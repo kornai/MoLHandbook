@@ -1,0 +1,2302 @@
+\chapter{Semantics}
+
+To the mathematician encountering linguistic semantics for the first time, the
+whole area appears as a random collection of loosely connected philosophical
+puzzles, held together somewhat superficially by terminology and tools
+borrowed from logic.  In Section~6.1 we will discuss some of the puzzles that
+played a significant role in the development of linguistic semantics from a
+narrow utilitarian perspective: suppose an appropriate technique of
+mathematical logic can be found to deal with the philosophical puzzle -- how
+much does it help us in dealing with the relationship between grammatical
+expressions and their meaning? Since the task is to characterize this
+relationship, we must, at the very least, provide a theory capable of {\sl (A)
+  characterizing the set of expressions} and {\sl (B) characterizing the set
+  of meanings}. By inspecting the Liar (Section~6.1.1), opacity
+(Section~6.1.2), and the Berry paradox (Section~6.1.3), we will gradually
+arrive at a more refined set of desiderata, distinguishing those that we see
+as truly essential for semantics from those that are merely nice to have.
+These will be summarized in Section~6.1.4.
+
+In Section~6.2 we describe the standard formal theory that meets the essential
+criteria. Our point of departure will be Montague grammar (MG) in
+Section~6.2.1, but instead of formalizing the semantics of a largely
+artificial and only superficially English-like fragment, we set ourselves the
+more ambitious goal of exploring the semantics of everyday language use, which
+tolerates contradictions to a surprising degree. In Section~6.2.2, we introduce
+a version of paraconsistent logic, Ginsberg's (1986) system $D$, and survey
+the main construction types of English from a semantic perspective.
+
+Finally, in Section~6.3, we begin the development of a formal theory that
+departs from MG in many respects. Our main concern will not be with the use of
+paraconsistent/default logic (although we see this as inevitable) but rather
+with replacing Tarski-style induction on subformulas by a strict left-to-right
+method of building the semantic analysis. We take this step because induction
+on subformulas presumes tree structure, while in natural language syntax there
+are clear technical reasons to prefer FSTs, HMMs, and other finite state
+methods of syntax analysis that do not naturally endow strings with tree
+structure.
+
+\section{The explanatory burden of semantics}
+
+While contemporary mathematical logic is indistinguishable from other branches
+of mathematics as far as its methods or driving esthetics are concerned,
+historically it has grown out of philosophical logic and owes, to this day, a
+great deal to its original philosophical motivations, in particular to the
+desire to eliminate ambiguities and paradoxes from the system. From a
+linguistic perspective, these are questionable goals since natural
+language is often ambiguous and clearly capable of expressing paradoxes.
+What linguistics needs is not a perfect language free of all ambiguity and
+contradiction, but rather a meta-theory that is capable of capturing these
+characteristic properties (we hesitate to call them imperfections, as there is
+no evolutionary pressure to remove them) of the object of inquiry. 
+
+\subsection{The Liar}
+
+Pride of place among the philosophical puzzles readily expressible in 
+natural language must go to the {\it Liar:} \index{Liar paradox|textbf}
+
+\begin{equation}
+\mbox{This sentence is false}
+\end{equation}
+
+\noindent
+Perhaps the simplest resolution of the paradox would be to claim that the
+sentence (6.1) is simply not grammatical. But given its structural similarity
+to sentences such as {\it This man is asleep}, this is not a very attractive
+claim. A more sophisticated version of the same argument would use some
+version of the generative semantics view introduced in Section~5.2 and claim
+that sentence generation starts with some state of affairs to be put into
+words, and since there is no conceivable state of affairs corresponding to
+(6.1), the sentence just never gets generated, let alone interpreted. Again,
+this is not very attractive in the light of the fact that in rather simple
+contexts (6.1) is perfectly meaningful:
+
+\begin{quote}
+
+The very first sentence in Fisher's biography of Lincoln asserts ``Abe Lincoln
+was born in a log cabin in Idaho". This sentence is false. 
+
+\end{quote}
+
+\noindent 
+Perhaps one could claim that {\it This} in (6.1) must refer to something
+external to the sentence, but again there is little to support this: examples
+such as{\it This sentence is in German} or {\it This sentence takes 56
+  characters to print} are perfectly ordinary.  Since we cannot really blame
+the syntax of (6.1), we need to turn to its semantics. What is {\it this}
+referring to? Clearly, it refers to the entire sentence $S$ in (6.1).
+Therefore, we may conclude that (6.1) asserts
+
+\begin{equation}
+\mbox{S is false} \wedge S=[\mbox{This sentence is false}]
+\end{equation}
+
+\noindent 
+The classical solution, Russell's theory of types, is based on the observation
+that (6.1) and (6.2) are not the same sentence and not entirely the same
+assertion. It is possible to build up a large and useful logical calculus that
+includes something like a T-scheme (the axiom scheme connecting assertions
+about the truth of sentences to the actual truth of sentences -- more on this
+later) while carefully banning only a few self-referential statements.  Here
+we are interested in a more linguistic solution, one that does not do away
+with self-referentiality, since there is no evidence that language treats
+linguistic objects such as words or sentences in any way different from other
+abstract nouns. We state this as our requirement {\sl (C): expressions that
+  have similar form should receive analyses by the same apparatus.}
+
+The central observation is that predicates such as {\it true} and {\it false}
+are context-dependent, and in analyzing (6.1) there is no reason to use an
+eternal absolute notion of truth and falsehood. Since even the most
+eternal-looking mathematical expressions such as $6 \cdot 6 = 36$ depend on
+implicit assumptions (e.g. that of using base 10), there is every reason to
+suppose that natural language expressions such as (6.1) do also. Let us call a
+set of assumptions (closed formulas in a logical language) a {\it context} and
+denote it by $C$. If a statement $s$ is true in the context (true in all
+models that the set of formulas $C$ holds true), we write $s \in T(C)$, if
+false, we write $s \in F(C)$ -- it is possible for $s$ to be true but be
+outside the deductive closure of $C$.  Now (6.1) and (6.2) can be reformulated
+as
+
+\begin{eqnarray}
+S=[S \in F(C)] \\
+S \in C \wedge S = [S \in F(C)]
+\end{eqnarray} 
+
+\noindent respectively. Of these, (6.4) is manifestly self-contradictory,
+which, in an ordinary system of two-valued logic, is sufficient cause to
+declare it false. \newcite{Kripke:1975} develops a three-valued logic with a
+{\it middle} truth value that offers an escape, but we do not follow this
+development because the `strengthened' version of the Liar, {\it This
+  sentence is not true}, would cause the same problem to a three-valued
+treatment that (6.1) causes in a two-valued system. Rather, we follow the
+Russellian insight and for each context $C$ define $\widehat{C}$ as the set of
+those statements that refer to $T(C)$ or $F(C)$. Formally, we adjoin a
+predicate $T$ meaning `is true' to the language and make it subject to axioms
+(called the {\it T-scheme} in Tarski 1956)\nocite{Tarski:1956} such as $x
+\Leftrightarrow T(x)$.\index{truth!by T-scheme}\index{T-scheme} Now we can
+capture the essence of the `naive' analysis (formalized by Prior 1958, 1961)
+that (6.1) is not just contradictory, but
+false:\nocite{Prior:1958}\nocite{Prior:1961}
+
+\medskip
+\noindent
+{\bf Theorem 6.1} For every context $C,$ (6.1) is false in $\widehat{C}$.
+
+\medskip
+\noindent
+{\bf Proof} Suppose indirectly $ S \in T(\widehat{C})$. By the T-scheme,
+we have $S \in F(C)$, and therefore $C$ is a context for $S$. This,
+by $S$, leads to $S \in T(C)$, a contradiction that proves that our 
+indirect assumption was false. 
+
+\medskip
+\noindent
+{\bf Discussion} This is not to say that the Liar is not a valuable paradox:
+to the contrary, \index{paradox}\index{Liar paradox}\index{barber paradox}in
+the history of logic, the Liar and closely related paradoxes such as the
+barber paradox have led to many notable advances in logic, including Russell's
+theory of types and Tarski's undefinability theorem. However, from a
+linguistic perspective many of the issues brought up by the Liar are already
+evident in much simpler nonparadoxical sentences that have no
+self-referential or quotational aspect whatsoever. First, and most important,
+is the treatment of {\it nonintersective modifiers}.\index{nonintersective modifier} At the very least, we need a theory that covers {\it enormous flea}
+\cite{Parsons:1970} and {\it lazy evaluation} before we can move on to {\it
+  false sentence.}\footnote{What is common to the examples is that enormous
+  fleas are not enormous things that are also fleas (hence the name
+  nonintersective), lazy evaluation is not some lazy thing that happens to be
+  an evaluation, and true sentences are not true things that happen to be
+  sentences.}
+
+Once such a theory is at hand (and as we shall see, this is by no means a
+trivial task), there is the further question of whether we really need a
+linguistic semantic account of {\it true} and {\it false.} English, as a
+formal language, contains many expressions with these words, but formal
+semantics generally refrains from the explication of ordinary nouns and
+adjectives like {\it flea} and {\it enormous}, preferring to leave such
+matters either to specialists in biology and psychology or to lexicographers
+and knowledge representation experts. There is no compelling reason why {\it
+  sentence} and {\it true} should occupy a more central position in our
+development of semantics: we conclude that for the purposes of linguistic
+semantics an analysis of these notions is nice but inessential. On the other
+hand, since self-referential statements are formed by ordinary grammatical
+means, it follows from {\sl (C)} that we should cover them.
+
+Quotational sentences are also problematic from our perspective.  Our
+intonational means to segregate quoted from direct material are limited: a
+sentence such as {\it `Snow is white' is true if and only if snow is white} is
+practically impossible to render differently from {\it `Snow is white' is true
+if and only if `snow is white'.} Since we are attempting a formal
+reconstruction, a general appeal to the {\it universality} of natural
+language,\index{universality} (i.e. to the notion that everything can be
+discussed in natural language) is insufficient -- what we need is a precise
+mechanism whereby matters such as quotation can be discussed. The use of
+quotation marks in written language provides the beginnings of such a
+mechanism, but as far as grammar is concerned these are not very well
+regulated, especially when it comes to quotations inside quotations beyond
+depth two. And even without embedding, the matter is far from trivial: compare
+{\it A `quine' is a program that, when compiled and executed, prints its own
+source code} to {\it A quine is a program that, when compiled and executed,
+prints its own source code}.  We conclude that a theory of quotation is nice
+but inessential, especially as the phenomenon is more characteristic of
+artificially regulated written communication than of natural language. 
+
+\subsection{Opacity}
+
+Another important puzzle is that of {\it opacity} (used here in a very
+different sense from that in phonology or syntax). \index{opacity,
+  semantic|textbf} It has long been noted that certain predicates $P$ about
+statements $s$ and $t$ do not allow for substitution. Even if $s=t$ it does
+not follow that $P(s)=P(t)$.  Frege (1879) used {\it know} as an example of
+such a predicate, but the observation remains true of many other predicates
+concerning knowledge, (rational) belief, hope, preference, (dis)approval,
+etc., generally collected under the heading of {\it propositional attitudes}.
+\index{propositional attitude} Frege used as his example the knowledge state
+of ancient Greeks, who had not realized prior to Pythagoras that Hesperus
+(the evening star), and Phosphorus (the morning star) were one and the same
+object, what we call Venus today. Thus, for an ancient Greek it was perfectly
+possible to know/believe that a bright object in the evening sky is Hesperus
+without knowing/believing that it is Phosphorus. In other words, {\it
+  Believe(s)} does not follow from {\it Believe(t)} even though $s=t$.
+
+In the tradition of philosophical logic, opacity is intimately linked to {\it
+a priori, analytic}, and {\it necessary} statements, and for those whose goal
+is to develop rational theories of beliefs, propositional attitudes, and
+judgments in general, such considerations are valuable. But from our
+perspective, the issue is nearly trivial: there is no denying that (i)
+sentences about beliefs, etc., are about the mental states of people and that
+(ii) mental models need not correspond to facts. The ancient Greeks had a
+model of the world in which there were two different entities where in reality
+there was only one. In other cases people, or entire civilizations, assume the
+existence of entities that do not correspond to anything in reality (the
+Western philosophical tradition generally exemplifies this by unicorns) or
+conversely use models that have literally no words for important entities.
+But imperfect knowledge and mistaken beliefs are part of the human condition:
+there is no logical error, and what is more important here, there is no {\it
+grammatical} error in thinking or saying things that are not so. Again, from a
+linguistic perspective the issues brought up by opacity are evident in much
+simpler cases that do not probe the edges of logical, philosophical, or
+physical necessity: ordinary fiction will suffice. What do we mean when we say
+{\it Anna Karenina is afraid of getting older}? How does it differ from {\it
+Jean Valjean is afraid of getting older}? Most people will agree that {\it
+Anna Karenina commits suicide} is true and {\it Jean Valjean commits suicide}
+is false. It is a highly nontrivial task to design a theory that provides the
+expected results in such cases, and although the desideratum follows from {\sl
+(C)} it is worth stating it separately: {\sl (D) expressions occurring in
+fiction should receive analysis by the same apparatus as expressions used in
+nonfiction contexts.}
+
+\subsection{The Berry paradox}
+
+In Section~1.5, we already alluded to the {\it Berry paradox} of finding
+\index{Berry paradox}
+
+\begin{equation}
+\mbox{the smallest integer not definable in $k$ words} 
+\end{equation}
+
+\noindent 
+For $k \leq 7$ the paradox is not apparent: we enumerate definitions of
+integers e.g. in lexicographic order, rearrange the list in increasing order
+of the numbers defined, and pick the first integer not on the list, say $s_k$.
+But for $k=8$ there is a problem: (6.5) itself is on the list, so $s_8$ is
+defined by it, and we must pick $s_8+1$ (or, if it was defined elsewhere on
+the list, the next-smallest gap). But then, $s_8$ was not on the list, or was
+it?  What makes this question particularly attractive is that desiderata {\sl
+  (A)} and {\sl (B)} appear to be easily met: it looks trivial to define the
+syntax of number names and, for once, we have a well-agreed-upon semantic
+model of the domain. There are some core elements {\it one, two, ..., nine}
+that combine with other base ten core elements such as {\it ten, twenty, ...,
+  ninety} and {\it hundred, thousand, million, billion, trillion, quadrillion,
+  ...} all contributing to the comma-separated reading style (CSRS) whereby
+450,789,123,450,123 is read off as {\it four hundred and fifty trillion seven
+  hundred and eighty nine billion one hundred and twenty three million four
+  hundred and fifty thousand one hundred and twenty three}.  There is
+something of a performance issue in where to terminate the sequence: clearly,
+numbers such as {\it septendecillion} or {\it nonillion} only serve as party
+amusements, as the people who actually would need them will in real life
+switch over to scientific reading style (SRS) somewhere around $10^9$.  Once
+we have made a choice where to terminate the sequence, it is trivial to define
+a small finite automaton generating all and only the CSRS numbers and another
+automaton generating SRS numbers such as {\it three point two seven five times
+  ten to the minus nineteenth}.
+
+\smallskip\noindent {\bf Exercise 6.1} Write a detailed grammar of the CSRS
+and SRS systems. Make sure that articles are correctly generated both in the
+conventional listing of numbers {\it one, two, $\cdots$, ninety-nine, one
+  hundred, one/a hundred and one, one/a hundred and two, $\cdots$, two
+  hundred, two hundred and one, $\cdots$} and before round numbers. Define the
+appropriate notion of roundness. Consider grammatical responses to questions
+such as {\it How many students are in this school?}, explain why {\it
+  *hundred} is ungrammatical and {\it (exactly) one/a hundred} are acceptable.
+
+\medskip\noindent Yet no sooner than we start specifying the syntax beyond
+these trivial fragments we run into difficulties. First, there is no
+one-to-one relationship between numbers and expressions composed entirely of
+number names: {\it seven thirty} generally refers to a time of the day, {\it
+  nine eleven} to emergency services, and {\it forty fifty} or {\it two three
+  thousand} to approximate quantities given by a confidence interval. This
+last class is so similar to CSRS that on occasion the lines between the two
+are blurred: {\it ninety nine hundred} can refer both to 9,900 and to
+99--100. To be sure, in the written language hyphens are used with approximate
+quantities, but spoken English (which for the linguist has methodological
+primacy) shows no sign of this.  When viewed from the perspective of spoken
+language, the whole enterprise of assigning semantics to CSRS and SRS is of
+dubious character: such numbers form highly stylized and regulated formal
+languages whose regulatory principles appear to be arithmetical, rather than
+linguistic, in nature. Arithmetic is not acquired with the same effortless
+ease as a first language. For most people the process starts later, and for
+many it remains incomplete.
+
+To get the Berry paradox really working we also need our syntax to cover
+arithmetic expressions ({\it eight cubed} is a number expressible in two words
+instead of the four required by CSRS), other bases ({\it hex a a b nine} only
+requires five words), the ability to solve equations ({\it the smallest
+  Mersenne prime with an eight digit exponent}) and in general to run
+algorithms ({\it the result of running md5sum on the empty
+  file}). Unfortunately, as a technical device for the description of
+algorithms yielding a numerical output, natural language is spectacularly
+inadequate, requiring a variety of support devices such as end markers,
+quotation marks, and parentheses, which have little or no use in ordinary
+language, a fact that is painfully evident to anyone who has ever tried to
+debug source code over the phone. This makes writing a grammar that meets {\sl
+  (A)} a complex matter, as there is no easy test of whether an expression
+evaluates to a numerical value or not.
+
+At the same time, when it comes to expressions with a numerical value, natural
+language overgenerates in two significant ways.  First, there are a class of
+statements that become true just by means of saying so, and such statements
+can be used to define numbers. To illustrate the more general phenomenon,
+consider whether a statement such as {\it I promise to come tomorrow} can be
+false. I can break the promise (by not coming), but merely by saying {\it I
+  promise} I have actually promised that I will come. There is a whole set of
+verbs such as {\it declare}, {\it order}, {\it request}, {\it warn}, and {\it
+  apologize} that are similarly self-fulfilling -- following
+\newcite{Austin:1962}, these are known as {\it performatives}.
+\index{performative} The only near-performative in mathematical usage is {\it
+  let}: when we say {\it Let T be a right triangle}, $T$ is indeed a right
+triangle.  Compared with the performatives in everyday language, the power of
+{\it let} is rather limited. In particular, by saying things such as {\it let
+  x be a prime between 8 and 10}, we have not succeeded in creating such a
+prime, while by saying {\it I name this ship Aoxamoxoa} one can indeed create
+a ship by that name. But in the subdomain of naming numbers, the full power of
+{\it let} is at our disposal: there are monomorphemic elements such as {\it
+  eleven, twelve, dozen} in broad use, and others such as {\it gross}, {\it
+  score}, {\it chiliad}, and {\it crore} known only to chiliads or perhaps
+crores of people.  As examples such as {\it googolplex} show, all that is
+required for a successful act of naming is that the language community agrees
+that a word means a certain thing and not something else. The word {\it
+  factoriplex} does not exist in current English but is easily defined as the
+product of all integers from 1 to googolplex, minus 42. Performatives
+trivialize the Berry paradox (there is no number meeting (6.5) since every
+number is nameable in one word) but yield another strong desideratum: {\sl (E)
+  the system must be flexible about naming.}
+
+Second, natural language offers a wealth of algorithmic descriptions of
+numbers that are solvable only by encyclopedic knowledge. Clearly, {\it the
+  year Columbus discovered America} evaluates to 1492, and equally clearly,
+knowing this is beyond the power of linguistic semantics. As far as the
+expression is concerned, it could refer to any year within Columbus' adult
+life, and no amount of understanding English will suffice to better pin down
+the exact date.  But if we are reluctant to impute knowledge of medieval
+history to speakers of English, we should be equally reluctant to impute
+knowledge of Mersenne primes, or even knowledge of eight cubed. Rather than
+stating this as a negative desideratum, ``the system should not rely on
+external knowledge'', we state it as a positive requirement: {\sl (F) the
+  system must remain invariant under a change of facts}.
+
+The remarks above are not meant to demonstrate the uselessness or
+irrelevance of the Berry paradox (which remains a valuable technical tool 
+e.g. in Kolmogorov complexity; see Chapter~7) but rather to make clear that
+from the standpoint of linguistics the difficulties arise long before the
+diagonalization issues that are in the focus of the logical treatment would
+come to force. If we exclude the arbitrariness of number naming, references to
+encyclopedic knowledge, and the description of algorithms, what remains is
+some extension of the CSRS and SRS grammars. For these, (6.5) has a solution:
+we run the grammar, evaluate each expression, and pick the smallest one
+missing from the list of numbers so generated. The paradox disappears since
+this amounts to describing an algorithm rather than naming a number.
+
+\paragraph{The hangman paradox}
+It is possible to interpret the Berry paradox in another manner: consider {\it
+  Your obligation will be fulfilled only when you give Berry half of the money
+  in your pocket.} A reasonable person may conclude that if he gives Berry
+half of the money in his pocket, his obligation is fulfilled.  However, Berry
+may object, noting the amount of money still in the person's pocket, that the
+obligation is unfulfilled and demand another halving, another, and another, ad
+infinitum. Or consider {\it To complete this task, you need to sleep on it and
+  you must report back to Berry that you are absolutely certain it's done.}
+The next day, you may entertain doubts. Since you have not so far reported
+back to Berry, you have not completed the task, and you need to sleep on it.
+This interpretation, traditionally presented under the name {\it hangman
+  paradox}, \index{hangman paradox} has less to do with finding the smallest
+solution to (6.5) than with the more wide-ranging problem of imperatives that
+demand the impossible. There is nothing on the surface to distinguish these
+from imperatives that can in fact be met. A perfectly analogous problem is
+presented by questions that cannot be answered. For any given question, we do
+not know in advance whether an answer exists, and if we permit a question to
+be formulated in a sublanguage that is strong enough to refer to
+algorithmically undecidable issues, we know that some questions will not have
+answers. Again, there is no need to probe the edges of undecidability;
+ordinary adjectival modification will already furnish plenty of examples such
+as {\it prime between eight and ten} that receive no
+interpretation in any model, and embedding such references to impossible
+objects in questions or imperatives is a trivial matter. Carefully crafted
+realist fiction creates a world that appears possible, but to the extent that
+human language use, and indeed the whole human condition, is greatly impacted
+by narratives that defy rational belief, requirement {\sl D} needs to be
+further strengthened: {\sl (G) all expressions should receive analysis by the
+  same apparatus as supposed statements of fact.}
+
+\subsection{Desiderata}
+
+Let us now collect the requirements on linguistic semantics that have
+emerged from the discussion. {\sl (A)} asks for a characterization of
+the set of natural language expressions. In mathematical linguistics, this is
+done by generating the set (see Section~2.1), and in the previous chapters we
+have discussed in detail how phonology, morphology, and syntax, taken
+together, can provide such a characterization. {\sl (B)} asks the same for the
+set of meanings, but our lack of detailed knowledge about the internal
+composition of the mental form that meanings take gives us considerable
+freedom in this regard: any set that can be generated (recursively enumerated)
+is a viable candidate as long as it can be used in a theory of semantics that
+meets the other desiderata.  One particularly attractive approach is to
+represent meanings by well-formed formulas in some logical calculus, but other
+approaches, such as network representations, also have a significant following.
+
+Requirement {\sl (C)}, that expressions similar in form should receive
+analyses by the same apparatus, has far-reaching consequences. First, it
+implies a principle of homogeneity: to the extent meanings are typed, and this
+will be necessary at least to distinguish objects from statements, questions,
+and imperatives, {\sl (C)} calls for expressions of the same linguistic type
+to be mapped on meanings of the same logical type. Second, to the extent the
+meanings of expressions are built recursively from the meanings of their
+constituents, {\sl (C)} calls for direct compositionality in the form of some
+{\it rule to rule hypothesis}:\index{rule to rule hypothesis}
+\index{compositionality} each step in generating the expression must be paired
+with a corresponding step in generating the meaning. Third, to the extent that
+the truth, consistency, feasibility, adequacy, or even plausibility of an
+expression cannot be fully known at the time it is uttered, {\sl (C)} implies
+our {\sl (D)} and {\sl (G)}: the meaning of expressions is independent of
+their status in the real world.
+
+In model-theoretic semantics, the meaning representations (formulas) are just
+technical devices used for disambiguating expressions with multiple meanings.
+Since the formulas themselves are mapped onto model structures by an
+interpretation function, the step of mapping expressions to meanings can be
+composed with the interpretation function to obtain a {\it direct
+interpretation} that makes no reference to the intermediary stage of formulas.
+In this setup, requirement {\sl (F)}, that the system must remain invariant
+under a change of facts, is generally taken to mean that the interpretation
+function is symmetrical (invariant under any permissible permutation of
+models). But {\sl (F)} is asking for a considerably more fluid view of facts
+than what is generally taken for granted in model-theoretic semantics: from
+our perspective, the fact that {\it eight cubed} and {\it hex two hundred} are
+the same number, decimal 512, is an entirely contingent statement, perhaps
+true in some models where correct arithmetic is practiced but quite possibly
+false in others. 
+
+\medskip
+\noindent
+{\bf Exercise 6.2} From an early age, Katalin was taught by her older brother
+that three plus five is eight, except for chipmunks, where three chipmunks
+plus five chipmunks are nine chipmunks because chipmunks are counted
+differently. Two plus two is four, except for chipmunks, where it is five.
+One plus one plus one is three, except for chipmunks, where it is five. By age
+five, Katalin mastered both regular addition and multiplication and chipmunk
+arithmetic up to about a hundred. Describe her semantics of arithmetic
+expressions. 
+
+\medskip
+\noindent
+Finally, let us call attention to an important consequence of the mundane
+treatment of arithmetic expressions assumed here. In his discussion of
+Montague (1963), \nocite{Montague:1963} \nocite{Thomason:1977} Thomason (1977)
+argues that any direct theory of propositional attitudes is bound to be caught
+up in Tarski's (1935) theorem of undefinability \cite{Tarski:1956}, rendering
+the resulting analysis trivial.  However, as Thomason is careful
+to note, the conclusion rests on our ability to pass from natural language to
+the kinds of formal systems that Tarski and Montague consider: first order
+theories with identity that are strong enough to model arithmetic. Tarski
+himself was not sanguine about this: he held that in natural language ``it
+seems to be impossible to define the notion of truth or even to use this
+notion in a consistent manner and in agreement with the laws of
+logic".\index{truth}
+
+To replicate Tarski's proof, we first need to supplement natural language with
+variables. The basic idea, to formalize the semantics of a predicate such as
+{\it subject owns object} by a two-place relation $\zeta(s,o)$ is fairly
+standard (although, as we shall see in Section~6.3, there are alternatives
+that do not rely on variables at all). But the proposed paraphrases for
+first-order formulas, such as replacing $\forall x [\exists y \zeta(x,y)
+  \rightarrow \exists z \zeta(z,x)]$ by {\it for everything x, either there is
+  not something y such that x owns y or there is something z such that z
+  belongs to x} clearly belong in an artificial extension of English rather
+than English itself.  Second, we must assume that the language can sustain a
+form of arithmetic; e.g.  Robinson's Q. We have already expressed doubts as to
+the universality of natural language when it comes to logical or arithmetic
+calculi, but using Q we can narrow this down further: several of the axioms in
+Q appear untenable for natural language.  Again, the key issues arise long
+before we consider exponentiation (a key feature for G\"{o}del numbering) or
+ordering.  Q comes with a signature that includes a successor $s$, addition +,
+and multiplication $\cdot$. By Q2 we can infer $x=y$ from $sx=sy$, Q4 provides
+$x+sy=s(x+y)$, and Q6 gives $x \cdot sy = xy + x$. All of these axioms are
+gravely suspect in light of the noncounting principle discussed in
+Section~5.5.  There are many ways we can {\it start} counting in natural
+language: we can look at quotations of quotations {\it (Joe said that Bill
+  said...)} and emphasis of emphasized material {\it (very very...)}, but
+there isn't a single way that takes us very far -- whichever way we go, we
+reach the top in no more than four steps, and there Q2 fails.
+
+Since this is one of the key points where the semantics of natural language
+expressions parts with the semantics of mathematical expressions, it is worth
+highlighting a consequence of the position that worlds, or models (from here
+on we use the two terms interchangeably), need not be consistent: our
+desideratum {\sl (E)}, that the system must be flexible about naming, now
+comes for free. In the following, we employ {\it paraconsistent logic} to make
+room for entities such as unicorns, triangular circles, and numbers that
+remain unchanged after adding one.  \index{logic!paraconsistent} As readers
+familiar with modern philosophical logic will know, the use of paraconsistent
+logic opens the way to new solutions to the Liar and several other puzzles,
+but we will not pursue these developments here -- rather, we will concentrate
+on problems that we have earlier identified as central, most notably the
+distinctions between {\it essential} and {\it accidental} properties
+introduced in Section~5.3.
+
+\section{The standard theory}
+
+In a series of seminal papers, Montague (1970a, 1970b, 1973, all reprinted in
+Thomason 1974) began the development of a formal theory that largely meets,
+and in some respects goes beyond, the desiderata listed above. In
+Section~6.2.1 we introduce this family of theories, known today as {\it
+  Montague grammar} (MG). As there are several excellent introductions to MG
+(see in particular Dowty et al. 1981 and Gamut 1991), \nocite{Dowty:1981}
+\nocite{Gamut:1991} we survey here only the key techniques and ideas and use
+the occasion to highlight some of the inadequacies of MG, of which the most
+important is the use of a stilted, semiformalized (sometimes fully formalized)
+and regimented English-like sublanguage more reminiscent of the language use
+of logic textbooks than that of ordinary English.  \nocite{Montague:1970}
+\nocite{Montague:1970a} \nocite{Montague:1973} \nocite{Thomason:1974}
+Linguists brought up in a more descriptive tradition are inevitably struck by
+the stock examples of MG like {\it Every man loves a woman such that she loves
+  him} or {\it John seeks a unicorn and Mary seeks it.} While still avoiding
+the rough and tumble of actual spoken English, we take the object of inquiry
+to be a less regimented language variety, that of copyedited journalistic
+prose.  Most of our examples in Section~6.2 will be taken from an American
+newspaper, the {\it San Jose Mercury News.} For reasons of expository
+convenience, we will often considerably simplify the raw examples, indicating
+inessential parts by [] wherever necessary, but in doing so, we attempt to
+make sure the simplified example is still one that could be produced by a
+reasonable writer of English and would be left standing by a reasonable
+copy editor.  \index{Montague grammar, MG} \nocite{Montague:1970}
+\nocite{Montague:1970a} \nocite{Montague:1973} \nocite{Thomason:1974}
+
+\subsection{Montague grammar}
+
+In Chapter~3, we defined signs as conventional pairings of sound and meaning
+and elaborated a formal theory of phonology capable of describing the sound
+aspect of signs. Developing a formal theory of semantics that is capable of
+describing the meaning aspect of signs will not proceed quite analogously
+since in phonology we could ignore the syntax, while in semantics it is no
+longer possible to do so.
+
+The central idea of Montague (1970a) was to introduce two algebras, one
+syntactic and the other semantic, and treat the whole issue of linguistic
+semantics as a homomorphism\index{homomorphism} from one to the other. As
+there are several minor technical differences in the way this idea was
+implemented in Montague's main papers on the subject (and subsequent research
+has not always succeeded in identifying which of the alternatives is really
+the optimal one), we will not remain meticulously faithful to any of the
+founding papers, but we will endeavor to point out at least the main strands
+of development in MG, which, construed broadly, is clearly the largest and
+most influential school of contemporary linguistic semantics. 
+
+As usual, an {\bf algebra}\index{algebra} is a set $T$ endowed with finitely
+many operations $F_1, \ldots\ ,F_k$ of fixed arity $a_1, \ldots ,a_k$. By an
+{\bf operation}\index{operation} of arity $a$, we mean a function $T^a
+\rightarrow T$, so by convention distinguished elements of the algebra are
+viewed as nullary operations. For Montague, the syntactic algebra is strongly
+typed but otherwise unrestricted: if $p$ and $q$ are expressions of types
+(categories) $P$ and $Q$, an operation $f$ will always (and only) produce an
+expression $f(p,q)$ of type $R$. In practice, Montague always used binary
+operations (a tradition not entirely upheld in subsequent MG work) and was
+very liberal as to the nature of these, permitting operations that introduce
+or drop grammatical formatives and reorder the constituents. Some later work,
+such as Cooper (1975)\nocite{Cooper:1975} or McCloskey (1979),
+\nocite{McCloskey:1979} took advantage of this liberal view and permitted
+generative transformations as syntactic operations, while others took a much
+stricter view, permitting only concatenation (and perhaps wrapping; see Bach
+1981).\nocite{Bach:1981} Either way, the syntactic and semantic algebras of
+MG provide the characterization of natural language expressions and meanings
+required by our desiderata {\sl (A)} and {\sl (B)}.
+
+The mapping $\phi$ from the syntactic algebra to the semantic algebra must be
+a homomorphism: for each operation $f$ of arity $a$ in the syntactic algebra,
+there must be a corresponding operation $g$ of the same arity in the semantic
+algebra, and if $r = f(p,q)$, we must have $\phi(r)=g(\phi(p),\phi(q))$. While
+in practice Montague used formulas of a higher-order {\it intensional logic}
+called IL as elements of the semantic algebra, with function composition
+(including applying an argument to a function) as the chief operation, it is
+clear from his work that he took a far more abstract view of what can
+constitute a proper semantic representation. In particular, the IL formulas
+are interpreted in model structures by another function $\psi$, which is also
+a homomorphism, so that the $\lambda$-calculus formulas, viewed by Montague as
+a mere pedagogical device, can be dispensed with entirely, interpreting
+natural language expressions directly in model structures. Later work explored
+several other choices for semantic algebra: Heim (1982) \nocite{Heim:1982}
+used {\it file change potentials}, Cresswell (1985) \nocite{Cresswell:1985}
+used structures that preserve a record of the way the expression was built up,
+and many other options are available, as long as the ultimate model-theoretic
+nature of the enterprise is preserved (i.e. the structures of the semantic
+algebra are interpreted in models).
+
+Montague used IL first as a means of resolving issues of opacity. Instead of
+taking the meaning of terms to be their {\it extension}, the set of objects to
+which the interpretation function maps them in a single model structure, he
+chose to explicate meanings as {\it intensions}, the set of extensions in all
+modally accessible worlds.\index{extension}\index{intension} Since the
+extension of expressions may coincide (for example, in realis worlds both {\it
+  the king of France} and {\it the king of Austria} denote the empty set), it
+is not evident how to express the clear meaning difference between {\it John
+  aspires to be the king of France} and {\it John aspires to be the king of
+  Austria} or even {\it John aspires to be a unicorn}.
+
+With intensions, the problem is solved: since it is easy to imagine an
+alternative world where the French Revolution still took place but Austria,
+just like Belgium, retained the institution of monarchy, the intension of the
+two terms is different and we can ascribe the different meanings of the whole
+expressions to the different meanings of the NPs {\it king of France} vs. {\it
+  king of Austria.}  In MG, verbs denoting propositional or other attitudes
+are called {\it intensional} since they operate on intensions: their use
+solves many subtle interpretation problems already known to the Schoolmen,
+such as the {\it in sensu composito/in sensu diviso} readings of {\it I want a
+  new car}, which may express that the speaker has her eye on a particular car
+or that she wants to replace the old one with a new one and it does not really
+matter which one. A similar treatment is available for intensional nouns such
+as {\it temperature}: by taking these to be functions that take different
+values in different possible words, we avoid concluding {\it thirty is rising}
+from {\it the temperature is thirty} and {\it the temperature is rising}.
+
+One problem that this otherwise very satisfactory theory leaves open is known
+as the issue of {\it hyperintensionals:} \index{hyperintensionals} there are
+expressions like {\it prime between 8 and 10} and {\it triangular circle} that
+denote empty sets in every modally accessible world; indeed, under most
+theories of the matter, in any world whatsoever. Clearly, {\it Pappus searched
+  for a method to trisect any angle} presumes very different truth
+conditions\index{truth condition} from {\it Pappus searched for a method to
+square the circle} even if, in hindsight, it is clear that the two activities
+are equally futile. 
+
+Another technical device of MG worthy of special mention is the use of {\it
+  disambiguated language}.\index{disambiguation} Since $\phi$ (or $\phi \circ
+\psi)$ is a function, only a single translation can attach to any expression,
+so those expressions that are ambiguous need to be assigned as many
+disambiguated versions as there are separate meanings. In syntax, the
+preferred method of disambiguation is by constituent structure, as in {\it
+  [The man on the hill] with the telescope} as opposed to {\it The man on the
+  [hill with the telescope]}. In semantics, however, we often find cases like
+(5.2), where the constituent structure is unambiguous, {\it Every man [loves a
+    woman]}, yet the sentence has two distinct readings, (5.3) and (5.4),
+corresponding to the order in which the universal {\it every} and the
+existential {\it a} get to bind the variables in {\it loves(x,y)}. We can use
+derivation history to distinguish such cases: the same constituent structure
+is reached by applying (possibly different) operations in different orders.
+
+To see how the ambiguity is handled in MG, we need to consider another
+characteristic feature of MG, the use of {\it generalized
+  quantifiers.}\index{generalized quantifiers} Intuitively, individuals
+(proper nouns such as {\it John} or NPs such as {\it the dog}) should be
+interpreted as elements of model structures (type $e$), and properties (be
+they expressed adjectivally: {\it (is) red, (is) sleepy}; or by intransitive
+verbs: {\it sleeps}) are interpreted as functions from individuals to truth
+values (type $e \rightarrow t$). Yet quantified NPs, such as {\it some men},
+{\it every dog}, {\it no tree}, etc., are syntactically congruent to simple
+NPs such as {\it John} or {\it the dog}, and our desideratum {\sl (C)} demands
+that they should receive analysis by the same apparatus as these. Since
+quantified NPs can be easily conceptualized as sets of properties (those
+properties, be they essential or accidental, that are shared by all members of
+the set), we lift the type of simple NPs from $e$ to $(e \rightarrow t)
+\rightarrow t$ and conceptualize them as the set of all properties enjoyed by
+the individual.  Once this step is taken, the intuitive assignment of {\it
+  sleeps} as function and {\it John} as argument can (indeed, must) be
+reversed for the function application to come out right. The translation of
+{\it every man} is $\lambda P (\forall x (\text{man}(x) \rightarrow P(x)))$, so
+that translation of {\it Every man sleeps} is obtained by applying this
+function to the translation of {\it sleeps}, yielding (by beta conversion) the
+desired $\forall x (\text{man}(x) \rightarrow \text{sleep}(x)).$
+
+Similarly, {\it a woman} is translated $\lambda P (\exists x
+(\text{woman}(x) \rightarrow P(x)))$, and if {\it loves} is translated as a
+two-place relation $l(x,y)$, {\it loves a woman} will be $\exists y
+(\text{woman}(y) \rightarrow l(x,y))$. Some care must be taken to make sure
+that it is the second (object of love) variable that is captured by the
+existential quantifier, but once this is done, the result is again an $e
+\rightarrow t$ function ready to be substituted into $\lambda P (\forall x
+(\text{man}(x) \rightarrow P(x)))$, yielding $\forall x (\text{man}(x)
+\rightarrow \exists y (\text{woman}(y) \rightarrow l(x,y)))$, the reading
+given in (5.3). In Montague's original system, the other reading (5.4),
+$\exists y (\text{woman}(y) \forall x (\text{man}(x)$ $l(x,y)))$ is obtained
+by radically different means: by introducing, and later deleting, a variable
+that is viewed as being analogous to a pronoun. 
+
+From here on, we do not follow Montague closely, since our primary concern is
+with natural language rather than with the semiformalized (sometimes fully
+formalized) and regimented English-like sublanguages used in most works of
+philosophical logic. In everyday usage, as evidenced e.g. by newspaper texts,
+quantified NPs such as {\it every Californian with a car phone}, {\it every
+  case}, {\it every famous star}, etc., do not lend themselves to a strict
+interpretation of {\it every x} as $\forall x$ inasmuch as they admit
+exceptions: {\it every case, except that of Sen.  Kennedy; every Californian
+  with a car phone, except drivers of emergency vehicles; every famous star,
+  including Benji}, etc. The problem, known as the {\it defeasability} of
+natural language statements, has given rise to a wide variety of {\it
+  nonmonotonic logic} approaches (for an overview see Ginsberg
+1986a).\nocite{Ginsberg:1986a} Of particular interest here are {\it generic}
+constructions \index{generic} such as {\it Sea turtles live to be over a 100
+  years old}, which can be true even if the majority of specific instances
+fail. At the extreme end, some generic statements such as {\it P6 processors
+  are outdated} may be considered true without {\it any} individual instances
+holding true.
+
+We define a {\bf construction} \index{construction|textbf} as a string
+composed of nonterminals (variables ranging over some syntactic category) and
+terminals (fixed grammatical formatives and lexical entries) with a uniform
+compositional meaning, obtained by a fixed process whose inputs are the
+meanings of the nonterminals and whose output is the meaning of the
+construction as a whole. An example we saw in Section~5.3 was {\it X is to Y
+  as Z is to W}, but we use the term here in the general linguistic sense,
+which covers the entire range from completely productive and highly abstract
+grammatical patterns such as
+
+\begin{equation} 
+\text{NP$\langle$}\alpha\text{PERS } \beta\text{NUM$\rangle$  VP$\langle$}\alpha\text{PERS }
+\beta\text{NUM } \gamma\text{TENSE$\rangle$}
+\end{equation}
+
+\noindent 
+to highly specified and almost entirely frozen idioms such as 
+
+\begin{equation} 
+\text{NP$\langle$}\alpha\text{PERS } \beta\text{NUM$\rangle$ kick$\langle$}\alpha\text{PERS }
+\beta\text{NUM } \gamma\text{TENSE$\rangle$ the bucket}
+\end{equation}
+
+\noindent 
+On occasion, when we are interested in the substitution of one
+construction into another, it will be necessary to assign a grammatical
+category (defined as including morphosyntactic features specified in angled
+brackets) to the construction as a whole, so a context free or mildly
+context-sensitive theory of constituent structure (see Section~5.1.3) roughly
+along the lines of GPSG \cite{Gazdar:1985} or early HPSG \cite{Pollard:1984}
+is presupposed. For the purposes of this chapter, we can safely ignore
+transference across patterns, such as the phenomenon that the agreement
+portion of (6.7) is obviously inherited from that of (6.6), and concentrate
+more on the semantics of constructions.
+
+As a limiting case, entirely frozen expressions (i.e. those constructions that
+no longer contain open slots, such as {\it go tell it to the Marines}) are
+simply taken as lexical entries; in this case, with meaning `nobody cares if
+you complain'. (The indexicals implicit in the imperative {\it go} and
+explicit in the paraphrased {\it you} do not constitute open slots in the
+sense that interests us here.) Since compositionality cannot be maintained
+as a principle of grammar without relegating the noncompositional aspects of
+constructions to the lexicon, we introduce the following {\it Principle of
+  Responsibility}: The semantics of any expression must be fully accounted for
+by the lexicon and the grammar taken together.  To make this principle clear,
+consider constructions such as
+
+\begin{equation}
+\text{for all NP$\langle$+DEF$\rangle$, S}
+\end{equation}
+
+\noindent 
+as in the following examples: {\it For all the glamour of aerial fish
+  planting, it was a mass production money-maker; The Clarence Thomas
+  hearings, for all their import...} or {\it For all their efforts at parity
+  and fairness, NFL officials ...}. Informally, the construction means
+something like `$S$, in spite of the usual implications of {\it
+  NP$\langle$+DEF$\rangle$}'.  In the case of {\it the glamour of aerial fish
+  planting}, the implication that needs to be defeased is that glamorous
+things are restricted to the few, a notion incompatible with {\it mass
+  production}.  Thus, to make sense of (6.8), we need to rely on lexical
+information. Without doing so, the clear difference between the acceptability
+of the preceding examples and {\it ???For all their protein content, eggs are
+  shaped so as to ease passage through the duct} would remain completely
+mysterious.
+
+Since universally quantified natural language NPs can actually have
+exceptions, we need to capture the notion of exceptionality some way; e.g. by
+saying that English {\it every man} means `almost all men' in the sense that
+exceptions have measure zero. Unfortunately, there is no obvious way to define
+measure spaces over semantic objects such as {\it legal cases} or {\it California
+drivers with car phones} naturally, so to translate {\it Geraldo Rivera
+[reveals that he is an extremely attractive virile hunk of man who] has had
+sex with [] every famous star in the entertainment industry} we say that
+for all $x$ such that $x$ has no extra properties beyond being a famous star
+in the entertainment industry, Geraldo Rivera has had sex with $x$. 
+
+A less clumsy translation, in keeping with the standard treatment of
+generalized quantification, is to say that the property of having had sex with
+Geraldo Rivera is implied by the property of being a famous star in the
+entertainment industry. We say that {\it every N} is the set of {\it typical}
+properties that $N$ has, where typicality is defined in the lexical entry of
+$N$. Since having four legs is typical of donkeys, {\it every donkey has four
+legs} will be true by definition and cannot be falsified by the odd lame
+donkey with three or fewer legs. 
+
+But if having four legs is an analytic truth\index{truth!analytic} for
+donkeys, how can we account for counterfactuals where five-legged donkeys can
+appear easily, or for the clear intuition that being four-legged is a
+contingent fact about donkeys, one that can be changed e.g. by genetic
+manipulation?  The answer offered here is that to reach these we need to
+change the lexicon.  Thus, to go from the historical meaning of Hungarian {\it
+  kocsi} `coach, horse-driven carriage' to its current meaning `(motor) car',
+what is needed is the prevalence of the motor variety among `wheeled
+contrivances capable of carrying several people on roads'. A 17th century
+Hungarian would no doubt find the notion of a horseless coach just as puzzling
+as the notion of flying machines or same-sex marriages. The key issue in
+readjusting the lexicon, it appears, is not counterfactuality as much as
+rarity: as long as cloning remains a rare medical technique, we will not have
+to say `a womb-borne human'.
+
+To summarize our main departure from standard MG: under the treatment assumed
+here, {\it every man loves a woman} means neither (5.3), $\forall x
+\text{man}(x)$ $ \exists y \text{woman}(y)$ $\text{loves}(x,y)$ nor (5.4),
+$\exists y \text{woman}(y)$ $ \forall x \text{man}(x)$ $\text{loves}(x,y)$; it
+means that woman-loving is a typical property of men, just as donkey-beating
+is a typical property of farmers.  Some of the typical properties of common
+nouns are analytic {\it relative to a given lexicon} while others are not. In
+fact, for every noun there are only a handful of defining properties (see
+Section~5.3), and these can change with time in spite of the inherent
+conservatism of the lexicon.
+
+Ordinary adjectival modification means conjoining another property to the
+bundle (conjunction) of essential properties, so {\it brown dog} refers to the
+conjunction of all essential dog properties and brownness. {\it Enormous
+fleas} have the property of enormity conjoined to the essential properties of
+fleas, which include being rather small, so the notion is applied, without any
+special effort, on the flea scale. The same simple treatment is available for
+impossible objects such as triangular circles. 
+
+\begin{figure}[hH]
+\begin{center}
+\includegraphics[width=4in]{Fig/reuleaux}
+\end{center}
+\caption{The Reuleaux triangle and its cousins.}
+\end{figure}
+
+Figure 6.1 shows on the left a slightly triangular circle and on the right 
+a slightly circular triangle. Whether the object in the middle, known as the  
+{\it Reuleaux triangle}, is considered a triangle, a point of view justified
+by its having three distinct vertices, or a circle, a point of view justified
+by its having constant diameter, is a matter of perception.
+
+What is clear from the linguistic standpoint is that adadjectives like {\it
+  slightly}, {\it seemingly}, and {\it very} attach to adjectives like {\it
+  circular}, {\it triangular}, and {\it equal} that have a strict mathematical
+definition just as easily as they attach to adjectives like {\it red}, {\it
+  large}, and {\it awful} that lack such a definition. Clearly, what these
+adadjectives modify is the `everyday' sense of these terms -- the mathematical
+sense is fixed once and for all and not subject to modification. Just as we
+were interested in the everyday sense of {\it all} and {\it every} and found
+that these are distinct from the standard mathematical sense taken for granted
+in MG, here we are interested in the ordinary sense of {\it circular}. Working
+backward from typical expressions like {\it circular letter} and {\it circular
+  argument}, we find that the central aspect of the meaning is not `a fixed
+distance away from a center' or even `fixed diameter' but rather `returning
+to its starting point', `being cyclic'.
+
+In these examples, the morphologically primitive forms are nominal: the
+adjectival forms {\it circular} and {\it triangular} are clearly derived from
+{\it circle} and {\it triangle} and not the other way around. Since derivation
+of this sort changes only the syntactic category of the expression but
+preserves its meaning, we can safely conclude that {\it circle} in the
+everyday sense is defined by some finite conjunction of essential properties
+that includes `being cyclic' and that the mathematical definition extends this
+conjunction by `staying in an (ideal) plane, keeping some (exact) fixed
+distance from a point'. Similarly, {\it triangle} simply means `having three
+angular corners' rather than the exact configuration of points and lines
+assumed in geometry.
+
+This point is worth remembering, as there is often a somewhat naive tendency
+to treat the mathematical definition as the norm and assume that everyday
+language is `sloppy' or `fuzzy'.  In reality, expressions like {\it a
+  triangular patch of snow on the mountainside} are perfectly reasonable and
+convey exactly the amount of information that needs to be communicated: nobody
+would assume that the patch lies in a single plane, let alone that its edges
+are perfectly straight lines. Linguistics, as a scientific endeavor, centers
+on modeling the data provided by actual language use, as opposed to providing
+some norm that speakers should follow.\index{normativity}
+\index{descriptivity} This is not to say that the study of highly regulated
+technical language, as found in legal or scientific discourse, is of no use,
+but as these language varieties are acquired in a formal schooling process,
+over many years of adult study (as opposed to the acquisition of natural
+language, which takes place at an earlier age and generally requires no
+schooling whatsoever), there is nothing to guarantee that their properties
+carry over to natural language.
+
+As everyday terms, {\it circular triangles}, {\it triangular circles}, {\it
+  she-males}, or {\it wide awake sleepers} (spies who eagerly wait for the
+chance to be activated) are all illustrations of the same phenomenon, namely
+that adjectival modification is not simply a conjunction of some new property
+to the set of essential properties but a destructive overwrite operation.
+Thus, {\it brown dog} is simply an object that has the property (color) brown
+in addition to the properties essential to dogs, but {\it ownerless dog} is an
+object with the same properties {\it except} for lacking an owner. In other
+words, essential properties are merely defaults that can be defeased.
+
+From this vantage point, English has far fewer hyperintensional constructions
+than assumed in the tradition of philosophical logic: certainly triangular   
+circles and immaculate conceptions give rise to no logical contradictions.  
+This renders the problem with hyperintensionals discussed above far less
+urgent, as we now only have to deal with cases in which the essential meaning
+of the adjective is in strict contradiction to the essential meaning of the   
+noun it modifies, and the latter is given by a single conjunct. Thus, we need
+to consider examples such as
+
+\begin{eqnarray}
+\text{Mondays that fall on Tuesdays}\\
+\text{Mondays that fall on Wednesdays}
+\end{eqnarray}
+
+\noindent
+Does it follow that a (rational) agent who believes in (6.9) must also believe
+in (6.10)? While the matter is obviously somewhat speculative, we believe the
+answer to be negative: if we learn that {\it John believes Mondays can be
+really weird -- he actually woke up to one that fell on Tuesday}, it does not
+follow that he also believes himself to have woken up on one that fell on
+Wednesday. Since he has some sort of weird experience that justifies for him a
+belief in (6.9), he is entitled to this belief without having to commit
+himself to (6.10), as the latter is not supported by any experience he has.
+
+What makes this example particularly hard is that Mondays, Tuesdays, and
+Wednesdays are purely cultural constructs: there is nothing in objective
+reality to distinguish a Monday from a Tuesday, and it is well within the
+power of society to change by decree the designation a day gets. When the
+lexical knowledge associated to a term is more flexible, as in the case of
+triangles and circles, {\it accommodation}, finding an interpretation that
+defeases as little of the lexical meaning as needed to make sense of the
+expression, is much easier. \index{accommodation} Most lexical entries clearly
+contain more information than a purely logical definition. For example {\it
+  bachelor}, does not just mean `unmarried man' -- the lexical entry must
+contain a great deal of default knowledge about preferring to live alone,
+eating TV dinners, etc., otherwise a sentence such as {\it In spite of having
+  married recently, John remained a true bachelor} could make no sense.
+
+So far, we have assumed that lexical entries contain some mixture of
+defeasible and strict (nondefeasible) information without committing ourselves
+as to their proportion. But whether lexical entries without defeasible content
+exist at all remains to be seen -- if not, the problem of hyperintensionals is
+not pertinent to natural language and the standard MG treatment of opacity
+remains viable. An even more radical question, one that we shall pursue in
+Section~6.2.2, is whether strict content exists in the lexicon to begin with.
+If not, natural language is structurally incapable of carrying arguments with
+strict conclusions. To carry out this investigation, we need a system of logic
+that can sustain some distinction between essential and inessential properties
+and one that can sustain some notion of default.  We find a suitable candidate
+for both in the seven-valued system $D$ of \newcite{Ginsberg:1986}, to which
+we turn now.
+
+\subsection{Truth values and variable binding term operators}
+
+Recall that a {\bf lattice} \index{lattice} is an algebra with two commutative
+and associative binary operations $\vee$ and $\wedge$ satisfying the {\it
+  absorption identities} $a \vee (a \wedge b) = a, a \wedge (a \vee b) =
+a$. Lattices are intimately related to partial orders: we say $a \leq b $ iff
+$a \vee b = b$ or, equivalently, if $a \wedge b =a$. If neither $a \leq b$ nor
+$b \leq a $ holds, we say $a$ and $b$ are not comparable. The lattice
+operations induce a partial order, and conversely, any partial order for which
+incomparable elements have a greatest lower bound and a least upper bound give
+rise to a lattice whose induced partial order is the same as the one with
+which we started.  The least element of a lattice, if it exists, is called the
+{\it zero} or {\it false} element, and the greatest, if it exists, is called
+the {\it one} or {\it true} element.\index{truth value}
+
+
+A {\bf bilattice} \index{bilattice|textbf} over a set $B$ has binary
+operations $\vee, \wedge, +, \cdot$ such that $B, \vee, \wedge$ and $B, +,
+\cdot$ are both lattices, and the operations of one respect the partial order
+on the other (and conversely).  Using traditional Hasse diagrams with bottom
+to top representing one ordering (say, the one induced by $+, \cdot$) and left
+to right representing the other (induced by $\vee, \wedge$), the smallest
+nontrivial bilattice comes out as a diamond figure. This is the four-valued
+system of Belnap (1977) \nocite{Belnap:1977} shown in Fig. 6.2 (i).  As usual,
+$t$ and $f$ are the classical true and false, $\perp$ means `both true and
+false', and $u$ means `unknown'. For system $D$, Ginsberg (1986) adds the
+values {\it dt} `true by default', {\it df} `false by default', and $\star$
+`both true and false by default', as shown in Fig. 6.2 (ii):
+
+\medskip
+\noindent
+\begin{tabular}{llll}
+(i) & &\phantom{mmmm} (ii) &\\
+& \vbox{\xymatrix{& \perp\ar@{-}[dl]\ar@{-}[dr] &\\
+f\ar@{-}[dr]& & t\ar@{-}[dl] \\
+& u &\\}}& &
+\vbox{\xymatrix{& & \perp\ar@{-}[dll]\ar@{-}[drr] & &\\
+f\ar@{-}[drr]\ar@{-}[ddr] & & & & t\ar@{-}[dll]\ar@{-}[ddl] \\
+& & \star\ar@{-}[dl]\ar@{-}[dr] & &\\
+& df\ar@{-}[dr] & & dt\ar@{-}[dl] &\\
+& & u & &\\}}\\
+\end{tabular}
+
+\begin{center}
+{\bf Fig. 6.2.} (i) Paraconsistent logic (ii) with defaults.
+\end{center}
+
+\smallskip\noindent Let us first see how to use these in lexical entries.  We
+will briefly touch on most lexical categories admitted as primitives by the
+NSM school -- pronouns, determiners, quantifiers,
+adjectives, verbs, adverbials, relations, and nouns -- but defer adadjectives
+and connectives to Section~6.3. As we go along, we are forced to make a number
+of design choices, and the reader should not assume that the ones made here
+are the only reasonable ones. Our goal here is not to solve all outstanding
+problems of semantics but rather to present a single coherent system that
+supports a reasonable notion of everyday {\it paraphrase} and common sense
+{\it inference}. The key issue is our desideratum {\sl (C)}, which calls for
+some uniform, mechanistic treatment of constructions. As long as we consider
+(5.9), {\it The duckling was killed by the farmer}, to be a reasonable
+paraphrase of (5.8), {\it The farmer killed the duckling}, we should be able
+to parse both these constructions, turn the crank of the semantic machinery,
+and obtain the same result either directly or perhaps by invoking inference
+steps along the way.
+
+\paragraph{Relations, adpositions}
+
+While not considered a primitive category in the NSM system, many grammarians
+take the view that adpositions\footnote{In English, prepositions, but in many
+languages such as Japanese or Uzbek [UZN], often postpositions: consider {\it
+soxil tomon} shore.NOM toward `toward the shore'.} form a major lexical
+category on a par with noun, verb, adjective, and adverb.  Very often, they
+express a clear spatial relation: e.g. English {\it under} is a relation
+between two entities X and Y such that the body of X is, according to the
+vector set by gravity, below that of Y. To provide an adequate semantics of
+constructions involving {\it under}, we need to address a number of technical
+issues, but most of the machinery will be required elsewhere as well.
+
+First, we need {\bf model structures} that contain {\it entities} and {\it
+  relations}.\index{model structure|textbf}\index{entity}\index{relation}\index{universe|textbf}
+Entities have type $e$, and (binary) relations have type $e\times e$. The set
+of entities in a model structure is called the {\bf universe} of the model.
+To fix ideas, we assume a distinguished model structure $M_0$ corresponding
+intuitively to reality, `our world as of a fixed date', and some set of
+indexes $I$. There are model structures $M_i$ with universe $U_i$ for every
+$i\in I$, and at least some of these are accessible from $M_0$ by the
+evolution of time). Unlike MG, which fully integrates time into the structure
+of models, we leave matters of time outside a single model structure in this
+discussion, at least for significant durations (over a few seconds). We leave
+open the possibility that a local (possibly infinitesimally small) temporal
+environment is part of the model structure or, equivalently, a single model
+may be able to sustain statements about speed, acceleration, precedence,
+etc. We shall also ignore all complications stemming from different reference
+frames and relativity (see Belnap and Szab\'{o} 1996).  We need to sustain two
+kinds of inferences:\nocite{Belnap:1996}
+
+\begin{eqnarray}
+\mbox{if X is under Y, and Y is under Z, then X is under Z}\\
+\mbox{if X is under Y, Y can fall on X}
+\end{eqnarray}
+
+\smallskip\noindent Inference (6.11) is clearly defeasible: if the rug is
+under the bed, and the coin is under the rug, it may still be that the coin is
+not under the bed (but rather under a portion of the rug that peeks out from
+under the bed).  More importantly, even if the coin lies geometrically under
+the bed, once it is covered by the rug it requires a significant amount of
+reconceptualization to consider it being under the bed: this is similar to the
+smart aleck of Winograd and Flores (1986) who answers {\it yes} to the
+question {\it is there water in the fridge?} based on the fact that there are
+vegetables in the fridge and organic matter is composed of 50\%
+water.\nocite{Winograd:1986}
+
+Somewhat surprisingly, it is (6.12) that appears to be nondefeasible: even in
+science-fictional contexts, the meaning of {\it under} is preserved. {\it The
+  ship's gravity generators reversed. The gun under the bed was now over it
+  and began to fall on it.} Although the phenomenon is already clear, with a
+little effort, even less arguable cases can be constructed:
+
+\begin{eqnarray}
+\mbox{if X is under Y, Y is over X}\\
+\mbox{if X is to the left of Y, Y is to the right of X.}
+\end{eqnarray}
+
+\noindent
+For a fuller theory of lexical semantics, several questions need to be
+answered. First, is there a need to distinguish a core (spatial) meaning of
+{\it under} from a more peripheral, metaphoric meaning? Clearly, from {\it
+  France was under Vichy rule} it does not follow that {\it *Vichy rule could
+  fall on France.} Here we take the methodological stance that different
+meanings, as denoted by subscripts in lexicographic practice, are to be
+avoided maximally: the lack of a {\it *Vichy rule could fall on France}
+construction is to be attributed to blocking (see Section~4.2) by the form
+{\it befell.} To be sure, there will always be cases such as {\it bank$_1$}
+`riverbank' vs. {\it bank$_2$} `financial institution' where the semantic
+relation between the two, if there ever was one, is beyond synchronic
+recovery, but for the most part we side with Jakobson, who in response to {\it
+  bachelor$_1$} `unmarried man', {\it bachelor$_2$} `seal without a mate', and
+{\it bachelor$_3$} `young knight carrying the banner of an established one'
+summarized the meaning as `unfulfilled in typical male role'.
+
+Second, where is information such as (6.12) to be stored: in the lexical entry
+of {\it under}, in the entry of {\it fall}, both, or neither? Here we assume a
+neutral store of background knowledge we will call the {\it encyclopedia},
+which is distinct from the lexicon, being devoted primarily to
+extragrammatical or {\it real-world} knowledge, but leave open the possibility
+that lexical entries may have pointers to encyclopedic knowledge. Our
+desideratum {\sl (F), invariance under change of facts}, will be fulfilled by
+permitting modification (in the limiting case, full deletion) of the
+encyclopedia but keeping the lexicon, at least synchronically, unchanged.
+Note that arithmetic, including the chipmunk arithmetic of Exercise 6.2, is a
+matter of real-world knowledge. The main relational constructions that we need
+to cover include the copulative
+
+\begin{equation}
+\text{S} \rightarrow \text{NP$\langle$}\alpha\text{PERS } \beta\text{NUM$\rangle$
+  COP$\langle$}\alpha\text{PERS } \beta\text{NUM }
+\gamma\text{TENSE$\rangle$ P NP}
+\end{equation}
+
+\noindent
+which is a full sentence such as {\it The cat was under the bed}, and the
+relative clause
+
+\begin{equation}
+\text{NP} \rightarrow \text{NP$\langle$}\alpha\text{PERS } \beta\text{NUM$\rangle$ P NP}
+\end{equation}
+
+\noindent
+which is an NP such as {\it the cat under the bed.} 
+
+\paragraph{Entities, constants}
+
+Mathematical logic makes routine use of a class of expressions, {\it
+  constants}, that have no clear counterpart in natural language. Mathematical
+constants are {\it rigid designators} of the best kind: not only do they
+\index{rigid designator}\nocite{Kripke:1972}correspond to the exact same
+element in each model, but this cross-world identity comes at no cost: the
+name itself guarantees that the same cluster of properties is enjoyed by each
+instance. They are not subject to adjectival modification, {\it *quick 5,
+  *ancient $\pi$}, or relativization: {\it the e that Mary learned about
+  yesterday} is the exact same $e, 2.718\ldots$, that we all learned
+about. Kripke (1972) treats all proper names as rigid designators, but this is
+not well-supported by the linguistic evidence. Proper names can shift
+designations as a result of adjectival modification ({\it the Polish
+  Shakespeare} is not Shakespeare but `the most distinguished Polish
+playwright') and similarly for possessive or relative clauses ({\it the Venice
+  of the North} is some `spectacular city built on islands in the North'), and
+so on. Here we take the stance that the relative constancy of proper names is
+primarily due to the lexical information associated to them, so that e.g.
+geographic names have a great deal more temporal constancy than names of
+organizations.
+
+Similarly, Kripke (1972) argues that {\it natural kinds}\index{natural kind}
+such as {\it dog} or {\it water} cannot be defined in terms of paraphrases as
+we have suggested in Section~5.3 -- a proper definition must ultimately rely
+on the scientific identification, in terms of DNA characteristics for dogs or
+the H$_2$O chemical formula for water. From a philosophical standpoint, this
+may be more satisfactory than the method of definition used here, which relies
+on conjoining essential properties. Indeed, it would be hard to argue that the
+ultimate reality of water is somehow distinct from H$_2$O. Yet from the
+natural language standpoint we are less concerned with ultimate reality than
+with actual usage, and H$_2$O is clearly {\it not} water but rather `distilled
+water' or even `chemically pure water' -- adopting the scientific definition
+would lead to the rather undesirable consequence that {\it water quenches
+  thirst best} would come out as highly questionable, as there are a range of
+experiments suggesting that chemically pure water is inferior to ordinary
+water in this regard. In general, those contexts that distinguish ordinary
+water from chemically pure water would all lead to paradoxical judgments: we
+would want to say {\it water generally has trace minerals} is true, but if we
+insist on defining water as H$_2$O the sentence is by definition false.
+
+The MG treatment of generalized quantification takes not just quantified NPs
+to be sets of properties but all NPs. Proper names, in particular, denote not
+individuals but the set of all properties these individuals have. We have
+already seen that a more modest selection of properties, taking only those
+properties that are in some sense defining (essential, typical) of the
+quantified noun yields better results for the {\it every N} construction, and
+it is worth noting that proper names can be quantified the same way: {\it
+  every Dr. Johnson finds his Boswell} `great men will find admiring
+biographers'. By our requirement {\sl (C)}, which calls for homogeneous
+semantic treatment of syntactically homogeneous constructions, NPs composed 
+of a determiner and a noun should also be sets of properties. We will assume 
+here that {\it the} adds a single property, that of definiteness, to the 
+set of properties that make up common nouns. This situation provides a 
+clear example of the autonomy of syntax thesis discussed in Section~5.3: if
+`definiteness' is just like `redness', there is no semantic explanation why 
+{\it the red boy} is grammatical but {\it *red the boy} is not. To summarize
+the major constructions we have to account for: 
+
+\begin{equation}
+\text{NP} \rightarrow \text{every/the}  \text{ N}
+\end{equation}
+
+\noindent
+which accounts for singular NPs such as {\it the point}, {\it every point},
+and
+
+\begin{equation}
+\text{NP}\langle\text{PL}\rangle \rightarrow (\text{every/the}) \text{
+  Num} \text{ N}\langle\text{PL}\rangle
+\end{equation}
+
+\noindent
+which accounts for plural NPs such as {\it every three points} [determine a
+plane] or {\it the three points} [determining a plane]. 
+
+\paragraph*{Adjectives}
+
+If all proper names, common nouns, and NPs are bundles of properties, is there
+still a need for a simple $e$ type ($e$ntities, $e$lements of model
+structures)?  To be sure, it generally requires a significant amount of
+definitional work to get to a specific entity: consider {\it the third nail
+  from the top in the fence segment starting at the northern end of my
+  backyard at Hiawatha Lane, Arlington, MA}. In definitions like these, the
+whole expression is anchored to proper names like {\it MA}, {\it Arlington},
+{\it Hiawatha Lane}, to indexicals like {\it I} or {\it my}, to demonstratives
+like {\it this}, and to essential properties such as the cardinal directions
+{\it north, top}.  Once we have a specific entity, we can name it, but the two
+model structures before and after the act of naming are different: in one, the
+nail in question is like any other nail, and in the other it enjoys the
+property of having a name.
+
+Remarkably, even though a whole set of culturally regulated naming conventions
+are deployed for the purpose (there are not likely to be two Hiawatha Lanes in
+one town, or two Arlingtons in one state), the act of naming the nail still
+requires the presence of the definite article {\it the}. This is not true for
+proper names, which are inherently definite: we say {\it London, you know, the
+  one in Ontario} rather than {\it *the Ontario London.} The main insight of
+Kripke (1972), that proper names behave like rigid designators, can therefore
+be salvaged by means of assigning the definiteness property to proper names in
+the lexicon and by allowing for some relationship between entities (type $e$)
+and the bundle of properties that define them, traditionally taken as type $(e
+\rightarrow t) \rightarrow t$.
+
+In the Leibniz/Mostowski/Montague tradition, there is a direct, in a
+philosophical sense definitional, one-to-one relation between entities and the
+sets of their properties: if two entities are not the same, there must be some
+property that holds for one but not for the other. If no such property is
+found, the two entities cannot be individuated and must therefore be counted
+as one and the same.\footnote{The philosophical problem of individuation is
+  particularly acute for elementary particles of the same kind, which have no
+  distinguishing properties once their quantum state is determined. We make no
+  pretense to be able to contribute to the philosophy of quantum mechanics and
+  simply assume that things are large enough so that there will be a whole
+  range of location properties to distinguish between any two tokens of the
+  same type.} This opens the way toward characterizing adjectives by their
+intension. Following Belnap (1977), we define the domain of a property $P$ in
+the universe $U_i$ by two sets, called the {\it positive} and the {\it
+  negative} support $P_+$ and $P_-$. In classical logic, $P_-$ would just be
+the complement of $P_+$, but here we permit the two to overlap and their union
+to leave some of $U_i$ uncovered. The four truth values, denoted $u, t, f$,
+and $\perp$, are assigned to entities $x$ as expected: $P(x)=\perp
+\Leftrightarrow x \in P_+ \wedge x \in P_-; P(x) = t \Leftrightarrow x \in P_+
+\wedge x \not\in P_-; P(x)=f \Leftrightarrow x \not\in P_+ \wedge x \in P_-;
+P(x)=u \Leftrightarrow x \not\in P_+ \wedge x \not\in P_-$. We will need two
+entailment relations, $\models_+$ and $\models_-$ (read {\it true-entails} and
+{\it false-entails}), with the expected properties such as $I \models_- U
+\wedge V \Leftrightarrow I \models_- U \vee I \models_- V$.
+\index{logic!four-valued}
+
+We have two candidate definitions for common nouns: on the one hand, we could
+identify the meaning of a noun such as {\it candle} with the property of
+`being a candle', i.e.  as a subset of $U_i$ (a single $e \rightarrow t$
+function at any index). This is the traditional logical approach. Under the
+traditional linguistic approach, to find the meaning of {\it candle}, one
+consults a dictionary, where it is defined as
+
+\begin{eqnarray}
+\textit{a light source, now used primarily for
+  decoration and on festive occasions,}\ \ \ \ \ \ \ \\\nonumber
+\textit{ made of wax, tallow, or other similar
+  slowly burning material,}\\\nonumber
+\textit{generally having a cylindrical shape, but also made
+  in different shapes.}
+\end{eqnarray}
+
+\smallskip\noindent Our goal here is to formalize this second approach
+(i.e. to treat common nouns as bundles of their essential properties).  Since
+properties are also subsets of $U_i$, this amounts to defining the set of
+candles by the intersection of the essential candle properties: serving as a
+light source, being used on festive occasions, being made of wax or a similar
+substance, etc. This is not to say that dictionary definitions are directly
+applicable as they are: for example, the definition above does not mention the
+wick, while we take wicks to be essential for candles.  The main construction
+that we have to account for is
+
+\begin{equation}
+\text{N} \rightarrow \text{A}  \text{ N}
+\end{equation}
+
+\noindent
+which describes adjectival modification as in {\it cylindrical shape.}
+
+\paragraph{Pronouns, indexicals, quantifiers}
+
+The standard MG method is to treat pronouns as variables.  While the metaphor
+of substituting specific instances is attractive, giving pronouns variable
+status would leave a gaping hole in the edifice: why cannot we quantify over
+them?  There is no {\it *every me} or {\it *every you}.  Alternatively, in
+languages with morphological person/number marking, it should be easy to use
+these marks on quantifiers as well (this is especially clear for languages
+such as Hungarian that reuse the same set of markers across verbs and nouns),
+yet cross-linguistically we do not find person/number marking on quantifiers
+at all.
+
+On the whole, pronouns have a distribution very close to that of proper nouns:
+perhaps the only situation where a pronoun cannot be replaced by a proper
+noun is in {\it resumptive} positions as in {\it I wonder who they think that
+  if Mary marries him/*John then everybody will be happy} or in lexical
+entries such as {\it make it clear} that contain pronouns as in {\it Studying
+  Chapter~2 makes it/*the book very clear that the author rejects the global
+  warming hypothesis.}  Therefore, assigning pronouns and proper nouns
+radically different types would be hard to justify. If proper names are of
+type $e,$ pronouns will have type $e \rightarrow e$ and will correspond to a
+distinguished function among all $e \rightarrow e$ functions, namely the
+identity. As there is only one identity function, this method goes a long way
+toward explaining why we find only a very restricted set of pronouns (only as
+many as there are gender classes), while there is an infinite supply of
+variables.  \index{pronoun!resumptive} If proper nouns are treated as bundles
+of their essential features, pronouns will be the identity function over such
+bundles, except possibly adding a gender feature to the conjunction.
+
+Another aspect of pronouns worth noting is that {\it I} is uniquely identified
+by the speaker who utters it, but {\it you} generally requires some gesture or
+equivalent cue to pick up its referent. This phenomenon is even more marked
+with other pro-forms such as {\it here}, {\it there}, {\it now}, etc., whose
+content clearly depends on the context they are uttered. Following Kaplan
+(1978,1989), these are generally collected under the heading of {\it
+  indexicals.}\index{indexical} \nocite{Kaplan:1978} \nocite{Kaplan:1989} The
+standard MG treatment is to use $n$-tuples of speaker, hearer, time, place
+etc., to structure the set $I$ of indexes, and make the content of indexicals
+dependent on these.
+
+In translating natural language expressions to formulas of some logical
+calculus, the standard method is to automatically supply variables to
+quantifiers. (As discussed earlier, the standard logical interpretation of
+$\forall$ is not the appropriate one: {\it generic} sentences such as {\it Hares
+  outrun foxes} express states of affairs believed to be true of whole
+classes, even though individual exceptions may exist, and the same is true of
+the typical use of {\it every}. For the moment, we ignore the issue and
+proceed the way MG does.)  Clearly, the sentence {\it Everyone thinks he will
+  win} is reasonably paraphrased as
+
+\begin{equation}
+\forall x \text{man}(x) \text{think}(x, \text{will$\_$win}(x))
+\end{equation}
+
+\smallskip\noindent and if {\it he} is viewed as a variable $x$, use some
+mechanism to make sure that {\it everyone} binds $x$. Needless to say, if {\it
+  he} is viewed as a variable $y$, the translation must become
+
+\begin{equation}
+\forall y \text{man}(y) \text{think}(y,\text{will$\_$win}(y))
+\end{equation}
+
+\smallskip
+\noindent
+As long as we treat the formulas as mere abbreviatory devices and take the
+interpretation in model structures as our eventual goal, alphabetic variants
+such as (6.21) vs. (6.22) make no difference, as they will hold in the exact
+same models. Correct bookkeeping is more of an issue in theories such as
+discourse representation theory (DRT)\index{discourse representation theory, DRT}
+(Kamp 1981, Heim 1982), where the\nocite{Kamp:1981}\nocite{Heim:1982}
+intermediate formulas play a more substantive role, but even in classic MG,
+some care must be taken in the choice of alphabetic variants to avoid the
+accidental capture of one variable by an unintended quantifier; otherwise we
+could end up with $\forall x [\text{woman}(x) \forall x [\text{man}(x)
+    \text{kissed}(x,x)]]$ as the translation of {\it every woman kissed every
+  man.}
+
+To present the variable binding mechanism in a standard format, we define a
+{\bf variable binding term operator} (VBTO)\index{variable binding term operator, VBTO|textbf}
+as an operator that binds one or more free variables
+in a term or formula. An example immediately familiar to the reader will be
+the definite integral $\int_a^b \underline{\ \ }\ dx$, which binds the
+variable $x$ of the function to whicj it is applied, or the $\lambda$
+abstractor $\lambda x$. As usual, we require the equivalence of alphabetic
+variants: if $\vee$ is a VBTO, $F(x)$ and $F(y)$ are terms with $x$ free in
+$F(x)$ exactly where $y$ is free in $F(y)$, and we require $\vee x F(x)= \vee
+y F(y)$. We also require extensionality: $\forall x F(x)=G(x) \Rightarrow \vee
+x F(x)= \vee y F(y)$ (see Corcoran et al. 1972).\nocite{Corcoran:1972}
+
+Once VBTOs are at hand, they can be applied to other phenomena as well,
+including questions such as {\it Who did John see?}, where it is the
+interrogative particle {\it who} that is treated as a VBTO $wh$ so that the
+translation becomes $\text{wh} x \text{ see(John,x)}$, and also to `moved' and
+`gapped' constituents as in {\it John saw everyone} or {\it John read the
+  first chapter of everything that Mary did [read the first chapter
+    of]}. While it is possible to translate long distance dependencies such as
+{\it Who did Mary see that John said that Bill resented?} as
+
+\begin{equation}
+\text{wh } x \text{ saw(Mary,x) } \& \text{ said(John,resented(Bill,x))}
+\end{equation}
+
+\smallskip\noindent the first occurrence of the variable is now very far from
+the last, and the bookkeeping required to keep track of what should bind what
+where gets very complicated. 
+
+While the pure syntax of first-order formulas is context free (this is what
+makes Tarski-style induction over subformulas possible), getting the semantics
+right requires full context-sensitive (or at least indexed, see Exercise 5.5)
+power, so the complexity of the logic apparatus overshadows the syntactic
+complexity of natural language. This gives us a vested interest in finding
+mechanisms of semantic description that are combinatorically less demanding --
+these will be discussed in Section~6.3.\index{context-sensitive language, CSL}
+
+In reality, there are significant performance limitations to nesting these
+constructions, and in practice speakers tend to break them up e.g. as {\it
+  What did John say, who did Mary see that Bill resented?} Even though the
+meaning of these sentences is somewhat different from (6.23) in that Mary's
+seeing someone now appears as part of what John said, the added simplicity is
+well worth the lost expressiveness to most speakers. Altogether, the semantics
+should account at least for the cases where pronouns (including interrogative,
+reflexive, and quantified expressions) appear in the positions normally filled
+by NPs, as in {\it He saw John, John saw him, Everyone saw John, John saw
+  everyone, Who saw John? John saw himself}, etc.
+
+The syntax should account for English-specific facts, e.g. that in situ object
+interrogatives, without an incredulous intonation, {\it John saw WHO?}, are
+far more rare than their {\it do-}support \index{{\it do}-support}
+counterparts, {\it Who did John see?}, or that constructions such as {\it
+  *Himself saw John} are ungrammatical.  The interaction between singular and
+plural forms, definite and indefinite articles, and quantifiers is very
+complex, with seemingly specific constructions such as {\it The hare will
+  outrun the fox} still offering generic readings.  Another complicating
+factor, in English and many other languages, is the use of the copula. So far,
+linguistic semantics has not advanced to the stage of providing a detailed
+grammar fragment covering these interactions in English, let alone to a
+parametric theory that contains English and other languages as special cases.
+
+We emphasize here that the issue of eliminating variables from the statement
+of semantic rules is independent of the issue of generics. Even if no
+variables are used, the translation `hares are fox-outrunners' (formulated as
+$H \subset FO$ in Peirce Grammars; see B\"ottner 2001)\nocite{Bo2ttner:2001}
+implies there are no exceptions, while in fact the critical observation is
+that there can be exceptions (and in extreme cases such as {\it the P6
+  processor} discussed above, all cases can be exceptional).
+
+\paragraph{Verbs} As the reader will have no doubt noticed, definition (6.19)
+of {\it candle} already goes beyond the use of adjectives, with binary or more
+complex relations such as {\it use for decoration, use on festive occasions,
+  made of wax, having a cylindrical shape}, etc. With relationships such as
+
+\begin{eqnarray}
+\text{use(people, candle, for decoration)}\\
+\text{use(people, candle, on festive occasions)}
+\end{eqnarray}
+
+\smallskip\noindent several questions present themselves. Is the {\it use} of
+(6.24) the same as the {\it use} of (6.25)? In general, the question of how
+lexical entries are to be individuated is particularly acute for verbs:
+consider {\it John ran$_1$ from the house to the tree}, {\it the fence ran$_2$
+  from the house to the tree}, {\it Harold ran$_3$ for mayor}, and {\it the
+  engine ran$_4$ for a full week}. Using paraphrases such as {\it the
+  fence/*John extends from the house to the tree}, it is easy to determine
+that $run_1$ and $run_2$ mean different things. For multilingual speakers,
+translations also give a good method for separating out dictionary senses:
+when the same word must be translated using two different words into another
+language, we can be virtually certain that there are two distinct meanings,
+but the converse does not hold. For example English $run_1$ and $run_2$
+receive the same Hungarian translation, {\it fut}, while $run_4$ is a distinct
+motion verb {\it j\'ar} `walk', and $run_3$ has no single verb to translate it
+(more complex phrases such as `participates in the election for' must be
+used).
+
+Having separated out at least four senses of {\it run}, we want to make sure
+that we do not go overboard and treat {\it ran} differently in {\it John ran
+  the Boston Marathon} and {\it John ran the Boston Marathon yesterday.} To do
+this, we will invoke the traditional distinction between {\it arguments},
+which correspond to bindable slots on the relation, and {\it adjuncts}, which
+do not.\index{argument}\index{adjunct} We say that {\it Boston Marathon} fills
+an argument slot while {\it yesterday} does not, and it is only arguments that
+appear in lexical entries.
+
+Formally, we will distinguish six VBTOs or {\it k\={a}raka} (deep
+cases)\index{k\={a}raka}\index{deep case} called Agent, Goal, Recipient,
+Instrument, Locative, and Source. The following table summarizes their English
+and Sanskrit names, the basic description of the argument they bind, and the
+place in the Ash\d{t}\={a}dhy\={a}y\={\i} where they are defined.
+
+\bigskip\noindent
+\begin{tabular}{llll}
+Agent & {\it kart\d{r}} & the independent one & (1.4.54)\\
+Goal & {\it karman} & what is primarily desired by the agent & (1.4.49)\\
+Recipient & {\it sa\d{m}prad\={a}na} & the one in view when giving & (1.4.32)\\
+Instrument & {\it kara\d{n}a} & the most effective means & (1.4.42)\\
+Locative & {\it adhikara\d{n}a} & the locus & (1.4.45)\\
+Source & {\it ap\={a}d\={a}na} & the fixed point that movement is away from
+  & (1.4.24)\\
+\end{tabular}
+
+\bigskip
+\noindent
+In constructing lexical entries, we thus need to specify both the arguments
+and the way they are linked. Since {\it run$_4$} is intransitive (cf. {\it The
+  engine runs, *The engine runs to Boston}) we can construct a formula $A x
+\text{ run}(x)$, where $A$ (Agent) is a VBTO. When the semantic relation has
+two arguments, as in $A x G y \text{ run}(x,y)$, it is the type of the binder
+that decides the role in which the substituted element will appear. In the
+case of {\it run$_3$}, the Agent is {\it Harold} and the Goal is {\it mayor}.
+
+In the process of generating the sentence, we begin by setting the (generally
+interlinked) tense, voice, and mood features and deciding on what to use for
+Agent and Goal. These get {\it expressed} by the appropriate morphological and
+syntactic devices: tense/aspect by the choice between {\it runs}, {\it ran},
+{\it is running}, {\it will run}, etc., the Goal by the preposition {\it for}
+(as is typical in many languages), and the Agent by appearing in the preverbal
+position (a parochial rule of English). In the case of {\it run$_2$}, there is
+no fixed point that movement is away from. There is no movement to begin with,
+but even if we allow for some generalized, symbolic notion of movement, it is
+clear that {\it the fence runs from the house to the tree} describes the exact
+same situation as {\it the fence runs from the tree to the house}, while {\it
+  John runs from the house to the tree} is truth-conditionally\index{truth condition} distinct from {\it John runs from the tree to the house.} Thus,
+we treat {\it run$_1$} as $A x S y G z \text{ run}(x,y)$ and $A x L y G z
+\text{ run}(x,y,z)$.
+
+Here we cannot even begin to survey the variety of constructions that the
+system should account for (P\={a}\d{n}ini's\index{P\={a}\d{n}ini} 
+dh\={a}tup\={a}\d{t}ha\index{dh\={a}tup\={a}\d{t}ha} has about
+two thousand verbal roots, and Levin (1993) has nearly a thousand verb
+classes) and will restrict ourselves to the prototypical action sentence 
+(5.8) as provided by the lexical entry $A x G y \text{ kill}(x,y)$. Unlike 
+many modern theories of the passive, P\={a}\d{n}ini does not require a 
+separate lexical entry for the passive verbal complex {\it be killed},
+not even one that is generated by a lexical rule from the active form. 
+
+\section{Grammatical semantics}
+
+In Section~5.2 we surveyed a range of syntactic theories we called {\it
+  grammatical} because they rely on notions such as (deep) case, valence,
+dependency, and linking, which are expressed only indirectly in the manner in
+which words are combined.  Our goal here is to develop a formal theory of
+semantics that fits these theories as well as standard MG fits combinatorial
+theories of syntax. In Section~6.3.1, we summarize the system of semantic
+types and contrast it with the far richer system of syntactic types. In
+Section~6.3.2, we introduce {\it signs} and describe the mechanisms of their
+combination. We consider the use of system $D$ instead of classic two-valued
+logic only a minor departure from MG and one that will not play an important
+role in what follows, beyond helping us define the range of semantic phenomena
+one should consider critical. A more significant departure from the tradition
+is that no MG-style fragment covering all the major constructions surveyed
+will be presented. To draw the limits of such a fragment, one would need to
+survey the frequency of the construction types in question, an undertaking
+beyond the scope of this book.
+
+The central innovation in Section~6.3.2 is the introduction of a strict
+left-to-right calculus of combining signs (presented as a parser but equally
+valid as a generation method). To the extent that MG relies on induction over
+subformulas, and thus on a notion of a parse tree for a formula, we
+significantly depart from the MG tradition here. But to the extent that our
+goal is still to provide a truth-conditional formulation, as opposed to a
+`language of thought' model, the reader may still safely consider the
+development here as part of MG.
+
+\subsection{The system of types}
+
+From the semantic viewpoint, we have found a need for only two basic types:
+$e$ (entities) and $t$ (truth values). Of these, $e$ is used directly only for
+certain proper names, if at all. Most entities are treated as bundles of
+properties $(e \rightarrow t) \rightarrow t$. Derived types were also kept
+simple: two-place relations are of type $e \times e$ rather than $(e
+\rightarrow t) \rightarrow t \times (e \rightarrow t) \rightarrow t$,
+three-place relations are of type $e \times e \times e$, and so on. Given the
+well-known problems with hyperintensionals, we remained neutral on the use of
+intensional types for solving the problems of opacity, even though some
+scattered arguments in their favor (most notably, the existence of
+`intensional' nouns such as {\it temperature}, and the ability to treat
+indexicals by manipulating indexes) have been noted.
+
+This is in sharp contrast to the syntactic viewpoint, where we see a profusion
+of types, both basic and derived. In addition to the basic NP and S types,
+there are adverbs S/S (for the time being, we ignore issues of directionality
+-- we return to this matter in Section~6.3.2), adjectives NP/NP, intransitive
+verbs S/NP, transitive verbs S/NPxNP, ditransitive verbs S/NPxNPxNP, and so
+on. Quantifiers and determiners require either some type Det so that bare
+nouns can be treated as NP/Det or some bare noun type N so that quantifiers
+and determiners can be assigned type NP/N. Without loss of generality, we can
+take the second option and redefine adjectives as N/N, clearly more
+appropriate than NP/NP in light of the observation that, at least in the
+plural, bare nouns readily take adjectival modifiers (without the need to add
+a determiner or quantifier later). Also, nonintersective adjectives are
+clearly functions from nouns to nouns.
+
+Let us see how the remaining syntactic categories fit into this basic scheme.
+Since the distribution of pronouns is near-identical to that of NPs, we can
+perhaps ignore the rare resumptive cases and assign the type NP to pronouns as
+well. Since adverbials modify verbs, their type must be S/S, or perhaps V/V,
+where V is some abbreviatory device for the main verb types
+S/NP$^k$. Obviously, adverbs are a class distinct from adjectives: compare
+{\it brown fox}, {\it soon forgets} to {\it *soon fox}, {\it *brown
+  forgets}. In English (and many other languages), there is an overt
+morphological suffix {\it -ly} that converts adjectives to adverbials: {\it
+  happy fox}, {\it happily forgets}.  By the logic of category assignment,
+adadjectives (modifiers of adjectives such as {\it slightly}, {\it seemingly},
+{\it very}) must have category A/A, or, if A is analyzed as N/N, adadjectives
+must be (N/N)/(N/N). Remarkably, adadjectives can also function as adadverbs
+(that is, as modifiers of adverbs): consider {\it slightly happy}, {\it very
+  soon}, etc. By the same logic, adadverbs are (V/V)/(V/V), so we have a
+defining relation
+
+\begin{equation}
+(N/N)/(N/N)=(V/V)/(V/V)
+\end{equation}
+
+\smallskip\noindent This makes perfect sense if both common nouns and verbs
+are treated as unary relations, but such a treatment makes no sense for
+transitive and higher-arity verbs. A similar problem is observed for
+conjunctions such as {\it and} or {\it or}, which operate the same way across
+the whole system of categories: if X$_1$ and X$_2$ are both of category C, the
+phrase ``X$_1$ and X$_2$'' will also be of category C. Conjunctions therefore
+must have type $C/CxC$ where C is some abbreviatory device for all categories
+S, NP, N, V, etc., possibly including conjunctions themselves, as in the
+expression {\it and/or.} It is worth noting that conjunctions work so well
+that reducing {\it X$_1$ and X$_2$} makes sense even in cases where the $X_1$
+would not get types assigned: consider {\it Mary wanted, and Bill obtained,
+  every album of John Coltrane}. This phenomenon, known as {\it nonconstituent
+  coordination} (NCC),\index{nonconstituent coordination, NCC} argues either
+for a broad view of category combination or for the adjunction of zero
+elements to the structure. The former approach is taken in combinatory
+categorial grammar \cite{Steedman:2001}, but the latter is also defensible
+since the zero elements (called {\it traces} in transformational grammar)
+\index{trace} can also be used to derive the peculiar intonation pattern of
+NCC sentences.
+
+One way of investigating the apparatus of category combination is to consider
+near-synonymous verbs that satisfy defining relations similar to (6.26). Take
+
+\begin{equation}
+A x G y R z \text{ give(x,y,z)} = A z G y S x \text{ get(x,y,z)}
+\end{equation}
+
+\smallskip\noindent which expresses the idea that the truth conditions of {\it
+  John gives a book to Bill} and {\it Bill gets a book from John} are
+identical. Similar relations hold for {\it sell/buy}, {\it fear/frighten},
+{\it kill/cause to die}, etc.  However, adverbs do not affect the arguments
+uniformly. Compare {\it This book will sell well} to {\it *This book will be
+  well-bought}, and similarly {\it to kill the duckling easily} does not mean
+{\it to cause the duckling to die easily}, and it is not clear what, if
+anything, the expression {\it ?to easily cause the duckling to die} should
+mean.
+
+In Chapter~3 we described signs as conventional pairings of sound and meaning.
+Here we refine this notion, defining a {\bf sign} as a triple (sound,
+structure, meaning),\index{sign|textbf} where {\it sound} is a a phonological
+representation of the kind discussed in Chapters~3 and 4 (for ease of reading,
+we will use orthographical representations instead), {\it structure} is a
+categorial signature of the kind discussed in Chapter~5, and {\it meaning} is
+a formula in a logical calculus similar to that used in extensional versions
+of MG but taking truth values in system $D$. There are two kinds of elementary
+signs we need to consider, lexical entries and constructions.  (Most
+elementary signs can be further analyzed morphologically, but from the
+perspective of syntax they are elementary in the sense that they have to be
+learned as units since their overall properties cannot be deduced from the
+properties of their parts.)
+
+By a {\bf directional category system} we mean an algebra with three binary
+operations $\backslash,/,$ and $.$, which have the following properties:
+
+\begin{eqnarray}
+y.(y\backslash x) = (x/y).y = x\\
+z\backslash (y\backslash x) = (y.z)\backslash x\\
+(x/y)/z=x/(z.y)
+\end{eqnarray}
+
+\smallskip\noindent The concatenation operation $.$ is marked only for clarity
+in (6.28)--(6.30), generally it is not written at all. By a {\it
+  nondirectional categorial system} we mean an algebra with two binary
+operations, $-$ (typeset as a fraction) and $.$, that have the following
+properties: \index{category system|textbf}
+
+\begin{eqnarray}
+\frac{x}{y}.y= y.\frac{x}{y}=x\\
+\frac{\frac{x}{y}}{z}=\frac{x}{y.z}=\frac{x}{z.y}
+\end{eqnarray}
+
+\smallskip\noindent In nondirectional (also called unidirectional) systems,
+the typography is generally simplified by using slashes instead of fractional
+notation -- this causes no confusion as long as we know whether a directional
+or a nondirectional system is meant.
+
+Given a set of basic categories $B$, from $x,y \in B$ we freely form derived
+directional categories $x\backslash y, y/x$ (in the nondirectional case,
+$\frac{x}{y}$) and the concatenated category $x.y$. The full set of categories
+$C$ is then obtained as the smallest set closed under these formation rules
+and containing $B$ as a subset. {\bf c-categorial grammars} map the lexicon
+one-to-many on category systems: we say that a sequence $l_1, \ldots, l_k$ of
+lexical elements is grammatical if there exist values of these mapping $c_1,
+\ldots, c_k$ and some order (not necessarily left to right) of performing the
+simplifications given in (6.28)--(6.32) that yield a designated element of the
+category system.\index{c-categorial grammar}
+
+\smallskip\noindent
+{\bf Discussion} The definition given here is slightly different from the one
+given in Example 2.2.2 and developed in Section~5.1.2. Categorial grammar, as
+the term is generally understood, does not use concatenated categories at all,
+only those categories obtained from the basic categories by (back)slashes.
+However, the linguistic use of categories is better approximated by the
+variant presented here -- we call the resulting system {\it c-categorial}
+`concatenation categorial' to preserve the distinction, to the extent it is
+relevant, between these and the more standard categorial systems.
+
+\medskip\noindent As (6.26) makes clear, in the cases of linguistic interest,
+we are not mapping onto the free algebra but rather on relatively small and
+well-behaved factors.  In Section~5.2, we noted that the entire system of
+(sub)categories is finite, on the order of a few thousand categories, modified
+by morphosyntactic features that can themselves take only a few thousand
+values. One important way of making sure that free generation of derived
+categories does not yield an infinite set of categories is to enforce the
+noncounting property (5.29) as defining relations: for each category $x \in C$
+we add the equation
+
+\begin{equation}
+x.x.x.x = x.x.x.x.x
+\end{equation}
+
+\smallskip\noindent Another important means of controlling the size of the
+category system is to take the system of basic categories $B$ to be small. As
+our survey in Section~6.3.1 indicates, we can generally make do with only
+three basic categories: {\it S}, {\it NP}, and $N$. This set is hard to reduce
+further, as there are clear monomorphemic lexical exponents of each: {\it
+  sentential} expressions such as {\it yes}, {\it ouch}, etc., are category
+$S$; {\it proper names} like {\it John} are category {\it NP}; and common
+nouns like {\it boy} are category {\it N}.  As for the remaining major
+categories, adjectives like {\it red} are $N\backslash N$, intransitive verbs
+like {\it sleep} are {\it NP}$\backslash S$, transitive verbs are {\it
+  NP}$\backslash S /${\it NP}, ditransitives are {\it NP}$\backslash S /$ {\it
+  NP.NP}, and so on. It is often convenient to abbreviate the whole class
+$\{\textit{NP} \backslash S / \textit{NP}^i|i=0,1,2,\ldots\}$ as $V$, but the
+category $V$ need not be treated as primitive, just as the category $A$, which
+is simply an abbreviation for $N\backslash N$, does not need to be listed as
+part of the nonderived categories comprising $B$. Adverbs, adadjectives, and
+adadverbs are also derived categories, which leaves only one candidate, the
+set of adpositions $P$, as a potential addition to $B$.  Here we take the view
+that adpositional phrases differ from adjectival phrases only in that verbs
+can subcategorize for them: semantically, they express two-place relations, so
+with the adpositional NP filled in they correspond to adjectives. In other
+words, we will treat being {\it on the hill} as a property, just like being
+{\it red.}
+
+To complete the argument for $B = \{S, \textit{NP}, N\}$, we need to discuss a
+variety of other category-changing (monomorphemic) elements, ranging from
+inflectional affixes such as the plural {\it -s} to `particles' such as the
+infinitival {\it to} and the relativizer {\it that}. For inflectional
+material, we can use direct products: if $\langle \alpha F \rangle$ is a
+morphosyntactic feature and $x$ some category, we freely form the category $x
+\langle \alpha F \rangle$.  Ideally, this would imply that whenever a
+morphosyntactic distinction such as number or person is available in one
+category, such as that of verbs, the same distinction should also be available
+for all other categories. This is far from true: while nouns are indeed
+available in different numbers, only pronouns have different persons, and
+cross-linguistically adverbials do not show person or number variants.
+
+In other words, the full system of categories is obtained not as a direct
+product of the basic and the inflectional categories but rather as a
+homomorphic image of this direct product.  There are a variety of elements,
+ranging from the marker of definiteness {\it the} to the marker of
+infiniteness {\it to}, that languages with more complex morphology express by
+inflectional, rather than syntactic, means; cf. Romanian {\it frate/fratele}
+`brother/the brother', Hungarian {\it eszik/enni} `he eats/to eat' --
+\index{Hungarian}\index{Romanian} different languages make the cut between the
+two parts of the direct product differently.
+
+To make sure that we cover at least the same range of basic facts that MG
+covers, we need to consider relative clauses such as {\it [the boy] that Mary
+  saw, [the boy] that saw Mary}. As these are clearly nominal postmodifiers,
+their category must be $N/N$, but note that their semantics differs from that
+of adjectives (category $N\backslash N$) significantly in that relative
+clauses are always intersective: a {\it lazy evaluation} need not be lazy, but
+an {\it evaluation that is lazy} must be. This observation is given force by
+examples such as {\it P: red paint that is blue} vs. {\it Q: blue paint that
+  is red} -- whatever substances $P$ and $Q$ may be (perhaps improperly
+manufactured paints that left the factory without quality control?), it is
+evident that $P$ is in fact blue and $Q$ is red, and not the other way
+around. To get a relative clause, we need a verb with one argument missing;
+e.g. $G x \text{ saw(Mary,x)}$ or $A x \text{ saw(x,Mary)}$. In categorial
+terms, such expressions are $\frac{S}{N}$ (with directionality, at least in
+English, tied to which argument is missing), so for subjectless relatives we
+have to assign {\it that} the category $(N\backslash N)/(\textit{NP}\backslash
+S)$ and for objectless relatives $(N\backslash N)/(S/\textit{NP})$. In
+languages with overt case marking, the relativizer will actually carry the
+case of the {\it NP} that is missing from the $S$. In English, this is
+marginally observable in the requirement to use {\it whom} in {\it The boy
+  whom Mary saw} as opposed to {\it *The boy whom saw Mary.}
+
+To simplify the notation, in what follows we will give category information in
+a nondirectional fashion (using forward slashes $/$ instead of fractions) and
+encode the directionality restrictions in the {\it phonology} portion of the
+ordered triples. Also, we generalize from the set of six VBTOs (deep cases)
+listed in Section~6.2 to a broader concept of typed VBTOs that can bind only
+arguments of a given syntactic type $T$: for these we use the uniform notation
+$\lambda_T$. Thus, $\lambda_{Vi}$ is a VBTO that can only bind intransitive
+verbs, $\lambda_{\textit{NP}\langle\textit{PL.ACC}\rangle}$ is one that can
+only bind forms that have category {\it NP}$\langle\textit{PL,ACC}\rangle$,
+and so on. In the semantics, whether coupled with a nondirectional or a
+directional system of categories, we take this typing, rather than the linear
+order of the VBTOs, to be the determining factor in substitution. What we
+require is the analog of Fubini's theorem that order of execution does not
+matter. Formally, if $x$ is of type $U, y$ is of type $V$, and $P$ is some
+two-place relation of type $U \times V$, we have
+
+\begin{equation}
+\lambda_Ux \lambda_Vy P(x,y) = \lambda_Vy \lambda_Ux P(x,y)
+\end{equation}
+
+\smallskip\noindent
+and if $a$ and $b$ are of types $U$ and $V$, respectively, we take 
+
+\begin{eqnarray}
+\lambda_Ux \lambda_Vy P(x,y)ab = \lambda_Vy \lambda_Ux P(x,y)ab =\\\nonumber
+\lambda_Ux \lambda_Vy P(x,y)ba = \lambda_Vy \lambda_Ux P(x,y)ba=P(a,b)
+\end{eqnarray}
+
+\smallskip\noindent Before reformulating the main constructions surveyed in
+Section~6.2 in terms of signs, let us see some example of triples, first
+without VBTOs.  The lexical entry of the sign for {\it after} in constructions
+such as {\it After the rain, Mary went home} will be
+
+\begin{equation}
+(\text{after, } s_1, s_2; S/(S.S); `\tau(s_1) < \tau(s_2)')
+\end{equation}
+
+\smallskip\noindent Here $s_1,s_2$ are strings (of type S). We make no
+apologies for the ad hoc notation `the temporal value of $s_1$ is less than
+that of $s_2$' that we provided for the third (semantics) part of the triple.
+To make this less ad hoc, one would need to develop a full theory of temporal
+semantics, a very complex undertaking that would only detract from our current
+purpose. We also gloss over the important problem of how an NP such as {\it
+  the rain} is to be construed as an S to which a temporal value can be
+reasonably assigned. An attractive solution is to assume a deleted verb {\it
+  fell}, {\it stopped}, etc. Turning to phrasal constructions such as the
+`arithmetic proportion' discussed in Section~5.3, we have
+
+\begin{equation}
+(s_1 \text{ is to } s_2 \text{ as } s_3 \text{ is to } s_4; S/(NP.NP.NP.NP);
+\text{`}\sigma(s_1)/\sigma(s_2)= \sigma(s_3)/\sigma(s_4)\text{'})
+\end{equation}
+
+\smallskip
+\noindent
+To see how lexical and phrasal signs combine, consider {\it London is to Paris
+  as John Bull is to Marianne}. As discussed in Section~6.2.2, {\it London}
+and {\it Paris} are not simply some rigid designators but contentful lexical
+entries `capital of England, large city in England', and similarly {\it John
+  Bull} and {\it Marianne} are `person typifying English character,
+personification of England' and `person typifying French character,
+personification of France', which at once makes the proportionality of (6.37)
+evident: both sides express some relation of England to France. Were we to
+ignore the lexical information, it would be a mystery why {\it London is to
+  Berlin as John Bull is to Marianne} is, under the ordinary interpretation of
+this sentence, false.
+
+\subsection{Combining signs}
+
+While the theory of combining signs is in principle neutral between parsing
+(analysis) and generation (synthesis), in practice there is a dearth of truly
+neutral terminology and the discussion needs to be cast either in generation-
+or in parsing-oriented terms. Here we take the latter option, but this implies
+no commitment to interpretative semantics -- generative terminology would 
+work just as well. 
+
+In the analysis of computer programs, two major strategies are available:
+either we begin by a pure syntax pass over the code and translate only a
+parsed version of the program (one that has already been endowed by a tree
+structure), or we build the entire semantics as we go along. Computer science
+terminology varies somewhat, but these strategies are often called {\it
+  compilation} and {\it interpretation.} Here our focus is with compilation,
+assigning as many meaning representations to an entire sentence (or larger
+structure) as its degree of ambiguity requires. 
+
+As a simple example, consider {\it Time flies}, which means `tempus fugit' or,
+if interpreted as an imperative, as a call to measure the speed of a common
+insect. The ambiguity rests on the ambiguity of the lexical signs (time; N;
+`tempus') vs. (time; V; `mensuro') and (flies; V; `fugito') vs. (flies;
+N$\langle$PL$\rangle$; `musca'), and on the existence of multiple paths
+through the grammar (state diagram) as shown schematically below:
+
+\begin{equation}
+\xymatrix{& \text{NP} \ar[dr]^{\text{Vi}} &\\
+0 \ar[ur]^{\text{NP}}\ar[dr]_{\text{Vt}\langle\text{IMP}\rangle} & & \text{S}\\
+& \text{I} \ar[ur]_{\text{NP}} & }
+\end{equation}
+
+\smallskip\noindent Ignoring matters of agreement for the moment, the top path
+corresponds to the rule (5.7) and the bottom path to the imperative
+construction as e.g. in {\it Eat flaming death!} For clarity, we added node
+labels corresponding to the category of the construction reached by traversing
+the arcs from the start state $0$ and accepting the sequence of symbols on
+them. 
+
+Parsing with some FSA consists in tracking paths through the state diagram in
+accordance with the lexical entries scanned. We begin by placing a pointer at
+the start state and look up the lexical entry (or entries) that have
+phonological (in our case orthographical) components that match the first word
+of the string to be parsed. In this example there are two such entries, so we
+nondeterministically advance to both states at the end of these arcs,
+collecting the semantics of each as we go along. In general, the same
+nondeterministic update step is to be performed on all members of the active
+pointer set: for each we consider what outgoing arcs match the incoming
+lexical entry or entries and advance the pointer, possibly
+nondeterministically, to the ends of the respective arcs -- if no such arc can
+be found, the pointer is removed from the active set. One important
+possibility to consider at each step is an update that matches a silent
+(nonemitting) arc. For example, in English, object relativizers are typically
+optional; e.g. {\it the man that I saw} is equivalent to {\it the man I saw},
+so that the entire network responsible for these contains (under a
+homomorphism that deletes agreement features) a subnetwork such as (6.39):
+
+\xyoption{curve}
+\begin{equation}
+\xymatrix{& 3\ar[dl]^{\text{Vt}} & 2\ar[l]^{\text{NP}}&\\
+0\ar[rrr]^{\text{NP}} & & & 1\ar[ul]^{\lambda}\ar@/_/[ul]_{\text{that}}}
+\end{equation}
+
+\smallskip\noindent In parsing a sentence such as (5.28), one path takes us
+through a relative clause with a silent relativizer {\it fat (that) people
+  eat}, yielding an NP subject for the predicate {\it accumulates.} The formal
+model itself shows no garden path effect: having matched {\it fat people} to
+the NP path of (6.38) and subsequently {\it eat} to the predicate, the pointer
+that embodies this analysis is at node S, corresponding to a complete
+sentence. The subsequent word {\it accumulates} has no outgoing match, so this
+pointer is eliminated from the pointer set, leaving only the correct path,
+which is as it should be, given the fact that (5.28) is unambiguous.  However,
+we may speculate that the human parser does not maintain a full
+nondeterministic set of pointers and partial parses the same way a machine
+could but will prune after awhile all nonpreferred paths. The garden path
+phenomenon is suggestive of a pruning strategy corresponding to a very narrow
+(perhaps only a couple of words) lookahead. 
+
+If parsing is simply the maintenance of a set of pointers and the partial
+semantic structures as they are built left to right, two important questions
+arise.  First, how are the more complex (tree-like) constituent structures
+created and maintained, and second, are there grammatical elements, be they
+lexical or phrasal, that manipulate the current pointer set in a more direct
+fashion? Under the construction grammar view adopted here, there are a large
+number of flat constructions such as (6.36) and (6.37), and the number of
+nonterminal nodes dominating a construction is a direct function of how these
+are embedded in one another. For example, in {\it The king of England opened
+  Parliament} there are two constructions to consider: the familiar S
+$\rightarrow$ NP VP (5.7), and the NP$\langle$POS$\rangle$ $\rightarrow$ NP of
+NP construction. In rewriting terms, we apply (5.7), rewrite the NP using the
+possessive rule, and rewrite the VP using
+
+\begin{equation}
+\text{VP} \rightarrow \text{V NP}
+\end{equation}
+
+\noindent
+(or rather, with the VP on the left carrying the same plural agreement feature
+as the V on the right, and the NP carrying the ACC case feature; see
+Section~5.7.)
+
+This means that to understand the contribution of {\it The king} we need to
+first understand how it contributes to {\it The king of England} (as discussed
+in Section~5.2.3, this is not necessarily a straightforward possessive
+relation) and next understand how the whole NP contributes to the sentence (by
+binding the Agent valency of {\it open}).  Altogether, the depth of the phrase
+structure tree corresponds exactly to the degree that constructions are
+recursively substituted in one another, and there seems to be no principled
+limitation on this. To the extent we see a limitation, it is on the number of
+pointers $k$ that can be maintained simultaneously in human memory. What the
+garden path phenomenon suggests is that this limit is at two. (Even $k=2$ is
+something of a stretch: in reality, when the first parse dies out, what we
+need to do is to recall the whole sentence from short-term auditory memory and
+restart the process -- the second pointer is there to keep the mechanism from
+taking the path it took the first time by marking that particular analysis as
+dead).
+
+In the strict left to right parsing model assumed here, each partial parse
+leads to a deterministic state, with different parsing alternatives typically
+corresponding to different states, though we leave open the possibility of
+pointer paths merging. Consider the initial sequence {\it Who did} which can
+be completed in many ways: by an in situ question particle {\it what?}; by an
+objectless clause {\it Mary see?}; by far more complex constructions such as
+{\it her parents think would be the best match for Mary?}; or, if we are
+willing to treat question intonation as a boundary melody, simply by this
+melody (orthographically represented as {\it ?} in these examples). The last
+case corresponds to {\it sluicing}\index{sluicing} questions, typically
+uttered by a person different from the one who uttered the lead sentence: {\it
+  A: John decided to buy an airplane. B: Who did?} As there are at least two
+different senses of {\it who} to consider (one of which can be replaced by
+{\it whom} in a stylistically marked variant of English, but the other cannot)
+and there are at least two different senses of {\it did}, we can entertain
+four different paths through the state machine. At this state of the parse,
+the string {\it Who did} has a nondeterministic analysis (pointer set)
+composed of these four possibilities: depending on the continuation, only one
+will be an initial segment of the complete parse.
+
+One peculiarity of the state machines arising in natural language syntax is
+that at any given stage of the left to right parse, at least one of the
+pointers in the currently active set is close to a final state.  Consider the
+initial sequence {\it After a good.} A complete continuation could be {\it boy
+  does his homework, he may play} -- this requires seven words. However, a
+much shorter continuation, with {\it meal, leave}, is also available: we take
+advantage of the fact that in English an intransitive verb alone is sufficient
+to form an imperative sentence (a form of the lexicality constraint discussed
+in Section~5.1.3) and also of the observation (see Erd\'elyi-Szab\'o et al.
+2007) \nocite{Szabo1:2007}that nouns such as {\it storm}, {\it meal},
+etc., supply temporal coordinates (typecasting {\it meal} to S is a silent
+move).  Since the construction (6.36) involves two sentences, in the {\it
+  homework} continuation a pointer different from that used in the {\it meal}
+case will survive, but the situation is analogous to chess, where we may
+consider deeply embedded structures of gambits and counter-gambits, but a fast
+way out, by one player resigning, is always available.
+
+How big is the state machine? In Corollary 4.4.1, we demonstrated that
+vocabulary size is infinite, but in Section~5.1.1 we argued that the set of
+strict (sub)categories $C$ is finite -- in Section~5.2.2 we estimated, rather
+generously, $|C|$ to be below $7.7\cdot 10^{23}$. A more realistic estimate is
+$10^6$, subdirectly composed of some $10^3$ lexical classes with some $10^3$
+inflectional possibilities. By the preceding observation, any active pointer
+set has at least one member that is within a few (say, five) steps of becoming
+final.  As there are at most $|C|^5 \leq 10^{30}$ five-step continuations, and
+there is a pointer in any active set (with at most $k$ members) that leads to
+a final state by such a continuation, there can be at most $k\cdot 10^{30}$
+states, given that those states that can never be reached by any member of an
+active set can obviously be pruned. Again, the estimate is rather generous: in
+reality, much shorter continuations suffice and no more than $10^{12}$ states
+are expected, even if we permit $k > 2$. While this number may still look too
+large, what really matters is not the raw number of states and transitions but
+rather the manner in which these are organized -- the overall complexity of
+the system (see Chapter~7) is considerably smaller than these numbers may
+suggest.
+
+Lexicality, taken in a broad sense, amounts to the statement `if it can be
+done by a phrase, it can be done by a single word'. So when we ask the general
+question whether phrases can manipulate the active pointer set in a manner
+more direct than the continuation tracking discussed so far, what we would
+really like to see are lexical entries capable of such manipulation.  A
+striking example is provided by coordinating conjunctions, in particular {\it
+  and.} Consider the initial segment {\it Mary wanted and.} This has two major
+continuations of interest here: {\it obtained records} and {\it Bill obtained
+  records}. Absent the rather characteristic intonation pattern
+(orthographically represented as $,$) of NCC, the preferred path is with
+constituent coordination: {\it wanted and obtained} become parallel verbs
+whose Agent valency is filled by {\it Mary} and whose Goal valency is filled
+by {\it records}. However, when we see the next element, {\it Bill}, this path
+is no longer available, and it is {\it Mary wanted} that needs to be made
+parallel with {\it Bill } $\underline{\ \ }$. This can only be done if {\it
+  and} has the power to introduce new active pointers nondeterministically at
+each previously traversed state. The continuation {\it Bill} is then free to
+take the first of these. One argument in favor of treating {\it and} in this
+fashion is that it can occur in the initial position: {\it And now, ladies and
+  gentlemen,\ldots}
+
+How are the semantics portions of signs to be combined?  Since constructions
+such as (6.37) cannot be recognized until the formatives {\it is to}, {\it
+  as}, {\it is to} that define them are supplied, the relevant semantic
+function $\sigma(s_1)/\sigma(s_2)= \sigma(s_3)/\sigma(s_4)$ cannot be fully
+invoked at the stage {\it London is}. To invoke it partially,
+$\sigma(\text{London})/\sigma(s_2)= \sigma(s_3)/\sigma(s_4)$ must already at
+this stage be maintained as one of the nondeterministic analyses, only to
+discard it when the next word, {\it foggy}, arrives.  Psychologically it may
+make more sense to assume that processing is deferred at least until a
+complete constituent is collected, just as in the processing of predicate
+calculus formulas, where interpretation proceeds through well-formed
+subformulas, but we have no intention here of presenting a psychologically
+realistic parsing model (see Section~5.6); our goal is simply to build a
+formal account couched in parsing terms.
+
+The real issue, then, is whether disjoint pieces must be kept in partial
+parses or whether a single combined sign must be available at each turn.  The
+problem is well illustrated by the case of English transitives, which,
+according to most theories, are built using the rules (5.7) and (6.40). In
+other words, the construction Vt NP itself is equivalent to an intransitive
+verb, and since its semantic representation can only be built after the object
+is available, the whole construction cannot be interpreted earlier.  To
+implement this view as a parsing strategy would require keeping track of {\it
+  The king of England} and {\it opened}, and once {\it Parliament} comes
+under scan, combine it first with {\it opened} and combine only the result
+with {\it The king of England.} In the proposal made here, (6.35) makes the
+formalism strong enough to carry out the substitutions in any order, so that
+the Agent VBTO of $A x G y \text{ open}(x,y)$ can bind {\it The king of
+  England} without assuming the existence of a constituent {\it The king of
+  England opened.} To the extent scope-taking does not follow the linear order,
+we may still want to invoke a delay mechanism such as {\it Cooper storage}
+(see Cooper 1975), but, given our observations about the defeasability of
+quantifiers, much of the standard evidence in favor of such a mechanism needs
+significant reexamination.\nocite{Cooper:1975}
+
+\section{Further reading}
+
+The Liar paradox goes back to the 4th century BCE. The solution adopted here
+is essentially that of Barwise and Etchemendy (1987), using the elementary
+formulation of Walker (2003) rather than the more technical ZFC$^-$+
+Anti-Foundation Axiom-based version \cite{Aczel:1988} that is now standard.
+Other notable efforts at a solution include three-valued logic (for a thorough
+discussion, see Visser 1989) and paraconsistent logic (Priest 1979, Priest et
+al.  1989). \newcite{Read:2002} and \newcite{Restall:2007} reconstruct the
+work of the medieval logician Thomas Bradwardine, who reaches, by rather
+different means, the same conclusion, that (6.1) is not contradictory, it is
+false. Our desideratum {\sl (C)}, which amounts to some strong form of 
+direct compositionality, is somewhat controversial, see \newcite{Janssen:1997}
+and Barker and Jacobson (2007).\nocite{Barker:2007}\index{compositionality}
+
+For the interaction of language and number systems, see \newcite{Hurford:1975}
+and \newcite{Wiese:2003}. For propositional attitudes, see in particular Frege
+(1879), Quine (1956), Barwise and Perry (1983), or the short tutorial summary
+by B\"auerle and Cresswell (1989).  Although our conclusions are diametrically
+opposed, our discussion is greatly indebted to Thomason's (1980) summary of
+the prerequisites for Tarski's undefinability theorem. \nocite{Thomason:1980}
+\nocite{Priest:1979} \nocite{Priest:1989} \nocite{Barwise:1987}
+\nocite{Walker:2003} \nocite{Visser:1989} \nocite{Frege:1879}
+\nocite{Quine:1956} \nocite{Ba2uerle:1989} For an alternative view on the
+viability of quotational theories see des Rivi\`{e}res and Levesque (1986).
+\nocite{Rivieres:1986} Another alternative treatment of opacity, based on {\it
+  structured meanings}, was developed in Cresswell (1985). See Ojeda (2006a)
+for detailed argumentation why a nonintensional treatment is to be preferred
+both on grounds of simplicity and grounds of adequacy.
+\nocite{Cresswell:1985} \nocite{Ojeda:2006a}
+
+With the Principle of Responsibility, our discussion departs somewhat from the
+MG tradition in that we make lexical semantics carry a great deal of the
+explanatory burden.  MG in general is silent on the meaning of lexical
+entries: aside from some meaning postulates that tie the meaning of
+nonintensional verbs and nouns to their intensionalized meanings, only a few
+function words are ever assigned translations, and attempts to push the basic
+techniques further (see in particular Dowty 1979) \nocite{Dowty:1979} go only
+as far as purely logical meanings can be assigned. For nominals see
+\newcite{Pustejovsky:1995}. The method of defining lexical entries in terms of
+their essential properties goes back to Aristotle and is perhaps best
+articulated in contemporary terms by Wierzbicka and the NSM school. For a
+recent critique of this approach, fueled largely by the ideas of Kripke (1972)
+already discussed here, see \newcite{Riemer:2006}.  Although the use of
+generalized quantifiers is often viewed as characteristic of MG, the idea goes
+back to Leibniz and was stated in modern terms as early as in
+\newcite{Mostowski:1957}.
+
+A good starting point for generics is Carlson and Pelletier (1995).  That
+generics admit exceptions and thus require a mechanism greatly different from
+that of standard quantification has long been noted \cite{Jespersen:1924}. For
+a summary evaluation and quick dismissal of nonmonotonic approaches to
+generics, see Pelletier and Asher (1997), and for a more sympathetic view, see
+Thomason (1997) in the same volume. The standard treatment of exceptions is
+\newcite{Moltmann:1995}, who takes the exception domain to be subtracted from
+each element in the set of properties that make up a generalized quantifier
+(see also Lappin 1996).\nocite{Lappin:1996} In our case, only essential
+properties are used, and the exception domain could be subtracted from them,
+but our discussion here is also compatible with the view that those essential
+properties that are contradicted by the exception get dropped out entirely.
+\nocite{Thomason:1997}\nocite{Pelletier:1997}\nocite{Carlson:1995} The
+possibility of using paraconsistent logic has already been considered by
+B\"{a}uerle and Cresswell (1989);
+
+\begin{quote}
+Possibly we would need in addition a nonstandard propositional logic, perhaps
+e.g. the kind that Belnap (1977) thinks a computer should use when reasoning
+from inconsistent information.
+\end{quote}
+
+\noindent 
+but they dismissed it promptly on the grounds that ``it is hard to see how any
+approach of this kind can guarantee that we have enough impossible worlds".
+We use Ginsberg's (1986) system $D$, which combines paraconsistency with
+default reasoning.
+
+The idea of eliminating bound variables from logic goes back to
+Sch\"{o}nfinkel (1924), \nocite{Scho2nfinkel:1924} but fuller development
+begins with Curry and Feys (1958) and Quine (1961). Suppes (1973) and Suppes
+and Macken (1978) credit the idea to Peirce; see also \newcite{Purdy:1992} and
+B\"ottner (2001).\nocite{Bo2ttner:2001}
+\nocite{Suppes:1973}\nocite{Suppes:1978} For a summary of the main ideas from
+both the linguistic and the mathematical perspectives, see Barker
+(2005),\nocite{Barker:2005} where both the standard analyses with variables
+and the variable-free approach pioneered by \newcite{Szabolcsi:1987},
+\newcite{Jacobson:1999}, and others are discussed.  Another approach, doing
+away with variables in favor of {\it arbitrary objects}, is introduced in
+\newcite{Fine:1985}.
+
+K\={a}rakas are discussed in Staal (1967) and Kiparsky (2002). The use of VBTOs
+(in particular, lambda-operators) to capture argument linking was suggested in
+lectures by Manfred Bierwisch (1988).\nocite{Bierwisch:1988} For c-categorial
+grammars, we could not locate any specific reference, but the idea of using
+concatenated (direct product) categories is part of the folklore. Some of the
+ideas about pointer set maintenance go back to unpublished work of the author
+and L\'aszl\'o K\'alm\'an, in particular Kornai and K\'alm\'an (1985).  The
+sluicing phenomenon was identified (and named) by \newcite{Ross:1969}; for a
+recent overview see \newcite{Merchant:2001}. 
+
+Historically, only the MG tradition of linguistic semantics has been presented
+in a fully formalized manner, but many of the ideas presented in this chapter
+have been stated quite clearly, if informally, in studies such as
+\newcite{Wierzbicka:1985}, Langacker (1982, 1987, 1991),
+\newcite{Fauconnier:1985}, and Jackendoff (1972, 1983, 1990).
+\nocite{Langacker:1982} \nocite{Langacker:1987} \nocite{Langacker:1991}
+\nocite{Jackendoff:1972}\nocite{Jackendoff:1983} \nocite{Jackendoff:1990}
+
+\endinput
+
+Belnap (1977). \nocite{Belnap:1977}
+
+A remarkable consequence of our definition by typical properties is that the
+translation of {\it every donkey} will not differ significantly from that of
+{\it a donkey, donkeys} or even {\it the donkey:} the typicality restriction
+pertains to them all\footnote{The odd one out is {\it any donkey}, which needs
+to be translated as `every $x$ with the property of being a donkey'.  This
+goes some way towards explaining the preference for {\it any} in irrealis
+contexts, but we will not pursue the matter here.}. This is as we want it for
+cross-linguistic purposes, since the clearly generic readings are not tied to
+the same varieties of quantified NPs in all languages.  
+
+%designed for the worst case (Hjelmslev's principle of the maximally
+%differentiated paradigm) 
+
+In $M_0$, indeed in any $M_t$ within a few billion years, there is a unique
+object we now call {\it Venus}, and we follow In one extreme view, the
+evolution of the world as a physical system follows an entirely deterministic
+path, so entities that did not exist at the time index where they were
+supposed to never get a chance to exist: in terms of referring, the Jean
+Valjean who did not exist in the 1830s is identical to the Anna Karenina who
+did not exist in the 1860s.
+
+Here we take a less extreme view, permitting indexes to be drawn from a set
+$I$ that is broader than the single timeline parametrized with $t$.  The
+meaning of proper names is thus taken to be a partial function from $I$ to
+entities (in every model where they exist), and counterfactual models, even
+models that satisfy propositions known to be inconsistent with logical or
+physical law, are permitted. We do not, however, spend significant effort on
+articulating the accessibility relation that obtains between models (nor do we
+use intensional model structures where a single model is already composed of
+several submodels with accessibility defined internally), because our focus is
+with natural language, rather than with explicating modal operators. As we
+shall see, for the critical issue of opacity, a simple (extensional) theory
+will suffice. 
+
+Proper names enjoy significantly more combinatorial freedom than common nouns:
+they can freely appear as subjects, objects, heads of relative clauses or
+adpositional phrases, while bare nouns generally require some modification by
+quantifiers, numerals, or determiners before they can occupy these slots. 
+
+We defer the issues of how determiners such as {\it the} can confer short-term
+rigidity to common nouns, and how indexicals get interpreted as referring to a
+specific person, place, or time.
+
+While the same idea could be made to work with the
+positive support in a four-valued system, this system offers another, from the
+AI perspective more useful possibility. We will say that a given entity class
+$x$ has {\it essential} property $P$ if for any entity $q$, $P(q)$ implies $q
+\in x$. What is required here is not the standard notion of implication, but
+rather {\it relevant implication} in the sense of Belnap (1977).  The type
+associated with common nouns is still $T^E$, and most (if not all) of the
+
+
+As we shall see, a great deal of the classical logical apparatus, starting
+with the Theorem of Deduction, requires significant work to generalize to this
+setting. This is very much worth the effort, since several issues, most
+
+As is standard, we distinguish the meaning of sentences, called {\it
+  propositions}, from the truth values these propositions may have. The
+Ordinary assertions are type $T$, yes/no questions are type
+
+{\it John sleeps} or
+{\it John is sleepy} express a state of affairs pertaining to a particular
+individual at a particular place and time (though the place/time coordinates
+often remain implicit), while
+
+p. 291 of 278-312 (14th of 35 pages) Montague Grammar., Review author[s]:
+James Higginbotham The Journal of Philosophy 1980 
+
+In attributive sentences the contribution of the verb to the entire
+proposition is very limited: in sentences such as {\it John
+is/was/became/got/turned sixty} the copulative verb carries, at best, some
+aspectual information, and a translation such as {\it John} $\in$ {\it
+sixty-year-old-entities} captures all essential aspects of the meaning.  As
+generics are typically tenseless, the device of eliminating the verb in favor
+of an (inherently tenseless) nominal form works well. 
+
+where important connections to prototype semantics the use of arbitrary
+objects for the analysis of mathematical reasoning was pioneered by Fine
+(1985).
+
+%terminology borrowed from HPSG we have seen, constructions may have (see
+%Pollard and Sag 1987 ch 2).
+
+\subsection{Truth values and variable binding term operators}
+
+Recall that a {\bf lattice} \index{lattice} is an algebra with two commutative
+and associative binary operations $\vee$ and $\wedge$ satisfying the {\it  
+  absorption identities} $a \vee (a \wedge b) = a, a \wedge (a \vee b) =
+a$. Lattices are intimately related to partial orders: we say $a \leq b $ iff 
+power of society to change by decree the designation a day gets. When the  
+lexical knowledge associated to a term is more flexible, as in the case of 
+triangles and circles, {\it accommodation}, finding an interpretation that
+defeases as little of the lexical meaning as needed to make sense of the
+expression, is much easier. \index{accommodation} Most lexical entries clearly
+contain more information than a purely logical definition: for example {\it  
+bachelor} does not just mean `unmarried man' -- the lexical entry must
+contain a great deal of default knowledge about preferring to live alone,
+eating TV dinners, etc. otherwise a sentence such as {\it In spite of having
+married recently, John remained a true bachelor} could make no sense.
+
+So far, we have assumed that lexical entries contain some mixture of
+defeasible and strict (nondefeasible) information, without committing
+ourselves as to the proportion of these. But whether lexical entries without
+defeasible content exist at all remains to be seen -- if not, the problem of
+hyperintensionals is not pertinent to natural language and the standard MG
+treatment of opacity remains viable. An even more radical question, one that
+we shall pursue in Section~6.2.2, is whether strict content exists in the lexicon to
+begin with?  If not, natural language is structurally incapable to carry
+arguments with strict conclusions. To carry out this investigation, we need a 
+system of logic that can sustain some distinction between essential and
+inessential properties, and one that can sustain some notion of default.  We
+find a suitable candidate for both in the seven-valued system $D$ of
+\newcite{Ginsberg:1986} to which we turn now.
+

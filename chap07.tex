@@ -1,0 +1,1268 @@
+\chapter{Complexity}
+
+\noindent
+Grammars are imperfect models of linguistic behavior. To the extent that we
+are more interested in competence than in performance (see Section~3.1), this
+is actually desirable, but more typically discrepancies between the
+predictions of the model and the observables represent serious over- or
+undergeneration (see Section~2.2). There is, moreover, an important range of
+models and phenomena where it is not quite obvious which of the cases above
+obtain. Suppose the task is to predict the rest of the series $2,3,5,\ldots$. A
+number of attractive hypotheses present themselves: the prime numbers, the
+Fibonacci numbers, square-free numbers, the sequence
+$2,3,5,2,3,5,2,3,5,\ldots$, and so on. The empirically minded reader may object
+that the situation will be greatly simplified if we obtain a few more
+data points, but this is quite often impossible: the set of actual human
+languages cannot be extended at will.  \index{Fibonacci numbers}
+
+Therefore, it would be desirable to have an external measure of simplicity, so
+that we can select the best (most simple) hypothesis compatible with a given
+range of facts. Starting with P\={a}\d{n}ini,\index{P\={a}\d{n}ini} linguists
+tend to equate simplicity with shortness, and they have devoted a great deal
+of energy to devising notational conventions that will make the linguistically
+attractive rules and generalizations compactly expressible. The central idea
+is that such notational conventions get amortized over many rules, so in fact
+we can introduce them without seriously impacting the overall simplicity of
+the system. 
+
+In this chapter, we begin to develop such a theory of simplicity.  In
+Section~7.1 we introduce the basic notions of {\it information} and {\it
+  entropy}, and in Section~7.2 we present the basic theory of Kolmogorov
+complexity originally put forth in Solomonoff (1964). Section~7.3 deals with
+the more general problem of {\it inductive learning} from the perspective of
+complexity.\nocite{Solomonoff:1964}
+
+\section{Information}
+
+In the classical model of information theory \cite{Shannon:1948}, the {\it
+  message} to be transmitted is completely devoid of internal structure: we
+are given a (finite or infinite) set $A = \{a_1,a_2,\ldots\}$ of elementary
+messages and a probability distribution $P$ over $A$.  More complex messages
+are formed by concatenating elementary messages, and it is assumed that this
+is a Bernoulli experiment, so that the choice of the next elementary message
+is independent of what went on before. To transmit one of the $a_i$, we need
+to encode it as a bitstring $C(a_i)$. We need to make sure that $C$ is
+invertible and that $C^+: A^+ \rightarrow \{0,1\}^+$, defined by lifting $C$
+to be a (concatenation-preserving) homomorphism, will also be invertible. This
+is trivially satisfied as long as no codeword is a prefix of another codeword
+(i.e.  the code is {\bf prefix-free}) since in that case we know exactly
+where each codeword ends (and the next one begins) in the stream of bits
+transmitted.\footnote{Somewhat confusingly, codes enjoying the prefix-free
+  property are also called {\it prefix codes}.}
+
+\smallskip\noindent
+{\bf Exercise 7.1} Construct a code $C$ such that $C$ is not prefix-free
+but $C^+$ is nevertheless invertible. 
+
+\smallskip\noindent An important subclass of prefix-free codes are
+fixed-length codes, where the length $n_i$ of $C(a_i)$ is constant (usually a
+multiple of eight).  However, in the cases that are of the greatest interest
+for the theory, the number of elementary messages is infinite, so no
+fixed-length code will do. Prefix-free variable-length binary codes will
+satisfy the following theorem.\index{prefix-fee code|textbf}
+
+\smallskip\noindent {\bf Theorem 7.1.1} Kraft inequality. In a prefix-free
+code, if $c_i$ are codewords of length $n_i$,
+
+\begin{equation}
+\sum_i 2^{-n_i} \leq 1
+\end{equation}
+
+\smallskip\noindent
+{\bf Proof} A prefix-free set of codewords can be depicted as a binary tree,
+where each sequence of zeros and ones corresponds to a unique path from the
+root to a leaf node, zero (one) meaning turn left (right). For the tree with
+two nodes, (7.1) is trivially satisfied (as equality). Since all prefix codes
+can be obtained by extending a leaf one or both ways, the result follows by
+induction for finite codes and, by standard limit arguments, for infinite
+codes as well.%$\blacksquare$
+
+\smallskip\noindent
+Given a probability distribution {\it P, Shannon-Fano codes} are computed by
+an algorithm that constructs this tree top-down by dividing the total
+probability mass in two parts recursively until each node has only one
+elementary message.  Shannon-Fano codes are of historical/theoretical interest
+only: in practical applications, the number of elementary messages is finite,
+and the more efficient {\it Huffman codes}, where the tree is created from the
+bottom up starting with the least probable message, have replaced Shannon-Fano
+codes entirely. \index{code!Shannon-Fano} \index{code!Huffman}
+
+\smallskip\noindent {\bf Exercise 7.2} Specify the top-down algorithm in more
+detail using raw (cumulative) probabilities. Compare your algorithms with the
+actual Fano (Shannon) algorithms. Specify the bottom-up procedure, and compare
+it with the Huffman algorithm. Do any of these procedures fit the notion of a
+{\it greedy} algorithm?
+
+\smallskip\noindent
+Now we introduce the quantity $H(P)=-\sum_i p \log_2 p$, known as the {\bf
+entropy} \index{entropy|textbf} of the distribution $P$. While the definition
+of $H$ may at first blush look rather arbitrary, it is, up to a constant
+multiplier (which can be absorbed in the base of the logarithm chosen)
+uniquely defined as {\it the} function that enjoys some simple and natural
+properties we expect any reasonably numerical characterization of the
+intuitive notion of {\it information} to have.
+
+\smallskip\noindent {\bf Theorem 7.1.2} (Khinchin 1957) Uniqueness of
+entropy. We investigate nonnegative, continuous, symmetrical functions $I(p_1,
+p_2,\ldots,p_k)$ defined for discrete probability distributions
+$P=\{p_1,p_2,\ldots,p_k\} (\sum p_i =1)$. (i) If $P'$ is formed from $P$ by
+adding another outcome $a_{k+1}$ with probability $p_{k+1}=0$, we require
+$I(P)=I(P')$. (ii) We require $I$ to take the maximum value in the equiprobable
+case $p_i=1/k$.  (iii) For $P,Q$ independent we require $I(PQ) = I(P)+I(Q)$
+and in general we require $I(PQ) = I(P)+I(Q|P).$ The only functions $I$
+satisfying the conditions above are $-c\sum p_i \log(p_i)=cH$ for arbitrary
+nonnegative constant $c$.\nocite{Khinchin:1957}
+
+\smallskip\noindent
+{\bf Proof} Let us denote the maximum value $I(P_k)$ taken in the equiprobable
+case $P_k=\{1/k,1/k,\ldots,1/k\}$ by $l(k)$.  By (i) we have $l(k) \leq
+l(k+1)$. By property (iii), taking $r$ independent distributions $P_k$, we have
+$l(k^r)=l(P^r_k)=l(P_{k^r})=rl(k)$. Letting $k=e^z$ and $l(e^x)=B(x)$, this
+functional equation becomes $B(zr)=rB(z)$, which, by a well-known theorem of
+Cauchy, can only be satisfied by $B(z)=cz$ for some constant $c$, so
+$l(e^z)=cz$, and thus $l(k)=c\log(k)$ (and by the monotone growth of $l$
+established earlier, $c > 0$). Turning to the nonequiprobable case given by
+rational probabilities $p_i=n_i/n$, we define $Q$ to contain $n$ different
+events, divided into $k$ groups of size $n_i$, such that the conditional
+probability of an event in the $i$th group is $1/n_i$ if $a_i$ was observed 
+in $P$ and zero otherwise. This way, we can refer to the equiprobable case for 
+which $I$ is already known and compute $I(Q|P)=c\sum_{i=1}^k p_i\log(n_i) =
+c\sum_{i=1}^k p_i\log(p_i)+c\log(n)$. In the joint distribution $PQ$, each 
+event has the same probability $1/n$, so that $I(PQ) =c\log(n)$. Given our 
+condition (iii), we established $I(P)=-c\sum_{i=1}^k p_i\log(p_i)$ for $p_i$
+rational and thus by continuity for any $p_i$. That $H$ 
+indeed enjoys properties (i)--(iii) is easily seen: (i) is satisfied because 
+we use the convention $0\log(0)=0$ (justified by the limit properties of 
+$x\log(x)$), (ii) follows by Jensen's inequality, and finally (iii), and 
+the more general chain rule $H(P_1P_2\ldots P_k)=H(P_1)+H(P_2|P_1)+
+H(P_3|P_1P_2)+\ldots +H(P_k|P_1P_2\ldots P_{k-1})$ follows by simply 
+rearranging the terms in the definition.  
+
+\smallskip\noindent {\bf Discussion} There are a range of other theorems that
+establish the uniqueness of $H$ (see in particular Lieb and Yngvason
+2003),\nocite{Lieb:2003} but none of these go all the way toward establishing
+$H$ as {\it the} appropriate mathematical reconstruction of the intuitive
+notion of information. One issue is that entropy is meaningful only over a
+statistical ensemble: the information content of individual messages is still
+a function (negative log) of their probability. Many authors find this
+counterintuitive, arguing e.g. that {\it There is a leopard in the garden}
+provides the same amount of information as {\it There is a dog in the garden},
+namely the presence of an animal. Even if we grant the point that
+probabilities are important (e.g. a message about a surprising event such as
+winning the lottery is more informative than a message about a likely event
+such as not winning it), outside the games of chance domain it is not at all
+trivial to assign reasonable background estimates to probabilities. Here we
+take the view that this is inevitable inasmuch as information content depends
+on our expectations: the same message, {\it He had steak for dinner}, is more
+informative about a supposed vegetarian than about a meat-and-potatoes guy.
+
+\smallskip\noindent {\bf Exercise 7.3$^\dagger$} Obtain a sample of English
+and count the frequency of each character, including whitespace. What is the
+{\it grapheme entropy} of the sample?  How much is the result changed by using
+e.g. Perl or C program texts rather than ordinary (newspaper) text in the
+sample?
+
+\smallskip\noindent {\bf Exercise 7.4$^\dagger$} Write a program that parses
+English into syllables, and count each syllable type in a larger sample. What
+is the {\it syllable entropy} of the text?
+
+\smallskip\noindent While it is easiest to consider phonemes, graphemes,
+syllables, and other finite sets of elementary messages, the definition of
+entropy is equally meaningful for infinite sets and in fact extends naturally
+to continuous distributions with density $f(x)$ by taking
+$H(f(x))=-\int_{-\infty}^{\infty} f(x)\log_2(f(x))dx$. Here we will consider
+English as being composed of words as elementary messages and estimate its
+{\it word entropy}. The task is made somewhat harder by the fact that words,
+being generated by productive morphological processes such as compounding (see
+Chapter~4), form an infinite set. Although the probabilities of {\it the},
+{\it of}, {\it to}, {\it a}, {\it and}, {\it in}, {\it for}, {\it that}, and
+other frequent words can be estimated quite reliably from counting them in
+samples (corpora) of medium size, say a few million words, it is clear that no
+finite sample will provide a reliable estimate for all the (infinitely many)
+words that we would need to cover.
+
+Therefore we start with Zipf's law (see Section~4.4),\index{Zipf's law} which
+states that the $r$th word in the corpus will have relative frequency
+proportional to $1/r^B$, where $B$, the {\it Zipf constant}, is a fixed number
+slightly above 1. To establish the constant of proportionality $C_k$, recall
+Herdan's law that a corpus of size $N$ will have about $N^{1/B}$ different
+words. Let us denote the cumulative probability of the most frequent $k$ words
+by $P_k$ and assume Zipf's law holds in the tail, so that we have
+
+\begin{equation}
+1-P_k=C_k \sum_{r=k+1}^{N^{1/B}} r^{-B} \approx C_k \int_k^{N^{1/B}} x^{-B}dx 
+= \frac{C_k}{(1-B)}[N^{\frac{1-B}{B}}-k^{1-B}]
+\end{equation}
+
+\smallskip\noindent
+For large $N$, the first bracketed term can be neglected, and therefore we
+obtain $C_k \approx (1-P_k)(B-1)k^{B-1}$. The first $k$ words, for relatively
+small fixed $k$, already cover a significant part of the corpus: for example,
+the standard list in Volume 3 of \cite{Knuth:1971} contains 31 words said to
+cover 36\% of English text, the 130--150 most frequent collected in Unix {\tt
+eign} cover approximately 40\% of newspaper text, and to reach 50\% coverage
+we need less than 256 words.  To estimate the entropy, we take
+
+\begin{equation}
+H = -\sum_{r=1}^k p_r \log_2(p_r) -\sum_{r=k+1}^{N^{1/B}} p_r \log_2(p_r)
+\end{equation}
+
+\smallskip\noindent
+The first sum, denoted $H_k$, can be reliably estimated from frequency counts
+and of course can never exceed the maximum (equiprobable) value of
+$\log_2(k)$. The second sum can be approximated by integrals:
+
+\begin{equation}
+\frac{C_kB}{\log(2)}\int_{k}^{N^{1/B}} \log(x) x^{-B} dx
+-\frac{C_k\log(C_k)}{\log(2)} \int_{k}^{N^{1/B}} x^{-B} dx
+\end{equation}
+
+\smallskip\noindent
+The value at the upper limit can be neglected for large $N$, so we get the 
+following theorem. 
+
+\smallskip\noindent
+{\bf Theorem 7.1.3} 
+The word entropy $H$ of a language with Zipf constant $B$ is given by
+
+\begin{equation}
+H \approx H_k +\frac{1-P_k}{\log(2)}(B/(B-1) -\log(B-1)+\log(k) -\log(1-P_k))
+\end{equation}
+
+\smallskip\noindent $H_{256}$ can be estimated from medium or larger corpora
+to be about 3.9 bits.  $P_{256}$ is about 0.52, and $B$ for English is about
+1.25, so the estimate yields 12.67 bits, quite close to the $\sim$ 12 bits
+that can be directly estimated based on large corpora (over a billion words).
+In other languages, the critical parameters may take different values. For
+example, in Hungarian, it requires the first 4096 words to cover about 50\% of
+the data, and the entropy contributed by $H_{4096}$ is closer to 4.3 bits, so
+we obtain $H \leq 15.41$ bits. Equation (7.5) is not very sensitive to the
+choice of $k$ but is very sensitive to $B$. Fortunately, on larger corpora,
+$B$ is better separated from 1 than Zipf originally thought. To quote
+Mandelbrot (1961b:196): \nocite{Mandelbrot:1961}
+
+\begin{quote}
+
+Zipf's values for $B$ are grossly underestimated, as compared with
+values obtained when the first few most frequent words are disregarded. As a
+result, Zipf finds that the observed values of $B$ are close to 1 or even less
+than 1, while we find that the values of $B$ are not less than 1. 
+
+\end{quote}
+
+\medskip\noindent As we shall see in the following theorem, for prefix codes
+the entropy appears as a sharp lower bound on the expected code length: no
+code can provide better ``on the wire'' compression (smaller average number of
+bits). Our estimate therefore means that English words require about 12 bits
+on average to transmit or to store -- this compares very favorably to using
+7-bit ascii, which would require about 35 bits (the frequency-weighted average
+word length in English is about five characters).
+
+\smallskip\noindent
+{\bf Theorem 7.1.4} (Shannon 1948) Let $a_i$ be arbitrary messages with
+probability $p_i$ and encoding $C(a_i)=c_i$ of length $n_i$ such that 
+$\sum_i p_i = 1 $ and the set of codewords is prefix-free, 
+
+\begin{equation}
+L(P)=\sum_i p_i n_i \geq H(P)
+\end{equation}
+
+\noindent
+with equality iff the codewords are all exactly of length $\log_2(1/p_i)$.
+
+\smallskip\noindent
+{\bf Proof} 
+
+\begin{equation}
+H(P)-L(p)=\sum_i p_i \log_2 {2^{-n_i} \over p_i} = \log_2 e \sum _i p_i \ln {2^{-n_i} \over p_i}
+\end{equation}
+
+\noindent  
+The right-hand side can be bound from above using $\ln x \leq x-1$, and by the 
+Kraft inequality we get 
+
+\begin{equation}
+H(P)-L(p) \leq \log_2 e \sum _i p_i ({2^{-n_i}\over p_i} -1) \leq 0 
+\end{equation}
+
+\bigskip\noindent When probabilities are very far from binary fractions,
+direct encoding may entail considerable loss compared with the entropy ideal.
+For example, if $p_1=.9, p_2=.1$, the entropy is 0.469 bits, while encoding the
+two cases as 0 vs. 1 would require a full bit. In such cases, it may make sense
+to consider blocks of messages. For example, three Bernoulli trials would lead
+tp 111 with probability .729; 110, 101, or 011 with probability .081; 001, 010,
+or 100 with probability .009; and 000 with probability .001. By using 0 for
+the most frequent case, 110, 100, and 101 for the next three, and finally
+11100, 11101, 11110, and 11111 for the remaining four, we can encode the
+average block of three messages in 1.598 bits, so the average elementary
+message will only require $1.598/3=0.533$ bits. \index{block coding}
+
+\smallskip\noindent
+{\bf Exercise 7.5} Prove that no block coding scheme can go below the 
+entropy limit but that with sufficiently large block size the average code 
+length can approximate the entropy within any $\varepsilon >0$.
+
+\smallskip\noindent {\bf Exercise 7.6} Prove that a regular language is
+prefix-free iff it is accepted by a DFSA with no transitions out of accepting
+states. Is a prefix-free language context-free iff it is accepted by a DPDA
+with the same restriction on its control? \index{finite state automaton, FSA}
+\index{push-down automaton, PDA}
+
+\smallskip\noindent In real-life communication, prefix-free codes are less
+important than the foregoing theorems would suggest, not because real channels
+are inherently noisy (the standard error-correcting techniques would be just
+as applicable) but because of the peculiar notion of {\it synchrony} that they
+assume. On the one hand, prefix-freeness eliminates the need for transmitting
+an explicit concatenation symbol, but on the other, it makes no provision for
+{\tt BEGIN} or {\tt END} symbols: the only way the channel can operate is by
+keeping the sender and the receiver in perfect synchrony. In Section~7.2 we
+will discuss a method, {\it self-delimiting}, that makes any set of codewords
+prefix-free.
+
+\smallskip\noindent
+{\bf Exercise 7.7} Research the role of the ascii codes 0x02 (STX), 0x03
+(ETX), and 0x16 (SYN). \index{STX} \index{ETX} \index{SYN}
+
+\smallskip\noindent
+Variable-length codes (typically, Huffman encoding) therefore tend to be 
+utilized only as a subsidiary encoding, internal to some larger coding scheme
+that has the resources for synchronization. We will discuss an example, the
+G3 standard of fax transmission, in Section~9.3.
+
+\smallskip\noindent
+{\bf Exercise 7.8} Take the elementary messages to be integers $i$ drawn
+from the geometrical distribution ($p_i = 1/2^i$). We define a complex message
+as a sequence of $n$ such integers, and assume that $n$ itself is
+geometrically distributed. How many bits will the average complex message
+require if you restrict yourself to prefix-free codes (no blocking)? With
+blocking, what is the optimal block size? What is the optimum average message
+length if the restriction on prefix-freeness is removed?
+
+\smallskip\noindent
+Human language, when viewed as a sequence of phonemes, shows very strong
+evidence of {\it phonotactic regularities} (i.e. dependence between the
+elementary messages). If we choose syllables as elementary, the dependence is
+weaker but still considerable. If we use morphemes as our elementary
+concatenative units, the dependence is very strong, and if we use words, it is
+again weaker, but far from negligible. Besides its uses in the study of coding
+and compression, the importance of entropy comes from the fact that it enables
+us to quantify such dependencies. For independent variables, we have
+$H(PQ)=H(P)+H(Q)$ (see condition (iii) in Theorem 7.1.2 above), so we define
+the {\bf mutual information} between $P$ and $Q$ as $H(P)+H(Q)-H(PQ)$. Mutual
+information will always be a nonnegative quantity, equal to zero iff the
+variables $P$ and $Q$ are independent. We also introduce here {\bf information
+gain}, also known as {\bf relative entropy} and {\bf Kullback-Leibler (KL)
+divergence}, as 
+
+\begin{equation}
+\sum_i p_i\log_2(p_i/q_i)=-H(P)-\sum_i p_i\log_2(q_i)
+\end{equation}
+
+\smallskip\noindent
+where the last term, denoted $H(P,Q)$, is known as the {\bf cross entropy} of 
+$P$ and $Q$. The importance of K-L divergence and cross entropy lies in 
+the fact that these quantities are minimal iff $P=Q$, and thus methods 
+that minimize them can be used to fit distributions.
+\index{phonotactics}
+\index{morphotactics} 
+\index{mutual information|textbf}
+\index{Kullback-Leibler (KL) divergence|textbf}
+\index{information gain|textbf}
+\index{cross entropy|textbf}
+
+All forms of communication that are parasitic on spoken language, such as
+writing, or exercise the same fundamental cognitive capabilities, such as sign
+language, are strongly non-Bernoullian. Other significant sources of messages,
+such as music or pictures, also tend to exhibit a high degree of
+temporal/spatial redundancy, as we shall discuss in Chapters 8 and 9. 
+
+\section{Kolmogorov complexity}
+
+The model described above is well suited only for the transmission of
+elementary messages that are truly independent of one another. If this
+assumption fails, redundancy between successive symbols can be squeezed out to
+obtain further compression. Consider, for example, the sequence of bits
+010100101011...  that is obtained by taking the fractional part of $n\sqrt{2}$
+and emitting 1 if greater than .5 and 0 otherwise. It follows from Weyl's
+theorem of equidistribution that P(0) = P(1) = .5. The entropy will be exactly
+1 bit, suggesting that the best we could do was to transmit the sequence bit
+by bit: transmitting the first $n$ elementary messages would require $n$
+bits. But this is clearly {\it not} the best that we can do: to generate the
+message at the other side of the channel requires only the transmission of the
+basic algorithm, which takes a constant number of bits, plus the fact that it
+needs to be run $n$ times, which takes $\log_2 n$ bits.
+
+We have not, of course, transcended the Shannon limit but simply put in sharp
+relief that entropy limits compressibility {\it relative} to a
+particular method of transmission, namely prefix-free codes. The faster method
+of transmitting 010100101011... requires a great deal of shared knowledge
+between sender and recipient: they both need to know what $\sqrt{}$ is and how
+you compute it, and they need to agree on {\tt for}-loops, {\tt
+  if}-statements, a compare operator, and so on. Kolmogorov complexity is
+based on the idea that all this shared background boils down to the knowledge
+required to program Turing machines in general or just one particular
+(universal) Turing machine.
+
+Turing's original machines were largely hardwired, with what we would nowadays
+call the program burned into the finite state control (firmware) of the
+machine. For our purposes, it will be more convenient to think of Turing
+machines as universal machines that can be programmed by finite binary
+strings.  For convenience, we will retain the requirement of prefix-freeness
+as it applies to such programs. We say that a partial recursive function
+$F(p,x)$ is {\bf self-delimiting}\index{self-delimiting!function|textbf} if
+for any prefix $q$ of the program $p,$ $F(q,x)$ is undefined. This way, a
+sequence of programs can be transmitted as a concatenation of program
+strings. The second variable of $F$, which we think of as the input to the
+machine programmed by $p$, is a string of natural numbers or rather a single
+(e.g. G\"odel) number that is used to encode strings of natural numbers.
+
+\smallskip\noindent {\bf Definition 7.2.1} The {\bf conditional complexity}
+$C_F(x|y)$ of $x$ given $y$ is the length of the smallest program $p$
+such that $x=F(p,y)$, or $\infty$ if no such program exists.
+
+\smallskip\noindent
+To remove the conditional aspects of the definition, we will need two
+steps, one entirely trivial, substituting $y=0$, and one very much in need of
+justification, replacing all $F$s by a single universal Turing machine $U$.
+
+\smallskip\noindent
+{\bf Definition 7.2.2} The {\bf complexity} $C_F(x)$ of $x$ relative to $F$
+is the length of the smallest program $p$ such that $x=F(p,\lambda)$, or
+$\infty$ if no such program exists.
+
+\smallskip\noindent
+{\bf Theorem 7.2.1} (Solomonoff 1960, Kolmogorov 1965) There is a partially 
+recursive function $U(p,y)$ such that for any partially recursive $F(p,y)$ 
+there exists a constant $c_F$ satisfying\nocite{Solomonoff:1960}
+\nocite{Kolmogorov:1965}
+
+\begin{equation}
+C_U(x|y) \leq C_F(x|y) + c_F
+\end{equation}
+
+\smallskip\noindent
+{\bf Proof} We construct $U$ by means of a universal Turing machine
+$V(a,p,x)$ that can be programmed by the appropriate choice of $a$ to emulate
+any $F(p,x)$. To force the prefix-free property, for any string $d=d_1 d_2
+\ldots d_n$, we form $d^0=d_1 0 d_2 0 \ldots 0 d_n 1$ by inserting 0s as
+concatenation markers and 1 as an end marker. Since any binary string $p$
+can be uniquely decomposed as an initial segment $a^0$ and a trailer $b$, 
+we can define $U(p,x)$ by $V(a,b,x)$. In particular, for $F(p,x)$ there is
+some $f$ such that for all $p,x$ $F(p,x)=V(f,p,x)$. In case $x$ can be 
+computed from $y$ by some shortest program $p$ running on $F$, we have 
+$U(f^0p,y)=V(f,p,y)=F(p,y)=x$, so that $C_U(x,y) \leq 2|f| + C_F(x|y)$.
+
+\smallskip\noindent {\bf Discussion} There are many ways to enumerate the
+partial recursive functions, and many choices of $V$ (and therefore $U$) could
+be made. What Theorem 7.2.2 means is that the choice between any two will only
+affect $C_U(x|y)$ up to an additive constant, and thus we can suppress $U$ and
+write simply $C(x|y)$, keeping in mind that it is defined only up to a $O(1)$
+term. In particular, relative to the Turing machine $T$ that prints its input 
+on its output and halts, we see $C_T(x) \leq l(x) + c_T$ for some constant
+$c_T$ that is independent of the bitstring $x$ (or its length $l(x)$). 
+
+The claim is often made (see e.g.  Chaitin 1982) that $C(x)$ measures the
+complexity of an individual object $x$, as opposed to entropy, which very much
+presumed that the objects of study are drawn from a probability
+distribution. However, this claim is somewhat misleading since the focus of
+the theory is really the asymptotic complexity of a sequence of objects, such
+as initial substrings of some infinite string, where the $O(1)$ term can be
+really and truly neglected.  For a single object, one could always find a $U$
+that will make $C_U(x)$ zero, just as if our only interest was in compressing
+a single file, we could compress it down to 1 bit, with an uncompress function
+that prints out the object in question if the bit was set and does nothing
+otherwise.\nocite{Chaitin:1982}
+
+To take advantage of asymptotic methods, one typically needs to endow familiar
+unordered objects with some kind of order. For example, formal languages are
+inherently unordered, but it is no great stretch to order $\Sigma^*$ (or any
+$L \subset \Sigma^*$) lexicographically.  Once this is done, we can talk about
+the $n$th string and replace sets by their characteristic function written as
+a (possibly infinite) bitstring whose $n$th bit is 1 or 0, depending on
+whether the $n$th string $y_n$ enjoyed some property or not. In order to
+discuss regular languages, we need to capture the structure of the state
+machine in bitstrings. Given some language $L \subset \Sigma^*$ and any string
+$x$, we define $\chi = \chi_1\chi_2\ldots$ to be 1 on the $n$th bit $\chi_n$
+iff the string $xy_n$ is in $L$ -- the first $n$ bits of $\chi$ will be
+denoted by $\chi$:$n$. Clearly, two strings $x$ and $x'$ have the same $\chi$
+iff they are right congruent, so that different $\chi$ correspond to different
+states in the DFSM. For $L$ regular, the first $n$ bits of any $\chi$ can be
+transmitted by transmitting the DFSA in O(1) bits, transmitting the state (out
+of finitely many) to which the $\chi$ in question corresponds (again O(1)
+bits), and transmitting the value of $n$, which requires no more than
+$\log_2(n)$ bits.
+
+\smallskip\noindent
+{\bf Theorem 7.2.2} (Li and Vit\'anyi 1995) $L \subset \Sigma^*$ is regular iff
+there exists a constant $c_L$ depending on $L$ but not on $n$ such that
+$\forall x \in \Sigma^* \ \  C(\chi$:$n) \leq \log_2 (n) + c_L$. 
+
+\smallskip\noindent {\bf Discussion} We have already seen the only if part --
+the converse depends on a lemma (for a proof, see Li and Vit\'anyi 1997, Claim
+6.8.1) that for any constant $c_L$ there will be only finitely many {\it
+  infinitely long} bitstrings that have no more than $\log_2 (n) + c_L$
+asymptotic complexity -- once this is demonstrated, the rest follows by the
+usual construction of FSAs from right congruence classes.
+\nocite{Li:1995}\nocite{Li:1997}
+
+\medskip\noindent Suppose our goal is to transmit bitstrings over a channel
+that transmits 0s and 1s in an error-free (noiseless) manner. Unless we have
+some out-of-band method of indicating where the transmission of a given
+bitstring begins and ends, we need to devote extra bits to the boundary
+information. An inefficient but simple method is to prefix each string $x$ by
+its own length $l(x)$. For this to work, we need to encode $l(x)$ in a manner
+that makes it recoverable from the code. This can be accomplished e.g. by
+giving it as a string of 1s (base one) and using $0$ as the end marker -- this
+is called the {\bf self-delimiting code} $S$ of
+$x$.\index{self-delimiting!code|textbf} For example, $S(001)=1110001$. In this
+encoding, $l(S(x))=2l(x)+1$. Not only is $S$ prefix-free, but the codeword and
+a following string $y$ can be unambiguously reconstructed from any $S(x)y$ by
+counting the number of 1s with which it begins and slicing off as many bits
+following the first 0 as there were 1s preceding it. We can use this property
+of $S$ to create a more efficient code $D(x)$, where the payload $x$ is
+suffixed not to the base one encoding of the length but rather to $S(l(x))$,
+where $l(x)$ is given in base two rather than base one; for example,
+$D(001)=S(11)001=11011001$. While this particular example comes out longer, in
+general
+
+\begin{equation}
+l(D(x))=l(S( \lceil\log_2 l(x)\rceil ))+l(x) \leq 2\log_2 l(x) +l(x) +c
+\end{equation}
+
+\smallskip\noindent i.e. the overhead of the transmission is now only $2\log_2
+l$ plus some small constant.
+
+People (mathematicians) have relatively clear intuitions about the randomness
+of everyday (resp. mathematical) objects -- certainly we feel that {\it
+  *furiously sleep ideas green colorless} is much more random than {\it
+  colorless green ideas sleep furiously}, which at least has largely
+predictable ordering at the part of speech level. If the sender and the
+recipient share this knowledge, e.g. because they are both speakers of
+English, it may be possible to transmit the second sentence (but not
+necessarily the first) in fewer bits than it would take to transmit a random
+string of words. Kolmogorov complexity offers a way to replace intuitions
+about randomness by rigorous definitions, but this comes at a price. As we
+have emphasized repeatedly, $C(x)$ is defined only up to an additive
+constant. One may think that by fixing a small `reference' universal Turing
+machine $U$ this fudge factor could be removed, but this is not quite so: for
+any fixed $U$, the function $C_U(x)$ is uncomputable.
+
+\smallskip\noindent
+{\bf Theorem 7.2.3} (Kolmogorov 1965) $C(x)$ is uncomputable. 
+
+\smallskip\noindent {\bf Proof} Suppose indirectly that $C(x): \{0,1\}^*
+\rightarrow {\Bbb N}$ is computed by some TM: it is then possible to program
+another TM that outputs, for each $n \in {\Bbb N}$, some string $x_n$ that has
+$C(x_n) > n$. Let the length of the program emulating this TM on the universal
+machine we chose be $p$: this means that $C(x_n) \leq \log_2(n) +p$ since we
+found a program of total length $\log_2(n) +p$ that outputs $x_n$. Since $p$
+is fixed but the program by definition outputs an $x_n$ with $C(x_n) > n$, we
+have a contradiction for $n$ sufficiently large, e.g. for $n = 2^p (p >2)$.
+
+\medskip\noindent While Kolmogorov complexity oscillates widely and
+uncomputably, on the whole $C(x)$ is well-approximated by $l(x)$.  We have
+already seen that $C(x) < l(x) +O(1)$, and for any constant $k$, only a small
+fraction of the bitstrings of length $l$ can have $C(x) \leq l-k$. More
+precisely, as there are at most $2^{l-k+1}-1$ programs of length $\leq l-k$,
+these can encode at most $2^{l-k+1}-1$ of the $2^l$ bitstrings of length $l$,
+so there must be at least one string $x_l$ for every $l$ that is truly
+incompressible (has $C(x)=l$), at least half of the strings of length $l$ have
+$C(x) \geq l-1$, at least three-quarters have $C(x) \geq l-2$, and in general
+at least $1-2^{-k}$ have $C(x)\geq l-k$.
+
+To put this in perspective, in Section~7.1 we estimated the word entropy of
+English to be around 12--13 bits. The readers who worked on Exercise 5.8 will
+know that in journalistic prose the median sentence length is above 15 words,
+so for more than half of the sentences the simple encoding scheme would
+require over 180 bits. Were these typical among the bitstrings of length 180,
+only $2^{-30}$ (about one in a billion) could be compressed down to 150 bits
+or less. As we shall see in Chapter~8, sentences can be compressed
+considerably better.
+
+Another way to show that only a few strings can have low Kolmogorov complexity
+is by reference to the Kraft nequality (Theorem 7.1.1) if we encode each
+string with its shortest generating program relative to some fixed string $y$.
+To make sure this is a prefix-free code, we use $K(x|y),$ defined as the
+shortest self-delimiting program on some universal TM and called the {\bf
+  prefix complexity}\index{prefix complexity} instead of $C(x|y)$, which was
+defined as the shortest program, not necessarily self-delimiting.  With the
+prefix notion of Kolmogorov complexity, which differs from our previous notion
+at most by $2\log_2 C(x|y)$, we have
+
+\begin{equation}
+\sum_{x\in\{0,1\}^*} 2^{-K(x|y)} \leq 1 
+\end{equation}
+
+\smallskip\noindent The most important case is of course $y=\lambda$. Here the
+Kraft inequality means that the numbers $2^{-K(x)}$ sum to less than 1.
+Therefore, we can turn them into a probability measure either by adding an
+{\it unknown event} that has probability $1-\sum_{x\in\{0,1\}^*} 2^{-K(x)}$ or
+we can normalize by multiplying all values by a constant. Using this latter
+method, we define the {\bf universal probability distribution} by taking the
+probability of a string $x$ to be $2^{-K(x)}$ (times some
+constant).\index{universal probability distribution|textbf} Solomonoff (1964)
+arrived at this notion by considering the idea of programming a TM by a random
+sequence of bits. If the shortest program that leads to $x$ has $n$ bits, the
+probability of arriving at $x$ by a randomly selected program is roughly
+$2^{-n}$ since longer programs can contribute very little to this value.
+
+The standard {\bf geometrical probability distribution} over bitstrings with
+parameter $r>1$\index{geometrical probability distribution|textbf} simply
+assigns probability $(1-1/r)(1/2r)^l$ to any string of length $l$ -- in
+particular, the probability of the empty string $\lambda$ will be $1-1/r$.
+This corresponds to an experiment in which 0s and 1s are chosen by tossing a
+fair coin, and at each step the experiment is continued with probability
+$1/r$. Transmitting a random (incompressible) string $x$ of length $l$
+actually requires {\it more} than $l$ bits since we also need to transmit the
+information that the transmission has ended. We can use (7.11) as an upper
+bound on the length of the full transmission, which would yield
+$(1/2)^{l+2\log_2(l)+c}$ for a string of length $l$. For each fixed $r,$ when
+$l$ is large enough, the universal distribution generally assigns smaller
+probability to a string than the geometrical distribution would -- the 
+remaining probability mass is spent on the few strings that have low
+complexity. 
+
+\section{Learning}
+
+Returning to our original example of predicting the next term of the series
+$2,3,5,\ldots$, we can see that to make this more precise we need to make a
+number of choices. First, what is the domain and the range of the function to
+be learned? Can the next term be $\pi$? In mathematical linguistics, our
+primary interest will be with strings, but this is not a significant
+limitation since strings can encode more complex data structures such as
+$k$-strings (see Section~3.3), parse trees (see Section~5.1), or even grammars
+(see below).  A considerably harder issue is brought up by weighted
+(probabilistic) structures since it is not at all obvious that even a single
+real number, say the frequency of some feature of interest, can be learned.
+
+Second, we need to specify the {\it hypothesis space} that delimits the choice
+of solutions. In the sequence learning and the closely related sequence
+prediction tasks, if we know that the only hypotheses worth considering are
+quadratic polynomials, the answer is already given by knowing the value of the
+function at three points. If, on the other hand, arbitrary degree polynomials
+or all computable functions are acceptable answers, no finite amount of data
+will uniquely identify one. In mathematical linguistics, the main issue is to
+identify a grammar that can generate a given data set, and this, as we shall
+see, is so hard that it is worth considering simplified versions of the
+problem.
+
+Third, we must specify the method of providing examples to the learning
+algorithm. For example, if the target to be learned is some formal language,
+it makes a big difference whether it gets presented to the algorithm in a
+fixed (e.g. lexicographical) order, completely randomly, or perhaps following
+some prescribed probability distribution. In the first case, we can be certain
+after a while that an example not encountered so far will never be encountered
+later (because we are past it in the lexicographical ordering); the two other
+methods of providing data have no such closed-world assumption.
+
+Fourth, we need to have some criteria for success. We will consider two main
+paradigms: identification in the limit \cite{Gold:1967} and probable
+approximate correctness \cite{Valiant:1984}.  By an algorithm capable of {\bf
+  identification in the limit (iitl)}, we mean an algorithm that will produce
+a hypothesis in each\index{identification in the limit, iitl|textbf} step such
+that after some number of steps it will always produce the same hypothesis,
+and it is the correct one. If the algorithm can signal that it converged, we
+are speaking of {\it finite identification} -- this is obviously a stronger
+criterion than iitl. By a {\bf probably approximately correct
+  (pac)}\index{probably approximately correct, pac} learning algorithm we mean
+one that is capable of approximating a family of distributions to an arbitrary
+degree with the desired (high) probability. But before turning to these, we
+need to capture the idea that the more complex (in the limiting case, entirely
+random) the material, the harder it is to learn.
+
+\subsection{Minimum description length}
+
+The mathematical theory of learning, or {\it inductive inference}, is very
+rich, though by no means mature. Depending on how we specify a problem in the
+four dimensions above, a broad variety of results can be obtained.  In
+applying the ideas of Kolmogorov complexity to natural language phenomena, we
+are faced with two technical problems. First, the {\it languages} of greatest
+interest in mathematical linguistics are noncounting, both in the informal
+sense of being free of arithmetic aspects and in the precise sense given by
+the noncounting property (5.29). In spite of the impressive size of the state
+space (estimated at $10^{12}$ in Section 6.3.2), counter-free automata are
+mathematically {\it simpler} than the full FSA class, while Theorem 7.2.2
+characterizes the latter as having, for all $x \in \Sigma^*$, a constant $c_L$
+conditional prefix complexity $K(\chi$:$n|n)$ (or, what is the same,
+$\log_2(n) +c_L$ Kolmogorov complexity). Since the whole machinery of
+Kolmogorov complexity is defined only up to a constant (the $\log_2 (n)$ in
+$C$ comes from the need to transmit $n$ and thus cannot be improved upon),
+there is no easy way to analyze languages simpler than regular.  Second, the
+{\it grammars} used in mathematical linguistics are just axiom systems (though
+highly tuned to the subject matter and clearly impressive in size), and as
+such they retain the unpredictability of smaller axiom systems. Specifically,
+the great hopes of Chaitin (1982)
+
+\begin{quote}
+I would like to measure the power of a set of axioms and rules of inference. I
+would like to be able to say that if one has ten pounds of axioms and a
+twenty-pound theorem, then that theorem cannot be derived from those axioms
+\end{quote}
+
+\smallskip\noindent remain unfulfilled since we can construct axiom systems of
+increasing proof-theoretic strength whose Kolmogorov complexity is the same
+(see van Lambalgen 1989, Raatikainen
+1998).\nocite{Lambalgen:1989}\nocite{Raatikainen:1998} What we need is some
+refinement of Kolmogorov complexity that incorporates a notion of {\bf
+  universal grammar},\index{universal grammar, UG|textbf} which we define here
+simply as a set of permissible models $A$. First we assume, as in principles
+and parameters theory (see Section~5.3), that there are $k$ binary parameters,
+so that $|A|=2^k$. The complexity of describing some data set $x$ relative to
+$A$ is therefore the complexity of describing $A$, say $K(A)$, plus the $k$
+bits required to select the appropriate model parameters.
+
+In general, we are interested in all sets $A$ such that $K(A)+\log_2 |A|$ is,
+up to an additive constant, the same as $K(x)$. If among these $\hat{A}$ has
+the minimal prefix complexity $K(\hat{A})$, the shortest description of
+$\hat{A}$ is called the {\bf minimal sufficient statistic} for
+$x$.\index{minimal sufficient statistic|textbf} Because $K(x|\hat{A}) = \log_2
+|\hat{A}|$ up to a constant, $\hat{A}$ is the optimal model of $x$ in the
+sense that $x$ is maximally random with respect to $\hat{A}$.
+
+In applying this framework, known as {\it minimum description length} (MDL),
+\index{minimum description length, MDL} to grammatical model selection, we
+encounter a number of difficulties. First, the data $x$, strings encoding the
+grammar of some natural language, are not completely at hand: at best, we have
+{\it some} grammatical description of {\it some} languages.  Second, even to
+the extent the data are at hand, they are not presented in a normalized
+format: different grammars use different notational conventions.  Third, and
+perhaps most important, the devices used for eliminating redundancy are not
+universally shared across grammars. Here we consider three such devices, {\it
+  anuv\d{r}tti}, {\it metarules}, and {\it conventions}.
+
+The P\={a}\d{n}inian device {\it anuv\d{r}tti}\index{anuv\d{r}tti}
+relies\index{P\={a}\d{n}ini} on a characteristic of the formal language
+P\={a}\d{n}ini employs in writing grammatical rules that is not shared by
+later work, namely that the rules ({\it s\={u}tras}) are given in a
+technically interpreted version of Sanskrit without recourse to any special
+notation. Since the rules are given in words (and were for many centuries
+transmitted orally without the benefit of writing them down), it is possible
+to take a rule set
+
+\begin{eqnarray}
+\text{A B C D E}\\
+\text{P Q C D E}\\
+\text{R S C D \ \ \ }
+\end{eqnarray}
+
+\noindent
+and abbreviate it by deleting those words that were already mentioned in 
+previous rules to yield
+
+\begin{eqnarray}
+\text{A B C D E}\\
+\text{P Q\ \ \ \ \ \ \ \ \ \ }\\
+\text{R S\ \ \ \ \ \ \ \ \ \ }
+\end{eqnarray}
+
+\noindent
+even though this device leaves some doubts whether (7.18) should really be
+interpreted as R S C D or rather as R S C D E. Such ambiguities are resolved
+by several principles. Some of these are highly mechanical, such as the
+principle that if a main element is discontinued, so are all its dependents.
+This can be used to reconstruct many rules in their unabbreviated format just
+by listing what is and what isn't considered a main element. Other principles
+(e.g. that a deleted element is to be thought of as being present as long as
+it is compatible with the rule statement) make an appeal to the meaning of
+rules.  As such, these cannot be considered fully automatic by today's
+standards, or, at the very least, the challenge to program a Turing machine
+based on such a principle is wide open. Be that as it may, anuv\d{r}tti
+shortens the statement of the grammar by over a third, a very significant
+compression ratio.
+
+Contemporary formal grammars use a different abbreviatory device, {\it
+  metarules},\index{metarule} which are rules to generate rules. In
+Section~5.7, we have already seen one instance, replacing two rules, the
+singular and the plural versions of (5.7), by a single rule schema
+(5.30). Such a schema comes with the interpretation that all variables in it
+must be uniformly (in all occurrences) replaced by all specific values the
+variable can take to yield as many rules as there are such replacement
+options. Of particular interest here are rules that depend on individual
+lexical entries: there are thousands of these, and there are generally very
+good reasons to group several of them together according to various criteria
+such as shared elements of lexical meaning, shared (sub)category, etc. Once we
+start using a hierarchically organized lexicon (see e.g. Flickinger 1987), it
+is natural to use network inheritance as an abbreviatory device, and in
+computerized systems this is common practice. Formally, it requires some
+system of metarules to unroll all the inheritance and present lexical entries
+(and the grammar rules that use them) in their unabbreviated form. The rate of
+compression depends greatly on the way rules are formulated, but again we
+expect very significant compression of the rule system, perhaps as much as
+50\%.\nocite{Flickinger:1987}
+
+Another major device used by many grammarians is the distinction between {\it
+  conventions} and rules. This can take many forms, \index{convention} but the
+key idea is always to designate some forms or rules as being intrinsically
+simpler than their representation would allow. In Section~3.2, we already
+mentioned the phonological theory of {\it markedness},\index{markedness} which
+takes e.g. the natural class of high vowels to be defined only by their
+[+high] and [+syll] features: the redundant values such as [$-$low] or
+[+voiced] are supplied by an automatic set of {\it markedness conventions.}
+Markedness conventions, much like anuv\d{r}tti, supply missing values and can
+interact with the statement of rules as a whole. Rules simplified under
+anuv\d{r}tti are simpler in the direct sense of being shorter (requiring fewer
+words to state), while rules simplified under markedness are just {\it
+  regarded} as being shorter, inasmuch as we explicitly define a {\it
+  simplicity measure} that only counts marked values. For example,
+context-sensitive voice assimilation in obstruent clusters is
+common,\index{assimilation!voice} and a rule like
+
+\begin{equation}
+[+\text{obst}]\rightarrow[\alpha\text{voice}]/\underline{\
+  \ }\left[ \begin{array}{c}+\text{obst}\\\alpha\text{voice}\end{array}\right]
+\end{equation}
+
+\smallskip\noindent which requires cluster members to assimilate to their
+right neighbor in voicing, is regarded as intrinsically simple. However, since
+a rule like 
+
+\begin{equation}
+[+\text{syll}]\rightarrow[\alpha\text{high}]/\underline{\
+  \ }\left[ \begin{array}{c}+\text{obst}\\\alpha\text{voice}\end{array}\right]
+\end{equation}
+
+\smallskip\noindent is unlikely to crop up in the phonology of any language,
+we make sure that the simplicity measure penalizes it, e.g. for assimilation
+of values across features. Generally, a complicated simplicity measure is seen
+as a sign of weakness of the underlying theory. For example, if assimilation
+is viewed as spreading (see Section~3.3) of an autosegment, rules like (7.20)
+are precluded, and this obviates the need to patch matters up by a post hoc
+simplicity measure. However, the working linguist is rarely in a position to
+anticipate future breakthroughs, so stipulation of simplicity remains a part
+of the descriptive apparatus.
+
+To some extent, these problems can be circumvented by considering grammars
+piecemeal rather than in their entirety. For example, stating the stress
+system of a language would require (i) finding its place in a typological
+system such as StressTyp (see Section~4.1.4) and (ii) describing the stress
+patterns relative to some slot in the typology.  Describing the ideally clean
+systems prescribed by the typology is an expense that gets amortized over many
+languages, so the term $K(A)$ enters the overall complexity with a multiplier
+considerably lower than the term $K(x|A)$, which is specific to the
+language. This is very much in line with traditional linguistic thinking,
+which values universal rules far more than parochial ones.
+\index{parochial rule}\index{universal grammar, UG}
+
+Unfortunately, decomposition of the grammar in this sense is not entirely
+unproblematic since one can often simplify the statement of one kind of rule,
+say the rules of stress placement, at the expense of complicating some other
+part of the grammar, such as the rules of compounding. To apply the MDL
+framework would therefore require a problem statement that is uniform across
+various aspects of the system; for example, by taking phonology, morphology,
+syntax, and semantics to be given by FSTs and assuming that universal grammar
+is a list of transducer templates that can be filled in and made part of an
+intersective definition at no cost (or very little cost, given amortization
+over many languages). 
+
+One final issue to consider, not just for stress systems but for any situation
+where there are only a finite number of patterns, is whether generating the
+patterns by a rule system provides a solution that is actually superior to
+simply listing them. The issue is particularly acute in the light of theorems
+such as
+
+\smallskip\noindent {\bf Theorem 7.3.1} (Tuza 1987) For every $n$ there exists
+finite languages $L_n$ containing $n^2 -n$ strings such that it requires at
+least $O(n^2/\log(n))$ rules in a regular, context-free, or length-increasing
+(context sensitive) grammar to generate $L_n$. 
+
+\smallskip\noindent {\bf Discussion} Since this is a worst case result, a
+possible objection is that the specific construction employed in
+\newcite{Tuza:1987}, namely languages based on $n$ different terminals
+collected in a terminal alphabet $\Sigma$ and $L_n = \{xy | x, y \in \Sigma, x
+\neq y \}$, is unlikely to appear in natural language grammars. In phonology,
+rules of {\it dissimilation}\index{dissimilation} that forbid the occurrence
+of more than one token of some type are quite common (for a brief overview see
+Idsardi 2006)\nocite{Idsardi:2006}, and there is no easy way to rule these out
+entirely. In syntactic rules, the phenomenon of {\it lexicality} (see
+Section~5.1.3) is quite pervasive, so much so that for each preterminal
+(strict lexical subcategory) $p$ we expect at least one rule unique to
+$p$. With the size of the preterminal set estimated at $10^6$ (see
+Section~6.3.2), Theorem 7.3.1 limits the compression achievable by generation
+to a factor of $\sqrt(\log(10^6))$ or to about 27\% of the length of the raw
+pattern list (actually less, since a rule will, in general, take more symbols
+to encode than a pattern would). Generative grammar, if viewed as a
+compression device which has the potential to save three quarters of the space
+that would be required to list the patterns, is clearly a valuable tool in its
+basic (finite state, context free, or context sensitive) form, but the other
+space-saving devices discussed here, anuv\d{r}tti, metarules, and conventions,
+can enhance its compression power considerably.
+
+\subsection{Identification in the limit}
+
+To specify a learning problem in iitl terms, we need to specify the domain and
+the range of the functions to be learned, the hypothesis space, and the order
+in which data will be presented to the learner. As an example, let us consider
+the issue of how infants acquire the phoneme inventory (see Section~3.1) of
+their language. The function they must identify is one that has at least
+acoustic input, utterances, and provides, for each utterance, a string (or
+$k$-string), over a yet to be determined phonemic alphabet (or tier
+alphabets). We say the input consists at least in acoustic data because it is
+clear that the infant also has, almost all of the time, access to visual cues
+such as lip rounding -- we ignore this fact here but return to the matter in
+Section~8.3. We also simplify the problem statement by assuming the existence
+of automatic (no learning or training required) low-level acoustical {\it
+  feature detectors}\index{feature detection} that digest the raw acoustic
+signal into parallel streams of discrete feature sequences (see Section~8.3).
+
+While this may look like drastic oversimplification, defining away a core part
+of the problem, in fact there is massive evidence from psycholinguistics that
+speech perception operates in terms of discrete units (a phenomenon known as
+{\it categorical perception},\index{categorical perception} see Liberman
+1957), that this mechanism is operative in infants even before they learn to
+speak (Eimas et al. 1971), and that it leverages deep perceptual abilities
+that were acquired evolutionarily long before primates (for chinchilla
+perception of voicing and syllable structure see Kuhl et
+al. 1975).\nocite{Eimas:1971}\nocite{Kuhl:1975} High sensitivity to
+distinctive features in the acoustical signal has been demonstrated for all
+the thirty or so features that act distinctively in the phonology of some
+languages. We defer the perceptual problem, how to create detectors for
+voicing or other features, to Chapters 8 and 9, and consider only the learning
+problem of finding the right phonemic alphabet based on the output of this
+exquisitely sensitive perceptual apparatus, given in feature vectors. Instead
+of asking how acoustic waveforms (a class of ${\Bbb R} \rightarrow {\Bbb R}$
+functions) get mapped onto ($k$-)strings, we ask how strings of feature
+vectors get so mapped.
+
+As for the hypothesis space, clearly the most desirable outcome would be to
+find a static mapping $g$ that maps feature vectors to phonemes and obtain the
+sequence-to-sequence mapping by lifting $g$ (applying it pointwise) to
+strings. Such a restriction of the hypothesis space comes with a price: there
+are many string-to-string mappings that cannot be so obtained. For example, if
+the inputs are 0 and 1 (vectors of length~1) and the outputs are $A$ and $B$,
+if $f$ is defined as always $A$ except when the previous three inputs were 000
+or 111, there isn't a single $g$ that can be lifted to $f$. A much broader,
+but still restrictive, hypothesis would be to assume that the solution is to
+be identified with a (multitape) finite state ($k$-)transducer that outputs a
+phoneme (or $k$-string) based on the feature vector under scan on its input
+tapes and on its current state.
+
+Finally, let us consider the order in which the data are presented to the
+learner. Even if the task is to find a function $g$ that operates on
+individual vectors, it is not realistic to assume (except, perhaps, for vowels
+that can be uttered in isolation) that the data will be presented pointwise --
+rather, the input is given in longer strings, syllables at the very least but
+more likely words or full sentences. In particular, stop consonants will never
+occur in isolation, but their phonemic value must be learned just the same.
+Since there are only finitely many phonemes, a random presentation of words
+will sooner or later contain every one of them, and we do not particularly
+need to put any constraint on the presentation of the data other than those
+excluding a certain kind of {\it child-directed speech}\index{child-directed
+  speech, CDS}\index{motherese}\index{baby talk} (CDS, also called {\it baby
+  talk} and {\it motherese}) that purposely avoids the sounds considered hard
+or stigmatized. Simplifying matters somewhat, in modern-day Israel, Sefardic
+parents, whose phonemic inventory contained guttural consonants, may not have
+passed these on to their children since the Ashkenazi variety of Modern
+Hebrew, which has higher prestige, lacks them. An obvious restriction on data
+presentation, then, is to require that it be {\it semicooperative} in the
+sense that all relevant data (everything in the domain of the function to be
+learned) are eventually presented.
+
+In reality, a great deal of language change can be attributed to imperfect
+learning, but the Modern Hebrew case cited above is more the exception than
+the rule: phonemic inventories can be very stable and remain virtually
+unchanged over many generations and centuries.  This is because the phoneme
+inventory can be iitl learned upon any reasonable (semicooperative)
+presentation of the data. The chief learning strategy appears to be selective
+forgetting. For example, Ntlaka'pamux [THP]\index{Ntlaka'pamux [THP]} has
+glottalized voiceless stop consonants that phonologically differ in place of
+articulation (uvular vs. velar), while English lacks this contrast and these
+consonants altogether. Learners of English who are 6--8 months oldrecognize
+the distinction just as well as Ntlaka'pamux infants of the same age, but by
+11--12 months their ability fades, while the Ntlaka'pamux infants of course
+retain it (Werker and Tees 1984).\nocite{Werker:1984} In spite of the
+selective forgetting of those features that play no distinctive role in the
+language, the full learning algorithm seems to involve a great deal of
+memorization.
+
+The algorithms used by linguists to describe a new language, called {\it
+  discovery procedures},\index{discovery procedure} generally require more
+than semicooperation and assume full (two-sided) presentation of the data in
+the form of an informant who can provide negative information (grammaticality
+judgments) as well, asserting if needed that a certain form hypothesized by
+the learner is {\it not} in the language. Both negative and very low
+probability positive examples help to accelerate the learning process, and
+this is why in descriptive grammars we often find references to contrasts not
+easily exemplified. For example, in English, the difference between unvoiced
+{\it \v{s}} and voiced {\it \v{z}} is seen only in pairs like {\it
+  Aleutian/allusion}, {\it Confucian/confusion}, {\it mesher/measure}, {\it
+  Asher/azure}, and {\it dilution/delusion}, which are very unlikely to be
+heard by infants at an early age. That said, by age four, when children begin
+to show signs of acquiring morphology, the algorithm that yields the phonemic
+alphabet has clearly converged on the basis of positive data alone. How a
+phoneme like {\it \v{z}} gets created by the infant without a great deal of
+positive evidence is something of a mystery unless we presume a learning
+algorithm that can only take a few options and must live with the resulting
+overgeneration. If we find that voicing is distinctive in English, for which
+there is a great deal of positive evidence outside the {\it \v{s}/\v{z}} pair,
+and we find that {\it \v{s}} is present in the system, for which again there
+is overwhelming positive evidence, we must live with the consequences and
+admit {\it \v{z}} in the system.
+
+As our next example, let us consider iitl of finite automata. Given an
+alphabet $T,$ a regular language $L\subset T^*$, and a {\it text}, defined
+here as a series of examples $s_1, s_2, \ldots$ drawn from $L$
+semicooperatively (each $s \in L$ sooner or later appears in the series) but
+possibly with repetitions, we are looking for an algorithm that produces at
+each step $i$ a DFSA $A_i$ that generates all the $s_j$ for $1 \leq j \leq i$
+and converges to the DFSA $A_0$ that generates $L$ in the sense that there
+exists some $k$ such that $A_i = A_0$ for $i>k$.
+
+Stated thus, the problem is not solvable. Let us first consider this for an
+important algorithm known as {\it identification by enumeration}. This is a
+lazy algorithm based on some notion of complexity or a priori probability that
+can be used to linearly order all possible hypotheses (DFSAs). At step $i$, it
+outputs the first (according to the prespecified order) hypothesis that is
+still compatible with the data points $s_1, s_2, \ldots, s_i$ seen so far. If
+the text is presented in an adversarial fashion, the algorithm can at no stage
+be certain that a string $t$ not presented so far will not be presented
+later. Whatever complexity ordering the algorithm embodies, the DFSA $U$ with
+one (accepting) state and loops for all symbols will come early in the
+enumeration in the sense that we need to entertain other (more complex)
+hypotheses as well, and the adversary can pick any language $L$ that is
+generated by one of these more complex DFSA $V$. Since the language $T^*$
+generated by $U$ is compatible with any finite amount of data presented
+semicooperatively, a lazy algorithm will never have a reason to move away from
+the hypothesis $U$ and will never reach the correct hypothesis $V$.
+
+An analogous situation can be found in the game of twenty questions: if there
+are more than $2^{20}$ animals (as there are), an answerer who knows the whole
+taxonomy can always win. The key idea is that the answerer need not settle on
+a particular animal at the outset; it is enough that at any point there remain
+animals that fit the sequence of answers provided so far. Each question cuts
+the set of still available animals in two parts, and one of these sets will
+have more than $2^{20-i}$ members: the answerer answers so as to select this
+set. After 20 questions, the answerer still has more than one animal
+compatible with the questions asked so far and the questioner has lost. In
+other words, since each question can secure at best one bit of information,
+and it requires more than 20 bits to code the full set of animals, the
+questioner cannot always win (since a winning strategy would amount to a coding
+of the set in 20 bits) and an answerer can exploit the information deficit to
+make sure the questioner never wins. Gold (1967) presents a similar strategy
+with adversarial (but semicooperative) data presentation to prove the 
+following theorem. 
+
+\smallskip\noindent
+{\bf Theorem 7.3.2} (Gold 1967) No set of languages that contains all the 
+finite languages and at least one infinite language is iitl. 
+
+\smallskip\noindent {\bf Discussion} Note that the theorem is sharp: the set
+of all finite languages is iitl, in fact the trivial algorithm that simply
+guesses the language to be the union of the strings presented so far will
+learn the correct language from any semicooperative text. A family of
+languages containing all finite languages and at least one infinite one is
+called {\bf superfinite},\index{superfiniteness|textbf} and since all the
+classical language families in the Chomsky hierarchy are superfinite, the
+theorem is often taken to mean that iitl with semicooperative data
+presentation is simply not the right model for grammar learning. Yet there is
+no reason to assume that the set of languages permissible by universal grammar
+will contain all finite languages; for example, the language
+$\{a,aba,abba,abbba,abbbba\}$ lacks the noncounting property (5.29) and is
+thus not a (potential) natural language.\index{noncounting}
+
+An indexed family of nonempty languages $L_1,L_2,\ldots$ satisfies Angluin's
+{\bf Condition 1} iff there is an effective procedure that will create, for
+each $i$, a finite subset $T_i$ of $L_i$ such that for all $j$, $L_j
+\not\subset L_i$ follows from $T_i \subseteq L_j$. The $T_i$ is called a {\bf
+  telltale}\index{telltale|textbf} for $L_i$ because once we know from
+semicooperative data presentation that $T_i$ is part of the target language,
+no subsets $L_j$ of $L_i$ need to be considered anymore. For such families, we
+have the following theorem.
+
+\smallskip\noindent
+{\bf Theorem 7.3.3} (Angluin 1980) An indexed family of nonempty languages 
+is iitl iff it satisfies Condition 1.\nocite{Angluin:1980}
+
+\smallskip\noindent For alphabets $\Sigma$ with at least three letters, a
+classic construction of Thue (1906, reprinted in Nagell
+1977)\nocite{Thue:1906}\nocite{Nagell:1977} asserts the existence of an
+infinite word $\xi = x_1x_2x_3\ldots$, which is {\bf square-free} in the sense
+that no substring of it has the form $\alpha\alpha$.\index{square-free word|textbf} For any threshold $k>1$, any regular set of subwords of $\xi$
+will be counter-free.  Let us now consider the language $P_0=\Sigma^*$ and the
+languages $P_i$ obtained from $\Sigma^*$ by removing from $\Sigma^*$ the
+prefix $x_1,\ldots x_i$ of $\xi$. This is an indexed family of nonempty
+languages that are all regular (complement of a finite language) and
+noncounting (complement of a noncounting language) with threshold $k$ for any
+$k>1$. If this family is iitl, by Theorem 7.3.3 there is a finite telltale
+$T_0$ such that for all $j$, $L_j \not\subset \Sigma^*$ must follow from $T_0
+\subseteq L_j$. Since the conclusion is false but the premiss will be true for
+any $L_j$ with $j$ greater than the longest string in $T_0$, we have a
+contradiction that proves the following theorem.
+
+\smallskip\noindent 
+{\bf Theorem 7.3.4} (Kracht 2007) For $k>1$, the family of regular noncounting
+languages over an alphabet $\Sigma$ that has at least three elements is not
+iitl.\nocite{Kracht:2007}
+
+\smallskip\noindent {\bf Discussion} To see that Theorem 7.3.3 is applicable,
+we need to assert that the languages $P_i$ are constructible. Thue's original
+proof relies on the homomorphism $h$ given by $0 \mapsto 01201; 1 \mapsto
+020121; 2 \mapsto 0212021$ over the alphabet $\{0,1,2\}$ and constructs $\xi$
+as $0xh(x)h^2(x)h^3(x)\ldots$, where $x=1201$ (i.e. as the result of the
+infinite iteration of $h$ from starting point $0$). Since $h$ increases the
+length of any string at least by a factor of 5 (and at most by a factor of 7),
+it requires at most $\lceil \log(l)/\log(5) \rceil$ iterations to compute the
+prefix $x_1\ldots x_l$ of $\xi$.  Since the algorithm $A(i,w)$ that decides
+the membership of $w$ in $P_i$ needs only to test whether $w$ is a prefix in
+$\xi$, it can run in time and space linear in $|w|$.
+
+Obviously, if $A$ is an iitl learnable family, so is every $B\subset A$, and if
+$C$ is not iitl learnable, neither will any $D \supset C$ be iitl
+learnable. But this is not enough to characterize the iitl families since
+there are many incomparable iitl families, such as the set of all finite
+languages vs. the set of all languages that can be generated by CSGs with a
+bounded number of rules (Shinohara 1990).  \nocite{Shinohara:1990}
+
+If we are prepared to relax the requirement of semicooperation (positive
+evidence only) and admit discovery procedures that rely on more data, there
+are several important results concerning regular languages and DFSAs. With a
+fully cooperative text (given in lexicographic order), Trakhtenbrot and Barzdin
+(1973)\nocite{Trakhtenbrot:1973} provided a polynomial algorithm that produces
+a DFSA consistent with all data (positive and negative) up to length $n$. If
+full cooperation is relaxed (positive and negative examples are presented but
+not all up to a given length), the problem is NP-hard \cite{Gold:1978}. If
+cooperation is extended by the answerer (informant) providing not just yes/no
+answers but also a full set of strings that reach every state of the
+automaton, the exact DFSA can be learned in finite time \cite{Angluin:1981}.
+If {\it grammar comparison} is allowed in the form of questions `Is this DFSA
+equivalent to the target?', polynomial learning of DFSAs is possible
+\cite{Angluin:1987}. It is equally possible to tighten the requirement of
+semicooperation by assuming a certain amount of downright misinformation or
+just noise. 
+
+\subsection{Probable approximate correctness}
+
+Assuming that each language learner is exposed to semicooperatively presented
+text from the older generations and identifies a grammar that can account for
+the text, there is still no guarantee that the learner's grammar will be the
+{\it exact} equivalent of the grammars that were used in generating the
+text. In fact, languages can and do change in aspects that go far beyond a
+superficial updating of vocabulary: whole grammatical constructions fall into
+disuse and eventually disappear, paradigms simplify, new constructions and new
+paradigms enter the language at a surprising rate. Sometimes the process can
+be attributed to contaminated text, especially if there is large-scale
+migration or change in ruling class, but even languages reasonably isolated
+from these effects change over time. To capture this phenomenon, we need to
+consider some notion of {\it approximate} learning that involves some measure
+of similarity between what is learned and what should have been learned: the
+key idea of Valiant (1984) was to express approximation in probabilistic
+terms.\nocite{Valiant:1984}
+
+To specify a pac learning problem, we again need to specify the domain and the
+range of the functions to be learned. These are generally the characteristic
+functions of some sets called {\it concepts}. We also need to specify the
+hypothesis space, generally as a family $H$ of concepts (sets) that are all
+subsets of the same universe called the {\it sample space} $S$. As the name
+suggests, $S$ will be endowed with a fixed (but not necessarily known)
+probability measure $P$ that dictates both how data will be presented to the
+learning algorithm and how the goodness of fit is to be measured between the
+target concept $C$ and a hypothesis $C'$ proposed by the algorithm.  We say
+that $C'$ {\bf approximates} $C$ within $\varepsilon$ if $P(C \Delta C') <
+\varepsilon$ (here $\Delta$ is used to denote symmetric set difference).  As
+for our criterion of success, we say that an algorithm $\delta,\varepsilon$
+{\bf pac-learns}\index{probably approximately correct, pac|textbf} $C$ if, after
+being presented with a sufficient number $n$ of randomly (according to $P$)
+chosen labeled examples, it produces, with probability $ > 1 - \delta$, a
+concept $C'$ that approximates $C$ within $\varepsilon$. Our chief interest is
+with algorithms that are polynomial in $n, 1/\delta$ and $1/\varepsilon$, and
+ideally we'd want algorithms that are robust under change of the distribution
+$P$ or even {\it distribution-free} (i.e. independent of $P$).
+
+As an example, let us again consider regular languages: the sample space is
+$T^*$ endowed with a suitable (e.g. geometrical) probability distribution, a
+concept to be learned is some regular language $C \subset T^*$, and a
+hypothesis produced by the algorithm is some DFSA $c'$, which generates the
+language $C'$. Stated in pac terms, the problem is still hard. In particular,
+Kearns and Valiant (1989)\nocite{Kearns:1989} demonstrate that a polynomial
+pac learner for all regular languages would also solve some problems generally
+regarded as cryptographically hard. However, {\it interleaving languages} (the
+musical analog of $k$-strings; see Ross 1995)\nocite{Ross:1995} are pac
+learnable, and if membership queries are allowed, a polynomial pac discovery
+procedure for DFSAs exists \cite{Angluin:1987}.
+
+The {\bf Vapnik-Chervonenkis (VC) dimension}\index{Vapnik-Chervonenkis (VC)
+  dimension} of a space $H$ of concepts is the maximum number of samples that
+can be labeled any way by members of $H$. Each member of $H$ creates a binary
+decision (labeling) on $S$, and if a set of $n$ is such that all $2^n$
+labelings can be obtained by a suitable choice of $H$, we say the set of
+points is {\it shattered} by $H$ -- the VC dimension of the hypothesis space
+is the cardinality of the largest set that can be so shattered. Obviously, for
+a finite class $H$, the VC dimension will be $\leq \log_2 |H|$. The VC
+dimension of the hypothesis space is closely related to pac learnability: the
+number of examples $n$ needed for $\delta,\varepsilon$ pac learning satisfies
+
+\begin{equation}
+\Omega\left(\frac{1}{\varepsilon}\log\frac{1}{\delta}+\frac{VC(H)}{\varepsilon}\right)
+\leq n \leq O\left(\frac{1}{\varepsilon}\log\frac{1}{\delta}
++\frac{VC(H)}{\varepsilon}\log\frac{1}{\varepsilon}\right)
+\end{equation}
+
+\smallskip\noindent While the two bounds are very close and the VC dimension
+of many classical learning models is known, the error bounds computed from
+(7.21) are rather pessimistic both because the results are distribution-free
+and because they are, as is common in theoretical computer science, worst-case
+results.  In principle, many linguistic problems could be recast as pac
+learning, but in a practical sense the algorithms that are most important for
+the linguist owe little to the pac framework both because the VC bounds do
+not characterize the problem well and because linguistic pattern matching, to
+which we turn in Chapter~8, is generally concerned with $n$-way, rather than
+2-way, classification problems.
+
+%\nocite{Kornai:2007} \nocite{Pereira:2000}
+
+\section{Further reading}
+
+Although there is some interesting prehistory (Nyquist 1924, Hartley 1928),
+information theory really begins with \newcite{Shannon:1948} -- for a modern
+treatment, see \newcite{MacKay:2003}.  The insufficiency of the classical {\it
+  quantitative} theory of information has been argued in
+\newcite{Bar-Hillel:1964}, whose goal was to replace it by a {\sl semantic
+  theory of information} -- the same goal is restated in
+\newcite{Dretske:1981} and \newcite{Devlin:1991}. Devlin (2001) argues that
+the semantic theory that fits the bill is {\it situation semantics}; for a
+short introduction, see Seligman and Moss (1997), and for a detailed exposition
+see Barwise and Perry (1983).  \nocite{Barwise:1983}\nocite{Seligman:1997}
+\nocite{Nyquist:1924}\nocite{Hartley:1928}\nocite{Devlin:2001}
+
+Li and Vit\'anyi (1997)\nocite{Li:1997} provide an encyclopedic treatment of
+Kolmogorov complexity. For a succinct presentation of the central ideas, see
+G\'acs (2003)\nocite{Ga1cs:2003} and for a discussion of the relation of
+Kolmogorov complexity and learnability see \newcite{Clark:1994}.  The MDL
+framework originates with \newcite{Rissanen:1978}.  For a thorough discussion
+of anuv\d{r}tti, invoking a full metagrammar of over a hundred principles, see
+Joshi and Bhate (1984).\nocite{Joshi:1984} The idea of using grammars to
+generate grammars goes back to Koster (1970).\nocite{Koster:1970} A
+significant fragment of English grammar, with heavy use of metarules, is
+presented in Gazdar et al. (1985).\nocite{Gazdar:1985} The first major
+discussion of simplicity measures in generative linguistics is Chomsky and
+Halle (1968 Ch. 9); for a comparison with the earlier structuralist ideas, see
+\newcite{Battistella:1996}.
+
+On the status of {\it \v{z}}, see \newcite{McMillan:1977}. The acquisition of
+phonology offers a particularly rich storehouse of phenomena that support a
+universal grammar-based view of language acquisition. For example, infants
+employ rules such as reduplication and final devoicing that the adult grammar
+of the language they learn may entirely lack. However, the idea that the
+acquisition of phonology relies heavily on hardwired UG has its detractors;
+see e.g. \cite{Zamuner:2005}. The same can be said for syntax, where 
+the {\it poverty of stimulus}\index{poverty of stimulus} argument offered
+in \newcite{Chomsky:1980}, that certain facts about natural language could not 
+be learned from experience alone, though widely accepted, has significant 
+detractors; see e.g. Pullum and Scholz (2002).\nocite{Pullum:2002}
+
+The classic sources on iitl and pac learning remain Gold (1967) and Valiant
+(1984). For inductive inference in general, see \newcite{Angluin:1983},
+\newcite{Angluin:1992}, and \newcite{Florencio:2003}.  For the lower bound in
+(7.21), see Ehrenfeucht et al. (1989), and for the upper bound see Blumer et
+al.  (1989)\nocite{Blumer:1989} and Anthony et al. (1990).
+\nocite{Anthony:1990}\nocite{Ehrenfeucht:1989}
+
+\endinput
+
+
+
+property vacuously, as 
+$[H]_k$ denote the {\it threshold $k$ counter-free closure} of $H$ i.e.  the
+smallest language that contains $H$ and has the counter-free property with
+threshold $k$. As Kracht (2007) shows, if a subword $\xi_0$ of $\xi$ is not
+in some language $H \subset \Sigma^*$, it will also not appear in the
+threshold $k$ counter-free closure $[H]_k$.

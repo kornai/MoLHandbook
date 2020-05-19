@@ -1,0 +1,1685 @@
+\chapter{Phonology}
+
+The fundamental unit of linguistics is the {\it sign}, which, as a first
+approximation, can be defined as a conventional pairing of sound and meaning.
+By {\it conventional} we mean both that signs are handed down from generation
+to generation with little modification and that the pairings are almost
+entirely arbitrary, just as in bridge, where there is no particular reason for
+a bid of two clubs in response to one no trump to be construed as an inquiry
+about the partner's major
+suits.\index{convention}\index{convention!Stayman}\index{sign} One of the
+earliest debates in linguistics, dramatized in Plato's {\it Cratylus},
+concerns the arbitrariness of signs.  One school maintained that for every
+idea there is a true sound that expresses it best, something that makes a
+great deal of sense for {\it onomatopoeic} words (describing e.g. the calls of
+various animals) but is hard to generalize outside this limited domain.
+Ultimately the other school prevailed (see Lyons 1968 Sec. 1.2 for a
+discussion) \nocite{Lyons:1968} at least as far as the word-level pairing of
+sound and meaning is concerned. \index{onomatopoeic words}
+
+It is desirable to build up the theory of sounds without reference to the
+theory of meanings both because the set of atomic units of sound promises to
+be considerably simpler than the set of atomic units of meanings and because
+sounds as linguistic units appear to possess clear physical correlates
+(acoustic waveforms; see Chapter~8), while meanings, for the most part, appear
+to lack any direct physical embodiment.\index{form}\index{meaning} There is
+at least one standard system of communication, Morse code, that gets by with
+only two units, dot (short beep) and dash (long beep) or possibly three, (if we
+count pause/silence as a separate unit; see Ex. 7.7). To be sure, Morse
+code is parasitic on written language, which has a considerably larger
+alphabet, but the enormous success of the alphabetic mode of writing itself
+indicates clearly that it is possible to analyze speech sounds into a few
+dozen atomic units, while efforts to do the same with meaning (such as Wilkins
+1668) \nocite{Wilkins:1668} could never claim similar success.
+\index{code!Morse}
+
+There is no need to postulate the existence of some alphabetic system for
+transcribing sounds, let alone a meaning decomposition of some given kind. In
+Section~3.1 we will start with easily observable entities called {\it
+  utterances},\index{utterance} which are defined as maximal pause-free
+stretches of speech, and describe the concatenative building blocks of sound
+structure called {\it phonemes}. For each natural language $L$ these will act
+as a convenient set of atomic symbols $P_L$ that can be manipulated by
+context-sensitive string-rewriting techniques, giving us what is called the
+{\it segmental phonology} of the language.  This is not to say that the set of
+words $W_L$, viewed as a formal language over $P_L$, will be context-sensitive
+(Type 1) in the sense of formal language theory. On the contrary, we have good
+reasons to believe that $W$ is in fact regular (Type 3).
+
+To go beyond segments, in Section~3.2 we introduce some subatomic components
+called {\it distinctive features} and the formal linguistic mechanisms
+required to handle them. To a limited extent, distinctive features pertaining
+to tone and stress are already useful in describing the {\it suprasegmental
+  phonology} of languages. To get a full understanding of suprasegmentals in
+Section~3.3 we introduce {\it multitiered} data structures more complex than
+strings, composed of {\it autosegments.} Two generalizations of regular
+languages motivated by phonological considerations, regular transducers and
+regular $k$-languages, are introduced in Section~3.4. The notions of prosodic
+hierarchy and optimality, being equally relevant for phonology and morphology,
+are deferred to Chapter~4.
+
+\section{Phonemes}
+
+We are investigating the very complex {\it interpretation relation}
+\index{interpretation relation} that obtains between certain structured
+kinds of sounds and certain structured kinds of meanings; our eventual goal is
+to define it in a generative fashion. At the very least, we must have some
+notion of identity that tells us whether two signs sound the same and/or mean
+the same. The key idea is that we actually have access to more information,
+namely, whether two utterances are {\it partially similar} in form and/or
+meaning. \index{partial similarity} To use Bloomfield's original examples:
+
+\begin{quote}
+A needy stranger at the door says {\it I'm hungry}. A child who has eaten and
+merely wants to put off going to bed says {\it I'm hungry}. Linguistics
+considers only those vocal features which are alike in the two utterances
+$\ldots$ Similarly, {\it Put the book away} and {\it The book is interesting}
+are partly alike {\it (the book).}
+\end{quote}
+
+That the same utterance can carry different meanings at different times is a
+fact we shall not explore until we introduce {\it disambiguation} in Chapter~6
+-- the only burden we now place on the theory of meanings is that it be
+capable of (i) distinguishing meaningful from meaningless and (ii) determining
+whether the meanings of two utterances share some aspect. Our expectations of
+the observational theory of sound are similarly modest: we assume we are
+capable of (i$'$) distinguishing pauses from speech and (ii$'$) determining
+whether the sounds of two utterances share some aspect.\index{disambiguation}
+
+We should emphasize at the outset that the theory developed on this basis does
+not rely on our ability to exercise these capabilities to the extreme. We have
+not formally defined what constitutes a pause or silence, though it is evident
+that observationally such phenomena correspond to very low acoustic energy
+when integrated over a period of noticeable duration, say 20 milliseconds.
+But it is not necessary to be able to decide whether a 19.2 millisecond
+stretch that contains exactly 1.001 times the physiological minimum of audible
+sound energy constitutes a pause or not. If this stretch is indeed a pause we
+can always produce another instance, one that will have a significantly larger
+duration, say 2000 milliseconds, and containing only one-tenth of the previous
+energy. This will show quite unambiguously that we had two utterances in the
+first place. If it was not a pause, but rather a functional part of sound
+formation such as a stop closure, the new `utterances' with the artificially
+interposed pause will be deemed ill-formed by native speakers of the language.
+\index{pause} Similarly, we need not worry a great deal whether {\it Colorless
+  green ideas sleep furiously} is meaningful, or what it exactly means. The
+techniques described here are robust enough to perform well on the basis of
+ordinary data without requiring us to make ad hoc decisions in the edge cases.
+The reason for this robustness comes from the fact that when viewed as a
+probabilistic ensemble, the edge cases have very little weight (see Chapter~8
+for further discussion).
+
+The domain of the interpretation relation $I$ is the set of {\it forms} $F$,
+and the codomain is the set of {\it meanings} $M$, so we have $I \subset F
+\times M$. In addition, we have two {\it overlap} relations, $O_F \subset F
+\times F $ and $O_M \subset M \times M$, that determine partial similarity of
+form and meaning respectively. $O_F$ is traditionally divided into {\it
+  segmental} and {\it suprasegmental} overlaps. We will discuss mostly
+segmental overlap here and defer suprasegmentals such as tone and stress to
+Section~3.3 and Section~4.1, respectively. Since speech happens in time, we
+can define two forms $\alpha$ and $\beta$ as {\it segmentally overlapping} if
+their temporal supports as intervals on the real line can be made to overlap,
+as in the {\it the book} example above. In the segmental domain at least, we
+therefore have a better notion than mere overlap: we have a partial ordering
+defined by the usual notion of interval containment. In addition to $O_F$, we
+will therefore use sub- and superset relations (denoted by $\subset_F,
+\supset_F$) as well as intersection, union, and complementation operations in
+the expected fashion, and we have
+
+\begin{equation} 
+\alpha \cap_F \beta \neq \emptyset \Rightarrow \alpha O_F \beta
+\end{equation}
+
+In the domain of $I$, we find obviously complex forms such as a full epic poem
+and some that are atomic in the sense that 
+
+\begin{equation}
+\forall x \subset_F \alpha : x \not\in dom(I)
+\end{equation}
+
+\noindent
+These are called {\it minimum forms}. \index{minimum form} A form that can
+stand alone as an utterance is a {\it free form};\index{free form} the rest
+(e.g. forms like {\it ity} or {\it al} as in {\it electricity, electrical}),
+which cannot normally appear between pauses, are called {\it bound
+  forms}. \index{bound form}
+
+Typically, utterances are full phrases or sentences, but when circumstances
+are right, e.g. because a preceding question sets up the appropriate context,
+forms much smaller than sentences can stand alone as complete utterances.
+Bloomfield (1926) defines a {\it word} as a minimum free form. For example,
+{\it electrical} is a word because it is a free form (can appear e.g. as
+answer to the question {\it What kind of engine is in this car?}) and it cannot
+be decomposed further into free forms ({\it electric} would be free but {\it
+al} is bound). We will have reason to revise this definition in Chapter~4, but
+for now we can provisionally adopt it here\index{word} because in
+defining phonemes it is sufficient to restrict ourselves to free forms. 
+
+For the rest of this section, we will only consider the set of words $W
+\subset F$, and we are in the happy position of being able to ignore the
+meanings of words entirely. We may know that forms such as {\it city} and {\it
+  velocity} have nothing in common as far as their meanings are concerned and
+that we cannot reasonably analyze the latter as containing the former, but we
+also know that the two rhyme, and as far as their forms are concerned {\it
+  velocity = velo}.{\it city}. Similarly, {\it velo} and {\it kilo} share
+the form {\it lo} so we can isolate {\it ve}, {\it ki}, and {\it lo} as more
+elementary forms.
+
+In general, if $pOq$, we have a nonempty $u$ such that $p=aub, q=
+cud$. $a,b,c,d,u$ will be called {\bf word fragments} obtained from comparing
+$p$ and $q$, and we say $p$ {\bf is a subword of} $q$, denoted $p \prec q$, if
+$a=b=\lambda$.  \index{word!fragment|textbf} \index{containment|textbf} We
+denote by $\tilde{W}$ the smallest set containing $W$ and closed under the
+operation of taking fragments -- $\tilde{W}$ contains all and only those
+fragments that can be obtained from $W$ in finitely many steps.
+
+By successively comparing forms and fragments, we can rapidly extract a set of
+short fragments $P$ that is sufficiently large for each $w \in \tilde{W}$ to
+be a concatenation of elements of $P$ and sufficiently small that no two
+elements of it overlap.  A {\bf phonemic alphabet} $P$ is therefore defined by
+(i) $\tilde{W} \subset P^*$ and (ii) $\forall p,q \in P: p O_F q \Rightarrow
+p=q$.  To forestall confusion, we emphasize here that $P$ consists of mental
+rather than physical units, as should be evident from the fact that the method
+of obtaining them relies on human oracles rather than on some physical
+definition of (partial) similarity. The issue of relating these mental units
+to physical observables will be taken up in Chapters 8 and 9. 
+
+We emphasize here that the procedure for finding $P$ does not depend on the
+existence of an alphabetic writing system. All it requires is an informant
+(oracle) who can render judgments about partial similarity, and in practice
+this person can just as well be illiterate.\index{phonemic alphabet} Although
+the number of unmapped languages is shrinking, to this day the procedure is
+routinely carried out whenever a new language is encountered. In some sense
+(to be made more precise in Section~7.3), informant judgments provide more
+information than is available to the language learner: the linguist's {\it
+  discovery procedure}\index{discovery procedure} is driven both by the
+positive (grammatical) and negative (ungrammatical) data, while it is
+generally assumed that infants learning the language only have positive data
+at their disposal, an assumption made all the more plausible by the wealth of
+language acquisition research indicating that children ignore explicit
+corrections offered by adults.
+
+For an arbitrary set $W$ endowed with an arbitrary overlap relation $O_F$,
+there is no guarantee that a phonemic alphabet exists; for example, if $W$ is
+the set of intervals $[0,2^{-n}]$ with overlap defined in the standard manner,
+$P = \{[2^{-(i+1)},2^{-i}]| i \geq 0\}$ will enjoy (ii) but not (i). In actual
+word inventories $W$ and their extensions $\tilde{W}$, we never see the
+phenomenon of an infinite descending chain of words or fragments $w_1, w_2,
+\ldots$ such that each $w_{i+1}$ is a proper part of $w_{i}$, nor can we find
+a large number (say $>2^8$) words or fragments such that no two of them
+overlap. We call such statements of contingent facts about the real world {\it
+postulates} to distinguish them from ordinary axioms, which are not generally
+viewed as subject to falsification.\index{postulate}
+
+\smallskip\noindent
+{\bf Postulate 3.1.1} Foundation. Any sequence of words and word fragments
+$w_1, w_2, \ldots$ such that each $w_{i+1} \prec w_i, w_{i+1} \neq w_i$,
+terminates after a finite number of steps.
+
+\smallskip\noindent
+{\bf Postulate 3.1.2} Dependence. Any set of words or word fragments $w_1,
+w_2, \ldots$ $w_m$ contains two different but overlapping words or fragments
+for any $m > 2^8$.
+
+%\smallskip\noindent
+From these two postulates both the existence and uniqueness of phonetic
+alphabets follow. Foundation guarantees that every $w \in W$ contains at least
+one atom under $\prec$, and dependence guarantees that the set $P$ of atoms is
+finite.  Since different atoms cannot overlap, all that remains to be seen is
+that every word of $\tilde{W}$ is indeed expressible as a concatenation of
+atoms. Suppose indirectly that $q$ is a word or fragment that could not be
+expressed this way: either $q$ itself is atomic or we can find a fragment
+$q_1$ in it that is not expressible. Repeating the same procedure for $q_1$,
+we obtain $q_2, \ldots, q_n$. Because of Postulate 3.2.1, the procedure
+terminates in an atomic $q_n$. But by the definition of $P$, $q_n$ is a member
+of it, a contradiction that proves the indirect hypothesis false.
+
+\smallskip\noindent
+{\bf Discussion} Nearly every communication system that we know of is built on
+a finite inventory of discrete symbols. There is no law of nature that would
+forbid a language to use measure predicates such as {\it tall} that take
+different vowel lengths in proportion to the tallness of the object described.
+In such a hypothetical language, we could say {\it It was taaaaaaall} to
+express the fact that something was seven times as tall as some standard of
+comparison, and {\it It was taaall} to express that it was only three times as
+tall. The closest thing we find to this is in Arabic/Persian calligraphy,
+where joining elements are sometimes sized in accordance with the importance
+of a word, or in Web2.0-style tag clouds, where font size grows with frequency.
+Yet even though analog signals like these are always available, we find that
+in actual languages they are used only to convey a discrete set of possible
+values (see Chapter~9), and no communication system (including calligraphic 
+text and tag clouds) makes their use obligatory. 
+
+Postulates 3.1.1 and 3.1.2 go some way toward explaining why discretization of
+continuous signals must take place. We can speculate that foundation is
+necessitated by limitations of perception (it is hard to see how a chain could
+descend below every perceptual threshold), and dependence is caused by
+limitations of memory (it is hard to see how an infinite number of totally
+disjoint atomic units could be kept in mind). No matter how valid these
+explanations turn out to be, the postulates have a clear value in helping us
+to distinguish linguistic systems from nonlinguistic ones. For example, the
+dance of bees, where the direction and size of figure-8 movements is directly
+related to the direction and distance from the hive to where food can be
+collected \cite{Frisch:1967}, must be deemed nonlinguistic, while the genetic
+code, where information about the composition of proteins is conveyed by
+DNA/RNA strings, can at least provisionally be accepted as linguistic.
+\index{genetic code} \index{bee dance}
+
+Following the tradition of \newcite{Chomsky:1965}, memory limitations are
+often grouped together with mispronunciations, lapses, hesitations, coughing,
+and other minor errors as {\bf performance}
+factors,\index{performance}\index{competence} while more abstract and
+structural properties are treated as {\it competence} factors. Although few
+doubt that some form of the competence vs. performance distinction is
+valuable, at least as a means of keeping the noise out of the data, there has
+been a great deal of debate about where the line between the two should be
+drawn. Given the orthodox view that limitations of memory and perception are
+matters of performance, it is surprising that such a deeply structural
+property as the existence of phonetic alphabets can be derived from postulates
+rooted in these limitations.
+
+\section{Natural classes and distinctive features}
+
+Isolating the atomic segmental units is a significant step toward
+characterizing the phonological system of a language. Using the phonemic
+alphabet $P$, we can write every word as a string $w \in P^*$, and by adding
+just one extra symbol \# to denote the pause between words, we can write all
+utterances as strings over $P \cup \{\#\}$.  Since in actual {\it connected}
+speech pauses between words need not be manifest, we need an interpretative
+convention that \# can be {\it phonetically realized} either as silence or as
+the empty string (zero realization). Silence, of course, is distinctly audible
+and has positive duration (usually 20 milliseconds or longer), while $\lambda$
+cannot be heard and has zero duration. \index{connected speech} \index{pause}
+\index{silence} \index{phonetic realization}
+\index{phonetic interpretation} 
+
+In fact, similar interpretative conventions are required throughout the
+alphabet, e.g. to take care of the fact that in English word-initial $t$ is
+{\it aspirated} (released with a puff of air similar in
+effect to $h$ but much shorter), while in many other positions $t$ is {\it
+unaspirated} (released without an audible puff of air): compare {\it ton} to
+{\it stun.} The task of relating the abstract units of the alphabet to their
+audible manifestations is a complex one, and we defer the details to
+Chapter~9. We note here that the interpretation process is by no means
+trivial, and there are many unassailable cases, such as aspirated vs.
+unaspirated $t$ and silenceful vs. empty \#, where we permit two or more
+alternative realizations for the same segment. (Here and in what follows we
+reserve the term {\bf segment} for alphabetic units; i.e. strings of length
+one.) \index{segment|textbf} \index{aspirated} \index{unaspirated}
+
+Since $\lambda$ can be one of the alternatives, an interesting technical
+possibility is to permit cases where it is the only choice: i.e. to declare
+elements of a phonemic alphabet that never get realized. The use of such {\it
+  abstract} or {\bf diacritic} elements {\it (anubandha)} is already pivotal
+in P\={a}\d{n}ini's system and remains characteristic of phonology to this
+day.\index{abstract segment|textbf}\index{diacritic|textbf} This is our first
+example of the linguistic distinction between {\it underlying} (abstract) and
+{\it surface} (concrete) forms -- we will see many others
+later.\index{underlying form}\index{surface form}
+\index{abstract phonemes}\index{anubandha}\index{P\={a}\d{n}ini}
+
+Because in most cases alternative realizations of a symbol are governed by the
+symbols in its immediate neighborhood, the mathematical tool of choice for
+dealing with most of segmental phonology is string rewriting by means of
+context-sensitive rules. Here a word of caution is in order: from the fact
+that context-sensitive rules are used it does not follow that the generated
+stringset over $P$, or over a larger alphabet $Q$ that includes abstract
+elements as well, will be context-sensitive. We defer this issue to Section~3.4, and
+for now emphasize only the convenience of context-sensitive rules, which offer
+an easy and well-understood mechanism to express the phonological regularities
+or {\it sound laws} that have been discovered over the centuries. 
+\index{sound law}
+
+\smallskip\noindent
+{\bf Example 3.2.1} Final devoicing in Russian. The nominative form of Russian
+nouns can be predicted from their dative forms by removing the dative suffix
+$u$ and inspecting the final consonant: if it is $b$ or $p$, the final
+consonant of the nominative form will be $p$.  This could be expressed in a
+phonological rule of {\it final b devoicing}: $b \rightarrow p / \underline{\
+\ }\#$. When it is evident that the change is caused by some piece of the
+environment where the rule applies, we speak of the piece {\it triggering} 
+the change; here the trigger is the final $\#$.\index{trigger}
+
+Remarkably, we find that a similar rule links $d$ to $t$, $g$ to $k$, and in
+fact any voiced obstruent to its voiceless counterpart.  The phenomenon that
+the structural description and/or the structural change in rules extends to
+some disjunction of segments is extremely pervasive. Those sets of segments
+that frequently appear together in rules (either as triggers or as undergoers)
+are called {\it natural classes};\index{natural class} for example,
+the class $\{p, t, k\}$ of {\it unvoiced stops} and the class $\{b, d, g\}$ of
+{\it voiced stops} are both natural, while the class $\{p, t, d\}$ is not.
+Phonologists would be truly astonished to find a language where some rule or
+regularity affects {\it p, t}, and {\it d} but no other segment. 
+
+The linguist has no control over the phonemic alphabet of a language: $P$ is
+computed as the result of a specific (oracle-based, but otherwise
+deterministic) algorithm. Since the set $N \subset 2^P$ of natural classes is
+also externally given by the phonological patterning of the language, over the
+millennia a great deal of effort has been devoted to the problem of properly
+characterizing it, both in order to shed some light on the structure of $P$
+and to help simplify the statement of rules. 
+
+So far, we have treated $P$ as an unordered set of alphabetic symbols. In the
+Ash\d{t}\={a}\-dhy\={a}y\={\i}, P\={a}\d{n}ini arranges elements of $P$ in
+a\index{P\={a}\d{n}ini} linear sequence (the {\it \'{s}ivas\={u}tras}) with
+some abstract (phonetically unrealized) symbols {\it (anubandha)}
+interspersed.  Simplifying his treatment somewhat (for a fuller discussion,
+see \nocite{Staal:1962} Staal 1962), natural classes {\it
+  (praty\={a}h\={a}ra)} are defined in his 1.1.71 as those subintervals of the
+{\it \'{s}ivas\={u}tras} that end in some {\it anubandha}. If there are $k$
+symbols in $P$, in principle there could be as many as $2^k$ natural
+classes. However, the P\={a}\d{n}inian method will generate at most $k(k+1)/2$
+subintervals (or even fewer, if diacritics are used more sparingly), which is
+in accordance with the following postulate.\index{praty\={a}h\={a}ra}
+\index{\'{s}ivas\={u}tras} \index{anubandha}
+
+\smallskip\noindent
+{\bf Postulate 3.2.1} In any language, the number of natural classes is small.
+
+\smallskip\noindent We do not exactly spell out what `small' means
+here. Certainly it has to be polynomial, rather than exponential, in the size
+of $P$. The European tradition reserves names for many important natural
+classes such as the {\it apicals}, {\it aspirates}, {\it bilabials}, {\it
+  consonants}, {\it continuants}, {\it dentals}, {\it fricatives}, {\it
+  glides}, {\it labiodentals}, {\it linguals}, {\it liquids}, {\it nasals},
+{\it obstruents}, {\it sibilants}, {\it stops}, {\it spirants}, {\it
+  unaspirates}, {\it velars}, {\it vowels}, etc. -- all told, there could be a
+few hundred, but certainly not a few thousand, such classes.  As these names
+suggest, the reason why a certain class of sounds is natural can often be
+found in sharing some aspects of production (e.g. all sounds crucially
+involving a constriction at the lips are {\it labials}, and all sounds
+involving turbulent airflow are {\it fricatives}), but often the justification
+is far more complex and indirect. In some cases, the matter of whether a
+particular class is natural is heavily debated. For a particularly hard
+chestnut, the {\it ruki} class;\index{ruki} see Section~9.2, Collinge's (1985)
+discussion of Pedersen's law I, and the references cited therein. \index{ruki}
+\index{fricative} \index{labial}\nocite{Collinge:1985}
+
+For the mathematician, the first question to ask about the set of natural
+classes $N$ is neither its size nor its exact membership but rather its
+algebraic structure: under what operations is $N$ closed? To the extent that
+P\={a}\d{n}ini is right, the structure is not fully Boolean: the complement of
+an interval typically will not be expressible as a single interval, but the
+intersection of two intervals {\it (praty\={a}h\={a}ra)} will again be an
+interval. We state this as the following postulate.
+
+\smallskip\noindent
+{\bf Postulate 3.2.2} In any language, the set of natural classes is closed 
+under intersection. 
+
+\smallskip\noindent This postulate makes $N$ a meet semilattice, and it is
+clear that the structure is not closed under complementation since single
+segments are natural classes but their complements are not. The standard way
+of weakening the Boolean structure is to consider meet semilattices of linear
+subspaces. We embed $P$ in a hypercube so that natural classes correspond to
+hyperplanes parallel to the axes. The basis vectors that give rise to the
+hypercube are called {\bf distinctive features} and are generally assumed to
+be binary; a typical example is the {\it voiced/unvoiced} distinction that is
+defined by the presence/absence of periodic vocal fold
+movements. \index{distinctive features|textbf} \index{voiced} \index{unvoiced}
+It is debatable whether the field underlying this vector space construct
+should be $\Bbb R$ or GF(2). We take the second option and use GF(2), but we
+will have reason to return to the notion of real-valued features in
+Chapters~8 and 9. Thus, we define a {\bf feature assignment} as an injective
+mapping $C$ from the set $Q$ of segments into the linear space
+GF(2,$n$).\index{feature assignment|textbf}
+
+This is a special case of a general situation familiar from universal algebra:
+if $A_i$ are algebras of the same signature and $A = \prod A_i$ is their
+direct product, we say that a subalgebra $B$ of $A$ is a {\bf subdirect
+  product} of the $A_i$ if all its projections on the components $A_i$ are
+surjective. \index{subdirect product|textbf} A classic theorem of Birkhoff
+asserts that every algebra can be represented as a subdirect product of
+subdirectly irreducible algebras.  Here the algebras are simply finite sets,
+and as the only subdirectly irreducible sets have one or two members (and
+one-member sets obviously cannot contribute to a product), we obtain
+distinctive feature representations (also called {\bf feature
+  decompositions})\index{feature decomposition|textbf} for any set for free.
+
+Since any set, not just phonological segments, could be defined as vectors
+(also called {\it bundles}) of features, \index{feature bundle} to give
+feature decomposition some content that is specific to phonology we must go a
+step further and link natural classes to this decomposition.  This is achieved
+by defining as {\bf natural classes} those sets of segments that can be
+expressed by fewer features than their individual members \nocite{Halle:1964}
+(see Halle 1964:328).  \index{natural class|textbf} To further simplify the
+use of natural classes, we assume a theory of {\it
+  markedness}\index{markedness} (Chomsky and Halle 1968 Ch. IX) that supplies
+those features that are predictable from the values already given (see
+Section~7.3).  For example, high vowels will be written as $\left[
+\begin{array}{c}+\text{syll}\\+\text{high}\end{array}\right]$, requiring only
+two features, because the other features that define this class, such as
+$[-\text{low}]$ or $[+\text{voice}]$, are predictable values already given.
+
+In addition to using {\it praty\={a}h\={a}ra}, P\={a}\d{n}ini employs a
+variety of other devices, most notably the concept of `homogeneity' {\it
+  (s\={a}var\d{n}ya)}, as a means of cross-classification
+(see\index{P\={a}\d{n}ini}\nocite{Cardona:1965} Cardona 1965). This device
+enables him to treat quality distinctions in vowels separately from length,
+nasality, and tone distinctions, as well as to treat place of articulation
+distinctions in consonants separately from nasality, voicing, and aspiration
+contrasts. Another subsidiary concept, that of {\it antara} \index{antara}
+`nearness', is required to handle the details of mappings between natural
+classes. Since P\={a}\d{n}inian rules always map classes onto classes, the
+image of a segment under a rule is decided by P1.1.50 {\it sth\={a}ne
+'ntaratama\d{h}} `in replacement, the nearest'. The modern equivalent of
+P1.1.50 is the convention that features unchanged by a rule need not be
+explicitly mentioned, so that the Russian final devoicing rule that we began
+with may simply be stated as [+obstruent] $\rightarrow$ [$-$voice] /
+$\underline{\ \ }\#$. 
+
+For very much the same empirical reasons that forced P\={a}\d{n}ini to
+introduce additional devices like {\it s\={a}var\d{n}ya}, the contemporary
+theory of features also relaxes the requirement of full orthogonality.
+\index{s\={a}var\d{n}ya} One place where the standard \cite{Chomsky:1968}
+theory of distinctive features shows some signs of strain is the treatment of
+vowel height. Phonologists and phoneticians are in broad agreement that vowels
+come in three varieties, {\it high}, {\it mid}, and {\it low}, which form an
+interval structure: we often have reason to group high and mid vowels together
+or to group mid and low vowels together, but we never see a reason to group
+high and low vowels together to the exclusion of mid vowels. The solution
+adopted in the standard theory is to use two binary features, [$\pm$ high] and
+[$\pm$ low], and to declare the conjunction [+high, +low] ill-formed.
+\index{vowel} \index{vowel height} \index{high (vowel feature)} 
+\index{low (vowel feature)}
+
+Similar issues arise in many other corners of the system; e.g. in the
+treatment of {\it place of articulation} features.\index{place of articulation}
+Depending on where the major constriction that determines the
+type of a consonant occurs, we distinguish several places of articulation,
+such as {\it bilabial}, {\it labiodental}, {\it dental}, {\it alveolar}, {\it
+  postalveolar}, {\it retroflex}, {\it palatar}, {\it velar}, {\it
+  pharyngeal}, {\it epiglottal}, and {\it glottal}, moving back from the lips
+to the glottis inside the vocal tract. No single language has phonemes at
+every point of articulation, but many show five-, or six-way contrasts. For
+example, Korean distinguishes bilabial, dental, alveolar, velar, and glottal,
+and the difference is noted in the basic letter shape ($\Box,
+\vee,\leftharpoonup ,\rightharpoondown$, and $\bigcirc$,
+respectively).\index{Korean} Generally, there is more than one consonant per
+point of articulation; for example, English has alveolars {\it n, t, d, s, z,
+  l}. Consonants sharing the same place of articulation are said to be {\it
+  homorganic} and they form a natural class (as can be seen e.g. from rules of
+nasal assimilation that replace e.g. {\it input} by {\it
+  imput}).\index{homorganic}\index{assimilation!nasal}
+
+Since the major classes (labial, coronal, dorsal, radical, laryngeal) show a
+five-way contrast, the natural way to deal with the situation would be the use
+of one GF(5)-valued feature rather than three (or more) underutilized GF(2)
+values, but for reasons to be discussed presently this is not a very
+attractive solution. What the system really needs to express is the fact that
+some features tend to occur together in rules to the exclusion of others, a
+situation somewhat akin to that observed among the segments. The first idea
+that leaps to mind would be to utilize the same solution, using features of
+features {\it (metafeatures)} to express natural classes of features. The
+Cartesian product operation that is used in the feature decomposition
+(subdirect product form) of $P$ is associative, and therefore it makes no
+difference whether we perform the feature decomposition twice in a metafeature
+setup, or just once at the segment level. Also, the inherent ordering of
+places of articulation (for consonants) or height (for vowels) is very hard to
+cenvey by features, be they 2-valued or n-valued, without recourse to
+arithmetic notions, something we would very much like to avoid as it would
+make the system overly expressive. 
+
+The solution now widely accepted in phonology (Clements 1985, McCarthy 1988)
+\nocite{Clements:1985,McCarthy:1988} is to arrange the features in a tree
+structure, using intermediate {\bf class nodes} \index{class node}
+\index{feature geometry} to express the grouping together of some features to
+the exclusion of others (see Fig. 3.1).
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=4in]{Fig/tree}
+%\caption{Figure 3.2.1 Feature geometry tree. Rules that required the special
+%principle of {\it s\={a}var\d{n}ya} can be stated using the {\it
+%supralaryngeal class node}.}
+\end{center}
+\end{figure}
+
+\begin{center}
+{\bf Fig. 3.1.} Feature geometry tree. Rules that required the special
+principle of {\it s\={a}var\d{n}ya} can be stated using the {\it
+supralaryngeal class node}. 
+\end{center}
+
+\smallskip\noindent This solution, now permanently (mis)named {\bf feature
+geometry}, is in fact a generalization of both the praty\={a}h\={a}ra and the
+standard feature decomposition methods. The linear intervals of the
+P\={a}\d{n}inian model are replaced by generalized (lattice-theoretic)
+intervals in the subsumption lattice of the tree, and the Cartesian product
+appearing in the feature decomposition corresponds to the special case where
+the feature geometry tree is a star (one distinguished root node, all other
+nodes being leaves). 
+
+\bigskip
+\noindent
+{\bf Discussion} The segmental inventories $P$ developed in Section~3.1 are clearly
+different from language to language. As far as natural classes and feature
+decomposition are concerned, many phonologists look for a single universal
+inventory of features arranged in a universally fixed geometry such as the one
+depicted in Fig. 3.1. Since the cross-linguistic identity of features such
+as [nasal] is anchored in their phonetic (acoustic and articulatory)
+properties rather than in some combinatorial subtleties of their
+intralanguage phonological patterning, this search can lead to a single
+object, unique up to isomorphism, that will, much like Mendeleyev's periodic
+table, encode a large number of regularities in a compact
+format. \index{nasality}
+
+Among other useful distinctions, Chomsky and Halle (1968)\nocite{Chomsky:1965}
+introduce the notion of {\it formal} vs. {\it substantive
+  universals}.\index{formal universal}\index{substantive universal} Using this
+terminology, meet semilattices are a formal, and a unique feature geometry
+tree such as the one in Fig. 3.1 would be a substantive, universal. To the
+extent that phonological research succeeds in identifying a unique feature
+geometry, every framework, such as semilattices, that permits a variety of
+geometries overgenerates. \index{overgeneration} That said, any theory is
+interesting to people other than its immediate developers only to the extent
+that it can be generalized to problems other than the one it was originally
+intended to solve. Phonology, construed broadly as an abstract theory of
+linguistic form, applies not only to speech but to other forms of
+communication (handwritten, printed, signed, etc.) as well. In fact, phonemes,
+distinctive features, and feature geometry are widely used in the study of
+sign language (see e.g. Sandler 1989, Liddell and Johnson 1989);
+\nocite{Sandler:1989} \nocite{Liddell:1989} where substantive notions like
+nasality may lose their grip, the formal theory remains valuable. (However, as
+the abstract theory is rooted in the study of sound, we will keep on talking
+about `utterances', `phonemes', `syllables', etc., rather than using
+`gestures', `graphemes', or other narrow terms.)
+
+\smallskip\noindent
+{\bf Exercise 3.2}. What are the phonemes in the genetic code? How would 
+you define feature decomposition and feature geometry there? 
+
+\section{Suprasegmentals and autosegments}
+
+In Section~3.1 we noted that words can be partially alike even when they do
+not share any segments. For example, {\it blackbird} and {\it whitefish} share
+the property that they have a single stressed syllable, a property that was
+used by \newcite{Bloomfield:1926} to distinguish them from multiword phrases
+such as {\it black bird} or {\it white fish}, which will often be pronounced
+without an intervening pause but never without both syllables
+stressed.\index{stress} \index{compound stress rule} In addition to stress,
+there are other {\it suprasegmentals}, such as {\it tone}, that appear to be
+capable of holding constant over multisegment stretches of speech, typically
+over syllables.
+
+Traditionally, the theory of suprasegmentals has been considered harder than
+that of segmental phenomena for the following reasons. First, their physical
+correlates are more elusive: stress is related to amplitude, and tone to
+frequency, but the relationship is quite indirect (see \nocite{Lehiste:1970}
+Lehiste 1970). Second, informant judgments are harder to elicit: native
+speakers of a language often find it much harder to judge e.g. whether two
+syllables carry the same degree of stress than to judge whether they contain
+the same vowel. Finally, until recently, a notation as transparent as the
+alphabetic notation for phonemes was lacking. In this section, we will deal
+mainly with tone and tone-like features of speech, leaving the discussion of
+stress and prosody to Section~4.1.\index{suprasegmentals}\index{tone}
+\index{amplitude}\index{frequency}\index{informant judgments}
+
+Starting in the 1970s, phonological theory abandoned the standard string-based
+theory and notation in favor of a generalization called {\it autosegmental}
+theory. Autosegmental theory (so named because it encompasses not only
+suprasegmental but also subsegmental aspects of sound structure) generalizes
+the method of using a string over some alphabet $P$ to 
+$k$-tuples of strings connected by {\it association relations} that spell out
+which segments in the two strings are overlapping in time.  We will begin with
+the simplest case, that of {\it bistrings} composed of two strings and an
+association relation. First, the strings are placed on {\it tiers}, which are
+very much like Turing-machine tapes, except the number of blank squares
+between nonblank ones cannot be counted. \index{autosegmental theory}
+\index{tier|textbf} \index{bistring}
+
+\smallskip\noindent
+{\bf Definition 3.3.1} A {\bf tier} is an ordered pair ($\Bbb Z$, N) where
+$\Bbb Z$ is the set of integers equipped with the standard identity and
+ordering relations `=' and `$<$' and N is the name of the tier.
+
+\smallskip\noindent The original example motivating the use of separate tiers
+was {\it tone}, which is phonologically distinctive in many languages. Perhaps
+the best-known example of this is Mandarin Chinese, where the same syllable
+{\it ma} means `mother', `hemp', `horse', `admonish', and `wh (question
+particle)', depending on whether it is uttered with the first, second, third,
+fourth, or fifth tone.  \index{Chinese (Mandarin)} As the tonology of Chinese
+is rather complex (see e.g. Yip 2002), \nocite{Yip:2002} we begin with
+examples from lesser-known but simpler tonal systems, primarily from the
+Niger-Congo family, where two contrastive level tones called high and low
+(abbreviated H and L, and displayed over vowels as acute or grave accent;
+e.g. {\it m\'{a}, m\`{a}}) are typical, three level tones (high, mid, low, H,
+M, L) are frequent, four levels (1, 2, 3, 4) are infrequent, and five levels
+are so rare that their analysis in terms of five distinct levels is generally
+questionable.  \index{high tone, H}\index{low tone, L}\index{mid tone, M}
+
+In the study of such systems, several salient (not entirely exceptionless, but
+nevertheless widespread) generalizations emerge. First, a single syllable may
+carry not just a single tone but also sequences of multiple tones, with HL
+realized as falling and LH as rising tones. Such sequences, known as {\it
+  contour tones},\index{contour tone} are easily marked by combining the acute
+(high) and grave (low) accent marks over the tone-bearing vowel (e.g. {\it
+  m\^{a}} for falling, {\it m\v{a}} for rising tone), but as the sequences get
+more complex, this notation becomes cumbersome (and the typographical
+difficulty greatly increases in cases where accent marks such as umlaut are
+also used to distinguish vowels such as {\it u} and {\it \"{u}, o} and {\it
+  \"{o}}).
+
+Second, sequences of multiple tones show a remarkable degree of stability in
+that deletion of the tone-bearing vowel need not be accompanied by deletion of
+the accompanying tone(s) -- this `autonomy' of tones motivates the name {\it
+  auto}segmental. Third, processes like assimilation do not treat contour
+tones as units but rather the last level tone of a contour sequence continues,
+\index{assimilation!tonal}e.g. {\it m\v{a}+ta} does not become {\it m\v{a}t\v{a}} but rather {\it
+  m\v{a}t\'{a}}. As an example of stability, consider the following example in
+Lomongo [LOL],\index{Lomongo [LOL]} where phrase-level rules turn {\it
+  b\`{a}l\'{o}ng\'{o} b\v{a}k\'{a}\'{e}} `his book' into {\it
+  b\`{a}l\'{o}ng\~{a}k\'{a}\'{e}}: the H on the deleted {\it o} survives
+and attaches to the beginning of the LH contour of the first {\it a} of {\it
+  (b)\v{a}k\'{a}\'{e}}. In the following autosegmental diagram, we segregate
+the segmental content from the tonal content by placing them on separate {\it
+  tiers}:
+
+%\'{}\hspace*{-0.7mm}\`{}\hspace*{-1.4mm}\'{}\hspace*{-2.3mm}a
+
+\bigskip
+\hspace*{8mm}
+\vbox{
+\xymatrix{
+\text{ba}\ar@{-}[d]& \text{long}\ar@{-}[d]& \text{(o)}& \text{(b)} &\text{a}\ar@{--}[dll]\ar@{-}[dl]\ar@{-}[d] & \text{ka}\ar@{-}[d] & \text{e}\ar@{-}[d]\\
+\text{L}           & \text{H}             &  \text{H} &   \text{L} & \text{H}  & \text{H}  & \text{H}\\ 
+}
+}
+
+\bigskip\noindent 
+Each tier N has its own {\bf tier alphabet} $T_N$, and we can assume without
+loss of generality that the alphabets of different tiers are disjoint except
+for a distinguished {\bf blank} symbol $G$ (purposely kept distinct from the
+pause symbol \#) that is adjoined to every tier alphabet. \index{blank|textbf}
+Two tiers bearing identical names can only be distinguished by inspecting
+their contents.  We define a tier containing a string $t_0t_1...t_n$ starting
+at position $k$ by a mapping that maps $k$ on $t_0$, $k+1$ on $t_1$,...,
+$k+n$ on $t_n$, and everything else on $G.$  Abstracting away from the starting
+position, we have the following definition.
+
+\smallskip\noindent
+{\bf Definition 3.3.2} A tier N {\bf containing} a string $t_0t_1...t_n$ over
+the alphabet $T_N\cup^* G$ is defined as the class of mappings $F_k$ that take
+$k+i$ into $t_i$ for $0 \leq i \leq n$ and to $G$ if $i$ is outside this
+range.  Unless noted otherwise, this class will be represented by the mapping
+$F_0$.  Strings containing any number of successive $G$ symbols are treated as
+equivalent to those strings that contain only a single $G$ at the same
+position. $G$-free strings on a given tier are called {\bf melodies}.
+\index{melody|textbf}
+
+Between strings on the same tier and within the individual strings, temporal
+ordering is encoded by their usual left-to-right ordering.  The temporal
+ordering of strings on different tiers is encoded by association relations.
+
+\smallskip\noindent
+{\bf Definition 3.3.3} An {\bf association relation} between two tiers N
+and M containing the strings n = $n_0n_1...n_k$ and m = $m_0m_1...m_l$
+is a subset of $\{0,1,...,k\} \times \{0,1,...,l\}$. An element that is
+not in the domain or range of the association relation is called {\bf 
+floating}. \index{floating element|textbf} 
+
+Note that the association relation, being an abstract pattern of synchrony
+between the tiers, is one step removed from the content of the tiers:
+association is defined on the {\it domain} of the representative mappings,
+while content also involves their {\it range}.  By Definition 3.3.3, there are
+$2^{kl}$ association relations possible between two strings of length $k$ and
+$l$. Of these relations, the {\it no crossing constraint} (NCC; see Goldsmith
+1976) \nocite{Goldsmith:1976} rules out as ill-formed all relations that
+contain pairs ($i,v$) and ($j,u$) such that $0\leq i < j \leq k$ and $0\leq u
+< v \leq l$ are both true. \index{no crossing constraint, NCC} We define the
+{\bf span} of an element x with respect to some association relation A as
+those elements y for which (x, y) is in A.\index{span|textbf} Rolling the
+definitions above into one, we have the following definition.
+
+\smallskip\noindent
+{\bf Definition 3.3.4} A {\bf bistring} is an ordered triple $(f,g,A)$, where
+$f$ and $g$ are strings not containing G, and $A$ is a well-formed association
+relation over two tiers containing $f$ and $g$. \index{bistring|textbf}
+\index{bistring!well-formed|textbf}
+
+In the general case, we have several tiers arranged in a tree structure called
+the geometry of the representation (see Section~3.2). Association relations
+are permitted only among those tiers that are connected by an edge of this
+tree, so if there are $k$ tiers there will be $k-1$ relations. Thus, in the
+general case, we define a $k$-{\bf string} as a $(2k-1)$-tuple
+$(s_1,...,s_{k}, A_1, \ldots, A_{k-1})$, where the $s_i$ are strings and the
+$A_i$ are association relations. \index{$k$-string|textbf}
+
+\smallskip\noindent
+{\bf Theorem 3.3.1.} The number of well-formed association relations over
+two tiers, each containing a string of length $n,$ is asymptotically
+$(6+4 \sqrt{2})^n$. 
+
+\smallskip\noindent
+{\bf Proof} Let us denote the number of well-formed association relations
+with $n$ symbols on the top tier and $k$ symbols on the bottom tier by
+$f(n,k)$. By symmetry, $f(n,k)=f(k,n)$, and obviously $f(n,1)=f(1,n)=2^n$. By
+enumerating relations according to the pair ($i,j$) such that no $i'<i$ is in
+the span of any $j'$ and no $j'' >j$ is in the span of $i$, we get
+
+\addtocounter{equation}{0}
+\begin{equation}
+f(n+1,k+1) = \sum_{i=1}^{k+1} f(n,i)2^{k+1-i} + f(n,k+1)
+\end{equation}
+From (3.3) we can derive the following recursion: 
+\begin{equation}
+f(n+1,k+1) = 2f(n+1,k) + 2f(n,k+1) -2f(n,k)
+\end{equation}
+For the first few values of $a_n = f(n,n)$, we can use (3.4) to calculate
+forward: $a_1 =2$, $a_2 =12$, $a_3=104$, $a_4=1008$, $a_5=10272$,
+$a_6=107712$, and so on.  Using (3.4) we can also calculate backward
+and define $f(0,n)=f(n,0)$ to be 1 so as to preserve the recursion.
+The generating function
+\begin{equation}
+F(z,w) = \sum_{i,j=0}^{\infty} f(i,j)z^iw^j
+\end{equation}
+will therefore satisfy the equation
+\begin{equation}
+F(z,w) = {{1 -{z \over 1-z} -{w \over 1-w}}\over{1-2z-2w+2zw}}
+\end{equation}
+If we substitute $w=t/z$ and consider the integral
+\begin{equation}
+{1\over{2 \pi i}} \int_{C}{F(z,t/z)\over z}dz
+\end{equation}
+this will yield the constant term $ \sum_{n=0}^{\infty} f(n,n)t^n$ by
+Cauchy's formula. Therefore, in order to get the generating function
+\begin{equation}
+d(t) = \sum_{i=0}^{\infty} a_n t^n
+\end{equation}
+we have to evaluate
+\begin{equation}
+{1\over {2 \pi i}} \int_{C}{{1 -{z \over {1-z}} -{t/z \over 1-{t/z}}}\over
+z{(1-2z-2{t/z}+2t)}}dz
+\end{equation}
+which yields
+\begin{equation}
+d(t) = 1 + {2t \over \sqrt{1-12t+4t^2}}
+\end{equation}
+$d(t)$ will thus have its first singularity when $ \sqrt{1-12t+4t^2}$
+vanishes at $t_0=(3-\sqrt{8})/2$, yielding 
+
+\begin{equation}
+a_n \approx (6+4 \sqrt{2})^n
+\end{equation}
+
+\noindent
+the desired asymptotics. $\blacksquare$
+
+\bigskip
+The base 2 logarithm of this number, $n \cdot 3.543$, measures how many bits
+we need to encode a bistring of length $n$. Note that this number grows
+linearly in the length of the bistring, while the number of (possibly
+ill-formed) association relations was $2^{n^2}$, with the base 2 log growing
+quadratically. Association relations in general are depicted as bipartite
+graphs (pairs in the relation are called {\bf association
+  lines})\index{association line} and encoded as two-dimensional arrays (the
+incidence matrix of the graph). However, the linear growth of information
+content suggests that well-formed association relations should be encoded as
+one-dimensional arrays or strings. Before turning to this matter in
+Section~3.4, let us first consider two particularly well-behaved classes of
+bistrings. A bistring is {\bf fully associated} if there are no floating
+elements and {\bf proper} if the span of any element on one tier will form a
+single substring on the other tier \cite{Levin:1985}.  Proper relations are
+well-formed but not necessarily fully associated.  
+\index{bistring!fully associated|textbf} \index{bistring!proper|textbf}
+
+Let us define $g(i,j)$ as the number of association relations containing no
+unassociated (floating) elements and define $b_n$ as $g(n,n)$.  By
+counting arguments similar to those used above, we get the recursion
+\begin{equation}
+g(n+1,k+1) = g(n+1,k) + g(n,k+1) +g(n,k)
+\end{equation}
+Using this recursion, the first few values of $b_n$ can be computed as
+1, 3, 13, 63, 321, 1683, 8989, and so on.
+Using (3.12) we can calculate backward and define $g(0,0)$ to be 1 and
+$g(i,0)=g(0,i)$ to be 0 (for $i > 0$)
+so as to preserve the recursion. The generating function
+\begin{equation}
+G(z,w) = \sum_{i,j=0}^{\infty} g(i,j)z^iw^j
+\end{equation}
+will therefore satisfy the equation
+\begin{equation}
+G(z,w) = {1 - z - w \over 1-z-w-zw} = 1+{zw \over 1-z-w-zw}
+\end{equation}
+Again we substitute $w=t/z$
+and consider the integral
+\begin{equation}
+{1\over{2 \pi i}} \int_{C}{G(z,t/z)\over z}dz
+\end{equation}
+which will yield the constant term $ \sum_{n=0}^{\infty} g(n,n)t^n$ by
+Cauchy's formula. Therefore, in order to get the generating function
+\begin{equation}
+e(t) = \sum_{i=0}^{\infty} b_n t^n
+\end{equation}
+we have to evaluate
+\begin{equation}
+{1\over {2 \pi i}} \int_{C}{{1 \over z} + {t \over
+z(1-z-t/z -t)}}dz = 1 -{t\over {2 \pi i}} \int_{C}{dz \over (z-p)(z-q)}
+\end{equation}
+which yields
+\begin{equation}
+e(t) = 1 + {t \over \sqrt{1-6t+t^2}}
+\end{equation}
+Notice that
+\begin{equation}
+e(2t) = 1 + {2t \over \sqrt{1-6 \cdot 2t+(2t)^2}} = d(t)
+\end{equation}
+and thus
+\begin{equation}
+\sum_{i=0}^{\infty} b_n (2t)^n = \sum_{i=0}^{\infty} a_n t^n
+\end{equation}
+Since the functions $d(t)$ and $e(t)$ are analytic in a disk of radius
+1/10, the coefficients of their Taylor series are uniquely determined,
+and we can conclude that
+\begin{equation}
+b_n 2^n = a_n
+\end{equation}
+meaning that fully associated bistrings over $n$ points are only an
+exponentially vanishing fraction of all well-formed bistrings. In terms of
+information content, the result means that fully associated bistrings of
+length $n$ can be encoded using {\it exactly} one bit less per unit length
+than arbitrary well-formed bistrings.
+
+\smallskip\noindent
+{\bf Exercise 3.3$^*$} Find a `bijective' proof establishing (3.21) 
+by direct combinatorial methods.
+
+Now, for proper representations, denoting their number by $h(n,k)$, the
+generating function $H=H(z,w)$ will satisfy a functional equation
+\begin{equation}
+H-zH-wH-2zwH +zw^2H+z^2wH-z^2w^2H= r(z,w)
+\end{equation}
+where $r(z,w)$ is rational. Using the same diagonalizing substitution
+$w=t/z$, we have to evaluate
+\begin{equation}
+{1\over {2 \pi i}} \int_{C}{s(z,t) \over
+z(1-z-t/z -2t+t^2/z+tz-t^2)}dz
+\end{equation}
+Again, the denominator is quadratic in $z$, and the radius of
+convergence is determined by the roots of the discriminant
+\begin{equation}
+{(t^2+2t-1)}^2-4(t-1)(t^2-t)=t^4+10t^2-8t+1
+\end{equation}
+The reciprocal of the smallest root of this equation, approximately
+6.445, gives the base for the asymptotics for $c_n$, the number of
+proper bistrings over $n$ points. By taking the base 2 logarithm, we have
+the following theorem.
+
+\smallskip\noindent
+{\bf Theorem 3.3.2} The information content of a fully associated
+(proper) well-formed bistring is 2.543 (2.688) bits per unit length.
+
+\smallskip\noindent
+{\bf Exercise 3.4}. Count the number of well-formed (fully associated,
+proper) $k$-strings of length $n$ assuming each tier alphabet has only 
+one element besides $G$.
+
+Sets of well-formed (fully associated, proper) bistrings will be called
+\index{bilanguage|textbf} 
+well-formed (fully associated, proper) {\bf bilanguages}. These can undergo
+the usual set-theoretic operations of {\bf intersection}, {\bf union}, and {\bf
+complementation} (relative to the `universal set' of well-formed, fully
+associated, resp. proper bistrings).  {\bf Reversal} (mirror image) is defined
+by reversing the constituent strings together with the association relation.
+\index{reversal} The concatenation of bistrings is defined by concatenating 
+both the strings and the relations: 
+
+\smallskip\noindent {\bf Definition 3.3.5} Given two bistrings $(f,h,A)$ and
+$(k,l,B)$ on tiers N and M, their {\bf concatenation} $(fk,hl,AB)$ is
+constructed via the tier-alphabet functions $F_0, H_0, K_{|f|},$ and $L_{|g|}$
+as follows. $FK_0(i)=F(i)$ for $0 \leq i<|f|$, $K_{|f|}(i)$ for $|f| \leq i <
+|f|+|k|, G$ otherwise. $HL_0(j)=H(j)$ for $0 \leq j<|k|$, $L_{|k|}(j)$ for
+$|k| \leq j < |f|+|k|, G$ otherwise. Finally, $AB = A \cup \{(i+|f|,j+|k|) |
+(i,j) \in B\}$.
+
+Notice that the concatenation of two connected bistrings will not be connected
+(as a bipartite graph). This is remedied by the following definition.
+
+\smallskip\noindent {\bf Definition 3.3.6} Given two bistrings as in 3.3.5,
+their {\bf $t$-catenation ($b$-catena\-tion)} is defined as $(fk,hl,AtB)$
+$(fk,hl,AbB)$, where $AtB = AB \cup \{(|f|-1,|k|)\}$ $(AbB = AB \cup
+\{(|f|,|k|-1)\}$).
+
+Using phonological terminology, in $t$-catenation the last element of the {\it
+t}op tier of the first bistring is {\it spread} on the first element of the
+bottom tier of the second bistring, and in $b$-catenation the last element of
+the {\it b}ottom tier of the first string is spread on the first element of
+the top tier of the second bistring. \index{spreading} 
+\index{bistring!t-catenation} \index{bistring!$b$-catenation} \index{bistring!concatenation}
+
+The only autosegmental operation that is not the straightforward
+generalization of some well-known string operation is that of {\bf
+alignment}. Given two bistrings $x = (f,g,A)$ and $y = (g,h,B)$, their
+alignment $z = x\parallel y$ is defined to be $(f,h,C)$, where $C$ is the
+relation composition of $A$ and $B$. In other words, the pair $(i,k)$ will be
+in $C$ iff there is some $j$ such that $(i,j)$ is in $A$ and $(j,k)$ is in
+$B$. Now we are in a position to define projections. These involve some subset
+$S$ of the tier alphabet $T$. A {\bf projector} $P_S(h)$ of a string $g =
+h_0h_1...h_m$ with respect to a set $S$ is the bistring $(h,h,Id_S)$, where
+$(i,j)$ is in $Id_S$ iff $i=j$ and $h_i$ is in $S$.  The {\bf normal bistring}
+$I(h)$ corresponding to a string $h$ is simply its projector with respect to
+the full alphabet: $I(h) = P_T(h)$. A {\bf projection} of a string with
+respect to some subalphabet $S$ can now be defined as the alignment of the
+corresponding normal bistring with the projector.\index{bistring!alignment} 
+ 
+The alignment of well-formed bistrings is not necessarily well-formed, as the
+following example shows. Let f = $ab$, g = $c$, h = $de$, and suppose that the
+following associations hold: $(0,0)$ and $(1,0)$ in $x$; $(0,0)$ and $(0,1)$
+in $y$. By definition, $C$ should contain $(0,0),(0,1),(1,0),$ and $(1,1)$ and
+will thus violate the No Crossing Constraint. Note also that a projector, as
+defined here, will not necessarily be proper. In order to capture the
+phonologically relevant sense of properness, it is useful to relativize the
+definition above to `P-bearing units' (Clements and Ford
+1979).\nocite{Clements:1979} We will say that a bistring $(f,h,A)$ is {\bf
+  proper with respect to a subset} $S$ of the tier alphabet $T$ underlying the
+string $h$, iff $(f,h,A)\parallel P_S(h)$ is proper.
+
+\section{Phonological computation}
+
+The standard theory of phonology (Chomsky and Halle 1968)
+\nocite{Chomsky:1968} enumerates the well-formed strings in a generative
+fashion (see Section~2.1) by selecting a set $E$ of {\it underlying forms} and
+some context-sensitive rules $R$ that manipulate the underlying forms to yield
+the permissible {\it surface forms.}\index{underlying form} \index{surface form}
+Because features are an effective (though imperfect, see Section~3.2)
+means of expressing natural classes, rules that typically arise in the
+phonology of natural languages can be stated more economically directly on
+features, and in fact phonologists rarely have any reason to manipulate
+strings of phonemes (as opposed to strings of feature bundles). Nevertheless,
+in what follows we can assume without loss of generality that the rules
+operate on segments because a rule system employing features can always be
+replaced by a less economical but equivalent rule system that uses only
+segments.
+
+\smallskip\noindent
+{\bf Exercise 3.5} Poststress destressing. In our example language there
+are five unstressed vowels {\it a e i o u} and five stressed vowels {\it A E I
+O U}. Whenever two stressed vowels would come into contact, the second one
+loses its stress: [+stress] $\rightarrow$ [$-$stress]/[+stress]$\underline{\ \
+}$. How many string-rewriting rules are needed to express this regularity
+without using feature decomposition? 
+
+\medskip\noindent In many problems, such as speech recognition, we are more
+interested in the converse task of computing the underlying form(s) given some
+surface form(s). Because of the context-sensitive character of the rules, the
+standard theory gave rise to very inefficient implementations: although in
+principle generative grammars are neutral between parsing and generation, the
+membership problem of CSGs is PSPACE-complete (see Theorem 2.3.2), and in
+practice no efficient parsing algorithm was found. Context-sensitive
+phonological rule systems, though widely used for generation tasks (Hunnicutt
+1976, Hertz 1982),\nocite{Hunnicutt:1976,Hertz:1982} were too inefficient to
+be taken seriously as parsers.\index{text to speech, TTS}\index{speech recognition}
+
+The key step in identifying the source of the parsing difficulty was Johnson's
+(1970) \nocite{Johnson:1970} finding that, as long as phonological rules do
+not reapply within their output, it is possible to replace the
+context-sensitive rules by finite state transducers (FSTs).
+\index{finite state transducer, FST} That such a condition is necessary can be seen from
+the following example: $S\rightarrow ab$; $\lambda \rightarrow ab /
+a\underline{\ \ }b$.  Starting from $S$, these rules would generate $\{a^nb^n|
+n \in \Bbb N\}$, a language known not to be regular (see Theorem 3.4.1
+below). \index{$a^nb^n$} To show that once the condition is met,
+context-sensitive rules can be replaced by FSTs, we first need to establish
+some facts.
+
+We define {\bf regular relations} analogously to the case of regular
+languages: given two alphabets $P,Q$, a relation $R \subset P^* \times Q^*$ is
+regular iff it is finitely generated from finite sets by the operations of
+union, concatenation, and Kleene closure. (These operations are defined
+componentwise on relations.)\index{regular relation} Regular relations are in
+the same relationship to FSTs as regular languages are to FSAs. In fact, it is
+convenient to think of languages as unary relations. Similarly, finite state
+automata will be defined as $n$-tape automata (transducers) with $n=1$. In
+such automata, all tapes are read-only, and the automaton can change internal
+state when no tape is advanced ($\lambda$-move) or when one or more of the
+tapes is advanced by one square.
+
+\smallskip\noindent {\bf Definition 3.4.1} A {\bf finite state transducer
+(FST)} \index{finite state transducer, FST|textbf} is a quadruple ($S, s, F,
+T$), where $S$ is a finite set of states, $s \in S$ is the starting state, $F
+\subset S$ is the set of final (accepting) states, and $T$ is a set of {\bf
+transitions}\index{transition} of the form $(b,a,l_1,\cdots,l_n)$, where $b$
+and $a$ are the states {\it b}efore and {\it a}fter the move, and the $l_j$
+are letters scanned on the $j$th tape during the move or $\lambda$.  When for
+every $b$ and $l_1,\cdots,l_n$ there is at most one $a \in S$ such that
+$(b,a,l_1,\cdots,l_n) \in T$, the transducer is {\bf deterministic}, and when
+$\lambda$ never appears in any transition it is called {\bf
+length preserving}.\index{length-preserving FST|textbf}\index{deterministic FST|textbf}
+Taking $n=1$, we obtain the important special case of {\bf finite
+state automata (FSAs)}, which are here viewed as
+\index{finite state automaton, FSA|textbf}inherently nondeterministic since {\it $\lambda$-moves} (change
+of state without consuming input) are permitted.\index{lambda move} For the
+sake of completeness, we define here {\bf deterministic finite state automata
+(DFSAs)}\index{finite state automaton, FSA!deterministic, DFSA|textbf} as
+deterministic length-preserving FSTs with $n=1$, but we leave it to the reader
+to prove the classic result that FSAs and DFSAs accept the same set of
+languages and that other minor alterations, such as consuming inputs on
+states rather than on transitions (Mealy machine rather than Moore machine),
+have no impact on the class of languages characterized by FSAs.
+\index{Mealy FSA}\index{Moore FSA}
+
+\medskip\noindent
+An $n$-tuple of words is {\bf accepted} by an FST iff, starting with $n$ tapes
+containing the $n$ words, the reading heads positioned to the left of the
+first letter in each word, and the FST in the initial state, the automaton has
+a sequence of legal moves (transitions in $T$) that will advance each reading
+head to the right of the word on that tape, with the automaton ending in a
+final (accepting) state.  When two words (or two $n$-tuples of words) land an
+FST in the same state (or in the case of nondeterministic FSTs, the same set
+of states) starting from the initial state, we call them {\it right congruent}.
+\index{right congruence|textbf}  Significantly, this notion can be defined
+without reference to the automaton, based solely on the language it accepts.
+
+\smallskip\noindent 
+{\bf Definition 3.4.2} Let $L$ be a language (of $n$-tuples), $x,y$ are {\bf
+right congruent} iff for all $z$ either both $xz$ and $yz$ are in $L$ or both
+of them are outside $L$. We define {\bf left congruence} \index{left congruence|textbf} analogously by requiring for all $z$ both $zx$ and $zy$ to
+be (or both not to be) in $L$. Finally, the {\bf syntactic congruence} (also
+known as {\bf Myhill-Nerode equivalence}) is defined as the smallest
+equivalence that is finer than both left and right congruences. The syntactic
+congruence, as the name suggests, is a primary tool of analysis for syntax
+(when the alphabet is taken to contain words and the strings are sentences) --
+we return to its use in Section~5.1.1.  \index{syntactic congruence|textbf}
+\index{Myhill-Nerode equivalence|textbf}
+
+\medskip\noindent
+{\bf Exercise 3.6} Prove that right congruence, as defined by FST landing 
+sites, is the same relation as defined through the accepted language $L$. 
+Prove that left and right congruences are equivalence relations. What can we 
+say about the paths through an FST and left congruent elements? 
+
+\smallskip\noindent
+The key property of regular languages (and relations) is that the (right)
+congruence they define has finitely many equivalence classes (this is also
+called having {\bf finite index}). \index{finite index|textbf} If a language
+(of $n$-tuples) has finite index, we can use the equivalence classes as states
+of the accepting FST, with transitions defined in the obvious
+manner. Conversely, languages accepted by some FST obviously have finite
+index. Finite languages have finite index, and if two languages have finite
+index, so will their union, concatenation, and Kleene closure. Thus we have
+the following theorem.
+
+\smallskip\noindent
+{\bf Theorem 3.4.1} Kleene's theorem. An $n$-place relation is regular iff
+it is accepted by an $n$-tape FST. 
+
+\medskip\noindent
+Other properties also studied in formal language theory, such as closure under
+intersection or complementation, will not necessarily generalize from unary to
+$n$-ary relations. For example, the binary relations $\{(a^n,b^nc^*)| n \in
+\Bbb N\}$ and $\{(a^n,b^*c^n)| n \in \Bbb N\}$ intersect to yield
+$\{(a^n,b^nc^n)| n \in \Bbb N\}$, which is not regular. However, the
+length-preserving relations are a special case where closure under
+intersection and set-theoretic difference holds. The method of expressing
+context-sensitive rules by regular binary relations exploits this fact by
+adding a new symbol, $\epsilon$, to the alphabet, and using it as padding to
+maintain length wherever needed.
+
+%\bigskip\noindent 
+Although the method of serially composed FSTs and the related method of
+parallel FSTs \cite{Koskenniemi:1983} play a central role in modern
+computational phonology, we will not pursue their development here, as it is
+covered in most newer textbooks on computational linguistics and there are
+volumes such as Roche and Schabes (1997) and Kornai (1999) devoted entirely to
+this subject. \nocite{Roche:1997} \nocite{Kornai:1999} Rather, we turn our
+attention to the formalization of the autosegmental theory described in
+Section~3.3, where regular languages are generalized so as to include the {\it
+  association relation}. \index{association relation} Because of the central
+role of the finitely generated case, our first task is to identify the family
+of {\it regular} or {\it finite state} bilanguages. We do this based on the
+finite index property:
+
+\smallskip\noindent
+{\bf Definition 3.4.3} The {\bf syntactic congruence} $\equiv_L$
+generated by a bilanguage $L$ contains those pairs of bistrings
+$(\alpha,\beta)$ that are freely substitutable for one another; i.e.
+for which $\gamma\alpha\delta \in L \Leftrightarrow \gamma\beta\delta
+\in L$. When $\gamma$ ($\delta$) is fixed as the empty string, we will
+talk of right (left) congruence. A $k$-language is {\bf regular} iff it gives
+rise to a (right) congruence with finitely many classes.
+
+\smallskip\noindent
+{\bf Example 3.4.1} One-member tier alphabets $\{a\} = T_N, \{b\} = T_M$, and
+empty association relations.  Let us denote the bistring $(a^i,b^j,\emptyset)$
+by $\langle i,j\rangle $. The bilanguage $B = \{\langle i,i\rangle | i > 0\}$
+is not regular because the bistrings $\langle 1,k\rangle $ all belong in
+different (right)congruence classes for $k=1,2,...$, as can be seen using
+$\delta=\langle l,1\rangle $: if $k \neq l$, then $\langle 1,k\rangle \langle
+l,1\rangle \not\in B$ but $\langle 1,l\rangle \langle l,1\rangle \in B$.
+
+\smallskip\noindent
+{\bf Discussion} $B$ can be expressed as the Kleene closure~$^+$ of the
+one-member bilanguage $\{\langle 1,1\rangle \}$. However, the appropriate
+closure operation for bilanguages involves not only concatenation but
+$t$-catenation and $b$-catenation as well.
+
+\smallskip\noindent 
+{\bf Example 3.4.2} CV-skeleta. Assume that the upper tier alphabet has only
+two symbols {\tt C} and {\tt V}, while the lower has several, and assume
+further that association relations are limited to binary branching. Symbols on
+the lower tier linked to a single {\tt V} (two adjacent {\tt V}s) are called
+{\it short (long) vowels}, and those linked to a single {\tt C} (two adjacent
+{\tt C}s) are called {\it short (long) consonants}. When two adjacent symbols
+from the lower tier link to a single {\tt V}, these are called {\it
+  diphthongs}, when they link to a single {\tt C}, they are called {\it
+  affricates.}\index{consonant}\index{affricate}\index{vowel}\index{diphthong}
+There are other configurations possible, such as triphthongs, but they are
+rarely attested.
+
+\smallskip\noindent
+{\bf Discussion} CV-skeletal representations formalize a large number of 
+observations that traditional grammars state in somewhat hazy terms, e.g. 
+that diphthongs are the sequence of two vowels `behaving as a single unit'. 
+
+\smallskip\noindent
+{\bf Definition 3.4.4} A {\bf biautomaton} is defined as a 6-tuple $(S, U, V,
+i, F, T)$, where $S$ is a set of states, $U$ and $V$ are the alphabets of the
+two tapes, $i$ is the initial state, $F$ is the set of final (accepting)
+states, and $T$ is the transition function. If we denote the square under scan
+on the upper tape by {\tt x} and the square under scan on the lower tape by
+{\tt y}, the transition function from a given state will depend on the
+following factors: \index{biautomaton|textbf}
+\begin{enumerate}
+\item[(i)] Is there a symbol on square {\tt x}, and if so, what symbol? (If 
+not, we use the special symbol $G$ introduced in 3.3.)
+\item[(ii)] Is there a symbol on square {\tt y}, and if so, what symbol?
+\item[(iii)] Are the squares associated?
+\item[(iv)] Are there further association lines from {\tt x} to
+some symbol after {\tt y}?
+\item[(v)] Are there further association lines from {\tt y} to
+some symbol after {\tt x}?
+\end{enumerate}
+
+The transition function $T$, depending on the present state, the letters under
+scan, and the presence of association between these letters, will assign a new
+state and advance the tapes in accordance with the following rule:
+
+\hfill (3.25)\\
+\begin{quote}
+If there are no further association lines from {\tt x} and {\tt y}, both tapes
+can move one step to the right, if there are further association lines from
+{\tt x}, only the bottom tape can move, and if there are further association
+lines from {\tt y}, only the top tape can move.
+\end{quote}
+
+\noindent
+In other words, the current position of the reading heads can always be added
+to the association relation without violating the No Crossing Constraint. We
+will shortly define {\it coders} as automata in which (3.25) is augmented by
+the requirement of moving the tapes as fast as possible, but for the moment we
+will leave the advancement pattern of the tapes nondeterministic. To specify
+which tape will move, it is best to separate out the transition function into
+three separate components: one that gives the new state provided a top move
+$t$ was taken, one that gives the new state provided a bottom move $b$ was
+taken, and one that gives the new state provided a full move $f$ was
+taken. Here and in what follows $x[y,t]$ denotes the result state of making a
+top move from state $x$ upon input $y$ and similarly for $x[y,b]$ (bottom
+move) and $x[y,f]$ (full move).  In general there can be more than one such
+state, and we do not require that only a top, bottom, or full move be
+available at any given point -- it might still be the case that only one of
+these moves is available because that is what the association pattern
+dictates, but there is no general requirement enforcing uniqueness of the
+next move.
+
+The transition function at state u $\in$ S is {\bf scanning independent} 
+\index{scanning independence} iff for every possible scanning of a string 
+$\alpha$ takes the machine from u to the same state x=u[$\alpha$]. In
+particular, the machine must be able to perform a full move as a top move
+followed by a bottom move or as a bottom move followed by a top move. Two
+full moves should be replaceable by $ttbb,\ bbtt,\ tbtb,\ bttb,\ tbbt,\ btbt$
+and similarly for $fff$ and longer sequences of moves. A biautomaton will be
+called a {\bf finite autosegmental automaton} iff its transition function is
+scanning independent at every state. It will be called a {\bf coder automaton}
+if advancement is by the following deterministic variant of the rule given
+above: \index{finite autosegmental automaton} \index{coder}
+
+\hfill (3.26)
+\begin{quote}
+If there are no further symbols on either tape, the machine stops. If there
+are no further symbols on one tape, the other tape is advanced by one.  If
+there are no further association lines from {\tt x} and {\tt y}, both tapes
+move one step to the right; if there are further association lines from {\tt
+x}, only the bottom tape moves; and if there are further association lines
+from {\tt y}, only the top tape moves, provided the move does not result in
+scanning G. (The case where there are further lines both from {\tt x}
+and {\tt y} cannot arise since such lines would cross.)
+\end{quote}
+
+\smallskip \noindent Coders can be used to assign a unique linear string,
+called the {\bf scanning code}\index{code!scanning|textbf} in Kornai (1995
+Sec. 1.4), to every association relation.  Let us denote a top move by $t$, a
+bottom move by $b$, the presence of an association line by $1$ and its absence
+by $0$. To assign a unique linear string over the alphabet $\{t,b,0,1\}$ to
+every association relation, it is sufficient to record the top and bottom
+moves of the coder, leaving full moves unmarked, together with the association
+lines or lack thereof encountered during the scan.  Since scanning a bistring
+of length $n$ requires at most $2n$ $t$ and $b$ moves, which requires $2n$
+bits, and at each step we need to mark $0$ or $1$, which requires another $2n$
+bits, we have a constructive proof that the information content of well-formed
+bistrings is at most 4 bits per unit length. While this is quite inefficient
+compared with the optimum 3.543 bits established by Theorem~3.3.1, the
+constructive nature of the encoding lends further support to the claim in
+Section~3.3 that multilinear representations are linear (rather than quadratic
+or other polynomial) data types.\nocite{Kornai:1995}
+
+So far we have four families of bilanguages: those accepted by finite
+autosegmental automata (deterministic or nondeterministic) will be collected
+in the families {\bf RD} and {\bf RN}, those accepted by biautomata will be
+collected in the family {\bf BA}, and those accepted by coders will be
+collected in the family {\bf CA}.  Clearly we have {\bf RN} $\subset$ {\bf
+BA}$,\ ${\bf RD} $\subset$ {\bf BA}, {\bf CA } $\subset$ {\bf BA} since both
+scanning independent and coder automata are special cases of the general class
+of biautomata. Let us first establish that nondeterminism adds no power -- for
+further ``geographic'' results, see Theorem 3.4.4.
+
+\smallskip\noindent
+{\bf Theorem 3.4.2 RD} = {\bf RN}.
+
+\smallskip\noindent
+{\bf Proof} Same as for the 1-string case. Instead of the state set $S$ of
+the nondeterministic automaton, consider its power set $2^S$ and lift the
+nondeterministic transition function $T$ to a deterministic transition
+function $D$ as follows: for $i \in$ S, define D($\{i\}$) as
+$\{$T($i$)$\}$, and for $X\subset S,$ $D(X) = \bigcup_{i \in X}
+D(\{i\})$. 
+
+\medskip\noindent
+Note that the proof will not generalize to coders because different
+nondeterministic options can lead to different positionings of the
+heads. However, if the transition function is scanning independent, different
+positionings of the heads can always be exchanged without altering the
+eventual state of the machine.  Now we can prove Kleene's theorem that the
+family of languages {\bf R} characterized by the finite index property is the
+same as {\bf RN} and {\bf RD}.
+
+\smallskip\noindent
+{\bf Theorem 3.4.3} A bilanguage $L$ is regular iff it is accepted by a
+regular autosegmental automaton.
+
+\smallskip\noindent
+{\bf Proof} ($\Leftarrow$) If $L$ is accepted by a regular autosegmental
+automaton, it is also accepted by a deterministic regular autosegmental
+automaton (which can be constructed by the method outlined above), and further
+it can be accepted by a reduced automaton in which no two states have exactly
+the same transition function (for such states can always be collapsed into a
+single state). We claim that there will be as many right congruence classes in
+$\equiv_L$ as there are states in a minimal (reduced, deterministic, regular)
+autosegmental automaton $A=(S, U, V, i, F, T)$.
+
+To see this, define $\alpha \equiv_A \beta$ iff for every scanning of $\alpha$
+starting in the initial state i and ending in some state j there is a scanning
+of $\beta$ starting in i and also ending in j and vice versa.  Clearly,
+$\equiv_A$ is an equivalence relation, and $\alpha \equiv_A \beta \Rightarrow
+\alpha \equiv_L \beta$. If $\alpha \not\equiv_A \beta$, there must exist a 
+state j such that at least one scanning of one of the bistrings, say $\alpha$,
+will lead from i to j, but no scanning of $\beta$ will ever lead from i to
+j. Since $A$ is deterministic, scanning $\beta$ will lead to some state
+k$\neq$j.  We will show that there exists a string $\delta$ such that from j
+we get to an accepting state by scanning $\delta$ and from k we get to a
+nonaccepting state (or conversely), meaning that $\alpha\delta \in L$ but
+$\beta\delta \notin L$ (or conversely), so in either case $\alpha
+\not\equiv_L\beta$.
+
+Call two states p and q {\it distinguishable} iff there exists a string
+$\delta$ such that starting from p, scanning $\delta$ leads to an accepting
+state, but starting from q, scanning $\delta$ leads to a rejecting state or
+vice versa. {\it In}distinguishability, denoted by I, is an equivalence
+relation: clearly pIp for every state p, and if pIq, also qIp. For
+transitivity, suppose indirectly that pIq and qIr, but p and r are
+distinguishable; i.e. there is a string $\delta$ for which p[$\delta$] is
+accepting but r[$\delta$] is not. Now, q[$\delta$] is either accepting or
+rejecting: in the former case, qIr was false, and in the latter, pIq was
+false, a contradiction. Further, in a minimal automaton there can be no two
+(or more) indistinguishable states, for such states could be collapsed into a
+single state without altering the accepted bilanguage. Since j and k above are
+not equal, they are distinguishable by some $\delta$. $\blacksquare$
+
+\bigskip
+
+($\Rightarrow$) To prove the `only if' part of the theorem, we have to show
+that if a bilanguage $L$ gives rise to a finite right congruence, it is
+accepted by some regular autosegmental automaton. We will construct the states
+of the automaton from the congruence classes of the equivalence relation. Let
+us denote the congruence class of a bistring $\alpha$ under $\equiv_L$ by
+($\alpha$). The initial state of the machine is the congruence class of the
+empty bistring, (\ ), and the transition function from state ($\alpha$) is
+defined for top transitions from ($\alpha$) as the congruence class ($\alpha
+t$T) ($t$-catenation), and similarly the result state of a bottom transition
+from ($\alpha$) will be the congruence class ($\alpha b$B)
+($b$-catenation). Thus top (bottom) transitions are nondeterministic: there
+are as many result states as there are congruence classes for each member of
+the top (bottom) tier alphabet.  For ordinary concatenation of a bistring
+$\beta$, the result is defined by the class ($\alpha\beta$) in order to
+guarantee scanning independence.
+
+Finally, the accepting states of the automaton are defined as those congruence
+classes that contain the members of $L$ -- this is well-defined because if
+$\alpha \equiv_L \beta$, both must be members of $L$ or both must be outside
+$L,$ meaning that $L$ is a union of congruence classes. What remains to be
+seen is that the bilanguage $M$ accepted by the automaton defined here is the
+same as the bilanguage $L$ we started with. First let us take a bistring
+$\alpha$ included in $L$ -- since $(\alpha)$ is an accepting state, it follows
+that $\alpha$ is also in $M$. Next let us take a bistring $\beta$ not in $L$
+-- since ($\beta$) is not an accepting state it would follow that $\beta$ is
+not in $M$ if we can show that no scanning path would lead to any state other
+than ($\beta$). This can be done by induction on the length (defined as the
+maximum of the length of the top and bottom strings) of $\beta$ (see Kornai
+1995, ch 1.6).
+
+\smallskip\noindent
+{\bf Discussion} The class {\bf R} of regular $k$-languages is closed under
+all Boolean operations, while the class of regular $k$-relations is not. This
+is due to the fact that finite autosegmental automata can always be
+determinized (Theorem 3.4.2), while FSTs in general cannot. Determinization
+creates a machine where complementing the set of accepting states leads to
+accepting the complement language -- if a language is only accepted by a
+nondeterministic acceptor, this simple method fails, and the complement
+language may not have an equally simple characterization. Since both families
+are closed under union, (non)closure under complementation will guarantee, by
+De Morgan's law, (non)closure under intersection. In this respect, the
+bilanguage families {\bf BA} and {\bf CA} are closer to regular relations than
+the family {\bf R}.  
+
+\smallskip\noindent
+{\bf Example 3.4.3} Consider the bilanguage $T = \{\langle i,j\rangle |
+i>j\}\{(a,b,\{(0,0)\})\}$ -- it contains those bistrings that have $i$
+floating features on the top tier, and $j$ floating features on the bottom
+tier, followed by an end marker, which is simply a feature $a$ on the top tier
+associated to a feature $b$ on the bottom tier.  Clearly, if $i-j \neq i'-j'$,
+we have $\langle i,j\rangle \not\equiv_T \langle i',j'\rangle $ so $T$ is not
+in {\bf R}. However, it is in {\bf CA} since the following automaton will
+accept it:
+
+\hfill (3.27)\\
+\begin{tabular}{lccccccc}
+&&&&&&&\\
+&&in&&from {\tt x}\phantom{m} &\phantom{m} from {\tt x}\phantom{m} &\phantom{m} from {\tt y}\phantom{m} &\phantom{m} automaton\\
+&&state&& to {\tt y} & to {\tt z>y} & to {\tt w>x} & will\\
+&&&&&&&\\
+&&0&&absent&absent&absent&stay in 0\\
+&&0&&absent&absent&present&go to 1\\
+&&1&&absent&absent&present&stay in 1\\
+&&1&&present&absent&absent&go to 2\\
+&&2&&any&any&any&go to 3\\
+\end{tabular}
+
+\medskip\noindent
+With 2 as the only accepting state, the machine will accept only those strings
+whose scan puts the machine in 2 but not further. To get into 2, the last
+thing the machine must encounter is a single association line (the end marker)
+in state~1. To get into state 1, the machine can make a number of top moves
+over floating elements (this is the loop over state~1), preceded by a number of
+full moves over floating elements (this is the loop over state~0). Note that
+this is not scanning independent: no provision was made for top and bottom
+moves to replace full moves out of state~0.
+
+What Example 3.4.3 shows is that {\bf CA} is not contained in {\bf R}.  It is,
+of course, contained in {\bf BA}, and the bilanguage $B$ of Example 3.4.1
+introduced above shows that the containment is proper.  The biautomaton that
+accepts this bilanguage is trivial: it contains only one state and only full
+advance is permitted (and that only when no association lines are present). To
+see that no coder can accept this bilanguage, suppose indirectly that an
+$n$-state coder $A$ accepts $B$.  The bistrings $\langle k,k\rangle $ are all
+accepted $(k=1,2,3,...,n+1)$, so there is at least one accepting state f that
+accepts both $\langle i,i\rangle $ and $\langle j,j\rangle $, $1\leq i<j\leq
+n+1,$ by the pigeonhole principle. Let $j-i=p$, and consider the bistring
+$\langle j,i\rangle $. In the first $i$ steps, we arrive in f, and in the next
+$p$ steps we make legal top moves (since we are at the end of the bottom
+string) that are indistinguishable from legal full moves.  But $p$ full moves
+would take us back to f, which is an accepting state, so $p$ top moves also
+take us back to f, meaning that $\langle j,i\rangle $ is accepted by $A$, a
+contradiction. To complete our `geographic survey', note that {\bf R} is not
+contained in {\bf CA}. This can be seen e.g.  by considering the regular
+bilanguage $D=\{\langle 1,j\rangle | j > 0\}$.  Collecting these results gives
+us the following theorem.
+
+\smallskip\noindent
+{\bf Theorem 3.4.4} Both {\bf R} and {\bf CA} are properly contained in {\bf
+BA}, and neither is contained in the other.
+
+\medskip\noindent
+To summarize, {\bf R} is closed under union and intersection, as the standard
+direct product construction shows, and also under complementation, as can be
+trivially established from the characterization by automata. Boolean
+operations thus offer no surprises, but string operations need to be revised.
+If we use concatenation as the only $k$-string composition operation, there
+will be an infinite number of further undecomposable structures, such as the
+bistrings resulting from the spreading of a single element on the bottom (top)
+tier. These structures, and many others, have no structural break in them if
+indeed concatenation was the only possibility: that is why we introduced
+$t$-catenation and $b$-catenation above. Regular expressions also work: 
+
+\smallskip\noindent
+{\bf Theorem 3.4.5} Every bilanguage accepted by an autosegmental automaton
+can be built up from the elementary bistrings $(x,y,\emptyset)$ and
+$(x,y,\{(0,0)\})$ by union, $t$-catenation, $b$-catenation, concatenation, and
+Kleene closure.
+
+\smallskip\noindent
+The proof is left as an exercise for the reader. Once these operations are
+available for creating larger bistrings from two successive bistrings, {\bf
+  Kleene closure} will include them as well.  This way the oddness of the
+bilanguage $B$ introduced in Example 3.4.1 above disappears: $B = \{\langle
+i,i\rangle | i \rangle 0\}$ is {\it not} the Kleene~$^+$ of $\langle
+1,1\rangle $ because the closure means arbitrary many catenation operations
+{\it including} $t$-catenations and $b$-catenations.  The Kleene $^+$ of
+$\langle 1,1\rangle $ is really the set of all well-formed bistrings (over
+one-letter tier alphabets), which is of course regular. From the
+characterization by automata, it easily follows that the concatenation,
+$t$-catenation, $b$-catenation, and Kleene closure of regular bilanguages is
+again regular. Standard proofs will also generalize for closure under
+(inverse) homomorphisms and (inverse) transductions.
+
+As we discussed earlier, transductions play a particularly important role in
+replacing context-sensitive phonological rules by finite state devices. For
+this reason, we combine the notions of $k$-strings and $n$-place regular
+relations and state this last result (for the proof, modeled after Salomaa
+1973 Ch. IV, see Kornai 1995 Sec. 2.5.2), as a separate
+theorem.\nocite{Salomaa:1973}
+
+\smallskip\noindent
+{\bf Theorem 3.4.6} If $L$ is a regular bilanguage and $B = (S, I, O, i, F,
+T)$ a generalized bisequential mapping, the image $(L)B$ of $L$ under $B$ is
+also a regular bilanguage.
+
+\smallskip\noindent
+Autosegmental rules can be grouped into two categories: rules affecting the
+strings stored on the various tiers and rules affecting the association
+relations. The two categories are not independent: rules governing the {\it
+insertion} and {\it deletion} of symbols on the various tiers are often
+conditioned on the association patterns of the affected elements or their
+neighbors, while rules governing the {\it association} and {\it delinking} of
+elements of different tiers will often depend on the contents of the tiers.
+\index{insertion} \index{deletion} \index{association} \index{delinking}
+
+Repeated insertion is sufficient to build any string symbol by symbol --
+deletion rules are used only because they make the statement of the grammar
+more compact. Similarly, repeated association would be sufficient for building
+any association relation line by line, and delinking rules are only used to
+the extent that they simplify the statement of phonological regularities. A
+typical example would be a {\it degemination} rule that will delink one of the
+two timing slots (a notion that we will develop further in Section~4.1)
+associated to a segment {\it k}, if it was preceded by another segment {\it
+  s}, and also deletes the freed slot. In pre-autosegmental theory the rule
+would be something like $k[+long] \rightarrow k[-long]/s\underline{\ \ }$ (the
+features defining $k$ and $s$ are replaced by $k$ and $s$ to simplify
+matters), and in autosegmental notation we have
+
+\addtocounter{equation}{3}
+\begin{equation}
+\xymatrix{
+&\text{s}\ar@{-}[ddl]&\text{k}\ar@{-}[ddl]\ar@{-}[dd]&&\text{s}\ar@{-}[dd]&\text{k}\ar@{-}[dd]\\
+&&&\rightarrow&&\\
+\text{X}&\text{X}&\text{X}&&\text{X}&\text{X}}
+\end{equation}
+
+\noindent
+The regular bitransducer corresponding to this rule will have an {\it
+input bistring}, an {\it output bistring}, and a {\it finite state
+control}. The heads scanning the bistrings and the association
+relations are read-only. If we denote the bistring on the left-hand
+side of the arrow by $\beta$ and that on the right-hand side by
+$\beta'$, the bitransducer accepts those pairs of bistrings that have
+the form $(\alpha\beta\gamma,\alpha\beta'\gamma)$ and those pairs
+$(\delta,\delta)$ that meet the rule vacuously ($\beta$ is not part of
+$\delta$). 
+
+\smallskip\noindent
+{\bf Exercise 3.7} Verify that the regular bitransducer defined with the
+finite state control in (3.26) accepts those and only those pairs of bistrings
+$(\rho,\sigma)$ in which $\sigma$ is formed from $\rho$ by applying (3.29). 
+
+\hfill (3.29)\\
+\noindent
+\begin{tabular}{lccccccc}
+&&in&&input &output&heads&result \\
+&&state&&bistring&bistring&move&state\\
+&&&&&&&\\
+&&0&&s1X&s1X&f/f&1\\
+&&0&&q!=s1X&q&m/m&0\\
+&&0&&q!=s1X&r!=q&m/m&-\\
+&&1&&k1X&k1X&b/0&2\\
+&&1&&q!=k1X&q&m/m&0\\
+&&1&&q!=k1X&r!=q&m/m&-\\
+&&2&&k1X&k1X&m/m&0\\
+&&2&&q!=k1X&r!=q&m/m&-\\
+\end{tabular}
+
+\bigskip\noindent
+What makes the theory of regular autosegmental languages, relations, automata,
+and transducers presented here central to the study of phonology is the view
+shared by many, though by no means all, phonologists that in spite of a
+superficial context-sensitivity, there is actually no need to go beyond the
+regular domain. For segmental rules, this was already established by Johnson
+(1970), but suprasegmentals, in particular tone and stress, remained a
+potential threat to this view. To the extent that autosegmental theory
+provides our current best understanding of tone, the foregoing imply that
+counterexamples will not be found among tonal phenomena since the basic
+regularities of tone, in particular the handling of floating elements and
+spreading, are clearly expressible by regular means. This still leaves stress
+phenomena as a potential source of counterexamples to the regularity thesis,
+particularly as hierarchical bracketing of the sort familiar from context-free
+grammars is at the heart of the so-called cyclic mode of rule application, a
+matter we shall turn to in Section~4.2. 
+
+
+\section{Further reading}
+
+The issue of whether signs are truly arbitrary still raises its head time and
+again in various debates concerning {\it sound symbolism, natural word order},
+and the {\it Sapir-Whorf hypothesis} (SWH). That there is some degree of sound
+symbolism present in language is hard to deny \cite{Allott:1995}, but from a
+frequency standpoint it is evident that the `conventional' and `arbitrary' in
+language vastly outweigh the `motivated' or `natural'. We will return to
+natural word order and the SWH in Chapters 5 and 6. We note here that the SWH
+itself is clearly conventionally named since neither Sapir's nor Whorf's
+published work shows much evidence that either of them ever posed it in
+the strong form `language determines thought' that came to be associated with
+the name SWH.  \index{Sapir-Whorf hypothesis}
+
+We owe the program of eliminating references to meaning from operational
+definitions of linguistic phenomena to the structuralist school,
+conventionally dated to begin with de Saussure (1879). The first detailed
+axiom system is that of Bloomfield (1926). The version we present here relies
+heavily on later developments, in particular Harris (1951).
+\nocite{Bloomfield:1926}\nocite{Saussure:1879}\nocite{Harris:1951}
+
+Distinctive features provide a vector decomposition of phonemes: whether the
+field underlying the vector space is taken to be continuous or discrete is a
+matter strongly linked to whether we take an empiricist or a mentalist view of
+phonemes. The first position is explicitly taken by Cherry (1956) and
+\nocite{Cherry:1956} \newcite{Stevens:1981}, who assume the coordinates in
+feature space to be directly measurable properties of the sounds. The second
+is implicit in the more abstract outlook of Trubetzkoi (1939) and Jakobson et
+al. (1952) and explicit in the single most influential work on the subject,
+\newcite{Chomsky:1968}.
+
+The issue of characterizing the set of well-formed phoneme strings in $P^*$ is
+impacted more severely by the appropriate notion of `well-formed' than by the
+choice of generative tools (context-sensitive, context-free, or finite state):
+as we shall see in Chapter~4, the key question is how we treat forms that have
+not been attested but sound good to native speakers.  To get a taste of the
+debate at the time, the reader may wish to consult Chomsky and Halle (1965a),
+Householder (1965, 1966), and Kortlandt (1973) -- in hindsight it is clear that
+the {\it mentalist} view propounded by Chomsky and Halle took the field (see
+\newcite{Anderson:2000} for a nuanced overview of the debate).
+\newcite{Anderson:1985} describes the history of modern phonological theory
+from a linguistic perspective.
+\nocite{Householder:1965}\nocite{Householder:1966}\nocite{Kortlandt:1973}
+
+Readers who wish to get some hands-on experience with the kinds of problems
+phonologists routinely consider should consult \newcite{Nida:1949} or Halle
+and Clements (1983) -- \nocite{Halle:1983} the latter includes several
+problems like that of Kikuyu [KIK] tone shift \cite{Clements:1979} that served
+to motivate autosegments.  Autosegmental theory initially grew out of research
+on African tone languages (Welmers 1959, Leben 1973, Goldsmith 1976, Williams
+1976)\nocite{Welmers:1959,Leben:1973,Goldsmith:1976,Williams:1976} and prosody
+\cite{Firth:1948} -- the standard monographic treatment is
+\newcite{Goldsmith:1990}. The basic insight that tones and segments need not
+be fully aligned with one another but rather must be placed on separate tiers
+was soon generalized from tone to vowel harmony \cite{Clements:1977},
+aspiration (Thr\'{a}insson 1978),\nocite{Thra1insson:1978}, nasality
+\cite{Hyman:1982}, and eventually, by placing all distinctive features on
+separate tiers, to the theory of feature geometry (for a review, see McCarthy
+1988; for a current proposal, see Padgett 2002).  \nocite{McCarthy:1988}
+\index{nasality} \index{preaspiration} \index{vowel harmony}
+\index{tone}\nocite{Padgett:2002}
+
+For further discussion of the P\={a}\d{n}inian system of describing natural
+classes, see \newcite{Petersen:2004}. The modern treatment of natural classes
+begins with Trubetzkoi (1939)\nocite{Trubetskoi:1939} and Jakobson et
+al. (1952), \nocite{Jakobson:1952} who assumed that the defining properties of
+natural classes are all orthogonal (see also Cherry 1956).
+\nocite{Cherry:1956} Distinguishing the marked member of an opposition has its
+roots in morphology, where it is often the case that only one member of an
+opposition (such as singular vs. plural) is marked explicitly, the other
+member being known from the absence of marking (e.g. we know {\it boy} is
+singular because it does not have the plural suffix {\it -s}). Extending this
+notion to phonological oppositions begins with Trubetzkoi, but the full theory
+of markedness developed only gradually with the work of Jakobson, Halle, and
+Chomsky -- for an overview, see \newcite{Hyman:1975}.
+
+The key ideas of decomposing context-sensitive rules into simple regular (and,
+when needed, length-preserving) steps such as the introduction and eventual
+deletion of temporary brackets that keep track of the locus of rule
+application were discovered independently by Johnson (1970) and Kaplan and Kay
+(an influential unpublished manuscript eventually published in 1994).
+\nocite{Kaplan:1994} \newcite{Kiraz:2001} presents a full system based on n-way
+relations (n-tape automata) in the context of Semitic morphology.  A different
+{\it intersective} approach is introduced in Bird and Ellison (1994).
+\nocite{Bird:1994} 
+
+The cyclic mode of rule application was first introduced in Chomsky and Halle
+(1968 Sec. 2.3--2.5). The formalism proposed there relied heavily on the use of
+explicit boundary markers, a device that is no longer viewed as appropriate by
+most phonologists, but the central idea is well-preserved in lexical phonology
+and morphology (LPM, see Kiparsky 1982),
+\index{lexical phonology and morphology, LPM} which no longer uses boundary markers.
+\nocite{Chomsky:1968} \nocite{Kiparsky:1982}
+
+\endinput
+
+%Mathematical models include Kortland, Batog, Wedberg
+
+phonics mapping
+
+duke of York
+
+\footnote{While the main line of development is clear, the actual
+history of such results is often more complex. For a discussion of the
+long-range effects of the Peters-Ritchie results see Newmeyer (1980), for
+those of Johnson's results, Karttunen (1993).} \nocite{Newmeyer:1980}
+
+\vbox{
+\synttree[{\small SUPRALARYNGEAL}
+[{\small nasal}]
+[{\small cont}]
+[{\small lateral}]
+[{\small PLACE}
+[{\small  LABIAL} [{\small distr}] [{\small round}] ]
+[{\small  CORONAL} [{\small distr}] [{\small anterior}]]
+[{\small  DORSAL} [{\small back}] [{\small high}] [{\small low}]]
+[{\small RAD}]
+]
+[{\small approx}]
+]
+}

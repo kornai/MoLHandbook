@@ -1,0 +1,762 @@
+\chapter{The elements}
+
+A primary concern of mathematical linguistics is to effectively enumerate
+those sets of words, sentences, etc., that play some important linguistic role.
+Typically, this is done by means of {\it generating} the set in question, a
+definitional method that we introduce in Section~2.1 by means of examples and
+counterexamples that show the similarities and the differences between the
+standard mathematical use of the term `generate' and the way it is employed in
+linguistics. \index{generation} 
+
+Because the techniques used in defining sets, functions, relations, etc., are
+not always directly useful for evaluating them at a given point, an equally
+important concern is to solve the membership problem for the sets, functions,
+relations, and other structures of interest. \index{membership problem} In
+Section~2.2 we therefore introduce a variety of {\it grammars} that can be
+used to, among other things, create {\it certificates} that a particular
+element is indeed a member of the set, gets mapped to a particular value,
+stands in a prescribed relation to other elements and so on, and compare
+generative systems to logical calculi.\index{grammar}\index{certificate}
+
+Since {\it generative grammar} is most familiar to mathematicians and computer
+scientists as a set of rather loosely collected string-rewriting techniques,
+in Section~2.3 we give a brief overview of this domain.  We put the emphasis on
+context-sensitive grammars both because they play an important role in
+phonology (see Chapter~3) and morphology (see Chapter~4) and because they
+provide an essential line of defense against undecidability in syntax (see
+Chapter~5).
+\index{generative grammar} \index{context-sensitive grammar, CSG}
+
+\section{Generation}
+
+To define a collection of objects, it is often expedient to begin with a fixed
+set of primitive elements $E$ and a fixed collection of {\it rules} (we use
+this term in a broad sense that does not imply strict procedurality) $R$ that
+describe permissible arrangements of the primitive elements as well as of more
+complex objects. If $x, y, z$ are objects {\it satisfying} a (binary) rule
+$z=r(x,y)$, we say that $z$ {\bf directly generates} $x$ and $y$ (in this
+order) and use the notation $z \rightarrow_r xy$. The smallest collection of
+objects closed under direct generation by any $r \in R$ and containing all
+elements of $E$ is called the set {\bf generated} from $E$ by $R$.
+\index{rule}\index{satisfaction}\index{generation!direct|textbf} 
+
+Very often the simplest or most natural definition yields a superset of the
+real objects of interest, which is therefore supplemented by some additional
+conditions to narrow it down.  In textbooks on algebra, the symmetric group is
+invariably introduced before the alternating group, and the latter is
+presented simply as a subgroup of the former. In logic, closed formulas are
+typically introduced as a special class of well-formed formulas. In
+context-free grammars, the sentential forms produced by the grammar are kept
+only if they contain no nonterminals (see Section~2.3), and we will see many
+similar examples (e.g. in the handling of agreement; see
+Section~5.2.3).
+\index{context-free grammar, CFG}\index{sentential form}\index{agreement}
+
+Generative definitions need to be supported by some notion of {\it equality}
+among the defined objects.  Typically, the notion of equality we wish to
+employ will abstract away from the derivational history of the object, but in
+some cases we will need a stronger definition of identity that defines two
+objects to be the same only if they were generated the same
+way.\index{derivational history}\index{equality} Of particular interest in
+this regard are derivational {\it strata.} A specific intermediary stage of a
+derivation (e.g.  when a group or rules have been exhausted or when some
+well-formedness criterion is met) is often called a {\bf stratum} and is
+endowed with theoretically significant properties, such as availability for
+interfacing with other modules of grammar. Theories that recognize strata are
+called {\it multistratal}, and those that do not are called {\it monostratal}
+-- we shall see examples of both in Chapter~5.  \index{stratum}
+\index{multistratal theory} \index{monostratal theory}
+
+In mathematical linguistics, the objects of interest are the collection of
+words in a language, the collection of sentences, the collection of meanings,
+etc. Even the most tame and obviously finite collections of this kind present
+great definitional difficulties. Consider, for example, the set of characters
+(graphemes) used in written English. Are uppercase and lowercase forms to be
+kept distinct? How about punctuation, digits, or Zapf dingbats? If there is a
+new character for the euro currency unit, as there is a special character for
+dollar and pound sterling, shall it be included on account of Ireland having
+already joined the euro zone or shall we wait until England follows suit?
+Before proceeding to words, meanings, and other more subtle objects of
+inquiry, we will therefore first refine the notion of a generative definition
+on some familiar mathematical objects.\index{characters!English}
+
+\smallskip\noindent {\bf Example 2.1.1} Wang tilings. Let $C$ be a finite set
+of colors and $S$ be a finite set of square tiles, each colored on the edges
+according to some function $e: S \rightarrow C^4$. We assume that for each
+coloring {\it type} we have an infinite supply of {\it tokens} colored with
+that pattern: these make up the set of primitive elements $E$. The goal is to
+tile the whole plane (or just the first quadrant) laying down the tiles so
+that their colors match at the edges. To express this restriction more
+precisely, we use a rule system $R$ with four rules $n,s,e,w$ as follows.  Let
+${\Bbb Z}$ be the set of integers, $'$ be the successor function ``add one"
+and $`$ be its inverse ``subtract one". For any $i,j \in \Bbb Z$, we say that
+the tile $u$ whose bottom left corner is at $(i,j)$ has a correct neighbor to
+the north if the third component of $e(u)$ is the same as the first component
+of $e(v)$ where $v$ is the tile at $(i,j')$.  Denoting the $i$th projection by
+$\pi_i$, we can write $\pi_3(e(u))=\pi_1(e(v))$ for $v$ at
+$(i,j')$. Similarly, the west rule requires $\pi_4(e(u))=\pi_2(e(v))$ for $v$
+at $(i`,j)$, the east rule requires $\pi_2(e(u))=\pi_4(e(v))$ for $v$ at
+$(i',j)$, and the south rule requires $\pi_1(e(u))=\pi_3(e(v))$ for $v$ at
+$(i,j`)$. We define {\bf first-quadrant (plane) tilings} as functions from
+$\Bbb N \times \Bbb N$ $(\Bbb Z \times \Bbb Z$) to $E$ that satisfy all four
+rules. \index{Wang tiling|textbf} \index{type} \index{token}
+
+\smallskip\noindent
+{\bf Discussion} While the above may look very much like a generative
+definition, there are some crucial differences. First, the definition relies
+on a number of externally given objects, such as the natural numbers, the
+integers, the successor function, and Cartesian products. In contrast, the
+definitions we will encounter later, though they may require some minimal
+set-theoretical scaffolding, are almost always {\it noncounting}, both in the
+broad sense of being free of arithmetic aspects\index{noncounting} and 
+in the narrower semigroup-theoretic sense (see Chapter 5.2.3).
+
+Second, these rules are {\it well-formedness conditions} (WFCs, see Section~2.3)
+rather than procedural {\it rules of production.} In many cases, this is a
+distinction without a difference, since production rules can often be used to
+enforce WFCs. To turn the four WFCs $n,s,e,w$ into rules of production
+requires some auxiliary definitions: we say that a new tile $(i,j)$ is {\bf
+  north-adjacent} to a preexisting set of tiles $T$ if $(i,j) \not\in T$ but
+$(i,j') \in T$, and similarly for east-, west-, and south-adjacency (any
+combination of these relations may simultaneously obtain between a new tile
+and some suitably shaped $T$). A {\bf (north, south, east, west)-addition} of
+a tile at $(i,j)$ is an operation that is permitted between a set of tiles $T$
+and a (south, north, west, east)-adjacent tile $(i,j)$ to form $T \cup (i,j)$
+iff the $n,s,w,e$ rules are satisfied, so there are $2^4$ production rules.
+
+It is a somewhat tedious but entirely trivial exercise to prove that these
+sixteen rules of production can be used to successively build all and only
+well-formed first quadrant (plane) tilings starting from a single tile placed
+at the origin.  Obviously, for some tile inventories, the production rules can
+also yield partial tilings that can never be completed as well-formed
+first-quadrant (or plane) tilings, and in general we will often see reason to
+consider broader production processes, where ill-formed intermediate
+structures are integral to the final outcome.
+
+This becomes particularly interesting in cases where the final result shows
+some regularity that is not shared by the intermediate structures. For
+example, in languages that avoid two adjacent vowels (a configuration known as
+{\it hiatus}), \index{hiatus} if a vowel-initial word would come after a
+vowel-final one, there may be several distinct processes that enforce this
+constraint; e.g., by deleting the last vowel of the first word or by inserting
+a consonant between them (as in {\it the very ideaR of it}). It has long been
+observed (see in particular Kisseberth 1970)\nocite{Kisseberth:1970} that such
+processes can {\it conspire} to enforce WFCs, and an important generative
+model, optimality theory (see Section~4.3), takes this observation to be
+fundamental in the sense that surface regularities appear as the cause, rather
+than the effect, of production rules that conspire to maintain them.  On the
+whole, there is great interest in {\it constraint-based} theories of grammar
+where the principal mechanism of capturing regularities is by stating them as
+WFCs. \index{well-formedness condition (WFC)}\index{production}
+\index{rule!WFC}\index{rule!production}\index{conspiracy}
+
+Third, the four WFCs (as opposed to the 16 production rules) have no recursive
+aspect whatsoever. There is no notion of larger structures built via
+intermediate structures: we go from the atomic units (tiles) to the global
+structure (tiling of the first quadrant) in one leap. Linguistic objects, as
+we shall see, are generally organized in intermediate layers that are of
+interest in themselves: a typical example is provided by phonemes (sounds),
+which are organized in syllables, which in turn are organized in metrical
+feet, which may be organized in cola (superfeet) before reaching the word
+level (see Section~4.1). In contrast, Example~2.1.1 will lack recursive
+structure not only in the presentation chosen above but in any other
+presentation.
+
+\smallskip\noindent
+{\bf Theorem 2.1.1} \cite{Berger:1966} It is recursively undecidable whether a
+given inventory of tiles $E$ can yield a Wang tiling.
+
+\smallskip\noindent
+{\bf Example 2.1.2} Presentation of groups in terms of generators and
+relations. Let $E$ be a set of generators $g_1,\cdots,g_k$ and their inverses
+$g_1^{-1},\cdots,g_k^{-1}$, and let $R$ contain both the formal product rule
+that forms a string of these from two such strings by means of concatenation
+and the usual rules of cancellation $g_i^{-1}g_i=g_ig_i^{-1}=\lambda$ as
+context-free string-rewriting rules. Formal products composed from the $g_i$
+and $g_i^{-1}$ define the {\bf free group} (or, if we omit inverses and
+cancellation, the {\bf free monoid}) over $k$ generators, with the usual
+conventions that the empty word is the multiplicative unit of the group
+(monoid) and that formal products containing canceling terms are equivalent to
+those with the canceling terms omitted. If a broader set of formal products is
+defined as canceling, representatives of this set are called {\bf defining
+relations} for the group being presented, which is the factor of the free
+group by the cancellation kernel. \index{free group|textbf}
+\index{free monoid|textbf}
+
+\smallskip\noindent {\bf Discussion} As is well-known, it is in general
+undecidable whether a formal product of generators and inverses is included in
+the kernel or not \cite{Sims:1994} -- we will discuss the relationship between
+combinatorial group theory and formal languages in Chapter~5. Note that it is
+a somewhat arbitrary technical decision whether we list the defining relations
+as part of our production rules or as part of the equality relation: we can
+keep one or the other (but not both) quite trivial without any loss of
+expressive power.  In general, the {\it equality} clause of generative
+definitions can lead to just the same complications as the {\it rules} clause.
+
+\smallskip\noindent
+{\bf Example 2.1.3} Herbrand universes. As the reader will recall, a {\bf
+first order language} (FOL) consists of logical symbols (variables,
+connectives, quantifiers, equal sign) plus some constants (e.g., distinguished
+elements of algebras), as well as function and relation symbols (each with
+finite arity). The primitive elements of the Herbrand universe are the object
+constants of the FOL under study (or an arbitrary constant if no object
+constant was available initially), and there are as many rules to describe
+permissible arrangements of elements as there are function/relation constants
+in the FOL under study: if $f$ was such a constant of arity $n$,
+$f(x_1,\ldots,x_n)$ is in the Herbrand universe provided the $x_i$ were.
+\index{Herbrand model}\index{first order language, FOL}
+
+\smallskip\noindent {\bf Discussion} Herbrand universes are used in building
+purely formula-based models which are in some sense canonical among the many
+models that first order theories have. It should come as no surprise that
+logic offers many {\it par excellence} examples of generative definition --
+after all, the techniques developed for formalizing mathematical statements
+grew out of the larger effort to render statements of all sorts
+formally. However, the definition of an FOL abstracts away from several
+important properties of natural language. In FOLs, functions and relations of
+arbitrary arity are permitted, while in natural language the largest number of
+arguments one needs to consider is five (see Section~5.2).  Also, in many
+important cases (see Chapter~3), the freedom to utilize an infinite set of
+constants or variables is not required.
+
+As a matter of fact, it is often tempting to replace natural languages, the
+true object of inquiry, by some well-regimented semiformal or fully formal
+construct used in mathematics. Certainly, there is nothing wrong with a bit of
+idealization, especially with ignoring factors best classified as noise. But a
+discussion about the English word {\it triangle} cannot rely too much on the
+geometrical object by this name since this would create problems where there
+aren't any; for example, it is evident that a hunter {\it circling} around a
+clearing does not require that her path keep the exact same distance from the
+center at all times. To say that this amounts to fuzzy definitions or sloppy
+language use is to put the cart before the horse: the fact to be explained is
+not how a cleaned-up language {\it could be} used for communication but how
+real language {\it is} used.
+
+\smallskip\noindent
+{\bf Exercise 2.1} The Fibonacci numbers are defined by $f_0=0, f_1=1,
+f_{n+1}=f_n+f_{n-1}$. Is this a generative definition? Why?
+\index{Fibonacci numbers}
+
+\section{Axioms, rules, and constraints}
+
+There is an unbroken tradition of argumentation running from the Greek
+sophists to the Oxford Union, and the axiomatic method has its historic roots
+in the efforts to regulate the permissible methods of debate. As in many other
+fields of human activity, ranging from ritual to game playing, regulation will
+lay bare some essential features of the activity and thereby make it more
+enjoyable for those who choose to participate. Since it is the general
+experience that almost all statements are debatable, to manage argumentation
+one first needs to postulate a small set of primitive statements on which the
+parties agree -- those who will not agree are simply excluded from the
+debate. As there is remarkable agreement about the validity of certain kinds
+of inference, the stage is set for a fully formal, even automatic, method of
+verifying whether a given argument indeed leads to the desired conclusion from
+the agreed upon premises. 
+
+There is an equally venerable tradition of protecting the full meaning and
+exact form of sacred texts, both to make sure that mispronunciations and other
+errors that may creep in over the centuries do not render them ineffectual and
+that misinterpretations do not confuse those whose task is to utter them on
+the right occasion. Even if we ignore the phonetic issues related to
+`proper' pronunciation (see Chapter~8), writing down the texts is far from
+sufficient for the broader goals of preservation. With any material of great
+antiquity, we rarely have a single fully preserved and widely accepted
+version -- rather, we have several imperfect variants and fragments.  What is
+needed is not just a frozen description of some texts, say the Vedas, but also
+a grammar that defines what constitutes a proper Vedic text. The philological
+ability to determine the age of a section and undo subsequent modifications is
+especially important because the words of earlier sages are typically accorded
+greater weight. 
+
+In defining the language of a text, a period, or a speech community, we can
+propagate {\it grammaticality} the same way we propagate truth in an axiomatic
+system, by choosing an initial set of grammatical expressions and defining
+some permissible combinatorical operations that are guaranteed to preserve
+grammaticality. Quite often, such operations are conceptualized as being
+composed of a purely combinatorical step (typically concatenation) followed by
+some tidying up; e.g., adding a third-person suffix to the verb when it
+follows a third-person subject: compare {\it I see} to {\it He sees}. In
+logic, we mark the operators overtly by affixing them to the sequence of the
+operands -- prefix (Polish), interfix (standard), and postfix (reverse Polish)
+notations are all in wide use -- and tend not to put a great deal of emphasis
+on tidying up (omission of parentheses is typical).  In linguistics, there is
+generally only one operation considered, concatenation, so no overt marking is
+necessary, but the tidying up is viewed as central to the enterprise of
+obtaining all and only the attested forms.
+
+The same goal of characterizing all and only the grammatical forms can be
+accomplished by more indirect means. Rather than starting from a set of fully
+grammatical forms, we can begin with some more abstract inventory, such as the
+set of words $W$, elements of which need not in and of themselves be
+grammatical, and rather than propagating grammaticality from the parts to the
+whole, we perform some computation along the way to keep score. 
+
+\smallskip\noindent {\bf Example 2.2.1} Balanced parentheses. We have two
+atomic expressions, the left and the right paren, and we assign the values
+$+1$ to `(' and $-1$ to `)'.  We can successively add new paren symbols on the
+right as long as the score (overall sum of $+1$ and $-1$ values) does not dip
+below zero: the well-formed (balanced) expressions are simply those where this
+WFC is met and the overall score is zero.
+
+\smallskip\noindent 
+{\bf Discussion} The example is atypical for two reasons: first because
+linguistic theories are noncounting (they do not rely on the full power of
+arithmetic) and second because it is generally not necessary for a WFC to be
+met at every stage of the derivation. Instead of computing the score in ${\Bbb
+Z}$, a better choice is some finite structure $G$ with well-understood rules of
+combination, and instead of assigning a single value to each atomic
+expression, it gives us much-needed flexibility to make the assignment
+disjunctive (taking any one of a set of values). Thus we have a mapping $c: W
+\rightarrow 2^G$ and consider grammatical only those sequences of words for
+which the rules of combination yield a desirable result.  Demonstrating that
+the assigned elements of $G$ indeed combine in the desired manner constitutes
+a {\bf certificate} of membership according to the grammar defined by $c$.
+\index{certificate|textbf}
+
+\smallskip\noindent {\bf Example 2.2.2} Categorial grammar. If $G$ behaves
+like a free group except that formal inverses of generators do not cancel from
+both sides ($g \cdot g^{-1} = e$ is assumed but $g^{-1} \cdot g = e$ is not)
+and we consider only those word sequences $w_1 .  w_2 \ldots w_n$ for which
+there is at least one $h_i$ in each $c(w_i)$ such that $h_1 \cdot \ldots \cdot
+h_n = g_0$ (i.e.  the group-theoretical product of the $h_i$ yields a
+distinguished generator $g_0$), we obtain a version of {\it bidirectional
+  categorial grammar}\index{categorial grammar!bidirectional} (Bar-Hillel
+1953, Lambek 1958). If we take $G$ as the free Abelian group, we obtain {\it
+  unidirectional categorial grammar}\index{categorial grammar!unidirectional}
+(Ajdukiewitz 1935).\nocite{Bar-Hillel:1953}\nocite{Lambek:1958}
+\nocite{Ajdukiewicz:1935} These notions will be developed further in Chapter
+5.2.
+
+\smallskip\noindent 
+{\bf Example 2.2.3} Unification grammar. By choosing $G$ to be the set of
+rooted directed acyclic node-labeled graphs, where the labels are first order
+variables and constants, and considering only those word sequences for which
+the assigned graphs will unify, we obtain a class of {\it unification
+grammars}.  \index{unification grammar}
+
+\smallskip\noindent
+{\bf Example 2.2.4} Link grammar. By choosing $G$ to satisfy a generalized
+version of the (horizontal) tiling rules of Example~2.1.1, we obtain the {\it
+link grammars} \index{link grammar} of Sleator and Temperley (1993).
+\nocite{Sleator:1993}
+
+%\bigskip\noindent
+We will investigate a variety of such systems in detail in Chapters~5 and 6,
+but here we concentrate on the major differences between truth and
+grammaticality.\index{truth!in axiomatic systems}\index{grammaticality} First,
+note that systems such as those above are naturally set up to define not only
+one distinguished set of strings but its cosets as well. For example, in a
+categorial grammar, we may inquire not only about those strings of words for
+which multiplication of the associated categories yields the distinguished
+generator but also about those for which the yield contains another generator
+or any specific word of $G$. This corresponds to the fact that e.g. {\it the
+  house of the seven gables} is grammatical but only as a noun phrase and not
+as a sentence, while {\it the house had seven gables} is a grammatical
+sentence but not a grammatical noun phrase. It could be tempting to treat the
+cosets in analogy with $n$-valued logics, but this does not work well since
+the various stringsets defined by a grammar may overlap (and will in fact
+irreducibly overlap in every case where a primitive element is assigned more
+than one disjunct by $c$), while truth values are always uniquely assigned in
+$n$-valued logic.\index{logic!multivalued}\index{truth value}
+
+Second, the various calculi for propagating truth values by specific rules of
+inference can be supported by an appropriately constructed theory of model
+structures. In logic, a model will be unique only in degenerate cases: as soon
+as there is an infinite model, by the L\"{o}wenheim-Skolem theorems we have at
+least as many nonisomorphic models as there are cardinalities. In grammar,
+the opposite holds: as soon as we fix the period, dialect, style, and possibly
+other parameters determining grammaticality, the model is essentially unique.
+\index{model theory}
+
+The fact that up to isomorphism there is only one model structure $M$ gives
+rise to two notions peculiar to mathematical linguistics: {\it overgeneration}
+and {\it undergeneration}. If there is some string $w_1 . w_2 \ldots w_n
+\not\in M$ that appears in the yield of $c$, we say that $c$ {\bf
+overgenerates} (with respect to $M$), and if there is a $w_1 . w_2  \ldots
+w_n \in M$ that does not appear in the yield of $c$, we say that $c$ {\bf
+undergenerates}. It is quite possible, indeed typical, for working grammars to
+have both kinds of errors at the same time. We will develop quantitative
+methods to compare the errors of different grammars in Section~5.4, and note
+here that neither undergeneration nor overgeneration is a definitive
+diagnostic of some fatal problem with the system. In many cases,
+overgeneration is benign in the sense that the usefulness of a system that
+e.g. translates English sentences to French is not at all impaired by the fact
+that it is also capable of translating an input that lies outside the confines
+of fully grammatical English. In other cases, the aim of the system may be to
+shed light only on a particular range of phenomena, say on the system of
+intransitive verbs, to the exclusion of transitive, ditransitive, etc., verbs.
+In the tradition of Montague grammar (see Section~6.2), such systems are
+explicitly called {\it fragments}. Constraint-based theories, which view 
+the task of characterizing all and only the well-formed structures as one 
+of (rank-prioritized) intersection of WFCs (see Section~4.2) can have the same 
+under- and overgeneration problems as rule-based systems, as long as they 
+have too many (too few) constraints. 
+\index{undergeneration|textbf}
+\index{overgeneration|textbf}
+\index{Montague grammar, MG}
+\index{fragment}
+
+In spite of these major differences, the practice of logic and that of grammar
+have a great deal in common. First, both require a systematic ability to
+analyze sentences in component parts so that generalizations involving only
+some part can be stated and the ability to construct new sentences from ones
+already seen. Chapter~5 will discuss such {\it syntactic} abilities in
+detail. We note here that the practice of logic is largely {\it normative} in
+the sense that constructions outside those explicitly permitted by its syntax
+are declared ill-formed, while the practice of linguistics is largely {\it
+  descriptive} in the sense that it takes the range of existing constructions
+as given and strives to adjust the grammar so as to match this range.
+\index{normativity} \index{descriptivity}
+
+Second, both logic and grammar are largely driven by an overall consideration
+of economy. As the reader will have no doubt noticed, having a separate WFC
+for the northern, southern, eastern, and western edges of a tile in
+Example~2.1.1 is quite unnecessary: any two orthogonal directions would
+suffice to narrow down the range of well-formed tilings. Similarly, in
+context-free grammars, we often find it sufficient to deal only with rules that
+yield only two elements on the right-hand side (Chomsky normal form),
+\index{Chomsky normal form} and there has to be some strong reason for
+departing from the simplest binary branching structure (see Chapter~5).
+
+From the perspective of linguistics, logical calculi are generation devices,
+with the important caveat that in logic the rules of deduction are typically
+viewed as possibly having more than one premiss, while in linguistics such
+rules would generally be viewed as having only one premiss, namely the
+conjunction of the logically distinct premisses, and axiom systems would be
+viewed as containing a single starting point (the conjunction of the axioms).
+The deduction of theorems from the axiom by brute force enumeration of all
+proofs is what linguists would call {\bf free generation}.
+\index{generation!free|textbf}The use of a single conjunct premiss instead of
+multiple premisses may look like a distinction without a difference, but it
+has the effect of making generative systems {\it invertible:} for each such
+system with rules $r_1,\ldots,r_k$ we can construct an inverted system with
+rules $r_1^{-1},\ldots,r_k^{-1}$ that is now an {\bf accepting}, rather than
+generating, device.\index{acceptance|textbf} This is very useful in all those
+cases where we are interested in characterizing both production (synthesis,
+generation) and perception (analysis, parsing) processes because the simplest
+hypothesis is that these are governed by the same set of abstract rules. 
+
+Clearly, definition by generation differs from deduction by a strict
+algorithmic procedure only in that the choice of the next algorithmic step is
+generally viewed as being completely determined by the current step, while in
+generation the next step is freely drawn from the set of generative rules.
+The all-important boundary between recursive and recursively enumerable (r.e.)
+is drawn the same way by certificates (derivation structures), but the systems
+of interest congregate on different sides of this boundary. In logic, proving
+the negation of a statement requires the same kind of certificate (a proof
+object rooted in the axioms and terminating in the desired conclusion) as
+proving the statement itself -- the difficulty is that most calculi are r.e.
+but not recursive (decidable). In grammar, proving the ungrammaticality of a
+form requires an apparatus very different from proving its grammaticality: for
+the latter purpose an ordinary derivation suffices, while for the former we
+typically need to exhaustively survey all forms of similar and lesser
+complexity, which can be difficult, even though most grammars are not only
+r.e. but in fact recursive.  \index{ungrammaticality} \index{decidability}
+
+\section{String rewriting}
+
+Given a set of atomic symbols $\Sigma$ called the {\bf alphabet}, the simplest
+imaginable operation is that of {\bf concatenation}, whereby a complex symbol
+$xy$ is formed from $x$ and $y$ by writing them in succession.  Applying this
+operation recursively, we obtain {\bf strings} of arbitrary {\it length}.
+Whenever such a distinction is necessary, the operation will be denoted by .
+(dot). The result of the dot operation is viewed as having no internal
+punctuation: $u . v = uv$ both for atomic symbols and for more complex
+strings, corresponding to the fact that concatenation is by definition
+associative. To forestall confusion, we mention here that in later chapters the
+. will also be used in {\it glosses} to connect a word stem to the complex of
+morphosyntactic (inflectional) features the word form carries: for example
+{\it geese = goose.PL} (the plural form of {\it goose} is {\it geese}) or
+Hungarian {\it h\'azammal = house.POSS1SG.INS} `with my house', where {\it
+POSS1SG} refers to the suffix that signifies possession by a first-person
+singular entity and {\it INS} refers to the instrumental case ending roughly
+analogous to English {\it with}.\index{gloss} (The reader should be forewarned
+that translation across languages rarely proceeds as smoothly on a morpheme by
+morpheme basis as the example may suggest: in many cases morphologically
+expressed concepts of the source language have no exact equivalent in the
+language used for glossing.)
+
+Of special interest is the {\bf empty string} $\lambda$, which serves as a
+two-sided multiplicative unit of concatenation: $\lambda . u = u .  \lambda =
+u$. The whole set of strings generated from $\Sigma$ by concatenation is
+denoted by $\Sigma^+$ ({$\lambda$-{\bf free Kleene closure}) or, if the empty
+string is included, by $\Sigma^*$ ({\bf Kleene closure}).  If $u . v = w$, we
+say that $u$ ($v$) is a {\bf left (right) factor} of $w$.  If we define the
+{\bf length} $l(x)$ of a string $x$ as the number of symbols in $x$, counted
+with multiplicity (the empty word has length 0), $l$ is a homomorphism from
+$\Sigma^*$ to the additive semigroup of nonnegative integers.  In particular,
+the semigroup of nonnegative integers (with ordinary addition) is isomorphic
+to the Kleene closure of a one-symbol alphabet (with concatenation): the
+latter may be called integers in {\bf base one} notation.
+\index{alphabet|textbf} \index{concatenation|textbf} \index{string|textbf}
+\index{empty string, $\lambda$|textbf} \index{Kleene closure, $^*$|textbf}
+\index{Kleene closure, $\lambda$-free, $^+$|textbf} \index{length|textbf}
+\index{integers, base one|textbf} \index{left factor|textbf}
+\index{right factor|textbf}
+
+Subsets of $\Sigma^*$ are called {\bf stringsets}, {\bf formal languages}, or
+just {\bf languages}. In addition to the standard Boolean operations, we can
+define the {\bf concatenation} of strings and languages $U$ and $V$ as
+$UV=\{uv | u \in U, v \in V\}$, suppressing the distinction between a string
+and a one-member language, writing $xU$ instead of $\{x\}U$, etc. The
+($\lambda$-free) Kleene closure of strings and languages is defined
+analogously to the closure of alphabets. For a string $w$ and a language $U$, 
+we say $u \in L$ is a {\bf prefix} of $w$ if $u$ is a left factor of $w$ and
+no smaller left factor of $w$ is in $U$. 
+
+Finite languages have the same distinguished status among all stringsets that
+the natural numbers ${\Bbb N}$ have among all numbers: they are, after all, all that
+can be directly listed without relying on any additional interpretative
+mechanism.  And as in arithmetic, where the simplest natural superset of the
+integers includes not only finite decimal fractions but some infinite ones as
+well, the simplest natural superset of the finite languages is best defined by
+closure under operations (both Boolean and string operations) and will contain
+some infinite languages as well. We call {\bf regular} all finite languages,
+and all languages that can be obtained from these by repeated application of
+union, intersection, complementation, concatenation, and Kleene closure.  The
+classic Kleene theorem guarantees that regular languages have the same
+distinguished status among languages that the rationals in ${\Bbb Q}$ have
+among numbers in ${\Bbb R}$.\index{stringset|textbf} \index{language|textbf}
+\index{language!regular|textbf} \index{reversal|textbf}
+\index{language!formal|textbf} \index{prefix|textbf}
+
+\smallskip\noindent 
+{\bf Exercise 2.2} Let $F$ be the language of Fibonacci numbers written in base
+one. Is $F$ finitely generated? \index{Fibonacci numbers}
+
+\medskip\noindent
+The generative grammars defining stringsets typically use an alphabet $V$
+that is a proper superset of $\Sigma$ that contains the symbols of interest.
+Elements of $N = V \setminus \Sigma$ are called {\bf nonterminal symbols} or
+just {\bf nonterminals} to distinguish them from elements of $\Sigma$ (called
+{\bf terminal symbols} or {\bf terminals}). Nonterminals play only a transient
+role in generating the objects of real interest, inasmuch as the yield of a
+grammar is explicitly restricted to terminal strings -- the name nonterminal
+comes from the notion that a string containing them corresponds to a stage of
+the derivation that has not (yet) terminated.  In {\bf context-free grammars}
+(CFGs), we use a {\bf start symbol} $S \in N$ and {\bf productions} or {\bf
+rewrite rules} of the form $A \rightarrow v$, where $A \in N$ and $v \in V^*$.
+\index{nonterminal|textbf} 
+\index{start symbol, S|textbf}
+\index{terminal|textbf}
+\index{context-free grammar, CFG|textbf}
+\index{production|textbf}
+\index{rewrite rule|textbf}
+
+\smallskip\noindent {\bf Example 2.3.1}. A CFG for base ten integers. We use
+nonterminals {\tt SIGN} and {\tt DIGIT} and posit the rules $S \rightarrow$
+{\tt SIGN DIGIT}; $S \rightarrow$ {\tt DIGIT}; {\tt DIGIT} $\rightarrow$ {\tt
+  DIGIT DIGIT}; {\tt DIGIT} $\rightarrow$ 0; {\tt DIGIT} $\rightarrow$ 1; ...
+{\tt DIGIT} $\rightarrow$ 9; {\tt SIGN} $\rightarrow$ {\tt +}; {\tt SIGN}
+$\rightarrow$ {\tt -}. (The nonterminals are treated here as atomic symbols
+rather than strings of Latin letters. We use whitespace to indicate token
+boundaries rather than the Algol convention of enclosing each token in
+$\langle \rangle$.) At the first step of the derivation, we can only choose the
+first or the second rule (since no other rule rewrites $S$) and we obtain the
+string {\tt SIGN DIGIT} or {\tt DIGIT}.  Taking the first option and using
+the last rule to rewrite {\tt SIGN}, we obtain {\tt -DIGIT}, and using the
+third rule $n$ times, we get {\tt -DIGIT}$^{n+1}$. By eliminating the
+nonterminals, we obtain a sequence of $n+1$ decimal digits preceded by the
+minus sign.
+
+\smallskip\noindent
+{\bf Discussion} Needless to say, base ten integers are easy to define by
+simpler methods (see Section~6.1), and the CFG used above is overkill also in
+the sense that strings with three or more digits will have more than one
+derivation. {\bf Context-free languages} (languages generated by a CFG) are a
+proper superset of regular languages. For example, consider the CFG with
+nonterminal $S$, terminals $a,b$, and rewrite rules $S \rightarrow aSa$; $S
+\rightarrow bSb$; $S \rightarrow a$; $S \rightarrow b$; $S \rightarrow
+\lambda$. It is easily seen that this grammar defines the language of {\it
+palindromes} over $\{a,b\}$, which contains exactly those strings that are
+their own reversal (mirror image). 
+
+\smallskip\noindent {\bf Exercise 2.3}. Given a CFG $G$ generating some CFL
+$L$ not containing the empty string, create another CFG $G'$ generating the
+same language such that every production has the form $A \rightarrow b C$, 
+where $A$ and $C$ are nonterminals (members of $N$) and $b$ is a terminal 
+(member of $\Sigma$).
+
+Continuing with the comparison to numbers, CFLs play the same role among
+languages that algebraic numbers play among the reals.\index{context-free language, CFL|textbf}\index{palindrome}
+To appreciate this, one needs to
+generalize from the view of languages as stringsets to a view of languages as
+mappings (from strings to weights in a semiring or similar structure). We
+take up this matter in Chapter 5.4. 
+
+\smallskip\noindent
+{\bf Exercise 2.4} Prove that the language of palindromes is not regular.
+
+\smallskip\noindent 
+If a context-free rewrite rule $A \rightarrow v$ is applied to a string $iAj$
+and $l$ is a right factor of $i$ ($r$ is a left factor of $j$), we say that
+the rule is applied {\bf in the left context} $l$ ({\bf in the right context}
+$r$).  {\bf Context-sensitive} rewrite rules are defined as triples $(p, l,
+r)$, where $p$ is a context-free production as above, and $l$ and $r$ are
+(possibly empty) strings defining the left and the right contexts of the rule
+in question.  In keeping with the structuralist morphology and phonology of
+the 1950s, the $\#$ symbol is often used as an {\it edge marker} signifying
+the beginning or end of a string. \index{edge marker, $\#$}
+
+Traditionally, $p$ is called the {\bf structural change}, the context, written
+$l\underline{\ \ }r$, is called the {\bf structural description}, and the
+triple is written as the structural change separated from the structural
+description by $/$ (assumed to be outside the alphabet $P$).\index{structural description (of CS rule)|textbf}\index{structural change (of CS rule)|textbf}
+For example, a rule that deletes a leading zero from an unsigned decimal could
+be written $0 \rightarrow \lambda /\#\underline{\ \ }$, and the more general
+rule that deletes it irrespective of the presence of a sign could be written
+$0 \rightarrow \lambda /\{\#,+,-\}\underline{\ \ }$. Note that the right
+context of these rules is empty (it does not matter what digit, if any,
+follows the leading 0), while the left context `edge of string' needs to be
+explicitly marked by the \# symbol for the rules to operate correctly. 
+
+When interpreted as WFCs, the context statements simply act as filters on
+derivations: an otherwise legitimate rewriting step $iAj \rightarrow ivj$ is
+blocked (deemed ill-formed) unless $l$ is a right factor of $i$ and $r$ is a
+left factor of $j$. This notion of context-sensitivity adds nothing to the
+generative power of CFGs: the resulting system is still capable only of
+generating CFLs. 
+
+\smallskip\noindent
+{\bf Theorem 2.3.1} \cite{McCawley:1968} Context-free grammars with context
+checking generate only context-free languages.
+
+\smallskip\noindent 
+However, if context-sensitivity is part of the generation process, we can
+obtain context-sensitive languages (CSLs) that are not CFLs. If $\lambda$-rules
+(rewriting nonterminals as the empty string in some context) are permitted,
+every r.e. language can be generated. If such rules are disallowed, we obtain
+the CSL family proper (the case when CSLs contain the empty string has to be
+treated separately). 
+
+\smallskip\noindent {\bf Theorem 2.3.2} \cite{Jones:1966} The {\bf
+  context-sensitive (CS)} family of languages that can be generated by
+$\lambda$-free context-sensitive productions\index{context-sensitive language, CSL|textbf}
+is the same as the family of languages that can be
+generated by using only length-increasing productions (i.e. productions of the
+form $u \rightarrow v$, where $l(v) \geq l(u)$ holds) and the same as the
+family of languages computable by {\bf linear bounded automata} (LBAs).
+
+\smallskip\noindent LBA are one-tape Turing machines (TMs) that accept on the
+empty tape, with the additional restriction that at all stages of the
+computation, the reading head must remain on the portion of the tape that was
+used to store the string whose membership is to be decided.
+\index{linear bounded automaton, LBA|textbf} 
+
+These results are traditionally summarized in the {\it Chomsky hierarchy}:
+assigning regular languages to Type 3, CFLs to Type 2, CSLs to Type 1, and
+r.e. languages to Type 0, \newcite{Chomsky:1956} demonstrated that each type
+is properly contained in the next lower one.\index{Chomsky hierarchy} These
+proofs, together with examples of context-free but not regular,
+context-sensitive but not context-free, and recursive but not
+context-sensitive languages, are omitted here, as they are discussed in many
+excellent textbooks of formal language theory such as \newcite{Salomaa:1973}
+or \newcite{Harrison:1978}. To get a better feel for CSLs, we note the
+following results:
+
+\smallskip\noindent
+{\bf Theorem 2.3.3} \cite{Karp:1972} The membership problem for CSLs is
+PSPACE-complete. 
+
+\smallskip\noindent
+{\bf Theorem 2.3.4}\nocite{Szelepcse1nyi:1987} (Szelepcs\'enyi 1987,
+Immerman 1988)\nocite{Immerman:1988} The complement of a CSL is a CSL. 
+
+\smallskip\noindent
+{\bf Exercise 2.5} Construct three CSGs that generate the language $F$ of
+Fibonacci numbers in base one, the language $F_2$ of Fibonacci numbers in base
+two, and the language $F_{10}$ of Fibonacci numbers in base ten. Solve the 
+membership problem for 117467.
+\index{Fibonacci numbers}
+
+\smallskip\noindent
+{\bf Exercise 2.6} Call a set of natural numbers $k$-regular if their 
+base $k$ representations are a regular language over the alphabet of $k$ 
+digits. It is easy to see that a 1-regular language is 2-regular (3-regular)
+and that the converse is not true. Prove that a set that is both 2-regular 
+and 3-regular is also 1-regular. 
+
+\index{Fibonacci numbers}
+
+\section{Further reading}
+
+Given that induction is as old as mathematics itself (the key idea going back
+at least to Euclid's proof that there are infinitely many primes) and that
+recursion can be traced back at least to Fibonacci's (1202) {\it Liber Abaci},
+it is somewhat surprising that the closely related notion of generation is far
+more recent: the first systematic use is in von Dyck (1882) for free
+groups. See Chandler and Magnus (1982 Ch. I.7) for some fascinating
+speculation why the notion did not arise earlier within group theory.  The
+kernel membership problem is known as the {\it word problem} in this setting
+(Dehn 1912).  The use of freely generated pure formula models in logic was
+pioneered by Herbrand (1930); Wang tilings were introduced by Wang (1960).
+Theorem 2.1.1 was proven by \newcite{Berger:1966}, who demonstrated the
+undecidability by encoding the halting problem in tiles. For a discussion, see
+Gruska (1997 Sec. 6.4.3).  The notion that linguistic structures are
+noncounting goes back at least to Chomsky (1965:55). 
+\index{membership problem} \index{word problem} \nocite{Chandler:1982} \nocite{Herbrand:1930}
+\nocite{Dyck:1882} \nocite{Dehn:1912} \nocite{Wang:1960} \nocite{Gruska:1997}
+\nocite{Chomsky:1965}\nocite{Fibonacci:1202}
+
+From P\={a}\d{n}ini to the {\it neogrammarians} of the 19th century, linguists
+were generally eager to set up the system so as to cover related styles,
+dialects, and historical stages of the same language by minor variants of the
+same theory. In our terms this would mean that e.g. British English and
+American English or Old English and Modern English would come out as models of
+a single `abstract English'.  This is one point where current practice
+(starting with de Saussure) differs markedly from the traditional approach.
+Since grammars are intended as abstract theories of the native speaker's
+competence, they cannot rely on data that are not observable by the ordinary
+language learner. In particular, they are restricted to a single temporal
+slice, called the {\it synchronic} view by de Saussure, as opposed to a view
+encompassing different historical stages (called the {\it diachronic}
+view).\index{synchrony}\index{diachrony} Since the lack of cross-dialectal or
+historical data is never an impediment in the process of children acquiring
+their native language (children are capable of constructing their internal
+grammar without access to such data), by today's standards it would raise
+serious methodological problems for the grammarian to rely on facts outside
+the normal range of input available to children. (De Saussure actually arrived
+at the synchrony/diachrony distinction based on somewhat different
+considerations.)  The neogrammarians amassed a great deal of knowledge about
+{\it sound change},\index{sound change} the historical process whereby words
+change their pronunciation over the centuries, but some of their main tenets,
+in particular the exceptionlessness of sound change laws, have been found not
+to hold universally (see in particular Wang 1969, Wang and Cheng 1977, Labov
+1981, 1994).\nocite{Wang:1969}\nocite{Wang:1977}\nocite{Labov:1981}
+\nocite{Labov:1994} \index{data!historical} \index{data!dialectal}
+\index{English!Old} \index{English!Modern} \index{English!British}
+\index{English!American} \index{language acquisition}
+\index{competence}\index{neogrammarians}
+
+Abstract string manipulation begins with Thue (1914, reprinted in Nagell 1977),
+who came to the notion from combinatorial group theory. For Thue, rewriting is
+symmetrical: if AXB can be rewritten as AYB the latter can also be rewritten
+as the former. This is how Harris (1957) defined transformations. The direct
+precursors of the modern generative grammars and transformations that were
+introduced by Chomsky (1956, 1959) are semi-Thue systems, where rewriting need
+not necessarily work in both directions.  The basic facts about regular
+languages, finite automata, and Kleene's theorem are covered in most textbooks
+about formal language theory or the foundations of computer science, see e.g.
+Salomaa (1973) or Gruska (1997). We will develop the connection between these
+notions and semigroup theory along the lines of \newcite{Eilenberg:1974} in
+Chapter 5. Context-free grammars and languages are also well covered in
+computer science textbooks such as Gruska (1997), for more details on
+context-sensitivity, see Section~10 of Salomaa (1973).  Theorem 2.3.1 was
+discovered in \cite{McCawley:1968}, for a rigorous proof see Peters and
+Ritchie (1973),\nocite{Peters:1973a} and for a modern discussion, see Oehrle
+(2000). \nocite{Oehrle:2000}\nocite{Harris:1957}
+
+Some generalizations of the basic finite state notions that are of particular
+interest to phonologists, namely regular relations, and finite $k$-automata,
+will be discussed in Chapter~3. Other generalizations, which are also relevant
+to syntax, involve weighted (probabilistic) languages, automata, and
+transducers -- these are covered in Sections 5.4 and 5.5. Conspiracies were
+first pointed out by \newcite{Kisseberth:1970} -- we return to this matter in
+Section~4.3. The founding papers on categorial grammars are Ajdukiewicz (1935)
+and Lambek (1958).  Unification grammars are discussed in Shieber (1986,
+1992).  \nocite{Shieber:1986}\nocite{Shieber:1992}\nocite{Chomsky:1956}
+\nocite{Chomsky:1959}\nocite{Thue:1914}\nocite{Nagell:1977}
+
+\endinput
+
+

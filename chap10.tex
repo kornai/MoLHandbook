@@ -1,0 +1,193 @@
+\chapter{Simplicity}
+
+Writing a textbook is a process that forces upon the author a neutral stance
+since it is clear that the student is best served by impartial analysis. Yet
+textbook authors can feel as compelled to push their own intellectual agenda
+as authors of research papers, and for this final chapter I will drop the
+impersonal {\it we} together with its implied neutrality and present a view
+of the overall situation in mathematical linguistics that makes no claims to
+being the standard view or even the view of a well-definable minority.  
+
+If one had to select a single theme running through this book, it would no
+doubt be the emphasis on regular (finite state) structures. The classic
+results from this field originate with the work of Mealy
+(1955)\nocite{Mealy:1955} on electric circuits and Kleene (1956) on nerve nets
+with discrete sets of inputs and outputs as opposed to the continuous inputs
+and outputs of perceptrons and contemporary neural nets. For the textbook
+writer, it was reasonable to assume that at least a streamlined version of
+this material would be familiar to the intended readership, as it is generally
+regarded as an essential part of the core computer science/discrete
+mathematics curriculum, and it was also reasonable to give short shrift to
+some of the more modern developments, especially to the use of ($k$-tape)
+finite state transducers in phonology/morphology, as these are amply covered
+in more specialized volumes such as Roche and Schabes (1997) and Kornai
+(1999).
+
+Yet I feel that, without this chapter, some of the impact of this work would
+be lost on the reader. On the one hand, the methods pioneered by Mealy,
+Kleene, Sch\"{u}tzenberger, Krohn, Rhodes, Eilenberg, Angluin, and a host of
+others remain incredibly versatile and highly generalizable as mathematical
+techniques. For example, much of the work on regular generalizations of FSA,
+both to transducers and to $k$-strings, is nothing but a rehash of the basic
+techniques relying on the identification of the congruence classes (elements
+of the syntactic monoid) with automata states: if the (right)congruence has
+finite index, finite automata are available.  But before turning to the issue
+of {\it why} these techniques are so highly generalizable, it should be noted
+that there is an important aspect of these methods that has, to some extent,
+been suppressed by the general turning of the tide against cybernetics,
+systems theory, and artificial intelligence, namely the direct appeal to
+neurological models originating with Kleene.
+\index{cybernetics}\index{artificial intelligence, AI}
+
+As we all know, dealing with natural language is hard. It is hard from the
+standpoint of the child, who must spend many years acquiring a language
+(compare this time span to that required for the acquisition of motor skills
+such as eating solids, walking, or swimming), it is hard for the adult language
+learner, it is hard for the scientist who attempts to model the relevant
+phenomena, and it is hard for the engineer who attempts to build systems that
+deal with natural language input or output. These tasks are so hard that
+Turing (1950)\nocite{Turing:1950} could rightly make fluent conversation in
+natural language the centerpiece of his test for intelligence. In more than
+half a century of work toward this goal, we have largely penetrated the
+outermost layer, speech production and perception, and we have done so by
+relying on learning algorithms specific to the Markovian nature of the
+signal. In spite of notable advances in the automatic acquisition of
+morphology, in this next layer we are still at a stage where speech
+recognition was forty years ago, with handcrafted models quite comparable,
+and in some cases superior, to machine-learned models. 
+
+Returning briefly to the issue raised at the beginning of this book: what do
+we have when a model is 70\%, 95\%, or even 99.99\% correct? Isn't a single
+contradiction or empirically false prediction enough to render a theory
+invalid? The answer to the first question is clearly positive: contradictions
+must be managed carefully in a metatheory (multivalued logic) and cannot
+pervade the theory itself. But the answer to the second question is negative:
+a single wrong prediction, or even a great number of wrong predictions, does
+{\it not} render the theory useless or invalid, a methodological point that
+has been repeatedly urged by Chomsky. To quantify this better, let us try to
+derive at least some rough estimates on the information content of linguistic
+theory.  
+
+There is a substantive body of information stored in the lexicon, which is
+clearly irreducible in the sense that universal grammar will have little to
+say about the idiosyncrasies of particular words or set phrases: a
+conservative estimate would be the size of an abridged dictionary,
+20,000--30,000 words, each requiring a few hundred unpredictable bits
+to encode their morphological, syntactic, and semantic aspects, for a total of
+about, say, a megabyte. Knowing that speech compression is already within a
+factor of five of the phonemic bitrate, we can conclude that the entire
+lexicon, including phonetic/phonological information, is unlikely to exceed a
+couple of megabytes.
+
+Traditional wisdom, largely confirmed by the practical experience of adult
+language learners, says that to know a language is to know the words, and in
+fact, from the middle ages until the 19th century, syntactic theory was viewed
+as a small appendix to the main body of lexical and morphological knowledge.
+Perhaps a more realistic estimate can be gathered from construction
+grammar,\index{construction grammar} which relies on a few dozen generic rules
+as opposed to thousands of specific constructions, or from
+P\={a}\d{n}ini,\index{P\={a}\d{n}ini} whose grammar is about 10\% the size of
+his lexicons, the {\it dh\={a}tup\={a}\d{t}ha}\index{dh\={a}tup\={a}\d{t}ha}
+(about 2,000 verbal roots) and the {\it
+  ga\d{n}ap\={a}\d{t}ha}\index{ga\d{n}ap\={a}\d{t}ha} (about 20,000 nominal
+stems), even though he attempts neither detailed semantic analysis of content
+words nor exhaustive coverage in the lexicon. Be that as it may, a great deal
+of modern syntax seems to investigate the recursive behavior of a few dozen
+constructions, likely encodable in less than 10 kilobytes, while the bulk of
+the training/learning effort is clearly directed at the nonrecursive
+(list-like) megabytes of data one needs to memorize in order to master the
+language.
+
+As the reader who went through this book knows, mathematical linguistics is
+not yet a unified theory: there are many ideas and fragments of theories, but
+there is nothing we could call a full theory of the domain. This is, perhaps,
+a reflection on the state of linguistics itself, which is blessed with many
+great ideas but few that have found good use beyond the immediate range of
+phenomena for which they were developed. Notions such as the {\it phoneme} or
+the {\it paradigm} have had a tremendous impact on anthropology, sociology,
+and literary theory, and some of the best work that predates the still
+fashionable hodge-podge of `critical' thought in the humanities clearly has
+its inspiration in these and similar notions of structural linguistics. If
+anything, language stands as a good example of a system ``lacking a clear
+central hierarchy or organizing principle and embodying extreme complexity,
+contradiction, ambiguity, diversity, interconnectedness, and
+intereferentiality'' -- the very definition of the postmodern intellectual
+state according to Wikipedia. In these pages, in order to gain clarity and to
+make a rigorous analysis possible, I have systematically chosen the simplest
+versions of the problems, and even these no doubt embody extreme complexity.
+
+Is there, then, a single thread that binds mathematical linguistics together?
+This book makes the extended argument that there is, and it is the attempt to
+{\it find fast algorithms.}  As all practicing engineers know, polynomial
+algorithms do not scale: for large problems only linear algorithms work.  For
+example, Gaussian elimination, or any other $O(N^3)$ method, must be replaced
+for large but sparse matrices by rotation techniques that scale linearly or
+nearly so with the amount of (nonzero) data. Since finite state methods are by
+their nature linear, improving the state of the art requires a realignment of
+focus from the algebraically complex to the algebraically simple, in
+particular to the noncounting finite state realm. The work is by no means
+done: there is surprisingly much that we do not know about this domain,
+especially about the weighted versions of the models. For example, it is not
+known whether noncounting languages are pac learnable (under mild noise
+conditions).  As Theorem 7.3.4 shows, there is little reason to believe that
+noncounting is the end of the story: to get a good characterization of
+natural language syntax we need to establish further restrictions so as to
+enable iitl learning. That said, noncounting still provides a valuable upper
+bound on the complexity of the problem.
+
+The same drastic realignment of focus is called for in the case of semantics.
+Far too great attention has been lavished on complex systems with incredibly
+powerful deduction, to the detriment of investigating simpler, decidable
+calculi. There are a massive amount of facts for which a well-developed theory
+of semantics must account, and in this domain we do not even have the
+beginnings of a good automatic acquisition strategy (Solomonoff-Levin
+universal learning is unlikely to scale).  Yet it is clear that the standard
+approach of linguistics, ascribing as much complexity to universal grammar
+(and, by implication, to the genetic makeup of humans) as can be amortized over
+the set of possible languages, is not very promising for semantics. The only
+words that can possibly yield to an approach from this direction belong in the
+narrow class of physical sensations and emotional experiences.
+
+In sum, it is not enough to stand on the shoulders of giants -- we must also
+face in a better direction.
+
+\section{Previous reading}
+
+The best ideas in this book should be credited to people other than the author
+even if no reference could be dug up. In particular, the heavy emphasis on
+noncounting languages originates with an apocryphal remark by John von
+Neumann: {\it The brain does not use the language of mathematics}.  The idea
+that VBTOs are first class entities is from William Lawvere, and the notion
+that linking is variable binding is from lectures by Manfred Bierwisch. The
+concluding sentence follows from a bon mot of Alan Kay.
+
+\nocite{Kleene:1956}
+\endinput
+
+\nocite{Solomonoff:1964}
+
+and the most that an author can do to further their own agenda is to be
+selective in their coverage of opposing views.
+
+There is an obvious connection between languages over a one-letter alphabet
+and binary strings: we can set the $i$th digit to 1 if $a_i \in L$ and to 0
+otherwise.  By interpreting the resulting string as the bits following the
+decimal point we can assign a real number between 0 and 1 to every string: for
+strings like $0.001111\ldots $ and $0.01000\ldots $ the mapping is two to one,
+otherwise it is one to one.
+
+Some simple introductions are needed, not so much to expose the techniques, or
+even the basic concepts, but just to pierce the tough rind of unfamiliarity.
+
+One could just attack problems without a huge background of knowledge
+
+the languages generated by HMMs are not only regular but also
+locally testable, and therefore (except for $L=\Sigma^*$) can always be
+blocked by any string that does not appear as a local subword of some word in
+the language. 
+
+Plans and recipes, 
+
+how much of complexity is analog/digital
+
+impact of trainability 
