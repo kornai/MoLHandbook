@@ -1,0 +1,1453 @@
+\chapter{Morphology}
+
+Morphology, the study of the shape and structure of words, is a field that
+brings into sharp relief what are perhaps the most vexing aspects of
+linguistics from a mathematical perspective: radical typological differences,
+flexible boundaries, and near-truths. Mild typological differences are common
+to most fields of study. For example, the internal organs of different
+primates are easily distinguished by experts yet differ only mildly, so that a
+person who knows something about gorillas and knows human anatomy well can
+make a reasonable guess about the position, shape, size, and functioning of
+gorilla livers without ever having seen one.  {\it Radical typological
+  differences} are much less common. Continuing with the analogy, one
+knowledgeable about the internal sex organs of males but not of females would
+have a hard time guessing their position, shape, size, or functioning.  In
+morphology, radical typological differences abound: no amount of expert
+knowledge about Modern English is sufficient to make a reasonable guess e.g.
+about the case system of Modern Russian, in spite of the fact that the two
+languages descended from the same Indoeuropean origins.  Mathematics, on the
+whole, is much better suited for studying mild (parametric) typological
+differences than radical ones. We exemplify the problem and discuss a possible
+solution in Section~4.1, which deals with prosody in general and the typology
+of stress systems in particular.
+
+In mathematics, {\it flexible boundaries} are practically unheard of: if in
+one case some matter depends on arithmetic notions, we are unlikely to find
+other cases where the exact same matter depends on topological notions. It is
+easier to find examples in computer science, where the same functionality
+(e.g. version control of files) may be provided as part of the operating system
+in one case or as part of the text editor in another. In morphology, flexible
+boundaries are remarkably common: the exact same function, forming the past 
+tense, may be provided by regular suffixation ({\it walk} $\rightarrow$ {\it 
+walked}), by ablaut ({\it sing} $\rightarrow$ {\it sang}), or by suppletion
+({\it go} $\rightarrow$ {\it went}). We exemplify the problem in Section~4.2, where 
+we introduce the notions of derivation and inflection.
+
+Finally, we call {\it near-truths}\index{truth!near-} those regularities that
+come tantalizingly close to being actually true yet are detectably false with
+the available measurement techniques. A well-known example is Prout's law that
+atomic weights are integer multiples of that of hydrogen. For example, the
+helium/hydrogen atomic weight ratio is 3.971 and that of nitrogen/hydrogen
+13.897.  Near-truths are so powerful that one is inclined to disregard the
+discrepancies: from a chemistry-internal perspective, everything would be so
+much simpler if atomic weights were truly subject to the law. In fact, we have
+to transcend the traditional boundaries of chemistry and gain a good
+understanding of isotopes and nuclear physics to see why the law is only
+nearly true. Unfortunately, there is no good candidate for a deeper theory
+that can clean up linguistic near-truths. As we shall see repeatedly, all
+forms of `cognitive' and `functional' explanations systematically fall
+short. Therefore, in Section~4.3 we look at a solution, {\it optimality theory}, which
+builds near-truths into the very architecture of linguistics.
+
+A central task that is shared between phonology and morphology is
+characterizing the set of words. The operational definition, {\it maximal
+pause-free stretch between potential pauses}, has a number of drawbacks.
+First, it is restricted to the subset of words that are attested, while it is
+clear that new words are added to the language all the time. A list of
+attested forms fails to characterize either the individual ability to serve as
+an oracle capable of rendering well-formedness judgments on word candidates
+or the collective ability of the speakers to introduce new words in their
+language. Second, it fails to assign structure to the words, substituting a
+simple accept/reject decision for detailed analysis. This failure is
+especially frustrating in light of the fact that every attempt at
+capturing the theoretically more interesting notion of {\it potential} words
+inevitably proceeds from structural considerations.  Third, it offers no help
+in assigning meaning to words, except perhaps for the rare subclass of
+onomatopoeic words whose meaning can be inferred from their sound. 
+
+Finally, the operational definition leaves open the issue of word frequency.
+Part of the task of characterizing the set of words is to describe their
+frequency either in corpora or, more interestingly, in the populations of
+which the corpora are samples. Typical populations of interest include the set
+of utterances a person in a given language community is likely to encounter
+or the set of texts some natural language software (spellchecker, machine
+translator, information retrieval system, etc.) should be prepared for.
+Especially for software, it is desirable to make the system less likely to
+fail on the frequently encountered cases than on some rare or marginal cases.
+We defer introducing the mathematical machinery of weighted languages and
+automata required for dealing with frequencies to Chapter~5, but introduce the
+basic empirical regularity, {\it Zipf's law}, in Section~4.4.
+
+As far as the acoustic content of potential word forms is concerned, the task
+of characterizing this (weighted) set can be subdivided into two parts: first,
+characterizing the segmental content as a set of well-formed phonemic strings,
+and second, characterizing the suprasegmental content (tone and stress)
+associated to the segments. The former task is called {\it phonotactics}, and
+it has been traditionally recognized that the central object of inquiry is not
+the full word but considerably smaller {\it syllabic} units that show very
+strong combinatorical restrictions internally, and only much weaker
+restrictions externally. As we shall see in Section~4.1, such units play a central
+role in characterizing the suprasegmental patterns of words as well. As far as
+the meaning of words is concerned, the pivotal units, called {\it morphemes},
+are again smaller than the word and show much less predictability than the
+words composed of them.  There are some languages, most notably Chinese, where
+the correlation between syllables and morphemes is quite strong, but most
+languages show evident mismatches in the form of both polysyllabic morphemes
+such as {\it country} and polymorphemic syllables such as {\it knives}. As we
+shall see in Section~4.2, the description of morpheme combinations, called {\it
+morphotactics}, has practically no commonalities with phonotactics, a fact
+often referred to as the {\it double articulation} or {\it duality of
+patterning} of language (Martinet 1957, Hockett 1960). \nocite{Martinet:1957}
+\nocite{Hockett:1960} \index{double articulation}
+\index{duality of patterning}\index{phonotactics}\index{morphotactics} \index{Chinese}
+
+\section{The prosodic hierarchy}
+
+The marking of certain substructures as belonging to a certain prosodic domain
+such as the {\it mora, syllable, foot}, or {\it prosodic word}\index{stress}
+is an essential part of phonological representations for three interrelated
+reasons.\index{mora}\index{foot}\index{syllable}\index{prosodic word} First, a
+great number of phonological processes or constraints make reference to such
+domains; for the syllable (in English), see \newcite{Kahn:1976}, and for the
+foot (in Japanese), see \newcite{Poser:1990}.  Second, the domains themselves
+can carry feature information that cannot properly be attributed to any smaller
+constituent inside the domain; {\it stress} and {\it boundary tones} provide
+widely attested examples, \index{boundary tone} \index{stress} though some
+readers may also be familiar with {\it emphasis} (pharyngealization) in
+Arabic, Aramaic [CLD], and Berber [TZM] (Jakobson 1957, Hoberman 1987, Dell
+and Elmedlaoui 1985,
+1988).\nocite{Jakobson:1957}\nocite{Hoberman:1987}\nocite{Dell:1985}\nocite{Dell:1988}\index{Aramaic [CLD]}\index{Berber [TZM]} 
+Finally, the shape of words is largely determined
+by the prosodic inventory of the language; for example, if a name ends in a
+vowel, we can be virtually certain it does not belong in the Anglo-Saxon layer
+of English.
+
+It should be said at the outset that our understanding of the prosodic
+hierarchy is not yet sufficient. For example, it is not clear that moras are
+constituents of the syllables in the same way syllables are constituents of
+feet, whether notions such as extrametricality or ambisyllabicity are
+primitive or derived, whether abstract units of stress can be additively
+combined (as in the {\it grid-based} theories starting with Liberman 1975),
+and so on. Even so, there is no doubt that the prosodic hierarchy plays an
+absolutely pivotal role in phonology and morphology as the guardian of
+well-formedness in a manner broadly analogous to the use of {\it checksums}
+in digital signal transmission. Arguably, the main function of phonology is to
+repair the damage that morphological rules, in particular concatenation, would
+cause.  \nocite{Liberman:1975}
+
+\subsection{Syllables}
+
+Syllables are at the middle of the prosodic hierarchy: there are higher units
+(feet, and possibly superfeet, the latter also called {\it cola}), and there
+are lower units (onset, nucleus, rhyme, mora), but we begin the discussion
+with the syllable since the other prosodic units are less likely to be
+familiar to the reader.  There are three different approaches one may wish to
+consider for a more precise definition of the syllable.  First, we can
+introduce a {\it syllabic alphabet} or {\it syllabary}\index{syllabic alphabet} that is analogous to the phonemic alphabet introduced in Section~3.1, but
+without the requirement that distinct syllables show no similarity (segmental
+overlap). This approach is historically the oldest, going back at least a
+thousand years to the syllabic writing systems such as found in Japanese
+Hiragana and arguably much earlier with Brahmi (5th century BCE) and the
+Cypriot syllabary (15th century BCE), though in fact many of the early scripts
+are closer to being mora-based than syllable-based. \index{Hiragana}
+\index{Brahmi script} \index{Cypriot syllabary}
+
+Second, we can introduce explicit boundary markers such as the - or $\cdot$
+used in dictionaries to indicate syllable boundaries, a notation that goes
+back at least to the 19th century. An interesting twist on the use of boundary
+markers is to permit {\it improper} parentheses, e.g. to denote by $[a (b] c)$
+the case where $b$ is said to be {\it ambisyllabic} (belonging to both
+syllables $ab$ and $bc$). The notion of ambisyllabicity receives a slightly
+different formulation in autosegmental theory (see Section~3.3).  Note that improper
+parentheses could describe cases like $[a (b c ] d)$, where more than one
+element is ambiguously affiliated, while the autosegmental well-formedness
+conditions would rule this out.
+\index{ambisyllabicity}\index{improper parentheses}\index{syllable}\index{bracketing!improper}
+
+Finally, we can use tree structure notation, which is more recent than the
+other two and has the advantage of being immediately familiar to contemporary
+mathematicians and computer scientists, but is incapable of expressing some of
+the subtleties, such as ambisyllabicity, that the earlier notations are better
+equipped to handle. One such subtlety, easily expressible with autosegmental
+notation or with improper parentheses, is the notion of {\it
+  extrametricality}, meaning that the parse tree simply fails to extend to
+some leaves. \index{extrametricality}
+
+The unsettled notation is much more a reflection of the conceptual
+difficulties keenly felt by the linguist (for an overview, see Blevins 1995)
+\nocite{Blevins:1995} than of practical difficulties on the part of the native
+speaker. In fact, most speakers of most languages have clear intuitions about
+the syllables in their language, know exactly where one ends and the next one
+begins, and can, with little or no formal training, draw up an inventory of
+syllables. It is precisely the confluence of these practical properties that
+makes the syllable such a natural building block for a script, and when new
+scripts are invented, such as Chief Sequoyah of the Cherokee [CER] did in
+1819, these are often syllabaries. The ease with which native speakers
+manipulate syllables is all the more remarkable given the near impossibility
+of detecting syllable boundaries algorithmically in the acoustic
+data. \index{Cherokee [CER]}
+
+For our purposes it will be sufficient to group phonemes into two broad
+classes, called {\it vowels} (V) and {\it consonants} (C), based on whether
+they can appear in isolation (i.e. flanked by pauses on both sides) or not. We
+mention here that in phonology consonants are generally subdivided into other
+{\it major classes} like stops such as {\it p t k b d g}, nasals such as {\it
+  n m}, liquids such as {\it l r}, and glides such as {\it y} (see Chomsky and
+Halle 1968 Sec. 7.3).  \index{consonant} \index{vowel} \index{major class} We
+will assume a separate CV tier where autosegments correspond to elementary
+timing units: a consonant or short vowel will take a single timing unit, and a
+long vowel will take two.  To build a {\it syllable},\index{syllable} we start
+with a {\it nucleus}, which can be a short vowel V or a long vowel VV, and
+optionally add consonants at the beginning (these will be called the {\it
+  onset}) and/or at the end (these will be called the {\it coda\/}). This way,
+no syllable composed of Cs alone will ever get built.\index{onset}\index{coda}
+\index{nucleus}
+
+Different languages put different constraints on the number and type of
+consonants that can appear in the onset and the coda. On the whole, codas tend
+to be more restricted: it is easy to find languages with CCC onsets but only
+CC codas, or CC onsets but only C (or no) codas, but it is hard to find
+languages with more complex codas than onsets.  Combinatorical restrictions
+within the onset are common. For example, in English, if the onset is CCC, the
+first C must be $s$ and the second must be a voiceless stop. Similarly, the
+{\it sr} onset is common and {\it *rs} is impossible, while in the coda it is
+the other way around. Generally, the nucleus serves as a barrier through which
+combinatorical restrictions do not propagate.
+
+The inventory of V sounds that can serve as syllabic nuclei is not constant
+across languages: vowels always can, but many languages, such as Czech, treat
+liquids as syllable-forming; and some, like Sanskrit, also permit nasals. At
+the extreme, we find Berber, where arguably every sound, including stops, can
+form a syllable, so no sound is truly C-like (incapable of serving as a
+syllabic nucleus).
+
+It is not evident whether the onset and the coda are truly symmetrical or
+whether it makes sense to group the nucleus and the coda together in a
+constituent called the {\it rhyme.}\index{rhyme} Many observations concerning
+the combinatorical restrictions can be summarized in terms of {\it sonority},
+a linear scale based somewhat loosely on the vocal energy (see Section~8.1) contained
+in the sound -- those sounds that can be heard farther away are considered
+more sonorous. Formally, the {\bf sonority hierarchy} groups the sounds in
+discrete, ranked sonority classes, with low vowels and voiceless stops being
+the most and least sonorous, respectively. The overall generalization is that
+syllables are constructed so that sonority rises from the margins toward the
+nucleus. In English and many other languages, sibilants such as {\it s} are a
+known exception since they are more sonorous than stops yet can appear
+farther from the nucleus. There are many mechanisms available to the
+phonologist to save the overall law from the exception that `proves' it (Lat.
+{\it provare}, to test). One is to declare sibilants extrametrical, and
+another one is to treat sibilant+stop clusters as a single consonant.  We
+return to this question in Section~4.3.  \index{sonority hierarchy|textbf}
+
+\smallskip\noindent {\bf Exercise 4.1$^\dagger$} English graphemotactics. Take
+a large list of written (lowercase) words, and define vowels {\bf V} as {\it
+aeiouy} and consonants as the rest.  Define as {\bf on}sets ({\bf co}das) those
+consonantal strings that begin (end) words, including the empty string in both
+sets.  How much of the word list is matched by the regular expression {\bf
+syll}$*$, where {\bf syll} is defined by {\bf on V co} $\cup$ {\bf on VV co}?
+Does the grammar overgenerate? How? Why? 
+
+\subsection{Moras}
+
+Syllables often come in two, and sometimes in three, sizes (weights): {\it
+  light} syllables are said to contain one mora, {\it heavy} syllables
+contain two moras, and {\it superheavy} syllables contain three moras. It is
+surprisingly hard to define {\bf moras}, which are some kind of abstract
+syllable weight unit, any better than by this simple listing since the
+containment of moras in syllables is like a dime containing two nickels: true
+for the purposes of exchanging equal value but not in the sense that the
+nickels could be found inside the dime. To see this, compare the typical light
+syllable, CV, to the typical heavy syllable, CVV or CVC.  If the second mora
+were contributed by the vowel length or by the coda consonant, we would expect
+CVVC syllables to be superheavy, but in fact only CVVCC syllables generally
+end up trimoraic.  \index{mora|textbf}
+
+The exchange of equal value is best seen in the operation of various rules of
+stress and tone assignment. A familiar example involving stress is classical
+Latin, where the last syllable is extrametrical (ignored by the rule of stress
+placement) and stress always falls on the penultimate mora before it. For
+tone, consider the Kikuria [KUJ] example discussed in Odden (1995). In Bantu
+languages, tense/aspect is often marked by assigning high tone to a given
+position in the verb stem: in Kikuria, the high tone's falling on the first,
+second, third, or fourth mora signifies remote past, recent past, subjunctive,
+and perfective, respectively. To quote Odden, \nocite{Odden:1995}
+\index{Kikuria [KUJ]} \index{Latin}
+
+\begin{quote} 
+Regardless of how one counts, what is counted are vowel moras, not segments
+or syllables. Stated in terms of mora count, high tone is simply assigned 
+to the fourth mora in the perfective, but there is no consistent locus of tone
+assignment if one counts either syllables or segments.
+\end{quote} 
+
+\noindent An entirely remarkable aspect of the situation is that in some other
+languages, such as Lardil [LBZ] (see Wilkinson 1988), the whole phenomenon of
+rules being sensitive to the number of moras is absent: it is the number of
+syllables, as opposed to the number of moras, that matters. The distinction is
+known in linguistics as {\sl quantity-sensitive} vs.  {\sl
+  quantity-insensitive} languages, and for the most part it neatly divides
+languages into two typological bins. But there are nagging problems, chief
+among them the existence of typologically {\it split} languages such as
+Spanish, where the verbal system is quantity insensitive but the nominal
+system is quantity sensitive.\index{split systems}\index{Lardil [LBZ]}
+
+\subsection{Feet and cola}
+
+One step up from syllables we find {\it metrical feet}, groupings that contain
+one strong and one weak syllable. Such feet account nicely for the long
+observed phenomenon that syllable stress generally appears as a pulse train,
+with stressed and unstressed syllables alternating quite predictably. When two
+stressed syllables meet, one of them generally gets destressed: compare Italian
+{\it cittA} `city' (stress is indicated by capitalized vowels here), and {\it
+vEcchia} `old' to the combination {\it citta vEcchia} `old city' (stress
+retraction, see Nespor and Vogel 1989 -- for a symmetrical rule see Exercise
+3.5). Another way of resolving such {\it clashes} is by the insertion of
+unstressed material such as a pause \cite{Selkirk:1984}. \nocite{Nespor:1989}
+
+Other feet constructions include {\it unbounded feet}, a flat structure
+incorporating an arbitrary number of syllables, {\it degenerate feet},
+containing just one syllable, and even {\it ternary feet}. There is no doubt
+that in the vast majority of cases, feet are binary (they contain exactly two
+syllables), Kiribati [GLB] being the best, perhaps the only, counterexample
+that resists reanalysis in terms of binary feet \cite{Blevins:1999}.
+\index{Kiribati [GLB]} In some cases, especially for the study of secondary,
+tertiary, and weaker levels of stress, it may make sense to join feet in a
+higher structure called a {\it colon} (see Hammond 1987).
+\nocite{Hammond:1987} \index{foot} \index{colon}
+
+\subsection{Words and stress typology}
+
+Segmentally, utterances can be parsed into words, and the words can be parsed
+into syllables (barring extrametrical material).  The suprasegmental shape of
+the resulting syllable stream gives strong cues to where the word boundaries
+are located: in any given word, there is exactly one primary stress. Some
+complications arise because certain particles, called {\it clitics}, are
+adjoined to an adjacent word prosodically even though the relation between the
+elements is morphologically undefined. The existence of such particles
+requires some dissociation between the phonological and the syntactic
+definitions of `word' -- the former are called {\it prosodic words}, the
+latter just {\it words}. For example, in Arabic, where conjunctions and
+prepositions are proclitic (attach to the following word), the written word
+unit (delimited by whitespace) is the prosodic, rather than the syntactic,
+word.  In Latin-based orthography, the apostrophe is often used to separate
+clitics from their hosts (but this is not a reliable criterion, especially as
+the apostrophe is used for many other purposes as well).  Ignoring this
+complication for the moment (we take up this matter in Section~4.2), there are as many
+words in an utterance as there are primary stresses, and to find out where the
+word boundaries fall, all that is required is an understanding of where the
+stress falls within the words.\index{clitic}\index{Arabic}
+ 
+At the top of the prosodic hierarchy we find the {\it prosodic word}, composed
+of cola or feet and carrying exactly one primary stress. Locating the syllable
+with the main stress as well as those syllables that carry lesser (secondary,
+tertiary, etc.) stress is a primary concern of the {\it metrical theory} of
+phonology. (Although in many ways related to the generative theory of {\it
+  metrics}, metrical theory is an endeavor with a completely different focus:
+metrics is a branch of {\it poetics}, concerned with poetic meter (see
+e.g. Halle and Keyser 1971), while metrical theory is a branch of linguistics
+proper.)\nocite{Halle:1971} When the problem is solvable in the sense that the
+location of the primary stress is rule-governed, linguists speak of {\it
+  fixed} stress.  When the location of stress cannot be predicted either on the
+basis of the phonological composition of the word (e.g. number and weight of
+syllables) or on the basis of morphological composition, linguists speak of
+{\it free} stress, and make recourse to the purely descriptive method of
+marking in the lexicon where the stress should fall.\index{word stress}
+
+While this last recourse may strike the mathematician as pathetically inept,
+bordering on the ridiculous, it is nothing to be sneered at. First, languages
+provide many examples of genuinely unpredictable features: as any
+foreign learner of German will know from bitter experience, the gender of
+German nouns {\it must be} memorized, as any heuristic appeal to `natural
+gender' will leave a large number of exceptions in its wake. Second, the
+procedure is completely legitimate even in cases where rules are available:
+tabulating a finite function can define it more compactly than a very complex
+formula would. The goal is to minimize the information that needs to be
+tabulated: we will begin to develop the tools to address this issue in
+Chapter~7. The reader who feels invincible should try to tackle the
+following exercise.
+
+\smallskip\noindent {\bf Exercise 4.2$^M$} Develop rules describing the
+placement of accents in Sanskrit. For general information, see Whitney (1887)
+\S 80--97, 128 130, 135a; for nouns \S 314--320; for numerals \S 482g,
+483a--c, 488a; for verbs \S 591--598; for adverbs \S 1111g, 1112e, 1114d; for
+personal suffixes \S 552--554; with other parts of the system discussed in \S
+556, 945, 1073e, 1082--1085, 1144, 1205, 1251, 1295, and elsewhere. An
+overview of P\={a}\d{n}ini's system, which also treats accents by rules
+scattered throughout the grammar, is presented in Cardona
+(1988 Sec. 2.8).\nocite{Whitney:1887}\nocite{Cardona:1988}\index{Sanskrit}
+\index{P\={a}\d{n}ini}
+
+\smallskip\noindent
+For the purposes of the typology, the interesting cases are the ones where
+stress is fixed. For example, in Hungarian, primary stress is always on the
+first syllable; in French, it is on the last syllable; in Araucanian [ARU],
+it is on the second syllable; in Warao [WBA], it is on the next to last
+(penultimate) syllable; and in Macedonian [MKJ], it is on the antepenultimate
+syllable. Interestingly, no example is known where stress would always fall on
+the third syllable from the left or the fourth from the right. 
+\index{Araucanian [ARU]}\index{Warao [WBA]}\index{Macedonian [MKJ]} 
+\index{Hungarian}\index{French}\nocite{Sebeok:1961}
+
+Quantity-sensitive languages offer a much larger variety. For example, in
+Eastern Cheremis [MAL], stress falls on the rightmost heavy syllable, but if
+all syllables are light, stress is on the leftmost syllable (Sebeok and
+Ingemann 1961).  In Cairene Arabic [ARZ], stress is on the final syllable if
+it is superheavy or on the penultimate syllable if heavy; otherwise it is on
+the rightmost nonfinal odd-numbered light syllable counting from the nearest
+preceding heavy syllable or from the beginning of the word
+\cite{McCarthy:1979}.  The reader interested in the full variety of possible
+stress rules should consult the StressTyp database \cite{Goedemans:1996},
+which employs the following overall categorization scheme:
+\index{Arabic!Cairene [ARZ]} \index{Cheremis!Eastern [MAL]}
+
+\begin{verbatim}
+1 Unbounded systems
+   1.1 Quantity-sensitive
+   1.2 Quantity-insensitive
+   1.3 Count systems
+2 Binary Bounded systems
+   2.1 Quantity-insensitive
+   2.2 Quantity-sensitive
+3 Special systems
+   3.1 Broken-window systems
+   3.2 n-ary weight distinctions
+     3.2.1 Superheavy syllables
+     3.2.2 Prominence systems
+4 Bounded ternary systems
+\end{verbatim}
+
+\smallskip\noindent Although from the outside it is somewhat haphazard, the
+system above is typical in many respects; indeed, it is among the very best
+that linguistic typology is currently capable of producing. First, the
+categories are rather sharply separated: a system that fits in one will not,
+as a rule, fit into any other.  There are very few split cases, and these tend
+to involve major subsystems (such as the verbal and nominal systems) rather
+than obscure corner cases.  Given that stress rules are generally riddled with
+exceptions, this is a remarkable achievement. Second, the system is based on
+several hundred languages analyzed in great depth, giving perhaps a 10\%
+sample of known languages and dialects. That certain categories are still
+instantiated by only a handful of examples is a cause for concern, but again,
+the depth of the research is such that these examples are fairly solid, rarely
+open to major reanalysis. Third, the empirical correlates of the categories
+are rather clear, and it requires only a few examples and counterexamples to
+walk down the decision tree, making the problem of classification much less
+formidable than in those cases of typology where the operative categories are
+far more elusive.
+
+The modern theory of stress typology begins with \newcite{Hayes:1980}, who
+tried to account for the observed variety of stress patterns in terms of a few
+simple operations, such as building binary trees over the string of syllables
+left to right or right to left -- for a current proposal along the same lines,
+see \newcite{Hayes:1995}. Here we will discuss another theory (Goldsmith and
+Larson 1990), which, in spite of its narrower scope (it applies to
+quantity-insensitive systems only), has taken the important step of divesting
+stress typology from much of its post hoc character.
+\nocite{Goldsmith:1990a}
+
+Suppose we have $n$ syllables arranged as a sequence of nodes, each
+characterized at time $T$ by two real parameters, its current activation level
+$a_k(T)$ and the bias $b_k$ that is applied to it independent of time $T$. The
+two parameters of the network are the leftward and rightward feeding factors
+$\alpha$ and $\beta$. The model is updated in discrete time: for $ 1 < k < n$,
+we have $a_k(T+1) = \alpha a_{k+1}(T) + \beta a_{k-1}(T) + b_k$. At the edges,
+we have $a_1(T+1) = \alpha a_2(T) + b_1$ and $a_n(T+1) = \beta a_{n-1}(T)
++b_n$. Denoting the matrix that has ones directly above (below) the diagonal
+and zeros elsewhere by {\bf U} ({\bf L}) and collecting the activation levels
+in a vector {\bf a}, and the biases in {\bf b}, we thus have
+
+\begin{equation}
+{\bf a}(T+1) =(\alpha {\bf U} + \beta {\bf L}){\bf a}(T)+{\bf b}
+\end{equation}  
+
+\smallskip
+\noindent 
+The iteration will converge iff all eigenvalues of ${\bf W} = \alpha {\bf U} +
+\beta {\bf L}$ lie within the unit disk. Gershgorin's Circle Theorem provides
+a simple sufficient condition for this: if $|\alpha|+|\beta| < 1, {\bf W}^n$
+will tend to zero and (4.1) yields a stable vector ${\bf a} = ({\bf I} - {\bf
+  W})^{-1}{\bf b}$ no matter where we start it. Here we will not analyze the
+solutions in detail (see Prince 1993),\nocite{Prince:1993a} but just provide a
+sample of the qualitatively different cases considered by Goldsmith and
+Larson.
+
+If we set $\alpha=-0.8, \beta=0,$ and a bias of 1 on the last node, we obtain
+an alternating pulse train proceeding from the right to left, corresponding to
+the stress pattern observed in Weri [WER], with primary stress falling on the
+last syllable and secondary stresses on the third, fifth, etc., syllables
+counting backward from the right edge.  \index{Weri [WER]} With the bias set
+at $-1$, we obtain the stress pattern of Warao [WBA], with primary stress on
+the penultimate syllable and secondary on the fourth, sixth, etc., counting
+backward. The mirror image of the Weri pattern, obtained by setting the bias
+to 1 on the first syllable, is observed in Maranungku [ZMR].
+
+What is remarkable about this situation is that the bewildering typological
+variation appears as a consequence of the model, different regions of the
+parameter space show typologically different patterns, without any particular
+effort to reverse-engineer rules that would provide the attested patterns.
+\newcite{Chomsky:1981} called this the {\it explanatory depth} of the theory,
+and on the whole there is little to recommend models lacking in it. 
+
+\smallskip
+\noindent
+{\bf Exercise 4.3} Provide a better bound on the convergence of {\bf W} than
+what follows from the Gershgorin Circle Theorem. Investigate which qualitative
+properties of the solutions are independent of the number of syllables $n$. 
+
+\section{Word formation}
+
+The basic morphological unit is the {\bf morpheme}, \index{morpheme} defined
+as a minimal (ato\-mic) sign. Unlike phonemes, which were defined as minimum
+concatenative units of sound, for morphemes there is no provision of temporal
+continuity because in many languages morphemes can be discontinuous and
+words and larger units are built from them by processes other than
+concatenation. Perhaps the best known examples are the triconsonantal roots
+found in Arabic, e.g. {\it kataba} `he wrote', {\it kutiba} `it was written',
+where only the three consonants {\it k-t-b} stay constant in the various
+forms.  The consonants and the vowels are put together in a single abstract
+{\it template},\index{template} such as the perfect passive CaCCiC (consider
+{\it kattib} `written', {\it darris}, `studied' etc.), even if this requires a
+certain amount of stretching (here the second of the three consonants gets
+lengthened so that a total of four C slots can be filled by three
+consonants) or removal of material that does not fit the template.  The
+phenomenon of discontinuous morphemes extends far beyond the Semitic
+languages, e.g. to Penutian languages such as Yokuts [YOK], Afroasiatic
+languages such as Saho [SSY], and even some Papuan languages.  \index{Arabic}
+\index{Saho [SSY]} \index{Yokuts [YOK]}
+
+In phonotactics, matters were greatly simplified by distinguishing those
+elements that do not appear in isolation (consonants) from those that do
+(vowels). In morphotactics, the situation is more complex, requiring us to
+distinguish at least six categories of morphemes: roots, stems, inflectional
+affixes, derivational affixes, simple clitics, and special clitics; as these
+differ from one another significantly in their combinatorical possibilities.
+When analyzing the prosodic word from the outside in, the outermost layer is
+provided by the {\it clitics}, elements that generally lack independent stress
+and thus must be prosodically subordinated to adjacent words: those attaching
+at the left are called {\it proclitic}, and those at the right are {\it
+  enclitic}.  \index{clitic} \index{proclitic} \index{enclitic} A particularly
+striking example is provided by Kwakiutl [KWK] \index{Kwakiutl [KWK]}
+determiners, which are prosodically enclitic (attach to the preceding word)
+but syntactically proclitic (modify the following noun phrase).
+
+Once the clitics are stripped away, prosodic and morphological words will
+largely coincide, and the standard Bloomfieldian definition becomes applicable
+as our first criterion for wordhood (1): {\it words are minimal free forms},
+i.e.  forms that can stand in isolation (as a full utterance delimited by
+pauses) while none of their constituent parts can. \index{word} We need
+to revise (1) to take into account not just clitics but also {\it
+compounding},\index{compounding} whereby words are formed from constituent
+parts that themselves are words: Bloomfield's example was {\it blackbird},
+composed of {\it black} and {\it bird}. To save the minimality criterion (1),
+Bloomfield noted that there is more to {\it blackbird} than {\it black+bird}
+inasmuch as the process of compounding also requires a rule of {\it compound
+destressing}, which reduces (or entirely removes) the second of the two
+word-level stresses that were present in the input. Since {\it bird} in
+isolation has full word-level stress (i.e.  the stress-reduced version cannot
+appear in isolation), criterion (1) remains intact. 
+
+Besides compounding, the two most important word-formation processes are {\it
+  affixation}, the addition of a bound form to a free form, and {\it
+  incorporation}, which will generally involve more than two operands, of
+which at least two are free and one is bound. We will see many examples of
+affixation. An English example of incorporation would be {\it synthetic
+  compounds} such as {\it moviegoer} (note the lack of the intermediate forms
+{\it *moviego, *goer} and {\it *movier}).\index{incorporation}\index{affixation}
+If affixation is concatenative (which is the typical case,
+often seen even in languages that have significant nonconcatenative
+morphology), affixes that precede (follow) the stem are called {\bf prefixes
+  (suffixes)}.\index{prefix|textbf}\index{suffix|textbf}\index{affix|textbf} If the bound morpheme is added in a nonconcatenative
+fashion (as e.g. in English {\it sing, sang, sung}), traditional grammar spoke
+of {\it infixation, umlaut}, or {\it ablaut}, but as these processes are
+better described using the autosegmental theory presented in Section~3.3, the
+traditional terminology has been largely abandoned except as descriptive
+shorthand for the actual multitiered
+processes.\index{infix}\index{umlaut}\index{ablaut}
+Compounded, incorporated, and affixed stems are still single
+prosodic words, and linguists use (2): {\it words have a single main stress}
+as one of many confluent criteria for deciding wordhood.
+
+An equally important criterion is (3): {\it compounds are not built
+compositionally} (semantically additively) from their constituent
+parts.\index{compositionality}
+It is evident that {\it blackbird} is not merely some
+black bird but a definite species, {\it Turdus merula.} Salient
+characteristics of blackbirds, such as the fact that the females are actually
+brown, cannot be inferred from {\it black} or {\it bird}. To the extent the
+mental lexicon uses words and phrases as access keys to such {\it encyclopedic
+knowledge}, it is desirable to have a separate entry or {\it lexeme} for each
+compound. We emphasize here that such considerations are viewed in morphology
+as heuristic shortcuts: the full theory of lexemes in the mental lexicon can
+(and, many would argue, must) be built without reference to encyclopedic
+knowledge.  What is required instead is some highly abstract grammatical
+knowledge about word forms belonging in the same lexeme, where lexemes are
+defined as a {\bf maximal set of paradigmatically related word forms}.
+\index{lexeme|textbf}
+
+But what is a {\it paradigm?} Before elaborating this notion, let us briefly
+survey the remaining criteria of wordhood: (4) {\it words are impervious to
+reordering} by the kinds of processes that often act freely on parts of
+phrases (cf.  {\it the bird is black} vs.  {\it *this is a birdblack}). (5)
+{\it words are opaque to anaphora} (cf. {\it Mary used to dare the devil but
+now she is afraid of him} vs. {\it *Mary used to be a daredevil but now she is
+afraid of him}).  Finally, (6) {\it orthographical separation} also provides
+evidence of wordhood, though this is a weak criterion -- orthography has its
+own conventions (which include hyphens that can be used to punt on the hard
+cases), and there are many languages such as Chinese and Hindi, where the
+traditional orthography does not include whitespace. 
+
+Given a finite inventory $M$ of morphemes, criteria (1--6) delineate a formal
+language of {\bf words} \index{word|textbf} $W$ as the subset of $w \in M^*$
+for which either (i) $w$ is free and no $w=w_1 w_2$ concatenation exists with
+both $w_1$ and $w_2$ free or (ii) such a concatenation exists but the meaning
+of $w$ is not predictable from the meanings of $w_1$ and $w_2$. By ignoring
+the nonconcatenative cases as well as the often considerable phonological
+effects of concatenation (such as stress shift, assimilation of phonemes at
+the concatenation boundary, etc.), this simple model lets us concentrate on
+the internal syntax of words, known as {\it
+  morphotactics}.\index{morphotactics} Words in $W \cap M$ ($M^2, \ldots$) are
+called {\it monomorphemic (bimorphemic, ...)}.  Morphemes in $M \setminus W$
+are called {\bf bound}, and the rest are {\bf free}.\index{bound morpheme|textbf}\index{free morpheme|textbf}\index{assimilation!across word boundary}
+
+The single most important morphotactic distinction is between {\it content}
+morphemes such as {\it eat} or {\it food} and {\it function} morphemes such as
+{\it the, of, -ing, -ity}, the former being viewed as truly essential for
+expressing any kind of meaning, while the latter only serve to put expressions
+in a grammatically nicer format. In numerical expressions, the digits would be
+content, and the commas used to group digits in threes would be function
+morphemes.  Between free or bound, content or function, all four combinations
+are widely attested, though not all four are simultaneously present in every
+language.  Bound content morphemes are known as {\bf roots}, and free content
+morphemes are called {\bf stems}. Bound function morphemes are known as {\bf
+  affixes}, and free function morphemes are called {\it function words} or
+{\bf
+  particles}.\index{root|textbf}\index{stem|textbf}\index{affix|textbf}\index{particle|textbf}
+On occasion, one and the same morpheme may appear in multiple classes. Take
+for example Hungarian case endings such as {\it nAk} `dative' or {\it vAl}
+`instrumental'. (Here $A$ is used to denote an {\it archiphoneme} or partially
+specified phoneme whose full specification for the backness feature
+(i.e. whether it becomes $a$ or $e$) depends on the stem. This phenomenon,
+called {\it vowel harmony}, is a typical example of autosegmental spreading,
+discussed in Section~3.3.) These morphemes generally function as affixes, but
+with personal pronouns they function as roots, as in {\it nekem} `1SG.DAT' and
+{\it velem} `1SG.INS'.\index{Hungarian}
+
+Affixes (function morphemes) are further classified as {\it inflectional} and
+{\it derivational} -- for example, compare the English plural {\it -s} and the
+noun-forming adjectival {\it -ity}.  As we analyze words from the outside in,
+in the outermost layer we find the inflectional prefixes and suffixes.  After
+stripping these away, we find the derivational prefixes and suffixes
+surrounding the stem. To continue with the example, we often find forms such
+as {\it polarities} in which first a derivational and subsequently an
+inflectional suffix is added, but examples of the reverse order are rarely
+attested, if at all.
+
+Finally, and at the very core of the system, we may find {\it roots}, which
+require some derivational process (typically templatic rather than
+concatenative) before they can serve as stems. By the time the analysis
+reaches the root level, the semantic relationship between stems derived from
+the same root is often hazy: one can easily see how in Arabic {\it writing, to
+write, written, book}, and {\it dictate} are derived from the same root {\it
+k-t-b}, but it is less obvious that {\it meat, butcher} is similarly related
+to {\it battle, massacre} and to {\it welding, soldering, sticking} (as in the
+root {\it l-h-m}). In Sanskrit, it is easy to understand that {\it desire} and
+{\it seek} could come from the same root {\it iSh}, but it is something of a
+stretch to see the relationship between {\it narrow} and {\it distressing
+(aNh)} or between {\it shine} and {\it praise (arch)}. 
+
+The categorization of the morphemes as roots, stems, affixes, and particles
+gives rise to a similar categorization of the processes that operate on them,
+and the relative prevalence of these processes is used to classify languages
+typologically. Languages such as Inuktitut [ESB], which form extremely complex
+words with multiple content morphemes, are called {\it incorporating}.
+\index{incorporating languages} At the opposite end, languages such as
+Vietnamese, where words typically have just one morpheme, are called {\it
+  isolating}. When the majority of words are built recursively by affixation,
+as in Turkish or Swahili, we speak of {\it agglutinating} languages.
+\index{agglutinating languages} Because of the central position that Latin and
+ancient Greek occupied in European scholarship until the 19th century, a
+separate typological category is reserved for {\it inflecting languages} where
+the agglutination is accompanied by a high degree of morphological {\it
+  suppletion} (replacement of affix combination by a single affix).
+\index{inflecting languages} Again we emphasize that the typological
+differences expressed in these labels are radical: the complexities of a
+strongly incorporating language cannot even be imagined from the perspective
+of agglutinating or isolating languages.  \index{Turkish} \index{Swahili}
+\index{Inuktitut [ESB]} \index{Latin} \index{Greek} \index{Vietnamese}
+\index{suppletion}
+
+The central organizational method of morphology, familiar to any user of a
+(monolingual or bilingual) dictionary, is to collect all compositionally
+related words in a single class called the {\it lexeme}. On many occasions, we
+can find a single distinguished form, such as the nominative singular of a
+noun or the third-person singular form of a verb, that can serve as a
+representative of the whole collection in the sense that all other members of
+the lexeme are predictable from this one {\it citation form}. On other
+occasions, this is not quite feasible, and we make recourse to a theoretical
+construct called the {\it underlying form} from which all forms in the lexeme
+are generated. The citation form, when it exists, is just a special case where
+a particular surface form (usually, but not always, the one obtained by
+affixing zero morphemes) retains all the information present in the underlying
+form. \index{citation form} \index{lexeme} \index{underlying form}
+
+Within a single lexeme, the forms are related {\it paradigmatically}. Across
+lexemes in the same class, the abstract structure of the lexeme, the {\it
+  paradigm}, stays constant, meaning that we can abstract away from the stem
+and consider the shared paradigm of the whole class (e.g. the nominal
+paradigm, the verbal paradigm, etc.) as structures worth investigating in
+their own right.  A paradigmatic contrast along a given morphological
+dimension such as {\it number}, {\it gender}, {\it person}, {\it tense}, {\it
+  aspect}, {\it mood}, {\it voice}, {\it case}, {\it topic}, {\it degree},
+etc., can take a finite (usually rather small) number of values, one of which
+is generally {\bf unmarked} (i.e. expressed by a zero morpheme). A typical
+example would be the number of nouns in English, contrasting the singular
+(unmarked) to plural {\it -s}, or in classical Arabic, contrasting singular,
+dual, and plural. We code the contrasts themselves by abstract markers
+(diacritics, see Section~3.2) called {\it morphosyntactic features}, and the
+specific morphemes that realize the distinctions are called their {\it
+  exponents}. The abstract markers are necessary both because the same
+distinction (e.g. plurality) can be expressed by different overt forms (as in
+English {\it boy/boys, child/children, man/men}) and because the exponent need
+not be a concatenative affix -- it can be a templatic one such as
+reduplication.\index{number}\index{gender}
+\index{person}\index{tense}\index{aspect}\index{mood}\index{voice}
+\index{case}\index{topic}\index{degree}\index{Arabic}\index{unmarked member of
+  opposition|textbf}\index{morphosyntactic feature}
+
+The full {\bf paradigm} is best thought of as a direct sum of direct products
+of morphological contrasts obtaining in that category. For example, if in a
+language verbs can be inflected for person (three options) and number (two
+options), there are a total of six forms to consider. This differs from the
+feature decomposition used in phonology (see Section~3.2) in three main
+respects.  First, there is no requirement for a single paradigmatic dimension
+to have exactly two values, and indeed, larger sets of values are quite common
+-- even {\it person} can distinguish as many as four (singular, dual, trial,
+and plural) in languages such as Gunwinggu [GUP].\index{Gunwinggu [GUP]}
+Second, it is common for paradigms to be composed of direct sums; e.g. a whole
+subparadigm of infinitivals plus a subparadigm of finite forms as in
+Hungarian. Third, instead of the subdirect construction, best characterized by
+a subset (embedding) in a direct product, we generally have a fully filled
+direct product, possibly at the price of repeating entries. For example,
+German adjectives have a maximum of six different forms (e.g. {\it gross,
+  grosses, grosse, grossem, grossen}, and {\it grosser}), but these are
+encoded by four different features, case (four values), gender (three values),
+number (two values), and determiner type (three values), which could in
+principle give rise to 72 different paradigmatic slots. Repetition of the same
+form in different paradigmatic slots is quite common, while missing entries (a
+combination of paradigmatic dimensions with no actual exponent), known as {\it
+  paradigm gaps}, are quite rare, but not unheard of.\index{paradigm|textbf}
+\index{Hungarian}
+
+For each stem in a class, the words that result from expressing the
+morphosyntactic contrasts in the paradigm are called the {\it paradigmatic
+forms} of the stem: a lexeme is thus a stem and all its paradigmatic forms.
+This all may look somewhat contrived, but the notion that stems should be
+viewed not in isolation but in conjunction with their paradigmatic forms is so
+central to morphology that the whole field of study (morphology, `the study of
+forms') takes its name from this idea. The central notational device in the
+linguistic presentation of foreign language data, {\it morphological glosses},
+\index{gloss} also has the idea of paradigmatic forms built in: for example,
+{\it librum} is glossed as {\it book.ACC}, thereby explicitly translating not
+only the stem {\it liber}, which has a trivial equivalent in English, but also
+the fact that the form is accusative, an idea that has no English equivalent. 
+
+The processes that generate the paradigmatic forms are called {\bf
+  inflectional}, while processes whose output is outside the lexeme of the
+input are called {\bf derivational} -- a key issue in understanding the
+morphotactics of a language is to distinguish the two. The most salient
+difference is in their degree of automaticity: inflectional processes are
+highly automatic, virtually exceptionless both in the way they are carried
+through and in the set of stems to which they apply, while derivational
+processes are often subject to alternations and/or are limited in their
+applicability to a subclass of stems. For example, if $X$ is an adjective,
+{\it X-ity} will be a noun meaning something like `the property of being X',
+but there are different affixes that perform this function and there is no
+clear way to delineate their scope without listing (compare {\it absurdity},
+{\it redness}, {\it teenhood}, {\it *redity}, {\it *teenity}, {\it *redhood},
+{\it *absurdhood}, {\it *absurdness}, {\it *teenness}).  When we see an affix
+with limited combining ability, such as {\it -itis} `swelling/inflammation of'
+(as in {\it tendinitis}, {\it laryngitis}, {\it sinusitis}), we can be certain
+that it is not inflectional.
+
+Being automatic comes hand in hand with being compositional. It is a hallmark
+of derivational processes that the output will not necessarily be predictable
+from the input (the derived stems for {\it laHm} `meat', {\it malHama}
+`battle', and {\it laHam} `welding' from the same root {\it l-h-m} are a good
+example).  The distinction is clearly observable in the frequency of forms
+that contain a given affix. For example, the proportion of plural forms ending
+in {\it -s} is largely constant across various sets of nouns, while the
+proportion of nouns ending in {\it -ity}, {\it -ness}, and {\it \-hood}
+depends greatly on the set of inputs chosen; e.g.  whether they are Latinate
+or Germanic in origin. The same distinction in {\it productivity} is also
+observable in whether people are ready to apply the generative rule to stems
+they have not encountered before.  \index{derivation|textbf}
+\index{inflection|textbf}
+
+By definition, inflection never changes category, but derivation can, so
+whenever we have independent (e.g. syntactic or semantic) evidence of category
+change, as in English {\it quick} (adjective) but {\it quickly} (adverb), we
+can be certain that the suffix causing the change is derivational.
+Inflectional features tend to play a role in rules of syntactic agreement
+(concord) and government, while derivational features do not
+\cite{Anderson:1982}. Finally, inflection generally takes place in the
+outermost layers (last stages, close to the edges of the word, away from the
+stem or root), while derivation is in the inner layers (early stages, close to
+the stem or root).
+
+%While this last statement is just a near truth (there are
+%known exceptions), it is still a valuable diagnostic criterion. 
+
+Although in most natural languages $M$ is rather large, $10^4$--$10^5$ entries
+(as opposed to the list of phonemes, which has only $10^1$--$10^2$ entries),
+the set of attested morphemes is clearly finite, and thus does not require any
+special technical device to enumerate.  This is not to say that the individual
+list entries are without technical complexity. Since these refer to (sound,
+meaning) pairs, at the very least we need some representational scheme for
+sounds that extends to the discontinuous case (see Section~3.3), and some
+representational scheme for meanings that will lend itself to addition-like
+operations as more complex words are built from the morphemes.  We will also
+see the need for marking morphemes {\it diacritically}\index{diacritic} i.e.
+in a way that is neither phonological nor semantic.  Since such diacritic
+marking has no directly perceptible (sound or meaning) correlate, it is
+obviously very hard for the language learner to acquire and thus has the
+greatest chance for faulty transmission across generations.
+
+The language $W$ can be infinite, so we need to bring some variant of the
+generative apparatus described in Chapter~2 to bear on the task of enumerating
+all words starting from a finite base $M$. The standard method of generative
+morphology is to specify a base inventory of morphemes as (sound, diacritic,
+meaning) triples and a base inventory of rules that form new triples from the
+already defined ones. It should be said at the outset that this picture is
+something of an idealization of the actual linguistic practice, inasmuch as no
+truly satisfactory formal representation of (word-level) meanings exists, and
+that linguistic argumentation generally falls back on natural language
+paraphrase (see Section~5.3) rather than employing a formal theory of
+semantics the same way it uses formal theories of syntax and phonology. While
+this lack of {\sl lexical semantics} is keenly felt in many areas of knowledge
+representation, in morphology we can make remarkable progress by relying only
+on some essential notions about whether two words mean, or do not mean, the
+same thing. Here we illustrate this on the notion of {\bf
+  blocking},\index{blocking} which says that if $s_1s_2$ is a derived
+(generated) form with meaning $m$ and $s$ is a primitive (atomic) form with
+the same meaning $m$, the atomic form takes precedence over the derived one:
+
+\begin{equation}
+(s,m) \in W \Rightarrow (s_1s_2,m) \not\in W
+\end{equation} 
+
+To see blocking in action, consider the general rule of past tense formation
+in English, which (keeping both the sound and the meaning sides of the
+morphemes loosely formulated, and ignoring the issue of diacritics entirely)
+says $$\mbox{(Verb, m)+({\it -ed}, PAST) = (Verb.ed, m.PAST)}$$ i.e.  the past
+tense of a verb {\it Verb} is formed by concatenation with the morpheme {\it
+ed}.  Clearly, this is a general rule of English, even though it fails in
+certain cases: when the verb is {\it go}, the past tense form is {\it went}
+rather than {\it *goed}. It would be awkward to reformulate the rule of
+English past tense formation to say ``add the morpheme {\it -ed} except when
+the verb is {\it go, eat, ...}". By assuming a higher principle of blocking,
+we are freed of the need to list the exceptions to each rule; the mere
+existence of (went, go.PAST) in the lexicon of English will guarantee that no
+other form with semantics go.PAST need be considered.  For a more subtle
+example, not immediately evident from (4.2), consider the rule of agentive
+noun formation: for (Verb, m), Verb.er is the agent of m (e.g., {\it eat/eater,
+kill/killer}).  Much to the chagrin of children learning English, there is no
+{\it *bicycler} -- such a person is called a {\it bicyclist}. Here the mere
+existence of the {\it -ist} form is sufficient to block the {\it -er} form,
+though there is no general rule of {\it -ist} taking precedence over {\it
+-er} (cf. {\it violinist/*violiner, *fiddlist/fiddler}). 
+
+Kiparsky (1982b) treats blocking as a special case of the more general
+Elsewhere Principle going back to P\={a}\d{n}ini: rules with narrower scope
+(affecting fewer items) take precedence over rules with broader scope.
+\index{elsewhere} By treating lexical entries like {\it bicyclist} as
+identity\index{P\={a}\d{n}ini} rules, blocking appears at the very top of a
+precedence hierarchy running from the most specific (singleton) rules to the
+most generic rules. Since much of morphology is about listing (diacritically
+marking) various elements, it may appear attractive to do away with general
+rules entirely, trying to accomplish as much by tabulation as possible. But it
+is clear that children, from a relatively early age, are capable of performing
+morphological operations on forms they have never encountered before. The
+classic ``wug" test of Berko (1958) presents children with the picture of a
+creature and the explanation ``this is a wug". When you add a second picture
+and say ``now there are two of them. These are two ...", by first grade
+children will supply the correct plural (with voiced /wugz/ rather than
+unvoiced /wugs/). Since the evidence in favor of such {\it productive} use of
+morphological rules is overwhelming, it is generally assumed that general
+(default) rules or constraints are part of the adult morphological system we
+wish to characterize.\nocite{Berko:1958}
+
+In this sense, the set of content morphemes is not just large but infinite
+(open to the addition of new stems like {\it wug}). In contrast, the set of
+function morphemes is small ($10^2$--$10^3$ entries) and closed. For each
+function morpheme $m_i$, we can ask what is the set $S_i \subset M$ for which
+affixation with $m_i$ is possible; e.g.  $\{s \in S | s.m_i \in W\}$. Perhaps
+surprisingly, we often find $S_i = S_j$. In other words, the distributions of
+different function morphemes are often identical or near-identical. For
+example, in English, every stem that can take {\it -ed} can also take {\it
+  -ing} and conversely -- exceptions such as strong verbs that do not take
+their past tense in {\it -ed} can be readily handled by the blocking mechanism
+discussed above.  This clustering gives rise to the fundamental set of
+diacritics known as {\it lexical categories} or {\it parts of speech}
+(POS).\index{lexical category} \index{part of speech, POS} Given that (two and
+a half millennia after P\={a}\d{n}ini) the actual format of morphological
+rules/constraints and their interaction is still heavily debated, it may come
+as something of a surprise that there is broad consensus on the invisible
+(diacritical) part of the apparatus, and in fact it would be next to
+impossible to find a grammar that does not employ lexical categories.
+
+In most, perhaps all, languages, the largest category is that of {\it nouns}
+(conventionally denoted N), followed by the class A of {\it adjectives}, the
+class V of {\it verbs}, Adv {\it (adverbials)}, and Num {\it
+  (numerals)}.\index{noun}\index{verb}\index{adjective}\index{adverbial}\index{numeral}
+Again, multiple membership is possible, indeed typical. For each lexical
+category there is an associated paradigm, sometimes trivial (as e.g. for
+adverbs, which generally have no paradigmatically related forms) but on
+occasion rather complex (as in verbal paradigms, which often express
+distinctions as to voice, aspect, tense, mood, person, and number of subject,
+direct and even indirect object, and gender). Paradigms are such a powerful
+descriptive tool that in an ideal agglutinating/inflecting language, the task
+of characterizing $W$ would be reduced to providing a few tabular listings of
+paradigms, plus some diacritic marking (lexical categorization) accompanying
+the list of content morphemes.  As an added bonus, we will see in Section~5.2
+that {\it syntax}, the study of the distribution of words in sentences, is
+also greatly simplified by reference to lexical categories and paradigmatic
+forms.  To be sure, no language is 100\% agglutinating (though many come
+remarkably close), but enough have large and complex paradigms to justify
+architecting the rest of the morphology around them.
+
+A central issue of morphology is whether the use of diacritics can be
+eliminated from the system. For example, it is often assumed that lexical
+categories are semantically motivated, e.g. nouns are names of things, verbs
+denote actions, etc.  Yet in truth we do not have a theory of lexical
+semantics that would sustain the category distinctions that we see, and many
+things that could equally well be one or the other (the standard example is
+{\it fire} noun vs. {\it burn} verb) actually end up in different categories
+in different languages. There has been better progress in eliminating
+diacritics by means of phonological marking. For example \newcite{Lieber:1980}
+replaces the paradigm classes of traditional Latin descriptive grammar with
+phonologically motivated triggers. Yet some hard cases, most notably Sanskrit
+and Germanic \cite{Blevins:2003}, still resist a purely phonological treatment,
+and the matter is by no means settled.
+
+\section{Optimality}
+
+Formal descriptions of morphology standardly proceed from a list of basic
+entries (roots and stems) by means of inflectional rules that manipulate
+strings or multitiered representations to produce the paradigmatic forms and
+derivational rules that produce stems from roots or other stems.  While this
+method is highly capable of expressing the kind of regularities that are
+actually observed in natural language, very often we find rule systems that
+{\it conspire} to maintain some observable regularity without actually relying
+on it. As an example, consider a language (such as Tiberian Hebrew) that does
+not tolerate complex codas. Whenever some process such as compounding or
+affixation creates a complex coda, we find some secondary cleanup process,
+such as the insertion of a vowel (a process called {\it
+  epenthesis\/})\index{epenthesis} or the deletion of a consonant, that will
+break up the complex coda.
+
+Optimality theory (OT) is built on the realization that in these situations
+the observable (surface) regularity is the cause, rather than the effect, so
+that to state the grammar one needs to state the regularities rather than the
+processes that maintain them. There are two main technical obstacles to
+developing such a theory: first, that the regularities may contradict each 
+other (we will see many examples of this), and second, that regularities may 
+have exceptions. In the previous section, we saw how individual (lexical) 
+exceptions can be handled by means of the Elsewhere Condition, and this 
+mechanism extends smoothly to all cases where one subregularity is entirely 
+within the domain of a larger (super)regularity. But there are many cases 
+where the domains overlap without either one being included in the other,
+and for these we need some prioritization called {\it constraint ranking} 
+in OT. \index{constraint ranking}
+
+An OT grammar is composed of two parts: a relation GEN between abstract
+(underlying) representations and candidate surface realizations, and a
+function EVAL that ranks the candidates so that the highest-ranked or {\it
+  optimal} one can be chosen. The ranking of the candidates is inferred from
+the ranking of the constraints, which is assumed to be absolute and immutable
+for a given language at a given synchronic stage but may vary across languages
+and across different synchronic stages of the same language. Optimality theory
+is closely linked to the kind of linguistic typology that we exemplified in
+Section~4.1 with stress typology in that the constraints are assumed to come
+from a universal pool: variation across languages is explained by assuming
+different rankings of the same constraints rather than by assuming different
+constraints.
+
+The (universal) family of constraints on GEN requires {\it faithfulness}
+between underlying and surface representations. These can be violated by
+epenthesis processes that create elements present in the surface that were
+missing from the underlying form, by deletion processes that remove from the
+surface elements that were present in the underlying form, and by reordering
+processes that change the linear order of elements on the surface from the
+underlying order. The constraints on EVAL are known as {\it markedness}
+constraints. These prohibit configurations that are exceptional from the
+perspective of universal grammar. For example, complex syllabic onsets or
+codas are more marked (typologically more rare) than their simple
+counterparts, so a universal prohibition against these makes perfect sense, as
+long as we understand that these prohibitions can be overridden by other (e.g.
+faithfulness) considerations in some languages.\index{universal grammar, UG}
+\index{markedness}
+
+Once an ordering of the constraints is fixed, it is a mechanical task to
+assess which constraints are violated by which input-output pair. This task is
+organized by the {\it tableau} data structure introduced in the founding paper
+of OT \nocite{Prince:1993}(Prince and Smolensky 1993), which places
+constraints in columns according to their rank order, and candidate forms in
+rows. Each form (or, in the case of faithfulness constraints, each
+input-output pair) will either {\it satisfy} a constraint or {\it violate}
+it. (In early OT work, the severity of a violation could be a factor, for a
+modern view, see McCarthy 2003.)\nocite{McCarthy:2003} In some cases, it
+is possible for a form (pair) to violate a constraint more than once; e.g. if
+the constraint requires full syllabification and there is more than one
+unsyllabified element. Given the infinite set of candidates produced by GEN,
+the {\it selection} problem is finding an optimal candidate $\omega$ such that
+for any other candidate $\chi$ the first constraint (in rank order) that
+distinguishes between $\omega$ and $\chi$ favors $\omega$.
+
+Standard phonology (Chomsky and Halle 1968) used context-sensitive rules not
+just to describe how the various morphosyntactic features are expressed (often
+constrained by reference to other invisible diacritic elements) but also to
+clean up the output of earlier rules so that the results become phonologically
+well-formed. In some grammars, most notably in
+P\={a}\d{n}ini,\index{P\={a}\d{n}ini} the cleanup is left to a single
+postprocessing stage (the last three sections of the grammar following 8.2,
+known as the {\it Trip\={a}d\={\i}}), but in many cases (often collected under
+the heading of {\it boundary strength} or {\it level ordering}) it seems
+advisable to mix the phonological rules with the purely morphological ones.
+To the extent that the morphological constituent structure dictates the order
+of rule application, a theory that strongly couples morphological and
+phonological well-formedness has little freedom in ordering the phonological
+rules. But to the extent that weaker (or as in the
+Ash\d{t}\={a}dhy\={a}y\={\i}, no) coupling is used, there remains a certain
+degree of freedom in ordering the rules, and this freedom can be exploited to
+describe near-truths.
+
+Context-sensitive rules of the form $B \rightarrow C/A\underline{\ \ }D$ are
+called {\it opaque} \index{opacity, phonological} if we encounter strings
+$ABD$, suggesting the rule should have applied but somehow did not, or if $C$
+appears in an environment other than $A\underline{\ \ }D$, suggesting that $C$
+came about by some other means. To continue with the Tiberian Hebrew example,
+the language has a rule of deleting {\it ?} (glottal stop) outside syllable
+onsets, which should be ordered {\it after} the rule of epenthesis that breaks
+up complex codas.  This means that a form such as {\it de\v{s}?} first
+undergoes epenthesis to yield {\it de\v{s}e?} but the final {\it ?} is
+deleted, so from the surface it is no longer evident what triggered the
+epenthesis in the first place.
+
+In a constraint-based system the notion of opacity has to be reinterpreted
+slightly -- we say that a constraint is not {\it surface true} if there are
+exceptions beyond the simple lexical counterexamples and not {\it surface
+  apparent} if the constraint appears true but the conditions triggering it
+are not visible.  Generally, such situations put such a high burden on the
+language learner that over the course of generations the rule/constraint
+system is replaced by one less opaque, even at the expense of not transmitting
+the system faithfully.
+
+\section{Zipf's law}
+
+We define a {\bf corpus} \index{corpus|textbf} simply as any collection of
+texts. Linguists will often impose additional requirements (e.g. that all
+texts should originate with the same author, should be about the same topic,
+or should have consistent spelling), but for full generality we will use only
+the more liberal definition given above. When a collection is exhaustive
+(e.g. the complete works of Shakespeare), we speak of {\it closed} corpora, and
+when it can be trivially extended (e.g. the issues of a newspaper that is
+still in publication), we speak of {\it open} corpora.  
+
+Perhaps the simplest operation we can perform on a corpus is to count the
+words in it. For the sake of concreteness we will assume that the texts are
+all ascii, that characters are lowercased, and all special characters, except
+for hyphen and apostrophe, are mapped onto whitespace. The terminal symbols or
+{\it letters} of our alphabet are therefore $\Sigma=\{a, b, \ldots z, 0, 1,
+\ldots 9, ', -\}$, and all word types are strings in $\Sigma^*$, though word
+tokens are strings over a larger alphabet including capital letters,
+punctuation, and special characters. Using these or similar definitions,
+counting the number of tokens belonging in the same type becomes a mechanical
+task. The results of such {\it word counts} can be used for a variety of
+purposes, such as the design of more efficient codes (see Chapter~7),
+typology, investigations of style, authorship, language development, and
+statistical language modeling in general.
+
+Given a corpus $S$ of {\bf size} $L(S)=N$ (the number of word tokens in $S$),
+\index{corpus size|textbf} we find $V$ different types, $V \leq N$.  Let us
+denote the {\bf absolute frequency} (number of tokens) for a type $w$ by
+$F_S(w)$ and the {\bf relative frequency} $F_S(w)/N$ by $f_S(w)$.  Arranging
+the $w$ in order of decreasing frequency, the $r$th type, $w_r$, is said to
+have {\bf rank} $r$, and its relative frequency $f_S(w_r)$ will also be
+written $f_r$. As \newcite{Estoup:1916} and \newcite{Zipf:1935} noted, the
+plot of log frequencies against log ranks shows a reasonably linear relation.
+Figure~4.1 shows this for a single issue of an American newspaper, the {\it
+  San Jose Mercury News}, or {\it Merc} for short. Historically, much of our
+knowledge about word frequencies has come from corpora of this size: the
+standard Brown Corpus (Kucera and Francis 1967)\nocite{Kucera:1967} is about a
+million words.  Today, corpora with size $10^7$--$10^8$ are considered
+medium-sized, and only corpora above a billion words are considered large (the
+largest published word count is based on over $10^{12}$
+words).\index{word!frequency} \index{frequency|textbf} \index{rank|textbf} The
+study of such corpora makes the utility of the log scale evident: perfectly
+ordinary words like {\it dandruffy} or {\it uniform} can have absolute
+frequency 0.000000001 or less.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=3in,angle=270]{Fig/eps1}
+\caption{Plot of log frequency as a function of log rank for a newspaper issue (150k words).}
+\end{center}
+\end{figure}
+
+\vspace*{-6mm}
+\noindent
+Denoting the slope of the linear portion by $-B$, $B$ is close to unity,
+slightly higher on some plots and slightly lower on others. (Some authors,
+such as \newcite{Samuelsson:1996}, reserve the term ``Zipf's law'' to the case
+$B=1$.) As a first approximation, Zipf's law can be given as
+
+\vspace*{-3mm}
+\begin{equation} %4.3
+\log(F_r) = H_N - B\log(r)
+\end{equation}
+
+\noindent
+where $H_N$ is some constant (possibly dependent on $S$ and thus on $N$, but
+independent of $r$).  This formula is closely related to, but not equivalent
+with, another regularity, often called Zipf's second law. Let $V(i,N)$ be the
+number of types that occur $i$ times. Zipf's second law is usually stated as
+
+\begin{equation} %4.4
+\log(i) = K_N - D_N\log(V(i,N))
+\end{equation} 
+
+\index{Zipf's law}
+\noindent
+The status of Zipf's law is highly contentious, and the debate surrounding
+it is often conducted in a spectacularly acrimonious fashion. As an example,
+we quote here Herdan (1966:88): \nocite{Herdan:1966}
+
+\begin{quote}
+The Zipf law is the supposedly straight line relation between occurrence
+frequency of words in a language and their rank, if both are plotted
+logarithmically. Mathematicians believe in it because they think that
+linguists have established it to be a linguistic law, and linguists believe in
+it because they, on their part, think that mathematicians have established it
+to be a mathematical law. ...  Rightly seen, the Zipf law is nothing but the
+arbitrary arrangement of words in a text sample according to their frequency
+of occurrence.  How could such an arbitrary and rather trivial ordering of
+words be believed to reveal the most recondite secrets, and the basic laws, of
+language?
+\end{quote}
+
+\noindent
+Given the sheer bulk of the literature supporting some Zipf-like regularity in
+domains ranging from linguistic type/token counts to the distribution of
+wealth, it is natural that statisticians sought, and successfully identified,
+different genesis mechanisms that can give rise to (4.3, (4.4), and related
+laws.
+
+The first results in this direction were obtained by \newcite{Yule:1924},
+working on a version of (4.3) proposed in \newcite{Willis:1922} to describe
+the number of species that belong to the same genus. Assuming a single
+ancestral species, a fixed annual probability $s$ of a mutation that produces
+a new species, and a smaller probability $g$ of a mutation that produces an
+entirely new genus, Yule shows that over time the distribution for the number
+of genera with exactly $i$ species will tend to
+
+\begin{equation} %4.5
+1/i^{1+g/s}
+\end{equation}
+
+This is not to say that words arise from a single undifferentiated ancestor by
+a process of mutation -- the essential point of Yule's work is that a simple
+uniform process can give rise, over time, to the characteristically nonuniform
+`Zipfian' distribution. %Merely by being around longer, older genera have more
+%chance to develop more species, even without the benefit of a better than
+%average mutation rate.
+%
+Zipf himself attempted to search for a genesis in terms of a ``principle of
+least effort'', but his work (Zipf 1935, 1949) \nocite{Zipf:1935}
+\nocite{Zipf:1949} was never mathematically rigorous and was cut short by his
+death. A mathematically more satisfying model specifically aimed at word
+frequencies was proposed by \newcite{Simon:1955}, who derived (4.3) from a
+model of text generation based on two hypotheses: (i) new words are
+introduced by a small constant probability, and (ii) old words are reused
+with the same probability that they had in earlier text.
+
+A very different genesis result was obtained by \newcite{Mandelbrot:1952}
+in terms of the classic ``monkeys and typewriters'' scenario. Let us designate
+an arbitrary symbol on the typewriter as a word boundary and define ``words''
+as maximum strings that do not contain it. If we assume that new symbols are
+generated randomly, Zipf's law can be derived for $B > 1$. Remarkably, the
+result holds true if we move from a simple Bernoulli experiment (zero-order
+Markov process; see Chapter~7) to higher-order Markov processes.
+
+In terms of content, though perhaps not in terms of form, the high point of
+the Zipfian genesis literature is the Simon-Mandelbrot debate (Mandelbrot
+1959, 1961a, 1961b, Simon 1960, 1961a, 1961b).  Simon's genesis works equally
+well irrespective of whether we assume a closed $(B < 1)$ or open $(B > 1)$
+vocabulary.  For Mandelbrot, the apparent flexibility in choosing any number
+close to 1 is a fatal weakness in Simon's model. While we side with Mandelbrot
+for the most part, we believe his critique of Simon to be too strict in the
+sense that explaining too much is not as fatal a flaw as explaining
+nothing. Ultimately, the general acceptance of Mandelbrot's genesis as the
+linguistically more revealing rests not on his attempted destruction of
+Simon's model but rather on the fact that we see his model as more
+assumption-free. \nocite{Mandelbrot:1959} \nocite{Mandelbrot:1961}
+\nocite{Mandelbrot:1961a} \nocite{Mandelbrot:1961b} \nocite{Simon:1960}
+\nocite{Simon:1961}\nocite{Simon:1961a}
+
+Although Zipf himself held that collecting more data about word frequency can
+sometimes distort the picture, and there is an ``optimum corpus size'' (for a
+modern discussion and critique of this notion, see Powers \nocite{Powers:1998}
+1998), here we will follow a straight {\it frequentist} approach that treats
+corpora as samples from an underlying distribution. To do this, we need to
+normalize (4.3) so that its fundamental content, linearity on a log-log scale,
+is preserved independent of sample size. Although in corpus linguistics it is
+more common to study sequences of dependent corpora $S_N \subset S_{N+1}$,
+here we assume a sequence of {\it independent} corpora satisfying $L(S_N)=N$.
+On the $y$ axis, we divide all values by $N$ so that we can work with relative
+frequencies $f$, rather than absolute frequencies $F$, and on the $x$ axis
+we divide all values by $V(N)$ so that we can work with relative ranks $0 \leq
+x = r/V(N) \leq 1$, rather than absolute ranks $r$. Accordingly, (4.3) becomes
+
+
+\vspace*{-3mm}
+\begin{equation} %4.6
+\log(f(xV(N))) = H_N - \log(N) -B_N\log(x) - B_N\log(V(N))
+\end{equation}
+
+\noindent
+The Zipf line intersects the $x$ axis at $x=1$, where the relative frequency
+of the least frequent item is just $1/N$. This is because at the low end of
+the distribution, we find a large number of {\bf hapax legomena}, words that
+appear only once in the corpus, and {\bf dis legomena}, words that appear only
+twice. (For large corpora, typically about 40\% to 60\% of all word types
+appear only once and another 10\% to 15\% only twice.) Since $\log(1)$ is
+zero, we have $H_N=B_N\log(V(N))$ i.e. that the Zipf line is always shifted up
+from the origin by $B_N\log(V(N))$. We can reasonably call a population Zipfian
+only if the $B_N$ will converge to a Zipf constant $B$, an empirical
+requirement that seems to be met by sequences of medium to large corpora --
+our current computational ability to analyze corpora without special hardware
+limits us to about $10^{11}$ words.
+
+Using $r=1$ in (4.3) we obtain $\log(F_1) = H_N = B\log(V(N))$ and by
+subtracting $\log(N)$ from both sides $\log(f(1))=B\log(V(N))-\log(N)$. Here
+the left hand side is a constant, namely the log frequency of the most
+frequent word (in English, {\it the}), so the right-hand side must also tend
+to a constant with increased $N$. Thus we have obtained $B\log(V(N)) \sim
+\log(N)$, known as the {\it power law of vocabulary growth.}  This law,
+empirically stated by many researchers including \newcite{Guiraud:1954} (with
+$B=2$), \newcite{Herdan:1960}, and \newcite{Heaps:1978}, becomes the following
+theorem.
+\index{Herdan's law}
+
+\smallskip
+\noindent
+{\bf Theorem 4.4.1} In corpora taken from populations satisfying Zipf's law 
+with constant $B$, the size of the vocabulary grows with the $1/B$-th power of 
+corpus length $N$,  
+
+\begin{equation} %4.7
+V(N)=cN^{1/B}
+\end{equation}
+
+\noindent
+Here $c$ is some fixed multiplicative constant (not to be confused with the
+constant $C$ of Herdan (1964:157) and later work, which corresponds to the
+exponent $1/B$ in our notation).  We illustrate this law on a corpus of some
+300 issues of the {\it Merc} totaling some 43 millon words (see Figure
+4.2). Increasingly larger {\it independent} samples were taken so as to guard
+against the effects of diachronic drift (new words get added to the
+vocabulary).
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=3in,angle=270]{Fig/eps3}
+\caption{\protect\small Growth of vocabulary size {\it V(N)} against corpus
+size {\it N} in the {\it Merc} on log-log scale.}
+\end{center}
+\end{figure}
+
+\vspace*{-6mm}
+\noindent
+Although we derived (4.7) as a theorem, it should be emphasized that it still
+has the status of an approximate empirical law (since it was derived from
+one), and in practice some slower patterns of infinite growth such as
+$V(N)=N^{D/\log(\log(N))}$ would still look reasonably linear for $N <10^{11}$
+at log-log scale, and would be just as compatible with the observable data.
+The same holds for Zipf's second law (see Figure~4.3).
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=3in,angle=270]{Fig/eps4}
+\caption{\protect\small Number-frequency law on the Merc (10m words)}
+\end{center}
+\end{figure}
+
+\noindent
+{\bf Theorem 4.4.2} In corpora taken from populations satisfying Zipf's law
+with parameter $B$, (4.4) is satisfied with parameter $D=B/(1+B)$.
+
+\smallskip
+\noindent
+{\bf Proof} Zipf's first law gives $f(r)=x^{-B}/N$, so the probability of a
+word is between $i/N$ and $(i+1)/N$ iff $i \leq x^{-B} \leq i+1$. Therefore, we
+expect $V(i,N) = V(N)(i^{-1/B } - (i+1)^{-1/B })$. By Rolle's theorem, the
+second term is $1/B \theta^{-1/B -1}$ for some $i \leq \theta \leq
+i+1$. Therefore, $\log(V(i,N)) = \log(V(N)) - \log(\theta)(B+1)/B -\log(B)$.
+Since $\log(B)$ is a small constant, and $\log(\theta)$ can differ from
+$\log(i)$ by no more than $\log(2)$, rearranging the terms we get $ \log(i) =
+\log(V(N)) B/(B+1) - \log(V(i,N)) B/(B +1)$. Since $K_N = \log(V(N))B/(B+1)$
+tends to infinity, we can use it to absorb the constant terms.
+
+\smallskip
+\noindent
+{\bf Discussion} The normalization term $K_N$ is necessitated by the fact that
+second law plots would otherwise show the same drift as first law plots. Using
+this term, we can state the second law in a much more useful format. Since
+$\log(i) = \log(V(N)) B/(B +1) - \log(V(i,N)) B/(B +1)$ plus some additive
+constant,
+
+\begin{equation} %8
+V(i,N) = mV(N)/i^{1+1/B}
+\end{equation}
+
+\noindent
+where $m$ is some multiplicative constant.  If we wish $\sum_{i=1}^{\infty}
+V(i,N) = V(N)$ to hold we must choose $m$ to be $1/\zeta(1+1/B)$, which is
+the reason why Zipfian distributions are sometimes referred to as $\zeta$
+distributions. Since this argument assumes Zipf's second law extends well to
+high-frequency items where the empirical fit is not particularly good (see
+Section~7.1 for further discussion), we find Mandelbrot's (1961c)
+\nocite{Mandelbrot:1961} criticism of $B=1$ to be somewhat less compelling
+than the case he made against $B<1$.  Recall from the preceding that $B$ is
+the reciprocal of the exponent $1/B $ in the vocabulary growth formula
+(4.6). If we choose a very `rich' corpus (e.g. a table of logarithms),
+virtually every word will be unique, and $V(N)$ will grow faster than
+$N^{1-\varepsilon}$ for any $\varepsilon > 0$, so $B$ must be 1. The following
+example sheds some light on the matter.
+
+\smallskip
+\noindent
+{\bf Example 4.4.1} Let $L=\{0,1,\ldots,9\}$ and our word tokens be the
+integers (in standard decimal notation). Further, let two tokens share the
+same type if their smallest prime factors are the same. Our size $N$ corpus is
+constructed by $N$ drawings from the exponential distribution that assigns
+frequency $2^{-i}$ to the number $i$. It is easy to see that the token
+frequency will be $1/(2^p - 1)$ for $p$ prime and 0 otherwise. Therefore, our
+corpora will not satisfy Zipf's law, since the rank of the $i$th prime is $i$
+but from the prime number theorem $p_i \sim i\log(i)$ and thus its log
+frequency $\sim -i\log(i)\log(2)$. However, the corpora will satisfy Zipf's
+second law since, again from the prime number theorem, $V(i,N)=N/i^2(\log(N)
+-\log(i))$ and thus $\log(V(N))/2 -\log(V(i,N))/2 = \log(N)/2 -\log(\log(N))/2
+-\log(N)/2 +\log(i) +\log(\log(N)-\log(i))/2$, which is indeed $\log(i)$
+within $1/\log(N)$.
+
+\smallskip
+\noindent
+{\bf Discussion.} Example 4.4.1 shows that Theorem 4.4.2 cannot be reversed
+without additional conditions (such as $B>1$). A purist might object that the
+definition of token/type relation used in this example is weird. However, it
+is just an artifact of the Arabic system of numerals that the smallest prime
+in a number is not evident. If we used the canonical form of numbers,
+everything after the first prime could simply be discarded as mere
+punctuation. 
+
+\smallskip
+\noindent
+Zipf's laws, including the power law of vocabulary growth, are near-truths in
+three different senses. First, the domain of the regularity needs to be
+circumscribed: it is clear that the empirical fit is not nearly as good at the
+high end as for lower frequencies.  Second, these laws are only true in the
+asymptotic sense: the larger the sample the better the fit. Finally, these
+laws are true only as first-order approximations. In general it makes perfect
+sense to use not only linear, but also quadratic and higher-order terms to
+approximate the function of interest. On a log-log scale, however, it is not
+evident that the next term should come from this kind of approach; there are
+many other series that would work equally well.
+
+\smallskip
+\noindent
+{\bf Corollary 4.4.1} Vocabulary is infinite. Since there is no theoretical
+limit on the size of the corpus we can collect, and $N^{1/B}$ tends to
+infinity with $N$, it is a trivial corollary of the Zipf/Herdan laws that 
+there is no theoretical limit to vocabulary size.
+
+\section{Further reading}
+
+Morphology is historically the oldest layer of linguistics: most of the early
+work on Sanskrit (P\={a}\d{n}ini, circa 520--460 BCE), Greek (Dionysius Thrax,
+circa 166--90 BCE), and Latin (Stilo, circa 152--74 BCE, Varro, 116--27 BCE)
+concerns morphological questions.  For a clear exposition of the structuralist
+methods, see Nida (1949). The idea that paradigms can freely repeat the same
+form has been raised to a methodological axiom, known as the {\it Principle of
+  the maximally differentiated paradigm}, by one of the founding fathers of
+structuralism, Hjelmslev (1961) [1943].  It is not always trivial to
+distinguish purely phonological from purely morphological concerns, and
+readers interested in morphology alone should still consult
+\newcite{Anderson:1985}. The most encyclopedic contemporary source is
+\newcite{Spencer:1998}.  The use of (sound, diacritic, meaning) triples is
+discussed e.g. in Mel'\v{c}uk (1993--2000) -- Kracht (2003) speaks of {\it
+  exponent} rather than sound and {\it category} rather than diacritic when
+elucidating the same idea of signs as ordered triples. 
+\nocite{Nida:1949}
+\nocite{Hjelmslev:1961} \nocite{Melcuk:1993}
+
+The prosodic hierarchy is discussed in detail in \newcite{Hammond:1995}; the
+approach we follow here is that of \newcite{Clements:1983}.  How the abstract
+picture of segmental duration assumed in this theory is reconciled with the
+actual length variation observed in speech is discussed in Kornai (1995 
+Ch. 3).  The sonority hierarchy originates with Jespersen (1897); for a
+detailed application to Tashlhiyt Berber [SHI], see Dell and Elmedlaoui (1985,
+1988).  \nocite{Dell:1985} \nocite{Dell:1988} Moras constitute a still
+unresolved area; see e.g.  \newcite{Broselow:1995} and \newcite{Hayes:1995}.
+\nocite{Wilkinson:1988} \nocite{Jespersen:1897} For the relationship of
+typology and diachrony see \newcite{Aristar:1999}. The modern theory of Arabic
+roots starts with \newcite{McCarthy:1979}; see also \newcite{Heath:1987}. For
+clitics, see \newcite{Zwicky:1985}, and for bound words, see
+\newcite{Nevis:1988}.
+
+For the purely phonological part of P\={a}\d{n}ini's system, see Buiskool
+(1939). \nocite{Buiskool:1939} Level ordering in standard phonology is
+motivated in \newcite{Kiparsky:1982}; for OT-internal arguments, see Rubach
+(1977, 2000); for a synthesis of OT and LPM, see
+\newcite{Kiparsky:2006}.\nocite{Rubach:1997} \nocite{Rubach:2000} Opacity was
+introduced in Kiparsky (1968),\nocite{Kiparsky:1968} for a syntesis of level
+ordering and OT, see Kiparsky (2006).\nocite{Kiparsky:2006} For an influential
+modern treatment of blocking, see \newcite{Aronoff:1976}, and for a more
+detailed discussion of blocking in P\={a}\d{n}ini's system, see
+\newcite{Kiparsky:2002}. Note that blocking is not necessarily absolute since
+doublets like {\it bicycler/bicyclist} can coexist, but (according to Kroch
+1994) these are ``always reflections of unstable competition between mutually
+exclusive grammatical options. Even a cursory review of the literature reveals
+that morphological doublets occur quite frequently, but also that they are
+diachronically unstable''.\nocite{Kroch:1994}\index{P\={a}\d{n}ini}
+
+Methods based on character and word frequency counts go back to the Middle
+Ages: in the 1640s, a Swedish sect was deemed heretical (relative to Lutheran
+orthodoxy) on the basis of a larger than expected frequency of forms such as
+{\it Christ bleeding, Christ suffering, Christ crucified} found in its Sion
+Psalmbook.  The same power law distribution as Zipf's law has been observed in
+patterns of income by \newcite{Pareto:1897}, and there is again a large body
+of empirical literature supporting Zipf's law, known in economics as Pareto's
+law. Champernowne (originally in 1936, but not fully published until 1973)
+offered a model where the uneven distribution emerges from a stochastic
+process (Champernowne 1952, 1953, 1973; see also Cox and Miller 1965) with a
+barrier corresponding to minimum wealth.\nocite{Champernowne:1952}
+\nocite{Champernowne:1953}\nocite{Champernowne:1973}\nocite{Cox:1965} The
+modern genesis is due to \newcite{Mandelbrot:1952} and \newcite{Miller:1957},
+though \newcite{Li:1992c} is often cited in this regard.
+\newcite{Mitzenmacher:2004} is a good survey. The fundamental observation
+behind Herdan's law is due to \newcite{Herdan:1960}, though Heaps (1978) is
+often credited. Theorem 4.4.1 is from Kornai (1999a);\nocite{Kornai:1999a} for
+a more recent discussion, see \newcite{Leijenhorst:2005}.\index{Heaps' law}
+
+Corpus size has grown dramatically in the past half-century. In the 1960s and
+1970s the major corpora such as the Brown Corpus, the London-Lund Corpus, or
+the Lancaster-Oslo-Bergen (LOB) Corpus had $N=10^6$ or less. By the 1980s
+corpora with $N=10^7$--$10^8$ were widely disseminated by the Linguistic Data
+Consortium, and by the 1990s billion-word ($10^9$) probabilistic language
+models were commonly used; e.g. in speech recognition.  Today, monolingual
+segments of large search engine caches provide access to corpora such as the
+Google 5-gram corpus with $N > 10^{12}$ -- inspecting the tail end of such
+caches makes it clear that infinite vocabulary growth is fueled by compounding
+and incorporation, as well as certain kinds of affixation (see Kornai 2002 for
+further discussion).\nocite{Kornai:2002}
+
+\endinput

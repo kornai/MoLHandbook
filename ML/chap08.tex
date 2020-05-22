@@ -1,0 +1,930 @@
+\chapter{Linguistic pattern recognition}
+
+\noindent
+In general, the pattern recognition task is defined as one where an infinite,
+continuous set of inputs is associated with a finite variety of outputs. A
+typical example is {\it face recognition}, \index{face recognition} where the
+goal is to identify the face as belonging to the same person in spite of
+changes in viewing angle, distance, light, makeup and hairdo, facial
+expression, etc. We speak of {\it linguistic} pattern recognition when the set
+of outputs is structured linguistically. This means both that the output
+units of linguistic significance follow each other in discrete time (e.g. a
+temporal succession of letters, words, or sentences) and that these units
+themselves come from a finite (or finitely generated) set. We could stretch
+the definition to include data that lack temporal organization. For example,
+the recognition of isolated characters is considered by many to be a
+linguistic pattern recognition task, especially in the case of Han and Hangul
+characters, which can be decomposed spatially though not necessarily
+temporally (see Sproat 2000).\nocite{Sproat:2000} However, no amount of
+stretching the definition will allow for face or fingerprint recognition, as
+the output in these domains can be made finite only by imposing some
+artificial cutoff or limitation on the system.\index{pattern recognition}
+\index{fingerprint recognition} \index{character recognition}
+\index{characters!Han}\index{characters!Hangul}
+
+Both linguistic and nonlinguistic pattern recognition involve an early stage
+of signal processing, often referred to as the {\it front end}. In speech
+recognition, the front end is generally based on acoustic principles, while in
+optical character recognition image processing techniques are used. In Chapter
+7, we looked at codes that were fully invertible. Here we will distinguish
+{\it low-} and {\it high-level} signal processing based on whether the input
+signal is largely recoverable from the output or not. In low-level signal
+processing, we encode the input in a largely invertible (lossless) manner,
+while in high-level signal processing, so much of the information that was
+present in the input gets discarded that the output can no longer serve as a
+basis for reconstructing the input. It should be clear from the foregoing that
+the distinction between low- and high-level signal processing is a matter of
+degree, especially as many signal processing algorithms have tunable
+parameters that control the degree of information loss. Nevertheless, there
+are some general guidelines that can, with proper care, be used to distinguish
+the two kinds of signal processing in nearly all cases of practical interest.
+
+On one side, any transformation that limits losses to such a degree that they
+are below the threshold of human perception is definitely low-level. A typical
+example would be the algorithm used in ripping music CDs: here the input is
+twice 16 bits (stereo) sampled at 44.1 kHz, for a total of 1411 kbps, and the
+output is MP3, requiring only 128 kbps (stereo) or 64 kbps (mono). On the
+other side, any {\it feature extraction} algorithm that produces categorial
+(especially 0-1) output from continuous input is considered high-level. A
+typical example would be an algorithm that decides whether a stretch of speech
+is voiced or unvoiced (see Chapter~9). Here the key issue is not whether the
+output is categorial but rather the number of categories considered. Two
+categories (one bit) is definitely high-level, and 64k categories (16 bits)
+are typical of low-level signal processing. We discuss this issue, {\it
+  quantization}, in Section~8.1.  Because of their special importance in
+linguistic pattern recognition, in Section~8.2 we revisit the basic notions of
+Markov processes (chains) and hidden Markov models (HMMs) that were introduced
+in Section~5.5 both for the discrete (quantized) and the continuous cases.
+
+Another criterion for distinguishing low- and high-level processing is whether
+the output of the front end is still suitable for human pattern recognition.
+For example, aggressive signal processing techniques can reduce the number of
+bits per second required for transmitting speech signals from 64 kbps (MP3
+mono) to 2 kbps (MELP) with considerable degradation in subjective signal
+quality but little or no loss of intelligibility.  Surprisingly, there exist
+pattern recognition methods and techniques that work best when the signal is
+degraded beyond the point of human recognizability. We discuss such cases, and
+the reasons for their existence, in Section~8.3. Topic detection, and the
+general problem of classifying documents, has all characteristics of linguistic
+pattern recognition when there is a single concept such as `spam' to be
+learned. As the number of topics increases (complex topic hierarchies often
+have tens of thousands of categories) the problem gradually takes on
+characteristics of nonlinguistic pattern recognition. In Section~8.4 we
+discuss the tools and techniques used in topic classification in some detail
+because these have broad applicability to other linguistic problems as well.
+
+\section{Quantization}
+
+Historically, quantization techniques grew out of analog/digital signal
+conversion, and to some extent they still carry the historical baggage
+associated with considerations of keeping the A/D circuitry simple. We begin
+with air pressure $s(t)$ viewed as a continuous function of time, and we
+assume the existence of an amplitude bound $A$ such that $-A \leq s(t) \leq A$
+for all $t$ considered. 
+
+\smallskip
+\noindent
+{\bf Exercise 8.1} Research the empirical amplitude distribution of speech
+over long stretches of time. If this has variance $\sigma$, how do you need to
+set $k$ in $A=k\sigma$ such that less than one in a hundred samples will have
+$|s| > A$? How do you need to set $k$ so that on the average no more than
+one in a thousand samples gets clipped? \index{clipping error}
+
+\smallskip
+\noindent
+Our goal is to quantize both the time axis and the amplitude axis, so that
+$s(t)$ is replaced by a stepwise constant function $r(t_i)$, where $r$ can take
+on only discrete values $r_0, r_1, \ldots , r_N$.  In the simplest case, both
+the $r_i$ and the $t_j$ are uniformly spaced. The reciprocal of $t_{i+1} -
+t_i$ is called the {\bf sampling frequency} -- in the case of speech, it is
+typically in the 6--40 kilohertz range. For simplicity, $N$ is usually chosen
+as a power of 2, so that instead of $N$-way sampling we speak of $b$-bit
+sampling, $N=2^b$. In the electrical engineering literature, this is known as
+{\bf pulse code modulation}, or PCM. In the case of speech, $b$ is typically
+between 1 and 24. At high sampling rates (20 kHz or above), one bit is already
+sufficient for low-quality, but generally intelligible, speech coding.
+\index{pulse code modulation, PCM}
+
+Uniform spacing means that the quantization levels are the centers of the
+$2^b$ intervals of size $\Delta = 2A/2^b$. The squared error of the stepwise
+approximation, called the {\it quantization noise}, can be estimated for any
+elementary interval of time by taking $b$ sufficiently large so that the error
+becomes a random variable with zero mean that is uniformly distributed over
+the range $-\Delta/2,\Delta/2$. Since the squared error of such a variable is
+obviously $\Delta^2/12$, the more commonly used {\bf signal to quantization
+  noise ratio}, or SQNR, is $3P_x2^{2b}/A^2$, where $P_x$ is the {\bf signal
+  energy}, defined as the area under the curve $s^2(t)$. Typically, speech
+engineers express such energy ratios using the {\bf decibel scale}, 10 times
+their base 10 logarithm, so we obtain the conclusion that adding an extra bit
+improves SQNR by about 6.02 decibels for PCM.
+\index{decibel}\index{signal energy}\index{signal to quantization noise ratio, SQNR}
+
+There is, of course, no reason to assume that the uniform quantization scheme
+is in any way optimal. There are many methods to decrease the number of bits
+per second required to transmit the signal or, equivalently, to increase
+signal quality for the same number of bits, and here we provide only a
+thumbnail sketch. In one family of methods, the original signal gets warped by
+the application of a concave function $W$ so that we uniformly quantize
+$W(s(t))$ instead of $s(t)$. If $W$ is chosen linear for $|s|<A/87.56$ and
+logarithmic for larger $s$, we speak of {\bf A-law} PCM, commonly used in
+digital telephony in Europe since the 1970s. If $W$ =
+sign$(s)A\log(1+255|s|/A)/3$, we speak of {\bf $\mu$-law} PCM, commonly used
+for digital telephony in the United States and Japan. These {\it log
+  PCM}\index{log PCM} methods, predating MP3 by over three decades, provide
+high-quality speech at the same 64 kbps rate. \index{$\mu$-law} \index{A-law}
+
+The quality of speech is a somewhat subjective matter: the standard way of
+evaluating it is by mean opinion scale (MOS),\index{mean opinion scale, MOS}
+ranging from 1 (bad) to 5 (excellent). A MOS grade of 4.5 or higher is
+considered {\it broadcast} quality; 4.0--4.5 is {\it toll} or {\it network}
+quality\index{toll quality} (phone networks aim at this level for toll
+services); 3.5--4.0 is considered {\it communications} quality (also known as
+{\it cell grade} quality); and 2.5--3.5 is {\it synthetic} quality (a
+historical name that no longer reflects the actual quality of modern synthetic
+speech, which can be indistinguishable from broadcast-quality human speech).
+Log PCM has MOS 4.3 -- below the broadcast level but well within the toll
+range.  \index{broadcast quality}\index{communications quality}\index{synthetic quality}
+
+\smallskip 
+\noindent 
+{\bf Exercise 8.2} What must be the amplitude distribution of speech over long
+stretches of time for A-law ($\mu$-law) to provide the optimal warping
+function? Compare these with the result of Exercise 8.1. 
+
+\smallskip
+\noindent
+Beyond A-law or $\mu$-law, in practical terms very little can be gained by
+matching the warping function more closely to the long-term characteristics of
+speech. {\it Adaptive} methods that exploit redundancies in the short-term
+characteristics of speech will be discussed in Section~9.1, but before turning
+to these, we need to gain a better understanding of the primary motivational
+example of quantization, phonemes. 
+
+In Section~3.1, we defined phonemes as mental units belonging in a phonemic
+alphabet that is specific to a given language. Since humans are capable of
+transcribing speech into phonemic units and the resulting string of symbols by
+definition preserves all linguistically significant (potentially
+meaning-altering) contrasts, using as many quantization levels (actually,
+quantization cells in $n$-dimensional space; see Section~9.1) as there are
+phonemes in the language is a particularly attractive proposition. Here we are
+referring not just to the small group of humans trained in phonemic
+transcription but to the much larger set of literate humans who can provide
+orthographic transcriptions (an arguably harder task, especially for complex
+orthographies with large historical baggage, but one that all cognitively
+unimpaired humans seem to be capable of) and even to illiterate people
+inasmuch as there is a wealth of psycholinguistic evidence that they, too, use
+phonemic units in all language comprehension and production tasks.
+
+The phoneme recognition problem is made hard by three factors. First, only a
+small number of phonemes, the vowels, appear freely in isolation, and human
+recognition is optimized to deal with sequences, where contextual cues are
+available, rather than with isolated phonemes. Second, the linear sequence
+recognition problem is often complicated by tempo, pitch, volume, and other
+autosegmental effects. For example, the phonetic sequence /{\it t\v{s}}/ maps
+on a single phoneme {\it \v{c}} in Spanish but on a sequence of two phonemes
+{\it t} and {\it \v{s}} in German, so the problem is recovering not just the
+sequence but also the autosegmental linking pattern. Finally, the mapping from
+mental units to physical units cannot be inverted: cases of {\it contextual
+  neutralization} such as Example 3.2.1 (Russian final devoicing) abound, and
+even more disturbingly, there seem to be many cases of {\it absolute
+  neutralization} where a contrast never surfaces.
+
+A familiar example is the `silent {\it e}' of English orthography in words
+like {\it ellipse}: it is never pronounced, but a system such as Chomsky and
+Halle (1968) that assumes an underlying $e$ that gets deleted from the surface
+seems better equipped to explain the regularities of English stress than a
+system that makes no recourse to such devices.  \index{neutralization} Another
+example familiar to phonologists is `velar' vs. `palatal' {\it i} stems in
+Hungarian: until we add a suffix, there is absolutely no way to distinguish
+the {\it i} sound found in {\it h\'{\i}d} `bridge' from that of {\it v\'{\i}z}
+`water', but once a suffix governed by vowel harmony is added the distinction
+becomes evident: {\it hidat (*hidet)} `bridge.ACC' but {\it vizet (*vizat)}
+`water.ACC' and similarly with the other harmonizing suffixes (V\'ag\'o
+1980). A system that assumes a rule that wipes out (neutralizes) the
+distinction between the two kinds of $i$ is better suited to explaining the
+facts of the language than one that does not (see V\'{a}g\'{o} 1976) -- so
+much so that nobody quite succeeded in constructing a rule system without any
+hidden contrast.\nocite{Va1go1:1976}
+
+\begin{figure}[hbt]
+\includegraphics[width=4.5in]{Fig/pb}
+\begin{center}
+\caption{Peterson-Barney (1952) 1st and 2nd formant data, female speakers}
+\end{center}
+\end{figure}
+
+In a classic experiment, Peterson and Barney (1952) removed all three
+confounding factors by restricting attention to the ten steady state vowels of
+English. \nocite{Peterson:1952} By instructing the speakers to produce clear
+examples and marking in the data set all instances where at least one of 26
+listeners could not clearly identify the vowel, they removed the `performance'
+factors that could lead to neutralization; by using steady state vowels, they
+removed all tempo issues; and by using only clearly monophonemic vowels, they
+removed all issues of segmentation and autosegmental association.  One would
+hope that on such a clean set of data it would be trivial to find ten
+canonical waveforms $p_1, \ldots p_{10}$ and a distance measure $d$ such that
+for each waveform $q$ the $p_i$ such that $d(q,p_i)$ is minimal (in standard
+notation, $\mbox{argmin}_i d(q,p_i)$) would serve to identify $q$.
+Unfortunately, the original acoustic data are lost, so we cannot test the
+performance of contemporary recognizers on this particular set, only the
+fundamental frequencies and the first three {\it formants} (resonant
+frequencies of the vocal tract)\index{formant} have been preserved (see
+Watrous 1991). \nocite{Watrous:1991}
+
+Figure 8.1 shows the first two formants for unambiguous vowels produced by
+female speakers. In formant space, the data show a number of overlapping
+clusters, which makes it clear that variability (both across speakers and
+across repeat utterances of the same speaker) is a major issue. This finding
+has deeply influenced the design of modern speech recognition systems, to
+which we turn now.
+
+\section{Markov processes, hidden Markov models}
+
+We begin with the simple case where the message to be coded exhibits first
+order Markovian dependence. Consider a finite set of elementary messages
+(symbols) $a_i (1 \leq i \leq k) $ with probabilities $p_i$. If in all complex
+messages $ P(a_{i_n} | a_{i_{n-1}}) = P(a_{i_n} | a_{i_1} a_{i_2} \ldots
+a_{i_{n-1}})$ holds (i.e. $a_{i_n}$ is predictable on the basis of the
+immediately preceding symbol just as well as it is predictable on the basis of
+all preceding symbols), we say that the messages are generated by a {\bf first
+  order Markov process} with transition probabilities $t_{ij} = P(a_j |
+a_i)$. \index{first order Markov process|textbf}
+
+In general, a {\bf signal process} is an infinite sequence of random variables
+$X_t, t=1,2,3,\ldots$ whose values are the elementary messages collected in a
+set $A$. For convenience, two-way infinite sequences including variables for
+$X_0, X_{-1}, X_{-2}, \ldots$ are often used since this makes the {\bf shift}
+operator $S$ that assigns to every sequence of values $a(t_i)$ the sequence
+$a(t_{i-1})$ invertible. A process is called {\it stationary} if the shift
+operator (and therefore every positive or negative power of it) is
+measure-preserving.\index{signal process|textbf}
+
+\smallskip\noindent {\bf Definition 8.2.1} A stochastic process is a
+probability measure $\mu$ defined on $A^{ \Bbb Z}$. If for every measurable
+subset $U$ we have $\mu(S(U)) = \mu(U)$, the process is {\bf stationary}. If
+for every measurable function $f$ of $n$ variables $\frac{i=1}{n}
+\sum_{i=1}^{n} f(X_i,X_{i+1},\ldots,X_{i+k-1})$ converges with probability 1
+to the expected value $E(f(X_1,X_2,\ldots X_k))$ whenever the latter is
+finite, the process is {\bf ergodic}.  \index{signal process!stochastic}
+\index{signal process!stationary} \index{signal process!ergodic}
+
+\smallskip\noindent
+{\bf Exercise 8.3} Can a nonstationary process be ergodic? Can a 
+nonergodic process be stationary? 
+
+\smallskip\noindent In general, the {\bf entropy of a signal process} is
+defined as $$\lim_{n\rightarrow\infty} H(X_1,X_2,\ldots,X_N)/N$$ if this limit
+exists: in the case of word-unigram based models, it is often referred to as
+the {\it per-word entropy} of the process.  For the Bernoulli case studied in
+Section~7.1, the random variables $X_i$ are independently identically
+distributed, so this definition reduces to $H(X_1)=H(X)$. In the non-Bernoulli
+case, by the chain rule we have $\frac{1}{N}(H(X_1)+H(X_2|X_1)+
+H(X_3|X_1X_2)+\ldots +H(X_N|X_1X_2\ldots X_{N-1}))$, and if the process is
+Markovian, this reduces to $\frac{1}{N}(H(X_1)+H(X_2|X_1)+H(X_3|X_2)+\ldots +
+H(X_N|X_{N-1}))$. If the process is stationary, all terms except the first one
+are $H(X_2|X_1)$, and these dominate the sum as
+$N\rightarrow\infty$. Therefore we obtain the following theorem. 
+
+\smallskip\noindent 
+{\bf Theorem 8.2.1} The word entropy of a stationary Markov process is
+$H(X_2|X_1)$.
+
+\smallskip\noindent To fully define one-sided first-order Markov chains we
+only need a set of {\it initial probabilities} $I_i$ and the transition
+probabilities $t_{ij}$. In two-sided chains, initial probabilities are
+replaced by the probabilities $T_i$ that the chain is in state $i$. These
+obviously satisfy $T_j=\sum_{i=1}^n T_it_{ij}$ and thus can be found as the
+eigenvector corresponding to the eigenvalue 1 (which will be dominant if all
+$t_{ij}$ are strictly positive). By a classical theorem of \index{Markov}A. A. Markov, if
+the process is {\bf transitive} in the sense that every state can be reached
+from every state in finitely many steps (i.e. if the transition matrix is
+irreducible), the state occupancy probabilities $T_i$ satisfy the law of large
+numbers: \index{process!transitive}
+
+\smallskip\noindent {\bf Theorem 8.2.2} \cite{Markov:1912} For any
+$\varepsilon, \delta$ arbitrarily small positive numbers, there exists a
+length $N$ such that if $m_i$ denotes the absolute frequency of the process
+being in state $a_i$ during a trial of length $N$, we have
+
+\begin{equation}
+P(|m_i/N-T_i| >\delta)<\varepsilon
+\end{equation}
+
+\noindent
+The current state of the chain can be identified with the last elementary
+message emitted since future behavior of the chain can be predicted just as
+well on the basis of this knowledge as on the basis of knowing all its past
+history.  From Section~8.2.1, the word entropy of such a chain can be computed
+easily: if $X_1=a_i$ is given, $H(X_2)$ is $-\sum_j t_{ij}\log_2(t_{ij})$, so
+we have
+
+\begin{equation}
+H(X_2|X_1) = -\sum_i T_i \sum_j t_{ij}\log_2(t_{ij})
+\end{equation}
+
+\noindent 
+What makes this entropy formula particularly important is that for longer
+sequences average log probability is concentrated on this value. By
+definition, the probability of any sequence $a= a_{i_1} a_{i_2} \ldots
+a_{i_N}$ of elementary messages is $T_{i_1}\prod_{k=1}^{N-1} t_{i_ki_{k+1}}$,
+and the probability of a set $C$ containing messages of length $N$ is simply
+the sum of the probabilities of the individual sequences.
+
+\smallskip\noindent {\bf Theorem 8.2.3} (Shannon 1948) For arbitrary small
+$\varepsilon > 0 and \eta > 0$, there is a set $C_{\eta, \varepsilon}$ of
+messages of length $N$ for sufficiently large $N$ such that $P(a \not\in C) <
+\varepsilon$ and if $a\in C$, then $|\log_2(1/P(a))/N-H| < \eta$.
+
+\smallskip\noindent {\bf Proof} Let us collect the $t_{ij}$. If $m_{ij}$
+counts the number of times $t_{ij}$ occurred in the product
+$T_{i_1}\prod_{k=1}^{N-1} t_{i_ki_{k+1}}$, we have
+
+\begin{equation}
+P(a)=T_{i_1}\prod_{i,j} t_{ij}^{m_{ij}}
+\end{equation}
+
+\noindent We define $C$ as containing those and only those sequences $a$ that
+have positive probability (include no $t_{ij}=0$) and satisfy $|m_{ij}
+-NT_it_{ij}| < N\varepsilon$ for all $i,j$. For these, the product in (8.3)
+can be rewritten with exponents $NT_it_{ij}+N\varepsilon\Theta_{i,j}$ with
+$|\Theta_{ij}|<1$. Therefore,
+
+\begin{equation}
+\log_2(1/P(a)) = -\log_2(T_{i_1})-N \sum_{t_{ij}\neq 0}T_it_{ij}\log_2(t_{ij})-N 
+\varepsilon \sum_{t_{ij}\neq 0} \Theta_{ij}\log_2(t_{ij}) 
+\end{equation}
+
+\noindent Since the second term is just $-NH$, we have $$|\log_2(1/P(a))/N-H|
+< -\log_2(T_{i_1})/N - \varepsilon\sum_{t_{ij}\neq 0}\log_2(t_{ij}).$$
+
+\smallskip\noindent The first term tends to 0 as $N\rightarrow\infty$, and the
+second term can be made less than an arbitrary small $\eta$ with the
+appropriate choice of $\varepsilon$. What remains to be seen is that sequences
+$a\not\in C$ with nonzero probability have overall measure $<\varepsilon$. For
+a nonzero probability $a$ not to belong in $C$ it is sufficient for $|m_{ij}
+-NT_it_{ij}| \geq N\varepsilon$ to hold for at least one $i,j$. Thus we need
+to calculate $\sum_{t_{ij}\neq 0} P(|m_{ij}-NT_it_{ij}|\geq N
+\varepsilon)$. Since this is a finite sum (maximum $n^2$ terms altogether),
+take any $t_{ij}\neq 0$ and apply Theorem 8.2.2 to find $N$ large enough for
+$P(|m_i-NT_i|<N\delta/2)>1-\varepsilon$ to hold. By restricting our attention
+to state $a_i$, we have a pure Bernoulli experiment whose outcomes (moving to
+state $a_j$) satisfy the weak law of large numbers, and thus for any
+$\varepsilon$ and $\delta/2$ we can make
+$P(|m_{ij}/m_i-t_{ij}|<\delta/2|)>1-\varepsilon$. Combining these two, we
+obtain
+
+$$P(|m_i-NT_i|<N\delta/2) P(|m_{ij}-m_it_{ij}|<m_i\delta/2) \geq
+(1-\varepsilon)(1-\varepsilon)\geq 1-2\varepsilon$$
+
+\noindent By the triangle inequality, $P(|m_{ij}-NT_it_{ij}|<N\delta) \geq
+1-2\varepsilon$, so $P(|m_{ij}-NT_it_{ij}|\geq N\delta) <2\varepsilon$, and by
+summing over all $i,j$, we obtain $P(\overline{C}) < 2n^2\varepsilon$, which
+can be made as small as desired.
+
+\smallskip\noindent In Section~5.5.2 we defined {\bf hidden Markov models}
+(HMMs) by weakening the association of states and elementary messages: instead
+of a single (deterministic) output as in Markov chains, we assign an {\it
+  output distribution} $E_i$ to each state $i$. It is assumed that the $E_i$
+are independent of time and independent of each other (though possibly
+identically or very similarly distributed). In the special case $E_i(a_i)=1,
+E_i(a_j) =0 (j\neq i)$, we regain Markov chains, but in the typical case the
+state cannot be deterministically recovered from the elementary message but
+remains to some extent hidden, hence the name. Each state $i$ of an HMM can be
+conceived as a signal process in\index{hidden Markov model, HMM|textbf} its
+own right, with entropy $H(E_i)=H_i$. We do not require the $E_i$ to be
+discrete. In fact {\it continuous density} HMMs \index{hidden Markov model, HMM!continuous density} play an important role in speech recognition, as we
+shall see in Chapter~9.  Although it would be possible to generalize the
+definition to situations where the underlying Markov chain is also replaced by
+a continuous process, this makes little sense for our purpose since our goal
+is to identify the underlying states with linguistic units, which are, by
+their very nature, discrete (see Section~3.1).
+
+The entropy of the whole process can be computed as a weighted mixture of the
+output entropies only if each state is final (diagonal transition matrix). In
+the general case, we have to resort to the original definition
+$\frac{1}{N}(H(X_1)+H(X_2|X_1)+ H(X_3|X_1X_2)+\ldots +H(X_N|X_1X_2\ldots
+X_{N-1}))$, and we see that $ H(X_3|X_1X_2)$ and similar terms can no longer be
+equated to $ H(X_3|X_2)$ since it is the previous {\it state} of the model not
+the previous {\it output} that contributes to the current state and thus
+indirectly to the current output. Introducing a Markov chain of random {\it
+state variables} $S_i$, we have $P(X_i=a_j) = \sum_{k=1}^n S_i(k) E_k(a_j)$
+(where the sum ranges over the states). By definition, word entropy will be
+the limit of
+
+\begin{eqnarray}
+\frac{1}{N}H(X_1,\ldots,X_N)=\frac{1}{N}(H(S_1,\ldots,S_N) + 
+H(X_1,\ldots,X_N|S_1,\ldots,S_N) \nonumber\\
+ - H(S_1,\ldots,S_N|X_1,\ldots,X_N))\hspace*{2.7cm}
+\end{eqnarray}
+
+\noindent We already computed the first term as $H(S_2|S_1)$. The second term
+is $\frac{1}{N}NH(X|S) = H(X_1|S_1)$, which is generally easy to compute from
+the underlying Markov process and the output probability distributions. It
+is only the last term %, $\lim \frac{1}{N} H(S_1,\ldots,S_N |X_1,\ldots,X_N)$,
+that causes difficulties inasmuch as computing the states from the outputs is
+a nontrivial task. Under most circumstances, we may be satisfied with pointwise
+maximum likelihood estimates.
+
+\section{High-level signal processing}
+
+Historically, linguistic pattern recognition systems were heavily slanted
+towards symbol-manipulation techniques, with the critical pattern recognition
+step often entirely obscured by the high-level preprocessing techniques that
+are referred to as {\it feature detection}.\index{feature detection} To the
+extent we can decompose the atomic concatenative units as bundles of
+distinctive features (see Sections~3.2 and 7.3.2), the simultaneous detection
+of all features amounts to recognizing the units themselves. In many settings,
+both linguistic and nonlinguistic, this makes excellent sense since the
+actual number of distinct units $N$ is considerably larger than the number of
+binary features used for their feature decomposition, ideally on the order of
+$\log_2(N)$. Further, some of the well-established features, such as {\it
+  voicing} in speech and {\it position} in handwriting recognition, are
+relatively easy to detect, which gave rise to high hopes that the detection of
+other features will prove just as unproblematic -- in speech recognition, this
+is known as the Stevens-Blumstein (1981) program.  \nocite{Stevens:1981}
+
+As we shall see in Chapter~9, low-level signal processing makes good use of
+the knowledge that phonologists and phoneticians have amassed about speech
+production and perception. But in high-level processing, engineering practice
+makes only limited use of the {\it featural} and {\it gestural} units proposed
+in phonology and phonetics: all working systems are based on {\it
+  (auto)segmental} units. Aside from voicing and a handful of other
+distinctive features, training good feature detectors proved too hard, and it
+is only voicing that ends up playing a significant role in speech processing
+(see Section~9.1). We have little doubt that infants come equipped with such
+detectors, but research into these is now pursued mainly with the goal of
+understanding the biological system, as opposed to the goal of building better
+speech recognition. On the whole, the feature detection problem turned out to
+be analogous to the problem of flapping wings: a fascinating subject but one
+with little impact on the design of flying machines.
+
+Therefore, we illustrate high-level signal processing on a simple example from
+character recognition, that of recognizing the (printed) characters {\it c},
+{\it d}, {\it e}, and {\it f}. Only two of these, $c$ and $e$, are positioned
+between the normal ``n'' lines of writing, with $d$ and $f$, having {\it
+  ascenders} that extend above the normal top line ({\it f}, depending on font
+style, may also have a {\it
+  descender}).\index{ascender}\index{descender}\index{n line} And only two,
+$d$ and $e$, have loops that completely surround a white area; $c$ and $f$
+leave the plane as a single connected component.  Therefore, to recognize
+these four characters, it is sufficient to detect the features [$\pm$
+  ascender] and [$\pm$ loop], a seemingly trivial task.
+
+\smallskip
+\noindent
+{\bf Exercise 8.4} Consider the difficulties of extracting either geometrical
+features such as position or topological features such as connectedness from a
+grayscale image. Write a list for later comparison with the eventual set of
+problems that will be discussed in Chapter~9.
+
+\smallskip
+\noindent
+First we apply a low-level step of {\it pixelization}, dividing the line
+containing the string of characters into a sufficient number of squares, say
+30 by 40 for the average character, so that a line with 80 characters is
+placed into a 2400 by 40 array such that the bottom of this array coincides
+with the baseline of the print and the top coincides with the horizontal line
+drawn through the highest points of the ascenders.
+
+Using 8 bit graylevel to describe the amount of black ink found in a pixel, we
+have devoted some 96 kilobytes to encode the visual representation of 20 bytes
+of information. To recover the two bits per character that actually interest
+us, we first need to {\it segment} the line image into 80 roughly 30 by 40
+rectangles, so that each of these contains exactly one character. We do this
+by considering columns of pixels one by one, adding up the gray values in each
+to form a {\it blackness profile}. Those columns where the result is small
+(zero) are considered dividers, and those where the values are higher than a
+threshold are considered parts of characters. We obtain an alternating string
+of divider and character zones, and we consider the segmentation
+well-established if we have the correct number of character zones (80) and
+these all have approximately the same width. \index{segmentation}
+
+Once these preliminaries are out of the way, the ascender feature can be
+simply detected by looking at the top five rows of pixels in each {\it
+  character bounding box}. If these are all white (the sum of grayness is
+below a low threshold), the character in question has no ascender, otherwise
+it does. Detecting loops is a more complex computation since we need to find
+local minima of the grayness function, which involves computing the gradient
+and determining that the Hessian is positive definite.  To compute the
+gradient, it is actually useful to blur the image, e.g. by averaging grayness
+over larger neighborhoods (e.g. over a disk of 5--10 pixel radius). Otherwise,
+completely flat white and black regions would both give zero gradient, and the
+gradient values near the edges would be numerically unstable.
+
+Visually, such transformations would make the image less legible, as would the
+ascender transform, which deletes everything but the top five rows of pixels.
+What this simplified example shows is that the transformations that enhance
+automatic feature detection may be very different from the ones that enhance
+human perception -- a conclusion that will hold true as long as we focus on
+the goal of pattern recognition without any attempt to mimic the human
+perception/recognition process.
+
+Finally, we note here that human speech is intrinsically multimodal: in the
+typical case, we do not just hear the speakers but also see their mouth, hand
+gestures, etc. There is clear evidence (McGurk and MacDonald 1976) that the
+visual cues will significantly interact with the audio cues: the image of a
+labial sound such as $b$ being produced overrides the acoustical cue, so that
+e.g.  the experimental subject will hear {\it base} even if {\it vase} was
+spoken. This {\it McGurk effect}\index{McGurk effect} is already detectable in
+young infants and is independent of the language being learned by the infant
+-- the effect persists even if the listener does not see the face but just
+touches it (Fowler and Dekle 1991).\nocite{McGurk:1976}\nocite{Fowler:1991}
+
+Therefore, it is important to determine the relative contributions of the
+different channels, a problem that is made very difficult by the fact that the
+linguistic signal is highly redundant. In telephony, a one second stretch is
+typically encoded in 8 kilobytes, while in imaging, a one square cm area takes
+about 56 kilobytes at the 600 dpi resolution common to most printers and
+scanners. On the average, one second of speech will contain about 10--15
+phonemes, each containing no more than 6 bits of information, so the
+redundancy is about a thousandfold. For the Latin alphabet, one square cm will
+contain anywhere from three handwritten characters, say 18 bits, to 60 small
+printed characters (45 bytes), so the redundancy factor is between 1200 and
+24000. In fact, these estimates are on the conservative side since they do not
+take into account the redundancy between adjacent phonemes or characters -- we
+return to the issue of compressing the signal in Chapter~9.
+
+\section{Document classification}
+
+As the number of machine-readable documents grows, finding the ones relevant
+to a particular query becomes an increasingly important problem. In the ideal
+case, we would like to have a {\sl question answering} algorithm that would
+provide the best answer, relative to any collection of documents $D$, for any
+(not necessarily well-formed English) query $q$ such as {\it Who is the CEO of
+  General Motors?} Since $D$ may contain contradictory answers (some of which
+may have been true at different times, others just plain wrong), it is clear
+that in general this is not a solvable problem. Question answering, together
+with unrestricted {\sl machine learning}, {\sl machine translation}, {\sl
+  pattern recognition}, {\sl commonsense reasoning}, etc., belong in the
+informal class of {\sl AI-complete} problems: a solution to any of them could
+be leveraged to solve all problems of artificial
+intelligence.\index{artificial intelligence, AI} \index{question answering}
+\index{machine learning} \index{machine translation}
+
+\smallskip\noindent
+{\bf Exercise 8.5} Define the problems above more formally, and develop
+Karp-style reduction proofs to show their equivalence. 
+
+\smallskip\noindent As Matijasevi\v{c} (1981)\nocite{Matijasevic:1981}
+emphasizes, the proof of the unsolvability of a problem is never the final
+point in our investigations but rather the starting point for tackling more
+subtle problems. AI-complete problems are so important that finding less
+general but better solvable formulations is still an important practical
+goal. Instead of unrestricted machine translation, which would encompass the
+issue of translating into arbitrary systems of logical calculus, and thus
+would subsume the whole AI-complete problem of {\sl knowledge representation},
+we may restrict attention to translation between natural languages, or even to
+a given pair of natural languages.  \index{knowledge representation, KR}
+Instead of the full question answering problem, we may restrict attention to
+the more narrow issue of {\it information extraction}: given a document $d$
+(e.g. a news article) and a relation $R$ (e.g. {\it Is-CEO-Of}), find all
+pairs of values $\{(x,y)|x\in$ {\it Person,} $y\in$ {\it Company,} $(x,y) \in$
+{\it Is-CEO-Of} $\}$ supported by $d$. \index{information extraction} This is
+still rather ambitious, as it requires a more robust approach to parsing the
+document than we are currently capable of (see Chapter~5), but at least it
+does away with many thorny problems of knowledge representation and natural
+language semantics (see Chapter~6). Once the problem is restricted this way,
+there is no particular reason to believe that it is algorithmically
+unsolvable, and in fact practical algorithms that run linear in the size of
+$d$ are available in the public domain (Kornai 1999), though these do not
+claim to extract all instances, just a large enough percentage to be useful.
+
+Even with linear parsing techniques, syntactic preprocessing of a large
+collection of documents (such as the web, currently containing about $10^{10}$
+documents) remains impractical, and the problem is typically attacked by means
+of introducing a crude intermediate classification system $T$ composed of a
+few hundred to a few thousand {\it topics}. We assume that $T$ partitions $D$
+into largely disjoint subsets $D_t \subset D \  (t\in T)$ and that queries
+themselves can be classified for topic(s). The idea is that questions about
+e.g. current research in computer science are unlikely to be answered by
+documents discussing the economic conditions prevailing in 19th century Congo,
+and conversely, questions about slavery, colonial exploitation, or African
+history are unlikely to be answered by computer science research papers. 
+\index{topic} \index{WWW}
+
+Therefore we have two closely related problems: in {\it query parsing} we try
+to determine the set of topics relevant to the query, and in {\it topic
+  detection} we try to determine which topics are discussed in a document. In
+many practical systems, the two problems are conflated into one by treating
+queries as (very short) documents in their own right. We thus have the problem
+of {\it document classification}: given some documents $D$, topics $T$, and
+some sample of $(d,t)$ pairs from the relation {\it Is-About} $\subset D
+\times T$, find the values of {\it Is-About} for new documents. Since the
+space of topics is not really structured linguistically (if anything, it is
+structured by some conceptual organization imposed on encyclopedic knowledge),
+strictly speaking this is not a linguistic pattern recognition problem, but we
+discuss it in some detail since the mathematical techniques used are quite
+relevant to mathematical linguistics as a whole. First, we present some
+terminology and notation. \index{query parsing} \index{topic detection}
+\index{document classification} \index{aboutness}
+
+We assume a finite set of words $w_1,w_2,\ldots,w_N$ arranged in order of
+decreasing frequency. $N$ is generally in the range $10^5$--$10^6$ -- for
+words not in this set, we introduce a catch-all {\it unknown word} $w_0$. By
+{\it general English} we mean a probability distribution $G_E$ that assigns
+the appropriate frequencies to the $w_i$ either in some large collection of
+topicless texts or in a corpus that is appropriately representative of all
+topics. By the (word unigram) probability model of a topic $t$, we mean a
+probability distribution $G_t$ that assigns the appropriate frequencies
+$g_t(w_i)$ to the $w_i$ in a large collection of documents about $t$. Given a
+collection $C$, we call the number of documents that contain $w$ the {\bf
+  document frequency} of the word, denoted $DF(w,C)$, and we call the total
+number of $w$ tokens its {\bf term frequency} in $C$, denoted $TF(w,C)$.
+\index{English!general} \index{text frequency|textbf} 
+\index{document frequency|textbf} \index{topic model|textbf}
+
+Assume that the set of topics $T=\{t_1,t_k,\ldots,t_k\}$ is arranged in order
+of decreasing probability $Q(T)=q_1,q_2,\ldots,q_k$. Let $\sum_{i=1}^k q_i = T
+\leq 1$, so that a document is topicless with probability $q_0=1-T$. The 
+general English probability of a word $w$ can therefore be computed in
+topicless documents to be $p_w=G_E(w)$ or as $\sum_{i=1}^k q_i g_i(w)$. In
+practice, it is next to impossible to collect a large set of truly topicless
+documents, so we estimate $p_w$ based on a collection $D$ that we assume to be
+representative of the distribution $Q$ of topics. It should be noted that this
+procedure, while workable, is fraught with difficulties since in general the
+$q_j$ are not known, and even for very large collections it cannot always be
+assumed that the proportion of documents falling in topic $j$ estimates $q_j$
+well.
+
+As we shall see shortly, within a given topic $t$, only a few dozen, or
+perhaps a few hundred, words are truly characteristic (have $g_t(w)$
+significantly higher than the background probability $g_E(w)$) and our goal
+will be to find them. To this end, we need to first estimate $G_E$. The
+trivial method is to use the {\it uncorrected observed frequency}
+$g_E(w)=TF(w,C)/L(C)$, where $L(C)$ is the {\bf length} of the corpus $C$ (the
+total number of word tokens in it). While this is obviously very attractive,
+the numerical values so obtained tend to be highly unstable. For example, the
+word {\it with} makes up about 4.44\% of a 55 m word sample of the {\it Wall
+  Street Journal} but 5.00\% of a 46 m word sample of the {\it San Jose
+  Mercury News}.  For medium-frequency words, the effect is even more
+marked. For example, {\it uniform} appears 7.65 times per million words in the
+{\it WSJ} and 18.7 times per million in the {\it Merc} sample. And for
+low-frequency words, the straightforward estimate very often comes out as 0,
+which tends to introduce singularities in models based on the estimates.
+\index{corpus size}
+
+The same uncorrected estimate, $g_t(w)=TF(w,D_t)/L(D_t)$, is of course
+available for $G_t$, but the problems discussed above are made worse by the
+fact that any topic-specific collection of documents is likely to be orders of
+magnitude smaller than our overall corpus. Further, if $G_t$ is a Markov
+source, the probability of a document containing $l_1$ instances of $w_1$,
+$l_2$ instances of $w_2$, etc., will be given by the multinomial formula
+
+\begin{equation}
+{{l_0+l_1+\ldots +l_N}\choose{l_0,l_1,\ldots ,l_N}} \prod_{i=0}^N g_t(w_i)^{l_i}
+\end{equation}
+
+\noindent
+which will be zero as long as any of the $g_t(w_i)$ are zero. Therefore, we
+will {\it smooth} the probabilities in the topic model by the (uncorrected)
+probabilities that we obtained for general English since the latter are of
+necessity positive. Instead of $g_t(w)$ we will therefore use $ \alpha g_E(w)
++ (1-\alpha )g_t(w)$, where $\alpha$ is a small but nonnegligible constant,
+usually between .1 and .3. %(see Kubala et al. 1999).\nocite{Kubala:1999}
+Another way of justifying this method is to say that documents are not fully
+topical but can be expected to contain a small portion $\alpha$ of general
+English.
+
+Since the probabilities of words can differ by many orders of magnitude (both
+for general English and for the sublanguage defined by any particular topic),
+we separate the discussion of the high-, mid-, and low-frequency cases.  If a
+word has approximately constant probability $g_t(w)$ across topics $t$, we say
+it is a {\it function word} of English. \index{function word} Such words are
+distributed evenly across any sample and will therefore have very low KL
+divergence. The converse is not true: low KL divergence indicates only that
+the word is not distinctive for those topics covered in the collection, not
+that the word is nondistinctive in a larger corpus. 
+
+For function words, the estimate $p_w = (1-T) g_t(w)$ or even simply $g_t(w)$
+is reasonable.  If a document $d$ has length $l(d) \gg 1/p_w$, we expect the word
+to appear in $d$ at least once. Let us denote the {\bf size} (number of
+documents) of a collection $C$ by $S(C)$. If $D_l$ contains only those
+documents in $D$ that are longer than $l$, we expect $DF(w,D_l)=S(D_l)$. We
+can turn this around and use this as a method of discovering function words: a
+reasonable choice of threshold frequency would be $10^{-4}$, and we can say
+that the function words of English will be those words that appear in all (or
+a very large proportion of) those documents that have length $\geq 10^5$.
+
+We emphasize that not all words with high observed frequency will meet the
+test: for example the word {\it Journal} has about twice the frequency of {\it
+  when} in the widely used {\it WSJ} corpora, but it will fail the
+$DF(w,D_l)=S(D_l)$ test in any other collection, while {\it when} will
+pass. The extreme high end of the distribution, words having 0.2\% or greater
+probability, are generally function words, and the first few hundred function
+words (which go down to the mid-range) collectively account for about half of
+any corpus (see Section~7.1).\index{corpus size}
+
+Function words are of course not the only words of general English. In the
+mid-range and below we will make a distinction between {\it specific} and {\it
+  nonspecific} content words. Informally, a content word is nonspecific if it
+provides little information about the identity of the topic(s) in which it
+appears. For example, words like {\it see} or {\it book} could not be called
+function words even under the most liberal definition of the term (and there
+will be many long documents that fail to contain them), but their content is
+not specific enough: for any topic $t$, $P(t|w)$ is about the same as the
+general probability of the topic $q_t$, or, what is the same by Bayes' rule,
+$g_t(w)/g_E(w)$ is close to 1.
+
+\smallskip\noindent {\bf Exercise 8.6} Assume a large collection of
+topic-classified data. Define an overall measure of `closeness to 1' that is
+independent of the distribution $Q$ of topics (it does not require that the
+collection be representative of this distribution).
+
+\smallskip\noindent In practice we rarely have access to a large enough
+collection of topic-classified data, and we have to look at the converse task:
+what words, if any, are specific to a few topics in the sense that $P(d\in
+D_t|w \in d) \gg P(d\in D_t)$. This is well measured by the number of
+documents containing the word. For example {\it Fourier} appears in only about
+200 k documents in a large collection containing over 200 m English documents
+(see {\tt www.northernlight.com}), while {\it see} occurs in 42 m and {\it
+  book} in 29 m. However, in a collection of 13 k documents about digital
+signal processing, {\it Fourier} appears 1100 times, so $ P(d\in D_t)$ is
+about $6.5\cdot 10^{-5}$, while $P(d\in D_t|w)$ is about $5.5 \cdot 10^{-3}$,
+two orders of magnitude better. In general, words with low DF values, or what
+is the same, high 1/DF = IDF {\bf inverse document frequency}\index{inverse document frequency, IDF|textbf}
+values, are good candidates for being
+specific content words. Again, the criterion has to be used with care: it is
+quite possible that a word has high IDF because of deficiencies in the corpus,
+not because it is inherently very specific. For example, the word {\it
+  alternately} has even higher IDF than {\it Fourier}, yet it is hard to
+imagine any topic that would call for its use more often than others.
+
+This observation provides strong empirical evidence that the vocabulary of any
+language cannot be considered finite; for if it was finite, there would be a
+smallest probability $p$ among the probabilities of the words, and in any
+random collection of documents with length $ \gg 1/p$, we would expect to find
+no hapaxes at all. Obviously, for hapaxes TF = DF = 1, so to the extent that
+every document has a topic this could be established deterministically from
+the hapax in question.  In machine-learning terms, this amounts to memorizing
+the training data, and the general experience is that such methods fail to
+work well for new data.  Overall, we need to balance the TF and IDF factors,
+and the simplest way of doing this is by the classical TF$\cdot$IDF formula
+that looks at the product of these two numbers.
+
+Given a document with word counts $l_i$ and total length $n$, if we assume the
+$l_i$ are independent (the `naive Bayesian' assumption), the log probability
+quotient that topic $t$, rather than general English, emitted this document
+will be given by $$\sum_{i=0}^N l_i \log {{\alpha g_E(w_i) + (1-\alpha
+    )g_t(w_i)}\over{g_E(w_i)}}$$
+
+\noindent
+We rearrange this sum in three parts: where
+$g_E(w_i)$ is significantly larger than $g_t(w_i)$, when it is about the same,
+and when it is significantly smaller. In the first part, the numerator is
+dominated by $\alpha g_E(w_i)$, so we have
+\begin{equation}
+\log(\alpha) \sum_{g_E(w_i) \gg g_t(w_i)} l_i
+\end{equation}
+
+\noindent
+which we can think of as the contribution of `negative evidence', words that
+are significantly sparser for this topic than for general English. In the
+second part, the quotient is about 1 and therefore the logs are about 0, so
+this whole part can be neglected -- words that have about the same frequency
+in the topic as in general English cannot help us distinguish whether the
+document came from the Markov source associated with the topic or from the one
+associated with general English.  Finally, the part where the probability of
+the words is significantly higher than the background probability will
+contribute the `positive evidence'
+
+$$\sum_{g_E(w_i) \ll g_t(w_i)} l_i \log \left(\alpha + \frac{(1-\alpha )
+g_t(w_i)}{g_E(w_i)}\right)$$ 
+
+\noindent
+Since $\alpha$ is a small constant, on the order of .2, while in the
+interesting cases (such as {\it Fourier} in DSP vs. in general English)
+$g_t$ is orders of magnitude larger than $g_E$, the first term can be
+neglected and we have, for the positive evidence, 
+
+\begin{equation}
+\sum_{g_E(w_i) \ll g_t(w_i)} l_i (\log(1-\alpha) +\log(g_t(w_i))-\log(g_E(w_i))
+\end{equation}
+
+\noindent
+Needless to say, the real interest is not in determining
+$\log(P(t|d)/P(E|d))$, i.e. whether a document belongs to a particular topic
+as opposed to general English, but rather in whether it belongs in topic $t$
+or topic $s$. We can compute $\log(P(t|d)/P(s|d))$ as
+$\log((P(t|d)/P(E|d))/(P(s|d)/P(E|d)))$, and the importance of this step is
+that we see that the `negative evidence' given by (8.7) also disappears. Words
+that are below background probability for topic $t$ will in general also be
+below background probability for topic $s$ since their instances are
+concentrated in some other topic $u$ of which they are truly
+characteristic. The key contribution in distinguishing topics $s$ and $t$ will
+therefore come from those few words that have significantly higher than
+background probabilities in at least one of these:
+
+\begin{eqnarray}
+\log(P(t|d)/P(s|d)) = \nonumber\\
+\sum_{g_E(w_i) \ll g_t(w_i)} l_i (\log(1-\alpha) +\log(g_t(w_i))-\log(g_E(w_i)) -\nonumber\\
+- \sum_{g_E(w_i) \ll g_s(w_i)} l_i (\log(1-\alpha) +\log(g_s(w_i))-\log(g_E(w_i))
+\end{eqnarray}
+ 
+\noindent
+For words $w_i$ that are significant for both topics (such as {\it Fourier}
+would be for DSP and for harmonic analysis), the contribution of general
+English cancels out, and we are left with $\sum l_i \log(g_t(w_i)/g_s(w_i))$.
+But such words are rare even for closely related topics, and the cases where
+their probability ratio $g_t(w_i)/g_s(w_i)$ is far from 1 are even rarer, so
+the bulk of $\log(P(t|d)/P(s|d))$ is contributed by two disjoint sums in
+(8.9). Even these can be simplified further by noting that in any term
+$\log(1-\alpha)$ is small compared with $\log(g_s(w_i))-\log(g_E(w_i))$ since
+the former is about $-\alpha$ while the latter counts the orders of magnitude
+in frequency over general English. Thus, if we define the relevance $r(w,t)$
+of word $w$ to topic $t$ by $\log(g_s(w_i))-\log(g_E(w_i))$, we can simply
+treat this as an additive quantity and for a document $d$ with counts $l_i$ we
+obtain
+
+\begin{equation}
+r(d,t)=\sum l_i r(w,t)
+\end{equation}
+
+\noindent
+where the sum is taken over those words $w_i$ whose frequency in documents
+about $t$ is significantly higher than their background frequency $p_{w_i}=
+g_E(w_i)$. 
+
+What (8.10) defines is the simplest, historically oldest, and best-understood
+pattern classifier, a {\it linear machine}\index{linear machine} where the
+decision boundaries are simply hyperplanes. As the reasoning above makes
+clear, linearity is to some extent a matter of choice: certainly the
+underlying Markovian assumption, that the words are chosen independent of one
+another, is quite dubious. However, it is a good first-order approximation,
+and one can extend it to second order, third order, etc., by increasing the
+Markovian parameter. Once the probabilities of word pairs, word triples, etc.,
+are explicitly modeled, much of the criticism directed at the naive unigram or
+{\it bag of words}\index{bag of words} approach loses its grip.
+
+Of particular importance is the fact that, in topic classification, the models
+can be {\it sparse} in the sense of using nonzero coefficients $g_t(w_i)$ only
+for a few dozen, or perhaps a few hundred, words $w_i$ for a given topic $t$
+even though the number of words considered, $N$, is typically in the hundred
+thousands to millions (see Kornai 2002).\nocite{Kornai:2002} Assuming $k=10^4$
+topics and $N=10^6$ words, we would need to estimate $kN=10^{10}$ parameters
+even for the simplest (unigram) model. This may be (barely) within the limits
+of our supercomputing ability, but it is definitely beyond the reliability and
+representativeness of our data. Over the years, this has led to a considerable
+body of research on {\it feature selection}, which tries to address the issue
+by reducing $N$, and on {\it hierarchical classification}, which aims at
+reducing $k$. We do not attempt to survey this literature here but note that
+much of it is characterized by an assumption of `once a feature, always a
+feature': if a word $w_i$ is found distinctive for topic $t$, an attempt is
+made to estimate $g_s(w_i)$ for the whole range of $s$ rather than the one
+value $g_t(w_i)$ that we really care about.
+
+The fact that high-quality working classifiers can be built using only sparse
+subsets of the whole potential feature set reflects a deep structural property
+of the data: at least for the purpose of comparing log emission probabilities
+across models, the $G_t$ can be approximated by sparse distributions $S_t$. In
+fact, this structural property is so strong that it is possible to build
+classifiers that ignore the differences between the numerical values of
+$g_s(w_i)$ and $g_t(w_i)$ entirely, replacing both by a uniform estimate
+$g(w_i)$ based on the IDF (inverse document frequency) of
+$w_i$. Traditionally, the $l_i$ multipliers in (8.10) have been known as the
+term frequency (TF) factor, and such systems, where the classification load is
+carried entirely by the zero-one decision of using a particular word in a
+particular topic, are known as TF-IDF classifiers.
+
+\section{Further reading}
+
+The standard pattern recognition handbook is Duda et
+al. (2000);\nocite{Duda:2000} see also \newcite{MacKay:2003}. These authors
+approach the problem from a practical standpoint -- for a more abstract view,
+see Devroye et al. (1996)\nocite{Devroye:1996} and Hastie et al.
+(2001).\nocite{Hastie:2001} The `six decibels per bit' rule comes from
+\newcite{Bennett:1948}. The idea of computing SQNR by assuming uniform
+distribution with zero mean for each cell comes from \newcite{Widrow:1960} --
+for the limits of its applicability, see Sripad and Snyder
+(1977).\nocite{Sripad:1977} In practical applications, analog to digital
+conversion does not involve circuitry that can quantize to more than 8 bits.
+Rather, Sigma-Delta conversion (Inose et al. 1962)\nocite{Inose:1962} is
+used.  A-law and $\mu$-law are part of the Consultative Committee for
+International Telephony and Telegraphy (CCITT) standard G.711
+(1972).\index{G.711}
+
+The papers and books recommended for Markov processes and HMMs in Section~5.7
+approach the subject with linguistic applications in mind. Our treatment
+follows the the pure mathematical approach taken in \newcite{Khinchin:1957}.
+It must be admitted that there is still a noticeable gap between the purely
+mathematically oriented work on the subject such as Capp\'e et al.
+(2005)\nocite{Cappe:2005} and the central linguistic ideas. While the HMMs
+used in speech recognition embody the phonemic principle (see Section~3.1),
+they fall short of full autosegmentalization (Section~3.3) and make no use of
+the prosodic hierarchy (Section~4.1).
+
+Feature extraction (high-level signal processing) is generally performed
+through supervised learning, a subject we shall discuss in Chapter~9.  The
+basic literature on speech perception is collected in Miller et al. (1991).
+\nocite{Miller:1991}
+
+For topic detection experiments, the widely used Reuters Corpus is available
+at {\tt http://trec.nist.gov/data/reuters/reuters.html}. There is no
+monographic treatment of the subject (for a survey, see Sebastiani
+2002),\nocite{Sebastiani:2002} and the reader is advised to consult the annual
+SIGIR and TREC proceedings.  Classification by linear machine originates with
+\newcite{Highleyman:1962}, see also Duda et al. (2000 Ch. 5), Haste et
+al. (2001 Ch. 4), Devroye et al. (1996 Ch. 4).
+
+\endinput
+
+

@@ -1,0 +1,435 @@
+\chapter{Introduction}
+
+\section{The subject matter}
+
+What is {\it mathematical linguistics}? A classic book on the subject,
+(Jakobson 1961),\nocite{Jakobson:1961} contains papers on a variety of
+subjects, including a categorial grammar (Lambek 1961), formal syntax (Chomsky
+1961, Hi\.{z} 1961), logical semantics (Quine 1961, Curry 1961), phonetics and
+phonology (Peterson and Harary 1961, Halle 1961), Markov models (Mandelbrot
+1961b), handwriting (Chao 1961, Eden 1961), parsing (Oettinger 1961, Yngve
+1961), glottochronology (Gleason 1961), and the philosophy of language (Putnam
+1961), as well as a number of papers that are harder to fit into our current
+system of scientific subfields, perhaps because there is a void now where once
+there was cybernetics and systems theory (see Heims 1991).
+\index{mathematical linguistics}\index{cybernetics}
+\nocite{Lambek:1961}\nocite{Chomsky:1961}\nocite{Hiz:1961}
+\nocite{Quine:1961}\nocite{Curry:1961}\nocite{Peterson:1961}
+\nocite{Halle:1961}\nocite{Mandelbrot:1961}\nocite{Chao:1961}
+\nocite{Eden:1961}\nocite{Oettinger:1961}\nocite{Yngve:1961}
+\nocite{Gleason:1961}\nocite{Putnam:1961}\nocite{Heims:1991}
+
+A good way to understand how these seemingly so disparate fields cohere is to
+proceed by analogy to mathematical physics. Hamiltonians receive a great deal
+more mathematical attention than, say, the study of generalized incomplete
+Gamma functions, because of their relevance to mechanics, not because the
+subject is, from a purely mathematical perspective, necessarily more
+interesting. Many parts of mathematical physics find a natural home in the
+study of differential equations, but other parts fit much better in algebra,
+statistics, and elsewhere. As we shall see, the situation in mathematical
+linguistics is quite similar: many parts of the subject would fit nicely in
+algebra and logic, but there are many others for which methods belonging to
+other fields of mathematics are more appropriate. Ultimately the coherence of
+the field, such as it is, depends on the coherence of linguistics.
+
+Because of the enormous impact that the works of Noam Chomsky and Richard
+Montague had on the postwar development of the discipline, there is a strong
+tendency, observable both in introductory texts such as Partee et al. (1990)
+and in research monographs such as Kracht (2003), to simply equate
+mathematical linguistics with formal syntax and semantics. Here we take a
+broader view, assigning syntax (Chapter~5) and semantics (Chapter~6) no
+greater scope than they would receive in any book that covers linguistics as a
+whole, and devoting a considerable amount of space to phonology (Chapter~2),
+morphology (Chapter~3), phonetics (Chapters~8 and 9), and other areas of
+traditional linguistics. In particular, we make sure that the reader will
+learn (in Chapter~7) the central mathematical ideas of information theory and
+algorithmic complexity that provide the foundations of much of the
+contemporary work in mathematical linguistics.\nocite{Partee:1990}
+
+This does not mean, of course, that mathematical linguistics is a discipline
+entirely without boundaries.  Since almost all social activity ultimately
+rests on linguistic communication, there is a great deal of temptation to
+reduce problems from other fields of inquiry to purely linguistic problems.
+Instead of understanding schizoid behavior, perhaps we should first ponder
+what the phrase {\it multiple personality} means.  Mathematics already
+provides a reasonable notion of `multiple', but what is `personality', and how
+can there be more than one per person? Can a proper understanding of the
+suffixes {\it -al} and {\it -ity} be the key?  This line of inquiry, predating
+the Schoolmen and going back at least to the {\sl cheng ming} (rectification
+of names) doctrine of Confucius, has a clear and convincing rationale ({\it
+  The Analects} 13.3, D.C. Lau transl.): \index{rectification of names}
+\nocite{Confucius:1979}
+
+\begin{quote}
+When names are not correct, what is said will not sound reasonable; when 
+what is said does not sound reasonable, affairs will not culminate in 
+success; when affairs do not culminate in success, rites and music will 
+not flourish; when rites and music do not flourish, punishments will not 
+fit the crimes; when punishments do not fit the crimes, the common 
+people will not know where to put hand and foot. Thus when the gentleman
+names something, the name is sure to be usable in speech, and when he says 
+something this is sure to be practicable. The thing about the gentleman is
+that he is anything but casual where speech is concerned.
+\end{quote}
+
+\noindent
+In reality, linguistics lacks the resolving power to serve as the ultimate
+arbiter of truth in the social sciences, just as physics lacks the resolving
+power to explain the accidents of biological evolution that made us human. By
+applying mathematical techniques we can at least gain some understanding of
+the limitations of the enterprise, and this is what this book sets out to do.
+
+\section{Cumulative knowledge}
+
+It is hard to find any aspect of linguistics that is entirely uncontroversial,
+and to the mathematician less steeped in the broad tradition of the humanities
+it may appear that linguistic controversies\index{controversies} are often
+settled on purely rhetorical grounds. Thus it may seem advisable, and only
+fair, to give both sides the full opportunity to express their views and let
+the reader be the judge. But such a book would run to thousands of pages and
+would be of far more interest to historians of science than to those actually
+intending to learn mathematical linguistics. Therefore we will not necessarily
+accord equal space to both sides of such controversies; indeed often we will
+present a single view and will proceed without even attempting to discuss
+alternative ways of looking at the matter. 
+
+Since part of our goal is to orient the reader not familiar with linguistics,
+typically we will present the majority view in detail and describe the
+minority view only tersely. For example, Chapter~4 introduces the reader to
+morphology and will rely heavily on the notion of the morpheme
+\index{morpheme} -- the excellent book by \newcite{Anderson:1992} denying the
+utility, if not the very existence, of morphemes, will be relegated to
+footnotes. In some cases, when we feel that the minority view is the correct
+one, the emphasis will be inverted: for example, Chapter~6, dealing with
+semantics, is more informed by the `surface compositional' than the `logical
+form' view. In other cases, particularly in Chapter~5, dealing with syntax, we
+felt that such a bewildering variety of frameworks is available that the
+reader is better served by an impartial analysis that tries to bring out the
+common core than by in-depth formalization of any particular strand of
+research. 
+
+In general, our goal is to present linguistics as a cumulative body of
+knowledge.  In order to find a consistent set of definitions that offer a
+rational reconstruction of the main ideas and techniques developed over the
+course of millennia, it will often be necessary to take sides in various
+controversies. There is no pretense here that mathematical formulation will
+necessarily endow a particular set of ideas with greater verity, and often the
+opposing view could be formalized just as well. This is particularly evident
+in those cases where theories diametrically opposed in their means actually
+share a common goal such as describing all and only the well-formed structures
+(e.g. syllables, words, or sentences) of languages. As a result, we will see
+discussions of many `minority' theories, such as case grammar or generative
+semantics, which are generally believed to have less formal content than their
+`majority' counterparts. 
+
+\section{Definitions}
+
+For the mathematician, definitions are nearly synonymous with abbreviations: we
+say `triangle' instead of describing the peculiar arrangement of points and
+lines that define it, `polynomial' instead of going into a long discussion
+about terms, addition, monomials, multiplication, or the underlying ring of
+coefficients, and so forth.  The only sanity check required is to exhibit an
+instance, typically an explicit set-theoretic construction, to demonstrate
+that the defined object indeed exists. Quite often, counterfactual objects
+such as the smallest group $K$ not meeting some description, or objects whose
+existence is not known, such as the smallest nontrivial root of $\zeta$ not on
+the critical line, will play an important role in (indirect) proofs, and
+occasionally we find cases, such as {\it motivic cohomology}, where the whole
+conceptual apparatus is in doubt.  In linguistics, there is rarely any serious
+doubt about the existence of the objects of inquiry. When we strive to define
+`word', we give a mathematical formulation not so much to demonstrate that
+words exist, for we know perfectly well that we use words both in spoken
+and written language, but rather to handle the odd and unexpected cases. The
+reader is invited to construct a definition now and to write it down for
+comparison with the eventual definition that will emerge only after a rather
+complex discussion in Chapter~4. 
+
+In this respect, mathematical linguistics is very much like the empirical
+sciences, where formulating a definition involves at least three distinct
+steps: an {\it ostensive} definition based on positive and sometimes negative
+examples (vitriol is an acid, lye is not), followed by an {\it extensive}
+definition delineating the intended scope of the notion (every chemical that
+forms a salt with a base is an acid), and the {\it intensive} definition that
+exposes the underlying mechanism (in this case, covalent bonds) emerging
+rather late as a result of a long process of abstraction and analysis.
+\index{definition} \index{definition!ostensive} \index{definition!extensive}
+\index{definition!intensive}
+
+Throughout the book, the first significant instance of key notions will appear
+in {\it italics}, usually followed by ostensive examples and counterexamples
+in the next few paragraphs. (Italics will also be used for emphasis and for
+typesetting linguistic examples.) The empirical observables associated with
+these notions are always discussed, but textbook definitions of an extensive
+sort are rarely given. Rather, a mathematical notion that serves as a stand-in
+will be defined in a rigorous fashion: in the defining phrase, the same notion
+is given in {\bf boldface}. Where an adequate mathematical formulation is
+lacking and we proceed by sheer analogy, the key terms will be {\sl slanted}
+-- such cases are best thought of as open problems in mathematical
+linguistics. 
+
+\section{Formalization} 
+
+In mathematical linguistics, as in any branch of applied mathematics, the
+issue of formalizing semiformally or informally stated theories comes up quite
+often. A prime example is the study of phrase structure, where Chomsky (1956)
+took the critical step of replacing the informally developed system of
+immediate constituent analysis (ICA, see Section~5.1) by the rigorously
+defined context-free grammar (CFG, see Section~2.3) formalism. Besides
+improving our understanding of natural language, a worthy goal in itself, the
+formalization opened the door to the modern theory of computer languages and
+their compilers. This is not to say that every advance in formalizing
+linguistic theory is likely to have a similarly spectacular payoff, but
+clearly the informal theory remains a treasure-house inasmuch as it captures
+important insights about natural language. While not entirely comparable to
+biological systems in age and depth, natural language embodies a significant
+amount of evolutionary optimization, and artificial communication systems can
+benefit from these developments only to the extent that the informal insights
+are captured by formal methods.
+
+The quality of formalization depends both on the degree of faithfulness to the
+original ideas and on the mathematical elegance of the resulting system.
+Because the proper choice of formal apparatus is often a complex matter,
+linguists, even those as evidently mathematical-minded as Chomsky, rarely
+describe their models with full formal rigor, preferring to leave the job to
+the mathematicians, computer scientists, and engineers who wish to work with
+their theories. Choosing the right formalism for linguistic rules is often
+very hard. There is hardly any doubt that linguistic behavior is governed by
+rather abstract rules or constraints that go well beyond what systems limited
+to memorizing previously encountered examples could explain.  Whether these
+rules have a stochastic aspect is far from settled: engineering applications
+are dominated by models that crucially rely on probabilities, while
+theoretical models, with the notable exception of the {\it variable rules}
+used in sociolinguistics (see Section~5.4.3), rarely include considerations
+relating to the frequency of various phenomena.  The only way to shed light on
+such issues is to develop alternative formalizations and compare their
+mathematical properties.\index{variable rules}
+
+The tension between faithfulness to the empirical details and the elegance of
+the formal system has long been familiar to linguists: \newcite{Sapir:1921}
+already noted that ``all grammars leak". One significant advantage that
+probabilistic methods have over purely symbolic techniques is that they come
+with their own built-in measure of leakiness (see Section~5.4). It is never a
+trivial matter to find the appropriate degree of idealization in pursuit of
+theoretical elegance, and all we can do here is to offer a couple of
+convenient stand-ins for the very real but still somewhat elusive notion of
+elegance.
+
+The first stand-in, held in particularly high regard in linguistics, is {\it
+  brevity}.  The contemporary slogan of algorithmic complexity (see
+Section~7.2), that the best theory is the shortest theory, could have been
+invented by P\={a}\d{n}ini.  The only concession most linguists are willing to
+make is that some of the complexity should be ascribed to principles of {\it
+  universal grammar} (UG) rather than to the {\it parochial} rules specific to
+a given language, and since the universal component can be amortized over many
+languages, we should maximize its explanatory burden at the expense of the
+parochial component.\index{parochial rule}\index{universal grammar, UG}
+
+The second stand-in is {\it stability} in the sense that minor perturbations
+of the definition lead to essentially the same system. Stability has always
+been highly regarded in mathematics: for example, Birkhoff (1940) spent
+significant effort on establishing the value of lattices as legitimate objects
+of algebraic inquiry by investigating alternative definitions that ultimately
+lead to the same class of structures. There are many ways to formalize an
+idea, and when small changes in emphasis have a very significant impact on the
+formal properties of the resulting system, its mathematical value is in doubt.
+Conversely, when variants of formalisms as different as indexed grammars
+\cite{Aho:1968}, combinatory categorial grammar \cite{Steedman:2001}, head
+grammar \cite{Pollard:1984}, and tree adjoining grammar \cite{Joshi:2003}
+define the same class of languages, the value of each is significantly
+enhanced.\index{combinatory categorial grammar, CCG}\index{indexed grammar}
+\index{tree adjoining grammar, TAG}\index{head grammar}\nocite{Birkhoff:1940}
+
+One word of caution is in order: the fact that some idea is hard to formalize,
+or even seems so contradictory that a coherent mathematical formulation
+appears impossible, can be a reflection on the state of the art just as well
+as on the idea itself.  Starting with \newcite{Berkeley:1734}, the intuitive
+notion of infinitesimals was subjected to all kinds of criticism, and it took
+over two centuries for mathematics to catch up and provide an adequate
+foundation in \newcite{Robinson:1966}. It is quite conceivable that equally
+intuitive notions, such as a {\sl semantic theory of information}, which
+currently elude our mathematical grasp, will be put on firm foundations by
+later generations.  In such cases, we content ourselves with explaining the
+idea informally, describing the main intuitions and pointing at possible
+avenues of formalization only programmatically.  \index{infinitesimals}
+
+\section{Foundations}
+
+For the purposes of mathematical linguistics, the classical foundations of
+mathematics are quite satisfactory: all objects of interest are sets,
+typically finite or, rarely, denumerably infinite. This is not to say that
+nonclassical metamathematical tools such as Heyting algebras find no use in
+mathematical linguistics but simply to assert that the
+fundamental issues of this field are not foundational but definitional. 
+
+Given the finitistic nature of the subject matter, we will in general use the
+terms set, class, and collection interchangeably, drawing explicit cardinality
+distinctions only in the rare cases where we step out of the finite domain.
+Much of the classical linguistic literature of course predates Cantor, and
+even the modern literature typically conceives of infinity in the Gaussian
+manner of a potential, as opposed to actual, Cantorian infinity. Because of
+immediate empirical concerns, denumerable generalizations of finite objects
+such as $\omega$-words and B\"{u}chi automata are rarely used,\footnote{For a
+contrary view, see Langendoen and Postal (1984).\nocite{Langendoen:1984}} and
+in fact even the trivial step of generalizing from a fixed constant to
+arbitrary $n$ is often viewed with great suspicion. \index{$\omega$-word}
+\index{B\"{u}chi automaton}
+
+Aside from the tradition of Indian logic, the study of languages had very
+little impact on the foundations of mathematics. Rather, mathematicians
+realized early on that natural language is a complex and in many ways
+unreliable construct and created their own simplified language of formulas
+and the mathematical techniques to investigate it. As we shall see, some of
+these techniques are general enough to cover essential facets of natural
+languages, while others scale much more poorly.
+
+There is an interesting residue of foundational work in the Berry, Richard,
+Liar, and other paradoxes, which are often viewed as diagnostic of the
+vagueness, ambiguity, or even `paradoxical nature' of natural language. Since
+the goal is to develop a mathematical theory of language, sooner or later we
+must define English in a formal system. Once this is done, the buck stops
+there, and questions like ``what is the smallest integer not nameable in ten
+words?" need to be addressed anew.  \index{Liar paradox} \index{Berry paradox}
+\index{Richard paradox}
+
+We shall begin with the seemingly simpler issue of the first number not
+nameable in {\it one} word.  Since it appears to be one hundred and one, a
+number already requiring {\it four} words to name, we should systematically
+investigate the number of words in number names. There are two main issues to
+consider: what is a word? (see Chapter~4); and what is a name? (see
+Chapter~6).  Another formulation of the Berry paradox invokes the notion of
+syllables; these are also discussed in Chapter~4. Eventually we will deal with
+the paradoxes in Chapter~6, but our treatment concentrates on the linguistic,
+rather than the foundational, issues.
+
+\section{Mesoscopy}
+
+Physicists speak of mesoscopic systems when these contain, say, fifty atoms,
+too large to be given a microscopic quantum-mechanical description but too
+small for the classical macroscopic properties to dominate the behavior of the
+system. Linguistic systems are mesoscopic in the same broad sense: they have
+thousands of rules and axioms compared with the handful of axioms used in most
+branches of mathematics. Group theory explores the
+implications of five axioms, arithmetic and set theory get along with five
+and twelve axioms respectively (not counting members of axiom schemes
+separately), and the most complex axiom system in common use, that of
+geometry, has less than thirty axioms.
+
+It comes as no surprise that with such a large number of axioms, linguistic
+systems are never pursued microscopically to yield implications in the same
+depth as group theory or even less well-developed branches of mathematics.
+What is perhaps more surprising is that we can get reasonable approximations
+of the behavior at the macroscopic level using the statistical techniques
+pioneered by A. A. Markov (see Chapters~7 and 8). \index{Markov}
+
+Statistical mechanics owes its success largely to the fact that in
+thermodynamics only a handful of phenomenological parameters are of interest,
+and these are relatively easy to link to averages of mechanical quantities.
+In mathematical linguistics the averages that matter (e.g. the percentage 
+of words correctly recognized or correctly translated) are linked only very 
+indirectly to the measurable parameters, of which there is such a bewildering 
+variety that it requires special techniques to decide which ones to employ
+and which ones to leave unmodeled. 
+
+Macroscopic techniques, by their very nature, can yield only approximations
+for mesoscopic systems. Microscopic techniques, though in principle easy to
+extend to the mesoscopic domain, are in practice also prone to all kinds of
+bugs, ranging from plain errors of fact (which are hard to avoid once we deal
+with thousands of axioms) to more subtle, and often systematic, errors and
+omissions. Readers may at this point feel very uncomfortable with the idea
+that a given system is only 70\%, 95\%, or even 99.99\% correct. After all,
+isn't a single contradiction or empirically false prediction enough to render
+a theory invalid? Since we need a whole book to develop the tools needed to
+address this question, the full answer will have to wait until Chapter~10. 
+
+What is clear from the outset is that natural languages offer an unparalleled
+variety of complex algebraic structures. The closest examples we can think of
+are in crystallographic topology, but the internal complexity of the groups
+studied there is a product of pure mathematics, while the internal complexity
+of the syntactic semigroups associated to natural languages is more attractive
+to the applied mathematician, as it is something found in vivo.  Perhaps the
+most captivating aspect of mathematical linguistics is not just the existence
+of discrete mesoscopic structures but the fact that these come embedded, in
+ways we do not fully understand, in continuous signals (see Chapter~9). 
+
+\section{Further reading}
+
+The first works that can, from a modern standpoint, be called mathematical
+linguistics are Markov's (1912) extension of the weak law of large numbers
+(see Theorem 8.2.2) and Thue's (1914) introduction of string manipulation (see
+Chapter~2), but pride of place must go to P\={a}\d{n}ini, whose inventions
+include not just grammatical rules but also a formal metalanguage to describe
+the rules and a set of principles governing their interaction.  Although the
+{\it Ash\d{t}\={a}dhy\={a}y\={\i}} is available on the web in its entirety,
+the reader will be at a loss without the modern commentary literature starting
+with B\"{o}htlingk (1887, reprinted 1964). For modern accounts of various
+aspects of the system see Staal (1962, 1967) Cardona (1965, 1969, 1970, 1976,
+1988), and Kiparsky (1979, 1982a, 2002).\index{P\={a}\d{n}ini} Needless to
+say, P\={a}\d{n}ini did not work in isolation. Much like Euclid, he built on
+the inventions of his predecessors, but his work was so comprehensive that it
+effectively drove the earlier material out of circulation.  While much of
+linguistics has aspired to formal rigor throughout the ages (for the Masoretic
+tradition, see Aronoff 1985, for medieval syntax see Covington 1984), the
+continuous line of development that culminates in contemporary formal grammar
+begins with Bloomfield's (1926) Postulates (see Section~3.1), with the most
+important milestones being Harris (1951) and Chomsky (1956,
+1959).\nocite{Covington:1984}\nocite{Bo2htlingk:1964}
+
+Another important line of research, only briefly alluded to above, could be
+called mathematical antilinguistics, its goal being the elimination, rather
+than the explanation, of the peculiarities of natural language from the
+system. The early history of the subject is discussed in depth in Eco (1995);
+\nocite{Eco:1995}
+the modern mathematical developments begin with Frege's (1879) system of {\it
+Concept Writing} (Begriffsschrift), generally considered the founding paper of
+mathematical logic. There is no doubt that many great mathematicians from
+Leibniz to Russell were extremely critical of natural language, using it more
+for counterexamples and cautionary tales than as a part of objective reality
+worthy of formal study, but this critical attitude has all but disappeared
+with the work of Montague (1970a, 1970b, 1973). Contemporary developments in 
+model-theoretic semantics or `Montague grammar' are discussed in Chapter~6.
+
+\nocite{Staal:1962}\nocite{Staal:1967} 
+\nocite{Cardona:1965}\nocite{Cardona:1969} 
+\nocite{Cardona:1970}\nocite{Cardona:1976} 
+\nocite{Cardona:1988}\nocite{Frege:1879}
+\nocite{Kiparsky:1979}\nocite{Kiparsky:2002}
+\nocite{Aronoff:1985}\nocite{Bloomfield:1926} 
+\nocite{Levelt:1974}\nocite{Manaster-Ramer:1987}
+\nocite{Gross:1972}\nocite{Kiparsky:1982a}
+
+Major summaries of the state of the art in mathematical linguistics include
+Jakobson (1961), Levelt (1974), Manaster-Ramer (1987), and the subsequent
+Mathematics of Language (MOL) conference volumes. We will have many occasions
+to cite Kracht's (2003) indispensable monograph {\it The Mathematics of
+Language}.
+
+The volumes above are generally more suitable for the researcher or advanced
+graduate student than for those approaching the subject as undergraduates.  To
+some extent, the mathematical prerequisites can be learned from the ground up
+from classic introductory textbooks such as Gross (1972) or Salomaa (1973).
+Gruska (1997) offers a more modern and, from the theoretical computer science
+perspective, far more comprehensive introduction.  The best elementary
+introduction to the logical prerequisites is Gamut (1991). The discrete side
+of the standard ``mathematics for linguists" curriculum is conveniently
+summarized by Partee et al. (1990), and the statistical approach is clearly
+introduced by Manning and Sch\"{u}tze (1999). The standard introduction to
+pattern recognition is Duda et al. (2000).  Variable rules were introduced in
+Cedergren and Sankoff (1974) \nocite{Cedergren:1974} and soon became the
+standard modeling method in sociolinguistics -- we shall discuss them in
+Chapter~5. 
+
+
+\endinput
+
+Indexed, head, combinatory categorial, and tree-adjoining grammars are
+discussed further in Chapter~5. 
+
+Cedergren, Henrietta J. and David Sankoff. 1974. Variable rules: Performance
+as a statistical reflection of competence. Language 50, 333-55
+
+Sankoff, David (1985). Statistics in linguistics. New York Encyclopaedia of
+the statistical sciences 5. Wiley. 74-81. 
+
+
+
+

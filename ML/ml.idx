@@ -1,0 +1,898 @@
+\indexentry{Euclid|hyperpage}{vi}
+\indexentry{P\={a}\d{n}ini|hyperpage}{vi}
+\indexentry{axiomatic method|hyperpage}{vi}
+\indexentry{Markov|hyperpage}{vi}
+\indexentry{grammaticality|hyperpage}{viii}
+\indexentry{ungrammaticality|hyperpage}{viii}
+\indexentry{mathematical linguistics|hyperpage}{1}
+\indexentry{cybernetics|hyperpage}{1}
+\indexentry{rectification of names|hyperpage}{2}
+\indexentry{controversies|hyperpage}{2}
+\indexentry{morpheme|hyperpage}{3}
+\indexentry{definition|hyperpage}{3}
+\indexentry{definition!ostensive|hyperpage}{3}
+\indexentry{definition!extensive|hyperpage}{3}
+\indexentry{definition!intensive|hyperpage}{3}
+\indexentry{variable rules|hyperpage}{4}
+\indexentry{parochial rule|hyperpage}{5}
+\indexentry{universal grammar, UG|hyperpage}{5}
+\indexentry{combinatory categorial grammar, CCG|hyperpage}{5}
+\indexentry{indexed grammar|hyperpage}{5}
+\indexentry{tree adjoining grammar, TAG|hyperpage}{5}
+\indexentry{head grammar|hyperpage}{5}
+\indexentry{infinitesimals|hyperpage}{5}
+\indexentry{$\omega$-word|hyperpage}{6}
+\indexentry{B\"{u}chi automaton|hyperpage}{6}
+\indexentry{Liar paradox|hyperpage}{6}
+\indexentry{Berry paradox|hyperpage}{6}
+\indexentry{Richard paradox|hyperpage}{6}
+\indexentry{Markov|hyperpage}{6}
+\indexentry{P\={a}\d{n}ini|hyperpage}{7}
+\indexentry{generation|hyperpage}{9}
+\indexentry{membership problem|hyperpage}{9}
+\indexentry{grammar|hyperpage}{9}
+\indexentry{certificate|hyperpage}{9}
+\indexentry{generative grammar|hyperpage}{9}
+\indexentry{context-sensitive grammar, CSG|hyperpage}{9}
+\indexentry{rule|hyperpage}{9}
+\indexentry{satisfaction|hyperpage}{9}
+\indexentry{generation!direct|hyperindexformat{\textbf}}{9}
+\indexentry{context-free grammar, CFG|hyperpage}{10}
+\indexentry{sentential form|hyperpage}{10}
+\indexentry{agreement|hyperpage}{10}
+\indexentry{derivational history|hyperpage}{10}
+\indexentry{equality|hyperpage}{10}
+\indexentry{stratum|hyperpage}{10}
+\indexentry{multistratal theory|hyperpage}{10}
+\indexentry{monostratal theory|hyperpage}{10}
+\indexentry{characters!English|hyperpage}{10}
+\indexentry{Wang tiling|hyperindexformat{\textbf}}{10}
+\indexentry{type|hyperpage}{10}
+\indexentry{token|hyperpage}{10}
+\indexentry{noncounting|hyperpage}{11}
+\indexentry{hiatus|hyperpage}{11}
+\indexentry{well-formedness condition (WFC)|hyperpage}{11}
+\indexentry{production|hyperpage}{11}
+\indexentry{rule!WFC|hyperpage}{11}
+\indexentry{rule!production|hyperpage}{11}
+\indexentry{conspiracy|hyperpage}{11}
+\indexentry{free group|hyperindexformat{\textbf}}{12}
+\indexentry{free monoid|hyperindexformat{\textbf}}{12}
+\indexentry{Herbrand model|hyperpage}{12}
+\indexentry{first order language, FOL|hyperpage}{12}
+\indexentry{Fibonacci numbers|hyperpage}{13}
+\indexentry{certificate|hyperindexformat{\textbf}}{14}
+\indexentry{categorial grammar!bidirectional|hyperpage}{14}
+\indexentry{categorial grammar!unidirectional|hyperpage}{14}
+\indexentry{unification grammar|hyperpage}{14}
+\indexentry{link grammar|hyperpage}{14}
+\indexentry{truth!in axiomatic systems|hyperpage}{14}
+\indexentry{grammaticality|hyperpage}{14}
+\indexentry{logic!multivalued|hyperpage}{15}
+\indexentry{truth value|hyperpage}{15}
+\indexentry{model theory|hyperpage}{15}
+\indexentry{undergeneration|hyperindexformat{\textbf}}{15}
+\indexentry{overgeneration|hyperindexformat{\textbf}}{15}
+\indexentry{Montague grammar, MG|hyperpage}{15}
+\indexentry{fragment|hyperpage}{15}
+\indexentry{normativity|hyperpage}{15}
+\indexentry{descriptivity|hyperpage}{15}
+\indexentry{Chomsky normal form|hyperpage}{16}
+\indexentry{generation!free|hyperindexformat{\textbf}}{16}
+\indexentry{acceptance|hyperindexformat{\textbf}}{16}
+\indexentry{ungrammaticality|hyperpage}{16}
+\indexentry{decidability|hyperpage}{16}
+\indexentry{gloss|hyperpage}{17}
+\indexentry{alphabet|hyperindexformat{\textbf}}{17}
+\indexentry{concatenation|hyperindexformat{\textbf}}{17}
+\indexentry{string|hyperindexformat{\textbf}}{17}
+\indexentry{empty string, $\lambda$|hyperindexformat{\textbf}}{17}
+\indexentry{Kleene closure, $^*$|hyperindexformat{\textbf}}{17}
+\indexentry{Kleene closure, $\lambda$-free, $^+$|hyperindexformat{\textbf}}{17}
+\indexentry{length|hyperindexformat{\textbf}}{17}
+\indexentry{integers, base one|hyperindexformat{\textbf}}{17}
+\indexentry{left factor|hyperindexformat{\textbf}}{17}
+\indexentry{right factor|hyperindexformat{\textbf}}{17}
+\indexentry{stringset|hyperindexformat{\textbf}}{17}
+\indexentry{language|hyperindexformat{\textbf}}{17}
+\indexentry{language!regular|hyperindexformat{\textbf}}{17}
+\indexentry{reversal|hyperindexformat{\textbf}}{17}
+\indexentry{language!formal|hyperindexformat{\textbf}}{17}
+\indexentry{prefix|hyperindexformat{\textbf}}{17}
+\indexentry{Fibonacci numbers|hyperpage}{17}
+\indexentry{nonterminal|hyperindexformat{\textbf}}{17}
+\indexentry{start symbol, S|hyperindexformat{\textbf}}{17}
+\indexentry{terminal|hyperindexformat{\textbf}}{17}
+\indexentry{context-free grammar, CFG|hyperindexformat{\textbf}}{17}
+\indexentry{production|hyperindexformat{\textbf}}{17}
+\indexentry{rewrite rule|hyperindexformat{\textbf}}{17}
+\indexentry{context-free language, CFL|hyperindexformat{\textbf}}{18}
+\indexentry{palindrome|hyperpage}{18}
+\indexentry{edge marker, $\#$|hyperpage}{18}
+\indexentry{structural description (of CS rule)|hyperindexformat{\textbf}}{18}
+\indexentry{structural change (of CS rule)|hyperindexformat{\textbf}}{18}
+\indexentry{context-sensitive language, CSL|hyperindexformat{\textbf}}{19}
+\indexentry{linear bounded automaton, LBA|hyperindexformat{\textbf}}{19}
+\indexentry{Chomsky hierarchy|hyperpage}{19}
+\indexentry{Fibonacci numbers|hyperpage}{19}
+\indexentry{Fibonacci numbers|hyperpage}{19}
+\indexentry{membership problem|hyperpage}{20}
+\indexentry{word problem|hyperpage}{20}
+\indexentry{synchrony|hyperpage}{20}
+\indexentry{diachrony|hyperpage}{20}
+\indexentry{sound change|hyperpage}{20}
+\indexentry{data!historical|hyperpage}{20}
+\indexentry{data!dialectal|hyperpage}{20}
+\indexentry{English!Old|hyperpage}{20}
+\indexentry{English!Modern|hyperpage}{20}
+\indexentry{English!British|hyperpage}{20}
+\indexentry{English!American|hyperpage}{20}
+\indexentry{language acquisition|hyperpage}{20}
+\indexentry{competence|hyperpage}{20}
+\indexentry{neogrammarians|hyperpage}{20}
+\indexentry{convention|hyperpage}{23}
+\indexentry{convention!Stayman|hyperpage}{23}
+\indexentry{sign|hyperpage}{23}
+\indexentry{onomatopoeic words|hyperpage}{23}
+\indexentry{form|hyperpage}{23}
+\indexentry{meaning|hyperpage}{23}
+\indexentry{code!Morse|hyperpage}{23}
+\indexentry{utterance|hyperpage}{23}
+\indexentry{interpretation relation|hyperpage}{24}
+\indexentry{partial similarity|hyperpage}{24}
+\indexentry{disambiguation|hyperpage}{24}
+\indexentry{pause|hyperpage}{25}
+\indexentry{minimum form|hyperpage}{25}
+\indexentry{free form|hyperpage}{25}
+\indexentry{bound form|hyperpage}{25}
+\indexentry{word|hyperpage}{25}
+\indexentry{word!fragment|hyperindexformat{\textbf}}{26}
+\indexentry{containment|hyperindexformat{\textbf}}{26}
+\indexentry{phonemic alphabet|hyperpage}{26}
+\indexentry{discovery procedure|hyperpage}{26}
+\indexentry{postulate|hyperpage}{26}
+\indexentry{genetic code|hyperpage}{27}
+\indexentry{bee dance|hyperpage}{27}
+\indexentry{performance|hyperpage}{27}
+\indexentry{competence|hyperpage}{27}
+\indexentry{connected speech|hyperpage}{28}
+\indexentry{pause|hyperpage}{28}
+\indexentry{silence|hyperpage}{28}
+\indexentry{phonetic realization|hyperpage}{28}
+\indexentry{phonetic interpretation|hyperpage}{28}
+\indexentry{segment|hyperindexformat{\textbf}}{28}
+\indexentry{aspirated|hyperpage}{28}
+\indexentry{unaspirated|hyperpage}{28}
+\indexentry{abstract segment|hyperindexformat{\textbf}}{28}
+\indexentry{diacritic|hyperindexformat{\textbf}}{28}
+\indexentry{underlying form|hyperpage}{28}
+\indexentry{surface form|hyperpage}{28}
+\indexentry{abstract phonemes|hyperpage}{28}
+\indexentry{anubandha|hyperpage}{28}
+\indexentry{P\={a}\d{n}ini|hyperpage}{28}
+\indexentry{sound law|hyperpage}{28}
+\indexentry{trigger|hyperpage}{28}
+\indexentry{natural class|hyperpage}{28}
+\indexentry{P\={a}\d{n}ini|hyperpage}{29}
+\indexentry{praty\={a}h\={a}ra|hyperpage}{29}
+\indexentry{\'{s}ivas\={u}tras|hyperpage}{29}
+\indexentry{anubandha|hyperpage}{29}
+\indexentry{ruki|hyperpage}{29}
+\indexentry{ruki|hyperpage}{29}
+\indexentry{fricative|hyperpage}{29}
+\indexentry{labial|hyperpage}{29}
+\indexentry{distinctive features|hyperindexformat{\textbf}}{29}
+\indexentry{voiced|hyperpage}{29}
+\indexentry{unvoiced|hyperpage}{29}
+\indexentry{feature assignment|hyperindexformat{\textbf}}{30}
+\indexentry{subdirect product|hyperindexformat{\textbf}}{30}
+\indexentry{feature decomposition|hyperindexformat{\textbf}}{30}
+\indexentry{feature bundle|hyperpage}{30}
+\indexentry{natural class|hyperindexformat{\textbf}}{30}
+\indexentry{markedness|hyperpage}{30}
+\indexentry{P\={a}\d{n}ini|hyperpage}{30}
+\indexentry{antara|hyperpage}{30}
+\indexentry{s\={a}var\d{n}ya|hyperpage}{30}
+\indexentry{vowel|hyperpage}{30}
+\indexentry{vowel height|hyperpage}{30}
+\indexentry{high (vowel feature)|hyperpage}{30}
+\indexentry{low (vowel feature)|hyperpage}{30}
+\indexentry{place of articulation|hyperpage}{30}
+\indexentry{Korean|hyperpage}{31}
+\indexentry{homorganic|hyperpage}{31}
+\indexentry{assimilation!nasal|hyperpage}{31}
+\indexentry{class node|hyperpage}{31}
+\indexentry{feature geometry|hyperpage}{31}
+\indexentry{nasality|hyperpage}{32}
+\indexentry{formal universal|hyperpage}{32}
+\indexentry{substantive universal|hyperpage}{32}
+\indexentry{overgeneration|hyperpage}{32}
+\indexentry{stress|hyperpage}{32}
+\indexentry{compound stress rule|hyperpage}{32}
+\indexentry{suprasegmentals|hyperpage}{32}
+\indexentry{tone|hyperpage}{32}
+\indexentry{amplitude|hyperpage}{32}
+\indexentry{frequency|hyperpage}{32}
+\indexentry{informant judgments|hyperpage}{32}
+\indexentry{autosegmental theory|hyperpage}{33}
+\indexentry{tier|hyperindexformat{\textbf}}{33}
+\indexentry{bistring|hyperpage}{33}
+\indexentry{Chinese (Mandarin)|hyperpage}{33}
+\indexentry{high tone, H|hyperpage}{33}
+\indexentry{low tone, L|hyperpage}{33}
+\indexentry{mid tone, M|hyperpage}{33}
+\indexentry{contour tone|hyperpage}{33}
+\indexentry{assimilation!tonal|hyperpage}{33}
+\indexentry{Lomongo [LOL]|hyperpage}{33}
+\indexentry{blank|hyperindexformat{\textbf}}{34}
+\indexentry{melody|hyperindexformat{\textbf}}{34}
+\indexentry{floating element|hyperindexformat{\textbf}}{34}
+\indexentry{no crossing constraint, NCC|hyperpage}{34}
+\indexentry{span|hyperindexformat{\textbf}}{34}
+\indexentry{bistring|hyperindexformat{\textbf}}{34}
+\indexentry{bistring!well-formed|hyperindexformat{\textbf}}{34}
+\indexentry{$k$-string|hyperindexformat{\textbf}}{34}
+\indexentry{association line|hyperpage}{36}
+\indexentry{bistring!fully associated|hyperindexformat{\textbf}}{36}
+\indexentry{bistring!proper|hyperindexformat{\textbf}}{36}
+\indexentry{bilanguage|hyperindexformat{\textbf}}{37}
+\indexentry{reversal|hyperpage}{37}
+\indexentry{spreading|hyperpage}{38}
+\indexentry{bistring!t-catenation|hyperpage}{38}
+\indexentry{bistring!$b$-catenation|hyperpage}{38}
+\indexentry{bistring!concatenation|hyperpage}{38}
+\indexentry{bistring!alignment|hyperpage}{38}
+\indexentry{underlying form|hyperpage}{38}
+\indexentry{surface form|hyperpage}{38}
+\indexentry{text to speech, TTS|hyperpage}{39}
+\indexentry{speech recognition|hyperpage}{39}
+\indexentry{finite state transducer, FST|hyperpage}{39}
+\indexentry{$a^nb^n$|hyperpage}{39}
+\indexentry{regular relation|hyperpage}{39}
+\indexentry{finite state transducer, FST|hyperindexformat{\textbf}}{39}
+\indexentry{transition|hyperpage}{39}
+\indexentry{length-preserving FST|hyperindexformat{\textbf}}{39}
+\indexentry{deterministic FST|hyperindexformat{\textbf}}{39}
+\indexentry{finite state automaton, FSA|hyperindexformat{\textbf}}{39}
+\indexentry{lambda move|hyperpage}{39}
+\indexentry{finite state automaton, FSA!deterministic, DFSA|hyperindexformat{\textbf}}{39}
+\indexentry{Mealy FSA|hyperpage}{39}
+\indexentry{Moore FSA|hyperpage}{39}
+\indexentry{right congruence|hyperindexformat{\textbf}}{40}
+\indexentry{left congruence|hyperindexformat{\textbf}}{40}
+\indexentry{syntactic congruence|hyperindexformat{\textbf}}{40}
+\indexentry{Myhill-Nerode equivalence|hyperindexformat{\textbf}}{40}
+\indexentry{finite index|hyperindexformat{\textbf}}{40}
+\indexentry{association relation|hyperpage}{40}
+\indexentry{consonant|hyperpage}{41}
+\indexentry{affricate|hyperpage}{41}
+\indexentry{vowel|hyperpage}{41}
+\indexentry{diphthong|hyperpage}{41}
+\indexentry{biautomaton|hyperindexformat{\textbf}}{41}
+\indexentry{scanning independence|hyperpage}{42}
+\indexentry{finite autosegmental automaton|hyperpage}{42}
+\indexentry{coder|hyperpage}{42}
+\indexentry{code!scanning|hyperindexformat{\textbf}}{42}
+\indexentry{insertion|hyperpage}{46}
+\indexentry{deletion|hyperpage}{46}
+\indexentry{association|hyperpage}{46}
+\indexentry{delinking|hyperpage}{46}
+\indexentry{Sapir-Whorf hypothesis|hyperpage}{48}
+\indexentry{nasality|hyperpage}{48}
+\indexentry{preaspiration|hyperpage}{48}
+\indexentry{vowel harmony|hyperpage}{48}
+\indexentry{tone|hyperpage}{48}
+\indexentry{lexical phonology and morphology, LPM|hyperpage}{49}
+\indexentry{truth!near-|hyperpage}{51}
+\indexentry{double articulation|hyperpage}{53}
+\indexentry{duality of patterning|hyperpage}{53}
+\indexentry{phonotactics|hyperpage}{53}
+\indexentry{morphotactics|hyperpage}{53}
+\indexentry{Chinese|hyperpage}{53}
+\indexentry{stress|hyperpage}{53}
+\indexentry{mora|hyperpage}{53}
+\indexentry{foot|hyperpage}{53}
+\indexentry{syllable|hyperpage}{53}
+\indexentry{prosodic word|hyperpage}{53}
+\indexentry{boundary tone|hyperpage}{53}
+\indexentry{stress|hyperpage}{53}
+\indexentry{Aramaic [CLD]|hyperpage}{53}
+\indexentry{Berber [TZM]|hyperpage}{53}
+\indexentry{syllabic alphabet|hyperpage}{53}
+\indexentry{Hiragana|hyperpage}{53}
+\indexentry{Brahmi script|hyperpage}{53}
+\indexentry{Cypriot syllabary|hyperpage}{53}
+\indexentry{ambisyllabicity|hyperpage}{54}
+\indexentry{improper parentheses|hyperpage}{54}
+\indexentry{syllable|hyperpage}{54}
+\indexentry{bracketing!improper|hyperpage}{54}
+\indexentry{extrametricality|hyperpage}{54}
+\indexentry{Cherokee [CER]|hyperpage}{54}
+\indexentry{consonant|hyperpage}{54}
+\indexentry{vowel|hyperpage}{54}
+\indexentry{major class|hyperpage}{54}
+\indexentry{syllable|hyperpage}{54}
+\indexentry{onset|hyperpage}{54}
+\indexentry{coda|hyperpage}{54}
+\indexentry{nucleus|hyperpage}{54}
+\indexentry{rhyme|hyperpage}{55}
+\indexentry{sonority hierarchy|hyperindexformat{\textbf}}{55}
+\indexentry{mora|hyperindexformat{\textbf}}{55}
+\indexentry{Kikuria [KUJ]|hyperpage}{56}
+\indexentry{Latin|hyperpage}{56}
+\indexentry{split systems|hyperpage}{56}
+\indexentry{Lardil [LBZ]|hyperpage}{56}
+\indexentry{Kiribati [GLB]|hyperpage}{56}
+\indexentry{foot|hyperpage}{56}
+\indexentry{colon|hyperpage}{56}
+\indexentry{clitic|hyperpage}{57}
+\indexentry{Arabic|hyperpage}{57}
+\indexentry{word stress|hyperpage}{57}
+\indexentry{Sanskrit|hyperpage}{57}
+\indexentry{P\={a}\d{n}ini|hyperpage}{57}
+\indexentry{Araucanian [ARU]|hyperpage}{57}
+\indexentry{Warao [WBA]|hyperpage}{57}
+\indexentry{Macedonian [MKJ]|hyperpage}{57}
+\indexentry{Hungarian|hyperpage}{57}
+\indexentry{French|hyperpage}{57}
+\indexentry{Arabic!Cairene [ARZ]|hyperpage}{58}
+\indexentry{Cheremis!Eastern [MAL]|hyperpage}{58}
+\indexentry{Weri [WER]|hyperpage}{59}
+\indexentry{morpheme|hyperpage}{59}
+\indexentry{template|hyperpage}{59}
+\indexentry{Arabic|hyperpage}{60}
+\indexentry{Saho [SSY]|hyperpage}{60}
+\indexentry{Yokuts [YOK]|hyperpage}{60}
+\indexentry{clitic|hyperpage}{60}
+\indexentry{proclitic|hyperpage}{60}
+\indexentry{enclitic|hyperpage}{60}
+\indexentry{Kwakiutl [KWK]|hyperpage}{60}
+\indexentry{word|hyperpage}{60}
+\indexentry{compounding|hyperpage}{60}
+\indexentry{incorporation|hyperpage}{60}
+\indexentry{affixation|hyperpage}{60}
+\indexentry{prefix|hyperindexformat{\textbf}}{60}
+\indexentry{suffix|hyperindexformat{\textbf}}{60}
+\indexentry{affix|hyperindexformat{\textbf}}{60}
+\indexentry{infix|hyperpage}{60}
+\indexentry{umlaut|hyperpage}{60}
+\indexentry{ablaut|hyperpage}{60}
+\indexentry{compositionality|hyperpage}{60}
+\indexentry{lexeme|hyperindexformat{\textbf}}{61}
+\indexentry{word|hyperindexformat{\textbf}}{61}
+\indexentry{morphotactics|hyperpage}{61}
+\indexentry{bound morpheme|hyperindexformat{\textbf}}{61}
+\indexentry{free morpheme|hyperindexformat{\textbf}}{61}
+\indexentry{assimilation!across word boundary|hyperpage}{61}
+\indexentry{root|hyperindexformat{\textbf}}{61}
+\indexentry{stem|hyperindexformat{\textbf}}{61}
+\indexentry{affix|hyperindexformat{\textbf}}{61}
+\indexentry{particle|hyperindexformat{\textbf}}{61}
+\indexentry{Hungarian|hyperpage}{61}
+\indexentry{incorporating languages|hyperpage}{62}
+\indexentry{agglutinating languages|hyperpage}{62}
+\indexentry{inflecting languages|hyperpage}{62}
+\indexentry{Turkish|hyperpage}{62}
+\indexentry{Swahili|hyperpage}{62}
+\indexentry{Inuktitut [ESB]|hyperpage}{62}
+\indexentry{Latin|hyperpage}{62}
+\indexentry{Greek|hyperpage}{62}
+\indexentry{Vietnamese|hyperpage}{62}
+\indexentry{suppletion|hyperpage}{62}
+\indexentry{citation form|hyperpage}{62}
+\indexentry{lexeme|hyperpage}{62}
+\indexentry{underlying form|hyperpage}{62}
+\indexentry{number|hyperpage}{63}
+\indexentry{gender|hyperpage}{63}
+\indexentry{person|hyperpage}{63}
+\indexentry{tense|hyperpage}{63}
+\indexentry{aspect|hyperpage}{63}
+\indexentry{mood|hyperpage}{63}
+\indexentry{voice|hyperpage}{63}
+\indexentry{case|hyperpage}{63}
+\indexentry{topic|hyperpage}{63}
+\indexentry{degree|hyperpage}{63}
+\indexentry{Arabic|hyperpage}{63}
+\indexentry{unmarked member of   opposition|hyperindexformat{\textbf}}{63}
+\indexentry{morphosyntactic feature|hyperpage}{63}
+\indexentry{Gunwinggu [GUP]|hyperpage}{63}
+\indexentry{paradigm|hyperindexformat{\textbf}}{63}
+\indexentry{Hungarian|hyperpage}{63}
+\indexentry{gloss|hyperpage}{63}
+\indexentry{derivation|hyperindexformat{\textbf}}{64}
+\indexentry{inflection|hyperindexformat{\textbf}}{64}
+\indexentry{diacritic|hyperpage}{64}
+\indexentry{blocking|hyperpage}{65}
+\indexentry{elsewhere|hyperpage}{65}
+\indexentry{P\={a}\d{n}ini|hyperpage}{65}
+\indexentry{lexical category|hyperpage}{66}
+\indexentry{part of speech, POS|hyperpage}{66}
+\indexentry{noun|hyperpage}{66}
+\indexentry{verb|hyperpage}{66}
+\indexentry{adjective|hyperpage}{66}
+\indexentry{adverbial|hyperpage}{66}
+\indexentry{numeral|hyperpage}{66}
+\indexentry{epenthesis|hyperpage}{67}
+\indexentry{constraint ranking|hyperpage}{67}
+\indexentry{universal grammar, UG|hyperpage}{67}
+\indexentry{markedness|hyperpage}{67}
+\indexentry{P\={a}\d{n}ini|hyperpage}{68}
+\indexentry{opacity, phonological|hyperpage}{68}
+\indexentry{corpus|hyperindexformat{\textbf}}{68}
+\indexentry{corpus size|hyperindexformat{\textbf}}{69}
+\indexentry{word!frequency|hyperpage}{69}
+\indexentry{frequency|hyperindexformat{\textbf}}{69}
+\indexentry{rank|hyperindexformat{\textbf}}{69}
+\indexentry{Zipf's law|hyperpage}{69}
+\indexentry{Herdan's law|hyperpage}{71}
+\indexentry{P\={a}\d{n}ini|hyperpage}{74}
+\indexentry{Heaps' law|hyperpage}{74}
+\indexentry{English|hyperpage}{75}
+\indexentry{English|hyperpage}{76}
+\indexentry{lexical category|hyperpage}{77}
+\indexentry{part of speech, POS|hyperpage}{77}
+\indexentry{distribution|hyperindexformat{\textbf}}{77}
+\indexentry{syntactic semigroup|hyperpage}{77}
+\indexentry{syntactic monoid|hyperpage}{77}
+\indexentry{homomorphism|hyperindexformat{\textbf}}{77}
+\indexentry{substructure|hyperindexformat{\textbf}}{77}
+\indexentry{direct product|hyperindexformat{\textbf}}{77}
+\indexentry{divisor|hyperindexformat{\textbf}}{78}
+\indexentry{cover|hyperindexformat{\textbf}}{78}
+\indexentry{intransitive|hyperindexformat{\textbf}}{78}
+\indexentry{transitive|hyperindexformat{\textbf}}{78}
+\indexentry{ditransitive|hyperindexformat{\textbf}}{78}
+\indexentry{lexical category|hyperpage}{78}
+\indexentry{strict category|hyperindexformat{\textbf}}{78}
+\indexentry{part of speech, POS|hyperpage}{78}
+\indexentry{syncategoremata|hyperpage}{78}
+\indexentry{tagset|hyperpage}{78}
+\indexentry{POS tag|hyperpage}{78}
+\indexentry{selectional restriction|hyperpage}{79}
+\indexentry{English|hyperpage}{79}
+\indexentry{preterminal|hyperpage}{79}
+\indexentry{cancellation|hyperindexformat{\textbf}}{80}
+\indexentry{categorial grammar!unidirectional|hyperindexformat{\textbf}}{80}
+\indexentry{categorial grammar|hyperindexformat{\textbf}}{81}
+\indexentry{adjective|hyperpage}{82}
+\indexentry{adadjective|hyperpage}{82}
+\indexentry{lexicality|hyperpage}{82}
+\indexentry{endocentric construction|hyperpage}{82}
+\indexentry{exocentric construction|hyperpage}{82}
+\indexentry{head|hyperpage}{83}
+\indexentry{projection|hyperpage}{83}
+\indexentry{maximal projection|hyperpage}{83}
+\indexentry{phrase|hyperindexformat{\textbf}}{83}
+\indexentry{verb phrase, VP|hyperpage}{83}
+\indexentry{prepositional phrase, PP|hyperpage}{83}
+\indexentry{adjectival phrase, AP|hyperpage}{83}
+\indexentry{adverbial phrase, AdvP|hyperpage}{83}
+\indexentry{dependent|hyperpage}{83}
+\indexentry{immediate constituent analysis, ICA|hyperpage}{83}
+\indexentry{constituents|hyperpage}{83}
+\indexentry{bracketing|hyperpage}{84}
+\indexentry{labeled bracketing|hyperindexformat{\textbf}}{84}
+\indexentry{context-free grammar, CFG!extended|hyperpage}{85}
+\indexentry{tree adjoining grammar, TAG|hyperpage}{85}
+\indexentry{head grammar|hyperpage}{85}
+\indexentry{combinatory categorial grammar, CCG|hyperpage}{85}
+\indexentry{constituents|hyperpage}{85}
+\indexentry{discontinuous constituents|hyperpage}{85}
+\indexentry{Mohawk [MOH]|hyperpage}{86}
+\indexentry{lexical functional grammar, LFG|hyperpage}{86}
+\indexentry{active|hyperpage}{87}
+\indexentry{passive|hyperpage}{87}
+\indexentry{passive transformation|hyperpage}{87}
+\indexentry{opacity, syntactic|hyperpage}{87}
+\indexentry{case|hyperpage}{87}
+\indexentry{oblique|hyperpage}{87}
+\indexentry{accusative|hyperpage}{87}
+\indexentry{locative|hyperpage}{87}
+\indexentry{vocative|hyperpage}{87}
+\indexentry{dative|hyperpage}{87}
+\indexentry{instrumental|hyperpage}{87}
+\indexentry{genitive|hyperpage}{87}
+\indexentry{nominative/accusative case pattern|hyperpage}{87}
+\indexentry{Hindi|hyperpage}{87}
+\indexentry{Hungarian|hyperpage}{87}
+\indexentry{Russian|hyperpage}{87}
+\indexentry{Latin|hyperpage}{87}
+\indexentry{Tsez [DDO]|hyperpage}{87}
+\indexentry{Latin|hyperpage}{88}
+\indexentry{agreement|hyperindexformat{\textbf}}{88}
+\indexentry{concord|hyperpage}{88}
+\indexentry{Head Feature Convention, HFC|hyperpage}{88}
+\indexentry{government|hyperindexformat{\textbf}}{89}
+\indexentry{possession|hyperpage}{89}
+\indexentry{coreference|hyperpage}{89}
+\indexentry{modification|hyperpage}{89}
+\indexentry{dependency grammar|hyperindexformat{\textbf}}{89}
+\indexentry{tagmemics|hyperpage}{89}
+\indexentry{relational grammar|hyperindexformat{\textbf}}{89}
+\indexentry{stratum|hyperpage}{89}
+\indexentry{sentence diagram|hyperpage}{89}
+\indexentry{MIL|hyperindexformat{\textbf}}{89}
+\indexentry{valence|hyperpage}{91}
+\indexentry{P\={a}\d{n}ini|hyperpage}{91}
+\indexentry{control verb|hyperpage}{93}
+\indexentry{raising verb|hyperpage}{93}
+\indexentry{Dutch|hyperpage}{94}
+\indexentry{immediate dominance/linear precedence,   IDLP|hyperpage}{95}
+\indexentry{generalized phrase structure grammar, GPSG|hyperpage}{95}
+\indexentry{parataxis|hyperpage}{95}
+\indexentry{English|hyperpage}{95}
+\indexentry{thematic role|hyperpage}{96}
+\indexentry{theta role|hyperpage}{96}
+\indexentry{genitive|hyperpage}{97}
+\indexentry{P\={a}\d{n}ini|hyperpage}{97}
+\indexentry{Latin|hyperpage}{98}
+\indexentry{accusativus cum infinitivo, ACI|hyperpage}{98}
+\indexentry{adjunct|hyperpage}{99}
+\indexentry{valence|hyperindexformat{\textbf}}{99}
+\indexentry{Japanese|hyperpage}{100}
+\indexentry{Irish|hyperpage}{100}
+\indexentry{Sapir-Whorf hypothesis|hyperpage}{100}
+\indexentry{principles and   parameters|hyperpage}{100}
+\indexentry{split systems|hyperpage}{100}
+\indexentry{German|hyperpage}{100}
+\indexentry{Acehnese [ACE]|hyperpage}{100}
+\indexentry{Warlpiri [WBP]|hyperpage}{100}
+\indexentry{accusative|hyperpage}{100}
+\indexentry{ungrammaticality!unrecoverable|hyperpage}{102}
+\indexentry{valence|hyperpage}{102}
+\indexentry{Dyirbal [DBL]|hyperpage}{103}
+\indexentry{language of thought|hyperpage}{103}
+\indexentry{artificial intelligence, AI|hyperpage}{103}
+\indexentry{knowledge representation, KR|hyperpage}{103}
+\indexentry{aktionsart|hyperpage}{104}
+\indexentry{telic|hyperpage}{104}
+\indexentry{atelic|hyperpage}{104}
+\indexentry{truth value|hyperpage}{104}
+\indexentry{discourse representation theory, DRT|hyperpage}{105}
+\indexentry{ritual|hyperpage}{105}
+\indexentry{conceptual dependency, CD|hyperindexformat{\textbf}}{105}
+\indexentry{generative semantics|hyperpage}{105}
+\indexentry{construction|hyperpage}{106}
+\indexentry{construction grammar|hyperpage}{107}
+\indexentry{trace|hyperpage}{108}
+\indexentry{language!weighted|hyperindexformat{\textbf}}{108}
+\indexentry{weight|hyperindexformat{\textbf}}{108}
+\indexentry{language!probabilistic|hyperindexformat{\textbf}}{109}
+\indexentry{bounded counter|hyperindexformat{\textbf}}{110}
+\indexentry{density!natural|hyperindexformat{\textbf}}{110}
+\indexentry{density!Abel|hyperindexformat{\textbf}}{111}
+\indexentry{semiautomaton|hyperpage}{111}
+\indexentry{state machine|hyperpage}{111}
+\indexentry{transient state|hyperindexformat{\textbf}}{112}
+\indexentry{final state|hyperindexformat{\textbf}}{112}
+\indexentry{blocking off|hyperindexformat{\textbf}}{112}
+\indexentry{vulnerability|hyperindexformat{\textbf}}{112}
+\indexentry{density!Bernoulli|hyperindexformat{\textbf}}{114}
+\indexentry{density!combinatorial|hyperindexformat{\textbf}}{114}
+\indexentry{saturation|hyperindexformat{\textbf}}{114}
+\indexentry{underestimation error|hyperindexformat{\textbf}}{115}
+\indexentry{overestimation error|hyperindexformat{\textbf}}{115}
+\indexentry{Linux|hyperpage}{116}
+\indexentry{parenthetical expression|hyperpage}{116}
+\indexentry{sociolinguistics|hyperpage}{117}
+\indexentry{variable rule model|hyperindexformat{\textbf}}{117}
+\indexentry{odds|hyperindexformat{\textbf}}{117}
+\indexentry{machine learning features|hyperpage}{118}
+\indexentry{generative capacity|hyperindexformat{\textbf}}{118}
+\indexentry{probabilistic finite state automaton, PFSA|hyperindexformat{\textbf}}{119}
+\indexentry{transducer!weighted|hyperpage}{119}
+\indexentry{composition (of weighted transductions)|hyperindexformat{\textbf}}{120}
+\indexentry{transition!weighted|hyperpage}{120}
+\indexentry{length-preserving FST|hyperindexformat{\textbf}}{120}
+\indexentry{deterministic FST|hyperindexformat{\textbf}}{120}
+\indexentry{finite state transducer, FST!length-preserving|hyperindexformat{\textbf}}{120}
+\indexentry{finite state transducer, FST!deterministic|hyperindexformat{\textbf}}{120}
+\indexentry{finite state transducer, FST!probabilistic|hyperindexformat{\textbf}}{120}
+\indexentry{finite state automaton, FSA!weighted|hyperindexformat{\textbf}}{120}
+\indexentry{length distribution|hyperindexformat{\textbf}}{122}
+\indexentry{count vector|hyperindexformat{\textbf}}{123}
+\indexentry{Catalan numbers|hyperpage}{123}
+\indexentry{hidden Markov model, HMM|hyperindexformat{\textbf}}{125}
+\indexentry{hidden Markov model, HMM!run|hyperpage}{126}
+\indexentry{Viterbi algorithm|hyperpage}{127}
+\indexentry{truth!data label|hyperpage}{127}
+\indexentry{garden path|hyperpage}{128}
+\indexentry{discovery procedure|hyperpage}{129}
+\indexentry{type lifting|hyperpage}{129}
+\indexentry{language!noncounting|hyperindexformat{\textbf}}{129}
+\indexentry{noncounting|hyperindexformat{\textbf}}{129}
+\indexentry{transformation semigroup|hyperpage}{130}
+\indexentry{transformation monoid|hyperpage}{130}
+\indexentry{transformation group|hyperpage}{130}
+\indexentry{action|hyperindexformat{\textbf}}{130}
+\indexentry{rank|hyperindexformat{\textbf}}{130}
+\indexentry{reset semigroup|hyperindexformat{\textbf}}{130}
+\indexentry{group-free|hyperpage}{130}
+\indexentry{cascade product|hyperindexformat{\textbf}}{131}
+\indexentry{underspecification|hyperpage}{131}
+\indexentry{syntactic congruence|hyperindexformat{\textbf}}{133}
+\indexentry{type-logical grammar|hyperpage}{134}
+\indexentry{pregroup grammar|hyperpage}{134}
+\indexentry{descriptive adequacy|hyperpage}{135}
+\indexentry{explanatory adequacy|hyperpage}{135}
+\indexentry{Liar paradox|hyperindexformat{\textbf}}{138}
+\indexentry{truth!by T-scheme|hyperpage}{139}
+\indexentry{T-scheme|hyperpage}{139}
+\indexentry{paradox|hyperpage}{139}
+\indexentry{Liar paradox|hyperpage}{139}
+\indexentry{barber paradox|hyperpage}{139}
+\indexentry{nonintersective modifier|hyperpage}{139}
+\indexentry{universality|hyperpage}{140}
+\indexentry{opacity,   semantic|hyperindexformat{\textbf}}{140}
+\indexentry{propositional attitude|hyperpage}{140}
+\indexentry{Berry paradox|hyperpage}{141}
+\indexentry{performative|hyperpage}{142}
+\indexentry{hangman paradox|hyperpage}{143}
+\indexentry{rule to rule hypothesis|hyperpage}{144}
+\indexentry{compositionality|hyperpage}{144}
+\indexentry{truth|hyperpage}{145}
+\indexentry{logic!paraconsistent|hyperpage}{146}
+\indexentry{Montague grammar, MG|hyperpage}{146}
+\indexentry{homomorphism|hyperpage}{146}
+\indexentry{algebra|hyperpage}{147}
+\indexentry{operation|hyperpage}{147}
+\indexentry{extension|hyperpage}{147}
+\indexentry{intension|hyperpage}{147}
+\indexentry{hyperintensionals|hyperpage}{148}
+\indexentry{truth condition|hyperpage}{148}
+\indexentry{disambiguation|hyperpage}{148}
+\indexentry{generalized quantifiers|hyperpage}{148}
+\indexentry{generic|hyperpage}{149}
+\indexentry{construction|hyperindexformat{\textbf}}{149}
+\indexentry{truth!analytic|hyperpage}{150}
+\indexentry{normativity|hyperpage}{152}
+\indexentry{descriptivity|hyperpage}{152}
+\indexentry{accommodation|hyperpage}{152}
+\indexentry{lattice|hyperpage}{153}
+\indexentry{truth value|hyperpage}{153}
+\indexentry{bilattice|hyperindexformat{\textbf}}{153}
+\indexentry{model structure|hyperindexformat{\textbf}}{154}
+\indexentry{entity|hyperpage}{154}
+\indexentry{relation|hyperpage}{154}
+\indexentry{universe|hyperindexformat{\textbf}}{154}
+\indexentry{rigid designator|hyperpage}{156}
+\indexentry{natural kind|hyperpage}{156}
+\indexentry{logic!four-valued|hyperpage}{158}
+\indexentry{pronoun!resumptive|hyperpage}{159}
+\indexentry{indexical|hyperpage}{159}
+\indexentry{discourse representation theory, DRT|hyperpage}{159}
+\indexentry{variable binding term operator, VBTO|hyperindexformat{\textbf}}{160}
+\indexentry{context-sensitive language, CSL|hyperpage}{160}
+\indexentry{{\it do}-support|hyperpage}{160}
+\indexentry{argument|hyperpage}{161}
+\indexentry{adjunct|hyperpage}{161}
+\indexentry{k\={a}raka|hyperpage}{161}
+\indexentry{deep case|hyperpage}{161}
+\indexentry{truth condition|hyperpage}{162}
+\indexentry{P\={a}\d{n}ini|hyperpage}{162}
+\indexentry{dh\={a}tup\={a}\d{t}ha|hyperpage}{162}
+\indexentry{nonconstituent coordination, NCC|hyperpage}{164}
+\indexentry{trace|hyperpage}{164}
+\indexentry{sign|hyperindexformat{\textbf}}{164}
+\indexentry{category system|hyperindexformat{\textbf}}{165}
+\indexentry{c-categorial grammar|hyperpage}{165}
+\indexentry{Hungarian|hyperpage}{166}
+\indexentry{Romanian|hyperpage}{166}
+\indexentry{sluicing|hyperpage}{170}
+\indexentry{compositionality|hyperpage}{172}
+\indexentry{Fibonacci numbers|hyperpage}{175}
+\indexentry{P\={a}\d{n}ini|hyperpage}{175}
+\indexentry{prefix-fee code|hyperindexformat{\textbf}}{176}
+\indexentry{code!Shannon-Fano|hyperpage}{176}
+\indexentry{code!Huffman|hyperpage}{176}
+\indexentry{entropy|hyperindexformat{\textbf}}{176}
+\indexentry{Zipf's law|hyperpage}{178}
+\indexentry{block coding|hyperpage}{180}
+\indexentry{finite state automaton, FSA|hyperpage}{180}
+\indexentry{push-down automaton, PDA|hyperpage}{180}
+\indexentry{STX|hyperpage}{180}
+\indexentry{ETX|hyperpage}{180}
+\indexentry{SYN|hyperpage}{180}
+\indexentry{phonotactics|hyperpage}{181}
+\indexentry{morphotactics|hyperpage}{181}
+\indexentry{mutual information|hyperindexformat{\textbf}}{181}
+\indexentry{Kullback-Leibler (KL) divergence|hyperindexformat{\textbf}}{181}
+\indexentry{information gain|hyperindexformat{\textbf}}{181}
+\indexentry{cross entropy|hyperindexformat{\textbf}}{181}
+\indexentry{self-delimiting!function|hyperindexformat{\textbf}}{181}
+\indexentry{self-delimiting!code|hyperindexformat{\textbf}}{183}
+\indexentry{prefix complexity|hyperpage}{184}
+\indexentry{universal probability distribution|hyperindexformat{\textbf}}{184}
+\indexentry{geometrical probability distribution|hyperindexformat{\textbf}}{185}
+\indexentry{identification in the limit, iitl|hyperindexformat{\textbf}}{185}
+\indexentry{probably approximately correct, pac|hyperpage}{186}
+\indexentry{universal grammar, UG|hyperindexformat{\textbf}}{186}
+\indexentry{minimal sufficient statistic|hyperindexformat{\textbf}}{186}
+\indexentry{minimum description length, MDL|hyperpage}{187}
+\indexentry{anuv\d{r}tti|hyperpage}{187}
+\indexentry{P\={a}\d{n}ini|hyperpage}{187}
+\indexentry{metarule|hyperpage}{187}
+\indexentry{convention|hyperpage}{188}
+\indexentry{markedness|hyperpage}{188}
+\indexentry{assimilation!voice|hyperpage}{188}
+\indexentry{parochial rule|hyperpage}{189}
+\indexentry{universal grammar, UG|hyperpage}{189}
+\indexentry{dissimilation|hyperpage}{189}
+\indexentry{feature detection|hyperpage}{190}
+\indexentry{categorical perception|hyperpage}{190}
+\indexentry{child-directed   speech, CDS|hyperpage}{190}
+\indexentry{motherese|hyperpage}{190}
+\indexentry{baby talk|hyperpage}{190}
+\indexentry{Ntlaka'pamux [THP]|hyperpage}{191}
+\indexentry{discovery procedure|hyperpage}{191}
+\indexentry{superfiniteness|hyperindexformat{\textbf}}{192}
+\indexentry{noncounting|hyperpage}{192}
+\indexentry{telltale|hyperindexformat{\textbf}}{192}
+\indexentry{square-free word|hyperindexformat{\textbf}}{192}
+\indexentry{probably approximately correct, pac|hyperindexformat{\textbf}}{194}
+\indexentry{Vapnik-Chervonenkis (VC)   dimension|hyperpage}{194}
+\indexentry{poverty of stimulus|hyperpage}{195}
+\indexentry{face recognition|hyperpage}{197}
+\indexentry{pattern recognition|hyperpage}{197}
+\indexentry{fingerprint recognition|hyperpage}{197}
+\indexentry{character recognition|hyperpage}{197}
+\indexentry{characters!Han|hyperpage}{197}
+\indexentry{characters!Hangul|hyperpage}{197}
+\indexentry{clipping error|hyperpage}{198}
+\indexentry{pulse code modulation, PCM|hyperpage}{199}
+\indexentry{decibel|hyperpage}{199}
+\indexentry{signal energy|hyperpage}{199}
+\indexentry{signal to quantization noise ratio, SQNR|hyperpage}{199}
+\indexentry{log PCM|hyperpage}{199}
+\indexentry{$\mu$-law|hyperpage}{199}
+\indexentry{A-law|hyperpage}{199}
+\indexentry{mean opinion scale, MOS|hyperpage}{199}
+\indexentry{toll quality|hyperpage}{199}
+\indexentry{broadcast quality|hyperpage}{199}
+\indexentry{communications quality|hyperpage}{199}
+\indexentry{synthetic quality|hyperpage}{199}
+\indexentry{neutralization|hyperpage}{200}
+\indexentry{formant|hyperpage}{201}
+\indexentry{first order Markov process|hyperindexformat{\textbf}}{201}
+\indexentry{signal process|hyperindexformat{\textbf}}{201}
+\indexentry{signal process!stochastic|hyperpage}{201}
+\indexentry{signal process!stationary|hyperpage}{201}
+\indexentry{signal process!ergodic|hyperpage}{201}
+\indexentry{Markov|hyperpage}{202}
+\indexentry{process!transitive|hyperpage}{202}
+\indexentry{hidden Markov model, HMM|hyperindexformat{\textbf}}{203}
+\indexentry{hidden Markov model, HMM!continuous density|hyperpage}{203}
+\indexentry{feature detection|hyperpage}{204}
+\indexentry{ascender|hyperpage}{205}
+\indexentry{descender|hyperpage}{205}
+\indexentry{n line|hyperpage}{205}
+\indexentry{segmentation|hyperpage}{205}
+\indexentry{McGurk effect|hyperpage}{206}
+\indexentry{artificial intelligence, AI|hyperpage}{206}
+\indexentry{question answering|hyperpage}{206}
+\indexentry{machine learning|hyperpage}{206}
+\indexentry{machine translation|hyperpage}{206}
+\indexentry{knowledge representation, KR|hyperpage}{206}
+\indexentry{information extraction|hyperpage}{206}
+\indexentry{topic|hyperpage}{207}
+\indexentry{WWW|hyperpage}{207}
+\indexentry{query parsing|hyperpage}{207}
+\indexentry{topic detection|hyperpage}{207}
+\indexentry{document classification|hyperpage}{207}
+\indexentry{aboutness|hyperpage}{207}
+\indexentry{English!general|hyperpage}{207}
+\indexentry{text frequency|hyperindexformat{\textbf}}{207}
+\indexentry{document frequency|hyperindexformat{\textbf}}{207}
+\indexentry{topic model|hyperindexformat{\textbf}}{207}
+\indexentry{corpus size|hyperpage}{208}
+\indexentry{function word|hyperpage}{208}
+\indexentry{corpus size|hyperpage}{209}
+\indexentry{inverse document frequency, IDF|hyperindexformat{\textbf}}{209}
+\indexentry{linear machine|hyperpage}{211}
+\indexentry{bag of words|hyperpage}{211}
+\indexentry{G.711|hyperpage}{212}
+\indexentry{optical character recognition, OCR|hyperpage}{213}
+\indexentry{signal|hyperindexformat{\textbf}}{214}
+\indexentry{z transform|hyperindexformat{\textbf}}{214}
+\indexentry{filter|hyperindexformat{\textbf}}{214}
+\indexentry{system|hyperpage}{214}
+\indexentry{impulse|hyperindexformat{\textbf}}{214}
+\indexentry{impulse response|hyperindexformat{\textbf}}{214}
+\indexentry{filter!causal|hyperindexformat{\textbf}}{214}
+\indexentry{filter!stable|hyperindexformat{\textbf}}{214}
+\indexentry{frequency response|hyperindexformat{\textbf}}{214}
+\indexentry{transfer function|hyperpage}{214}
+\indexentry{frequency spectrum|hyperpage}{214}
+\indexentry{signal!bandlimited|hyperindexformat{\textbf}}{216}
+\indexentry{sideband|hyperpage}{216}
+\indexentry{linear predictive coding, LPC|hyperpage}{217}
+\indexentry{all-pole filter|hyperpage}{217}
+\indexentry{signal!stationary|hyperpage}{217}
+\indexentry{signal!stationary in the wide   sense|hyperpage}{217}
+\indexentry{pitch period|hyperpage}{218}
+\indexentry{signal!stationary|hyperpage}{218}
+\indexentry{signal!quasistationary|hyperpage}{218}
+\indexentry{Hamming window|hyperpage}{218}
+\indexentry{convolution|hyperindexformat{\textbf}}{218}
+\indexentry{highpass filter|hyperpage}{218}
+\indexentry{lowpass filter|hyperpage}{218}
+\indexentry{bandpass filter|hyperpage}{218}
+\indexentry{filter bank|hyperpage}{218}
+\indexentry{subband|hyperpage}{218}
+\indexentry{mel scale|hyperpage}{218}
+\indexentry{discrete Fourier transform, DFT|hyperpage}{219}
+\indexentry{energy spectrum|hyperindexformat{\textbf}}{219}
+\indexentry{power spectrum|hyperpage}{219}
+\indexentry{fast Fourier transform, FFT|hyperpage}{220}
+\indexentry{source-filter model|hyperpage}{220}
+\indexentry{bark scale|hyperpage}{220}
+\indexentry{cepstrum|hyperpage}{220}
+\indexentry{quefrency|hyperpage}{220}
+\indexentry{downsampling|hyperpage}{220}
+\indexentry{vector quantization,  VQ|hyperindexformat{\textbf}}{222}
+\indexentry{channel symbol|hyperpage}{222}
+\indexentry{codebook|hyperindexformat{\textbf}}{222}
+\indexentry{reproduction alphabet|hyperindexformat{\textbf}}{222}
+\indexentry{clustering!unsupervised|hyperpage}{223}
+\indexentry{reconstruction error|hyperpage}{223}
+\indexentry{Lloyd's algorithm (LGB algorithm)|hyperpage}{223}
+\indexentry{clustering!supervised|hyperpage}{224}
+\indexentry{truth!data label|hyperpage}{224}
+\indexentry{nearest neighbor classifier|hyperpage}{224}
+\indexentry{Itakura-Saito divergence|hyperindexformat{\textbf}}{225}
+\indexentry{Chinese|hyperpage}{225}
+\indexentry{lexical phonology and morphology, LPM|hyperpage}{226}
+\indexentry{coarticulation|hyperpage}{226}
+\indexentry{Sanskrit|hyperpage}{226}
+\indexentry{ruki|hyperpage}{226}
+\indexentry{ruki|hyperpage}{226}
+\indexentry{assimilation!anticipatory|hyperpage}{226}
+\indexentry{assimilation!perseveratory|hyperpage}{226}
+\indexentry{prosodic word|hyperpage}{227}
+\indexentry{Greibach normal form|hyperpage}{227}
+\indexentry{triphone|hyperpage}{229}
+\indexentry{quinphone|hyperpage}{229}
+\indexentry{delta features|hyperpage}{230}
+\indexentry{downdrift|hyperpage}{230}
+\indexentry{hidden Markov model, HMM!diagonal|hyperpage}{231}
+\indexentry{hidden Markov model, HMM!tied mixture|hyperpage}{231}
+\indexentry{speaker adaptation!CMN|hyperpage}{231}
+\indexentry{cepstral means normalization, CMN|hyperpage}{231}
+\indexentry{speaker adaptation!MMLR|hyperpage}{231}
+\indexentry{maximum likelihood linear regression, MMLR|hyperpage}{231}
+\indexentry{vocal tract length normalization, VTLN|hyperpage}{231}
+\indexentry{speaker adaptation!VTLN|hyperpage}{231}
+\indexentry{page decomposition|hyperpage}{232}
+\indexentry{downsampling|hyperpage}{232}
+\indexentry{binarization|hyperpage}{232}
+\indexentry{G3|hyperindexformat{\textbf}}{232}
+\indexentry{run-length encoding, RLE|hyperpage}{232}
+\indexentry{projection profile|hyperpage}{234}
+\indexentry{connected component|hyperpage}{234}
+\indexentry{bounding box|hyperpage}{234}
+\indexentry{handprint|hyperpage}{234}
+\indexentry{character size|hyperpage}{235}
+\indexentry{stroke width|hyperpage}{235}
+\indexentry{font weight|hyperpage}{235}
+\indexentry{mathematical morphology, MM|hyperpage}{235}
+\indexentry{structuring element|hyperpage}{235}
+\indexentry{reflection|hyperindexformat{\textbf}}{235}
+\indexentry{dilation|hyperindexformat{\textbf}}{235}
+\indexentry{erosion|hyperindexformat{\textbf}}{235}
+\indexentry{opening|hyperindexformat{\textbf}}{235}
+\indexentry{closing|hyperindexformat{\textbf}}{235}
+\indexentry{boundary|hyperindexformat{\textbf}}{235}
+\indexentry{image skeleton|hyperindexformat{\textbf}}{235}
+\indexentry{vertex chain code|hyperpage}{235}
+\indexentry{structural decomposition|hyperpage}{236}
+\indexentry{central moment|hyperindexformat{\textbf}}{236}
+\indexentry{Zernike moment|hyperindexformat{\textbf}}{237}
+\indexentry{Karhunen-Lo\`{e}ve transformation|hyperindexformat{\textbf}}{237}
+\indexentry{principal component analysis, PCA|hyperindexformat{\textbf}}{237}
+\indexentry{linear discriminant analysis, LDA|hyperpage}{237}
+\indexentry{cybernetics|hyperpage}{241}
+\indexentry{artificial intelligence, AI|hyperpage}{241}
+\indexentry{construction grammar|hyperpage}{242}
+\indexentry{P\={a}\d{n}ini|hyperpage}{242}
+\indexentry{dh\={a}tup\={a}\d{t}ha|hyperpage}{242}
+\indexentry{ga\d{n}ap\={a}\d{t}ha|hyperpage}{242}
