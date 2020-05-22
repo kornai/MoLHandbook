@@ -1,0 +1,1607 @@
+\indexentry{G\"artner, Hans--Martin}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Keenan, Edward L.}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Kolb, Hap}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{M\"onnich, Uwe}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Erilt, Lumme}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Kobele, Greg}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Michaelis, Jens}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Alt, Helmut}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Ebert, Christian}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Fabian, Benjamin}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Gehrke, Stefanie}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Hanke, Timo}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Hodges, Wilfrid}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{J\"ager, Gerhard}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Kanazawa, Makoto}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Koniecny, Franz}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Kosiol, Thomas}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Lin, Ying}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Lipt\'ak, Zsuzsanna}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{N\'emeti, Istv\'an}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Parsons, Terry}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Manaster--Ramer, Alexis}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Riggle, Jason}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Salinger, Stefan}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Stabler, Edward P.}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Sternefeld, Wolfgang}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Stamm, Harald}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Staudacher, Peter}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Tchao, Ngassa}{{\fontencoding  {OT1}\selectfont  vii}}
+\indexentry{Chomsky, Noam}{{\fontencoding  {OT1}\selectfont  ix}}
+\indexentry{sign}{{\fontencoding  {OT1}\selectfont  x}}
+\indexentry{sign!exponent}{{\fontencoding  {OT1}\selectfont  x}}
+\indexentry{sign!category}{{\fontencoding  {OT1}\selectfont  x}}
+\indexentry{sign!meaning}{{\fontencoding  {OT1}\selectfont  x}}
+\indexentry{compositionality}{{\fontencoding  {OT1}\selectfont  x}}
+\indexentry{mode}{{\fontencoding  {OT1}\selectfont  x}}
+\indexentry{algebra of structure terms}{{\fontencoding  {OT1}\selectfont  xi}}
+\indexentry{Pentus, Mati}{{\fontencoding  {OT1}\selectfont  xii}}
+\indexentry{Rounds, William}{{\fontencoding  {OT1}\selectfont  xii}}
+\indexentry{Groenink, Annius}{{\fontencoding  {OT1}\selectfont  xii}}
+\indexentry{Chomsky, Noam}{{\fontencoding  {OT1}\selectfont  xiii}}
+\indexentry{B\"uchi, J.}{{\fontencoding  {OT1}\selectfont  xiii}}
+\indexentry{Thatcher, J.~W.}{{\fontencoding  {OT1}\selectfont  xiii}}
+\indexentry{Doner, J.~E.}{{\fontencoding  {OT1}\selectfont  xiii}}
+\indexentry{Wright, J.~B.}{{\fontencoding  {OT1}\selectfont  xiii}}
+\indexentry{set}{1}
+\indexentry{$\cap$, $\cup$, $-$, $\varnothing$}{1}
+\indexentry{$\wp$, $\wp_{fin}$}{1}
+\indexentry{$+$}{1}
+\indexentry{$\in$, $\doteq$, $\subseteq$}{1}
+\indexentry{comprehension}{2}
+\indexentry{foundation}{2}
+\indexentry{class}{3}
+\indexentry{$\omega$, $\aleph_0$}{3}
+\indexentry{$\wp(M)$}{3}
+\indexentry{natural number}{3}
+\indexentry{ordinal}{3}
+\indexentry{well--ordering}{3}
+\indexentry{cardinal}{3}
+\indexentry{set!countable}{3}
+\indexentry{partition}{3}
+\indexentry{relation}{4}
+\indexentry{relation!reflexive}{4}
+\indexentry{relation!symmetric}{4}
+\indexentry{relation!transitive}{4}
+\indexentry{equivalence relation}{4}
+\indexentry{ordered set}{4}
+\indexentry{ordering}{4}
+\indexentry{$R \circ S$, $R \cup S$}{4}
+\indexentry{diagonal}{4}
+\indexentry{$\Delta$, $R^n$, $R^+$, $R^{\ast}$}{4}
+\indexentry{transitive closure}{5}
+\indexentry{function}{5}
+\indexentry{function!partial}{5}
+\indexentry{$f \restriction P$}{5}
+\indexentry{function!surjective}{5}
+\indexentry{$\epi$, $\mono$}{5}
+\indexentry{function!injective}{5}
+\indexentry{function!bijective}{5}
+\indexentry{direct image}{5}
+\indexentry{$f[X]$}{5}
+\indexentry{characteristic function}{5}
+\indexentry{$\chi_N$}{5}
+\indexentry{constant}{5}
+\indexentry{signature}{5}
+\indexentry{algebra}{5}
+\indexentry{algebra!$\Omega$--}{5}
+\indexentry{$\Tm_{\Omega}$}{6}
+\indexentry{term}{6}
+\indexentry{term!level of a \faul}{6}
+\indexentry{term!$\Omega$--\faul}{6}
+\indexentry{signature!constant expansion}{6}
+\indexentry{$\goth{Tm}_{\Omega}(X)$}{6}
+\indexentry{term algebra}{6}
+\indexentry{algebra!freeely ($\kappa$-)generated}{7}
+\indexentry{substitutions}{7}
+\indexentry{term function}{7}
+\indexentry{term function!clone of}{7}
+\indexentry{polynomial}{7}
+\indexentry{homomorphism}{8}
+\indexentry{isomorphism}{8}
+\indexentry{automorphism}{8}
+\indexentry{endomorphism}{8}
+\indexentry{congruence relation}{8}
+\indexentry{$[x]\Theta$}{8}
+\indexentry{equivalence class}{8}
+\indexentry{$\GA/\Theta$}{9}
+\indexentry{factorization}{9}
+\indexentry{$\ker$}{9}
+\indexentry{subalgebra}{9}
+\indexentry{algebra!product}{9}
+\indexentry{product of algebras}{9}
+\indexentry{variety}{10}
+\indexentry{equation}{10}
+\indexentry{congruence!fully invariant}{10}
+\indexentry{$\mathsf{Alg}(E)$}{11}
+\indexentry{equationally definable class}{11}
+\indexentry{signature!sorted}{11}
+\indexentry{sort}{11}
+\indexentry{algebra!many--sorted}{12}
+\indexentry{homomorphism!sorted}{12}
+\indexentry{equation!sorted}{12}
+\indexentry{homomorphism}{13}
+\indexentry{homomorphism!weak}{13}
+\indexentry{homomorphism!strong}{13}
+\indexentry{subalgebra!strong}{13}
+\indexentry{congruence!weak}{13}
+\indexentry{congruence!strong}{13}
+\indexentry{$\vDash^w$, $\vDash^s$}{13}
+\indexentry{Galois correspondence}{13}
+\indexentry{context}{13}
+\indexentry{intent}{13}
+\indexentry{extent}{13}
+\indexentry{closure operator}{14}
+\indexentry{concept}{14}
+\indexentry{structure}{15}
+\indexentry{signature!functional}{15}
+\indexentry{signature!relational}{15}
+\indexentry{string}{17}
+\indexentry{segment}{17}
+\indexentry{letter}{17}
+\indexentry{alphabet}{17}
+\indexentry{string!length}{17}
+\indexentry{$"|\vec{x}"|$}{17}
+\indexentry{$\vec{x}\conc\vec{y}$, $\varepsilon$}{17}
+\indexentry{unit}{17}
+\indexentry{associativity}{18}
+\indexentry{${\vec{x}\,}^i$, $\prod_{i < n} \vec{x}_n$}{18}
+\indexentry{ordering!lexicographical}{18}
+\indexentry{$Z(\vec{x})$}{18}
+\indexentry{ordering!numerical}{18}
+\indexentry{dyadic representation}{18}
+\indexentry{monoid}{19}
+\indexentry{$\GZ(A)$}{19}
+\indexentry{$\vec{x}^T$}{21}
+\indexentry{mirror string}{21}
+\indexentry{prefix}{22}
+\indexentry{postfix}{22}
+\indexentry{suffix}{22}
+\indexentry{substring}{22}
+\indexentry{position}{22}
+\indexentry{context}{22}
+\indexentry{substring occurrence}{22}
+\indexentry{substitution!string}{22}
+\indexentry{substring occurrence!overlapping}{22}
+\indexentry{substring occurrence!contained}{22}
+\indexentry{precedence}{22}
+\indexentry{language}{22}
+\indexentry{language!string}{22}
+\indexentry{$L \cdot M$, $L^n$, $L^+$, $L^{\ast}$, $L/M$, $L\backslash M$}{23}
+\indexentry{Kleene star}{23}
+\indexentry{prefix closure}{23}
+\indexentry{$L^P$, $L^S$}{23}
+\indexentry{postfix closure}{24}
+\indexentry{blank}{24}
+\indexentry{$\Box$, $\oconc$}{24}
+\indexentry{$\dashv_L$}{24}
+\indexentry{$C_L(M)$, $Z_L(P)$}{24}
+\indexentry{Sestier--closure}{24}
+\indexentry{Sestier--operator}{24}
+\indexentry{distribution classes}{24}
+\indexentry{representation}{24}
+\indexentry{representative!unique}{24}
+\indexentry{string!representing}{24}
+\indexentry{readability!unique}{24}
+\indexentry{notation!infix}{25}
+\indexentry{associativity!left--\faul}{25}
+\indexentry{associativity!right--\faul}{25}
+\indexentry{notation!Polish}{25}
+\indexentry{notation!Reverse Polish}{25}
+\indexentry{FORTH}{25}
+\indexentry{$\PN_{\Omega}$}{26}
+\indexentry{$M\backslash\backslash L$, $L {//} M$}{29}
+\indexentry{stratum}{29}
+\indexentry{stratum!semantical}{29}
+\indexentry{stratum!syntactical}{29}
+\indexentry{stratum!morphological}{29}
+\indexentry{stratum!phonological}{29}
+\indexentry{phonology}{29}
+\indexentry{morphology}{29}
+\indexentry{syntax}{29}
+\indexentry{rule of realization}{29}
+\indexentry{phone}{30}
+\indexentry{phone}{30}
+\indexentry{morph}{30}
+\indexentry{lex}{30}
+\indexentry{seme}{30}
+\indexentry{phoneme}{30}
+\indexentry{Hindi}{31}
+\indexentry{English}{31}
+\indexentry{French}{31}
+\indexentry{German}{31}
+\indexentry{morpheme}{31}
+\indexentry{umlaut}{32}
+\indexentry{allomorph}{32}
+\indexentry{stratum!surface}{32}
+\indexentry{stratum!deep}{32}
+\indexentry{umlaut}{32}
+\indexentry{channel}{33}
+\indexentry{Devanagari}{33}
+\indexentry{ligature}{33}
+\indexentry{Finnish}{34}
+\indexentry{Hindi}{34}
+\indexentry{Chinese}{34}
+\indexentry{French}{34}
+\indexentry{Finnish}{34}
+\indexentry{Hungarian}{34}
+\indexentry{German}{34}
+\indexentry{French}{34}
+\indexentry{letter}{34}
+\indexentry{German}{35}
+\indexentry{umlaut}{35}
+\indexentry{phoneme}{35}
+\indexentry{English}{35}
+\indexentry{German}{35}
+\indexentry{French}{35}
+\indexentry{English}{35}
+\indexentry{Hindi}{35}
+\indexentry{word}{36}
+\indexentry{segment}{36}
+\indexentry{segmentability}{36}
+\indexentry{feature!suprasegemental}{36}
+\indexentry{Bahasa Indonesia}{36}
+\indexentry{feature!distinctive}{37}
+\indexentry{functor}{38}
+\indexentry{argument}{38}
+\indexentry{head}{38}
+\indexentry{complement}{38}
+\indexentry{subject}{38}
+\indexentry{object}{38}
+\indexentry{grammatical relation}{38}
+\indexentry{Latin}{39}
+\indexentry{language!SOV--, SVO--, VSO--}{39}
+\indexentry{language!OSV--, OVS--, VOS--}{39}
+\indexentry{language!verb final}{39}
+\indexentry{language!verb medial}{39}
+\indexentry{language!verb initial}{39}
+\indexentry{German}{39}
+\indexentry{Hungarian}{39}
+\indexentry{language!head final}{39}
+\indexentry{language!head initial}{39}
+\indexentry{Japanese}{40}
+\indexentry{Hungarian}{40}
+\indexentry{Latin}{40}
+\indexentry{German}{40}
+\indexentry{word order!free}{41}
+\indexentry{case}{41}
+\indexentry{polyvalency}{41}
+\indexentry{verb!transitive}{41}
+\indexentry{verb!intransitive}{41}
+\indexentry{Mel'\v{c}uk, Igor}{41}
+\indexentry{Polish Notation}{42}
+\indexentry{labelling function}{42}
+\indexentry{structure over $A$}{43}
+\indexentry{structures!$A$--\faul}{43}
+\indexentry{graph!directed}{43}
+\indexentry{chain}{43}
+\indexentry{graph!connected}{43}
+\indexentry{cycle}{43}
+\indexentry{cycle}{43}
+\indexentry{root}{43}
+\indexentry{graph!directed acyclic}{43}
+\indexentry{graph!directed transitive acyclic (DTAG)}{43}
+\indexentry{DAG}{43}
+\indexentry{forest}{43}
+\indexentry{tree}{43}
+\indexentry{node!daughter}{43}
+\indexentry{node!mother}{43}
+\indexentry{$\prec$}{43}
+\indexentry{$x \circ y$}{43}
+\indexentry{overlap}{43}
+\indexentry{$\circ$}{43}
+\indexentry{Predecessor Lemma}{44}
+\indexentry{branching number}{44}
+\indexentry{leaf}{44}
+\indexentry{$b(\GG)$}{44}
+\indexentry{$\low{x}$, $\uppx{x}$}{44}
+\indexentry{path}{44}
+\indexentry{branch}{44}
+\indexentry{height}{44}
+\indexentry{depth}{44}
+\indexentry{$h(x)$, $d(x)$}{44}
+\indexentry{subgraph}{44}
+\indexentry{subtree}{45}
+\indexentry{constituent}{45}
+\indexentry{$\sqsubset$}{45}
+\indexentry{domination}{45}
+\indexentry{tree!ordered}{45}
+\indexentry{$[x]$}{46}
+\indexentry{extension of a node}{46}
+\indexentry{$k(x)$}{46}
+\indexentry{string!associated}{46}
+\indexentry{constituent!continuous}{46}
+\indexentry{ordering!exhaustive}{46}
+\indexentry{Constituent Lemma}{47}
+\indexentry{tree!properly branching}{47}
+\indexentry{constituent structure}{48}
+\indexentry{tree domain}{48}
+\indexentry{$T/\vec{x}$}{49}
+\indexentry{coding!dependency}{50}
+\indexentry{coding!structural}{50}
+\indexentry{Tesni\`ere, Lucien}{51}
+\indexentry{stemma}{51}
+\indexentry{dependency syntax}{51}
+\indexentry{Mel'\v{c}uk, Igor}{51}
+\indexentry{Chomsky, Noam}{51}
+\indexentry{Catalan numbers}{51}
+\indexentry{semi Thue system}{52}
+\indexentry{$\Pf_{T}$, $\Pf_{T}^n$, $\Pf_{T}^{\ast}$}{52}
+\indexentry{Thue system}{52}
+\indexentry{derivation}{52}
+\indexentry{grammar}{52}
+\indexentry{start symbol}{52}
+\indexentry{rule}{52}
+\indexentry{symbol!terminal}{52}
+\indexentry{symbol!nonterminal}{52}
+\indexentry{category}{53}
+\indexentry{$G \vdash \vec{x}$, $\vdash_G \vec{x}$}{53}
+\indexentry{$L(G)$}{53}
+\indexentry{analysis problem}{53}
+\indexentry{parsing problem}{53}
+\indexentry{recognition problem}{53}
+\indexentry{production}{53}
+\indexentry{$\vec{\alpha} \pf \vec{\beta}$}{53}
+\indexentry{productivity}{53}
+\indexentry{production!expanding}{53}
+\indexentry{production!strictly expanding}{53}
+\indexentry{production!contracting}{53}
+\indexentry{rule!terminal}{53}
+\indexentry{$X_{\varepsilon}$}{53}
+\indexentry{grammar!of Type 0,1,2,3}{53}
+\indexentry{grammar!context sensitive}{53}
+\indexentry{grammar!context free}{53}
+\indexentry{grammar!regular}{53}
+\indexentry{language!of Type 0,1,2,3}{54}
+\indexentry{language!context free}{54}
+\indexentry{language!context sensitive}{54}
+\indexentry{language!regular}{54}
+\indexentry{ALGOL}{54}
+\indexentry{Backus--Naur form}{54}
+\indexentry{Polish Notation}{55}
+\indexentry{RG, CFG, CSG, GG}{56}
+\indexentry{RL, CFL, CSL, GL}{56}
+\indexentry{rule!instance of a \faul}{57}
+\indexentry{rule instance!domain of a \faul}{57}
+\indexentry{derivation}{57}
+\indexentry{derivation!start of a \faul}{57}
+\indexentry{derivation!end of a \faul}{57}
+\indexentry{$\der(G,\vec{\alpha})$, $\der(G)$}{57}
+\indexentry{string sequence}{57}
+\indexentry{string sequence!associated}{57}
+\indexentry{domains!disjoint}{57}
+\indexentry{Commuting Instances Lemma}{58}
+\indexentry{standard form}{58}
+\indexentry{Commuting Instances Lemma}{59}
+\indexentry{grammar$^{\ast}$}{59}
+\indexentry{quasi--grammar}{59}
+\indexentry{grammar!noncontracting}{60}
+\indexentry{homomorphism!$\varepsilon$--free}{62}
+\indexentry{abstract family of languages}{63}
+\indexentry{AFL}{63}
+\indexentry{Thue, Axel}{64}
+\indexentry{Post, Emil}{64}
+\indexentry{Chomsky, Noam}{64}
+\indexentry{Commuting Instances Lemma}{65}
+\indexentry{multigraph}{65}
+\indexentry{vertex}{65}
+\indexentry{edge}{65}
+\indexentry{vertex colouring}{65}
+\indexentry{vertex colour}{65}
+\indexentry{multigraph}{66}
+\indexentry{$\gamma$--graph}{66}
+\indexentry{$\ein(x,f)$, $\aus(x,f)$}{66}
+\indexentry{colour functional}{67}
+\indexentry{$\goth{II}$, $\goth{IO}$, $\goth{OI}$, $\goth{OO}$}{67}
+\indexentry{$\GG[\GH/\GM : \GF]$}{67}
+\indexentry{graph grammar}{68}
+\indexentry{graph grammar!context free}{68}
+\indexentry{start graph}{68}
+\indexentry{derivation}{68}
+\indexentry{$L_{\gamma}(\Gamma)$}{68}
+\indexentry{node!active}{69}
+\indexentry{node!nonactive}{69}
+\indexentry{$L_B(G)$}{70}
+\indexentry{subtree!local}{70}
+\indexentry{cut}{71}
+\indexentry{constituent}{71}
+\indexentry{Constituent Substitution Theorem}{72}
+\indexentry{constituent part!left, right}{72}
+\indexentry{Pumping Lemma}{73}
+\indexentry{independent pumping pair}{75}
+\indexentry{centre tree}{75}
+\indexentry{adjunction tree}{75}
+\indexentry{tree adjunction grammar!unregulated}{76}
+\indexentry{UTAG}{76}
+\indexentry{M\"onnich, Uwe}{76}
+\indexentry{term replacement system}{77}
+\indexentry{Pumping Lemma}{79}
+\indexentry{Interchange Lemma}{79}
+\indexentry{Turing, Alan}{79}
+\indexentry{Post, Emil}{79}
+\indexentry{Turing machine}{80}
+\indexentry{Turing machine!deterministic}{80}
+\indexentry{blank}{80}
+\indexentry{state}{80}
+\indexentry{state!initial}{80}
+\indexentry{state!accepting}{80}
+\indexentry{computation step}{80}
+\indexentry{configuration}{81}
+\indexentry{$\vec{x} \conc q \conc \vec{y} \vdash_T     \vec{x}_1 \conc q_1 \conc \vec{y}_1$}{81}
+\indexentry{$C(T)$}{81}
+\indexentry{end configuration}{82}
+\indexentry{language!accepted}{82}
+\indexentry{$L(T)$}{82}
+\indexentry{function!computable}{83}
+\indexentry{language!recursively enumerable}{83}
+\indexentry{language!decidable}{84}
+\indexentry{Turing machine!multitape}{84}
+\indexentry{Turing machine!universal}{88}
+\indexentry{Post, Emil}{89}
+\indexentry{Markov, A.~A.}{89}
+\indexentry{Chomsky, Noam}{89}
+\indexentry{Putnam, Hilary}{89}
+\indexentry{Turing machine!linearly space bounded}{89}
+\indexentry{Landweber, Peter S.}{89}
+\indexentry{Kuroda, S.--Y.}{89}
+\indexentry{presentation}{89}
+\indexentry{PTIME}{91}
+\indexentry{NP}{91}
+\indexentry{PSPACE}{91}
+\indexentry{EXPTIME}{91}
+\indexentry{NEXPTIME}{91}
+\indexentry{Church, Alonzo}{91}
+\indexentry{Kleene, Stephen C.}{91}
+\indexentry{Post, Emil}{91}
+\indexentry{Turing, Alan}{91}
+\indexentry{language!regular}{93}
+\indexentry{grammar!strictly binary}{93}
+\indexentry{automaton!finite state}{93}
+\indexentry{automaton!deterministic finite state}{93}
+\indexentry{transition function}{93}
+\indexentry{state!initial}{93}
+\indexentry{state!accepting}{93}
+\indexentry{$L(\GA)$}{94}
+\indexentry{$\GA^d$}{94}
+\indexentry{term!regular}{95}
+\indexentry{$\cdot$, $\cup$, $^{\ast}$}{95}
+\indexentry{$^+$}{96}
+\indexentry{system of equations!proper}{96}
+\indexentry{system of equations!simple}{96}
+\indexentry{Kleene, Stephen C.}{98}
+\indexentry{grammar!left regular}{101}
+\indexentry{grammar!right regular}{101}
+\indexentry{language!finite index}{101}
+\indexentry{language!context free}{101}
+\indexentry{linearisation}{102}
+\indexentry{$\der(\lhd)$}{103}
+\indexentry{search!depth--first}{103}
+\indexentry{linearisation!leftmost}{103}
+\indexentry{priorisation}{103}
+\indexentry{search!breadth--first}{104}
+\indexentry{nonterminal!reachable}{105}
+\indexentry{nonterminal!completable}{105}
+\indexentry{grammar!slender}{105}
+\indexentry{rule simulation!forward}{106}
+\indexentry{R--simulation}{106}
+\indexentry{rule simulation!backward}{106}
+\indexentry{equivalence}{106}
+\indexentry{reducibility}{107}
+\indexentry{grammar!reduced}{107}
+\indexentry{bracketing analysis}{108}
+\indexentry{constituent analysis}{109}
+\indexentry{$L_c(G)$}{109}
+\indexentry{grammar!standard form}{109}
+\indexentry{grammar!Chomsky Normal Form}{109}
+\indexentry{standard form}{109}
+\indexentry{Chomsky Normal Form}{109}
+\indexentry{grammar!invertible}{110}
+\indexentry{grammar!perfect}{111}
+\indexentry{Greibach Normal Form}{111}
+\indexentry{production!$X$--\faul}{112}
+\indexentry{production!left recursive}{112}
+\indexentry{rule!skipping of a \faul}{112}
+\indexentry{branch expression}{115}
+\indexentry{move!$\varepsilon$--\faul}{116}
+\indexentry{pushdown automaton}{116}
+\indexentry{automaton!pushdown}{116}
+\indexentry{stack alphabet}{116}
+\indexentry{transition function}{116}
+\indexentry{configuration}{116}
+\indexentry{transition}{116}
+\indexentry{computation}{116}
+\indexentry{language!{\faul} accepted by state}{117}
+\indexentry{pushdown automaton!simple}{117}
+\indexentry{language!{\faul} accepted by stack}{117}
+\indexentry{pushdown automaton!deterministic}{120}
+\indexentry{language!context free deterministic}{120}
+\indexentry{$\Delta$}{120}
+\indexentry{language!mirror}{120}
+\indexentry{language!prefix free}{120}
+\indexentry{language!Dyck--}{121}
+\indexentry{XML}{121}
+\indexentry{language!strict deterministic}{121}
+\indexentry{$\Delta^s$}{121}
+\indexentry{$^{(k)}\vec{x}$}{122}
+\indexentry{partition!strict}{122}
+\indexentry{$\equiv$}{122}
+\indexentry{grammar!strict deterministic}{123}
+\indexentry{$\vec{\alpha} \Pf^n_L \vec{\gamma}$}{123}
+\indexentry{stack move}{124}
+\indexentry{turn}{124}
+\indexentry{language!$n$--turn}{125}
+\indexentry{language!ultralinear}{125}
+\indexentry{language!linear}{125}
+\indexentry{grammar!linear}{125}
+\indexentry{chart}{126}
+\indexentry{$X \odot Y$, $\BU \odot \BV$}{127}
+\indexentry{Cocke, J.}{128}
+\indexentry{Kasami, Tadao}{128}
+\indexentry{Younger, D.~H.}{128}
+\indexentry{tree!partial $G$--\faul}{130}
+\indexentry{constituent!$G$--\faul}{130}
+\indexentry{constituent!accidental}{130}
+\indexentry{grammar!transparent}{131}
+\indexentry{transparency}{131}
+\indexentry{grammar!inherently opaque}{131}
+\indexentry{Polish Notation}{131}
+\indexentry{$\Pi_{\Omega}$}{131}
+\indexentry{Fine, Kit}{132}
+\indexentry{grammar!ambiguous}{133}
+\indexentry{language!inherently ambiguous}{133}
+\indexentry{Parikh, Rohit}{133}
+\indexentry{NTS--property}{134}
+\indexentry{language!NTS--\faul}{134}
+\indexentry{shift}{136}
+\indexentry{reduction}{136}
+\indexentry{strategy}{136}
+\indexentry{grammar!$LR(k)$--\faul}{137}
+\indexentry{language!$LR(k)$--\faul}{137}
+\indexentry{left transparency}{139}
+\indexentry{context!left}{139}
+\indexentry{grammar!left transparent}{139}
+\indexentry{Harrison, M.~A.}{141}
+\indexentry{Geller, M.~M.}{141}
+\indexentry{cancellation}{143}
+\indexentry{LC--rule}{143}
+\indexentry{LC--calculus}{143}
+\indexentry{strategy!top--down}{144}
+\indexentry{strategy!generalized left corner}{144}
+\indexentry{strategy!bottom--up}{144}
+\indexentry{Ginsburg, Seymour}{145}
+\indexentry{Spanier, Edwin H.}{145}
+\indexentry{Presburger Arithmetic}{145}
+\indexentry{monoid!commutative}{145}
+\indexentry{semigroup!commutative}{145}
+\indexentry{$\GM(A)$, $\Omega^n$}{147}
+\indexentry{Kronecker symbol}{147}
+\indexentry{$\mu$}{147}
+\indexentry{Parikh map}{148}
+\indexentry{letter equivalence}{148}
+\indexentry{language!linear}{148}
+\indexentry{language!semilinear}{148}
+\indexentry{vector!cyclic}{148}
+\indexentry{dimension}{148}
+\indexentry{$U + V$, $nU$, $\omega U$}{148}
+\indexentry{$\Sigma(U;V)$}{148}
+\indexentry{Parikh, Rohit}{149}
+\indexentry{definability}{150}
+\indexentry{equation!reduced}{151}
+\indexentry{quantifier elimination}{155}
+\indexentry{Presburger}{155}
+\indexentry{Ginsburg, Seymour}{156}
+\indexentry{Spanier, Edwin H.}{156}
+\indexentry{language!almost periodical}{157}
+\indexentry{Presburger Arithmetic}{158}
+\indexentry{Joshi, Aravind}{159}
+\indexentry{Takahashi, Masako}{159}
+\indexentry{Levy, Leon S.}{159}
+\indexentry{$\sigma_a(\GB)$, $\mu(\GB)$}{159}
+\indexentry{Parikh, Rohit}{160}
+\indexentry{Chomsky, Noam}{163}
+\indexentry{Postal, Paul}{163}
+\indexentry{Gazdar, Gerald}{163}
+\indexentry{Pullum, Geoffrey}{163}
+\indexentry{Huybregts, Riny}{163}
+\indexentry{Shieber, Stuart}{163}
+\indexentry{English}{163}
+\indexentry{German}{163}
+\indexentry{Swiss German}{163}
+\indexentry{order!nesting}{164}
+\indexentry{order!crossing}{164}
+\indexentry{Transducer Theorem}{165}
+\indexentry{Swiss German}{165}
+\indexentry{English}{166}
+\indexentry{Interchange Lemma}{166}
+\indexentry{ALGOL}{168}
+\indexentry{variable!bound}{169}
+\indexentry{sentence}{169}
+\indexentry{English}{170}
+\indexentry{Zwicky, Arnold}{170}
+\indexentry{Miller, Philip H.}{172}
+\indexentry{compositionality}{175}
+\indexentry{interpreted string language}{175}
+\indexentry{language!interpreted}{175}
+\indexentry{$L(\CI)$, $M(\CI)$}{175}
+\indexentry{Polish Notation}{177}
+\indexentry{derivation term}{177}
+\indexentry{Polish Notation}{178}
+\indexentry{sign}{179}
+\indexentry{mode}{179}
+\indexentry{$\auf F,\Omega\zu$}{179}
+\indexentry{algebra!$n$--generated}{179}
+\indexentry{$\varepsilon$, $\gamma$, $\mu$}{179}
+\indexentry{exponent}{179}
+\indexentry{category}{179}
+\indexentry{type}{179}
+\indexentry{$f^{\varepsilon}$, $f^{\gamma}$, $f^{\mu}$}{180}
+\indexentry{realization}{180}
+\indexentry{structure term}{180}
+\indexentry{structure term!orthographically definite}{180}
+\indexentry{structure term!syntactically definite}{180}
+\indexentry{structure term!semantically definite}{180}
+\indexentry{structure term!definite}{180}
+\indexentry{$\upsilon$}{181}
+\indexentry{unfolding map}{181}
+\indexentry{sign system!linear}{183}
+\indexentry{sign system!compositional}{184}
+\indexentry{sign system!weakly compositional}{184}
+\indexentry{sign!realization}{184}
+\indexentry{sign system!modularly decidable}{187}
+\indexentry{de Saussure, Ferdinand}{188}
+\indexentry{Peirce, Charles S.}{188}
+\indexentry{Montague Grammar (see Montague Semantics)}{188}
+\indexentry{Montague Semantics}{188}
+\indexentry{Mel'\v{c}uk, Igor}{188}
+\indexentry{logic!boolean}{190}
+\indexentry{variable!propositional}{190}
+\indexentry{formula!well--formed}{190}
+\indexentry{wff}{190}
+\indexentry{tautology}{190}
+\indexentry{contradiction}{190}
+\indexentry{formula!contingent}{190}
+\indexentry{$\Taut_{\mathsf{B}}(\mbox{\mtt\symbol{25}},\sbot)$}{190}
+\indexentry{Hilbert (style) calculus}{190}
+\indexentry{logic!classical}{190}
+\indexentry{logic!boolean}{190}
+\indexentry{intuitionistic logic}{190}
+\indexentry{logic!intuitionistic}{190}
+\indexentry{axiom schema}{191}
+\indexentry{axiom schema!instance}{191}
+\indexentry{proof}{191}
+\indexentry{proof!length of a \faul}{191}
+\indexentry{$\vdash^{\mathsf{B}} \varphi$}{191}
+\indexentry{axiom}{191}
+\indexentry{Modus Ponens (MP)}{191}
+\indexentry{proof}{191}
+\indexentry{assignment}{191}
+\indexentry{$\Sigma_{\mathsf{B}}(A)$}{191}
+\indexentry{truth}{191}
+\indexentry{consequence}{192}
+\indexentry{$\vDash$}{192}
+\indexentry{Deduction Theorem}{192}
+\indexentry{Little Deduction Theorem}{193}
+\indexentry{set!consistent}{193}
+\indexentry{set!downward closed}{194}
+\indexentry{Compactness Theorem}{194}
+\indexentry{sequent}{195}
+\indexentry{antecedent}{195}
+\indexentry{succedent}{195}
+\indexentry{premiss}{196}
+\indexentry{conclusion}{196}
+\indexentry{formula!main}{196}
+\indexentry{formula!cut--\faul}{196}
+\indexentry{Gentzen calculus}{196}
+\indexentry{sequent proof}{196}
+\indexentry{rule}{196}
+\indexentry{rule!finitary}{196}
+\indexentry{sequent calculus}{196}
+\indexentry{proof tree}{196}
+\indexentry{axiom!primitive}{197}
+\indexentry{rule!admissible}{199}
+\indexentry{rule!eliminable}{199}
+\indexentry{Cut Elimination}{199}
+\indexentry{cut!degree of a \faul}{199}
+\indexentry{cut!weight of a \faul}{199}
+\indexentry{cut--weight}{199}
+\indexentry{natural deduction}{202}
+\indexentry{Modus Ponens (MP)}{202}
+\indexentry{assumption}{202}
+\indexentry{$\varphi^{\surd}$, $[\varphi]$}{202}
+\indexentry{rule}{203}
+\indexentry{rule!finitary}{203}
+\indexentry{natural deduction calculus}{203}
+\indexentry{proof tree}{203}
+\indexentry{\textsf{Int}}{205}
+\indexentry{$\lambda\Omega$--term}{206}
+\indexentry{$\lambda$--term}{206}
+\indexentry{$\lambda$--term!pure}{206}
+\indexentry{variable!occurrence}{207}
+\indexentry{variable!free}{207}
+\indexentry{variable!bound}{207}
+\indexentry{$\lambda$--term!closed}{207}
+\indexentry{conversion!$\alpha $--, $\beta $--, $\eta $--$\mathrel {\mathop {\sim }\limits ^{\circ }}$}{208}
+\indexentry{$\xi $--rule}{208}
+\indexentry{(ext)}{209}
+\indexentry{valuation}{209}
+\indexentry{replacement}{209}
+\indexentry{$\lambda$--term!congruent}{209}
+\indexentry{$\rightsquigarrow_{\alpha}, \triangleright_{\alpha}, \equiv_{\alpha}$}{209}
+\indexentry{$\lambda$--term!contraction}{209}
+\indexentry{$\rightsquigarrow_{\beta}, \triangleright_{\beta}, \equiv_{\beta}$}{209}
+\indexentry{redex}{209}
+\indexentry{contractum}{209}
+\indexentry{$\lambda$--term!evaluated}{209}
+\indexentry{normal form}{209}
+\indexentry{normal form}{210}
+\indexentry{applicative structure}{212}
+\indexentry{applicative structure!partial}{212}
+\indexentry{applicative structure!extensional}{212}
+\indexentry{applicative structure!typed}{212}
+\indexentry{$\rtimes$, $\ltimes$}{213}
+\indexentry{$M \pf N$}{213}
+\indexentry{$\mathsf{app}(x,y)$}{213}
+\indexentry{{\tt S}, {\tt K}, {\tt I}}{214}
+\indexentry{combinator}{214}
+\indexentry{combinatorial term}{214}
+\indexentry{combinatory logic}{215}
+\indexentry{$\mathsf{CL}$}{215}
+\indexentry{Curry, Haskell B.}{216}
+\indexentry{Curry, Haskell B.}{216}
+\indexentry{combinatorial term!typed}{216}
+\indexentry{combinator!typed}{216}
+\indexentry{combinatorial term!stratified}{216}
+\indexentry{combinator!stratified}{216}
+\indexentry{applicative structure!combinatorially complete}{218}
+\indexentry{Sch\"onfinkel, Moses}{218}
+\indexentry{combinatory algebra}{218}
+\indexentry{combinatory algebra!extensional}{218}
+\indexentry{$\lambda$--algebra}{218}
+\indexentry{combinatory algebra!partial}{219}
+\indexentry{Curry, Haskell B.}{219}
+\indexentry{Curry--Howard--Isomorphism}{219}
+\indexentry{Howard, William}{219}
+\indexentry{Curry, Haskell B.}{220}
+\indexentry{Frege, Gottlob}{221}
+\indexentry{Church, Alonzo}{221}
+\indexentry{Sch\"onfinkel, Moses}{221}
+\indexentry{Curry, Haskell B.}{221}
+\indexentry{Husserl, Edmund}{221}
+\indexentry{Ajdukiewicz, Kazimierz}{223}
+\indexentry{Bar--Hillel, Yehoshua}{223}
+\indexentry{Ajdukiewicz--Bar Hillel Calculus}{223}
+\indexentry{Lambek--Calculus}{223}
+\indexentry{Lambek, Joachim}{223}
+\indexentry{category assignment}{223}
+\indexentry{$\Cat_{\mbox{\smtt\tb}, \mbox{\smtt\tf}}(C)$}{223}
+\indexentry{category}{223}
+\indexentry{category!basic}{223}
+\indexentry{category assignment}{224}
+\indexentry{tree!correctly labelled}{224}
+\indexentry{categorial grammar!AB--\faul}{224}
+\indexentry{Bar--Hillel, Yehoshua}{225}
+\indexentry{Gaifman, Haim}{225}
+\indexentry{Shamir, E.}{225}
+\indexentry{Montague Semantics}{226}
+\indexentry{$\real{\gamma}$}{226}
+\indexentry{$\mbox{\tt A}_{\sgr}$, $\mbox{\tt A}_{\skl}$}{227}
+\indexentry{sign grammar!AB--\faul}{227}
+\indexentry{combinatory categorial grammar}{230}
+\indexentry{$\circplus$, $\circminus$}{231}
+\indexentry{$\CCG(\mathsf{B})$}{231}
+\indexentry{$\gtrdot$, $\lessdot$}{232}
+\indexentry{polymorphism}{235}
+\indexentry{$[\alpha]_{\zeta}$, $[\alpha]$}{237}
+\indexentry{$\circ$}{237}
+\indexentry{category complex}{238}
+\indexentry{sequent}{238}
+\indexentry{cancellation interpretation}{238}
+\indexentry{$\mathsf{AB}$, $\mathsf{AB} + \mbox{\rm (cut)}$, $\mathsf{AB}^{-}$}{238}
+\indexentry{category!basic}{238}
+\indexentry{category!distinguished}{238}
+\indexentry{categorial sequent grammar}{238}
+\indexentry{type raising}{239}
+\indexentry{Cut Elimination}{239}
+\indexentry{sign complex}{241}
+\indexentry{$\succ$, $\Vdash$}{241}
+\indexentry{$\focc(x,M)$}{243}
+\indexentry{$\S(\Gamma)$}{245}
+\indexentry{$\mathsf{N}$}{245}
+\indexentry{$\mathsf{E}$}{246}
+\indexentry{Lambek--Calculus}{248}
+\indexentry{Lambek--Calculus!Nonassociative}{248}
+\indexentry{$\mathsf{L}$, $\mathsf{NL}$, $\mathsf{NL}^-$}{248}
+\indexentry{Lambek, Joachim}{248}
+\indexentry{Lambek, Joachim}{248}
+\indexentry{projection}{252}
+\indexentry{$\lambda^{\bullet}$--term}{252}
+\indexentry{$\lambda^{\bullet}$--term!strictly linear}{252}
+\indexentry{$\lambda^{\bullet}$--term!linear}{252}
+\indexentry{$\mathsf{L}$}{254}
+\indexentry{loop}{255}
+\indexentry{Pentus, Mati}{255}
+\indexentry{interpretation!group valued}{255}
+\indexentry{Roorda, Dirk}{256}
+\indexentry{interpolant}{256}
+\indexentry{interpolation}{256}
+\indexentry{Roorda, Dirk}{261}
+\indexentry{$L_m$}{261}
+\indexentry{Pentus, Mati}{261}
+\indexentry{$L_m^{\boxminus}$}{261}
+\indexentry{category!thin}{262}
+\indexentry{sequent!thin}{262}
+\indexentry{thin category}{262}
+\indexentry{Pentus, Mati}{265}
+\indexentry{L--frame}{265}
+\indexentry{Pentus, Mati}{266}
+\indexentry{Montague Semantics}{266}
+\indexentry{Montague, Richard}{266}
+\indexentry{logic!first--order}{266}
+\indexentry{first--order logic}{266}
+\indexentry{FOL}{266}
+\indexentry{simple type theory (STT)}{270}
+\indexentry{Church, Alonzo}{270}
+\indexentry{Henkin frame}{270}
+\indexentry{Montague Semantics}{270}
+\indexentry{Montague, Richard}{272}
+\indexentry{Categorial Grammar}{272}
+\indexentry{Harris, Zellig S.}{276}
+\indexentry{Steedman, Mark}{276}
+\indexentry{generalized quantifier}{277}
+\indexentry{forward deletion}{277}
+\indexentry{backward deletion}{277}
+\indexentry{problem!ill--conditioned}{279}
+\indexentry{valuation}{280}
+\indexentry{register}{281}
+\indexentry{Trakht\'enbrodt, B.~A.}{283}
+\indexentry{language!propositional}{283}
+\indexentry{substitution}{283}
+\indexentry{consequence relation}{284}
+\indexentry{consequence relation!structural}{284}
+\indexentry{consequence relation!finitary}{284}
+\indexentry{rule!finitary}{284}
+\indexentry{consequence!$n$--step \faul}{284}
+\indexentry{matrix}{284}
+\indexentry{truth value}{284}
+\indexentry{truth value!designated}{284}
+\indexentry{set!deductively closed}{285}
+\indexentry{deductively closed set}{285}
+\indexentry{set!consistent}{285}
+\indexentry{set!maximally consistent}{285}
+\indexentry{matrix!canonical}{285}
+\indexentry{filter}{285}
+\indexentry{congruence relation!admissible}{285}
+\indexentry{matrix!reduced}{285}
+\indexentry{matrix semantics}{285}
+\indexentry{matrix semantics!adequate}{285}
+\indexentry{semantics!primary}{287}
+\indexentry{semantics!secondary}{287}
+\indexentry{Leibniz' Principle}{288}
+\indexentry{Leibniz, Gottfried W.}{288}
+\indexentry{Leibniz' Principle}{289}
+\indexentry{Montague, Richard}{289}
+\indexentry{Leibniz' Principle}{289}
+\indexentry{Hodges, Wilfrid}{290}
+\indexentry{H--grammar}{290}
+\indexentry{H--semantics}{290}
+\indexentry{synonymy}{290}
+\indexentry{equivalence}{290}
+\indexentry{synonymy!H--\faul}{290}
+\indexentry{category!$\mu$--\faul}{290}
+\indexentry{synonymy!Husserlian}{290}
+\indexentry{Leibniz' Principle}{290}
+\indexentry{structure term!sentential}{291}
+\indexentry{synonymy!Leibnizian}{291}
+\indexentry{Hodges, Wilfrid}{291}
+\indexentry{$\asymp_{\GA}$, $\asymp$}{291}
+\indexentry{Dresner, Eli}{293}
+\indexentry{Leibniz' Principle}{293}
+\indexentry{Leibniz' Principle}{294}
+\indexentry{boolean algebra}{294}
+\indexentry{algebra!boolean}{294}
+\indexentry{meet}{294}
+\indexentry{join}{294}
+\indexentry{complement}{294}
+\indexentry{zero}{294}
+\indexentry{one}{294}
+\indexentry{associativity}{294}
+\indexentry{commutativity}{294}
+\indexentry{idempotence}{295}
+\indexentry{absorption}{295}
+\indexentry{lattice}{295}
+\indexentry{semilattice}{295}
+\indexentry{greatest lower bound (glb)}{295}
+\indexentry{least upper bound (lub)}{295}
+\indexentry{lattice!distributive}{296}
+\indexentry{lattice!bounded}{296}
+\indexentry{join irreducibility}{296}
+\indexentry{meet irreducibility}{296}
+\indexentry{meet prime}{296}
+\indexentry{de Morgan law}{297}
+\indexentry{double negation}{297}
+\indexentry{field of sets}{297}
+\indexentry{$\GP(X)$}{297}
+\indexentry{$\GB^X$}{297}
+\indexentry{Montague, Richard}{298}
+\indexentry{atom}{299}
+\indexentry{$\At(\GB)$}{299}
+\indexentry{boolean algebra!atomic}{300}
+\indexentry{set!cofinite}{300}
+\indexentry{point}{300}
+\indexentry{$\pt(\GA)$}{300}
+\indexentry{filter}{301}
+\indexentry{ultrafilter}{301}
+\indexentry{finite intersection property}{301}
+\indexentry{boolean algebra!complete}{302}
+\indexentry{Keenan, Edward L.}{302}
+\indexentry{Faltz, Leonard L.}{302}
+\indexentry{monotonicity}{302}
+\indexentry{antitonicity}{302}
+\indexentry{restrictiveness}{302}
+\indexentry{intersectiveness}{302}
+\indexentry{$\mathsf{PC}$, $\vdash^{\mathsf{PC}}$}{304}
+\indexentry{$\Theta^{\dpf}$}{305}
+\indexentry{propositional logic!inconsistent}{305}
+\indexentry{Chrysippos}{305}
+\indexentry{de Morgan, Augustus}{306}
+\indexentry{Boole, George}{306}
+\indexentry{Frege, Gottlob}{306}
+\indexentry{lattice!dual}{306}
+\indexentry{$t^d$}{306}
+\indexentry{Leibniz' Principle}{306}
+\indexentry{use}{307}
+\indexentry{mention}{307}
+\indexentry{context}{307}
+\indexentry{Leibniz' Principle}{307}
+\indexentry{$A \equiv B$}{307}
+\indexentry{context!hyperintensional}{307}
+\indexentry{Leibniz' Principle}{307}
+\indexentry{Leibniz' Principle}{308}
+\indexentry{Leibniz' Principle}{308}
+\indexentry{sense}{308}
+\indexentry{reference}{308}
+\indexentry{context!extensional}{308}
+\indexentry{context!intensional}{308}
+\indexentry{Leibniz' Principle}{309}
+\indexentry{Montague, Richard}{309}
+\indexentry{Carnap, Rudolf}{309}
+\indexentry{$\qu, \wD$}{309}
+\indexentry{modal logic}{309}
+\indexentry{modal logic!classical}{309}
+\indexentry{modal logic!monotone}{309}
+\indexentry{modal logic!normal}{309}
+\indexentry{modal logic!quasi--normal}{309}
+\indexentry{operator!necessity}{309}
+\indexentry{operator!possibility}{309}
+\indexentry{operator!dual}{309}
+\indexentry{$\oplus$}{309}
+\indexentry{$\vdash_{L}, \Vdash_{L}$}{309}
+\indexentry{consequence relation!local}{310}
+\indexentry{consequence relation!global}{310}
+\indexentry{Kripke--frame}{310}
+\indexentry{Kripke--frame!generalized}{310}
+\indexentry{set!\faul\  of worlds}{310}
+\indexentry{accessibility relation}{310}
+\indexentry{$\sq$}{310}
+\indexentry{valuation}{310}
+\indexentry{frame consequence!local}{310}
+\indexentry{frame consequence!global}{310}
+\indexentry{$\mathsf{S5}$}{311}
+\indexentry{$[K_J]$, $[B_J]$}{311}
+\indexentry{$\mathsf{K4}$}{312}
+\indexentry{$\qrechts$, $\rechts$, $\qlinks$, $\links$}{312}
+\indexentry{Montague, Richard}{313}
+\indexentry{$\sq$, $\wD$}{313}
+\indexentry{boolean algebra!with operators (BAO)}{313}
+\indexentry{hemimorphism}{313}
+\indexentry{multimodal algebra}{313}
+\indexentry{subframe!generated}{314}
+\indexentry{Blok, Wim}{315}
+\indexentry{Pigozzi, Don}{315}
+\indexentry{Leibniz' Principle}{315}
+\indexentry{theory}{315}
+\indexentry{axiomatization}{315}
+\indexentry{logic}{315}
+\indexentry{meaning postulate}{316}
+\indexentry{Czelakowski, Janusz}{316}
+\indexentry{Suszko, Roman}{316}
+\indexentry{Prucnal, T.}{316}
+\indexentry{Wro\'nski, Andrzej}{316}
+\indexentry{equivalential term}{316}
+\indexentry{equivalential term!set of \faul s}{317}
+\indexentry{consequence relation!equivalential}{317}
+\indexentry{consequence relation!finitely equivalential}{317}
+\indexentry{term!equivalential}{317}
+\indexentry{variety!congruence regular}{318}
+\indexentry{variety!congruence regular}{318}
+\indexentry{logic!Fregean}{318}
+\indexentry{Leibniz' Principle}{318}
+\indexentry{Leibniz' Principle}{318}
+\indexentry{Leibniz equivalence}{318}
+\indexentry{Leibniz operator}{318}
+\indexentry{Leibniz' Principle}{319}
+\indexentry{canonical Leibniz congruence}{319}
+\indexentry{canonical Leibniz meaning}{319}
+\indexentry{$\nabla_{\vdash}$}{319}
+\indexentry{Leibniz' Principle}{319}
+\indexentry{theory}{320}
+\indexentry{Leibniz' Principle}{320}
+\indexentry{Recanati, Fran\c{c}ois}{320}
+\indexentry{Leibniz' Principle}{320}
+\indexentry{logic!first--order}{323}
+\indexentry{first--order logic}{323}
+\indexentry{FOL}{323}
+\indexentry{$\mathsf{FOL}$, $\vdash^{\mathsf{FOL}}$}{323}
+\indexentry{first--order logic}{323}
+\indexentry{G\"odel, Kurt}{324}
+\indexentry{simple type theory (STT)}{324}
+\indexentry{$\mathsf{STyp}$}{325}
+\indexentry{$M_{\alpha} \neweq N_{\alpha}$}{325}
+\indexentry{$\mathsf{STyp}$}{325}
+\indexentry{Henkin, Leon}{329}
+\indexentry{cylindric algebra}{333}
+\indexentry{dimension}{333}
+\indexentry{$\Delta a$}{333}
+\indexentry{cylindric algebra!locally finite dimensional}{333}
+\indexentry{Halmos, Paul}{334}
+\indexentry{Quine, Willard van Orman}{334}
+\indexentry{dimension}{334}
+\indexentry{Sain, Ildik\'o}{334}
+\indexentry{Thompson, Richard S.}{334}
+\indexentry{support}{334}
+\indexentry{$\supp(\pi)$}{334}
+\indexentry{transformation}{334}
+\indexentry{permutation}{334}
+\indexentry{transposition}{334}
+\indexentry{polyadic algebra!finitary}{334}
+\indexentry{index}{335}
+\indexentry{type}{335}
+\indexentry{$f^{\star}$}{338}
+\indexentry{environment}{338}
+\indexentry{Monk, Donald}{340}
+\indexentry{Johnson, J.~S.}{340}
+\indexentry{Sain, Ildik\'o}{340}
+\indexentry{Thompson, Richard S.}{340}
+\indexentry{Hindley, J.~R.}{340}
+\indexentry{Longo, G.}{340}
+\indexentry{Koymans, J.~P.~C.}{340}
+\indexentry{Montague Semantics}{341}
+\indexentry{sign grammar!context free}{341}
+\indexentry{sign system!context free}{341}
+\indexentry{sign grammar!quasi context free}{341}
+\indexentry{interpreted language!strongly context free}{342}
+\indexentry{interpreted language!weakly context free}{342}
+\indexentry{function!finite}{346}
+\indexentry{function!bounded}{346}
+\indexentry{interpreted language!finitely reversible}{346}
+\indexentry{interpreted language!boundedly reversible}{346}
+\indexentry{$x^{\GI}$, $x_{\GI}$}{346}
+\indexentry{$[\vec{x}]_{\Sigma}^A$}{347}
+\indexentry{$A$--meaning}{347}
+\indexentry{meaning!$A$--\faul}{347}
+\indexentry{Montague Semantics}{348}
+\indexentry{Montague Semantics}{351}
+\indexentry{Pogodalla, Sylvain}{351}
+\indexentry{$\oli{X}$--syntax}{351}
+\indexentry{Montague Semantics}{352}
+\indexentry{presupposition}{352}
+\indexentry{$\gg_{\vdash}$}{352}
+\indexentry{Russell, Bertrand}{352}
+\indexentry{Kempson, Ruth}{352}
+\indexentry{$\vdash_3$}{353}
+\indexentry{$\vdash_2$}{353}
+\indexentry{connective!Bochvar}{353}
+\indexentry{$\und'$, $\oder'$, $\pf'$}{356}
+\indexentry{presupposition!generic}{356}
+\indexentry{assertion}{356}
+\indexentry{bivalence}{356}
+\indexentry{$\downarrow$}{357}
+\indexentry{presupposition!generic}{357}
+\indexentry{assertion}{357}
+\indexentry{$\equiv_3$}{357}
+\indexentry{projection algorithm}{357}
+\indexentry{context change}{357}
+\indexentry{text}{357}
+\indexentry{text!coherent}{357}
+\indexentry{context!local}{358}
+\indexentry{bivalence}{358}
+\indexentry{Heim, Irene}{358}
+\indexentry{Kartttunen, Lauri}{358}
+\indexentry{van Eijck, Jan}{358}
+\indexentry{supervaluation}{359}
+\indexentry{van Fraassen, Bas}{359}
+\indexentry{Kleene, Stephen C.}{360}
+\indexentry{connective!strong Kleene}{360}
+\indexentry{$\cap^{\diamond}$, $\cup^{\diamond}$}{360}
+\indexentry{law of the excluded middle}{360}
+\indexentry{I--model}{361}
+\indexentry{C--model}{361}
+\indexentry{Veltman, Frank}{362}
+\indexentry{Ramsey, Frank}{362}
+\indexentry{G\"ardenfors model}{362}
+\indexentry{G\"ardenfors, Peter}{362}
+\indexentry{Deduction Theorem}{363}
+\indexentry{Chomsky, Noam}{365}
+\indexentry{Joshi, Aravind}{367}
+\indexentry{constant growth property}{367}
+\indexentry{Rambow, Owen}{367}
+\indexentry{Michaelis, Jens}{367}
+\indexentry{Kracht, Marcus}{367}
+\indexentry{Joshi, Aravind}{367}
+\indexentry{language!PTIME}{368}
+\indexentry{$\Omega_{\intercal}$}{369}
+\indexentry{key}{369}
+\indexentry{A--form}{369}
+\indexentry{Ebert, Christian}{370}
+\indexentry{Kracht, Marcus}{370}
+\indexentry{Chandra, A.~K.}{370}
+\indexentry{Stockmeyer, L.~J.}{370}
+\indexentry{Kozen, Dexter C.}{370}
+\indexentry{Turing machine!logarithmically space bounded}{370}
+\indexentry{\textbf{LOGSPACE}}{370}
+\indexentry{boolean function}{372}
+\indexentry{cell}{372}
+\indexentry{number}{373}
+\indexentry{argument key}{373}
+\indexentry{network}{373}
+\indexentry{network!goal}{373}
+\indexentry{$w(\vec{x})$}{373}
+\indexentry{$\xi(\vec{x})$}{373}
+\indexentry{network!monotone}{375}
+\indexentry{boolean function!monotone}{376}
+\indexentry{Turing machine!alternating}{376}
+\indexentry{\textbf{ALOGSPACE}}{377}
+\indexentry{Chandra, A.~K.}{377}
+\indexentry{Stockmeyer, L.~J.}{377}
+\indexentry{Kozen, Dexter C.}{377}
+\indexentry{language!weakly semilinear}{379}
+\indexentry{Groenink, Annius}{379}
+\indexentry{Rounds, William}{379}
+\indexentry{Horn--formula}{380}
+\indexentry{literal movement grammar (LMG)}{381}
+\indexentry{LMG (see literal movement grammar)}{381}
+\indexentry{predicate}{381}
+\indexentry{branching number}{381}
+\indexentry{$\vdash_G$}{382}
+\indexentry{substitution}{382}
+\indexentry{valuation}{382}
+\indexentry{Herbrand--universe}{382}
+\indexentry{rule!instance}{382}
+\indexentry{permutation}{383}
+\indexentry{literal movement grammar!nondeleting}{384}
+\indexentry{rule!upward nondeleting}{384}
+\indexentry{rule!upward linear}{384}
+\indexentry{rule!downward nondeleting}{384}
+\indexentry{rule!downward linear}{384}
+\indexentry{rule!noncombinatorial}{385}
+\indexentry{literal movement grammar!noncombinatorial}{385}
+\indexentry{rule!simple}{385}
+\indexentry{literal movement grammar!simple}{385}
+\indexentry{\textbf{ARO}}{387}
+\indexentry{Groenink, Annius}{390}
+\indexentry{elementary formal system}{390}
+\indexentry{rule!definite}{392}
+\indexentry{literal movement grammar!definite}{392}
+\indexentry{$\sotimes$}{394}
+\indexentry{$\sotimes$, $\triangleleft$, $\triangleright$, $\zeta$, $\iota$}{394}
+\indexentry{string vector algebra}{395}
+\indexentry{$\GV(\GA)$}{395}
+\indexentry{Arabic}{398}
+\indexentry{Mandarin}{398}
+\indexentry{Chinese}{398}
+\indexentry{Radzinski, Daniel}{399}
+\indexentry{literal movement grammar!linear}{400}
+\indexentry{Vijay--Shanker, K.}{404}
+\indexentry{Weir, David}{404}
+\indexentry{Joshi, Aravind}{404}
+\indexentry{Pollard, Carl}{404}
+\indexentry{Roach, Kelly}{404}
+\indexentry{head grammar}{404}
+\indexentry{context!$n$--\faul}{405}
+\indexentry{discontinuity degree}{405}
+\indexentry{rule!monotone}{406}
+\indexentry{literal movement grammar!monotone}{406}
+\indexentry{language!$k$--pumpable}{407}
+\indexentry{Groenink, Annius}{407}
+\indexentry{overlap}{409}
+\indexentry{Seki, Hiroyuki}{411}
+\indexentry{Matsumura, Takashi}{411}
+\indexentry{Fujii, Mamoru}{411}
+\indexentry{Kasami, Tadao}{411}
+\indexentry{Michaelis, Jens}{411}
+\indexentry{Villemonte de la Clergerie, Eric}{412}
+\indexentry{Stabler, Edward P.}{412}
+\indexentry{Chomsky, Noam}{412}
+\indexentry{Harkema, Henk}{412}
+\indexentry{node!central}{412}
+\indexentry{$\GN(\GT)$}{413}
+\indexentry{$D(G)$}{413}
+\indexentry{derivation grammar}{413}
+\indexentry{grammar!derivation}{413}
+\indexentry{derivation}{413}
+\indexentry{$X^{\triangledown}$}{414}
+\indexentry{tree adjoining grammar!standard}{415}
+\indexentry{TAG}{415}
+\indexentry{Vijay--Shanker, K.}{416}
+\indexentry{Weir, David}{416}
+\indexentry{Joshi, Aravind}{416}
+\indexentry{literal movement grammar!$n$--branching}{420}
+\indexentry{Harris, Zellig S.}{421}
+\indexentry{index scheme}{422}
+\indexentry{index scheme!terminal}{422}
+\indexentry{instantiation}{422}
+\indexentry{rule scheme}{422}
+\indexentry{index scheme!context free}{422}
+\indexentry{index scheme!linear}{422}
+\indexentry{index grammar}{423}
+\indexentry{index grammar!linear}{423}
+\indexentry{LIG}{423}
+\indexentry{index grammar!simple}{424}
+\indexentry{index grammar!right linear}{427}
+\indexentry{Michaelis, Jens}{427}
+\indexentry{Wartena, Christian}{427}
+\indexentry{block}{429}
+\indexentry{p--category}{429}
+\indexentry{$K(\alpha)$}{429}
+\indexentry{combinatory categorial grammar}{429}
+\indexentry{CCG (see combinatory categorial grammar)}{429}
+\indexentry{Langholm, Tore}{431}
+\indexentry{Leibniz' Principle}{432}
+\indexentry{Leibniz' Principle}{432}
+\indexentry{Leibniz' Principle}{433}
+\indexentry{Leibniz' Principle}{433}
+\indexentry{occurrence}{433}
+\indexentry{replacement}{433}
+\indexentry{Hodges, Wilfrid}{433}
+\indexentry{Tarski, Alfred}{433}
+\indexentry{Tarski's Principle}{433}
+\indexentry{progress measure}{435}
+\indexentry{sign grammar!progressive}{435}
+\indexentry{sign grammar!strictly progressive}{435}
+\indexentry{Leibniz' Principle}{435}
+\indexentry{$\Sent_{\GA, \mbox{\smtt S}}$}{436}
+\indexentry{context set}{436}
+\indexentry{$\simeq_{\Sigma}$}{436}
+\indexentry{exponents!syntactically indistinguishable}{436}
+\indexentry{grammar!natural}{437}
+\indexentry{sign system!strictly compositional}{438}
+\indexentry{Montague, Richard}{438}
+\indexentry{Russell, Bertrand}{438}
+\indexentry{Frege, Gottlob}{438}
+\indexentry{Montague, Richard}{438}
+\indexentry{Montague, Richard}{439}
+\indexentry{Montague, Richard}{440}
+\indexentry{Montague, Richard}{441}
+\indexentry{May, Robert}{441}
+\indexentry{Fiengo, Robert}{441}
+\indexentry{Montague, Richard}{441}
+\indexentry{Church, Alonzo}{441}
+\indexentry{tectogrammar}{441}
+\indexentry{von Humboldt, Alexander}{441}
+\indexentry{phenogrammar}{441}
+\indexentry{Leibniz' Principle}{442}
+\indexentry{singulare tantum}{442}
+\indexentry{Mandarin}{442}
+\indexentry{Radzinski, Daniel}{442}
+\indexentry{Bahasa Indonesia}{443}
+\indexentry{Leibniz' Principle}{443}
+\indexentry{Leibniz' Principle}{444}
+\indexentry{Hausser, Roland}{444}
+\indexentry{Montague, Richard}{444}
+\indexentry{Leibniz' Principle}{444}
+\indexentry{Leibniz' Principle}{445}
+\indexentry{Latin}{445}
+\indexentry{Leibniz' Principle}{445}
+\indexentry{de Saussure, Ferdinand}{445}
+\indexentry{signifier}{445}
+\indexentry{signified}{445}
+\indexentry{Chomsky, Noam}{446}
+\indexentry{string term}{446}
+\indexentry{$\lambda$--term!relevant}{446}
+\indexentry{string term!weakly progressive}{446}
+\indexentry{string term!progressive}{446}
+\indexentry{sign!de Saussure}{446}
+\indexentry{grammar!de Saussure}{446}
+\indexentry{de Saussure sign}{446}
+\indexentry{de Saussure grammar}{446}
+\indexentry{functor sign}{446}
+\indexentry{argument sign}{446}
+\indexentry{Bahasa Indonesia}{449}
+\indexentry{Malay}{449}
+\indexentry{English}{449}
+\indexentry{Mel'\v{c}uk, Igor}{449}
+\indexentry{German}{450}
+\indexentry{conversioneme}{452}
+\indexentry{Swiss German}{452}
+\indexentry{case}{453}
+\indexentry{Finnish}{454}
+\indexentry{Harris, Zellig S.}{455}
+\indexentry{German}{455}
+\indexentry{suppletion}{455}
+\indexentry{Latin}{455}
+\indexentry{portmanteau morph}{455}
+\indexentry{de Groote, Philippe}{456}
+\indexentry{Arabic}{456}
+\indexentry{Mandarin}{456}
+\indexentry{functional head}{457}
+\indexentry{German}{459}
+\indexentry{GPSG (see Generalized Phrase Structure Grammar)}{460}
+\indexentry{Generalized Phrase Structure Grammar}{460}
+\indexentry{attribute}{460}
+\indexentry{value}{460}
+\indexentry{attribute--value structure (AVS)}{460}
+\indexentry{AVS (see attribute value structure)}{460}
+\indexentry{value!atomic}{461}
+\indexentry{attribute!Type 0}{461}
+\indexentry{attribute!Type 1}{461}
+\indexentry{HPSG (see Head Driven Phrase Structure Grammar)}{461}
+\indexentry{Head Driven Phrase Structure Grammar}{461}
+\indexentry{variable!structure \faul}{462}
+\indexentry{licensing}{463}
+\indexentry{underspecification}{463}
+\indexentry{attribute!definite}{465}
+\indexentry{attribute!set valued}{465}
+\indexentry{second order logic}{465}
+\indexentry{second order logic!monadic}{465}
+\indexentry{MSO (see monadic second order logic)}{465}
+\indexentry{SO (see second order logic)}{465}
+\indexentry{$\mathsf{MSO}(\Omega)$}{465}
+\indexentry{structure}{466}
+\indexentry{model}{466}
+\indexentry{quantified modal logic}{466}
+\indexentry{QML (see quantified modal logic)}{466}
+\indexentry{Kripke--frame}{466}
+\indexentry{Kripke--model}{466}
+\indexentry{$\Omega^m$}{467}
+\indexentry{Z--structure}{468}
+\indexentry{theory!MSO--}{469}
+\indexentry{model class}{469}
+\indexentry{logic}{469}
+\indexentry{class!axiomatic}{469}
+\indexentry{class!finitely MSO--axiomatisable}{469}
+\indexentry{B\"uchi, J.}{469}
+\indexentry{$\delta(\GA)$}{470}
+\indexentry{MZ--structure}{471}
+\indexentry{structures!connected}{471}
+\indexentry{quantifier!restricted}{473}
+\indexentry{$\{P_x/x\}\varphi$}{474}
+\indexentry{modality!universal}{474}
+\indexentry{grammar$^{\ast}$!faithful}{476}
+\indexentry{code}{476}
+\indexentry{formula!codable}{476}
+\indexentry{product of grammars$^{\ast}$}{477}
+\indexentry{$G_1\times G_2$}{477}
+\indexentry{product}{477}
+\indexentry{code}{477}
+\indexentry{Coding Theorem}{478}
+\indexentry{umlaut}{483}
+\indexentry{devoicing}{483}
+\indexentry{archiphoneme}{483}
+\indexentry{devoicing}{484}
+\indexentry{Chomsky, Noam}{484}
+\indexentry{Halle, Morris}{484}
+\indexentry{SPE--model}{484}
+\indexentry{devoicing}{484}
+\indexentry{Chomsky, Noam}{484}
+\indexentry{Halle, Morris}{484}
+\indexentry{Kaplan, Ron}{484}
+\indexentry{Kay, Martin}{484}
+\indexentry{Koskenniemi, Kimmo}{484}
+\indexentry{language$^{\ast}$}{485}
+\indexentry{word}{485}
+\indexentry{realization}{485}
+\indexentry{allophone}{485}
+\indexentry{map!discriminating}{485}
+\indexentry{phonemicization}{485}
+\indexentry{phoneme}{485}
+\indexentry{English}{486}
+\indexentry{German}{486}
+\indexentry{German}{487}
+\indexentry{Finnish}{487}
+\indexentry{context set}{487}
+\indexentry{$\Cont_L(a)$}{487}
+\indexentry{complementary distribution}{487}
+\indexentry{propositional dynamic logic}{488}
+\indexentry{PDL (see propositional dynamic logic)}{488}
+\indexentry{program!elementary}{488}
+\indexentry{propositional dynamic logic!elementary}{489}
+\indexentry{$\mathsf{PDL}$}{489}
+\indexentry{$\mathsf{PDL}^{\smallsmile}$, $\mathsf{EPDL}^{\smallsmile}$}{489}
+\indexentry{definition!global implicit}{490}
+\indexentry{constant!eliminable}{490}
+\indexentry{Fisher--Ladner closure}{491}
+\indexentry{$\FL(\chi)$}{491}
+\indexentry{cooccurrence restrictions}{492}
+\indexentry{definition!global explicit}{493}
+\indexentry{Beth property!global}{493}
+\indexentry{sandhi}{494}
+\indexentry{template}{494}
+\indexentry{template language}{494}
+\indexentry{template language!boundary}{494}
+\indexentry{finite state automaton!partial}{495}
+\indexentry{language!2--template}{495}
+\indexentry{sonoricity hierarchy}{496}
+\indexentry{van der Hulst, Harry}{497}
+\indexentry{onset}{497}
+\indexentry{rhyme}{497}
+\indexentry{nucleus}{497}
+\indexentry{coda}{497}
+\indexentry{transducer!finite state}{497}
+\indexentry{state}{498}
+\indexentry{state!initial}{498}
+\indexentry{state!accepting}{498}
+\indexentry{transition function}{498}
+\indexentry{transducer!deterministic finite state}{498}
+\indexentry{alphabet!input}{498}
+\indexentry{alphabet!output}{498}
+\indexentry{regular relation}{499}
+\indexentry{relation!regular}{499}
+\indexentry{Transducer Theorem}{499}
+\indexentry{Kaplan, Ron}{500}
+\indexentry{Kay, Martin}{500}
+\indexentry{Hungarian}{501}
+\indexentry{Indo--European}{501}
+\indexentry{Finnish}{502}
+\indexentry{$\mathsf{MSO}^b$}{503}
+\indexentry{$\oben$, $\oben^+$, $\unten$, $\unten^+$, $\rechts$, $\rechts^+$, $\links$, $\links^+$}{504}
+\indexentry{code}{508}
+\indexentry{faithfulness}{508}
+\indexentry{formula!codable}{508}
+\indexentry{grammar$^{\ast}$!product of {\faul}s}{508}
+\indexentry{projection}{508}
+\indexentry{Thatcher, J.~W.}{508}
+\indexentry{Wright, J.~B.}{508}
+\indexentry{Doner, J.~E.}{508}
+\indexentry{code!uniform}{509}
+\indexentry{Transformational Grammar}{513}
+\indexentry{TG (see Transformational Grammar)}{513}
+\indexentry{topicalisation}{513}
+\indexentry{English}{513}
+\indexentry{structural description}{513}
+\indexentry{structural change}{513}
+\indexentry{V2--movement}{515}
+\indexentry{damit--split}{515}
+\indexentry{German}{515}
+\indexentry{Harris, Zellig S.}{515}
+\indexentry{Chomsky, Noam}{515}
+\indexentry{deep structure}{515}
+\indexentry{surface structure}{516}
+\indexentry{derivation}{516}
+\indexentry{logical form}{517}
+\indexentry{Chomsky, Noam}{517}
+\indexentry{English}{517}
+\indexentry{trace}{518}
+\indexentry{Phonological Form}{518}
+\indexentry{referential expression}{518}
+\indexentry{anaphor}{518}
+\indexentry{Latin}{518}
+\indexentry{Italian}{518}
+\indexentry{little pro}{519}
+\indexentry{binding}{519}
+\indexentry{c--command}{519}
+\indexentry{GB (see Theory of Government and Binding)}{520}
+\indexentry{Theory of Government and Binding}{520}
+\indexentry{Chomsky, Noam}{520}
+\indexentry{Move--$\alpha$}{520}
+\indexentry{parasitic gap}{520}
+\indexentry{German}{521}
+\indexentry{English}{521}
+\indexentry{Minimalist Program}{521}
+\indexentry{module}{521}
+\indexentry{antecedent}{522}
+\indexentry{trace}{522}
+\indexentry{Chomsky, Noam}{523}
+\indexentry{T--model}{523}
+\indexentry{$\oli{X}$--syntax}{523}
+\indexentry{category!lexical}{523}
+\indexentry{category!functional}{523}
+\indexentry{head}{523}
+\indexentry{complement}{524}
+\indexentry{specifier}{524}
+\indexentry{adjunct}{524}
+\indexentry{category}{524}
+\indexentry{segment}{524}
+\indexentry{subcategorization frame}{524}
+\indexentry{licensing}{524}
+\indexentry{argument!internal}{524}
+\indexentry{argument!external}{524}
+\indexentry{Burzio, Luigi}{525}
+\indexentry{government}{525}
+\indexentry{government!proper}{525}
+\indexentry{cyclicity}{526}
+\indexentry{cyclicity}{526}
+\indexentry{bounding node}{526}
+\indexentry{Generalized Phrase Structure Grammar}{527}
+\indexentry{LFG (see Lexical Functional Grammar)}{527}
+\indexentry{Head Driven Phrase Structure Grammar}{527}
+\indexentry{Chomsky, Noam}{527}
+\indexentry{Bloomfield, Leonard}{527}
+\indexentry{Manaster--Ramer, Alexis}{528}
+\indexentry{Kac, Michael B.}{528}
+\indexentry{Gazdar, Gerald}{528}
+\indexentry{Pullum, Geoffrey}{528}
+\indexentry{Huybregts, Riny}{528}
+\indexentry{Shieber, Stuart}{528}
+\indexentry{Rogers, James}{528}
+\indexentry{Kracht, Marcus}{528}
+\indexentry{Postal, Paul}{528}
+\indexentry{von Stechow, Arnim}{528}
+\indexentry{Sternefeld, Wolfgang}{528}
+\indexentry{German}{528}
+\indexentry{Staal, J.~F.}{529}
+\indexentry{metarule}{529}
+\indexentry{feature}{529}
+\indexentry{feature!head}{529}
+\indexentry{feature!foot}{529}
+\indexentry{unification}{529}
+\indexentry{path}{530}
+\indexentry{verb cluster}{530}
+\indexentry{German}{530}
+\indexentry{Dutch}{530}
+\indexentry{Bresnan, Joan}{531}
+\indexentry{Kaplan, Ron}{531}
+\indexentry{Peters, Stanley}{531}
+\indexentry{Zaenen, Annie}{531}
+\indexentry{f--structure}{531}
+\indexentry{a--structure}{531}
+\indexentry{c--structure}{531}
+\indexentry{$s \doteq t$, $s \uparrow$}{533}
+\indexentry{constraint}{533}
+\indexentry{constraint!basic}{533}
+\indexentry{Kracht, Marcus}{537}
+\indexentry{German}{537}
+\indexentry{Uszkoreit, Hans}{537}
+\indexentry{Swiss German}{537}
+\indexentry{idc--command}{538}
+\indexentry{c--command}{538}
+\indexentry{command relation}{538}
+\indexentry{command relation!monotone}{538}
+\indexentry{command relation!tight}{538}
+\indexentry{$\goth{MCr}(\GT)$}{539}
+\indexentry{command relation!generated}{540}
+\indexentry{command relation!chain like}{540}
+\indexentry{$K(P) \bullet K(Q)$}{540}
+\indexentry{command relation!product of {\faul}s}{540}
+\indexentry{shuffling}{540}
+\indexentry{embedding}{540}
+\indexentry{command relation!weakly associated}{541}
+\indexentry{command relation!definable}{541}
+\indexentry{subjacency}{542}
+\indexentry{Chomsky, Noam}{542}
+\indexentry{Copy--$\alpha$}{542}
+\indexentry{ac--command}{543}
+\indexentry{chain}{543}
+\indexentry{chain!trace \faul}{543}
+\indexentry{chain!copy \faul}{543}
+\indexentry{chain!head \faul}{543}
+\indexentry{chain!foot \faul}{543}
+\indexentry{copy chain$^{\ast}$}{543}
+\indexentry{chain!associated}{543}
+\indexentry{$x \approx_{\CD} y$, $[x]_{\CD}$}{543}
+\indexentry{link}{543}
+\indexentry{link map}{543}
+\indexentry{map!ascending}{543}
+\indexentry{copy chain tree}{544}
+\indexentry{CCT (see copy chain tree)}{544}
+\indexentry{uniqueness}{544}
+\indexentry{Liberation}{544}
+\indexentry{root}{544}
+\indexentry{canonical decomposition}{545}
+\indexentry{trajectory}{546}
+\indexentry{$\pi_x$, $x_{\pi}$, $\zeta_x$, $x_{\zeta}$}{546}
+\indexentry{link map!orbital}{546}
+\indexentry{No Recycling}{546}
+\indexentry{copy chain structure}{546}
+\indexentry{CCS (see copy chain structure)}{546}
+\indexentry{tree}{546}
+\indexentry{multidominance structure}{547}
+\indexentry{MDS (see multidominance structure)}{547}
+\indexentry{multidominance structure!ordered}{547}
+\indexentry{OMDS (see ordered multidominance structure)}{547}
+\indexentry{address}{548}
+\indexentry{element!overt}{548}
+\indexentry{link}{548}
+\indexentry{link!maximal}{548}
+\indexentry{identifier!S--\faul}{548}
+\indexentry{link extension}{548}
+\indexentry{trace chain structure}{549}

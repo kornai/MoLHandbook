@@ -1,0 +1,50 @@
+\select@language {english} \contentsline {chapter}{\numberline {1}Fundamental Structures}{1}% 
+\select@language {english} \contentsline {section}{\numberline {1}Algebras and Structures}{1}% 
+\select@language {english} \contentsline {section}{\numberline {2}Semigroups and Strings}{16}% 
+\select@language {english} \contentsline {section}{\numberline {3}Fundamentals of Linguistics}{29}% 
+\select@language {english} \contentsline {section}{\numberline {4}Trees}{42}% 
+\select@language {english} \contentsline {section}{\numberline {5}Rewriting Systems}{52}% 
+\select@language {english} \contentsline {section}{\numberline {6}Grammar and Structure}{65}% 
+\select@language {english} \contentsline {section}{\numberline {7}Turing machines}{79}% 
+\select@language {english} \contentsline {chapter}{\numberline {2}Context Free Languages}{93}% 
+\select@language {english} \contentsline {section}{\numberline {1}Regular Languages}{93}% 
+\select@language {english} \contentsline {section}{\numberline {2}Normal Forms}{101}% 
+\select@language {english} \contentsline {section}{\numberline {3}Recognition and Analysis}{115}% 
+\select@language {english} \contentsline {section}{\numberline {4}Ambiguity, Transparency and Parsing Strategies}{130}% 
+\select@language {english} \contentsline {section}{\numberline {5}Semilinear Languages}{145}% 
+\select@language {english} \contentsline {section}{\numberline {6}Parikh's Theorem}{158}% 
+\select@language {english} \contentsline {section}{\numberline {7}Are Natural Languages Context Free?}{163}% 
+\select@language {english} \contentsline {chapter}{\numberline {3}Categorial Grammar and Formal Semantics}{175}% 
+\select@language {english} \contentsline {section}{\numberline {1}Languages as Systems of Signs}{175}% 
+\select@language {english} \contentsline {section}{\numberline {2}Propositional Logic}{189}% 
+\select@language {english} \contentsline {section}{\numberline {3}Basics of $\lambda $--Calculus and Combinatory Logic}{205}% 
+\select@language {english} \contentsline {section}{\numberline {4}The Syntactic Calculus of Ca\-te\-go\-ries}{222}% 
+\select@language {english} \contentsline {section}{\numberline {5}The AB--Calculus}{237}% 
+\select@language {english} \contentsline {section}{\numberline {6}The Lambek--Calculus}{247}% 
+\select@language {english} \contentsline {section}{\numberline {7}Pentus' Theorem}{255}% 
+\select@language {english} \contentsline {section}{\numberline {8}Montague Semantics I}{266}% 
+\select@language {english} \contentsline {chapter}{\numberline {4}Semantics}{279}% 
+\select@language {english} \contentsline {section}{\numberline {1}The Nature of Semantical Representations}{279}% 
+\select@language {english} \contentsline {section}{\numberline {2}Boolean Semantics}{294}% 
+\select@language {english} \contentsline {section}{\numberline {3}Intensionality}{306}% 
+\select@language {english} \contentsline {section}{\numberline {4}Binding and Quantification}{321}% 
+\select@language {english} \contentsline {section}{\numberline {5}Algebraization}{330}% 
+\select@language {english} \contentsline {section}{\numberline {6}Montague Semantics II}{341}% 
+\select@language {english} \contentsline {section}{\numberline {7}Partiality and Discourse Dynamics}{352}% 
+\select@language {english} \contentsline {chapter}{\numberline {5}PTIME Languages}{365}% 
+\select@language {english} \contentsline {section}{\numberline {1}Mildly--Context Sensitive Lan\-gua\-ges}{365}% 
+\select@language {english} \contentsline {section}{\numberline {2}Literal Movement Grammars}{379}% 
+\select@language {english} \contentsline {section}{\numberline {3}Interpreted LMGs}{391}% 
+\select@language {english} \contentsline {section}{\numberline {4}Discontinuity}{399}% 
+\select@language {english} \contentsline {section}{\numberline {5}Adjunction Grammars}{412}% 
+\select@language {english} \contentsline {section}{\numberline {6}Index Grammars}{421}% 
+\select@language {english} \contentsline {section}{\numberline {7}Compositionality and Constituent Structure}{431}% 
+\select@language {english} \contentsline {section}{\numberline {8}de Saussure Grammars}{445}% 
+\select@language {english} \contentsline {chapter}{\numberline {6}The Model Theory of Linguistic Structures}{459}% 
+\select@language {english} \contentsline {section}{\numberline {1}Categories}{459}% 
+\select@language {english} \contentsline {section}{\numberline {2}Axiomatic Classes I: Strings}{468}% 
+\select@language {english} \contentsline {section}{\numberline {3}Categorization and Pho\-no\-logy}{483}% 
+\select@language {english} \contentsline {section}{\numberline {4}Axiomatic Classes II: Exhaustively Ordered Trees}{503}% 
+\select@language {english} \contentsline {section}{\numberline {5}Transformational Grammar}{513}% 
+\select@language {english} \contentsline {section}{\numberline {6}GPSG and HPSG}{527}% 
+\select@language {english} \contentsline {section}{\numberline {7}Formal Structures of GB}{538}% 
