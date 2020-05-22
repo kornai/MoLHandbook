@@ -1,0 +1,989 @@
+\section{Boolean Semantics}
+%
+%
+%
+Boolean algebras are needed in all areas of semantics, as is 
+demonstrated in \cite{keenanfaltz:boolean}. Boolean algebras 
+are the structures that correspond to propositional logic 
+in the sense that the variety turns out to be generated from 
+just one algebra: the algebra with two values $0$ and $1$, 
+and the usual operations (Theorem~\ref{thm:var}). 
+Moreover, the calculus of equations and the usual deductive 
+calculus mutually interpret each other (Theorem~\ref{thm:eqtovdash}). 
+This allows to show that the axiomatization is complete 
+(Theorem~\ref{thm:2comp}). 
+%%
+\begin{defn}
+\label{defn:ba}
+%%%
+\index{boolean algebra}%%
+\index{algebra!boolean}%%
+%%%
+An algebra $\auf B, 0, 1, -,\cap, \cup\zu$, where $0, 1 \in B$, $-
+\colon B \pf B$ and $\cap, \cup \colon B^2 \pf B$, is called a 
+\textbf{boolean algebra} if it satisfies the following equations 
+for all $x, y, z \in B$.
+%%
+$$\begin{array}{l@{\;}l@{\; = \;}l@{\quad\quad}l@{\;}l@{\; = \;}l}
+\mbox{\rm (as$\cap$)} & x \cap (y \cap z) &  
+(x \cap y) \cap z &
+    \mbox{\rm (as$\cup$)} & x \cup (y \cup z) 
+    & (x \cup y) \cup z \\
+\mbox{\rm (co$\cap$)} & x \cap y & y \cap x &
+    \mbox{\rm (co$\cup$)} & x \cup y & y \cup x \\
+\mbox{\rm (id$\cap$)} & x \cap x & x &
+    \mbox{\rm (id$\cup$)} & x \cup x & x \\
+\mbox{\rm (ab$\cap$)} & x \cap (y \cup x) & x &
+    \mbox{\rm (ab$\cup$)} & x \cup (y \cap x) & x \\
+\mbox{\rm (di$\cap$)} & x \cap (y \cup z) & &
+    \mbox{\rm (di$\cup$)} & x \cup (y \cap z) & \\
+& \multicolumn{2}{r}{(x \cap y) \cup (x \cap z)\quad} &
+& \multicolumn{2}{r}{(x \cup y) \cap (x \cup z)} \\
+\mbox{\rm (li$-$)} & x \cap (-x) & 0 &
+    \mbox{\rm (ui$\cup$)} & x \cup (-x) & 1 \\
+\mbox{\rm (ne$\cap$)} & x \cap 1 & x &
+    \mbox{\rm (ne$0$)} & x \cup 0 & x \\
+\mbox{\rm (dm$\cap$)} & -(x \cap y) & (-x) \cup (-y) &
+    \mbox{\rm (dm$\cup$)} & -(x \cup y) & (-x) \cap (-y) \\
+\mbox{\rm (dn$-$)} & -(- x) & x & \multicolumn{3}{c}{}
+\end{array}$$
+%%
+\end{defn}
+%%
+%%%
+The operation $\cap$ is generally referred to as the \textbf{meet}
+%%%
+\index{meet}%%
+%%%
+(\textbf{operation}) and $\cup$ as the \textbf{join} 
+%%%
+\index{join}%%
+%%%
+(\textbf{operation}).  $- x$ is called the \textbf{complement} 
+%%%
+\index{complement}%%%
+%%%
+of $x$ and $0$ the \textbf{zero} 
+%%%
+\index{zero}%%
+%%%
+and 1 the \textbf{one} or \textbf{unit}. 
+%%%
+\index{one}%%
+%%%
+Obviously, the boolean algebras 
+form an equationally definable class of algebras.
+
+The laws (as$\cap$) and (as$\cup$) are called \textbf{associativity
+laws}, 
+%%%%
+\index{associativity}%%
+%%%%
+the laws (co$\cap$) and (co$\cup$) \textbf{commutativity laws},
+%%%
+\index{commutativity}%%
+%%%%
+(id$\cap$) and (id$\cup$) the \textbf{laws of idempotence} 
+%%%
+\index{idempotence}%%
+%%%
+and (ab$\cap$) and (ab$\cup$) the \textbf{laws of absorption}.  
+%%%
+\index{absorption}%%
+%%%
+A structure $\auf L, \cap, \cup\zu$ satisfying these laws is called
+a \textbf{lattice}. 
+%%%
+\index{lattice}%%
+%%%
+If only one operation is present and the
+corresponding laws hold we speak of a \textbf{semilattice}. 
+%%%
+\index{semilattice}%%
+%%%
+(So, a semilattice is a semigroup that satisfies commutativity and
+idempotence.) Since $\cap$ and $\cup$ are associative and
+commutative, we follow the general practice and omit brackets
+whenever possible. So, rather than $(x \cap (y \cap z))$
+we simply write $x \cap y \cap z$. Also, $(x \cap (y \cap x))$
+is simplified to $x \cap y$. Furthermore, given a
+finite set $S \subseteq L$ the notation $\bigcup \auf x : x \in S\zu$
+or simply $\bigcup S$ is used for the iterated join of the
+elements of $S$. This is uniquely defined, since the join is
+independent of the order and multiplicity in which the elements
+appear.
+%%
+\begin{defn}
+Let $\GL$ be a lattice. We write $x \leq y$ if
+$x \cup y = y$.
+\end{defn}
+%%
+Notice that $x \leq y$ iff $x \cap y = x$. This
+can be shown using the equations above. We leave this as an
+exercise to the reader. Notice also the following.
+%%
+\begin{lem}
+\label{lem:order}
+\begin{dingautolist}{192}
+\item
+$\leq$ is a partial ordering.
+\item
+$x \cup y \leq z$ iff $x \leq z$ and $y \leq z$.
+\item
+$z \leq x \cap y$ iff $z \leq x$ and $z \leq y$.
+\end{dingautolist}
+\end{lem}
+%%
+\proofbeg
+\ding{192} (a) $x \cup x = x$, whence $x \leq x$. (b) Suppose
+that $x \leq y$ and $y \leq x$. Then we get $x \cup y = x$  and
+$y \cup x = y$, whence $y = x \cup y = x$. (c) Suppose
+that $x \leq y$ and $y \leq z$. Then $x \cup y = y$ and
+$y \cup z = z$ and so $x \cup z = x \cup (y \cup z) =
+(x \cup y) \cup z = y \cup z = z$. \ding{193} Let $x \cup y
+\leq z$. Then, since $x \leq x \cup y$, we have $x \leq z$ by
+(\ding{192}c); for the same reason also $y \leq z$. Now assume
+$x \leq z$ and $y \leq z$. Then $x \cup z = y \cup z = z$
+and so $z = z \cup z = (x \cup z) \cup (y \cup z) =
+(x \cup y) \cup z$, whence $x \cup y \leq z$. \ding{194}
+Similarly, using $x \leq y$ iff $x \cap y = x$.
+\proofend
+
+In fact, it is customary to define a lattice by means of $\leq$.
+This is done as follows.
+%% Bild %%
+%%
+\begin{defn}
+Let $\leq $ be a partial order on $L$.  Let $X \subseteq L$ be an
+arbitrary set. The \textbf{greatest lower bound} (\textbf{glb}) of 
+%%%
+\index{greatest lower bound (glb)}%%%
+%%%
+$X$, also denoted $\bigcap X$, is that element $u$ such that for 
+all $z$: if $x \geq z$ for all $x \in X$ then also $u \geq z$ (if it 
+exists). Analogously, the \textbf{least upper bound} (\textbf{lub}) 
+%%%
+\index{least upper bound (lub)}%%%
+%%%
+of $X$, denoted by $\bigcup X$, is that element $v$ such that for all
+$z$: if $x \leq  z$ for all $x \in X$ then also $v \leq z$ (if it 
+exists).
+\end{defn}
+%%
+Notice that there are partial orderings which have no lubs. For 
+example, let $L = \auf \{0,1,2,3\}, \preccurlyeq\zu$, where 
+%%%
+\begin{equation}
+\preccurlyeq := \{\auf 0,0\zu, \auf 0,2\zu, \auf 0,3\zu, 
+	\auf 1,1\zu, \auf 1,2\zu, \auf 1,3\zu, \auf 2,2\zu, 
+	\auf 3,3\zu\}
+\end{equation}
+%%%
+Here, $\{0,1\}$ has no lub. This partial ordering does therefore 
+not come from a lattice. For 
+by the facts established above, the join of two elements
+$x$ and $y$ is simply the lub of $\{x, y\}$, and the
+meet is the glb of $\{x, y\}$. It is left to the reader to
+verify that these operations satisfy all laws of lattices.
+So, a partial order $\leq$ is the order determined by a lattice
+structure iff all finite sets have a least upper
+bound and a greatest lower bound.
+
+The laws (di$\cap$) and (di$\cup$) are the \textbf{distributivity
+laws}. A lattice is called \textbf{distributive} if they hold in it.
+%%%
+\index{lattice!distributive}%%
+%%%
+A nice example of a distributive lattice is the following. Take
+a natural number, say $28$, and list all divisors of it:
+1, 2, 4, 7, 14, 28. Write $x \leq y$ if $x$ is a
+divisor of $y$. (So, $2 \leq 14$, $2 \leq 4$, but not $4 \leq 7$.)
+Then $\cap$ turns out to be the greatest common divisor and
+$\cup$ the least common multiple. Another example is the
+linear lattice defined by the numbers $< n$ with $\leq$ the
+usual ordering. $\cap$ is then the minimum and $\cup$ the
+maximum.
+
+%%%
+\index{lattice!bounded}%%
+%%%
+A \textbf{bounded lattice} is a structure $\auf L, 0, 1, \cap, \cup\zu$
+which is a lattice with respect to $\cap$ and $\cup$, and in which
+satisfies (ne$\cap$) and (ne$\cup$). From the definition of $\leq$,
+(ne$\cap$) means that $x \leq 1$ for all $x$ and (ne$\cup$) that
+$0 \leq x$ for all $x$. Every finite lattice has a least and a
+largest element and can thus be extended to a bounded lattice.
+This extension is usually done without further notice.
+%%
+\begin{defn}
+%%%
+\index{join irreducibility}%%
+\index{meet irreducibility}%%
+%%%
+Let $\GL = \auf L, \cap, \cup\zu$ be a lattice.  An element $x$ is
+\textbf{join irreducible in} $\GL$ if for all $y$ and $z$ such that
+$x = y \cup z$ either $x = y$ or $x = z$. $x$ is \textbf{meet
+irreducible} if for all $y$ and $z$ such that $x = y \cap z$
+either $x = y$ or $x = z$.
+\end{defn}
+%%
+It turns out that in a distributive lattice irreducible
+elements have a stronger property. Call $x$ \textbf{meet prime}
+%%%
+\index{meet prime}%%
+%%%
+if for all $y$ and $z$: from $x \geq y \cap z$ follows $x \geq y$
+or $x \geq z$. Obviously, if $x$ is meet prime it is also meet
+irreducible. The converse is generally false. Look at $M_3$ shown
+in Figure~\ref{fig:nondist}. Here, $c \geq a \cap b (= 0)$, but neither
+$c \geq a$ nor $c \geq b$ holds.
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(10,8)
+\put(5,1){\makebox(0,0){$\bullet$}}
+    \put(5,0){\makebox(0,0){$0$}}
+    \put(5,1){\line(-1,1){3}}
+    \put(5,1){\line(0,1){3}}
+    \put(5,1){\line(1,1){3}}
+\put(2,4){\makebox(0,0){$\bullet$}}
+    \put(1,4){\makebox(0,0){$a$}}
+    \put(2,4){\line(1,1){3}}
+\put(5,4){\makebox(0,0){$\bullet$}}
+    \put(4,4){\makebox(0,0){$b$}}
+    \put(5,4){\line(0,1){3}}
+\put(8,4){\makebox(0,0){$\bullet$}}
+    \put(9,4){\makebox(0,0){$c$}}
+    \put(8,4){\line(-1,1){3}}
+\put(5,7){\makebox(0,0){$\bullet$}}
+    \put(5,8){\makebox(0,0){$1$}}
+\end{picture}
+\end{center}
+\caption{The Lattice $M_3$}
+\label{fig:nondist}
+\end{figure}
+%%
+\begin{lem}
+\label{lem:prime}
+Let $\GL$ be a distributive lattice. Then $x$ is meet (join)
+prime iff $x$ is meet (join) irreducible.
+\end{lem}
+%%
+Let us now move on to the complement. (li$\cap$) and (ui$\cup$)
+have no special name. They basically ensure that $-x$ is the
+unique element $y$ such that $x \cap y = 0$ and $x \cup y = 1$.
+%%%
+\index{de Morgan law}%%
+\index{double negation}%%
+%%%
+The laws (dm$\cap$) and (dm$\cup$) are called \textbf{de Morgan
+laws}. Finally, (dn$-$) is the law of \textbf{double negation}.
+%%
+\begin{lem}
+\label{lem:complement}
+The following holds in a boolean algebra.
+%%
+\begin{dingautolist}{192}
+\item
+$x \leq y$ iff $-y \leq -x$.
+\item
+$x \leq y$ iff $x \cap (-y) = 0$ iff $(-x) \cup y = 1$.
+\end{dingautolist}
+\end{lem}
+%%
+\proofbeg
+\ding{192} $x \leq y$ means $x \cup y = y$, and so
+$- y = -(x \cup y) = (-x) \cap (-y)$, whence $-y \leq -x$.
+From $-y \leq -x$ we now get $x = --x \leq --y = y$.
+\ding{193} If $x \leq y$ then $x \cap y = x$, and so
+$x \cap (-y) = (x \cap y) \cap (-y) = x \cap 0 = 0$.
+Conversely, suppose that $x \cap (-y) = 0$. Then
+$x \cap y = (x \cap y) \cup (x \cap (-y)) =
+x \cap (y \cup (-y)) = x \cap 1 = x$. So, $x \leq y$.
+It is easily seen that $x \cap (-y) = 0$ iff
+$(-x) \cup y = 1$.
+\proofend
+
+We can use the terminology of universal algebra (see
+Section~\ref{kap1}.\ref{kap1-1}). So, the notions of homomorphisms and
+subalgebras, congruences, of these structures should be clear.
+We now give some examples of boolean algebras.  The first example
+is the powerset of a given set. Let $X$ be a set.
+Then $\wp(X)$ is a boolean algebra with $\varnothing$ in place of
+0, $X$ in place of $1$, $- A = X - A$, $\cap$ and $\cup$ the
+intersection and union. We write $\GP(X)$ for this algebra.
+%%%
+\index{field of sets}%%
+\index{$\GP(X)$}%%%
+%%%
+A subalgebra of this algebra is called a \textbf{field of sets}.
+Also, a subset of $\wp(X)$ closed under the boolean operations
+is called a field of sets. The smallest examples are the algebra
+$\mathbf{1} := \GP(\varnothing)$, consisting just of one element
+($\varnothing$), and $\mathbf{2} := \GP(\{\varnothing\})$, the
+algebra of subsets of $1 = \{\varnothing\}$. Now, let $X$ be a set
+and $\GB = \auf B, 0, 1, \cap, \cup, -\zu$ be a boolean algebra.
+Then for two functions $f, g \colon X \pf B$ we may define $-f$,
+$f \cap g$ and $f \cup g$ as follows.
+%%
+\begin{align}
+\notag
+(-f)(x) & := - f(x) \\
+(f \cup g)(x) & := f(x) \cup g(x) \\
+\notag
+(f \cap g)(x) & := f(x) \cap g(x)
+\end{align}
+%%
+Further, let $\uli{0} \colon X \pf B \colon x \mapsto 0$ and $\uli{1} \colon
+X \pf B \colon x \mapsto 1$. It is easily verified that the set of all
+functions from $X$ to $B$ form a boolean algebra: %%
+$\auf B^X, \uli{0}, \uli{1}, -, \cap, \cup\zu$. We denote this
+algebra by $\GB^X$. 
+%%%
+\index{$\GB^X$}%%%
+%%%%
+The notation has been chosen on purpose: this
+algebra is nothing but the direct product of $\GB$ indexed over
+$X$. A particular case is $\GB = \mathbf{2}$. Here, we may actually
+think of $f \colon X \pf 2$ as the characteristic function $\chi_M$ of
+a set, namely the set $f^{-1}(1)$. It is then again verified that
+$\chi_{-M} = - \chi_M$, $\chi_{M\cap N} = \chi_M \cap \chi_N$,
+$\chi_{M \cup N} = \chi_M \cup \chi_N$. So we find the following.
+%%
+\begin{thm}
+$\mathbf{2}^X$ is isomorphic to $\GP(X)$.
+\end{thm}
+%%
+We provide some applications of these results. The intransitive verbs
+of English have the category $e\backslash t$. Their semantic type
+is therefore $e \pf t$. This in turn means that they are interpreted
+as functions from objects to truth values. We assume that the truth
+values are just $0$ and $1$ and that they form a boolean algebra
+with respect to the operations $\cap$, $\cup$ and $-$. Then we
+can turn the interpretation of intransitive verbs into a boolean
+algebra in the way given above. Suppose that the interpretation
+of {\tt and}, {\tt or} and {\tt not} is also canonically extended
+in the given way. That is: suppose that they can now also be
+used for intransitive verbs and have the meaning given above.
+Then we can account for a number of inferences, such as the
+inference from \eqref{eq:ex1} to \eqref{eq:ex2} and \eqref{eq:ex3},
+and from \eqref{eq:ex2} and \eqref{eq:ex3} together to
+\eqref{eq:ex1}. Or we can infer that \eqref{eq:ex1} implies
+that \eqref{eq:ex4} is false; and so on.
+%%
+\begin{align}
+\label{eq:ex1} & \mbox{\tt Claver walks and talks.} \\
+\label{eq:ex2} & \mbox{\tt Claver walks.} \\
+\label{eq:ex3} & \mbox{\tt Claver talks.} \\
+\label{eq:ex4} & \mbox{\tt Claver does not walk.}
+\end{align}
+%%
+With the help of that we can now also assign a boolean structure to the
+transitive verb denotations. For their category is $(e \backslash t)/e$,
+which corresponds to the type $e \pf (e \pf t)$. Now that the
+set functions from objects to truth values carries a boolean
+structure, we may apply the construction again. This allows
+us then to deduce \eqref{eq:ex6} from \eqref{eq:ex5}.
+%%
+\begin{align}
+\label{eq:ex5} & \mbox{\tt Claver sees or hears Patrick}. \\
+\label{eq:ex6} & \mbox{\tt Claver sees Patrick or Claver hears Patrick.}
+\end{align}
+%%
+Obviously, any category that finally ends in $t$ has a space of
+denotations associated to it that can be endowed with the structure
+of a boolean algebra. (See also Exercise~\ref{ex:boolesch}.) These
+are, however, not all categories. However, for the remaining ones
+we can use a trick used already by Montague. 
+%%%
+\index{Montague, Richard}%%%
+%%%
+Montague was concerned
+with the fact that names such as {\tt Peter} and {\tt Susan} denote
+objects, which means that their type is $e$. Yet, they fill a subject
+NP position, and subject NP positions can also be filled by (nominative)
+quantified NPs such as {\tt some philosopher}, which are of type
+$(e \pf t) \pf t$. In order to have homogeneous type assignment,
+Montague lifted the denotation of {\tt Peter} and {\tt Susan} to
+$(e \pf t) \pf t$. In terms of syntactic categories we lift from $e$
+to $t/(e \backslash t)$. We have met this earlier in
+Section~\ref{kap3}.\ref{kap3-2} as raising. Cast in terms of boolean
+algebras this is the following construction. From an arbitrary
+set $X$ we first form the boolean algebra $\GP(X)$ and
+then the algebra $\mathbf{2}^{\GP(X)}$.
+%%
+\begin{prop}
+The map $x \mapsto x^{\dagger}$ given by
+$x^{\dagger}(f) := f(x)$ is an embedding of $X$ into
+$\mathbf{2}^{\GP(X)}$.
+\end{prop}
+%%
+\proofbeg
+Suppose that $x \neq y$. Then $x^{\dagger}(\chi_{\{x\}}) =
+\chi_{\{x\}}(x) = 1$, while $y^{\dagger}(\chi_{\{x\}}) =
+\chi_{\{x\}}(y) = 0$. Thus $x^{\dagger} \neq y^{\dagger}$.
+\proofend
+
+To see that this does the trick, consider the following sentence.
+%%
+\begin{equation}
+\label{eq:ex7} \mbox{\tt Peter and Susan walk.}
+\end{equation}
+%%
+We interpret {\tt Peter} now by $\mathsf{peter}'^{\dagger}$,
+where $\mathsf{peter}'$ is the individual Peter. Similarly,
+$\mathsf{susan}'^{\dagger}$ interprets {\tt Susan}.
+Then \eqref{eq:ex7} means
+%%
+\begin{align}
+\begin{split}
+  & (\mathsf{peter}'^{\dagger} \cap \mathsf{susan}'^{\dagger})(
+\mathsf{walk}') \\
+ = & 
+(\mathsf{peter}'^{\dagger}(\mathsf{walk}')) \cap
+    (\mathsf{susan}'^{\dagger}(\mathsf{walk}')) \\
+ =  & \mathsf{walk}'(\mathsf{peter}') \cap
+    \mathsf{walk}'(\mathsf{susan}')
+\end{split}
+\end{align}
+%%
+So, this licenses the inference from \eqref{eq:ex7} to
+\eqref{eq:ex8} and \eqref{eq:ex9}, as required. (We have
+tacitly adjusted the morphology here.)
+%%
+\begin{align}
+\label{eq:ex8} & \mbox{\tt Peter walks.} \\
+\label{eq:ex9} & \mbox{\tt Susan walks.}
+\end{align}
+%%
+It follows that we can make the denotations of any linguistic
+category a boolean algebra.
+
+The next theorem we shall prove is that boolean algebras are
+(up to isomorphism) the same as fields of sets. Before we prove
+the full theorem we shall prove a special case, which is very
+%%%
+\index{atom}%%
+%%%
+important in many applications. An \textbf{atom} is an element
+$x \neq 0$ such that for all $y \leq x$: either $y = 0$ or $y = x$.
+$\At(\GB)$ 
+%%%
+\index{$\At(\GB)$}%%%
+%%%
+denotes the set of all atoms of $\GB$.
+%%
+\begin{lem}
+In a boolean algebra, an element is an atom iff it is join irreducible.
+\end{lem}
+%%
+This is easy to see. An atom is clearly join irreducible.
+Conversely, suppose that $x$ is join irreducible. Suppose
+that $0 \leq y \leq x$. Then 
+%%%
+\begin{equation}
+x = (x \cap y) \cup (x \cap (-y)) = y \cup (x \cap (-y))
+\end{equation}
+%%%
+By irreducibility, either $y = x$ or 
+$x \cap (-y) = x$. From the latter we get $x \leq -y$, or 
+$y \leq -x$, using Lemma~\ref{lem:order}. Since also $y \leq x$, 
+$y \leq x \cap (-x) = 0$. So, $y = 0$. Therefore, $x$ is an atom. 
+Put 
+%%%
+\begin{equation}
+\wht{x} := \{y \in \At(\GB) : y \leq x\}
+\end{equation}
+%%%%
+The map $x \mapsto \wht{x}$ is a homomorphism: 
+$\wht{x} = \At(\GA) - \wht{x}$. For let $u$ be an atom. 
+For any $x$, $u = (u \cap x) \cup (u \cap (-x))$;
+and since $u$ is irreducible, $u = u \cap x$ or $u = u \cap (-x)$, 
+which gives $u \leq x$ or $u \leq -x$. But not both, since 
+$u > 0$. Second, $\wht{x \cap y} = \wht{x} \cap \wht{y}$, as
+is immediately verified. 
+
+Now, if $\GB$ is finite, $\wht{x}$ is nonempty iff $x \neq 0$. 
+%%
+\begin{lem}
+If $\GB$ is finite, $x = \bigcup \wht{x}$.
+\end{lem}
+%%
+\proofbeg
+Put $x' := \bigcup \wht{x}$. Clearly, $x' \leq x$. Now suppose 
+$x' < x$. Then $(-x') \cap x \neq 0$. Hence there is an atom 
+$u \leq (-x') \cap x$, whence $u \leq x$. But $u \nleq x'$, a 
+contradiction.
+\proofend
+
+A boolean algebra is said to be \textbf{atomic} %%%
+%%%
+\index{boolean algebra!atomic}%%%
+%%%
+if $x$ is the lub $\wht{x}$ for all $x$.
+%%
+\begin{thm}
+Let $\GB$ be a finite boolean algebra.  The map $x \mapsto \wht{x}$
+is an isomorphism from $\GB$ onto $\GP(\At(\GB))$.
+\end{thm}
+%%
+Now we proceed to the general case. First, notice that this theorem 
+is false in general. A subset $N$ of $M$ is called \textbf{cofinite} 
+%%%
+\index{set!cofinite}%%
+%%%
+if its complement, $M - N$, is finite. Let
+$\Omega$ be the set of all subsets of $\omega$ which are
+either finite or cofinite. Now, as is easily checked, $\Omega$
+contains $\varnothing$, $\omega$ and is closed under complement,
+union and intersection. The singletons $\{x\}$ are the atoms.
+However, not every set of atoms corresponds to an element of the
+algebra. A case in point is $\{\{2k\} : k \in \omega\}$. Its
+union in $\omega$ is the set of even numbers,  which is neither
+finite nor cofinite. Moreover, there exist infinite boolean
+algebras that have no atoms (see the exercises). Hence, we must
+take a different route.
+%%
+\begin{defn}
+%%%%
+\index{point}%%%
+\index{$\pt(\GA)$}%%%
+%%%%%
+Let $\GB$ be a boolean algebra. A \textbf{point} is a homomorphism
+$h \colon \GB \pf \mathbf{2}$. The set of points of $\GB$ is denoted
+by $\pt(\GB)$.
+\end{defn}
+%%
+Notice that points are necessarily surjective. For we must
+have $h(0^{\GB}) = 0$ and $h(1^{\GB}) = 1$. (As a warning
+to the reader: we will usually not distinguish $1^{\GB}$ and
+$1$.)
+%%
+\begin{defn}
+%%%%
+\index{filter}%%%
+\index{ultrafilter}%%%
+%%%%
+A \textbf{filter} of $\GB$ is a subset that satisfies the following.
+%%
+\begin{dingautolist}{192}
+\item $1 \in F$.
+\item If $x, y \in F$ then $x \cap y \in F$.
+\item If $x \in F$ and $x \leq y$ then $y \in F$.
+\end{dingautolist}
+%%
+A filter $F$ is called an \textbf{ultrafilter} if $F \neq B$
+and there is no filter $G$ such that $F \subsetneq G \subsetneq B$.
+\end{defn}
+%%
+A filter $F$ is an ultrafilter iff for all $x$: either
+$x \in F$ or $-x \in F$. For suppose neither is the case. Then
+let $F^x$ be the set of elements $y$ such that there is a
+$u \in F$ with $y \geq u \cap x$. This is a filter, as is
+easily checked. It is a proper filter: it does not contain
+$-x$. For suppose otherwise. Then $-x \geq u \cap x$ for
+some $u \in F$. By Lemma~\ref{lem:complement} this means that
+$0 = u \cap x$, from which we get $u \leq -x$. So, $-x \in F$,
+since $u \in F$. Contradiction.
+%%
+\begin{prop}
+Let $h \colon \GB \pf \GA$ be a homomorphism of boolean algebras. Then
+$F_h := h^{-1}(1^{\GA})$ is a filter of $\GB$. Moreover, for any
+filter $F$ of $\GB$, $\Theta_F$ defined by $x\; \Theta_F\; y$ iff
+$x \dpf y \in F$ is a congruence. The factor algebra
+$\GB/\Theta_F$ is also denoted by $\GB/F$ and the map
+$x \mapsto [x]{\Theta_F}$ by $h_F$.
+\end{prop}
+%%
+It follows that if $h \colon \GB \epi \GA$ then $\GA \cong \GB/F_h$.
+Now we specialize $\GA$ to \textbf{2}. Then if $h \colon \GB \pf
+\mathbf{2}$, we have a filter $h^{-1}(1)$. It is clear that
+this must be an ultrafilter. Conversely, given an ultrafilter
+$U$, $\GB/U \cong \mathbf{2}$. We state without proof the following
+%%%
+\index{finite intersection property}%%
+%%%
+theorem. A set $X \subseteq B$ has the \textbf{finite intersection
+property} if for every finite $S \subseteq X$ we have 
+$\bigcap S \neq 0$.
+%%
+\begin{thm}
+\label{thm:fep}
+For every subset of $B$ with the finite intersection property
+there exists an ultrafilter containing it.
+\end{thm}
+%%
+Now put $\wht{x} :=  \{h \in \pt(\GB) : h(x) = 1\}$. It is verified that
+%%
+\begin{align}
+\notag
+\wht{-x} & = - \wht{x} \\
+\wht{x \cap y} & = \wht{x} \cap \wht{y} \\
+\notag
+\wht{x \cup y} & = \wht{x} \cup \wht{y}
+\end{align}
+%%
+To see the first, assume $h \in \wht{-x}$. Then $h(-x) = 1$, from
+which $h(x) = 0$, and so $h \not\in  \wht{x}$, that is to say
+$h \in - \wht{x}$. Conversely, if $h \in - \wht{x}$ then
+$h(x) \neq 1$, whence $h(-x) = 1$, showing $h \in \wht{-x}$.
+Second, $h \in \wht{x \cap y}$ implies $h(x \cap y) = 1$,
+so $h(x) = 1$ and $h(y) = 1$, giving $h \in \wht{x}$ as
+well as $h \in \wht{y}$.  Conversely, if the latter holds then
+$h(x \cap y) = 1$ and so $h \in \wht{x \cap y}$. Similarly with
+$\cup$.
+%%
+\begin{thm}
+\label{thm:var}
+The map $x \mapsto \wht{x}$ is an injective homomorphism from $\GB$
+into the algebra $\GP(\pt(\GB))$. Consequently,
+every boolean algebra is isomorphic to a field of sets.
+\end{thm}
+%%
+\proofbeg
+It remains to see that the map is injective. To that end,
+let $x$ and $y$ be two different elements. We claim that there
+is an $h \colon \GB \pf \mathbf{2}$ such that $h(x) \neq h(y)$. For
+we either have $x \nleq y$, in which case $x \cap (-y) > 0$;
+or we have $y \nleq x$, in which case $y \cap -x > 0$. Assume
+(without loss of generality) the first. There is an ultrafilter 
+$U$ containing the set $\{x \cap (-y)\}$, by Theorem~\ref{thm:fep}.
+Obviously, $x \in U$ but $y \not\in U$. Then $h_U$ is the desired
+point.
+\proofend
+
+We point out that this means that every boolean algebra is a 
+subalgebra of a direct product of \textbf{2}. The variety of 
+boolean algebras is therefore generated by \textbf{2}.
+The original representation theorem for finite boolean algebras
+can be extended in the following way (this is the route that
+Keenan and Faltz take). A boolean algebra $\GB$ is called 
+\textbf{complete} 
+%%%
+\index{boolean algebra!complete}%%%
+%%%
+if any set has a least upper bound and a greatest lower bound.
+%%%
+\begin{thm}
+Let $\GB$ be a complete atomic boolean algebra. Then $\GB \cong
+\GP(\At(\GB))$.
+\end{thm}
+%%
+It should be borne in mind that within boolean semantics (say,
+in the spirit of Keenan and Faltz) 
+%%%
+\index{Keenan, Edward L.}%%%
+\index{Faltz, Leonard L.}%%%
+%%%
+the meaning of a particular
+linguistic item is a member of a boolean algebra, but it may at
+the same time be a function from some boolean algebra to another.
+For example, the denotations of adjectives form a boolean 
+algebra, but they may also be seen as functions from the algebra 
+of common noun denotations (type $e \pf t$) to itself. These maps 
+are, however, in general not homomorphisms. The meaning of a 
+particular adjective, say {\tt tall}, can in principle be any such 
+function. However, some adjectives behave better than others.  
+Various properties of such functions can be considered.
+%%%
+\begin{defn}
+%%%%
+\index{monotonicity}%%
+\index{antitonicity}%%
+\index{restrictiveness}%%
+\index{intersectiveness}%%
+%%%%
+Let $\GB$ be a boolean algebra and $f \colon B \pf B$.
+$f$ is called \textbf{monotone} iff for all $x, y \in B$:
+if $x \leq y$ then $f(x) \leq f(y)$. $f$ is called \textbf{antitone}
+if for all $x, y \in B$: if $x \leq y$ then $f(x) \geq f(y)$.
+$f$ is called \textbf{restricting} iff for each
+$x \in B$ $f(x) \leq x$. $f$ is called \textbf{intersecting} iff
+for each $x \in B$: $f(x) = x \cap f(1)$.
+\end{defn}
+%%
+Adjectives that denote intersecting functions are often also
+called \textbf{intersective}. An example is {\tt white}. A white car
+is something that is both white and a car. Hence we find that
+$\mathsf{white}'$ is intersecting. Intersecting functions are
+restricting but not necessarily conversely. The adjective {\tt
+tall} denotes a restricting function (and is therefore also called
+\textbf{restricting}). A tall student is certainly a student. Yet, a
+tall student is not necessarily also tall. The problem is that
+tallness varies with the property that is in question. (We may
+analyze it, say, as: belongs to the 10 \% of the longest students.
+Then it becomes clear that it has this property.) Suppose that
+students of sports are particularly tall. Then a tall student of
+sports will automatically qualify as a tall student, but a tall
+student may not be a tall student of sports. On the other hand, if
+students of sports are particularly short, then a tall student
+will be a tall student of sports, but the converse need not hold.
+There are also adjectives that have none of these properties (for 
+example, {\tt supposed} or {\tt alleged}). We will return to 
+sentential modifiers in the next section.
+
+We conclude the section with a few remarks on the connection
+with theories and filters. Let $\Omega$ be the signature of
+boolean logic: the 0--ary symbols $\top$, $\bot$, the unary
+$\nicht$ and the binary $\oder$ and $\und$. Then we can define
+boolean algebras by means of equations, as we have done with
+Definition~\ref{defn:ba}. For reference, we call the set of
+equations $\mathsf{BEq}$. Or we may actually define a consequence
+relation, for example by means of a Hilbert--calculus.
+Table~\ref{tab:proposition} gives a complete set of axioms,
+which together with the rule MP axiomatize boolean logic.
+%%
+\begin{table}
+\caption{The Axioms of Propositional Logic}
+\label{tab:proposition}
+$$\begin{array}{l@{\quad}l}
+\mbox{\rm (a0)} & p_0 \pf (p_1 \pf p_0) \\
+\mbox{\rm (a1)} & (p_0 \pf (p_1 \pf p_2)) \pf ((p_0 \pf p_1) \pf
+    (p_0 \pf p_2)) \\
+\mbox{\rm (a2)} &
+    ((p_0 \pf p_1) \pf p_0) \pf p_0 \\
+\mbox{\rm (a3)} &
+    \bot \pf p_0 \\
+\mbox{\rm (a4)} &
+    \nicht p_0 \pf (p_0 \pf \bot) \\
+\mbox{\rm (a5)} &
+    (p_0 \pf \bot) \pf \nicht p_0 \\
+\mbox{\rm (a6)} & \top \\
+\mbox{\rm (a7)} &
+    p_0 \pf (p_1 \pf (p_0 \und p_1)) \\
+\mbox{\rm (a8)} &
+    (p_0 \und p_1) \pf p_0 \\
+\mbox{\rm (a9)} &
+    (p_0 \und p_1) \pf p_1 \\
+\mbox{\rm (a10)} &
+    p_0 \pf (p_0 \oder p_1) \\
+\mbox{\rm (a11)} &
+    p_1 \pf (p_0 \oder p_1) \\
+\mbox{\rm (a12)} &
+    ((p_0 \oder p_1) \pf p_2) \pf ((p_0 \pf p_2) \und
+    (p_1 \pf p_2))
+\end{array}$$
+\end{table}
+%%
+Call this calculus $\mathsf{PC}$.  We have to bring the equational
+calculus and the deductive calculus into correspondence. We have
+a calculus of equations (see Section~\ref{kap1}.\ref{kap1-1}), which tells
+us what equations follow from what other equations. Write
+$\varphi \dpf \chi$ in place of $(\varphi \pf \chi) \und
+(\chi \pf \varphi)$.
+%%%
+\index{$\mathsf{PC}$, $\vdash^{\mathsf{PC}}$}%%% 
+%%
+\begin{thm}
+\label{thm:eqtovdash}
+The following are equivalent.
+\begin{dingautolist}{192}
+\item
+$\vdash^{\mathsf{PC}} \varphi \dpf \chi$.
+\item
+For every boolean algebra $\GA$:
+$\GA \vDash \varphi = \chi$.
+\item
+$\mathsf{BEq} \vdash \varphi \doteq \chi$.
+\end{dingautolist}
+\end{thm}
+%%
+The proof is lengthy, but routine. \ding{193} and \ding{194} are 
+equivalent by the fact that an algebra is a boolean algebra iff 
+it satisfies $\mathsf{BEq}$. So, \ding{192} $\Dpf$ \ding{194} needs 
+proof. 
+%The interested reader is referred to \cite{kracht:tools} 
+%for a proof of this equivalence. 
+It rests on the following 
+%%%
+\begin{lem}
+(a) $\vdash^{\mathsf{PC}} \varphi$ iff 
+$\vdash^{\mathsf{PC}} \top \dpf \varphi$. 
+\\
+(b) $\mathsf{BEq} \vdash \varphi \doteq \chi$ iff $\mathsf{BEq} \vdash 
+\top \doteq \varphi \dpf \chi$.
+\end{lem}
+%%%
+\proofbeg
+(a) Suppose that $\vdash^{\mathsf{PC}} \varphi$. Since 
+$\vdash^{\mathsf{PC}} \varphi \pf (\top \pf \varphi)$ we get 
+$\vdash^{\mathsf{PC}} \top \pf \varphi$. Similarly, from 
+$\vdash^{\mathsf{PC}} \top$ we get $\vdash^{\mathsf{PC}} 
+\varphi \pf \top$. Conversely, if $\vdash^{\mathsf{PC}} \top 
+\dpf \varphi$, then with (a8) we get $\vdash^{\mathsf{PC}} 
+\top \pf \varphi$ and with (a6) and MP, $\vdash^{\mathsf{PC}} 
+\varphi$. (b) We can take advantage of our results on BAs here. 
+Put $a \triangleup b := (-a \cup b) \cap (a \cup -b)$. The claim 
+boils down to $a \triangleup b = 1$ iff $a = b$. Now, if $a \triangleup 
+b = 1$, then $-a \cup b = 1$, from which $a \leq b$, and also 
+$a \cup -b = 1$, from which $b \leq a$. Together this gives $a = b$. 
+Conversely, if $a = b$ then $-a \cup b = -b \cup b = 1$ and 
+$a \cup -b = a \cup -a = 1$, showing $a\triangleup  b = 1$. 
+\proofend
+
+The next thing to show is that if $\mathsf{BEq} \vdash 
+\top \doteq \varphi \pf \chi; \top \doteq \varphi$ then also 
+$\mathsf{BEq} \vdash \top \doteq \chi$. Finally, for all 
+$\varphi$ of the form (a1) -- (a12), $\mathsf{BEq} \vdash 
+\top \doteq \varphi$. This will show that $\vdash^{\mathsf{PC}} 
+\varphi$ implies $\mathsf{BEq} \vdash \top \doteq \varphi$. 
+\ding{192} is an immediate consequence. For the converse direction, 
+first we establish that for all basic equations $\varphi \doteq 
+\chi$ of $\mathsf{BEq}$ we have $\vdash^{\mathsf{PC}} \varphi 
+\dpf \chi$. This is routine. Closure under substitution is 
+guaranteed for theorems. So we need to show that this is 
+preserved by the inference rules of Proposition~\ref{prop:eqcalc}, 
+that is: 
+%%%
+\begin{subequations}
+\begin{align}
+& \vdash^{\mathsf{PC}} \varphi \dpf \varphi \\
+\varphi \dpf \chi & \vdash^{\mathsf{PC}} \chi \dpf \varphi \\
+\varphi \dpf \chi; \chi \dpf \psi & \vdash^{\mathsf{PC}} 
+\varphi \dpf \psi \\
+%\varphi \dpf \chi & \vdash^{\mathsf{PC}} \varphi^{\sigma} \dpf 
+%	\chi^{\sigma} \\
+\{\varphi_i \dpf \chi_i : i < \Omega(f)\} & 
+	\vdash^{\mathsf{PC}} f(\vec{\varphi}) \dpf f(\vec{\chi}) 
+\end{align}
+\end{subequations}
+%%% 
+In the last line, $f$ is one of the basic functions. The verification 
+is once again routine. We shall now show that the so--defined logic is 
+indeed the logic of the two element matrix with designated element 1. 
+By DT (which holds in $\mathsf{PC}$), $\varphi \dpf \chi$ iff $\varphi 
+\vdash^{\mathsf{PC}} \chi$ and $\chi \vdash^{\mathsf{PC}} \varphi$. 
+%%%
+\index{$\Theta^{\dpf}$}%%
+%%%%
+\begin{equation}
+\Theta^{\dpf} := \{\auf \varphi, \chi\zu \colon \vdash^{\mathsf{PC}}
+\varphi \dpf \chi\}
+\end{equation}
+%%%
+$\Theta^{\dpf}$ is a congruence on the term algebra. What is 
+more, it is admissible for every deductively closed set. For if 
+$\Sigma$ is deductively closed and $\varphi \in \Sigma$, then 
+also $\chi \in \Sigma$ for every $\chi \, \Theta^{\dpf}\, \varphi$, 
+by Modus Ponens.
+%%%
+\begin{lem}
+$\goth{Tm}_{\Omega}(V)/\Theta^{\dpf}$ is a boolean algebra. Moreover, if
+$\Sigma$ is a deductively closed set in $\goth{Tm}_{\Omega}(V)$
+then $\Sigma/\Theta^{\dpf}$ is a filter on 
+$\goth{Tm}_{\Omega}(V)/\Theta^{\dpf}$. If $\Sigma$ is maximally 
+consistent, $\Sigma/\Theta^{\dpf}$ is an
+ultrafilter. Conversely, if $F$ is a filter on 
+$\goth{Tm}_{\Omega}(V)/\Theta^{\dpf}$, then $h^{-1}_{\Theta^{\dpf}}[F]$
+is a deductively closed set. If $F$ is an ultrafilter, this set is a
+maximally consistent set of formulae.
+\end{lem}
+%%%
+Thus, $\vdash^{\mathsf{PC}}$ is the intersection of all
+$\vDash_{\auf \GA, F\zu}$, where $\GA$ is a boolean algebra and
+$F$ a filter. Now, instead of deductively closed sets we can also
+take maximal (consistent) deductively closed sets. Their image
+under the canonical map is an ultrafilter. However, the
+equivalence $\Theta_U := \{\auf x, y\zu : x \dpf y \in U\}$ is a 
+congruence, and it is admissible for $U$. Thus, we can once again 
+factor it out and obtain the following completeness theorem.
+%%
+\begin{thm}
+\label{thm:2comp} 
+$\vdash^{\mathsf{PC}}\; = \; \vDash_{\auf \boldsymbol{2}, \{1\}\zu}$.
+\end{thm}
+%%
+This says that we have indeed axiomatized the logic of the
+2--valued algebra. What is more, equations can be seen as
+statements of equivalence and conversely. We can draw from
+this characterization a useful consequence. Call a propositional
+logic \textbf{inconsistent} if every formula is a theorem.
+%%%
+\index{propositional logic!inconsistent}
+%%%
+\begin{cor}
+$\mathsf{PC}$ is maximally complete. That is to say, if an
+axiom or rule $\rho$ is not derivable in $\mathsf{PC}$,
+$\mathsf{PC} + \rho$ is inconsistent.
+\end{cor}
+%%%
+\proofbeg
+Let $\rho = \auf \Delta, \varphi\zu$ be a rule that is not derivable
+in $\mathsf{PC}$. Then by Theorem~\ref{thm:2comp} there is a valuation
+$\beta$ which makes every formula of $\Delta$ true but $\varphi$ false.
+Define the following substitution: $\sigma(p) := \top$ if
+$\beta(p) = 1$, and $\sigma(p) := \bot$ otherwise. Then for
+every $\chi \in \Delta$, $\sigma(\chi) \dpf \top$, while
+$\sigma(\varphi) \dpf \bot$. Hence, as $\mathsf{PC}$ derives
+$\sigma(\chi)$ for every $\chi \in \Delta$, it also derives
+$\sigma(\varphi)$, and so $\bot$. On the other hand,
+in $\mathsf{PC}$, everything follows from $\bot$. Thus,
+$\mathsf{PC} + \rho$ is inconsistent.
+\proofend
+
+{\it Notes on this section.} The earliest sources of propositional
+logic are the writing of the Stoa, notably by Chrysippos. 
+%%%
+\index{Chrysippos}%%
+%%%
+Stoic logic was couched in terms
+of inference rules. The first to introduce equations and a calculus
+of equations was Leibniz. The characterization of $\leq$ in terms of
+union (or intersection) is explicitly mentioned by him. Leibniz
+only left incomplete notes. Later, de Morgan, 
+%%%
+\index{de Morgan, Augustus}%%%
+\index{Boole, George}%%%
+\index{Frege, Gottlob}%%%
+%%%
+Boole and Frege have
+completed the axiomatization of what is now known as Boolean logic.
+%%
+\vplatz
+\exercise
+Show that $x \leq y$ iff $x \cap y = x$.
+%%
+\vplatz
+\exercise
+For a lattice $\GL = \auf L, \cap, \cup\zu$ define $\GL^d
+:= \auf L, \cup, \cap\zu$. Show that this is lattice as well. 
+Obviously, $\GL^{dd} = \GL$. $\GL^d$ is called the 
+%%%
+\index{lattice!dual}%%
+\index{$t^d$}%%
+%%%%
+\textbf{dual lattice} of $\GL$. The dual of a lattice 
+term $t^d$ is defined as follows. $x^d := x$ if $x$ is a variable, 
+$(t \cup t')^d := t^d \cap {t'}^d$, $(t \cap t')^d := t^d \cup {t'}^d$.
+Evidently, $\GL \vDash s \doteq t$ iff $\GL^d \vDash s^d \doteq t^d$.
+Deduce that $s \doteq t$ holds in every lattice iff 
+$s^d \doteq t^d$ holds in every lattice. 
+%%
+\vplatz
+\exercise
+\label{ex:dual}
+(Continuing the previous exercise.) For a boolean term define
+additionally $0^d := 1$, $1^d := 0$, $(-t)^d := - t^d$ and
+$\GB^d := \auf B, 1, 0, \cup, \cap, -\zu$ for
+$\GB = \auf B, 0, 1, \cap, \cup, -\zu$. Show that $\GB^d \cong
+\GB$. This implies that $\GB \vDash s \doteq t$ iff
+$\GB \vDash s^d \doteq t^d$.
+%%
+\vplatz
+\exercise
+Prove Lemma~\ref{lem:prime}.
+%%%
+\vplatz
+\exercise
+Let $\leq$ be a partial ordering on $L$ with finite lubs and glbs. 
+Define $x \cup y := \lub \{x,y\}$, and $x \cap y := \glb \{x,y\}$. 
+Show that $\auf L, \cap, \cup\zu$ is a lattice.
+%%
+\vplatz
+\exercise
+Let $\BZ$ be the set of entire numbers. For $i,j \in \omega$ and
+$j < 2^i$ let $R_{i,j} := \{m\cdot 2^i + j : m \in \BZ\}$. Let
+$H$ be the set of subsets of $\BZ$ generated by all {\it finite\/}
+unions of sets of the form $R_{i,j}$. Show that $H$ forms a
+field of sets (hence a boolean algebra). Show that it has no
+atoms.

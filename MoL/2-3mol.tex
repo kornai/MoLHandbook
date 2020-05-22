@@ -1,0 +1,1156 @@
+\section{Recognition and Analysis}
+%
+%
+%
+CFLs can be characterized by special classes of automata, just 
+like regular languages. Since there are CFLs that are not regular,
+automata that recognize them cannot all be finite state
+automata. They must have an infinite memory. The special way
+such a memory is organized and manipulated differentiates
+the various kinds of nonregular languages. CFLs
+can be recognized by so--called {\it pushdown
+automata}. These automata have a memory in the form of
+a stack onto which they can put symbols and remove (and
+read them) one by one. However, the automaton only has
+access to the symbol added most recently. A {\it stack\/}
+over the alphabet $D$ is a string over $D$. We shall agree
+that the first letter of the string is the highest entry
+in the stack and the last letter corresponds to the lowest
+entry. To denote the end of the stack, we need a special
+symbol, which we denote by {\tt \#}. (See Exercise~\ref{ex:oneside} 
+for the necessity of an end--of--stack marker.)
+
+A {\it pushdown automaton\/} steers its actions by means of
+the highest entry of the stack and the momentary memory state.
+Its actions consist of three successive steps.
+(1) The disposal or removal of a symbol on the stack.
+(2) The moving or not moving of the read head to the right.
+(3) The change into a memory state (possibly the same one).
+If the automaton does not move the head in (2) we call the
+action an $\varepsilon$--\textbf{move}.
+%%%
+\index{move!$\varepsilon$--\faul}%%
+%%%
+We write $A_{\varepsilon}$ in place of $A \cup \{\varepsilon\}$.
+%%
+\begin{defn}
+%%%
+\index{pushdown automaton}%%
+\index{automaton!pushdown}%%
+\index{stack alphabet}%%
+\index{transition function}%%
+%%%
+A \textbf{pushdown automaton over} $A$ is a septuple
+%%
+\begin{equation}
+\GK = \auf Q, i_0, A, F, D, \mbox{\tt \#}, \delta\zu
+\end{equation}
+%%
+where $Q$ and $D$ are finite sets, $i_0 \in Q$, $\mbox{\tt \#} \in D$ 
+and $F \subseteq Q$, as well as 
+%%%
+\begin{equation}
+\delta \colon Q \times D \times A_{\varepsilon} \pf \wp(Q \times D^{\ast})
+\end{equation}
+%%%
+a function such that $\delta(q,a,d)$ is always finite. We call $Q$ 
+the set of \textbf{states}, $i_0$ the \textbf{initial state}, $F$ 
+the set of \textbf{accepting states}, $D$ the \textbf{stack alphabet}, 
+{\tt \#} the \textbf{beginning of the stack} and $\delta$ the 
+\textbf{transition function}.
+\end{defn}
+%%
+\index{configuration}%%
+%%%
+We call $\Gz := \auf q, \vec{d}\zu$, where $q \in Q$ and $\vec{d}
+\in D^{\ast}$, a \textbf{configuration}. We now write
+%%
+\begin{equation}
+\auf p, \vec{d}\zu \stackrel{x}{\pf} \auf p', \vec{d'}\zu
+\end{equation}
+%%
+if for some $\vec{d}_1$ $\vec{d} =  Z \conc \vec{d}_1$, $\vec{d'} =
+\vec{e} \conc \vec{d}_1$ and $\auf p', \vec{e}\zu \in
+\delta(p,Z,x)$. We call this a \textbf{transition}.
+%%%
+\index{transition}%%
+%%%
+We extend the function $\delta$ to configurations. $\auf p',\vec{d'}\zu 
+\in \delta(p, \vec{d}, x)$ is also used. Notice that in contrast to a 
+pushdown automaton a 
+finite state automaton may not change into a new state without reading 
+a new symbol. For a pushdown automaton this is necessary in particular 
+if the automaton wants to clear the stack. If the stack is empty then the
+automaton cannot work further. This means, however, that the
+pushdown automaton is necessarily partial. The transition function
+can now analogously be extended to strings. Likewise, we can
+define it for sets of states. 
+%%
+\begin{equation}
+\Gz \stackrel{\vec{x} \conc \vec{y}}{\longrightarrow} \Gz'
+\quad\Dpf\quad
+\text{ there exists }\Gz'' \text{ with }
+\Gz \stackrel{\vec{x}}{\pf} \Gz'' \stackrel{\vec{y}}{\pf} \Gz'
+\end{equation}
+%%%
+\index{computation}%%
+%%%
+If $\Gz \stackrel{\vec{x}}{\pf} \Gz'$ we say that there is a
+$\GK$--\textbf{computation for} $\vec{x}$ \textbf{from} $\Gz$ 
+\textbf{to} $\Gz'$. Now
+%%
+\begin{equation}
+L(\GK) := \{\vec{x} : \text{\it for some }
+q \in F, \vec{z} \in D^{\ast} \colon
+\auf i_0, \mbox{\tt \#} \zu \stackrel{\vec{x}}{\pf} 
+\auf q, \vec{z}\zu\}
+\end{equation}
+%%
+%%%
+\index{language!{\faul} accepted by state}%%
+\index{pushdown automaton!simple}%%
+%%%
+We call this the language which is \textbf{accepted by} $\GK$ 
+\textbf{by state}. We call a pushdown automaton \textbf{simple} if from
+$\auf q, \vec{z}\zu \in \delta(p,Z,a)$ follows $|\vec{z}\conc a| \leq 2$.
+It is an exercise to prove the next theorem.
+%%
+\begin{prop}
+\label{prop:einfach}
+For every pushdown automaton $\GK$ there is a simple
+pushdown automaton $\GL$ such that $L(\GL) = L(\GK)$.
+\end{prop}
+%%
+For this reason we shall tacitly assume that the automaton
+does not write arbitrary strings but a single symbol. In addition
+to $L(\GK)$ there also is a language which is \textbf{accepted  by}
+$\GK$ \textbf{by stack}.
+%%%
+\index{language!{\faul} accepted by stack}%%
+%%%
+\begin{equation}
+L^s(\GK) := \{\vec{x} : \text{for some } q \in Q \colon
+\auf i_0, \mbox{\tt \#}\zu \stackrel{\vec{x}}{\pf} \auf q, \varepsilon\zu\}
+\end{equation}
+%%
+The languages $L(\GK)$ and $L^s(\GK)$ are not necessarily
+identical for given $\GK$. However, the set of all languages of the
+form $L(\GK)$ for some pushdown automaton equals the set of all
+languages of the form $L^s(\GK)$ for some pushdown automaton.
+This follows from the next theorem.
+%%
+\begin{prop}
+For every pushdown automaton $\GK$ there is an $\GL$ with
+$L(\GK) = L^s(\GL)$ as well as a pushdown automaton $\GM$ with
+$L^s(\GK) = L(\GM)$.
+\end{prop}
+%%
+\proofbeg
+Let $\GK = \auf Q, i_0, A, F, D, \mbox{\tt \#}, \delta\zu$ be given.
+We add to $Q$ two states, $q_i$ and $q_f$. $q_i$ shall be the
+new initial state and $F^{\GL} := \{q_f\}$. Further, we add a
+new symbol $\flat$ which is the beginning of the stack of
+$\GL$. We define $\delta^{\GL}(q_i, \flat, \varepsilon) :=
+\{\auf i_0, \mbox{\tt \#} \conc \flat\zu\}$. There are no more
+$\delta^{\GL}$--transitions exiting $q_i$.  For $q \neq q_i, q_f$ 
+and $Z \neq \flat$ $\delta^{\GL}(q,Z,\vec{x}) := \delta^{\GK}(q,Z,x)$, 
+$x \in A$.  Further, if $q \in F$ and $Z \neq \flat$, we put
+$\delta^{\GL}(q, Z, \varepsilon) := 
+\delta^{\GK}(q,Z, \varepsilon) \cup \{\auf q_f, \varepsilon\zu\}$ 
+and otherwise $\delta^{\GL}(q, Z, \varepsilon) := 
+\delta^{\GK}(q, Z, \varepsilon)$. Finally, let
+$\delta^{\GL}(q_f, Z, x) := \varnothing$ for
+$x \in A$ and $\delta^{\GL}(q_f, Z, \varepsilon) :=
+\{\auf q_f, \varepsilon\zu\}$ for $Z \in D \cup \{\flat\}$.
+Assume now $\vec{x} \in L(\GK)$. Then there is a $\GK$--computation
+$\auf i_0, \mbox{\tt \#}\zu \stackrel{\vec{x}}{\pf} %
+\auf q, \vec{d}\zu$ for some $q \in F$ and so we also have an 
+$\GL$--computation 
+$\auf q_i, \flat\zu \stackrel{\vec{x}}{\pf} \auf q_f,\vec{d}\zu$. 
+Since $\auf q_f, \vec{d}\zu \stackrel{\varepsilon}{\pf}
+\auf q_f, \varepsilon\zu$ we have $\vec{x} \in L^s(\GL)$.
+Hence $L(\GK) \subseteq L^s(\GL)$. Now, conversely, let
+$\vec{x} \in L^s(\GL)$. Then $\auf q_i, \flat\zu \stackrel{\vec{x}}{\pf}
+\auf p, \varepsilon\zu$ for a certain $p$. Then
+$\flat$ is deleted only at last since it happens only in
+$q_f$ and so $p = q_f$. Further, we have
+$\auf q_i, \flat\zu \stackrel{\vec{x}}{\pf} \auf q,
+\vec{d}\conc \flat\zu$ for some state $q \in F$.
+This means that there is an $\GL$--com\-pu\-ta\-tion
+$\auf i_0, \mbox{\tt \#} \conc \flat\zu
+\stackrel{\vec{x}}{\pf} \auf q, \vec{d} \conc \flat\zu$.
+This, however, is also a $\GK$--computation.
+This shows that $L^s(\GL) \subseteq L(\GK)$ and so also the
+first claim. Now for the construction of $\GM$. We add two
+new states, $q_f$ and $q_i$, and a new symbol, $\flat$,
+which shall be the begin of stack of $\GM$, and we put
+$F^{\GM} := \{q_f\}$. Again we put $\delta^{\GM}(q_i, \flat, x) %
+:= \varnothing$ for $x \in A$ and $\delta^{\GM}(q_i, \flat, \varepsilon) %
+:= \{\auf i_0, \mbox{\tt \#} \conc \flat\zu\}$.
+Also, we put $\delta^{\GM}(q, Z, x) := \delta^{\GK}(q,Z,x)$
+for $Z \neq \flat$ and $\delta^{\GM}(q, \flat, \varepsilon) :=
+\{\auf q_f, \varepsilon\zu\}$, as well as
+$\delta^{\GM}(q, \flat, x) := \varnothing$ for $x \in A$.
+Further, $\delta^{\GM}(q_f, Z, x) := \varnothing$.
+This defines $\delta^{\GM}$. Now consider an
+$\vec{x} \in L^s(\GK)$. There is a $\GK$--computation
+$\auf i_0, \mbox{\tt \#}\zu \stackrel{\vec{x}}{\pf} \auf p, \varepsilon\zu$
+for some $p$. Then there exists an $\GL$--computation
+%%
+\begin{equation}
+\auf q_i, \flat\zu \stackrel{\vec{x}}{\pf} \auf p, \flat\zu
+\stackrel{\varepsilon}{\pf} \auf q_f, \varepsilon\zu
+\end{equation}
+%%
+Hence $\vec{x} \in L(\GM)$. Conversely, let $\vec{x} \in L(\GM)$.
+Then there exists an $\GL$--com\-pu\-ta\-tion $\auf q_i, \flat\zu
+\stackrel{\vec{x}}{\pf} \auf q_f, \vec{d}\zu$ for some $\vec{d}$.
+One can see quite easily that $\vec{d} = \varepsilon$. Further,
+this computation factors as follows.
+%%
+\begin{equation}
+\auf q_i, \flat\zu \stackrel{\varepsilon}{\pf}
+\auf i_0, \mbox{\tt \#} \conc \flat\zu \stackrel{\vec{x}}{\pf}
+\auf p, \flat\zu \stackrel{\varepsilon}{\pf}
+\auf q_f, \varepsilon\zu
+\end{equation}
+%%
+Here $p \in Q$, whence $p \neq q_f, q_i$. But every
+$\GM$--transition from $i_0$ to $p$ is also a $\GK$--transition.
+Hence there is a $\GK$--computation
+$\auf i_0, \mbox{\tt \#}\zu \stackrel{\vec{x}}{\pf}
+\auf p, \varepsilon\zu$. From this follows $\vec{x} \in L^s(\GK)$,
+and so $L^s(\GK) = L(\GM)$.
+\proofend
+%%
+\begin{lem}
+Let $L$ be a CFL over $A$. Then there exists
+a pushdown automaton $\GK$ such that $L = L^s(\GK)$.
+\end{lem}
+%%
+\proofbeg
+We take a CFG $G = \auf \mbox{\tt S}, N, A, R\zu$
+in Greibach Form with $L = L(G)$. We assume that
+$\varepsilon \not\in G$. (If $\varepsilon \in L(G)$, then we 
+construct an automaton for $L(G) - \{\varepsilon\}$ and then
+modify it slightly.) The automaton possesses only one state, $i_0$,
+and uses $N$ as its stack alphabet. The beginning of the stack
+is {\tt S}.
+%%
+\begin{equation}
+\delta(i_0, X, x) := \{\auf i_0, \vec{Y}\zu :
+X \pf x \conc \vec{Y} \in R\}
+\end{equation}
+%%
+This defines $\GK := \auf \{i_0\}, i_0, A, \{i_0\},
+N, \mbox{\tt S}, \delta\zu$. We show that $L = L^s(\GK)$. To
+this end recall that for every $\vec{x} \in L(G)$ there is a
+leftmost derivation. In a grammar in Greibach Form every
+leftmost derivation derives strings of the form
+$\vec{y} \conc \vec{Y}$. Now one shows by induction that
+$G \vdash \vec{y} \conc \vec{Y}$ iff $\auf i_0, %
+\vec{Y}\zu \in \delta(i_0, \mbox{\tt S}, \vec{y})$.
+\proofend
+%%
+\begin{lem}
+\label{prop:stapel}
+Let $\GK$ be a pushdown automaton. Then $L^s(\GK)$
+is context free.
+\end{lem}
+%%
+\proofbeg
+Let $\GK = \auf Q, i_0, A, F, D, \mbox{\tt \#}, \delta\zu$ be 
+a pushdown automaton. We may assume that it is simple. Put 
+$N := Q \times D \times (Q \cup \{\mbox{\tt S}\})$,
+where \mbox{\tt S} is a new symbol. \mbox{\tt S} shall also be the
+start symbol. We write a general element of $N$ in the form
+$[q,A,p]$. Now we define $R := R^s \cup R^0 \cup R^{\delta} \cup %
+R^{\varepsilon}$, where
+%%
+\begin{equation}
+\label{eq:gvona}
+\begin{array}{lll}
+R^s & := \{\mbox{\tt S} \pf [i_0, \mbox{\tt \#}, q] :\! 
+	&\! q \in Q\} \\
+R^0 & := \{[p, Z, q] \pf x :\! 
+	& \! \auf r,\varepsilon\zu \in \delta(p,Z,x)\} 
+\\
+R^{\delta} & := \{[p, Z, q] \pf x [r, Y, q] :\! 
+	& \! \auf r, Y\zu \in \delta(p,Z,x)\} \\
+R^{\varepsilon} & := \{[p, Z, q] \pf [p', X, r] [r, Y, q] :\! 
+	& \! \auf p', XY\zu \in \delta(p,Z,\varepsilon)\}
+\end{array}
+\end{equation}
+%%
+The grammar thus defined is called $G(\GA)$. We claim that for every 
+$\vec{x} \in A^{\ast}$, every $p, q \in Q$ and every $Z \in D$
+%%
+\begin{equation}
+\label{eq:spr}
+[p, Z, q] \vdash_G \vec{x} \quad \Dpf \quad
+\auf q, \varepsilon\zu \in \delta(p, Z, \vec{x})
+\end{equation}
+%%
+This suffices for the proof. For if $\vec{x} \in L(G)$ then we have 
+$[i_0, \mbox{\tt \#}, q] \vdash_G \vec{x}$ and so because of 
+\eqref{eq:spr} $\auf q, \varepsilon\zu \in \delta(i_0, \mbox{\tt \#}, %
+\vec{x})$, which means nothing but $\vec{x} \in L^s(\GK)$. And if the
+latter holds then we have $[i_0, \mbox{\tt \#}, q] \vdash_G \vec{x}$ and
+so $\mbox{\tt S} \vdash_G \vec{x}$, which is nothing else but
+$\vec{x} \in L(G)$.
+
+Now we show \eqref{eq:spr}. It is clear that \eqref{eq:spr} 
+follows from \eqref{eq:spr2}.
+%%
+\begin{multline}
+\label{eq:spr2}
+[p, Z, q] \vdash^{\ell}_G \vec{y} \conc
+[q_0, Y_0, q_1][q_1, Y_1, q_2]\dotsb [q_{m-1},Y_{m-1},q] \\
+	\qquad \Dpf \qquad
+\auf q_0, Y_0Y_1\dotsb Y_{m-1}\zu \in \delta(p, Z, \vec{y})
+\end{multline}
+%%
+\eqref{eq:spr2} is proved by induction.
+\proofend
+%%
+
+%%
+On some reflection it is seen that for every automaton $\GK$ there
+is an automaton $\GL$ with only one accepting state which accepts
+the same language. If one takes $\GL$ in place of $\GK$ then there
+is no need to use the trick with a new start symbol. Said in
+another way, we may choose $[i_0, \mbox{\tt \#}, q]$ as a start symbol where
+$q$ is the accepting state of $\GL$.
+%%
+\nocite{chomsky:pushdown}
+%%
+\begin{thm}[Chomsky]
+The CFLs are exactly the languages
+which are accepted by a pushdown automaton, either by
+state or by stack.
+\end{thm}
+%%
+From this proof we can draw some further conclusions.
+The first conclusion is that for every pushdown automaton
+$\GK$ we can construct a pushdown automaton $\GL$ for which
+$L^s(\GL) = L^s(\GK)$ and which contains no $\varepsilon$--moves.
+Also, there exists a pushdown automaton $\GM$ such that
+$L^s(\GM) = L^s(\GK)$ and which contains only one state, which is
+at the same time an initial and an accepting state. For such
+an automaton these definitions reduce considerably. Such an
+automaton possesses as a memory only a string. The transition
+function can be reduced to a function $\zeta$ from
+$A \times D^{\ast}$ into finite subsets of $D^{\ast}$.
+(We do not allow $\varepsilon$--transitions.)
+
+The pushdown automaton runs along the string from left to right.
+It recognizes in linear time whether or not a string is in the
+language. However, the automaton is nondeterministic. 
+%%
+\begin{defn}
+%%%
+\index{pushdown automaton!deterministic}%%
+\index{language!context free deterministic}%%
+%%%
+A pushdown automaton $\GK = \auf Q, i_0, A, F, D, \mbox{\tt \#}, %
+\delta\zu$ is \textbf{deterministic} if for every $q \in Q$, $Z \in D$ 
+and $x \in A_{\varepsilon}$ we have $|\delta(q, Z, x)| \leq 1$ and 
+for all $q \in Q$ and all $Z \in D$
+either (a) $\delta(q,Z,\varepsilon) = \varnothing$ or
+(b) $\delta(q,Z,a) = \varnothing$ for all $a \in A$.
+A language $L$ is called \textbf{deterministic} if
+$L = L(\GA)$ for a deterministic automaton $\GA$.
+%%%
+\index{$\Delta$}%%
+%%%%
+The set of deterministic languages is denoted by $\Delta$.
+\end{defn}
+%%
+Deterministic languages are such languages which are accepted
+by a deterministic automaton by state. Now, is it possible to
+build a deterministic automaton accepting that language just
+like regular languages? The answer is negative. To this end we
+consider the \textbf{mirror language} $\{\vec{x}\, \vec{x}^T :
+\vec{x} \in A^{\ast}\}$.
+%%%
+\index{language!mirror}%%
+%%%
+This language is surely context free. There are, however, no
+deterministic automata that accept it. To see this one has to
+realize that the automaton will have to put into the stack the
+string $\vec{x} \, \vec{x}^T$ at least up to $\vec{x}$ in order
+to compare it with the remaining word, $\vec{x}^T$. The machine,
+however, has to guess when the moment has come to change from
+putting onto stack to removing from stack. The reader may reflect
+that this is not possible without knowing the entire word.
+%%
+\begin{thm}
+\label{thm:dtime}
+Deterministic languages are in $\textbf{DTIME}(n)$.
+\end{thm}
+%%
+The proof is left as an exercise.
+
+We have seen that also regular languages are in
+$\mathbf{DTIME}(n)$. However, there are deterministic languages
+which are not regular. Such a language is
+$L = \{\vec{x}\mbox{\tt c}\vec{x}^T : \vec{x} \in \{\mbox{\tt a},
+\mbox{\tt b}\}^{\ast}\}$. In contrast to the mirror language $L$
+is deterministic. For now the machine does not have to guess
+where the turning point is: it is right after the symbol
+{\tt c}.
+
+Now there is the question whether a deterministic automaton
+can recognize languages using the stack. This is not the case.
+For let $L = L^s(\GK)$, for some deterministic automaton $\GK$. 
+Then, if $\vec{x}\, \vec{y} \in L$ for some $\vec{y} \neq \varepsilon$ 
+then $\vec{x} \not\in L$. We say that $L$ is \textbf{prefix free} 
+if it has this property.
+%%%
+\index{language!prefix free}%%
+%%%
+For if $\vec{x} \in L$ then there exists a  $\GK$--computation
+from $\auf q_0, \mbox{\tt \#}\zu$ to $\auf q, \varepsilon\zu$. Further,
+since $\GK$ is deterministic: if $\auf q_0,
+\mbox{\tt \#}\zu \stackrel{\vec{x}}{\pf} \Gz$ then $\Gz = \auf q,
+\varepsilon\zu$. However, if the stack has been emptied
+the automaton cannot work further. Hence $\vec{x}\, \vec{y}
+\not\in L$. There are deterministic languages which are not
+prefix free. We present an important class of such languages,
+the {\it Dyck--languages}. Let $A$ be an alphabet. For each $x \in A$ 
+let $\uli{x}$ be another symbol. We write $\uli{A} := \{\uli{x} : x \in A\}$.
+We introduce a congruence $\theta$ on $\GZ(A \cup \uli{A})$. It is 
+generated by the equations
+%%
+\begin{equation}
+a\uli{a}\; \theta\; \varepsilon
+\end{equation}
+%%
+for all $a \in A$.
+(The analogous equations $\uli{a}a\; \theta\; \varepsilon$ are
+{\it not\/} included.) A string $\vec{x} \in (A \cup \uli{A})^{\ast}$
+is called \textbf{balanced} if $\vec{x}\; \theta\; \varepsilon$.
+$\vec{x}$ is balanced iff $\vec{x}$ can be rewritten
+into $\varepsilon$ by successively replacing substrings of the
+form $x\uli{x}$ into $\varepsilon$.
+%%
+\begin{defn}
+%%%
+\index{language!Dyck--}%%
+%%%
+$\textbf{D}_r$ denotes the set of balanced strings over
+an alphabet consisting of $2r$ symbols.  A language is
+called a \textbf{Dyck--language} if it has the form
+$D_r$ for some $r$ (and some alphabet $A \cup \uli{A}$).
+\end{defn}
+%%
+The language XML 
+%%%
+\index{XML}%%%
+%%%
+(\textbf{Extensible Markup Language}, an outgrowth
+of HTML) embodies like no other language the features of
+Dyck--languages. For every string $\vec{x}$ it allows to form a pair
+of tags $\mbox{\tt <}\vec{x}\mbox{\tt >}$ (opening tag) and
+$\mbox{\tt </}\vec{x}\mbox{\tt >}$ (closing tag). The syntax of
+XML is such that the tags always come in pairs. The
+tags alone (not counting the text in between) form a Dyck Language.
+What distinguishes XML from other languages is that tags can be
+freely formed.
+%%
+\begin{prop}
+Dyck--languages are deterministic but not prefix free.
+\end{prop}
+%%
+The following grammars generate the Dyck--languages:
+%%
+\begin{equation}
+\mbox{\tt S} \pf \mbox{\tt SS} \mid x\mbox{\tt S}\uli{x}
+\mid \varepsilon
+\end{equation}
+%%
+Dyck--languages are therefore context free. It is easy to see
+that together with $\vec{x}, \vec{y} \in D_r$ also
+$\vec{x}\vec{y} \in D_r$. Hence Dyck--languages are not prefix
+free. That they are deterministic follows from some general
+results which we shall establish later. We leave it to the
+reader to construct a deterministic automaton which recognizes
+$D_r$. This shows that the languages which are accepted by
+a deterministic automaton by empty stack are a proper subclass
+of the languages which are accepted by an automaton by
+state.  This justifies the following definition.
+%%
+\begin{defn}
+%%%
+\index{language!strict deterministic}%%
+\index{$\Delta^s$}%%
+%%%
+A language $L$ is called \textbf{strict deterministic} if there
+is a deterministic automaton $\GK$ such that
+$L = L^s(\GK)$. The class of strict deterministic languages
+is denoted by $\Delta^s$.
+\end{defn}
+%%
+\begin{thm}
+\label{thm:praefixfrei}
+$L$ is strict deterministic if $L$ is
+deterministic and prefix free.
+\end{thm}
+%%
+\proofbeg
+We have seen that strict deterministic languages are prefix free.
+Now let $L$ be deterministic and prefix free. Then there exists an
+automaton  $\GK$ which accepts $L$ by state. Since $L$ is prefix
+free, this holds for every $\vec{x} \in L$, and for every proper
+prefix $\vec{y}$ of $\vec{x}$ we have that if $\auf q_0, \mbox{\tt \#}\zu
+\stackrel{\vec{y}}{\pf} \auf q, \vec{Y}\zu$ then $q$ is not an
+accepting state. Thus we shall rebuild $\GK$ in the following way.
+Let $\delta_1(q,Z,x) := \delta^{\GK}(q,Z,x)$ if $q$ is not
+accepting. Further, let $\delta_1(q,Z,x) := \varnothing$
+if $q \in F$ and $x \in A$; let $\delta_1(q,Z,\varepsilon) :=
+\{\auf q,\varepsilon\zu\}$, $Z \in D$. Finally, let $\GL$ be
+the automaton which results from $\GK$ by replacing
+$\delta^{\GK}$ with $\delta_1$. $\GL$ is deterministic as
+is easily checked. Further, an $\GL$--computation can be
+factored into an $\GK$--computation followed by a deletion
+of the stack. We claim that $L(\GK) = L^s(\GL)$. The claim
+then follows. So let $\vec{x} \in L(\GK)$.
+Then there exists a $\GK$--computation using $\vec{x}$
+from $\auf q_0, \mbox{\tt \#}\zu$ to $\auf q, \vec{Y}\zu$ where
+$q \in F$. For no proper prefix $\vec{y}$ of $\vec{x}$ there is
+a computation into an accepting state since $L$ is prefix
+free. So there is an $\GL$--computation with $\vec{x}$ from
+$\auf q_0, \mbox{\tt \#}\zu$ to $\auf q, \vec{Y}\zu$. Now 
+$\auf q, \vec{Y}\zu \stackrel{\varepsilon}{\pf} \auf q, \varepsilon\zu$
+and so $\vec{x} \in L^s(\GL)$. Conversely, assume
+$\vec{x} \in L^s(\GL)$. Then there is a computation
+$\auf q_0, \mbox{\tt \#}\zu \stackrel{\vec{x}}{\pf}
+\auf q, \varepsilon\zu$. Let $\vec{Y} \in D^{\ast}$
+be the longest string such that
+$\auf q_0, \mbox{\tt \#}\zu \stackrel{\vec{x}}{\pf}
+\auf q, \vec{Y}\zu$. Then the $\GL$--step before reaching
+$\auf q, \vec{Y}\zu$ is a $\GK$--step. So there is a
+$\GK$--computation for $\vec{x}$ from $\auf q_0, \mbox{\tt \#}\zu$ to
+$\auf q,\vec{Y}\zu$, and so $\vec{x} \in L(\GK)$.
+\proofend
+%%
+
+The proof of this theorem also shows the following.
+%%
+\begin{thm}
+\label{thm:prffrei}
+Let $U$ be a deterministic CFL.
+Let $L$ be the set of all $\vec{x} \in U$ for which
+no proper prefix is in $U$. Then $L$ is strict
+deterministic.
+\end{thm}
+%%
+For the following definition we make the following agreement,
+which shall be used quite often in the sequel.
+%%%
+\index{$^{(k)}\vec{x}$}%%%
+%%%%
+We denote by ${^{(k)}\vec{\alpha}}$ the prefix of $\vec{\alpha}$
+of length $k$ in case $\vec{\alpha}$ has length at least
+$k$; otherwise ${^{(k)}\vec{\alpha}} := \vec{\alpha}$.
+%%
+\begin{defn}
+%%%
+\index{partition!strict}%%
+\index{$\equiv$}%%
+%%%
+Let $G = \auf \mbox{\tt S}, N, A, R\zu$ be a grammar and
+$\Pi \subseteq \wp(N \cup A)$ a partition. We write
+$\alpha \equiv \beta$ if there is an $M \in \Pi$ such that
+$\alpha, \beta \in M$. $\Pi$ is called \textbf{strict for G}
+if the following holds.
+%%
+\begin{dingautolist}{192}
+\item
+    $A \in \Pi$
+\item
+    For $C, C' \in N$ and $\vec{\alpha}, \vec{\gamma}_1,
+    \vec{\gamma}_2 \in (N \cup A)^{\ast}$: if $C \equiv C'$
+    and $C \pf \vec{\alpha}\, \vec{\gamma}_1$ as well as
+    $C' \pf \vec{\alpha}\, \vec{\gamma}_2 \in R$ then either
+        \begin{enumerate}
+        \item
+            $\vec{\gamma}_1, \vec{\gamma}_2 \neq \varepsilon$ and
+            ${^{(1)}\vec{\gamma}_1} \equiv {^{(1)}\vec{\gamma}_2}$
+            or
+        \item
+            $\vec{\gamma}_1 = \vec{\gamma}_2 = \varepsilon$ and
+            $C = C'$.
+        \end{enumerate}
+\end{dingautolist}
+\end{defn}
+%%
+\begin{defn}
+%%%
+\index{grammar!strict deterministic}%%
+%%%
+A CFG $G$ is called \textbf{strict deterministic}
+if there is a strict partition for $G$.
+\end{defn}
+%%
+We look at the following example
+(taken from \cite{harrison:formal}):
+%%
+\begin{equation}
+\begin{array}{l@{\quad\pf\quad}l@{\qquad}l@{\quad\pf\quad}l}
+\mbox{\tt S} & \mbox{\tt aA} \mid \mbox{\tt aB} &
+	\mbox{\tt C} & \mbox{\tt bC} \mid \mbox{\tt a} \\
+\mbox{\tt A} & \mbox{\tt aAa} \mid \mbox{\tt bC} &
+	\mbox{\tt D} & \mbox{\tt bDc} \mid \mbox{\tt c} \\
+\mbox{\tt B} & \mbox{\tt aB} \mid \mbox{\tt bD} 
+\end{array}
+\end{equation}
+%%
+$\Pi = \{\{\mbox{\tt a}, \mbox{\tt b}, \mbox{\tt c}\},
+\{\mbox{\tt S}\}, \{\mbox{\tt A}, \mbox{\tt B}\},
+\{\mbox{\tt C}, \mbox{\tt D}\}\}$ is a strict partition.
+The language generated by this grammar is
+$\{\mbox{\tt a}^n \mbox{\tt b}^k \mbox{\tt a}^n,
+\mbox{\tt a}^n \mbox{\tt b}^k \mbox{\tt c}^k : k, n \geq 1\}$.
+
+We shall now show that the languages generated by strict
+deterministic grammars are exactly the strict deterministic
+languages. This justifies the terminology in retrospect.
+To begin, we shall draw a few conclusions from the definitions.
+If $G = \auf \mbox{\tt S}, N, A, R\zu$ is strict deterministic
+and $R' \subseteq R$ then $G' = \auf \mbox{\tt S}, N, A, R'\zu$
+is strict deterministic as well. Therefore, for a strict
+deterministic grammar we can construct a weakly equivalent
+strict deterministic slender grammar. We denote by
+%%%
+\index{$\vec{\alpha} \Pf^n_L \vec{\gamma}$}%%%
+%%
+$\vec{\alpha} \Pf^n_L \vec{\gamma}$
+the fact that there is a leftmost derivation of length $n$ of
+$\vec{\gamma}$ from $\vec{\alpha}$.
+%%
+\begin{lem}
+\label{lem:partition}
+Let $G$ be a CFG with a strict partition $\Pi$.
+Then the following is true.
+    For $C, C' \in N$ and $\vec{\alpha}, \vec{\gamma}_1,
+    \vec{\gamma}_2 \in (N \cup A)^{\ast}$: if $C \equiv C'$
+    and $C \Pf^n_L \vec{\alpha}\, \vec{\gamma}_1$ as well as
+    $C' \Pf^n_L \vec{\alpha}\, \vec{\gamma}_2$ then either
+        \begin{dingautolist}{192}
+        \item
+            $\vec{\gamma}_1, \vec{\gamma}_2 \neq \varepsilon$ and
+            ${^{(1)}\vec{\gamma}_1} \equiv {^{(1)}\vec{\gamma}_2}$
+            or
+        \item
+            $\vec{\gamma}_1 = \vec{\gamma}_2 = \varepsilon$ and
+            $C = C'$.
+        \end{dingautolist}
+\end{lem}
+%%
+The proof is an easy induction over the length of the derivation.
+%%
+\begin{lem}
+\label{lem:linksrekursiv}
+Let $G$ be slender and strict deterministic. Then if
+$C \Pf_L^+ D\, \vec{\alpha}$ we have $C \not\equiv D$.
+\end{lem}
+%%
+\proofbeg
+Assume $C \Pf^n_L D\, \vec{\alpha}$. Then because of
+Lemma~\ref{lem:partition} we have for all $k \geq 1$:
+$C \Pf^{kn}_L D\, \vec{\gamma}$ for some $\vec{\gamma}$.
+From this it follows that there is no terminating leftmost
+derivation from $C$. This contradicts the fact that $G$ is
+slender.
+\proofend
+%%
+
+It follows that a strict deterministic grammar is not left 
+recursive, that is, $A \Pf_L^+ A\, \vec{\alpha}$ cannot hold. 
+We can construct a Greibach Normal Form for $G$ in the following way. Let
+$\rho = C \pf \alpha \, \vec{\gamma}$  be a rule. If
+$\alpha \not\in A$ then we skip $\rho$ by replacing it with the
+set of all rules $C \pf \vec{\eta}\, \vec{\gamma}$ such that
+$\alpha \pf \vec{\eta} \in R$.  Then Lemma~\ref{lem:partition}
+assures us that $\Pi$ is a strict partition also for the new
+grammar. This operation we repeat as often as necessary. Since
+$G$ is not left recursive, this process terminates.
+%%
+\begin{thm}
+For every strict deterministic grammar $G$ there is a strict 
+deterministic grammar $H$ in Greibach Normal Form such that
+$L(G) = L(H)$.
+\end{thm}
+%%
+Now for the promised correspondence between strict deterministic
+languages and strict deterministic grammars.
+%%
+\begin{lem}
+Let $L$ be strict deterministic. Then there exists a
+deterministic automaton with a single accepting state
+which accepts $L$ by stack.
+\end{lem}
+%%
+\proofbeg
+Let $\GA$ be given. We add a new state $q$ into which the
+automaton changes as soon as the stack is empty.
+\proofend
+%%
+\begin{lem}
+Let $\GA$ be a deterministic automaton with a single accepting
+state. Then $G(\GA)$ is strict deterministic.
+\end{lem}
+%%
+\proofbeg
+Let $\GA = \auf Q, i_0, A, F, D, \mbox{\tt \#}, \delta\zu$. By the preceding
+lemma we may assume that $F = \{q_f\}$. Now let $G(\GA)$ defined as in
+\eqref{eq:gvona}. Put
+%%
+\begin{equation}
+\alpha \equiv \beta \quad:\Dpf\quad
+\left\{
+    \begin{array}{ll}
+                        & \alpha, \beta \in A \\
+    \text{ or}   & \alpha = [q,Z,q'], \beta = [q,Z,q''] \\
+    & \quad \text{for some } q, q', q'' \in Q, Z \in D.
+    \end{array}
+\right.
+\end{equation}
+%%
+We show that $\equiv$ is a strict partition. To this end,
+let $[q,Z,q'] \pf \vec{\alpha}\vec{\gamma}_1$ and
+$[q,Z,q''] \pf \vec{\alpha}\vec{\gamma}_2$ be two rules.
+Assume first of all $\vec{\gamma}_1,
+\vec{\gamma}_2 \neq \varepsilon$.
+Case 1. $\vec{\alpha} = \varepsilon$. Consider
+$\zeta_i := {^{(1)}\vec{\gamma}_i}$. If $\zeta_1 \in A$
+then also $\zeta_2 \in A$, since $\GA$ is deterministic.
+If on the other hand $\zeta_1 \not\in A$ then we have
+$\zeta_1 = [q, Y_0, q_1]$ and
+$\zeta_2 = [q, Y_0, q_1']$, and so $\zeta_1 \equiv \zeta_2$.
+Case 2. $\vec{\alpha} \neq \varepsilon$. Let then
+$\eta := {^{(1)}\vec{\alpha}}$. If $\eta \in A$, then we now have
+$\zeta_1 = [q_i, Y_i, q_{i+1}]$ and
+$\zeta_2 = [q_i, Y_i, q_{i+1}']$ for some
+$q_i, q_{i+1}, q_{i+1}' \in Q$. This completes this case.
+
+Assume now $\vec{\gamma}_1 = \varepsilon$.
+Then $\vec{\alpha}\, \vec{\gamma}_1$ is a prefix of
+$\vec{\alpha}\, \vec{\gamma}_2$.
+Case 1. $\vec{\alpha} = \varepsilon$. Then
+$\vec{\alpha}\, \vec{\gamma}_2 = \varepsilon$,
+hence $\vec{\gamma}_2 = \varepsilon$.
+Case 2. $\vec{\alpha} \neq \varepsilon$.
+Then it is easy to see that $\vec{\gamma}_2 =
+\varepsilon$. Hence in both cases we have
+$\vec{\gamma}_2 = \varepsilon$, and so $q' = q''$.
+This shows the claim.
+\proofend
+%%
+\begin{thm}
+Let $L$ be a strict deterministic language. Then there exists
+a strict deterministic grammar $G$ such that $L(G) = L$.
+\end{thm}
+%%
+%%
+The strategy to put a string onto the stack and then subsequently
+remove it from there has prompted the following definition.
+%%%
+\index{stack move}%%
+\index{turn}%%
+%%%
+A \textbf{stack move} is a move where the machine writes a symbol
+onto the stack or removes a symbol from the stack. (So the stack
+either increases in length or it decreases.) The automaton is said
+to make a \textbf{turn} if in the last stack move it increased the
+stack and now it decreases it or, conversely, in the last stack
+move it diminishes the stack and now increases it.
+%%
+\begin{defn}
+%%%
+\index{language!$n$--turn}%%
+\index{language!ultralinear}%%
+%%%
+A language $L$ is called an $n$--\textbf{turn language} if there is
+a pushdown automaton which recognizes every string from $L$
+with at most $n$ turns. $L$ is \textbf{ultralinear} if it is an
+$n$--turn language for some $n \in \omega$.
+\end{defn}
+%%
+Notice that a CFL is $n$--turn exactly if there
+is an automaton which accepts $L$ and in which for every
+string $\vec{x}$ {\it every\/} computation needs at most
+$n$ turns. For given any automaton $\GK$ which recognizes
+$L$, we build another automaton $\GL$ which has the same
+computations as $\GK$ except that they are terminated before
+the $n+1$st turn. This is achieved by adding a memory that
+counts the number of turns.
+
+We shall not go into the details of ultralinear languages.
+One case is worth noting, that of 1--turn languages.
+%%%
+\index{language!linear}%%
+\index{grammar!linear}%%
+%%%
+A CFG is called \textbf{linear} if in every rule
+$X \pf \vec{\alpha}$ the string $\vec{\alpha}$ contains at most one
+occurrence of a nonterminal symbol. A language is \textbf{linear}
+if it is generated by a linear grammar.
+%%
+\begin{thm}
+A CFL is linear iff it is
+1--turn.
+\end{thm}
+%%
+\proofbeg
+Let $G$ be a linear grammar. Without loss of generality
+a rule is of the form $X \pf aY$ or $X \pf Ya$. Further,
+there are rules of the form $X \pf \varepsilon$. We construct
+the following automaton. $D := \{\mbox{\tt \#}\} \cup N$, where 
+{\tt \#} is the beginning of the stack, $Q := \{+, -, q\}$,
+$i_0 := +$, $F := \{q\}$. Further, for
+$x \in A$ we put $\delta(+, X, x) := \{\auf +, Y\zu\}$
+if $X \pf xY \in R$ and $\delta(+, X, \varepsilon) := 
+\{\auf +, Y\zu\}$ if $X \pf Yx \in R$; let
+$\delta(-, Y, x) := \{\auf -, \varepsilon\zu\}$
+if $X \pf Yx \in R$. And finally $\delta(\auf +, X, x\zu) := 
+\{\auf -, \varepsilon\zu\}$ if $X \pf x \in R$. Finally, 
+$\delta(-,\mbox{\tt \#},\varepsilon) := \{\auf q, \varepsilon\zu\}$.  
+This defines the automaton $\GK(G)$. It is not hard to show that 
+$\GK(G)$ only admits computations
+without stack moves. For if the automaton is in state 
+$+$ the stack may not decrease unless the automaton changes
+into the state $-$. If it is in $-$, the stack may not increase 
+and it may only be changed into a state $-$, or, finally, into 
+$q$. We leave it to the reader to check that
+$L(\GK(G)) = L(G)$. Therefore $L(G)$ is a 1--turn language.
+Conversely, let $\GK$ be an automaton which allows computations
+with at most one turn. It is then clear that if the stack is
+emptied the automaton cannot put anything on it.
+The automaton may only fill the stack and later empty it.
+Let us consider the automaton $G(\GK)$ as defined above.
+Then all rules are of the form $X \pf x\vec{Y}$ with
+$x \in A_{\varepsilon}$. Let $\vec{Y} =
+Y_0 Y_1 \dotsb Y_{n-1}$. We claim that every
+$Y_i$--production for $i > 0$ is of the form $Y_i \pf a$
+or $Y_i \pf X$. If not,  there is a computation in which
+the automaton makes two turns, as we have indicated above.
+(This argument makes tacit use of the fact that the automaton
+possesses a computation where it performs a transition to
+$Y_i = [p,X,q]$ that is to say, that it goes from
+$p$ to $q$ where $X$ is the topmost stack symbol. If this
+is not the case, however, then the transitions can be
+eliminated without harm from the automaton.) Now it is easy
+to eliminate the rules of the form $Y_i \pf X$ by skipping them.
+Subsequent skipping of the rules $Y_i \pf a$ yields a
+linear grammar.
+\proofend
+
+The automata theoretic analyses suggest that the recognition
+problem for CFLs must be quite hard.
+However, this is not the case. It turns out that the recognition
+and parsing problem are solvable in $O(n^3)$ steps. To see this,
+let a grammar $G$ be given.  We assume without loss of generality
+that $G$ is in Chomsky Normal Form.  Let $\vec{x}$ be a string of
+length $n$. As a first step we try to list all substrings which
+are constituents, together with their category. If $\vec{x}$ is a
+constituent of category $S$ then $\vec{x} \in L(G)$; if it is not,
+then $\vec{x} \not\in L(G)$. In order to enumerate the substrings
+we use an $(n+1) \times (n+1)$--matrix whose entries
+are subsets of $N$. Such a matrix is called a \textbf{chart}.
+%%%
+\index{chart}%%
+%%%
+Every substring is defined by a pair $\auf i,j\zu$ of numbers,
+where $0 \leq i < j \leq n + 1$. In the cell $\auf i,j\zu$ we
+enter all $X \in N$ for which the substring $x_i x_{i+1} \dotsb x_{j-1}$
+is a constituent of category $X$. In the beginning the matrix is
+empty. Put $d := i - j$. Now we start by filling the matrix 
+starting at $d = 1$ and counting up to $d = n$. For each $d$, 
+we go from $i = 0$ until $i = n - d$. So, we begin
+with $d = 1$ and compute for $i = 0$, $i = 1$, $i = 2$ and so on. 
+Then we set $d := 2$ and compute for $i = 0$, $i = 1$ etc. We 
+consider the pair $\auf d, i\zu$. The substring
+$x_i \dotsb x_{i+d}$ is a constituent of category $X$ iff
+it decomposes into substrings $\vec{y} = x_i \dotsb x_{i+e}$ and
+$\vec{z} = x_{i+e+1} \dotsb x_{i+d}$ such that there is a rule
+$X \pf Y Z$ where $\vec{y}$ is a constituent of category $Y$ and
+$\vec{z}$ is a constituent of category $Z$. This means that the set of
+all $X \in N$ which we enter at $\auf i, i+d\zu$ is computed from
+all decompositions into substrings. There are $d - 1 \leq n$
+such decomposition. For every decomposition the computational
+effort is limited and depends only on a constant $c_G$ whose
+value is determined by the grammar. For every pair we need
+$c_G \cdot (n+1)$ steps. Now there exist ${n \choose 2}$ proper
+subwords. Hence the effort is bounded by $c_G \cdot n^3$.
+
+In Figure~\ref{fig:chart} we have shown the computation of a
+chart based on the word {\tt abaabb}. Since the grammar is
+invertible any substring has at most one category. In general,
+this need not be the case. (Because of Theorem~\ref{thm:invertierbar}
+we can always assume the grammar to be invertible.)
+%%
+\begin{equation}
+\begin{array}{l@{\quad\pf\quad}l}
+\mbox{\tt S} & \mbox{\tt SS} \mid \mbox{\tt AB} \mid \mbox{\tt BA} \\
+\mbox{\tt A} & \mbox{\tt AS} \mid \mbox{\tt SA} \mid \mbox{\tt a} \\
+\mbox{\tt B} & \mbox{\tt BS} \mid \mbox{\tt SB} \mid \mbox{\tt b}
+\end{array}
+\end{equation}
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(20,15)
+\put(2.5,1){\makebox(0,0){\tt a}}
+\put(5.5,1){\makebox(0,0){\tt b}}
+\put(8.5,1){\makebox(0,0){\tt a}}
+\put(11.5,1){\makebox(0,0){\tt a}}
+\put(14.5,1){\makebox(0,0){\tt b}}
+\put(17.5,1){\makebox(0,0){\tt b}}
+%%
+\put(2.5,2){\line(-1,1){1.5}}
+\put(5.5,2){\line(-1,1){3}}
+\put(8.5,2){\line(-1,1){4.5}}
+\put(11.5,2){\line(-1,1){6}}
+\put(14.5,2){\line(-1,1){7.5}}
+\put(17.5,2){\line(-1,1){9}}
+\put(19,3.5){\line(-1,1){9}}
+%%
+\put(1,3.5){\line(1,1){9}}
+\put(2.5,2){\line(1,1){9}}
+\put(5.5,2){\line(1,1){7.5}}
+\put(8.5,2){\line(1,1){6}}
+\put(11.5,2){\line(1,1){4.5}}
+\put(14.5,2){\line(1,1){3}}
+\put(17.5,2){\line(1,1){1.5}}
+%%
+\put(2.5,3.5){\makebox(0,0){\tt A}}
+\put(5.5,3.5){\makebox(0,0){\tt B}}
+\put(8.5,3.5){\makebox(0,0){\tt A}}
+\put(11.5,3.5){\makebox(0,0){\tt A}}
+\put(14.5,3.5){\makebox(0,0){\tt B}}
+\put(17.5,3.5){\makebox(0,0){\tt B}}
+%%
+\put(4,5){\makebox(0,0){\tt S}}
+\put(7,5){\makebox(0,0){\tt S}}
+\put(10,5){\makebox(0,0){$\varnothing$}}
+\put(13,5){\makebox(0,0){\tt S}}
+\put(16,5){\makebox(0,0){$\varnothing$}}
+%%
+\put(5.5,6.5){\makebox(0,0){\tt A}}
+\put(8.5,6.5){\makebox(0,0){\tt A}}
+\put(11.5,6.5){\makebox(0,0){\tt A}}
+\put(14.5,6.5){\makebox(0,0){\tt B}}
+%%
+\put(7,8){\makebox(0,0){$\varnothing$}}
+\put(10,8){\makebox(0,0){\tt S}}
+\put(13,8){\makebox(0,0){\tt S}}
+%%
+\put(8.5,9.5){\makebox(0,0){\tt A}}
+\put(11.5,9.5){\makebox(0,0){\tt B}}
+%%
+\put(10,11){\makebox(0,0){\tt S}}
+\end{picture}
+\end{center}
+\caption{A Chart for {\tt abaabb}}
+\label{fig:chart}
+\end{figure}
+%%
+The construction of the chart is as follows.
+Let $C_{\vec{x}}(i,j)$ be the set of all nonterminals
+$X$ such that $X \vdash_G x_i x_{i+1} \dotsb x_{j-1}$.
+Further, for two nonterminals $X$ and $Y$
+$X \odot Y := \{Z : Z \pf XY \in R\}$ and for sets
+$\BU, \BV \subseteq N$ let
+%%%
+\index{$X \odot Y$, $\BU \odot \BV$}%%
+%%
+\begin{equation}
+\BU \odot \BV := \bigcup \auf X \odot Y : X \in \BU, Y \in \BV\zu
+\end{equation}
+%%
+Now we can compute $C_{\vec{x}}(i,j)$ inductively. The induction
+parameter is $j - i$. If $j - i = 1$ then
+$C_{\vec{x}}(i,j) = \{X : X \pf x \in R\}$. If $j - i > 1$ then
+the following equation holds.
+%%
+\begin{equation}
+C_{\vec{x}}(i,j) = \bigcup_{i < k < j} C_{\vec{x}}(i,k)
+\odot C_{\vec{x}}(k,j)
+\end{equation}
+%%
+We always have $j - k, k - i < j - i$.
+Now let $\vec{x} \in L(G)$. How can we find a
+derivation for $\vec{x}$? To that end we use the fully computed
+chart. We begin with $\vec{x}$ and decompose it in an
+arbitrary way; since $\vec{x}$ has the category {\tt S}, there must
+be a rule $\mbox{\tt S} \pf XY$ and a decomposition
+into $\vec{x}$ of category $X$ and $\vec{y}$ of category
+$Y$. Or $\vec{x} = a \in A$ and $\mbox{\tt S} \pf a$ is a rule.
+If the composition has been found, then we continue with the
+substrings $\vec{x}$ and $\vec{y}$ in the same way.
+Every decomposition needs some time, which only depends on
+$G$. A substring of length $i$ has $i \leq n$ decompositions.
+In our analysis we have at most 2$n$ substrings.
+This follows from the fact that in a properly branching
+tree with $n$ leaves there are at most $2n$ nodes. In total we
+need time at most $d_G \cdot n^2$ for a certain constant
+$d_G$ which only depends on $G$.
+
+From this it follows that in general even if the grammar is not
+in Chomsky Normal Form the recognition and analysis only needs
+$O(n^3)$ steps where at the same time we only need $O(n^2)$ cells.
+For let $G$ be given. Now transform $G$ into 2--standard form
+into the grammar $G^2$. Since $L(G^2) = L(G)$, the recognition
+problem for $G$ is solvable in the same amount of time as $G^2$.
+One needs $O(n^2)$ steps to construct a chart for $\vec{x}$.
+One also needs an additional $O(n^2)$ steps in order to create
+a $G$--tree for $\vec{x}$ and $O(n)$ steps to turn this into a
+derivation.
+
+However, this is not already a proof that the problem is
+solvable in $O(n^3)$ steps and $O(n^2)$ space, for we need
+to find a Turing machine which solves the problem in the
+same time and space. This is possible; this has been shown
+independently by Cocke, Kasami and Younger.
+%%%%
+\index{Cocke, J.}%%%
+\index{Kasami, Tadao}%%%
+\index{Younger, D.~H.}%%%
+%%
+\nocite{younger:cfg}\nocite{kasami:cfg}
+%%
+\begin{thm}[Cocke, Kasami, Younger]
+\label{thm:cky}
+CFLs have the following multitape complexity.
+%%
+\begin{dingautolist}{192}
+\item
+$\text{CFL} \subseteq \textbf{DTIME}(n^3)$.
+\item
+$\text{CFL} \subseteq \textbf{DSPACE}(n^2)$.
+\end{dingautolist}
+\end{thm}
+%%
+\proofbeg
+We construct a deterministic 3 tape Turing machine which only
+needs $O(n^2)$ space and $O(n^3)$ time. The essential trick
+consists in filling the tape. Also, in addition to the alphabet 
+$A$ we need an auxiliary alphabet consisting of
+{\tt B} and {\tt Q} as well as for every $U \subseteq N$ 
+a symbol $[U]$ and a symbol $[U]^{\surd}$. On Tape 1 we have
+the input string, $\vec{x}$. Put $C(i,j) := C_{\vec{x}}(i,j)$.
+Let $\vec{x}$ have length $n$. On Tape 1 we construct a
+sequence of the following form.
+%%
+\begin{equation}
+\mbox{\tt Q}\mbox{\tt B}^n \mbox{\tt Q}\mbox{\tt B}^{n-1}
+\mbox{\tt Q} \dotsb \mbox{\tt QBBQBQ}
+\end{equation}
+%%
+This is the skeleton of the chart. We call a sequence of
+{\tt B}s in between two {\tt Q}s a \textbf{block}. The first block
+is being filled as follows. The string $\vec{x}$ is deleted
+step by step and the sequence $\mbox{\tt B}^n$ is being replaced
+by the sequence of the $C(i,i+1)$. This procedure requires
+$O(n^2)$ steps. For every $d$ from $1$ to $n-1$ we shall fill
+the $d+1$st block. So, let $d$ be given. On Tape 2 we write
+the sequence
+%%
+\begin{equation}
+\begin{array}{l}
+\mbox{\tt Q}[C(0,1)][C(0,2)]\dotsb [C(0,d)]\conc \\
+\conc \mbox{\tt Q} [C(1,2)][C(1,3)]\dotsb[C(1,d+1)]\conc\dotsb \\
+\conc\mbox{\tt Q}[C(n-d,n-d+1)][C(n-d,n-d+2)]\dotsb [C(n-d,n)]
+\mbox{\tt Q}
+\end{array}
+\end{equation}
+%%
+On Tape 3 we write the sequence
+%%
+\begin{equation}
+\begin{array}{l}
+\mbox{\tt Q}[C(0,d)][C(1,d)]\dotsb [C(d-1,d)]\conc \\
+\conc \mbox{\tt Q}[C(1,d+1)][C(2,d+1)]\dotsb [C(d,d+1)] \conc \dotsb \\
+\conc \mbox{\tt Q} [C(n-d,n)][C(n-d+1,n)]\dotsb [C(n-1,n)]\mbox{\tt Q}
+\end{array}
+\end{equation}
+%%
+From this sequence we can compute the $d+1$st block quite fast.
+The automaton has to traverse the first block on Tape 2 and the
+second block on Tape 3 cogradiently and memorize the result of
+$C(0,j) \odot C(j,d+1)$. When it reaches the end it has computed
+$C(0,d+1)$ and can enter it on Tape 1. Now it moves on to the
+next block on the second and the third tape and computes
+$C(1,d+2)$. And so on. It is clear that the computation is linear
+in the length of the Tape 2 (and the Tape 3) and therefore needs
+$O(n^2)$ time. At the end of this procedure Tape 2 and 3 are
+emptied. Also this needs quadratic time. At the end we need to
+consider that the filling of Tapes 2 and 3 needs
+$O(n^2)$ time. Then for every $d$ the time consumption is
+at most $O(n^2)$ and in total $O(n^3)$.
+For this we first write {\tt Q} and position the head of Tape 1
+on the element $[C(0,1)]$. We write $[C(0,1)]$ onto Tape 2
+and $[C(0,1)]^{\surd}$ onto Tape 1. (So, we 
+`tick off' the symbol. This helps us to remember what we did.)
+Now we advance to $[C(1,2)]$ copy the result onto Tape 2
+and replace it by $[C(1,2)]^{\surd}$. And so on. This only
+needs linear time; for the symbols $[C(i,i+1)]$ we recognize
+because they are placed before the {\tt Q}. If we are ready
+we write {\tt Q} onto Tape 2 and move on Tape 1 on to the
+beginning and then to the first symbol to the right of
+a `ticked off' symbol. This is $[C(1,2)]$. We copy this symbol
+onto Tape 2 and tick it off. Now we move on to the next symbol
+to the right of the symbol which has been ticked off, copy it
+and tick it off. In this way Tape 2 is filled in quadratic
+time. At last the symbols that have been ticked off are being
+ticked `on', which needs $O(n^2)$ time. Analogously the
+Tape 3 is filled.
+%%
+\proofend
+%%
+\vplatz
+\exercise
+Prove Proposition~\ref{prop:einfach}.
+%%
+\vplatz
+\exercise
+Prove Theorem~\ref{thm:dtime}. {\it Hint.}
+Show that the number of $\varepsilon$--moves
+of an automaton $\GA$ in scanning of the string
+$\vec{x}$ is bounded by $k_{\GA} \cdot |\vec{x}|$,
+where $k_{\GA}$ is a number that depends only on
+$\GA$. Now code the behaviour of an arbitrary
+pushdown automaton using a 2--tape Turing machine and
+show that to every move of the pushdown automaton
+corresponds a bounded number of steps of the Turing
+machine.
+%%
+\vplatz
+\exercise
+Show that a CFL is 0--turn iff it is regular.
+%%
+\vplatz
+\exercise
+Give an algorithm to code a chart onto the tape of a Turing
+machine.
+%%
+\vplatz
+\exercise
+Sketch the behaviour of a deterministic Turing machine
+which recognizes a given CFL using $O(n^2)$ space.
+%%
+\vplatz
+\exercise
+Show that $\{\vec{w}\, \vec{w}^T : \vec{w} \in A^{\ast}\}$ is
+context free but not deterministic.
+%%
+\vplatz
+\exercise
+Construct a deterministic automaton  which recognizes a given
+Dyck--language.
+%%
+\vplatz
+\exercise
+Prove Theorem~\ref{thm:prffrei}.

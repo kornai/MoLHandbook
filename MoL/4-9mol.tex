@@ -1,0 +1,1042 @@
+\newcommand{\rfs}[1]{\mbox{}[#1]}
+\section{Discourse Representation Theory and Referent Systems}
+\label{kap6-3}
+%
+%
+%
+One of the problems of Montague Semantics was the treatment of
+so called extrasentential anaphora. These are the anaphorical
+expressions whose antecedent is not within the same sentence
+and also not within a superordinate sentence. This is a problem that
+GB theory also has, since lack of c--command generally inhibits
+the possibility of binding (see Section~\ref{kap5-5}).
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.1) & {\tt Paul sees a red car. It pleases him much.} \\
+(\thesection.2) & {\tt If Paul sees a red car then it pleases him.} 
+\end{tabular}
+\\[2mm]
+%%
+We assume that {\tt it} refers to whatever {\tt a red car} refers
+to and {\tt him} refers to whatever {\tt Paul} refers to, namely
+Paul. Therefore, {\tt Paul} is the antecedent of {\tt him}. We
+denote this by giving the antecedent a superscript and the pronoun
+a subscript. So we use the following annotated sentences.
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.3) & [{\tt Paul}]$^0$ {\tt sees} [{\tt a red car}]$^1$.
+    {\tt It$_1$ pleases him$_0$ much.} \\
+(\thesection.4) & {\tt If} [{\tt Paul}]$^0$ {\tt sees} [{\tt a red
+    car}]$^1$ {\tt then it$_1$ pleases him$_1$.}
+\end{tabular}
+\\[2mm]
+%%
+To deal with these sentences, Hans Kamp has developed in
+\cite{kamp:truth} the {\bf Discourse Representation Theory}
+({\bf DRT}, see also \cite{kampreyle:drt} and the survey article 
+\cite{vaneijckkamp:drt}).
+%%%
+\index{Discourse Representation Theory}%%
+%%%
+DRT wants to answer the following two questions.
+%%
+\begin{enumerate}
+\item
+If {\tt a}({\tt n}) actually is to be interpreted as an existential
+quantifier, why is it effectively a universal quantifier in
+(\thesection.4)?
+\item
+Why are certain occurrences of pronouns good and others not?
+\end{enumerate}
+%%
+Why we choose this interpretation rather than another is not what
+DRT can tell us. It assumes that we have chosen antecedents
+for pronouns in the form of the indexing. To see that there is
+a problem with the quantifiers, look at (\thesection.4). On the
+surface it has the form $((\exists x)\varphi(x)) \pf \chi(x)$, with
+$x$ occurring free in $\chi$. Intuitively speaking this says,
+however, that every red car which Paul sees pleases him; so
+the meaning is $(\forall x)(\varphi(x) \pf \chi(x))$. The emergence
+of the universal quantifier is mysterious. For notice that in predicate
+logic $((\exists x)\varphi) \pf \chi \equiv (\forall x)(\varphi %
+\pf \chi)$ only if $x$ does not occur in $\chi$. In (\thesection.4)
+this is not the case.
+
+Now for the second question. We observe the following.
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.5) & {\tt If Paul sees} [{\tt a red car}]$^1$ {\tt it$_1$
+    pleases him much.} \\
+    & \qquad {\tt $^{\ast}$It$_1$ has an airbag.} \\
+(\thesection.6) & {\tt Paul sees} [{\tt a red car}]$^1$. {\tt It$_1$
+    pleases him much.} \\
+    & \qquad {\tt It$_1$ has an airbag.} \\
+\end{tabular}
+\\[2mm]
+%%
+In (\thesection.5) the second occurrence of $\mbox{\tt him}_1$
+is illicit. This does not seem to have syntactic reasons. For
+c--command as an explanation is out of the question. The if--clause
+is not the main clause (this must be argued for; in German for
+example, the verb is not in second place, which is a good 
+indication of the fact that we have a subordinate clause). 
+So, neither occurrence of $\mbox{\tt it}_1$ is c--commanded 
+by its antecedent. If we
+exchange the first sentence by (\thesection.1) we get (\thesection.6).
+Here, however, the pronoun is acceptable, even though c--command
+still does not obtain.
+
+We fix an arbitrary semantic representation language $\CL$, for
+example the language of first order predicate logic. This fixes
+the notion of a variable and that of a formula.
+%%%
+\begin{defn}
+%%%
+\index{Discourse Representation Theory}%%
+\index{DRS}%%
+%%%
+The set of {\bmi discourse representation structures} ({\bmi DRSs})
+{\bmi over} $\CL$ is defined as follows.
+%%
+\begin{enumerate}
+\item
+If $\delta$ is a $\CL$--formula, then $\delta$ is a DRS over
+    $\CL$.
+\item
+If $\Delta \subseteq \CL$ is a set of DRSs and $V$ a set of
+    variables then $[V : \Delta]$ is a DRS over $\CL$.
+\item
+If $\delta$ and $\delta'$ are DRSs over $\CL$ then so is
+    $\nicht \delta$, $\delta \Pf \delta'$ and
+    $\delta \oder \delta'$.
+\end{enumerate}
+%%
+\end{defn}
+%%
+Often a DRS is represented in the form of a box and the set
+braces are ignored. For example $[\{x_0, x_3\} : \{P(x_0),
+Q(x_3, x_0); S(x_3,x_3)\}]$ is written down as follows.
+%%
+$$\begin{array}{|c|}
+\hline
+x_0, x_3 \\\hline
+P(x_0); Q(x_3, x_0); S(x_3,x_3). \\\hline
+\end{array}$$
+%%
+A DRS is therefore either a term over DRSs (created with the
+help of $\nicht$ and $\oder$) or a pair $[V : \Delta]$,
+where $V$ is a set of variables and $\Delta$ a set of
+DRSs. In the second case we call $V$ the {\bf head}
+%%%
+\index{head}%%
+\index{body}%%
+%%%
+of $\delta$ and $\Delta$ the {\bf body}. This terminology is
+not by chance: a DRS looks quite similar to an {\tt Algol}
+program. At first, variables are declared and then the program
+proper follows. The terminology is the same as in {\tt Algol}.
+Now it is required in {\tt Algol} to declare every variable
+before using it (see also the Section~\ref{kap2-6}).
+Exactly such a condition also exists for DRSs.
+%%
+\begin{defn}
+%%%
+\index{accessibility}%%
+%%%
+In a DRS is, {\bmi direct accessibility} between occurrences 
+of sub--DRSs defined as follows.
+%%%
+\begin{enumerate}
+\item
+If $\delta = [V : \Delta]$ and $\delta' \in \Delta$ then
+the occurrence of $\delta'$ in $\delta$ is {\bmi directly
+accessible from} $\delta$.
+\item
+If $\delta = (\nicht \delta')$ then the occurrence of
+$\delta'$ in $\delta$ is {\bmi directly accessible from}
+$\delta$.
+\item
+If $\delta = (\delta' \oder \delta'')$ then the occurrences
+of $\delta'$ and $\delta''$ in $\delta$ are {\bmi directly
+accessible from} $\delta$.
+\item
+If $\delta = (\delta' \Pf \delta'')$ then the occurrences
+of $\delta'$ and $\delta''$ in $\delta$ is {\bmi directly
+accessible from} $\delta$. Further, the named occurrence of
+$\delta''$ is {\bmi directly accessible from} the named occurrence
+of $\delta'$.
+\end{enumerate}
+%%
+The relation of {\bmi accessibility} is the transitive
+closure of relation of direct accessibility.
+%%
+\end{defn}
+%%
+\begin{defn}
+Let $\delta$ be a DRS and $x$ a variable. An occurrence of
+$x$ in a formula $\varphi$ is called {\bmi bound} if there is
+a DRS $[V : \Delta]$ which contains this occurrence
+of $\varphi$ and for which we have $x \in V$. A DRS is called
+{\bmi closed} if for every occurrence of a variable is bound.
+\end{defn}
+%%
+In DRT one assumes that a complete text is interpreted by a closed
+DRS. This does not have to be the case for the individual
+sentences, only for every initial segment of the text.
+
+The notion of a structure for the language $\CL$ is already
+defined. A {\bf valuation} is a function $\beta : V \pf M$
+where $V$ is the set of $\CL$--variables and $M$ the
+universe of $\GM$. If $\beta$ and $\beta'$ are valuations
+and $W$ a set of variables then we write $\beta \sim_W \beta'$
+if $\beta(x) = \beta'(x)$ for every variable $x \not\in W$.
+%%
+\begin{defn}
+Let $\GM$ be a structure for $\CL$ and $\beta$ a valuation.
+%%
+\begin{enumerate}
+\item
+$\auf \GM, \beta\zu \vDash^d \delta$ if
+    $\auf \GM, \beta\zu \vDash \delta$.
+\item
+$\auf \GM, \beta\zu \vDash^d [V : \Delta]$ if there is a $\beta'$
+    with $\beta \sim_V \beta'$ and
+    $\auf \GM, \beta'\zu \vDash^d \delta$ for every
+    $\delta \in \Delta$.
+\item
+$\auf \GM, \beta\zu \vDash^d \nicht \delta$ if 
+    $\auf \GM, \beta\zu \nvDash^d \delta$.
+\item
+$\auf \GM, \beta\zu \vDash^d \delta' \oder \delta''$ if
+    $\auf \GM, \beta\zu \vDash^d \delta'$ or
+    $\auf \GM, \beta\zu \vDash^d \delta''$.
+\item
+$\auf \GM, \beta\zu \vDash^d [V : \Delta] \Pf [W : \Delta']$ if
+    for all $\beta'$ with $\beta \sim_V \beta'$
+    and $\auf \GM, \beta\zu \vDash^d \Delta$ there is a
+    $\beta''$ with $\beta' \sim_W \beta''$
+    and $\auf \GM, \beta''\zu \vDash \Delta'$.
+\end{enumerate}
+%%
+\end{defn}
+%%
+In fact, it is easy to give a translation into plain first order
+logic. For $V = \{x_i : i < n\}$ write $(\exists V)$
+in place of $(\exists x_0)(\exists x_1)\ldots (\exists x_{n-1})$.
+Given $\Delta$ write $\Delta^{\dagger} :=
+\{\delta^{\dagger} : \delta \in \Delta\}$. The following
+translation procedure nust be applied outside in:
+%%%
+$$\begin{array}{l@{\quad := \quad}l}
+([V : \Delta] \Pf [W : \Delta'])^{\dagger} &
+    (\forall V)[\gund \Delta^{\dagger} \pf (\exists W)\gund
+    \Delta'^{\dagger}] \\
+([V : \Delta])^{\dagger} & (\exists V)\gund \Delta^{\dagger} \\
+(\nicht \delta)^{\dagger} & \nicht \delta^{\dagger} \\
+(\delta \oder \delta')^{\dagger} & \delta^{\dagger} \oder
+    {\delta'}^{\dagger}
+\end{array}$$
+%%
+\begin{prop}
+\label{prop:drtfol}
+For every DRS $\delta$ and every mo\-del $\auf \GM, \beta\zu$:
+%%
+$$\auf \GM, \beta\zu \vDash^d \delta \Dpf
+\auf \GM, \beta\zu\vDash \delta^{\dagger}$$
+\end{prop}
+%%
+The proof is left as an exercise. Conversely, predicate logic can
+be embedded into DRT, which shows that they are actually equally 
+expressive.  (Here, $;$ is used in the same way in proof sequents.)
+%%
+$$\begin{array}{l@{\quad := \quad}l}
+R(\vec{x})_{\dagger} & \{R(\vec{x})\} \\
+(\nicht \varphi)_{\dagger} & \nicht \varphi_{\dagger} \\
+(\varphi \und \chi)_{\dagger} & \varphi_{\dagger};
+    \chi_{\dagger} \\
+((\exists x)\varphi)_{\dagger} & [\{x\} : \varphi_{\dagger}]
+\end{array}$$
+%%
+\begin{prop}
+\label{prop:foldrt}
+For every first-order formula $\varphi$ and every model
+$\auf \GM, \beta\zu$:
+%%
+$$\auf \GM, \beta\zu \vDash \varphi \Dpf
+\auf \GM, \beta\zu\vDash^d \varphi^{\dagger}$$
+\end{prop}
+%%
+Since every formula is a DRS and $\vDash^d$ coincides with the
+usual notion $\vDash$ we will simply not distinguish
+the two. We say the DRSs $\delta$ and $\delta'$ are
+{\bf equivalent} if for all model $\GM$ and all
+partial valuations $\beta$: $\auf \GM, \beta\zu \vDash \delta$
+if and only if $\auf \GM, \beta\zu \vDash \delta'$, if and only
+if $\delta^{\dagger} \dpf {\delta'}^{\dagger}$ is a theorem
+of predicate logic. In this case
+we write $\delta \equiv \delta'$.
+%%%
+\index{$\delta \equiv  \delta'$}%%
+%%%
+\begin{prop}
+We have $\delta \equiv [\varnothing : \delta]$. Further
+$[V : [V' : \Delta]] \equiv [V \cup V' : \Delta]$.
+%%
+\end{prop}
+%%%
+From this theorem it immediately follows that a DRS can be
+made up to equivalence from DRSs of the form $[\{x\} : \varnothing]$
+and $[\varnothing : \varphi]$ with the help $\bullet$, $\nicht$,
+$\oder$ and $\Pf$. If $\delta = [V : \Delta]$ and $\delta' = %
+[V' : \Delta']$ DRSs over $\CL$ so is
+%%
+$$\delta \bullet \delta' := [V \cup V' :
+\Delta \cup \Delta']\; .$$
+%%%
+\index{Zeevat--Merge}
+%%%
+This operation is called the {\bf Zeevat--Merge}. This is not
+the same as the conjunction. To give an example, let $P$ be
+a unary predicate, $M := \{a,b\}$ and $P$ are interpreted in
+$\GM$ by the set $\{a\}$. Then for every $\beta$:
+%%
+$$\auf \GM, \beta\zu \vDash [\{x\} : P(x)]; [\{x\} : \nicht P(x)]\; .$$
+%%
+But we do not have
+%%
+$$\auf \GM, \beta\zu \vDash [\{x\} : P(x); \nicht P(x).] \; .$$
+%%
+We shall now show how DRT treats simple sentences and texts. Let it
+be said in advance that DRT tries to avoid quantifiers and
+variable binders. This is not necessary but it can be done in
+virtue of the expressive strength of DRT. Therefore we do not
+have bound variables as in Montague Semantics. In place of that,
+all occurring formulae are open.
+%%
+$$\begin{array}{l@{\qquad}l@{\qquad}l}
+\begin{array}{|c|}
+\multicolumn{1}{c}{\mbox{\tt a}_i} \\\hline
+\{x_i\} \\\hline
+\varnothing \\\hline
+\end{array}
+&
+\begin{array}{|c|}
+\multicolumn{1}{c}{\mbox{\tt car}_i} \\\hline
+\varnothing \\\hline
+\mbox{\sf car}'(x_i) \\\hline
+\end{array}
+&
+\begin{array}{|c|}
+\multicolumn{1}{c}{\mbox{\tt red}_i} \\\hline
+\varnothing \\\hline
+\mbox{\sf red}'(x_i) \\\hline
+\end{array}
+\\\\
+%%
+\begin{array}{|c|}
+\multicolumn{1}{c}{\mbox{\tt he}_{\auf i,k\zu}} \\\hline
+\{x_i\} \\\hline
+x_i \doteq x_k \\\hline
+\end{array}
+&
+\begin{array}{|c|}
+\multicolumn{1}{c}{\mbox{\tt Paul}_i} \\\hline
+\varnothing \\\hline
+x_i \doteq p \\\hline
+\end{array}
+ &
+\begin{array}{|c|}
+\multicolumn{1}{c}{\mbox{\tt see}_{\auf j,k\zu}} \\\hline
+\varnothing  \\\hline
+\mbox{\sf see}'(x_i,x_k) \\\hline
+\end{array}
+\end{array}$$
+%%
+These DRSs are to be understood as examples. Notice that we have
+indexed the DRSs. This is absolutely necessary to guarantee a
+proper translation. Consider now the sentence
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.7) & {\tt Paul sees a red car.}
+\end{tabular}
+\\[2mm]
+%%
+In order to convert this into a DRS we have to establish the
+syntactic structure and an indexation. Then we get the following
+result.
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.8) & [\mbox{\tt Paul}$_0$ [\mbox{\tt sees}$_{\auf 0,1\zu}$ 
+	[\mbox{\tt a}$_1$ [\mbox{\tt red}$_1$ \mbox{\tt car}$_1$]]]]
+\end{tabular}
+\\[2mm]
+%%
+The constituent bracket is translated by $\bullet$. Hence
+we get as a translation of (\thesection.8) now (\thesection.9)
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.9) & $[\{x_0\} : x_0 \doteq p] \bullet
+    ([\varnothing : \mbox{\sf see}'(x_0,x_1)] $ \\
+    & \qquad $\bullet ([\{x_1\} : \varnothing] \bullet
+    ([\varnothing : \mbox{\sf red}'(x_1)] \bullet
+    [\varnothing : \mbox{\sf car}'(x_1)])))$
+\end{tabular}
+\\[2mm]
+%%
+$$\begin{array}{|c|}
+\hline
+\{x_0,x_1\} \\\hline
+x_0 \doteq p; \mbox{\sf see}'(x_0,x_1); \\
+\mbox{\sf red}'(x_1); \mbox{\sf car}'(x_1). \\\hline
+\end{array}$$
+%%
+Under certain circumstances the Zeevat--Merge acts as a dynamic 
+conjunction. Call the merge $\delta \bullet \delta'$ {\bf normal} 
+if every variable occurring bound at the main level in $\delta'$ 
+does not occur in $\delta$.
+%%%
+\begin{prop}
+\label{prop:normalmerge}
+Suppose that $\delta \bullet \delta'$ is normal. Then
+$$\delta \bullet \delta' \equiv [\varnothing : \delta;
+    \delta \Pf \delta']]$$
+%%
+\end{prop}
+%%
+Notice that classically, $\varphi \und (\varphi \pf \chi) =
+\varphi \und \chi$, but since we do not disallow accidental
+capture of variables, we cannot automatically conclude that the
+theorem holds. The proof is left as an exercise. Now, it is also
+easily established that every DRS has a normal decomposition.
+%%%
+\begin{prop}
+%%%
+\index{decomposition!normal}%%
+%%%
+Up to equivalence, every DRS can be built up from formulae and 
+$[\{x\} : \varnothing]$ ($x \in X$) using normal merge, $\Pf$, 
+$\oder$, and $\nicht$. The term that represents this DRS is called 
+a {\bmi normal decomposition}.
+\end{prop}
+
+Jeroen Groenendijk and Martin Stokhof pointed out in
+\shortcite{groenendijkstokhof:pdl} that the problems that DRT treats
+could be given a compositional interpretation once the format of
+the semantics is changed. Basically, rather than viewing
+propositions as conditions on states, they are viewed as relations
+between states. In order to motivate this, we shall introduce
+dynamic logic. The dynamic logics has been developed in the 1980s
+in order to formally write down propositions over programs and
+verify them. The basic innovation of dynamic logic consisted in
+providing a calculus of {\it actions\/} in addition to
+propositions or formulae. This allows to take account for the
+character of programs and this has also motivated the name for
+this logic. In between more domains of application for dynamic
+logic have been found, for example the dynamic semantics. An
+overview can be found in \cite{muskensvanbenthemvisser:dynamics}. 
+{\it Propositional dynamic logic\/} ({\sf PDL}) has the following 
+syntax.
+%%%
+\index{dynamic logic}%%
+%%%%
+\begin{defn}
+Let $\Pi := \{\pi_i : i < \kappa\}$ be a set of so called
+programs and $V := \{p_i : i < \omega\}$ a set of propositional
+variables. Then $\mbox{\it Prg\/}(\Pi)$ and $\mbox{\it Fml\/}(\Pi)$
+are defined as follows.
+%%%
+\begin{enumerate}
+\item
+$\pi_i \in \mbox{\it Prg\/}(\Pi)$ for all $i < \kappa$.
+\item
+If $\alpha$, $\beta$ are from $\mbox{\it Prg\/}(\Pi)$ then also
+$\alpha^{\ast}$, $\alpha \cup \beta$ as well as $\alpha;\beta$.
+\item
+If $\varphi \in \mbox{\it Fml\/}(\Pi)$ then
+$\varphi? \in \mbox{\it Prg\/}(\Pi)$.
+\item
+$p_i \in \mbox{\it Fml\/}(\Pi)$ for all $i < \kappa$.
+\item
+If $\varphi$ and $\chi$ are from $\mbox{\it Fml\/}(\Pi)$ so
+are $\top$, $\varphi \und \chi$.
+\item
+If $\alpha \in \mbox{\it Prg\/}(\Pi)$ and $\chi
+    \in \mbox{\it Fml\/}(\Pi)$ then also
+    $[\alpha] \chi \in \mbox{\it Fml\/}(\Pi)$.
+\end{enumerate}
+%%
+\index{program}%%
+\index{test}%%
+%%%%
+We call elements from $\mbox{\it Prg\/}(\Pi)$ {\bmi programs} and
+elements from $\mbox{\it Fml\/}(\Pi)$ {\bmi formulae}. $\pi \in \Pi$
+is called an {\bmi elementary program}. Programs of the form
+$\chi?$ are called {\bmi tests}.
+\end{defn}
+%%%%
+We agree on a few abbreviations.
+%%%%
+$$\begin{array}{l@{\quad := \quad}l}
+\auf \alpha\zu \chi & \nicht [\alpha] \nicht \chi, \\
+\varphi \oder \chi & \nicht (\nicht \varphi \und \nicht \chi), \\
+\varphi \pf \chi & \nicht (\varphi \und \nicht \chi), \\
+\bot & \nicht \top.
+\end{array}$$
+%%%%
+\index{{\sf PDL}}%%
+{\sf PDL} is an extension of modal logic. It is interpreted in
+Kripke--structures, as introduced in Section~\ref{kap5-1}.
+The only innovation is the fact that we now have a structure
+on the set of modalities. Let $F$ be a set $R :
+\Pi \pf \wp(F \times F)$ and $\beta : V \pf \wp(F)$.
+We define by intercalated induction the extensions of these
+maps.
+%%
+$$\begin{array}{l@{\quad := \quad}l}
+\oli{R}(\pi_i) & R(\pi), \\
+\oli{R}(\alpha;\beta) & R(\alpha) \circ R(\beta), \\
+\oli{R}(\alpha^{\ast}) & R(\alpha)^{\ast}, \\
+\oli{R}(\alpha \cup \beta) & R(\alpha) \cup R(\beta), \\
+\oli{R}(\chi?) & \{\auf v,v\zu : v \in \oli{\beta}(\chi)\}, \\
+\oli{\beta}(p_i) & \beta(p_i), \\
+\oli{\beta}(\top) & \wp(F), \\
+\oli{\beta}(\nicht \varphi) & F - \oli{\beta}(\varphi), \\
+\oli{\beta}(\varphi \und \chi) & \oli{\beta}(\varphi) \cap
+    \oli{\beta}(\chi), \\
+\oli{\beta}([\alpha]\chi) & \{v :
+    \mbox{ for all }w \in F: \mbox{ if }v\; R(\alpha)\; w
+    \mbox{ then }w \in \oli{\beta}(\chi)\}.
+\end{array}$$
+%%%
+$\auf F, R, \beta\zu$ is called a {\bf Kripke--model}. Finally,
+we write $\auf F, R, \beta, x\zu \models \chi$ if
+$x \in \oli{\beta}(\chi)$. A program therefore is a
+relation which connects one world with another.
+In dynamic logic programs are more like action schemata
+which construct subsequent states. Then it may be that there
+is not a subsequent state (one then says the program
+{\it fails\/}) or it may happen that there are several
+successor states (one speaks of {\it nondeterministic choice\/}).
+Typically, programs are deterministic, which means that
+they always yield the same value for the same input.
+We write $v \stackrel{\alpha}{\pf} w$ if $v\; R(\alpha)\; w$.
+Further we write $v \stackrel{\alpha}{\pf} \surd$ if there is a
+$w \in F$ such $v \stackrel{\alpha}{\pf} w$. We have
+$v \stackrel{\alpha; \beta}{\pf} w$ if and only if there is a
+$u \in F$ with $v \stackrel{\alpha}{\pf} u \stackrel{\beta}{\pf} w$.
+Further $v \stackrel{\alpha \cup \beta}{\pf} w$ if and only if
+$v \stackrel{\alpha}{\pf} w$ or $v \stackrel{\beta}{\pf} w$ and
+$v \stackrel{\alpha^{\ast}}{\pf} w$ if and only if there is a
+sequence $u_i$, $i < n$, such that $u_0 = v$, $u_n = w$ and
+$u_i \stackrel{\alpha}{\pf} u_{i+1}$ for all $i < n$. (If
+$n = 0$, we must have $u = v$.) Finally, we have
+$v \stackrel{\chi?}{\pf} w$ if and only if $\chi$ is satisfied
+at $v$ and $w = v$.
+
+We remark that some junctors can be defined by others.
+Namely we have the following in any Kripke--model.
+%%
+$$\begin{array}{l@{\quad \dpf \quad}l}
+\mbox{} [\alpha \cup \beta]\chi & [\alpha]\chi \und [\beta]\chi \\
+\mbox{} [\alpha;\beta]\chi & [\alpha][\beta]\chi \\
+\chi & \auf\chi?\zu\top \\
+\varphi \pf \chi & [\varphi?]\chi
+\end{array}$$
+%%
+Dynamic logic allows to define certain basic constructions of
+the usual programming languages, the so called {\it loops}.
+%%
+$$\begin{array}{l@{\quad := \quad}l}
+\mbox{\sf while } \chi\  \mbox{\sf do } \alpha &
+    (\chi?;\alpha)^{\ast};(\nicht\chi?) \\
+\mbox{\sf until }\chi\  \mbox{\sf do } \alpha &
+    (\nicht\chi?;\alpha)^{\ast};\chi?
+\end{array}$$
+%%
+Both constructs are programs. Let $\beta := \mbox{\sf while }
+\chi\;  \mbox{\sf do } \alpha$. Then $v \stackrel{\beta}{\pf} w$
+if and only if $w$ can be reached from $v$ by iterating
+$\alpha$ as long as $\chi$ is satisfied. Since $\chi$
+need not hold at $w$ the subsequent test on $\nicht\chi$
+is necessary. Analogously for {\sf until}.
+
+%%%
+\index{quantified dynamic logic}%%
+\index{{\sf QDL}}%%
+%%%
+There exists also {\bf quantified dynamic logic} ({\sf QDL}). It
+is different insofar as it assumes instead of the apparatus of
+propositional logic the standard language of predicate logic.
+However, there is one exception: there are no quantifiers. Instead,
+for every variable $x_i$ there
+%%%
+\index{random reset}%%
+%%%
+is a program called {\bf random reset of} $x_i$, denoted by
+$x_i \pf ?$. The structures are the structure of predicate logic.
+A model is a triple $\auf M, \GI, \beta\zu$, where
+$\auf M, \GI\zu$ is a (single) first order structure and $\beta$ an
+assignment. (For the benefit of the reader we deal only with
+assignments, that is, total functions.) We add to the definition
+of $\oli{R}$ the following clause.
+%%
+$$\begin{array}{l@{\quad := \quad}l}
+\oli{R}(x_i \leftarrow ?) & \{\auf \beta, \beta'\zu : \beta \sim_x
+    \beta'\}
+\end{array}$$
+%%%
+Furthermore, we assume for atomic formulae the following.
+%%%
+$$\begin{array}{l@{\quad :\Dpf \quad}l}
+\auf M, \GI, \beta\zu \models R(\vec{x}) &
+    \auf \beta(x_i) : i < \Xi(R)\zu \in \GI(R) \\
+\end{array}$$
+%%%
+The clauses for $\nicht$, $\oder$ and the other propositional
+connectives are entirely standard. Terms are evaluated in the
+usual manner, using the valuation: $[t]^{\beta}$ is defined
+inductively. Now observe the following.
+%%%
+$$\auf M, \GI, \beta\zu \models \auf x_i\leftarrow ?\zu \varphi
+    \mbox{ if and only if there is }\beta' \sim_{x_i} \beta:
+    \auf M, \GI, \beta'\zu \models \varphi$$
+%%
+Thus, $\auf x_i\leftarrow ?\zu \varphi$ behaves technically like
+$\exists x_i.\varphi$. Both are true in the same models. In this
+way, standard predicate logic can be translated into dynamic
+predicate logic. However, let us now resume the discussion on DRT.
+We shall introduce a relational interpretation of the connectives
+in place of the usual definition as sets of assignments. {\sf PDL}
+offers a natural way of doing this in terms of actions. Here is a
+translation from normal decompositions.
+%%%
+$$\begin{array}{l@{\quad := \quad}l}
+(R(\vec{x}))^{\nabla} & \varphi? \\
+([\{x\} : \varnothing])^{\nabla} & x \pf ?\\
+(\delta \bullet \delta')^{\nabla} & \delta^{\nabla};\delta'^{\nabla} \\
+(\delta \Pf \delta')^{\nabla} & [\delta^{\nabla}]%
+    \auf \delta'^{\nabla} \zu\top? \\
+(\delta \oder \delta')^{\nabla} & \delta^{\nabla} \cup \delta'^{\nabla}
+\end{array}$$
+%%%
+\begin{thm}
+Let $\delta$ be a DRS and $\auf \GM, \beta\zu$ a model.
+Then
+%%
+$$\auf \GM, \beta\zu\vDash^d \delta \quad\Dpf\quad
+\auf \GM, \beta\zu \vDash \auf \delta^{\nabla}\zu \top$$
+%%
+\end{thm}
+%%
+We now turn to the question of the choice of variables. As said
+above, DRT does not choose the indices, it assumes them to be
+given beforehand. To remedy the situation, Kees
+Vermeulen~\shortcite{vermeulen:mystery} introduced what he calls
+{\bf Referent Systems}. Let $\mbox{\it Var\/} := \{0,1\}^+$.
+(For technical convenience, $\varepsilon$ is excluded.)
+%%
+\begin{defn}
+%%%
+\index{referent system}%%
+\index{import function}%%
+\index{export function}%%
+%%%
+Let $N$ be a set. A referent system over $N$ is a triple
+$\GR = \auf I, R, E\zu$, where $R \subseteq \mbox{\it Var\/}$ is
+called the set of {\bmi referents}, $I$ is a partial injective
+function from $N$ to $R$, called the {\bmi import function},
+and $E$ a partial injective function from $R$ to $N$,
+called the {\bmi export function}. $N$ is the set of
+{\bmi names}.
+\end{defn}
+%%
+If $E(r) = A$ we say that $\GR$ {\bf exports} $r$ {\bf under
+the name} $A$, and if $I(B) = r$ we say that $\GR$ {\bf imports}
+$r$ {\bf under the name} $B$. It is not required that $A = B$!
+Meaning units are pairs $\GE = \auf \GR,  \Phi\zu$ where $\GR =
+\auf I, R, E\zu$ is a referent system over some appropriate
+set of names and $\Phi$ a set of formulae using only the referents
+from $R$. Let $\auf D, I\zu$ be a model. An {\bf assignment}
+is a map from a set of referents into $D$. $\auf \GR, \Phi\zu$
+is {\bf satisfied} in a model under the assignment $h$ if
+$h$ assigns a value to each referent from $\GR$ and all formulae
+from $\Phi$ are true under $h$. Hence, the satisfaction clauses
+are pretty much those of DRT. The consequence is that the renaming
+of referents does not change satisfiability in a model.
+
+Let $\GE_i = \auf \GR_i, \Phi_i\zu$, $i < 2$,
+be meaning units. The merge $\GE_0 \circ \GE_1$ is defined as
+follows. We define the merge $\GR_2 := \GR_0 \bullet \GR_1$ of
+referent systems plus injective functions $\iota_0 : R_0 \pf R_2$,
+$\iota_1 : R_0 \pf R_2$, and then put
+%%
+$$\GE_0 \circ \GE_1 := \auf \GR_2, \iota_0[\Phi_0] \cup
+    \iota_1[\Phi_1]\zu$$
+%%
+We are left with a definition of the merge. We say first
+of all given two referents $r \in R_0$ and $s \in R_1$ that
+%%%
+\index{supervenience}%%
+%%%
+$r$ {\bf supervenes} $s$ if $I_1(E_0(r)) = s$. Supervenience
+is a relation $\subseteq R_0 \times R_1$. Let $U$ be the set
+of supervened elements of $R_1$. Write $r^0$ in place of
+$r \cdot 0$ and $r^1$ in place of $r \cdot 1$. Then we put
+%%
+$$\begin{array}{l@{\quad := \quad}l}
+R_2 & (R_0 \times \{0\} \cup R_1 \times \{1\}) - U \times \{1\} \\
+\iota_0(r) & r^0 \\
+\iota_1(s) & \left\{\begin{array}{ll}
+        r^0 & \mbox{ if } s \mbox{ is supervened by } r, \\
+        s^1 & \mbox{ otherwise.}
+            \end{array}\right.
+\end{array}$$
+%%
+\index{I--preemption}%%
+\index{E--preemption}%%
+%%%
+Say that $r$ {\bf I--preempts} $s$ if there is an $A \in N$
+such that $I_0(A) = r$ and $I_1(A) = s$; and
+that $s$ {\bf E--preempts} $r$ if $E_1(s) = E_0(r)$. (Notice that
+$r$ can both I--preempt and supervene $s$.) The import and export
+functions are now as follows.
+%%
+$$\begin{array}{l@{\quad := \quad}l}
+I_2(A) & \left\{\begin{array}{ll}
+            r^0 & \mbox{ if } I_0(A) = r, \\
+            s^1 & \mbox{ if } s \mbox{ is not I--preempted and }
+                I_1(A) = s, \\
+            \star & \mbox{ otherwise.}
+                \end{array}\right. \\
+\multicolumn{2}{l}{} \\
+E_2(u) & \left\{\begin{array}{ll}
+            E_1(s) & \mbox{ if } u = t^0 \mbox{ and }
+                t \mbox{ supervenes } s, \\
+            E_1(s) & \mbox{ if } u = s^1 \mbox{ and
+                $s$ is not superverned, } \\
+            E_0(r) & \mbox{ if } u = r^0,
+                E_1 \mbox{ is defined on }r
+                \mbox{ and is not E--preempted,} \\
+            \star & \mbox{ otherwise.}
+            \end{array}\right.
+\end{array}$$
+%%
+Table~\ref{tab:merge} shows the merge of referent systems containing
+just one referent. We write $[A : r : B]$ if $r$ is a referent that
+is imported under $A$ and exported under the name $B$. We write
+$[- : r : B]$ if $r$ has no import name, and similarly $[A : r : -]$
+and $[- : r : -]$.
+%%
+\begin{table}
+\caption{The Merge of Referent Systems}
+\label{tab:merge}
+\begin{center}
+$$\begin{array}{l@{\quad \bullet \quad}l@{\quad = \quad}l}
+\rfs{A : r : B} & \rfs{B : s : C} & \rfs{A : r^0 : C} \\
+\rfs{- : r : B} & \rfs{B : s : C} & \rfs{- : r^0 : C} \\
+\rfs{A : r : B} & \rfs{B : s : -} & \rfs{A : r^0 : -} \\
+\rfs{- : r : B} & \rfs{B : s : -} & \rfs{- : r^0 : -}
+\end{array}$$
+\end{center}
+\end{table}
+%%
+The table does not show the effect of the preemption. It can
+happen that two referents compete for the same import (export)
+name. In that case they must be from different referent systems
+(since both are functions and injective). Then the referent
+from the first system wins the import name; if they compete
+for the export name, the one from the second system wins. 
+
+With the referent systems the Latin examples can be accounted
+for; as names we choose the cases, and the verbs and prepositions
+are simply referent systems importing referents under certain
+names, while inflected nouns export referents under a given
+name. For example, Latin {\it horto\/} and {\it magno\/}
+are translated by
+%%
+$$\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt horto}/} \\
+\hline
+\rfs{- : 0 : \mbox{\rm abl}} \\\hline
+\mbox{\sf garden}'(0)
+\\\hline
+\end{array}
+\qquad\qquad
+\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt magno}/} \\
+\hline
+\rfs{\mbox{\rm abl} : 0 : \mbox{\rm abl}}
+\\\hline
+\mbox{\sf big}'(0) \\\hline
+\end{array}$$
+%%
+Their merge is --- according to the definition above ---:
+%%
+$$\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt horto magno}/} \\
+\hline
+\rfs{- : 00 : \mbox{\rm abl}}
+\\\hline
+\mbox{\sf garden}'(00) \\
+\mbox{\sf big}'(00)
+\\\hline
+\end{array}$$
+%%
+This is the translation of {\tt horto magno}. Notice that
+{\tt magno horto} would in this system not get the right
+translation. We need to assume in fact that lexical entries
+are associated with sets of referent systems, thereby allowing
+for different word order (and the fact that both {\tt magno}
+and {\tt horto} can also be dative). Obviously, this model
+is very simplistic, but it shows how one can incorporate
+morphological information about the syntactic structure into
+the semantics.
+
+How would referent systems handle our examples (1) and (2)?
+We will present a solution, which is based on the following
+insight. Pronouns pick up their referent not by an index
+(such an index is simply not part of the language) but rather
+by the information that is resident in the semantics of the
+antecedent, the gender of the pronoun and more. To make
+matters simple, we assume that we only use gender information.
+Therefore the set of names consists of combinations of gender
+and case. However, one or both of gender and case can be
+absent, and this is represented by $\star$.
+Hence the set of names is as follows:
+%%
+\newcommand{\ms}{\mbox{\sc m}}
+\newcommand{\nm}{\mbox{\sc n}}
+\newcommand{\ac}{\mbox{\sc a}}
+\newcommand{\fm}{\mbox{\sc f}}
+\newcommand{\nt}{\mbox{\sc n}}
+\newcommand{\spr}[2]{(#1, #2)}
+%%
+$$\{\ms, \fm, \nt, \star\} \times \{\nm, \ac, \star\}$$
+%%
+(Here, $\nm$ abbreviates {\it nominative}, $\ac$ {\it
+accusative}, and $\fm$, $\ms$ and $\nt$ are the genders.)
+A particular pair is written like a vector, for example
+$\spr{\ms}{\ac}$. Notice that $\spr{\ms}{\star}$ is a
+name in the technical sense, likewise $\spr{\star}{\star}$
+and $\spr{\star}{\ac}$. The cases will be used to steer the
+syntactic translation, and the gender is used to get at
+the binding. To make the whole thing work we have to play
+with the $\star$ to switch the assignment of gender and
+case on and off. For example, the pronouns {\tt he}
+and {\tt him} have the following semantics
+%%
+$$\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt he}/} \\
+\hline
+\left[ \spr{\ms}{\star} : x : \spr{\ms}{\nm}\right]
+\\\hline
+\varnothing \\\hline
+\end{array} \qquad
+\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt him}/} \\
+\hline
+\left[ \spr{\ms}{\ac} : x : \spr{\ms}{\star}\right]
+\\\hline
+\varnothing \\\hline
+\end{array}$$
+%%
+The difference is that {\tt he} has no case to the left and
+nominative to the right, while {\tt him} has accusative to
+the left and no case to the right. The semantics of {\tt fat},
+{\tt man} (nominative) and {\tt man} (accusative) are as follows:
+%%
+$$
+\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt fat-}\gamma/} \\
+\hline
+\left[ \spr{\alpha}{\gamma} : 0 : \spr{\alpha}{\gamma}\right]
+\\\hline
+\mbox{\sf fat}'(0) \\\hline
+\end{array} \qquad
+\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt man-}\mbox{\sc nom}/} \\
+\hline
+\left[ \spr{\ms}{\star} : x : \spr{\ms}{\nm}\right]
+\\\hline
+\mbox{\sf man}'(0) \\\hline
+\end{array} \qquad
+\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt man-}\mbox{\sc acc}/} \\
+\hline
+\left[ \spr{\ms}{\ac} : 0 : \spr{\ms}{\star}\right]
+\\\hline
+\mbox{\sf man}'(0) \\\hline
+\end{array}$$
+%%
+Here the variable is instantiated to any appropriate value
+(in this case, genders or $\star$ for $\alpha$ and case or
+$\star$ for $\gamma$). This is an extensions of the original
+proposal; what we argue is that the variables are part of the
+lexical representation and get instantiated after the representation
+has been inserted into the structure. The indefinite determiner
+{\sf a(n)} wipes out the gender to the left. It has the
+semantics
+%%
+$$\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt a-}\gamma/} \\
+\hline
+\left[ \spr{\star}{\gamma} : 0 : \spr{\alpha}{\gamma}\right]
+\\\hline
+\varnothing \\\hline
+\end{array}$$
+%%
+Finally, the transitive verb {\tt see} has this entry
+%%
+$$\begin{array}{|l|}
+\multicolumn{1}{c}{/\mbox{\tt see}/} \\
+\hline
+\left[ \spr{\alpha}{\nm} : 0 : \spr{\alpha}{\star}\right] \\
+\left[ \spr{\beta}{\star} : 1 : \spr{\beta}{\ac} \right] \\
+\hline
+\mbox{\sf see}'(0,1) \\\hline
+\end{array}$$
+%%
+We now take the following sentence, with the  bracketing (plus case
+assignment) given by the syntax.
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.10) & {\tt Kim (sees (a fat man (at the metro entrance))).} \\
+    & \qquad {\tt  He (is selling souvenirs)}.
+\end{tabular}
+\\[2mm]
+%%
+We leave the phrases `at the metro entrance' and `is selling
+souvenirs' unanalyzed. Putting together the object noun phrase and
+renaming the referents suitably gives
+%%
+$$\begin{array}{|l|}
+\hline
+\left[ \spr{\star}{\ac} : 0 : \spr{\ms}{\star} \right] \\
+\hline
+\mbox{\sf fat}(x), \mbox{\sf man}'(0) \\
+\mbox{\sf at--metro--entrance}'(0) \\\hline
+\end{array}$$
+%%
+So the first sentence is translated as shown in Table~\ref{tab:metro}.
+%%
+\begin{table}
+\caption{Merge Using Referent Systems}
+\label{tab:metro}
+$$\begin{array}{lll}
+\begin{array}{|l|}
+\hline
+\left[ \spr{\fm}{\star} : 0 : \spr{\fm}{\nm} \right] \\
+\hline
+0 \doteq k \\\hline
+\end{array} & \quad \circ \quad & 
+    \left(\;
+\begin{array}{|l|}
+\hline
+\left[ \spr{\alpha}{\nm} : 0 : \spr{\alpha}{\star}\right] \\
+\left[ \spr{\beta}{\star} : 1 : \spr{\beta}{\ac} \right] \\
+\hline
+\mbox{\sf see}'(0,1) \\\hline
+\end{array}\right. \\
+\\
+& \quad \circ \quad & 
+\left. \begin{array}{|l|}
+\hline
+\left[ \spr{\star}{\ac} : 0 : \spr{\ms}{\star} \right] \\
+\hline
+\mbox{\sf fat}'(0); \mbox{\sf man}'(0); \\
+\mbox{\sf at--metro--entrance}'(0). \\\hline
+\end{array}
+\; \right) \\\\ & 
+\quad \simeq \quad & 
+\begin{array}{|l|}
+\hline
+\left[ \spr{\fm}{\star} : 0 : \spr{\fm}{\star}\right] \\
+\left[ \spr{\ms}{\star} : 1 : \spr{\ms}{\star} \right] \\
+\hline
+0 \doteq k; \mbox{\sf fat}(1); \mbox{\sf man}'(1); \\
+\mbox{\sf at--metro--entrance}'(1); \\
+\mbox{\sf see}'(0,1). \\\hline
+\end{array}
+\end{array}$$
+\end{table}
+%%
+Here, $\alpha$ is instantiated to $\fm$ and $\beta$ to $\ms$.
+$\simeq$ means that the structures are equal only after some
+renaming of referents. The point is now that the referents
+are open to anaphoric reference, but are syntactically inert
+since they carry the case description $\star$. Subsequently
+they can only be picked up by a pronoun. For example, we can
+merge with
+%%
+$$\begin{array}{|l|}
+\hline
+\left[ \spr{\ms}{\star} : 0 : \spr{\ms}{\star} \right] \\\hline
+\mbox{\sf sell--souvenirs}'(0) \\\hline
+\end{array}$$
+%%
+This gives
+%%
+$$\begin{array}{|l|}
+\hline
+\left[ \spr{\fm}{\star} : 0 : \spr{\fm}{\star}\right] \\
+\left[ \spr{\ms}{\star} : 1 : \spr{\ms}{\star} \right] \\
+\hline
+0 \doteq k; \mbox{\sf fat}'(1), \mbox{\sf man}'(1); \\
+\mbox{\sf at--metro--entrance}'(1); \\
+\mbox{\sf see}'(0,1); \\
+\mbox{\sf sell--souvenirs}'(1). \\\hline
+\end{array}$$
+%%
+In order to be able to judge the success and failure of
+referent systems, compare the result with a slightly
+different sentence.
+%%
+\\[2mm]
+\begin{tabular}{ll}
+(\thesection.11) & {\tt Paul sees a fat man at the metro entrance.} \\
+    & \qquad {\tt  He is selling souvenirs.}
+\end{tabular}
+\\[2mm]
+%%
+What will happen is that the phrase `a fat man at the
+metro entrance' will get a referent that is different
+from that for Paul. This is due to the fact
+that the determiner blocks the gender to the left.
+But the referent also E--preempts the referent for Paul
+since they export the same name before merge, $\spr{\ms}{\star}$.
+The pronoun `he' can therefore not refer back to Paul.
+Hence referent systems do not handle the facts correctly.
+In this case it is because the space of names is too small
+to make enough distinctions. However, the fact that
+anaphoric reference is blocked by antecedents which are
+less distant is not so far off the mark. This is a topic
+that deserves attention.
+%%%
+\vplatz
+\exercise
+Prove Proposition~\ref{prop:drtfol}.
+%%%
+\vplatz
+\exercise
+Show Proposition~\ref{prop:normalmerge}.
+\vplatz
+\exercise
+Let $\bot$ be a DRS that is never satisfiable.
+Show that $\oder$ and $\nicht$ can be defined in terms
+of $\Pf$ and $\bot$ (modulo $\equiv$).
+%%
+\vplatz
+\exercise
+Show that $\delta \equiv \top \Pf \delta$, but that in general 
+$\delta \bullet \delta' \not\equiv (\top \Pf \delta) \bullet \delta'$. 
+($\top \Pf \delta$ functions a bit like the `existential closure' 
+of $\delta$ in predicate logic though it does not use any 
+quantification. We prefer to call the map $\delta 
+\mapsto \top \Pf \delta$ `existential blindfolding'.)

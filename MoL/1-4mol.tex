@@ -1,0 +1,797 @@
+\section{Trees}
+\label{kap1-4}
+\label{einszwei}
+%
+%
+%
+Strings can also be defined as pairs $\auf \GL, \ell\zu$
+where $\GL = \auf L, <\zu$ is a finite linearly ordered set
+and $\ell \colon L \pf A$ a function, called the \textbf{labelling
+function}.
+%%%
+\index{labelling function}%%
+%%%
+Since $L$ is finite we have $\auf L, < \zu \cong \auf n, %
+\in\zu$ for $n := |L|$. (Recall that $n$ is a set that is
+linearly ordered by $\in$.) Replacing $\auf L, <\zu$ by the 
+isomorphic $\auf n, \in\zu$, and eliminating the redundant $\in$, 
+a string is often defined as a pair $\auf n, \ell\zu$, where $n$ 
+is a natural number. 
+In what is to follow, we will very often have to deal with extensions 
+of relational structures (over a given signature $\Xi$) by a labelling 
+function. They have the general form $\auf M, \GI, \ell\zu$, where 
+$M$ is a set, $\GI$ an interpretation and $\ell$ a function from $M$ 
+to $A$. These structures shall be called \textbf{structures over} $A$ or 
+$A$--\textbf{structures}.
+%%%
+\index{structure over $A$}%%
+\index{structures!$A$--\faul}%%
+
+A very important notion in the analysis of language is that of
+a {\it tree}. A tree is a special case of a directed graph.
+%%%
+\index{graph!directed}%%
+%%%
+A \textbf{directed graph} is a structure $\auf G, <\zu$, where
+$<\; \subseteq\, G^2$ is a binary relation. As is common usage,
+we shall write $x \leq y$ if $x < y$ or $x = y$. Also, $x$ and $y$
+are called \textbf{comparable} if $x \leq y$ or $y \leq x$. A
+%%%
+\index{chain}%%
+%%%
+(\textbf{directed}) \textbf{chain of length} $k$ is  a sequence
+$\auf x_i : i < k + 1\zu$ such that $x_i < x_{i+1}$ for all
+$i < k$. An \textbf{undirected chain of length} $k$ is a sequence
+$\auf x_i : i < k + 1\zu$ where $x_i < x_{i+1}$ or
+$x_{i+1} < x_i$ for all $i < k$. A directed graph is called
+%%%
+\index{graph!connected}%%
+%%%
+\textbf{connected} if for every two elements $x$ and $y$ there is
+an undirected chain from $x$ to $y$. A directed chain
+%%
+\index{cycle}%%
+%%%
+of length $k$ is called a \textbf{cycle of length} $k$
+%%%
+\index{cycle}%%
+\index{root}%%
+%%%
+if $x_k = x_0$. A binary relation is called \textbf{cycle free} if
+it only has cycles of length 0. A \textbf{root} is an element $r$
+such that for every $x$ $x <^{\ast} r$, where $<^{\ast}$ is the 
+reflexive, transitive closure of $<$. 
+%%
+\begin{defn}
+%%%
+\index{graph!directed acyclic}%%
+\index{graph!directed transitive acyclic (DTAG)}%%
+\index{DAG}%%
+%%%
+A \textbf{directed acyclic graph} (a \textbf{DAG}) 
+is a pair $\GG = \auf G, <\zu$ such that $<\; \subseteq G^2$
+is an acyclic relation on $G$. If $<$ is transitive, 
+$\GG$ is called a \textbf{directed transitive acyclic graph} 
+(\textbf{DTAG}).
+\end{defn}
+%%
+\begin{defn}
+%%%
+\index{forest}%%
+%%%
+$\GG = \auf G, <\zu$ is called a \textbf{forest} if $<$
+is transitive and irreflexive and if $x < y$ and $x < z$ then
+$y$ and $z$ are comparable. A forest with a root
+is called a \textbf{tree}.
+\index{tree}%%
+\end{defn}
+%%
+In a connected rooted DTAG the root is comparable
+with every other element since the relation is transitive. Furthermore,
+in presence of transitivity $<$ is cycle free iff it is
+irreflexive. For if $<$ is not irreflexive it has a cycle of length 1.
+Conversely, if there is a cycle $\auf x_i : i < k+1\zu$ of length
+$k  > 0$, we immediately have $x_0 < x_k = x_0$, by transitivity.
+
+If $x < y$ and there is no $z$ such that $x < z < y$, $x$ is
+called a \textbf{daughter of} $y$, and $y$ the \textbf{mother of} $x$,
+and we write $x \prec y$.
+%%%
+\index{node!daughter}%%
+\index{node!mother}%%
+\index{$\prec$}%%
+%%%
+\begin{lem}
+\label{lem:tochter}
+Let $\auf T, <\zu$ be a finite tree. If $x < y$ then
+there exists a $\wht{x}$ such that $x \leq \wht{x} \prec y$
+and a $\wht{y}$ such that $x \prec \wht{y} \leq y$.
+$\wht{x}$ and $\wht{y}$ are uniquely determined by $x$ and $y$.
+\proofend
+\end{lem}
+%%
+The proof is straightforward. In infinite trees this need not hold.
+We define
+%%%
+\index{$x \circ y$}%%
+%%%%
+$x \circ y$ by $x \leq y$ or $y \leq x$ and say that $x$ and $y$
+\textbf{overlap}. The following is also easy.
+%%%
+\index{overlap}%%
+\index{$\circ$}%%
+%%%
+\begin{lem}[Predecessor Lemma]
+\label{lem:vorfahr}
+\index{Predecessor Lemma}%%
+%%%
+Let $\GT$ be a finite tree and $x$ and $y$ nodes which do not
+overlap. Then there exist uniquely determined $u$, $v$ and $w$,
+such that $x \leq u \prec w$, $y \leq v \prec w$
+and $v \neq u$.
+\proofend
+\end{lem}
+%%
+\index{branching number}%%
+%%%
+A node \textbf{branches} $n$ \textbf{times downwards} if it has exactly
+$n$ daughters; and it branches $n$ \textbf{times upwards} if it has
+exactly $n$ mothers. We say that a node \textbf{branches upwards}
+(\textbf{downwards}) if it branches upwards or downwards at least 2
+times. A finite forest is characterized by the fact that it is
+transitive, irreflexive and no node branches upwards. Therefore,
+in connection with trees and forests we shall speak of `branching'
+when we mean `downward branching'.
+%%%
+\index{leaf}%%
+%%%
+$x$ is called a \textbf{leaf} if there is no $y < x$, that is, if
+$x$ branches 0 times. The set of leaves of $\GG$ is denoted by
+$b(\GG)$.
+%%%
+\index{$b(\GG)$}%%
+
+Further, we define the following notation.
+%%
+\index{$\low{x}$, $\uppx{x}$}%%
+%%
+\begin{align}
+\low{x} & := \{y : y \leq x\} &  \uppx{x} & := \{y : y \geq x\}
+\end{align}
+%%
+By definition of a forest, $\uppx{x}$ is linearly ordered by
+$<$. Also, $\low{x}$ together with the restriction of $<$
+to $\low{x}$ is a tree.
+
+%%%
+\index{path}%%
+\index{branch}%%
+%%%
+A set $P \subseteq G$ is called a \textbf{path} if it is linearly
+ordered by $<$ and convex, that is to say, if $x, y \in P$ then
+$z \in P$ for every $z$ such that $x < z < y$.  The \textbf{length of}
+$P$ is defined to be $|P| - 1$. A \textbf{branch} is a maximal path 
+with respect to set inclusion.
+%%%
+\index{height}%%
+\index{depth}%%
+\index{$h(x)$, $d(x)$}%%
+%%%
+The \textbf{height of} $x$ in a DTAG, in symbols $h_{\GG}(x)$ or
+simply $h(x)$, is the maximal length of a branch in $\low{x}$.
+It is defined inductively as follows.
+%%
+\begin{equation}
+h(x) := \begin{cases}
+      0 & \text{if $x$ is a leaf,} \\
+      1 + \max \{h(y) : y \prec x\} 
+      & \text{otherwise.}
+\end{cases}
+\end{equation}
+%%
+%%%
+Dually we define the \textbf{depth} in a DTAG.
+%%
+\begin{equation}
+d(x) := 
+\begin{cases}
+0 &  \text{ if $x$ is a root,} \\
+1 + \max \{d(y) : y \succ x\}  &
+    \mbox{ otherwise.}
+\end{cases}
+\end{equation}
+%%
+For the entire DTAG $\GG$ we set
+%%
+\begin{equation}
+h(\GG) := \{h(x) : x \in T\} 
+\end{equation}
+%%
+and call this the \textbf{height of} $\GG$. (This is an ordinal, 
+as is easily verified.)
+%%
+\begin{defn}
+%%%
+\index{subgraph}%%
+%%%
+Let $\GG = \auf G, <_G\zu$ and $\GH = \auf H, <_H\zu$
+be directed graphs and $G \subseteq H$. Then $\GG$ is called
+a \textbf{subgraph of} $\GH$ if $<_G\; = \; <_H \cap\, G^2$.
+\end{defn}
+%%
+\index{subtree}%%
+%%%
+If $\GG$ and $\GH$ are DTAG, forests or trees, then $\GG$ is
+a \textbf{sub--DTAG}, \textbf{subforest} and \textbf{subtree of}
+$\GH$, respectively. A subtree of $\GH$ with underlying set $\low{x}$ 
+is called a \textbf{constituent of} $\GH$.
+%%%
+\index{constituent}%%
+%%%
+%%
+\begin{defn}
+Let $A$ be an alphabet. A \textbf{DAG over} $A$ (or an $A$--\textbf{DAG})
+is a pair $\auf \GG, \ell\zu$ such that $\GG = \auf G, <\zu$ is
+a DAG and $\ell \colon G \pf A$ an arbitrary function.
+\end{defn}
+%%
+Alternatively, we speak of \textbf{DAGs with labels in} $A$, or simply 
+of \textbf{labelled DAGs} if it is clear which alphabet is meant. 
+Similarly with trees and DTAGs. The notions of substructures are extended 
+analogously.
+
+The tree structure in linguistic representations encodes
+the hierarchical relations between elements and not their
+spatial or temporal relationship. The latter have to be
+added explicitly.  This is done by extending the signature
+%%%
+\index{$\sqsubset$}%%
+%%%
+by another binary relation symbol, $\sqsubset$. We say that
+$x$ is \textbf{before} $y$ and that $y$ is \textbf{after} $x$ if
+$x \sqsubset y$ is the case. We say that $x$ \textbf{dominates}
+$y$ if $x > y$.
+%%%
+\index{domination}%%
+%%%
+The relation $\sqsubset$ articulates the temporal relationship
+between the segments. This is first of all defined on the leaves,
+and it is a linear ordering. (This reflects the insistance on
+segmentability. It will have to be abandoned once we do not
+assume segmentability.) Each node $x$ in the tree has the
+physical span of its segments. This allows to define an
+ordering between the hierarchically higher elements as well.
+We simply stipulate that $x \sqsubset y$ iff all
+leaves below $x$ are before all leaves below $y$. This is not
+unproblematic if nodes can branch upwards, but this situation
+we shall rarely encounter in this book.
+The following is an intrinsic definition of these structures.
+%%
+\begin{defn}
+%%%
+\index{tree!ordered}%%
+%%%
+An \textbf{ordered tree} is a triple $\auf T, <, \sqsubset\zu$
+such that the following holds.
+%%%
+\renewcommand{\labelenumi}{\mbox{\rm (ot\arabic{enumi})}}
+\begin{enumerate}
+\item $\auf T, <\zu$ is a tree.
+\item $\sqsubset$ is a linear, strict ordering on
+    the leaves of $\auf T,<\zu$.
+\item If $x \sqsubset z$ and $y < x$ then also $y \sqsubset z$.
+    \\
+     If $x \sqsubset z$ and $y < z$ then also $x \sqsubset y$.
+    \\
+\item If $x$ is not a leaf and for all $y < x$
+    $y \sqsubset z$ then also $x \sqsubset z$. \\
+    If $z$ is not a leaf and for all $y < z$ $x \sqsubset y$
+        then also $x \sqsubset z$.
+\end{enumerate}
+%%%
+\renewcommand{\labelenumi}{\alph{enumi}.}
+\end{defn}
+%%
+The condition (ot2) requires that the ordering is coherent
+with the ordering on the leaves. It ensures that $x \sqsubset y$
+only if all leaves below $x$ are before all leaves below $y$.
+(ot3) is a completeness condition ensuring that if the latter
+holds, then indeed $x \sqsubset y$.
+
+We agree on the following notation. Let $x \in G$. Put $[x] := 
+\low{x} \cap b(\GG)$. We call this the \textbf{extension of} $x$.
+%%%
+\index{$[x]$}%%
+\index{extension of a node}%%
+%%%
+$[x]$ is linearly ordered by $\sqsubset$. If a labelling function 
+$\ell$ is given in addition, we write $k(x) := \auf [x], \sqsubset, 
+\ell \restriction [x]\zu$ 
+%%%
+\index{$k(x)$}%%%
+%%%
+and call this the \textbf{associated string of} $x$.
+%%%
+\index{string!associated}%%
+%%%
+It may happen that two nodes have the same associated string.
+The string associated with the entire tree is
+%%%
+\begin{equation}
+k(\GG) := \auf b(\GG), \sqsubset, \ell \restriction b(\GG)\zu
+\end{equation}
+%%%
+\index{constituent!continuous}%%
+%%%
+A constituent is called \textbf{continuous} if the associated
+string is convex with respect to $\sqsubset$. A set $M$ is 
+\textbf{convex} (\textbf{with respect to} $\sqsubset$) if for all 
+$x, y, z \in M$: if $x \sqsubset z \sqsubset y$ then $z \in M$ 
+as well.
+
+For sets $M$, $N$ of leaves put $M \sqsubset N$ iff 
+for all $x \in M$ and all $y \in N$ we have $x \sqsubset 
+y$. From (ot4) and (ot3) we derive the following:
+%%
+\begin{equation}
+\label{eq:sqsubset}
+x \sqsubset y \quad \Dpf \quad
+[x] \sqsubset [y]
+\end{equation}
+%%
+This property shows that the orderings on the leaves alone 
+determines the relation $\sqsubset$ uniquely. 
+%%
+\begin{thm}
+\label{erweiterung}
+Let $\auf T, <\zu$ be a tree and $\sqsubset$ a linear
+ordering on its leaves. Then there exists exactly
+one relation $\sqsubset'\; \supseteq \;\sqsubset$ such that
+$\auf T, <, \sqsubset'\zu$ is an ordered tree.
+\end{thm}
+%%
+We emphasize that the ordering $\sqsubset'$ cannot be linear
+if the tree has more than one element. It may even happen that
+$\sqsubset'\; = \; \sqsubset$. One can show that overlapping
+nodes can never be comparable with respect to $\sqsubset$. For let
+$x \circ y$, say $x \leq y$.  Let $u \leq x$ be a leaf. Assume
+$x \sqsubset y$; then by (ot3) $u \sqsubset y$ as well as
+$u \sqsubset u$. This contradicts the condition that $\sqsubset$
+is irreflexive. Likewise $y \sqsubset x$ cannot hold. So, nodes
+can only be comparable if they do not overlap. We now ask: is
+it possible that they are comparable exactly when they do not
+overlap? In this case we call $\sqsubset$ \textbf{exhaustive}.
+%%%
+\index{ordering!exhaustive}%%
+%%%
+Theorem~\ref{thm:exhaustive} gives a criterion on the existence 
+of exhaustive orderings. Notice that if $M$ and $N$ are convex 
+sets, then so is $M \cap N$. Moreover, if $M \cap N = \varnothing$ 
+then either $M \sqsubset N$ or $N \sqsubset M$. Also, $M$ is convex 
+iff for all $u$: $u \sqsubset M$ or $M \sqsubset u$. 
+%%
+\begin{thm}
+\label{thm:exhaustive}
+Let $\auf T, <\zu$ be a tree and $\sqsubset$ a linear
+ordering on the leaves. There exists an exhaustive
+extension of $\sqsubset$ iff all constituents are 
+continuous.
+\end{thm}
+%%
+\proofbeg
+By Theorem~\ref{erweiterung} there exists a unique extension, 
+$\sqsubset'$. Assume that all constituents are continuous. Let $x$ 
+and $y$ are nonoverlapping nodes. Then $[x] \cap [y] = \varnothing$.
+Hence $[x] \sqsubset [y]$ or $[y] \sqsubset [x]$. since both sets 
+are convex. So, by \eqref{eq:sqsubset} we have $x \sqsubset' y$ or 
+$y \sqsubset' x$.  The ordering is therefore exhaustive. Conversely, 
+assume that $\sqsubset'$ is exhaustive. Pick $x$. We show that $[x]$ 
+is convex. Let $u$ be a leaf and $u \not\in [x]$. Then $u$ does not 
+overlap with $x$.  By hypothesis, $u \sqsubset' x$ or $x \sqsubset' u$, 
+whence $[u] \sqsubset [x]$ or $[x] \sqsubset [u]$, by \eqref{eq:sqsubset}. 
+This means nothing but that either $u \sqsubset y$ for all 
+$y \in [x]$ or $y \sqsubset u$ for all $y \in [x]$. So, $[x]$ is
+convex.
+\proofend
+%%
+\begin{lem}[Constituent Lemma]
+%%%
+\index{Constituent Lemma}%%%
+%%%
+Assume $\auf T, <, \sqsubset, \ell\zu$ is an exhaustively
+ordered $A$--tree. Furthermore, let $p < q$. Then there is a
+context $C = \auf \vec{u}, \vec{v}\zu$ such that
+%%
+\begin{equation}
+k(q) = C(k(p)) = \vec{u} \conc k(p) \conc \vec{v} 
+\end{equation}
+%%
+\end{lem}
+%%
+The converse does not hold. Furthermore, it may happen that
+$C = \auf\varepsilon, \varepsilon\zu$ --- in which case
+$k(q) = k(p)$ --- without $q < p$.
+%
+%
+\begin{prop}
+Let $\auf T, <, \sqsubset\zu$ be an ordered tree and $x \in T$.
+$x$ is 1--branch\-ing iff $[x] = [y]$ for some $y < x$.
+\end{prop}
+%%
+\proofbeg
+Let $x$ be a 1--branching node with daughter $y$. Then we have
+$[x] = [y]$ but $x \neq y$. So, the condition is necessary. Let
+us show that is sufficient. Let $x$ be minimally 2--branching. Let 
+$u < x$. There is a daughter $z \prec x$ such that $u \leq z$, 
+and there is $z' \prec x$ different from $z$. Then $[u] \subseteq 
+[z] \subseteq [x]$ as well as $[z'] \subseteq [x]$. All sets 
+are nonempty and $[z'] \cap [z] = \varnothing$. Hence 
+$[z] \subsetneq [x]$ and so also $[u] \subsetneq [x]$.
+\proofend
+
+%%%
+\index{tree!properly branching}%%
+%%%
+We say that a tree is \textbf{properly branching} if it has
+no 1--branching nodes.
+
+There is a slightly different method of defining trees.
+Let $T$ be a set and $\prec$ a cycle free relation on $T$
+such that for every $x$ there is at most one $y $ such that
+$x \prec y$. And let there be exactly one $x$ which has no
+$\prec$--successor (the root). Then put $< := \prec^+$.
+$\auf T, <\zu$ is a tree. And $x \prec y$ iff
+$x$ is the daughter of $y$. Let $D(x)$ be the set of daughters
+of $x$. Now let $P$ be a relation such that (a) $y\; P\; z$ only 
+if $y$ and $z$ are sisters, (b) $P^+$, the transitive closure 
+of $P$, is a relation that linearly orders $D(x)$ for every $x$, 
+(c) for every $y$ there is at most one $z$ such that $y \; P \; z$ 
+and at most one $z'$ such that $z' \; P\; y$.  Then put 
+$x \sqsubset y$ iff there is $z$ such that 
+(a) $x < \wht{x} \prec z$ for some $\wht{x}$, (b)
+$y < \wht{y} \prec y$ for some $\wht{y}$, (c)
+$\wht{x}\; P^+\; \wht{y}$. $\prec$ and $P$ are the immediate
+neighbourhood relations in the tree.
+%%
+\begin{prop}
+Let $\auf T, <, \sqsubset\zu$ be an exhaustively ordered tree.
+Then $x \sqsubset y$ iff there are $x' \geq x$ and
+$y' \geq y$ which are sisters and $x' \sqsubset y'$.
+\end{prop}
+%%
+Finally we mention a further useful concept, that of a constituent
+structure.
+%%
+\begin{defn}
+%%%
+\index{constituent structure}%%
+%%%
+Let $M$ be a set. A \textbf{constituent structure over}
+$M$ is a system $\GC$ of subsets of $M$
+with the following properties.
+%%%
+\renewcommand{\labelenumi}{\mbox{\rm (cs\arabic{enumi})}}
+%%%
+\begin{enumerate}
+\item
+$\{x\} \in \GC$ for every $x \in M$,
+\item
+$\varnothing \not\in \GC$, $M \in \GC$,
+\item
+if $S, T \in \GC$ and $S \nsubseteq T$ as well as
+$T \nsubseteq S$ then $S \cap T = \varnothing$.
+\end{enumerate}
+%%
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+%%
+\end{defn}
+%%
+\begin{prop}
+Let $M$ be a nonempty set.
+There is a biunique correspondence between finite constituent
+structures over $M$ and finite properly branching trees whose
+set of leaves is $\{\{x\} : x \in M\}$.
+\end{prop}
+%%
+\proofbeg
+Let $\auf M, \GC\zu$ be a constituent structure.
+Then $\auf \GC, \subsetneq\zu$ is a tree. To see this, one has to check
+that $\subsetneq$ is irreflexive and transitive and that it has a root.
+This is easy. Further, assume that $S \subsetneq T, U$. Then
+$U \cap T \supseteq S \neq \varnothing$, because of condition (cs2).
+Moreover, because of (cs3) we must have $U \subseteq T$ or $T \subseteq U$.
+This means nothing else than that $T$ and $U$ are comparable. The set
+of leaves is exactly the set $\{\{x\} : x \in M\}$. Conversely, let
+$\GT = \auf T, <\zu$ be a properly branching tree. Put
+$M := b(\GT)$ and $\GC := \{[x] : x \in T\}$.  We claim that 
+$\auf M, \GC\zu$ is a constituent structure. For (cs1),
+notice that for every $u \in b(\GG)$, $[u] = \{u\} \in \GC$.
+Further, for every $x$ $[x] \neq \varnothing$, since the tree is finite.
+There is a root $r$ of $\GT$, and we have $[r] = M$. This shows
+(cs2). Now we show (cs3). Assume that $[x] \nsubseteq [y]$ and
+$[y] \nsubseteq [x]$. Then $x$ and $y$ are incomparable (and
+different). Let $u$ be a leaf and $u \in [x]$, then we have $u \leq x$.
+$u \leq y$ cannot hold since $\uppx{u}$ is linear, and then
+$x$ and $y$ would be comparable. Likewise we see that from
+$u \leq y$ we get $u \nleq x$. Hence $[x] \cap [y] = \varnothing$.
+The constructions are easily seen to be inverses of each other 
+(up to isomorphism).
+\proofend
+
+In general we can assign to every tree a constituent structure,
+but only if the tree is properly branching it can be properly
+reconstructed from this structure. The notion of a constituent
+structure can be extended straightforwardly to the notion of an 
+ordered constituent structure, and we can introduce labellings. 
+
+We shall now discuss the representation of terms by means of trees.
+There are two different methods, both widely used. Before we begin,
+we shall introduce the notion of a tree domain.
+%%
+\begin{defn}
+%%%
+\index{tree domain}%%
+%%%
+Let $T \subseteq \omega^{\ast}$ be a set of finite sequences of 
+natural numbers. $T$ is called a \textbf{tree domain} if the 
+following holds.
+%%
+\renewcommand{\labelenumi}{\mbox{\rm (td\arabic{enumi})}}
+%%
+\begin{enumerate}
+\item If $\vec{x} \conc i \in T$ then $\vec{x} \in T$.
+\item If $\vec{x} \conc i \in T$ and $j < i$ then
+    also $\vec{x} \conc j \in T$.
+\end{enumerate}
+%%
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+%%
+\end{defn}
+%%
+We assign to a tree domain $T$ an ordered tree in the following way.
+The set of nodes is $T$, (1) $\vec{x} < \vec{y}$ iff 
+$\vec{y}$ is a proper prefix of $\vec{x}$ and (2) $\vec{x} \sqsubset 
+\vec{y}$ iff there are numbers $i, j$ and sequences $\vec{u}$, 
+$\vec{v}$, $\vec{w}$ such that (a) $i < j$ and 
+(b) $\vec{x} = \vec{u} \conc i \conc \vec{v}$, 
+$\vec{y} = \vec{u} \conc j \conc \vec{w}$. (This is exactly the 
+lexicographical ordering.) Together with these relations, $T$ is an 
+exhaustively ordered finite tree, as is easily seen. 
+Figure~\ref{fig:baumbereich} shows the tree domain
+$T = \{\varepsilon, 0,1,2, 10, 11, 20, 200\}$.
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(10,16)
+\put(8,2.5){\makebox(0,0){200}}
+    \put(8,3){\line(0,1){3}}
+\put(8,6.5){\makebox(0,0){20}}
+    \put(8,7){\line(0,1){3}}
+\put(8,10.5){\makebox(0,0){2}}
+    \put(8,11){\line(-1,1){3}}
+\put(5,14.5){\makebox(0,0){$\varepsilon$}}
+    \put(5,14){\line(0,-1){3}}
+\put(5,10.5){\makebox(0,0){1}}
+    \put(5,10){\line(-1,-1){3}}
+\put(2,6.5){\makebox(0,0){10}}
+    \put(5,10){\line(0,-1){3}}
+\put(5,6.5){\makebox(0,0){11}}
+    \put(5,14){\line(-1,-1){3}}
+\put(2,10.5){\makebox(0,0){0}}
+\end{picture}
+\end{center}
+\caption{A Tree Domain}
+\label{fig:baumbereich}
+\end{figure}
+%%
+If $T$ is a tree domain and $\vec{x} \in T$ then put
+%%
+%%%
+\index{$T/\vec{x}$}%%%
+%%%
+\begin{equation}
+T/\vec{x} := \{\vec{y} : \vec{x} \conc \vec{y} \in T\} 
+\end{equation}
+%%
+This is the constituent below $\vec{x}$. (To be exact, it is not
+identical to this constituent, it is merely isomorphic to it. The 
+(unique) isomorphism from $T/\vec{x}$ onto the constituent 
+$\low{\vec{x}}$ is the map $\vec{y} \mapsto \vec{x}\conc\vec{y}$.) 
+
+Conversely, let $\auf T, <, \sqsubset\zu$ be an exhaustively ordered
+tree. We define a tree domain $T^{\beta}$ by induction on the depth
+of the nodes.  If $d(x) = 0$, let $x^{\beta} := \varepsilon$. In this
+case $x$ is the root of the tree. If $x^{\beta}$ is defined, and $y$ 
+a daughter of $x$, then put $y^{\beta} := x^{\beta} \conc i$, if $y$ 
+is the $i$th daughter of $x$ counting from the left (starting, as usual, 
+with 0). (Hence we have $| x^{\beta} | = d(x)$.) We can see quite 
+easily that the so defined set is a tree domain. For we have
+$\vec{u} \in T^{\beta}$ as soon as $\vec{u} \conc j \in T^{\beta}$
+for some $j$. Hence (td1) holds. Further, if $\vec{u} \conc i \in
+T^{\beta}$, say $\vec{u} \conc i = y^{\beta}$ then $y$ is the $i$th
+daughter of a node $x$. Take $j < i$. Then let $z$ be the $j$th
+daughter of $x$ (counting from the left). It exists, and we have
+$z^{\beta} = \vec{u} \conc j$. Moreover, it can easily be shown 
+that the relations defined on the tree domain are exactly the ones 
+that are defined on the tree. In other words the map $x \mapsto % 
+x^{\beta}$ is an isomorphism. 
+%%
+\begin{thm}
+Let $\GT = \auf T, <, \sqsubset\zu$ be a finite, exhaustively
+ordered tree. The function $x \mapsto x^{\beta}$ is an isomorphism
+from $\GT$ onto the associated tree domain $\auf \GT^{\beta}, <, %
+\sqsubset\zu$. Furthermore, $\GT \cong \GU$ iff
+$\GT^{\beta} = \GU^{\beta}$.
+\proofend
+\end{thm}
+%%
+Terms can be translated into labelled tree domains.
+Each term $t$ is assigned a tree domain $t^b$ and a labelling function
+$t^{\lambda}$. The labelled tree domain associated with $t$
+is $t^m := \auf t^b, t^{\lambda}\zu$. We start with the variables.
+$x^b := \{\varepsilon\}$, and $x^{\lambda} \colon \varepsilon \mapsto x$.
+Assume that the labelled tree domains $t_i^m$, $i < n-1$, are
+defined, and put $n := \Omega(f)$. Let $s := f(t_0, \dotsc, t_{n-1})$;
+then
+%%
+\begin{equation}
+s^b := \{\varepsilon\} \cup
+    \bigcup_{i < n} \{i \conc \vec{x} : \vec{x} \in t_i^b\} 
+\end{equation}
+%%
+Then $s^{\lambda}$ is defined as follows.
+%%
+\begin{align}
+s^{\lambda}(\varepsilon) & := f &
+s^{\lambda}(j \conc \vec{x}) & := t_j^{\lambda}(\vec{x})
+\end{align}
+%%
+This means that $s^m$ consists of a root named $f$ which has
+$n$ daughters, to which the labelled tree domains of $t_0,
+\dotsc, t_{n-1}$ are isomorphic. We call the representation 
+which sends $t$ to $t^m$ the \textbf{dependency coding}.
+%%%
+\index{coding!dependency}%%
+%%%
+This coding is more efficient that the following, which we call
+\textbf{structural coding}.
+%%%
+\index{coding!structural}%%
+%%%
+We choose a new symbol, $T$, and define
+by induction to each term $t$ a tree domain $t^c$ and a
+labelling function $t^{\mu}$. Put $x^c := \{\varepsilon, 0\}$,
+$x^{\mu}(\varepsilon) := \mbox{\tt T}$, $x^{\mu}(0) := x$. Further
+let for $s = f(t_0, \dotsc, t_{n-1})$
+%%
+\begin{equation}
+\begin{split}
+s^c & := \{\varepsilon, 0\} \cup
+    \bigcup_{0 < i < n+1} \{i \conc \vec{x} : \vec{x} \in t_i^c\}
+\\
+s^{\mu}(\varepsilon) & := \mbox{\tt T} \\
+s^{\mu}(0) & := f \\
+s^{\mu}((j+1) \conc \vec{x}) & := t_j^{\mu}(\vec{x})
+\end{split}
+\end{equation}
+%%
+(Compare the structural coding with the associated string in the
+notation without brackets.) In Figure~\ref{fig:kodierung} both
+codings are shown for the term {\mtt (3+(5\symbol{42}7))} for
+comparison. The advantage of the structural coding is that the
+string associated to the labelled tree domain is also the string
+associated to the term (with brackets dropped, as the tree encodes
+the structure anyway).
+
+{\it Notes on this section.} A variant of the dependency coding of 
+syntactic structures has been proposed by Lucien Tesni\`ere 
+%%%
+\index{Tesni\`ere, Lucien}%%%
+%%%
+in \shortcite{tesniere:elements}. He called tree representations 
+%%%
+\index{stemma}\index{dependency syntax}%%%
+%%%
+\textbf{stemmata} (sg.\ {\it stemma}). This notation (and the theory 
+surrounding it) became known as \textbf{dependency syntax}. See 
+\cite{melcuk:dependency} for a survey. Unfortunately, the stemmata 
+do not coincide with the dependency trees defined here, and this 
+creates very subtle problems, see \cite{melcuk:dependency}.  
+%%%
+\index{Mel'\v{c}uk, Igor}%%%
+%%%
+Noam Chomsky 
+%%%
+\index{Chomsky, Noam}%%
+%%%
+on the other hand proposed the more elaborate structural 
+coding, which is by now widespread in linguistic theory. 
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(13,15)
+\put(2,10.5){\makebox(0,0){\tt 3}}
+\put(2,11){\line(1,1){3}}
+\put(5,14.5){\makebox(0,0){+}}
+\put(5,14){\line(1,-1){3}}
+\put(8,10.5){\makebox(0,0){\mtt\symbol{42}}}
+\put(5,6.5){\makebox(0,0){\tt 5}}
+\put(5,7){\line(1,1){3}}
+\put(11,6.5){\makebox(0,0){\tt 7}}
+\put(11,7){\line(-1,1){3}}
+\end{picture}
+\begin{picture}(16,15)
+\put(5,6.5){\makebox(0,0){\tt 3}}
+    \put(5,7){\line(0,1){3}}
+\put(11,2.5){\makebox(0,0){\tt 5}}
+    \put(11,3){\line(0,1){3}}
+\put(14,2.5){\makebox(0,0){\tt 7}}
+    \put(14,3){\line(0,1){3}}
+\put(2,10.5){\makebox(0,0){\tt +}}
+    \put(2,11){\line(1,1){3}}
+\put(5,10.5){\makebox(0,0){\tt T}}
+    \put(5,11){\line(0,1){3}}
+\put(8,6.5){\makebox(0,0){\mtt\symbol{42}}}
+    \put(8,7){\line(0,1){3}}
+\put(11,6.5){\makebox(0,0){\tt T}}
+    \put(11,7){\line(-1,1){3}}
+\put(14,6.5){\makebox(0,0){\tt T}}
+    \put(14,7){\line(-2,1){6}}
+\put(8,10.5){\makebox(0,0){\tt T}}
+    \put(8,11){\line(-1,1){3}}
+\put(5,14.5){\makebox(0,0){\tt T}}
+\end{picture}
+\end{center}
+\caption{Dependency Coding and Structural Coding}
+\label{fig:kodierung}
+\end{figure}
+%%
+%%
+\vplatz
+\exercise
+Define `exhaustive ordering' on constituent structures.
+Show that a linear ordering on the leaves is extensible
+to an exhaustive ordering in a tree iff it is in 
+the related constituent structure.
+%%
+\vplatz 
+\exercise 
+\label{ueb:schwester} 
+Let $\GT = \auf T, <\zu$
+be a tree and $\sqsubset$ a binary relation such that $x \sqsubset
+y$ only if $x, y$ are daughters of the same node (that is, they
+are sisters). Further, the daughter nodes of a given node shall be
+ordered linearly by $\sqsubset$. No other relations shall hold.
+Show that this ordering can be extended to an exhaustive ordering
+on $\GT$.
+%%
+\vplatz
+\exercise
+Show that the number of binary branching exhaustively ordered
+trees over a given string is exactly
+%%
+\begin{equation}
+C_n = \frac{1}{n+1} {2n \choose n}
+\end{equation}
+%%
+These numbers are called \textbf{Catalan numbers}.
+%%%
+\index{Catalan numbers}%%
+%%%
+% (Siehe auch Aigner: {\it Diskrete Mathematik}, S.~172.)
+%%
+\vplatz
+\exercise
+Show that $C_n < \frac{1}{n+1} 4^n$.
+(One can prove that ${2n \choose n}$ approximates the
+series $\frac{4^n}{\sqrt{\pi n}}$ in the limit.
+%%%
+%\nocite{heuser:analysis1}%%
+%%%
+The latter even majorizes the former. For the exercise there
+is an elementary proof.)
+%%
+\vplatz
+\exercise
+Let $L$ be finite with $n$ elements and $<$ a linear ordering on
+$L$. Construct an isomorphism from $\auf L, <\zu$ onto $\auf n, \in\zu$.

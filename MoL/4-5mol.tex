@@ -1,0 +1,804 @@
+\section{Algebraization}
+\label{kap6-4b}
+%%%
+Now that we have shown completeness with respect to models and
+frames, we shall proceed to investigate the possibility of
+algebraization of predicate logic and simple type theory. Apart
+from methodological reasons, there are also practical reasons for
+preferring algebraic models over frames. If $\varphi$ is a
+sentence and $\GM$ a model, then either $\GM \vDash \varphi$ or
+$\GM \vDash \nicht\varphi$. Hence, the theory of a single model is
+maximally consistent, that is, complete. One may argue that this
+is as it should be; but notice that the base logic ($\mathsf{FOL}$,
+$\mathsf{STyp}$) is not complete --- neither is the knowledge
+ordinary people have. Since models are not enough for representing
+incomplete theories, something else must step in their place.
+These are {\it algebras\/} for some appropriate signature, for the
+product of algebras is an algebra again, and the logic of the
+product is the intersection of the logics of the factors. Hence,
+for every logic there is an adequate algebra. However,
+algebraization is not straightforward. The problem is that there
+is no notion of binding in algebraic logic. Substitution always is
+replacement of an occurrence of a variable by the named string,
+there is never a preparatory replacement of variables being
+performed. Hence, what creates in fact big problems is those
+axioms and rules that employ the notion of a free or bound
+variable. In predicate logic this is the axiom (a15). (Unlike 
+$\mathsf{PC}$, $\mathsf{FOL}$ has no rule of substitution.)
+
+It was once again Tarski who first noticed the analogy between
+modal operators and quantifiers. Consider a language $L$ of first
+order logic without quantifiers. We may interpret the atomic
+formulae of this language as propositional atoms, and formulae
+made from them using the boolean connectives. Then we have a
+somewhat more articulate version of our propositional boolean
+language. We can now introduce a quantifier $Q$ simply as a unary
+operator. For example, {\mtt (\symbol{20}x0)} is a unary operator
+on formulae. Given a formula $\varphi$, {\mtt (\symbol{20}x0)$\varphi$}
+is again a formula. (Notice that the way we write the formulae is 
+somewhat different, but this can easily be accounted for.) In this 
+way we get an extended language: a language of formulae extended by 
+a single quantifier. Moreover, the laws of {\mtt (\symbol{20}x0)} turn 
+the logic exactly into a normal modal logic. The quantifier 
+{\mtt (\symbol{21}x0)} then corresponds to $\wD$, the dual of $\qu$. 
+Clearly, in order to reach full expressive power of predicate logic 
+we need to add infinitely many such operators, one for each variable. 
+The resulting algebras are called \textbf{cylindric algebras}. The
+principal reference is to \cite{henkinmonktarski:cylindric1}.
+
+We start with the intended models of cylindric algebras. A formula
+may be seen as a function from models, that is, pairs $\auf \GM,
+\beta\zu$, to $2$, where $\GM$ is a structure and $\beta$ an
+assignment of values to the variables.  First of all, we shall
+remove the dependency on the structure, which allows us to focus
+on the assignments. There is a general first order model for any
+complete (= maximal consistent) theory, in which exactly those
+sentences are valid that belong to the theory. Moreover, this model
+is countable. Suppose a theory $T$ is not complete. Then let $\Delta_i$, 
+$i \in I$, be its completions. For each $i \in I$, let $\GM_i$ be the 
+canonical structure associated with $\Delta_i$. If $\GA_i$ is the
+cylindrical algebra associated with $\GM_i$ (to be defined below),
+the algebra associated with $T$ will $\prod_{i \in I} \GA_i$. In this 
+way, we may reduce the study to that of a cylindric algebra of a single 
+structure.
+
+Take a first order structure $\auf M, \GI\zu$, where $M$ is the
+universe and $\GI$ the interpretation function. For simplicity, we
+assume that there are no functions. (The reader shall see in the
+exercises that there is no loss of expressivity in renouncing
+functions.) Let $V := \{x_i : i \in \omega\}$ be the set of
+variables. Let $\GV(V;M)$ be the boolean algebra of sets of
+functions into $M$. Then for every formula $\varphi$ we
+associate the following set of assignments:
+%%
+\begin{equation}
+[\varphi] := \{\beta : \auf \GM, \beta\zu \vDash \varphi\}
+\end{equation}
+%%
+Now, for each number $i$ we assume the following operation $\mathsf{A}_i$.
+%%
+\begin{equation}
+\mathsf{A}_i(S) := \{\beta : \mbox{ for all }\gamma
+\sim_{x_i} \beta: \gamma \in S\}
+\end{equation}
+%%
+Then $\mathsf{E}_i(S) := - \mathsf{A}_i(- S)$. (The standard
+notation for $\mathsf{E}_i$ is $\mathsf{c}_i$. The letter
+$\mathsf{c}$ here is suggestive for `cylindrification'. We have decided
+to stay with a more logical notation.) Furthermore, for every pair of
+numbers $i, j \in \omega$ we assume the element $\mathsf{d}_{i,j}$.
+%%
+\begin{equation}
+\mathsf{d}_{i,j} := \{\beta :  \beta(x_i) = \beta(x_j)\}
+\end{equation}
+%%
+It is interesting to note that with the help of these elements
+substitution can be defined. Namely, put
+%%
+\begin{equation}
+\mathsf{s}^{i}_{j}(x) := 
+    \begin{cases}
+    x & \text{ if $i = j$,} \\
+    \mathsf{E}_i(\mathsf{d}_{i,j} \cap x)
+    & \text{ otherwise.}
+    \end{cases}
+\end{equation}
+%%
+\begin{lem}
+\label{lem:subst}
+Let $y$ be a variable distinct from $x$. Then $[y/x]\varphi$
+is equivalent with {\mtt (\symbol{21}$x$).(($y$\symbol{61}$%
+x$)\symbol{4}$\varphi$)}.
+\end{lem}
+%%
+Thus, equality and quantification alone
+can define substitution. The relevance of this observation for
+semantics has been nicely explained in
+\cite{dresner:tarski}. For example, in applications
+it becomes necessary to introduce constants for the relational
+symbols. Suppose, namely that {\tt taller} is a binary relation
+symbol. Its interpretation is a binary relation on the domain.
+If we want to replace the structure by its associated cylindric
+algebra, the relation is replaced by an element of that algebra,
+namely
+%%
+\begin{equation}
+[\textsf{taller}'(x_0,x_1)] :=
+    \{\beta : \auf \beta(x_0), \beta(x_1)\zu \in
+    \GI(\mbox{\tt taller})\}
+\end{equation}
+%%
+However, this allows us prima facie only to assess the meaning of
+`$x_0$ is taller than $x_1$'. We do not know, for example, what
+happens to `$x_2$ is taller than $x_7$'. For that we need the
+substitution functions. Now that we have the unary substitution
+functions, any finitary substitution becomes definable. In this
+particular case,
+%%
+\begin{equation}
+[\textsf{taller}'(x_2,x_7)] = \mathsf{s}^7_1
+    \mathsf{s}^2_0 [\textsf{taller}'(x_0,x_1)]\
+\end{equation}
+%%
+Thus, given the definability of substitutions, to define the 
+interpretation of $R$ we only need to give the element
+$[R(x_0, x_1, \ldots, x_{\Xi(R)-1})]$.
+
+The advantage in using this formulation of predicate logic is
+that it can be axiomatized using equations. It is directly
+verified that the equations listed in the next definition
+are valid in the intended structures.
+%%%
+\begin{defn}
+A \textbf{cylindric algebra} 
+%%%
+\index{cylindric algebra}%%
+%%%
+of dimension $\kappa$, $\kappa$ a cardinal number, is a structure
+%%
+\begin{equation}
+\GA = \auf A, 0, 1, -, \cap, \cup, \auf \mathsf{E}_{\lambda}:
+    \lambda < \kappa\zu, \auf \mathsf{d}_{\lambda, \mu} :
+    \lambda, \mu < \kappa\zu\zu
+\end{equation}
+%%
+such that the following holds for all $x, y \in A$ and $\lambda,
+\mu, \nu < \kappa$:
+\begin{equation}
+\begin{tabular}{ll}
+\mbox{\rm (ca1)} &
+    $\auf A, 0, 1, -, \cap, \cup\zu$ is a boolean algebra. \\
+\mbox{\rm (ca2)} &
+    $\mathsf{E}_{\lambda} 0 = 0$. \\
+\mbox{\rm (ca3)} &
+    $x \cup \mathsf{E}_{\lambda} x = \mathsf{E}_{\lambda} x$.
+    \\
+\mbox{\rm (ca4)} &
+    $\mathsf{E}_{\lambda}(x \cap \mathsf{E}_{\lambda} y) =
+    \mathsf{E}_{\lambda} x \cap \mathsf{E}_{\lambda} y$. \\
+\mbox{\rm (ca5)} &
+    $\mathsf{E}_{\lambda}\mathsf{E}_{\mu} x =
+    \mathsf{E}_{\mu}\mathsf{E}_{\lambda} x$. \\
+\mbox{\rm (ca6)} &
+    $\mathsf{d}_{\lambda,\mu} = 1$. \\
+\mbox{\rm (ca7)} &
+    If $\lambda \neq \mu, \nu$ then
+        $\mathsf{d}_{\mu,\nu} =
+    \mathsf{E}_{\lambda}(\mathsf{d}_{\mu,\lambda}
+        \cap \mathsf{d}_{\lambda, \nu})$. \\
+\mbox{\rm (ca8)} &
+    If $\lambda \neq \mu$ then
+    $\mathsf{E}_{\lambda}(\mathsf{d}_{\lambda,\mu} \cap x)
+    \cap \mathsf{E}_{\lambda}(\mathsf{d}_{\lambda,\mu}
+    \cap (-x)) = 0$.
+\end{tabular}
+\end{equation}
+\end{defn}
+%%
+We shall see that this definition allows to capture the effect of
+the axioms above, with the exception of (a15). Notice first the
+following. $\dpf$ is a congruence in $\mathsf{FOL}$ as well. For
+if $\varphi \dpf \chi$ is a tautology then so is $(\exists
+x_i)\varphi \dpf (\exists x_i)\chi$. Hence, we can encode the
+axioms of $\mathsf{FOL}$ as equations of the form $\varphi \dpf
+\top$ as long as no side condition concerning free or bound
+occurrences is present. We shall not go into the details. For
+example, in $\varphi = (\forall x)\chi$ $x$ occurs trivially bound.
+It remains to treat the rule (gen). It corresponds to the rule
+(mn) of modal logic. In equational logic, it is implicit anyway.
+For if $x \doteq y$ then $O(x) \doteq O(y)$ for any unary operator
+$O$.
+%%%
+\begin{defn}
+Let $\GA$ be a cylindric algebra of dimension $\kappa$, and
+$a \in A$. Then
+%%
+\begin{equation}
+\Delta a := \{i : i < \kappa, \mathsf{E}_i a \neq a\}
+\end{equation}
+%%
+is called the \textbf{dimension of} $a$. 
+%%%
+\index{dimension}%%%
+\index{$\Delta a$}%%%
+%%%
+$\GA$ is said to be \textbf{locally finite dimensional} 
+%%%
+\index{cylindric algebra!locally finite dimensional}%%%
+%%%
+if $|\Delta a| < \aleph_0$ for all $a \in A$.
+\end{defn}
+%%
+A particular example of a cylindric algebra is
+$\CL_{\kappa}/\!\equiv$, $\CL_{\kappa}$ the formulae of pure
+equality based on the variables $\mbox{\tt x}_i$, $i < \kappa$,
+and $\varphi \equiv \chi$ iff $\varphi \dpf \chi$ is a
+theorem. (If additional function or relation symbols are needed,
+they can be added with little change to the theory.) This algebra
+is locally finite dimensional and is freely $\kappa$--generated.
+
+The second approach we are going to elaborate is one which takes
+substitutions as basic functions. For predicate logic this has
+been proposed by Halmos~\shortcite{halmos:polyadic}, 
+%%%
+\index{Halmos, Paul}%%%
+%%%
+but most people credit Quine~\shortcite{quine:variables} 
+%%%
+\index{Quine, Willard van Orman}%%%
+%%%
+for this idea. For an exposition see \cite{pigozzisalibra:vb}.  
+Basically, Halmos takes substitution as primitive. This has
+certain advantages that will become apparent soon. Let us agree
+that the index set is $\kappa$, again called the \textbf{dimension}.
+%%%
+\index{dimension}%%%
+%%%
+Halmos defines operations $\mathsf{S}(\tau)$ for every function
+$\tau \colon \kappa \pf \kappa$ such that there are only finitely many
+$i$ such that $\tau(i) \neq i$. The theory of such functions is
+axiomatized independently of quantification. Now, for every finite
+set $I \subset \kappa$ Halmos admits an operator $\mathsf{E}(I)$, 
+which represents quantification over each of variables $\mbox{\tt x}_i$, 
+where $i \in I$. If $I = \varnothing$, $\mathsf{E}(I)$ is the 
+identity, otherwise $\mathsf{E}(I)(\mathsf{E}(K)x) = 
+\mathsf{E}(I \cup K)x$. Thus, it is immediately clear
+that the ordinary quantifiers $\mathsf{E}(\{i\})$ suffice to
+generate all the others. However, the axiomatization is somewhat
+easier with the polyadic quantifiers. Another problem, noted in
+\cite{sainthompson:scheme}, is the fact that the axioms for polyadic 
+algebras cannot be schematized using letters for elements of the 
+index set. However, Sain and Thompson \shortcite{sainthompson:scheme} 
+%%%
+\index{Sain, Ildik\'o}%%%
+\index{Thompson, Richard S.}%%%
+%%%
+also note that the addition of transpositions is actually enough to 
+generate the same functions. To see this, here are some definitions.
+%%%
+\begin{defn}
+%%%
+\index{support}%%
+\index{$\supp(\pi)$}%%
+\index{transformation}%%
+\index{permutation}%%
+\index{transposition}%%
+%%
+Let $I$ be a set and $\pi \colon I \pf I$. The \textbf{support} of 
+$\pi$, $\supp(\pi)$, is the set $\{i : \pi(i) \neq i\}$. A function 
+of finite support is called a \textbf{transformation}.
+$\pi$ is called a \textbf{permutation of} $I$ if it is bijective. If
+the support contains exactly two elements, $\pi$ is called a 
+\textbf{transposition}.
+\end{defn}
+%%%
+The functions whose support has at most two elements are of
+special interest. Notice first the case when $\supp(\pi)$
+has exactly one element. In that case, $\pi$ is called an 
+\textbf{elementary substitution}. Then there are $i, j \in I$ such that
+$\pi(i) = j$ and $\pi(k) = k$ if $k \neq i$. If $i$ and $j$ are in
+$I$, then denote by $(i,j)$ the permutation that sends $i$ to $j$
+and $j$ to $i$. Denote by $[i,j]$ the elementary substitution that
+sends $i$ to $j$.
+%%%
+\begin{prop}
+\label{prop:support}
+Let $I$ be a set. The set $\Phi(I)$ of functions $\pi \colon I \pf I$
+of finite support is closed under concatenation. Moreover,
+$\Phi(I)$ is generated by the elementary substitutions and the
+transpositions.
+\end{prop}
+%%%
+The proof of this theorem is left to the reader. So,  it is enough 
+if we take only functions corresponding to $[i,j]$ and $(i,j)$. The 
+functions of the first kind are already known: these are 
+the $\mathsf{s}^j_i$. For the functions of the second kind, 
+write $\mathsf{p}_{i,j}$. Sain and Thompson effectively axiomatize
+cylindric algebras that have these additional operations. They
+call them \textbf{finitary polyadic algebras}. 
+%%%
+\index{polyadic algebra!finitary}%%%
+%%%
+Notice also the following useful fact, which we also leave as an exercise.
+%%%
+\begin{prop}
+\label{prop:approx} Let $\pi \colon I \pf I$ be an arbitrary function,
+and $M \subseteq I$ finite. Then there is a product $\gamma$ of
+elementary substitutions such that $\gamma \restriction M = \pi
+\restriction M$.
+\end{prop}
+%%%
+This theorem is both stronger and weaker than the previous one. It
+is stronger because it does not assume $\pi$ to have finite
+support. On the other hand, $\gamma$ only approximates $\pi$ on a
+given finite set. (The reader may take notice of the fact that
+there is no sequence of elementary substitutions that equals the
+transformation $(0\; 1)$ on $\omega$. However, we can approximate
+it on any finite subset.)
+
+Rather than developing this in detail for predicate logic we shall
+do it for the typed $\lambda$--calculus, as the latter is more rich 
+and allows to encode arbitrarily complex abstraction (for example, by
+way of using $\mathsf{STyp}$). Before we embark on the project let us 
+outline the problems that we have to deal with. Evidently, we wish 
+to provide an algebraic axiomatization that is equivalent to the 
+rules \eqref{eq:lea} -- \eqref{eq:leg} and \eqref{eq:lei}. First, 
+the signature we shall choose has function application and abstraction 
+as its primitives. However, we cannot have a single abstraction 
+symbol corresponding to $\tlambda$, rather, for each variable 
+(and each type) we must assume a different unary function symbol 
+$\tlambda_i$, corresponding to $\tlambda \mbox{\tt x}_i$. Now, 
+\eqref{eq:lea} -- \eqref{eq:lee} and \eqref{eq:lei} are already 
+built into the Birkhoff--Calculus. Hence, our only concern are the 
+rules of conversion. These are, however, quite 
+tricky. Notice first that the equations make use of the substitution 
+operation $[N/x]$. This operation is in turn defined with the 
+definitions \eqref{eq:suba} -- \eqref{eq:subf}. Already \eqref{eq:suba}
+for $N = \mbox{\tt x}_i$ can only be written down if we have an operation 
+that performs an elementary substitution. So, we have to add the unary 
+functions $\mathsf{s}_{i,j}$, to denote this substitution. Additionally, 
+\eqref{eq:suba} needs to be broken down into an inductive definition.
+To make this work, we need to add correlates of the variables. 
+That is, we add zeroary function symbols $\mbox{\tt x}_i$ for 
+every $i \in \omega$. Symbols for the functions $\mathsf{p}_{i,j}$ permuting 
+$i$ and $j$ will also be added to be able to say that the variables 
+all range over the same set. Unfortunately, this is not all. Notice 
+that \eqref{eq:lef} is not simply an equation: it has a side condition, 
+namely that $y$ is not free in $M$. In order to turn this into an 
+equation we must introduce {\it sorts}, which will help us keep track 
+of the free variables. Every term will end up having a unique sort, 
+which will be the set of $i$ such that $\mbox{\tt x}_i$ is free in 
+it. $B$ is the set of basic types. Call a member of 
+$\CI := \Typ_{\pf}(B) \times \omega$ an \textbf{index}. 
+%%%
+\index{index}%%
+\index{type}%%%
+%%%%
+If $\auf \alpha, i\zu$ is an index, $\alpha$ is its \textbf{type} 
+and $i$ its numeral. Let $\CF$ be the set of pairs 
+$\auf \alpha, \delta\zu$ where $\alpha$ is a type and $\delta$ 
+a finite set of indices.
+
+We now start with the signature. Let $\delta$ and $\delta'$ be finite 
+sets of indices, $\alpha$, $\beta$ types, and $\iota = \auf \gamma, i\zu$, 
+$\kappa = \auf \gamma', i'\zu$ indices. We list the symbols together with 
+their type:
+%%%
+\begin{subequations}
+\begin{align}
+\mbox{\tt x}_{\iota} & :  \auf\auf\gamma, \{\iota\}\zu\zu  \\
+\tlambda^{\auf\beta,\delta\zu}_{\iota} & : 
+\auf \auf \beta, \delta\zu, \auf \gamma\pf\beta, \delta - \{\iota\}\zu\zu \\
+\mbox{\tt p}_{\iota,\kappa}^{\auf \alpha, \delta\zu} & :
+\auf \auf \alpha, \delta\zu, \auf \alpha, (\iota, \kappa)[\delta]\zu\zu\qquad 
+\text{where $\gamma = \gamma'$} \\
+\mbox{\tt s}_{\iota, \kappa}^{\auf \alpha, \delta\zu} & :  
+\auf \auf \alpha, \delta\zu, \auf \alpha, [\iota, \kappa][\delta]\zu\zu \\
+\bullet^{\auf \alpha\pf\beta, \delta\zu, \auf \alpha, \delta'\zu} 
+   & : \auf \auf \alpha\pf\beta, \delta\zu, 
+\auf \alpha, \delta'\zu, \auf \beta, \delta \cup \delta'\zu\zu
+\end{align}
+\end{subequations}
+%%%
+Here $(\iota, \kappa)[\delta]$ is the result of exchanging $\iota$ and 
+$\kappa$ in $\delta$ and  $[\iota, \kappa][\delta]$ is the result of 
+replacing $\kappa$ by $\iota$ in $\delta$. 
+Notice that $\mbox{\tt x}_{\iota}$ is now a constant! 
+We may also have additional functional symbols stemming from an 
+underlying (sorted) algebraic signature. The reader is asked to 
+verify that nothing is lost if we assume that additional function 
+symbols only have arity 0, and signature $\auf \auf \alpha, 
+\varnothing\zu\zu$ for a suitable $\alpha$. This greatly simplifies 
+the presentation of the axioms. 
+
+This defines the language. Notice that in addition to the constants 
+$\mbox{\tt x}_{\iota}$ we also have variables $x_i^{\sigma}$ for each 
+sort $\sigma$. The former represent the variable $\mbox{\tt x}_i$ (where 
+$\iota = \auf \gamma, i\zu$) of the $\lambda$--calculus and the latter 
+range over terms of sort $\sigma$. Now, in order to keep the notation 
+perspicuous we shall drop the sorts whenever possible. That this is 
+possible is assured by the following fact. If $t$ is a term without 
+variables, and we hide all the sorts except for those of the variables, 
+still we can recover the sort of the term uniquely. For the types this 
+is clear, for the second component we observe the following. 
+%%%%
+\begin{lem}
+If a term $t$ has sort $\auf \alpha, \delta\zu$ then
+$\fr(t) = \{\mbox{\tt x}_{\iota} : \iota \in \delta\}$.
+\end{lem}
+%%
+The proof of this fact is an easy induction.
+
+\nocite{pigozzisalibra:vb}
+For the presentation of the equations we therefore omit the sorts.
+They have in fact only been introduced to ensure that we may talk 
+about the set of free variables of a term. The equations (vb1) --- 
+(vb6) of Table~\ref{tab:vb} characterize the behaviour of the 
+substitution and permutation function with respect to the 
+indices. We assume that $\iota$, $\mu$, $\nu$ all have the same 
+type. (We are dropping the superscripts indicating the sort.)
+The equations (vb7) -- (vb11) characterize the pure binding 
+by the unary operators $\tlambda_{\iota}$. 
+%%
+\begin{table}
+\caption{The Variable Binding Calculus $\mathsf{VB}$}
+\label{tab:vb}
+$$\begin{array}{ll@{\quad \doteq \quad}l}
+\mbox{\rm (vb1)} & 
+    \mbox{\tt s}_{\iota, \mu}\mbox{\tt x}_{\nu} & \left\{\begin{array}{ll}
+    \mbox{\tt x}_{\iota} & \mbox{if } \nu \in \{\iota,\mu\}, \\
+    \mbox{\tt x}_{\nu}    & \mbox{otherwise.}
+    \end{array}\right. \\
+    \multicolumn{3}{l}{}
+    \\
+\mbox{\rm (vb2)} & 
+\mbox{\tt p}_{\iota,\mu}\mbox{\tt x}_{\nu} & \left\{\begin{array}{ll}
+    \mbox{\tt x}_{\iota} & \mbox{if } \nu = \mu, \\
+    \mbox{\tt x}_{\mu} & \mbox{if } \nu = \iota, \\
+    \mbox{\tt x}_{\nu}    & \mbox{otherwise.}
+    \end{array}\right. \\
+    \multicolumn{3}{l}{}
+    \\
+\mbox{\rm (vb3)} & 
+\mbox{\tt p}_{\iota,\iota}x & x \\
+\mbox{\rm (vb4)} & 
+\mbox{\tt p}_{\iota,\mu}x & \mbox{\tt p}_{\mu,\iota}x \\
+\mbox{\rm (vb5)} & 
+\mbox{\tt p}_{\iota,\mu}\mbox{\tt p}_{\mu,\nu}x & 
+	\mbox{\tt p}_{\mu,\nu}
+    \mbox{\tt p}_{\iota,\mu} x \qquad\quad\; \mbox{if } 
+	|\{\iota, \mu, \nu\}| = 3
+\\
+\mbox{\rm (vb6)} & 
+\mbox{\tt p}_{\iota, \mu}\mbox{\tt s}_{\mu, \iota} x & 
+	\mbox{\tt s}_{\iota, \mu} x \\
+\mbox{\rm (vb7)} & 
+\mbox{\tt s}_{\iota,\mu}\tlambda_{\nu} x &
+    \tlambda_{\nu} \mbox{\tt s}_{\iota,\mu} x
+    \qquad\qquad\mbox{ if } |\{\iota,\mu,\nu\}| = 3 \\
+\mbox{\rm (vb8)} & 
+\mbox{\tt s}_{\mu,\iota} \tlambda_{\iota} x & \tlambda_{\iota} x \\
+\mbox{\rm (vb9)} & 
+\mbox{\tt p}_{\iota,\mu}\tlambda_{\nu} x &
+    \tlambda_{\nu} \mbox{\tt p}_{\iota,\mu} x
+    \qquad\qquad\mbox{ if } |\{\iota, \mu, \nu\}| = 3 \\
+\mbox{\rm (vb10)} & 
+\mbox{\tt p}_{\mu,\iota} \tlambda_{\mu} x & 
+	\tlambda_{\iota} \mbox{\tt p}_{\mu,\iota} x \\
+\mbox{\rm (vb11)} & 
+\tlambda_{\iota}(y \bullet \mbox{\tt x}_{\iota}) & y \\
+\mbox{\rm (vb12)} & 
+(\tlambda_{\iota}(x \bullet y)) \bullet z &
+    ((\tlambda_{\iota} x)\bullet z) \bullet ((\tlambda_{\iota}
+    y) \bullet z) \\
+\multicolumn{3}{l}{} \\
+\mbox{\rm (vb13)} & 
+(\tlambda_{\iota}\tlambda_{\mu} x) \bullet y & 
+	\left\{\begin{array}{ll}
+		\tlambda_{\mu} ((\tlambda_{\iota} x) \bullet y) & 
+		\mbox{if }{\iota} \neq {\mu}, \mbox{\tt x}_{\mu} 
+		\not\in \fr(y) \\
+	\tlambda_{\iota} x & \mbox{if }{\iota} = {\mu} 
+	\end{array}\right. \\
+\multicolumn{3}{l}{} \\
+\mbox{\rm (vb14)} & 
+(\tlambda_{\iota} \mbox{\tt x}_{\mu}) \bullet y & 
+	\left\{\begin{array}{ll}
+		y & \mbox{if }{\iota} = {\mu} \\
+		\mbox{\tt x}_{\mu} & \mbox{if }{\iota} \neq {\mu}
+	\end{array}\right.
+\end{array}$$
+\end{table}
+%%
+The set of equations is invariant under permutation of the indices. 
+Moreover, we can derive the invariance under replacement of bound 
+variables, for example. Thus, effectively, once the interpretation 
+of $\tlambda_{\auf \alpha,0\zu}$ is known, the interpretation of all 
+$\tlambda_{\auf \alpha, i\zu}$, $i\in \omega$, is known as well. 
+For using the equations we can derive that $\mbox{\tt p}_{\auf \alpha, 
+i\zu, \auf \alpha, 0\zu}$ is the inverse of $\mbox{\tt p}_{\auf \alpha, 
+0\zu, \auf \alpha, i\zu}$, 
+and so 
+%%
+\begin{equation}
+\tlambda_{\auf \alpha, i\zu} x \doteq \mbox{\tt p}_{\auf \alpha, 0\zu,
+\auf\alpha, i\zu} \tlambda_{\auf \alpha, 0\zu} \mbox{\tt p}_{\auf \alpha, 
+i\zu, \auf \alpha, 0\zu}
+x
+\end{equation}
+%%
+The equivalent of \eqref{eq:lef} now turns out to be derivable. 
+However, we still need to take care of \eqref{eq:leg}. Since we 
+do not dispose of the full substitution $[N/x]$, we need to break 
+down \eqref{eq:leg} into an inductive definition (vb12) --- (vb14).
+The condition $\mbox{\tt x}_{\mu} \not\in \fr(y)$ is 
+just a shorthand; all it says is that we take only those 
+equations where the term $y$ has sort $\auf \alpha, \delta\zu$ and 
+${\mu} \not\in \delta$. Notice that the disjunction in (vb13) is 
+not complete. From these equations we deduce that 
+$\mbox{\tt x}_{\auf \alpha, k\zu} \doteq \mbox{\tt p}_{\auf \alpha, k\zu,
+\auf \alpha, 0\zu} \mbox{\tt x}_{\auf \alpha, 0\zu}$, 
+so we could in principle dispense with all but one variable symbol 
+for each type. 
+
+The theory of sorted algebras now provides us with a class of models 
+which is characteristic for that theory. We shall not spell out a 
+proof that these models are equivalent to models of the $\lambda$--calculus 
+in a sense made to be precise. Rather, we shall outline a procedure 
+that turns an $\Omega$--algebra into a model of the above equations.
+Start with a signature $\auf F, \Omega\zu$, sorted or unsorted. For ease 
+of presentation let it be sorted. Then the set $B$ of basic types is the 
+set of sorts. Let $\mathsf{Eq}_{\Omega}$ be the equational theory 
+of the functions from the signature alone. For complex types, put 
+$A_{\alpha\pf\beta} := A_{\alpha} \pf A_{\beta}$. Now transform 
+the original signature into a new signature $\Omega' = \auf F, 
+\Omega'\zu$ where $\Omega'(f) = 0$ for all $f \in F$. Namely, for 
+$f \colon \prod_{i < n} A_{\sigma_i} \pf A_{\tau}$ set 
+%%
+\index{$f^{\star}$}%%
+%%%%
+\begin{equation}
+f^{\star} := \lambda x_{\auf \sigma_{n-1}, n-1\zu}.\dotsb .\lambda 
+x_{\auf \sigma_0, 0\zu}. f^{\GA}(x_{\auf \sigma_{n-1}, n-1\zu},\dotsc, 
+x_{\auf \sigma_0, 0\zu})
+\end{equation}
+%%
+This is an element of $A_{\pi}$ where 
+%%%
+\begin{equation}
+\pi := (\sigma_0 \pf (\sigma_1 \pf \dotsb (\sigma_{n -1} 
+\pf \tau)\dotsb ))
+\end{equation}
+%%%
+We blow up the types in the way described above. 
+This describes the transition from the signature $\Omega$ to a new 
+signature $\Omega^{\lambda}$. The original equations are turned into 
+equations over $\Omega^{\lambda}$ as follows. 
+%%%
+\begin{subequations}
+\begin{align}
+\mbox{\tt x}_{\alpha, i}^{\lambda} & := \mbox{\tt x}_{\auf \alpha, i\zu} \\
+(f(\vec{s}))^{\lambda} & := 
+	(\dotsb ((f^{\ast} \bullet s_0^{\lambda}) \bullet 
+s_1^{\lambda}) \bullet \dotsb \bullet s^{\lambda}_{n-1}) \\
+(s \doteq t)^{\lambda} & := s^{\lambda} \doteq t^{\lambda} 
+\end{align}
+\end{subequations}
+%%%
+Next, given an $\Omega$--theory, $T$, let $T^{\lambda}$ be the 
+translation of $T$, with the postulates (vb1) -- (vb14) added. 
+It should be easy to see that if $T \vDash s \boldsymbol{\doteq} t$ 
+then also $T^{\lambda} \vDash s^{\lambda} \boldsymbol{\doteq} t^{\lambda}$. 
+For the converse we provide a general model construction that for each 
+multisorted $\Omega$--structure for $T$ gives a multisorted 
+$\Omega^{\lambda}$--structure for $T^{\lambda}$ in which that 
+equation fails. 
+
+An \textbf{environment} 
+%%%
+\index{environment}%%
+%%%
+is a function $\beta$ from $\CI = \CS \times \omega$ 
+($\CS = \Typ_{\pf}(B)$) into $\bigcup \auf A_{\alpha} : \alpha \in \CS\zu$ 
+such that for every index $\auf i, \alpha\zu$, 
+$\beta(\auf \alpha, i\zu) \in A_{\alpha}$. We denote the set of 
+environments by $\CE$. Now let $C_{\auf \alpha, \delta\zu}$
+be the set of functions from $\CE$ to $A_{\alpha}$ which depend 
+at most on $\delta$. That is to say, if $\beta$ and $\beta'$ are 
+environments such that for all $\iota \in \delta$, $\beta(\iota) = 
+\beta'(\iota)$, and if $f \in C_{\auf \alpha, \delta\zu}$ then 
+$f(\beta) = f(\beta')$.
+
+The constant $f$ is now interpreted by the function 
+$[f^{\star}] \colon \beta \mapsto f^{\star}$. For the `variables' 
+we put $[\mbox{\tt x}_{\iota}] \colon \beta \mapsto \beta(\iota)$. 
+A transformation $\tau \colon \CI \pf \CI$ naturally induces a map 
+$\wht{\tau} \colon \CE \pf \CE \colon \beta \mapsto \beta \circ \tau$. 
+Further,
+%%
+\begin{equation}
+\begin{split}
+\wht{\tau \circ \sigma}(\beta) &
+= \beta \circ (\tau \circ \sigma) \\
+&
+= (\beta \circ \tau) \circ \sigma \\
+&
+= \wht{\sigma}(\wht{\tau}(\beta)) \\
+&
+= (\wht{\sigma} \circ \wht{\tau})(\beta)
+\end{split}
+\end{equation}
+%%
+Let $\sigma = \auf \alpha, \delta\zu$, $\tau = \auf \alpha, 
+[\iota, \mu][\delta]\zu$ and $\upsilon = \auf \alpha, 
+(\iota, \mu)[\delta]\zu$.
+%%
+\begin{align}
+\mbox{}[\mbox{\tt s}^{\sigma}_{\iota, \mu}] & \colon 
+C_{\sigma} \pf C_{\tau} \colon f \mapsto f \circ \wht{[\iota, \mu]} \\
+\mbox{}[\mbox{\tt p}^{\sigma}_{\iota, \mu}] & \colon 
+C_{\sigma} \pf C_{\upsilon} \colon f \mapsto f \circ \wht{(\iota, \mu)}
+\end{align}
+%%
+Next, $\bullet^{\auf \alpha\pf\beta, \delta\zu, \auf \alpha, \delta'\zu}$ 
+is interpreted as follows.
+%%
+\begin{multline}
+[\bullet^{\auf \alpha\pf\beta, \delta\zu, \auf \alpha, \delta'\zu}] \colon
+    C_{\auf \alpha, \delta\zu} \times C_{\auf \beta, \delta'\zu} 
+	\pf C_{\auf \alpha, \delta\cup\delta'\zu} \colon \\
+	\qquad\qquad
+	\auf f, g\zu \mapsto
+    \{\auf \beta, f(\beta) \bullet g(\beta)\zu : \beta \in \CE\}
+\end{multline}
+%%
+Finally, we define abstraction. Let $\iota = \auf \gamma, i\zu$.
+%%
+\begin{multline}
+[\tlambda^{\auf \alpha, \delta\zu}_{\iota}] \colon 
+	C_{\auf \alpha, \delta\zu} \pf C_{\auf \gamma\pf\beta, 
+	\delta - \{\iota\}\zu} \colon \\
+\qquad\qquad 
+\Gx \mapsto
+    \{\auf \beta, \{\auf y, f([y/\beta(\iota)]\beta)\zu 
+	: y \in A_{\gamma}\}\zu : \beta \in \CE\}
+\end{multline}
+%%
+It takes some time to digest this definition. Basically, given 
+$f$, $g_{f}(\beta) := \{\auf y, f([y/\beta(\iota)]%
+\beta)\zu : y \in A_{\gamma}\}$ is a function from $A_{\gamma}$ to 
+$A_{\alpha}$ with parameter $\beta \in \CE$. Hence it is a member of 
+$A_{\gamma\pf\alpha}$. It assigns to $y$ the value of $f$ on 
+$\beta'$, which is identical to $\beta$ except that now 
+$\beta(\iota)$ is replaced by $y$. This is the abstraction from $y$. 
+Finally, for each $f \in C_{\auf \alpha, \delta\zu}$, 
+$[\tlambda^{\auf \alpha, \delta\zu}_{\iota}](f)$ assigns to 
+$\beta \in \CE$ the value $g_{f}(\beta)$. (Notice 
+that the role of abstraction is now taken over by the set 
+formation operator $\{x : \quad\}$.)
+%%%
+\begin{thm}
+Let $\Omega$ a multisorted signature, and $T$ an equational theory over 
+$\Omega$. Furthermore, let $\Omega^{\lambda}$ be the signature of 
+the $\lambda$--calculus with 0--ary constants $f^{\star}$ for every 
+$f \in F$. The theory $T^{\lambda}$ consisting of the translation of 
+$T$ and the equations (vb1) --- (vb14) is conservative over $T$. This 
+means that an equation $s \doteq t$ valid in the $\Omega$--algebras 
+satisfying $T$ iff its translation is valid in all 
+$\Omega^{\lambda}$--algebras satisfying $T^{\lambda}$. 
+\end{thm}
+
+{\it Notes on this section.} The theory of cylindric algebras has
+given rise to a number of difficult problems. First of all, the
+axioms shown above do not fully characterize the cylindric
+algebras that are representable, that is to say, have as their
+domain $U^{\kappa}$, $\kappa$ the dimension, and where relation
+variables range over $n$--ary relations over $U$. Thus, although
+this kind of cylindric algebra was the motivating example, the
+equations do not fully characterize it. As Donald
+Monk~\shortcite{monk:cylindric} 
+%%%
+\index{Monk, Donald}%%%
+%%%
+has shown, there is no finite set of
+schemes (equations using variables for members of set of variable
+indices) axiomatizing the class of representable cylindric
+algebras of dimension $\kappa$ if $\kappa \geq \aleph_0$;
+moreover, for finite $\kappa$, the class of representable algebras
+is not finitely axiomatizable. J.~S.~Johnson has shown in
+%%%
+\index{Johnson, J.~S.}%%%
+%%%
+\cite{johnson:fpa} an analogue of the second result for polyadic
+algebras, Sain and Thompson \shortcite{sainthompson:scheme} 
+%%%
+\index{Sain, Ildik\'o}%%%
+\index{Thompson, Richard S.}%%%
+%%%%
+an analogue of the first.
+
+The model construction for the model of the $\lambda$--calculus is
+called a syntactical model in \cite{barendregt:lambda}. It is due 
+to Hindley and Longo from \cite{hindleylongo:models}. 
+%%%
+\index{Hindley, J.~R.}%%%
+\index{Longo, G.}%%
+%%%
+The approach of using functions from the set of variables into the algebra 
+as the carrier set is called a {\it functional environment model}, 
+and has been devised by Koymans (see \cite{koymans:lambda}). 
+%%%
+\index{Koymans, J.~P.~C.}%%%
+%%%
+A good overview over the different types of models is found in 
+\cite{meyer:model} and \cite{koymans:lambda}.
+%%
+\vplatz
+\exercise
+For $f$ an $n$--ary function symbol let $R_f$ be an $n+1$--ary
+relation symbol. Define a translation from terms to formulae as
+follows. First, for a term $t$ let $x_t$ be a variable such
+that $x_t \neq x_s$ whenever $s \neq t$.
+%%
+\begin{subequations}
+\begin{align}
+(\mbox{\mtt x$_i$})^{\dagger} & := \mbox{\mtt x$_{x_i}$\symbol{61}x$_{x_i}$} \\
+f(t_0,\dotsc, t_{n-1})^{\dagger} & :=
+    R_f(x_{t_0}, \dotsc, x_{t_{n-1}},
+    x_{f(\vec{t})}) \und \gund_{i < n} t_i^{\dagger}
+\end{align}
+\end{subequations}
+%%
+Finally, extend this to formulae as follows.
+%%
+\begin{subequations}
+\begin{align}
+R(t_0, \dotsc, t_{n-1})^{\dagger} & := R(x_{t_0}, \dotsc, x_{t_{n-1}})
+    \und\gund_{i < n} t_i^{\dagger} \\
+\mbox{\mtt (\symbol{5}$\varphi$)}^{\dagger} & :=
+    \mbox{\mtt (\symbol{5}$\varphi^{\dagger}$)} \\
+\mbox{\mtt ($\varphi$\symbol{4}$\chi$)}^{\dagger} & :=
+    \mbox{\mtt ($\varphi^{\dagger}$\symbol{4}$\chi^{\dagger}$)} \\
+(\mbox{\mtt (\symbol{21}$x$)$\varphi$})^{\dagger} & :=
+    \mbox{\mtt (\symbol{21}$x$)$\varphi^{\dagger}$}
+\end{align}
+\end{subequations}
+%%
+Now, let $\GM = \auf M, \Pi, \GI\zu$ be a signature. We replace
+the function symbols by relation symbols, and let $\GI^+$ be the
+extension of $\GI$ such that
+%%
+\begin{equation}
+\GI^+(R_f) = \{\auf \vec{x},y\zu \in M^{\Xi(f)+1} :
+\Pi(f)(\vec{x}) = y\}
+\end{equation}
+%%
+Then put $\GM^{\dagger} := \auf M, \GI^+\zu$.
+Show that $\auf \GM, \beta\zu \vDash \varphi$
+iff $\auf \GM^+, \beta\zu \vDash \varphi^{\dagger}$.
+%%%
+%%
+\vplatz 
+\exercise 
+Show that if $\GA$ is a cylindric algebra of
+dimension $\kappa$, every $\mathsf{E}_{\lambda}$, $\lambda <
+\kappa$, satisfies the axioms of $\mathsf{S5}$. Moreover, show that if
+$\GA \vDash \varphi$ then $\GA \vDash \nicht\mathsf{E}_{\lambda}
+\nicht\varphi$.
+%%
+\vplatz
+\exercise
+Prove Lemma~\ref{lem:subst}.
+%%
+\vplatz
+\exercise
+Show Proposition~\ref{prop:approx}.
+%%
+\vplatz
+\exercise
+Show that $\CL_{\kappa}/\!\equiv$ is a cylindric algebra of
+dimension $\kappa$ and that it is locally finite dimensional.
+%%%
+\vplatz
+\exercise
+Prove Proposition~\ref{prop:support}.

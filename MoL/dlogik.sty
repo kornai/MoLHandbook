@@ -1,0 +1,191 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                      %
+%  logik.sty -- Datum 10. April 1994                                   %
+%  Definiert Theoreme, bold math italic, logische Zeichen und          %
+%  jede Menge Modaloperatoren                                          %
+%                                                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% BoldMathItalic
+%
+\newfont{\bmi}{cmbxti12 scaled 1000}
+%
+%  Theorem Umgebungen
+%
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{stz}[thm]{Satz}
+\newtheorem{hlf}[thm]{Hilfssatz}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Korollar}
+\newtheorem{crit}[thm]{Kriterium}
+\newcommand{\proofend}{$\dashv$}
+\newcommand{\proofbeg}{{\bf Beweis. }}
+% \newcommand{\proofbeg}{\begin{proof}}
+% \newcommand{\proofend}{\end{proof}}
+\newcommand{\pseudoproofend}{$(\Diamond)$}
+%
+% Die Booleschen Symbole
+%
+\newcommand{\pf}{\rightarrow}
+\newcommand{\dpf}{\leftrightarrow}
+\newcommand{\und}{\wedge}
+\newcommand{\oder}{\vee}
+\newcommand{\nicht}{\neg}
+\newcommand{\gund}{\bigwedge}
+\newcommand{\goder}{\bigvee}
+%
+% Verbandsoperationen (VerbandsUnd,GrossesVerbandsUnd,
+% VerbandsOder, GrossesVerbandsOder)
+%
+\newcommand{\vund}{\sqcap}
+\newcommand{\voder}{\sqcup}
+\newcommand{\gvund}{\raisebox{-.2em}{\begin{picture}(1,1)
+                        \thicklines
+                        \put(0.1,0){\line(0,1){0.9}}
+                        \put(0.8,0){\line(0,1){0.9}}
+                        \put(0.1,0.9){\line(1,0){0.7}}
+                        \end{picture}}}
+\newcommand{\gvoder}{\raisebox{-.2em}{\begin{picture}(1,1)
+                        \thicklines
+                        \put(0.1,0){\line(0,1){0.9}}
+                        \put(0.8,0){\line(0,1){0.9}}
+                        \put(0.1,0){\line(1,0){0.7}}
+                        \end{picture}}}
+%
+% Zeichenhilfen: Klammern, Ueberstreichungen etc.
+%
+\newcommand{\auf}{\langle}
+\newcommand{\zu}{\rangle}
+\newcommand{\uppx}[1]{{\uparrow\! #1}}
+\newcommand{\low}[1]{{\downarrow\! #1}}
+\newcommand{\Pf}{\Rightarrow}
+\newcommand{\epi}{\twoheadrightarrow}
+\newcommand{\mono}{\rightarrowtail}
+\newcommand{\Dpf}{\Leftrightarrow}
+\newcommand{\tlm}{\subseteq}
+\newcommand{\dfgl}{\leftrightharpoons}
+\newcommand{\wht}[1]{\widehat{#1}}
+\newcommand{\oli}[1]{\overline{#1}}
+\newcommand{\uli}[1]{\underline{#1}}
+\newcommand{\wit}[1]{\widetilde{#1}}
+\newcommand{\nmodels}{\nvDash}
+%%
+%%  Modalitaeten: Orientierungsmodalitaeten
+%%
+\newcommand{\oben}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Diamond$}}
+                \put(.4,.29){\line(0,1){.3}}
+                   \end{picture}}
+\newcommand{\unten}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Diamond$}}
+                \put(.4,.29){\line(0,-1){.3}}
+                   \end{picture}}
+\newcommand{\links}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Diamond$}}
+                \put(.4,.29){\line(-1,0){.3}}
+                   \end{picture}}
+\newcommand{\rechts}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Diamond$}}
+                \put(.4,.29){\line(1,0){.3}}
+                   \end{picture}}
+\newcommand{\qoben}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Box$}}
+                \put(.4,.29){\line(0,1){.3}}
+                   \end{picture}}
+\newcommand{\qunten}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Box$}}
+                \put(.4,.29){\line(0,-1){.3}}
+                   \end{picture}}
+\newcommand{\qlinks}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Box$}}
+                \put(.4,.29){\line(-1,0){.3}}
+                   \end{picture}}
+\newcommand{\qrechts}{\begin{picture}(.7,.7)
+                \put(.4,.17){\makebox(0,0){$\Box$}}
+                \put(.4,.29){\line(1,0){.3}}
+                   \end{picture}}
+%
+% Ensprechende Algebra-Operationen
+%
+\newcommand{\soben}{\begin{picture}(1,.8)
+                \put(.5,.32){\makebox(0,0){$\blacklozenge$}}
+                \put(.5,.33){\line(0,1){.45}}
+                   \end{picture}}
+\newcommand{\sunten}{\begin{picture}(1,.8)
+                \put(.5,.32){\makebox(0,0){$\blacklozenge$}}
+                \put(.5,.33){\line(0,-1){.45}}
+                   \end{picture}}
+\newcommand{\slinks}{\begin{picture}(1,.8)
+                \put(.5,.32){\makebox(0,0){$\blacklozenge$}}
+                \put(.5,.33){\line(-1,0){.4}}
+                   \end{picture}}
+\newcommand{\srechts}{\begin{picture}(1,.9)
+                \put(.5,.32){\makebox(0,0){$\blacklozenge$}}
+                \put(.5,.33){\line(1,0){.4}}
+                   \end{picture}}
+\newcommand{\sqoben}{\begin{picture}(.8,.8)
+                \put(.5,.32){\makebox(0,0){$\blacksquare$}}
+                \put(.5,.33){\line(0,1){.45}}
+                   \end{picture}}
+\newcommand{\squnten}{\begin{picture}(.8,.8)
+                \put(.5,.32){\makebox(0,0){$\blacksquare$}}
+                \put(.5,.33){\line(0,-1){.45}}
+                   \end{picture}}
+\newcommand{\sqlinks}{\begin{picture}(1.1,.8)
+                \put(.55,.32){\makebox(0,0){$\blacksquare$}}
+                \put(.55,.33){\line(-1,0){.5}}
+                   \end{picture}}
+\newcommand{\sqrechts}{\begin{picture}(1.2,.9)
+                \put(.5,.32){\makebox(0,0){$\blacksquare$}}
+                \put(.5,.33){\line(1,0){.5}}
+                   \end{picture}}
+%
+% Die Weisse Relation      
+%
+\newcommand{\wD}{\lozenge}
+\newcommand{\wq}{\square}
+\newcommand{\whd}{\triangleleft}
+\newcommand{\rwhd}{\rhd}
+\newcommand{\nhd}{\ntriangleleft}
+\newcommand{\nwhd}{\ntriangleleft}
+\newcommand{\raute}{\lozenge}             
+\newcommand{\qu}{\square}
+\newcommand{\quadrat}{\square}
+\newcommand{\master}{\boxtimes}
+%
+% Schwarze Relation
+%
+\newcommand{\sD}{\blacklozenge}
+\newcommand{\sq}{\blacksquare}
+\newcommand{\shd}{\blacktriangleleft}
+\newcommand{\rshd}{\blacktriangleright}
+%
+% Simulierende Relation
+%
+\newcommand{\oD}{\onelozenge}
+\newcommand{\oq}{\boxminus}
+\newcommand{\ohd}{\leqslant}
+\newcommand{\rohd}{\geqslant}
+\newcommand{\nohd}{\nleqslant}
+\newcommand{\onelozenge}{\begin{picture}(.8,1)
+                                \put(.4,.3){\makebox(0,0){$\lozenge$}}
+                                \put(.15,.3){\line(1,0){.4}}
+                         \end{picture}}
+%
+%
+%
+\newcommand{\schq}{\begin{picture}(.8,.9)
+                \put(.4,.17){\makebox(0,0){$\Box$}}
+                \put(.1,.58){\line(1,-1){.5}}
+                   \end{picture}}
+\newcommand{\schD}{\begin{picture}(.8,.8)
+                \put(.4,.17){\makebox(0,0){$\Diamond$}}
+                \put(.2,.33){\line(1,-1){.5}}
+                   \end{picture}}
+
+
+
+

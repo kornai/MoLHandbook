@@ -1,0 +1,877 @@
+\section{Montague Semantics I}
+\index{Montague Semantics}%%%
+\label{kap3-6}
+%
+%
+%
+Until the beginning of the 1970s semantics of natural languages was
+considered a hopeless affair. Natural language was thought of as 
+being completely illogical so that no formal theory 
+of semantics for natural languages could ever be given. By contrast, 
+Montague 
+%%%
+\index{Montague, Richard}%%%
+%%%
+believed that natural languages can be analysed in the same way as formal 
+languages.  Even if this was too optimistic (and it is quite certain that
+Montague did deliberately overstate his case) there is enough
+evidence that natural languages are quite well--behaved. To prove
+his claim, Montague considered a small fragment of English, for
+whose semantics he produced a formal account. In this section we 
+shall give a glimpse of the theory shaped by Montague. Before
+we can start, we have to talk about predicate logics and its
+models. For Montague has actually built his semantics somewhat
+differently than we have done so far. In place of defining the
+interpretation in a model directly, he defined a translation
+into $\lambda$--calculus over predicate logic, whose interpretation
+on the other hand is fixed by some general conventions.
+
+%%%
+\index{logic!first--order}%%
+\index{first--order logic}%%
+\index{FOL}%%
+A language of first--order predicate logic with identity
+has the following symbols:
+%%
+\begin{dingautolist}{192}
+\item a set $R$ of relation symbols, a disjoint set $F$ of
+    function symbols,
+\item a countably infinite set $V := \{\mbox{\tt x}_i: i \in \omega\}$
+    of variables,
+\item the equality symbol {\tt =},
+\item the booleans {\mtt\symbol{5}}, {\mtt\symbol{4}}, {\mtt\symbol{31}}, 
+	{\mtt\symbol{25}}, 
+\item the quantifiers {\mtt\symbol{20}}, {\mtt\symbol{21}}.
+\end{dingautolist}
+%%
+As outlined in Section~\ref{kap1}.\ref{kap1-1}, the language is defined
+by choosing a signature $\auf \Omega, \Xi\zu$. Then $r$ is a
+$\Xi(r)$--ary relation symbol and $f$ a $\Omega(f)$--ary function
+symbol. Equality is always a binary relation symbol (so,
+$\Xi(\mbox{\tt =}) = 2$). We define the set of terms as usual.
+Next we define formulae (see also Section~\ref{kap2}.\ref{kap2-6}).
+%%
+\begin{dingautolist}{192}
+\item If $t_i$, $i < \Xi(r)$, are terms then
+    {\tt $r$($t_0, \dotsc, t_{\Xi(r)-1}$)} is a formula.
+\item If $t_0$ and $t_1$ are terms then {\mtt $t_0$\symbol{61}$t_1$}
+    is a formula.
+\item If $\varphi$ and $\psi$ are formulae, so are
+    {\mtt (\symbol{5}$\varphi$)}, {\mtt ($\varphi$\symbol{4}$\psi$)},
+    {\mtt ($\varphi$\symbol{31}$\psi$)} and 
+	{\mtt ($\varphi$\symbol{25}$\psi$)}.
+\item If $\varphi$ is a formula and $x \in V$, then
+    {\mtt (\symbol{20}$x$)$\varphi$} and 
+    {\mtt (\symbol{21}$x$)$\varphi$}
+    are formulae.
+\end{dingautolist}
+%%
+A $\auf \Omega, \Xi\zu$--{\bf structure} is a triple
+$\auf M, \{f^{\GM} : f \in F\}, \{r^{\GM} : r \in R\}\zu$
+such that $f^{\GM} \colon M^{\Omega(f)} \pf M$ for every $f \in F$
+and $r^{\GM} \subseteq M^{\Xi(r)}$ for every $r \in R$. Now
+let $\beta \colon V \pf M$. Then we define $\auf \GM, \beta\zu \vDash
+\varphi$ for a formula by induction.  To begin, we associate with
+every $t$ its value $[t]^{\beta}$ under $\beta$.
+%%
+\begin{align}
+\begin{split}
+\mbox{}[x]^{\beta} & := \beta(x) \\
+\mbox{}[f(t_0, \dotsc, t_{\Omega(f)-1})]^{\beta} &
+    := f^{\GM}([t_0]^{\beta}, \dotsc, [t_{\Omega(f)-1}]^{\beta})
+\end{split}
+\end{align}
+%%
+Now we move on to formulae. (In this definition, $\gamma \sim_x \beta$,
+for $x \in V$, if $\beta(y) \neq \gamma(y)$ only if $y = x$.)
+%%
+\begin{align}
+\begin{split}
+\auf \GM, \beta\zu \vDash \mbox{\mtt ($s_0$\symbol{61}$s_1$)}
+	 & :\Dpf [s_0]^{\beta} = [s_1]^{\beta} \\
+\auf \GM, \beta\zu \vDash \mbox{\mtt $r$($\vec{s}$)} & :\Dpf
+    \auf [s_i] : i < \Xi(r)\zu \in r^{\GM} \\
+\auf \GM, \beta\zu \vDash \mbox{\mtt (\symbol{5}$\varphi$)} 
+	& :\Dpf \auf \GM, \beta\zu \nvDash \varphi \\
+\auf \GM, \beta\zu \vDash \mbox{\mtt ($\varphi$\symbol{4}$\psi$)}
+	 & :\Dpf \auf \GM, \beta\zu \vDash \varphi \text{ and }
+    \auf \GM, \beta\zu \vDash \psi \\
+\auf \GM, \beta\zu \vDash \mbox{\mtt ($\varphi$\symbol{31}$\psi$)}
+	 & :\Dpf \auf \GM, \beta\zu \vDash \varphi \text{ or }
+    \auf \GM, \beta\zu \vDash \psi \\
+\auf \GM, \beta\zu \vDash \mbox{\mtt ($\varphi$\symbol{25}$\psi$)} 
+	& :\Dpf \auf \GM, \beta\zu \nvDash \varphi \text{ or }
+    \auf \GM, \beta\zu \vDash \psi \\
+\auf \GM, \beta\zu \vDash \mbox{\mtt (\symbol{21}$x$)$\varphi$} 
+	& :\Dpf \text{ there is } \beta' \sim_x \beta:
+    \auf \GM, \beta'\zu \vDash \varphi \\
+\auf \GM, \beta\zu \vDash \mbox{\mtt (\symbol{20}$x$)$\varphi$} 
+	& :\Dpf \text{ for all } \beta' \sim_x \beta:
+    \auf \GM, \beta'\zu \vDash \varphi
+\end{split}
+\end{align}
+%%
+In this way formulae are interpreted in models.
+%%
+\begin{defn}
+Let $\Delta$ be a set of formulae, and $\varphi$ a
+formula. Then $\Delta \vDash \varphi$ if for all
+models $\auf \GM, \beta\zu$: if $\auf \GM, \beta\zu
+\vDash \delta$ for every $\delta \in \Delta$, then
+also $\auf \GM, \beta\zu \vDash \varphi$.
+\end{defn}
+%%
+For example, the arithmetical terms in {\tt +}, {\tt 0} and 
+{\mtt\symbol{42}} with the relation {\mtt <} can be interpreted 
+in the structure $\BN$ where $\mbox{\tt +}^{\BN} = +$ and 
+$\mbox{\mtt\symbol{42}}^{\BN} = \cdot$ are the usual operations, 
+$\mbox{\mtt 0}^{\BN} = 0$ and $\mbox{\tt <}^{\BN} = <$. Then for 
+the valuation $\beta$ with $\beta(\mbox{\mtt x$_{\szwei}$}) = 7$ 
+we have:
+%%
+\begin{equation}
+\label{eq:38ast}
+\auf \BN, \beta\zu \vDash
+    \mbox{\mtt (\symbol{20}x$_{\snull}$)(\symbol{20}x$_{\seins}$)(%
+(x$_{\snull}$\symbol{42}x$_{\seins}$)\symbol{61}x$_{\szwei}$\symbol{25}%
+(x$_{\snull}$\symbol{61}1\symbol{31}x$_{\seins}$\symbol{61}1))}
+\end{equation}
+%%
+This formula says that $\beta(\mbox{\mtt x$_{\szwei}$})$ is a 
+prime number. For a number $w$ is a prime number iff for all numbers
+$u$ and $v$: if $u \cdot v = w$ then $u = 1$ or $v = 1$.
+We compare this with \eqref{eq:38ast}. \eqref{eq:38ast} holds if
+for all $\beta'$ different only on \mbox{\mtt x$_{\snull}$} 
+from $\beta$
+%%
+\begin{equation}
+\auf \BN, \beta'\zu \vDash
+    \mbox{\mtt (\symbol{20}x$_{\seins}$)((x$_{\snull}$\symbol{42}x%
+$_{\seins}$)\symbol{61}x$_{\szwei}$\symbol{25}(x$_{\snull}$\symbol{61}%
+1\symbol{31}x$_{\seins}$\symbol{61}1))} 
+\end{equation}
+%%
+This in turn is the case if for all $\beta''$ different only on 
+\mbox{\mtt x$_{\seins}$} from $\beta'$
+%%
+\begin{equation}
+\auf \BN, \beta''\zu \vDash
+    \mbox{\mtt ((x$_{\snull}$\symbol{42}x$_{\seins}$)\symbol{61}%
+x$_{\szwei}$\symbol{25}(x$_{\snull}$\symbol{61}1\symbol{31}x%
+$_{\seins}$\symbol{61}1))} 
+\end{equation}
+%%
+This means: if $u := \beta''(\mbox{\mtt x$_{\snull}$})$, 
+$v := \beta''(\mbox{\mtt x$_{\seins}$})$ and $w := \beta''(\mbox{\mtt %
+x$_{\szwei}$})$ and if we have $w = u \cdot v$,
+then $u = 1$ or $v = 1$. This holds for all $u$ and $v$.
+Since on the other hand $w = \beta(\mbox{\mtt x$_{\szwei}$})$ 
+we have \eqref{eq:38ast} iff $\beta(\mbox{\mtt x$_{\szwei}$})$, 
+that is to say 7, is a prime number.
+
+The reader may convince himself that for every $\beta$
+%%
+\begin{multline}
+\auf \BN, \beta\zu \vDash
+    \mbox{\mtt (\symbol{20}x$_{\snull}$)(\symbol{21}x$_{\seins}$)(%
+\symbol{20}x$_{\szwei}$)(\symbol{20}x$_{\sdrei}$)} \\
+\mbox{\mtt (x$_{\snull}$<x%
+$_{\seins}$\symbol{4}((x$_{\szwei}$\symbol{42}x$_{\sdrei})$%
+\symbol{61}x$_{\seins}$\symbol{25}(x$_{\szwei}$\symbol{61}1\symbol{31}x%
+$_{\sdrei}$\symbol{61}1)))}
+\end{multline}
+%%
+This says that for every number there exists a prime number
+larger than it. 
+
+For later use we introduce a type $e$.  This is the type of 
+terms. $e$ is realized by $M$. Before we can start designing 
+a semantics for natural language we shall have to eliminate 
+the relations from predicate logic.  To this end we shall 
+introduce a new basic type, $t$, which is the type of truth 
+values. It is realized by the set $\{0,1\}$.  An $n$--place 
+relation $r$ is now replaced by the characteristic function 
+$r^{\spadesuit}$ from $n$--tuples of objects to truth values, 
+which is defined as follows.
+%%
+\begin{equation}
+r^{\spadesuit}(x_0, x_1, \dotsc, x_{\Xi(r)-1}) = 1
+\text{ $:\Dpf$ } r(x_0, \dotsc, x_{\Xi(r)-1})
+\end{equation}
+%%
+This allows us to use $\lambda$--calculus for handling
+the argument places of $r$. For example, from the binary relation
+$r$ we can define the following functions $r_1$ and $r_2$.
+%%
+\begin{align}
+r_1 & := \lambda x_e. \lambda y_e. r^{\spadesuit}(x_e, y_e) \\
+r_2 & := \lambda x_e. \lambda y_e. r^{\spadesuit}(y_e, x_e)
+\end{align}
+%%
+So, we can define functions that either take the first argument
+of $r^{\spadesuit}$ first, or one which takes the first argument
+of $r^{\spadesuit}$ second.
+
+Further, we shall also interpret {\mtt\symbol{5}}, {\mtt\symbol{4}}, 
+{\mtt\symbol{31}} and {\mtt\symbol{25}} by the standard set--theoretic 
+functions $-$, $\cap$, $\cup$ and $\supset$, respectively:
+%%
+\begin{equation}
+\begin{array}{l|l}
+  & - \\\hline
+0 & 1 \\
+1 & 0
+\end{array}\qquad
+\begin{array}{l|ll}
+\cap & 0 & 1 \\\hline
+0    & 0 & 0 \\
+1    & 0 & 1
+\end{array}\qquad \\
+\begin{array}{l|ll}
+\cup & 0 & 1 \\\hline
+0     & 0 & 1 \\
+1     & 1 & 1
+\end{array}\qquad
+\begin{array}{l|ll}
+\supset & 0 & 1 \\\hline
+0   & 1 & 1 \\
+1   & 0 & 1
+\end{array}
+\end{equation}
+%%
+\newcommand{\GPi}{\mbox{\tt\textgreek{P}}}
+\newcommand{\GSi}{\mbox{\tt\textgreek{S}}}
+\newcommand{\Giota}{\mbox{\tt\textgreek{i}}}
+%%
+Syntactically speaking {\mtt\symbol{5}} has category $t/t$ and
+{\mtt\symbol{4}}, {\mtt\symbol{31}} and {\mtt\symbol{25}} have 
+category $(t\backslash t)/t$. Finally, also the quantifiers must 
+be turned into functions.  To this end we introduce the function 
+symbols $\GPi$ and $\GSi$ of type $((e \pf t) \pf t)$. Moreover, 
+$\GPi(X)$ is true iff for all $x$ $X(x)$ is true, and $\GSi(X)$ 
+is true iff for some $x$ $X(x)$ is true. 
+{\mtt (\symbol{20}$x$)$\varphi$} is now replaced by 
+{\mtt $\GPi$(\tlambda$x$.$\varphi$)}, and 
+{\mtt (\symbol{21}$x$)$\varphi$} by 
+{\mtt $\GSi$(\tlambda$x$.$\varphi$)}.
+So, ignoring types for the moment, we have the equations
+%%%
+\begin{align} 
+\mbox{\mtt \symbol{20}} & = \mbox{\mtt {\tlambda}x$_{\snull}$.%
+{\tlambda}x$_{\seins}$.\GPi({\tlambda}x$_{\snull}$.x$_{\seins}$)}  \\
+\mbox{\mtt \symbol{21}} & = \mbox{\mtt {\tlambda}x$_{\snull}$.%
+{\tlambda}x$_{\seins}$.\GSi({\tlambda}x$_{\snull}$.x$_{\seins}$)} 
+\end{align}
+%%%
+We shall however continue to write $\forall x.\varphi$ and 
+$\exists x.\varphi$. This definition can in fact be used to 
+define quantification for all functions. This is the core idea 
+behind the language of 
+%%%
+\index{simple type theory (STT)}%%
+%%%
+simple type theory (STT) according to Church~\shortcite{church:simple}. 
+%%%
+\index{Church, Alonzo}%%%
+%%%%
+Church assumes that the set of basic categories contains at 
+least $t$. The symbol {\mtt\symbol{5}} has the type $t \pf t$, 
+while the symbols {\mtt\symbol{4}}, {\mtt\symbol{31}} and
+{\mtt\symbol{25}} have type $t \pf (t \pf t)$. (Church actually works 
+only with negation and conjunction as basic symbols, but this 
+is just a matter of convenience.) To get the power of 
+predicate logic we assume for each type $\alpha$ a symbol 
+$\GPi^{\alpha}$ of type $(\alpha \pf t) \pf t$ and a symbol 
+$\Giota^{\alpha}$ of type $\alpha \pf (\alpha \pf t)$.
+Put $\CS := \Typ_{\pf}(B)$.
+%%%
+\begin{defn}
+%%%
+\index{Henkin frame}
+%%%
+A \textbf{Henkin frame} is a structure 
+%%
+\begin{equation}
+\GH = \auf \{D_{\alpha} : \alpha \in \CS\}, \bullet, -, \cap,
+\{\pi^{\alpha} : \alpha \in \CS\}, 
+\{\iota^{\alpha} : \alpha \in \CS\}\zu
+\end{equation}
+%%
+such that the following holds.
+%%
+\begin{dingautolist}{192}
+\item
+$\auf \{D_{\alpha} : \alpha \in \CS\},
+\bullet\zu$ is a functionally complete typed applicative structure.
+\item
+$D_t = \{0,1\}$,
+$- \colon D_t \pf D_t$ and $\cap \colon D_t \pf (D_t \pf D_t)$ are
+complement and intersection, respectively.
+\item
+For every $a \in D_{\alpha \pf t}$
+$\pi^{\alpha} \bullet a = 1$ iff
+for every $b \in D_{\alpha}$: $b \bullet a = 1$.
+\item
+For every $a \in D_{\alpha \pf t}$, if there is a $b \in
+D_{\alpha}$ such that $a \bullet b = 1$ then also 
+$a \bullet (\iota^{\alpha} \bullet a) = 1$.
+\end{dingautolist}
+\end{defn}
+%%%
+A valuation into a Henkin frame is a function $\beta$ such that
+for every variable $x$ of type $\alpha$ $\beta(x) \in D_{\alpha}$.
+For every $N$ of type $t$, $\auf \GH, \beta\zu \vDash N$ iff 
+$[N]^{\beta} = 1$. Further, for a set $\Gamma$ of expressions of 
+type $t$ and every $N$ of type $t$, $\Gamma \vDash N$ if
+for every Henkin frame and every valuation $\beta$: if $\auf \GH,
+\beta\zu \vDash M$ for all $M \in \Gamma$ then $\auf \GH, \beta\zu
+\vDash N$.
+
+$\pi^{\alpha}$ is the interpretation of $\GPi^{\alpha}$ and 
+$\iota^{\alpha}$ the interpretation of $\Giota^{\alpha}$. So,
+$\pi^{\alpha}$ is the device discussed above that allows to define 
+the universal quantifier for functions of type $\alpha \pf t$.
+$\iota^{\alpha}$ on the other hand is a kind of choice or `witness' 
+function. If $a$ is a function from objects of type $\alpha$ into 
+truth values then $\iota^{\alpha} \bullet a$ is an object of type
+$\alpha$, and, moreover, if $a$ is at all true on some $b$ of type
+$\alpha$, then it is true on $\iota^{\alpha} \bullet a$. In 
+Section~\ref{kap6}.\ref{kap6-4a} we shall deliver 
+an axiomatization of STT and show that the 
+axiomatization is complete with respect to these models. The reason 
+for explaining about STT is that every semantics or calculus that
+will be introduced in the sequel can easily be interpreted into
+STT.
+
+We now turn to Montague Semantics. To begin we choose a very small 
+\index{Montague Semantics}%%%
+base of words. 
+%%
+\begin{equation}
+\{\mbox{\tt Paul}, \mbox{\tt Peter}, \mbox{\tt sleeps},
+\mbox{\tt sees}\}
+\end{equation}
+%%
+The type of (the meaning of) {\tt Paul} and {\tt Peter} is $e$, the 
+type of {\tt sleeps} is $e \pf t$, the type of {\tt sees} 
+$e \pf (e \pf t)$. This means: names are interpreted by individuals, 
+intransitive verbs by unary relations, and transitive verbs by binary 
+relations. The (finite) verb {\tt sleeps} is interpreted by the 
+relation $\textsf{sleeps}'$ and {\tt sees} by the relation 
+$\textsf{see}'$. Because of our convention a transitive verb 
+denotes a function (!) of type $e \pf (e \pf t)$. So the semantics 
+of these verbs is
+%%
+\begin{align}
+\mbox{\tt sleeps} & \mapsto \lambda x_e . \textsf{sleep}'(x_e) \\
+\mbox{\tt sees} & \mapsto \lambda x_e. \lambda y_e. \mbox{\sf %
+    see}'(y_e, x_e)
+\end{align}
+%%
+We already note here that the variables are unnecessary. After
+we have seen how the predicate logical formulae can be massaged
+into typed $\lambda$--expressions, we might as well forget this
+history and write $\textsf{sleep}'$ in place of the function
+$\lambda x_e.\textsf{sleep}'(x_e)$ and $\textsf{see}'$ in
+place of $\lambda x_e.\lambda y_e.\textsf{see}'(y_e,x_e)$.
+This has the additional advantage that we need not mention the
+variables at all (which is a moot point, as we have seen above).
+We continue in this section to use the somewhat more longwinded
+notation, however. We agree further that the value of {\tt Paul} 
+shall be the constant $\textsf{paul}'$ and the value of 
+{\tt Peter} the constant $\textsf{peter}'$. Here are finally 
+our 0--ary modes.
+%%
+\begin{equation}
+\begin{array}{lll}
+\auf \mbox{\tt Paul}, & e, & \textsf{paul}'\zu \\
+\auf \mbox{\tt Peter}, & e, & \textsf{peter}'\zu \\
+\auf \mbox{\tt sleeps}, & e\backslash t, & \lambda x_e.
+    \textsf{sleep}'(x_e)\zu \\
+\auf \mbox{\tt sees}, & (e\backslash t)/e, &
+    \lambda x_e. \lambda y_e. \mbox{\sf see}'(y_e, x_e)\zu
+\end{array}
+\end{equation}
+%%
+The sentences {\tt Peter sleeps} or {\tt Peter sees Peter}
+are grammatical, and their meaning is $\textsf{sleep}'(\textsf{paul}')$ and
+$\textsf{see}'(\textsf{peter}', \textsf{peter}')$.
+
+The syntactic categories possess an equivalent in syntactic
+terminology. $e$ for example is the category of proper
+names. The category $e \backslash t$ is the category of
+intransitive verbs and the category $(e \backslash t)/e$ is
+the category of transitive verbs.
+
+This minilanguage can be extended.  For example, we can introduce 
+the word {\tt not} by means of the following constant mode.
+%%
+\begin{equation}
+\auf \mbox{\tt not}, (e\backslash t)\backslash (e \backslash t),
+    \lambda e_{e \pf t}. \lambda x_e. \nicht
+    x_{e \pf t}(x_e)\zu
+\end{equation}
+%%
+The reader is asked to verify that now {\tt sleeps not} is
+an intransitive verb, whose meaning is the complement of the
+meaning  of {\tt sleeps}. So, {\tt Paul sleeps not}
+is true iff {\tt Paul sleeps} is false.
+This is perhaps not such a good example, since the negation
+in English is formed using the auxiliary {\tt do}.  To give 
+a better example, we may introduce {\tt and} by the following mode.
+%%
+\begin{multline}
+\auf \mbox{\tt and},
+    ((e \backslash t)\backslash (e \backslash t))/(e \backslash t),
+\\
+    \lambda x_{e \pf t}.\lambda y_{e \pf t}.\lambda z_{e}.
+    x_{e \pf t}(z_e) \und y_{e \pf t}(z_e)\zu
+\end{multline}
+%%
+In this way we have a small language which can generate infinitely
+many grammatical sentences and which assigns them correct meanings.
+Of course, English is by far more complex than this.
+
+The real advance that Montague made was to show that one can
+%%%
+\index{Montague, Richard}%%%
+%%%
+treat quantification. Let us take a look at how this can be
+done. (Actually, what we are going to outline right now is
+not Montague's own solution, since it is not in line with 
+Categorial Grammar. 
+%%%
+\index{Categorial Grammar}%%%
+%%%
+We will deal with Montague's approach to 
+quantification in Chapter~\ref{kap6}.) Nouns like {\tt cat} and 
+{\tt mouse} are not proper names but semantically speaking unary predicates.
+For {\tt cat} does not denote a single individual but a class of
+individuals. Hence, following our conventions, the semantic type
+of {\tt cat} and {\tt mouse} is $e \pf t$. Syntactically speaking
+this corresponds to either $t/e$ or $e \backslash t$. Here,
+no decision is possible, for neither {\tt Cat Paul} nor 
+{\tt Paul cat} is a grammatical sentence. Montague did not solve
+this problem; he introduced a new category constructor $/\!/$,
+which allows to distinguish a category $t /\!/ e$ from $t /e$
+(the intransitive verb) even though they are not distinct in type.
+Our approach is simpler. We introduce a category $n$ and stipulate
+that $\sigma(n) := e \pf t$. This is an example where the basic
+categories are different from the (basic) semantic types.
+Now we say that the subject quantifier {\tt every} has the
+sentactic category $(t/(e \backslash t))/n$. This means the
+following. It forms a constituent together with a noun,
+and that constituent has the category $t/(e \backslash t)$. 
+This therefore is a constituent that needs an intransitive verb 
+to form a sentence. So we have the following constant mode.
+%%
+\begin{equation}
+\auf \mbox{\tt every}, (t/(e \backslash t))/n, 
+    \lambda x_{e \pf t}. \lambda y_{e \pf t}.
+    \forall x_e. (x_{e \pf t}(x_e) \pf y_{e \pf t}(x_e))\zu
+\end{equation}
+%%
+Let us give an example.
+%%
+\begin{equation}
+\mbox{\tt every cat sees Peter}
+\end{equation}
+%%
+The syntactic analysis is as follows.
+%%
+\begin{equation}
+\begin{array}{ccccc}
+\mbox{\tt every} & \quad \mbox{\tt cat} & \quad & \mbox{\tt sees} &
+    \quad \mbox{\tt Peter} \\
+(t/(e \backslash t))/n & n & & (e \backslash t)/e & e
+\\\cline{1-2}\cline{4-5}
+\multicolumn{2}{c}{t/(e \backslash t)} & &
+    \multicolumn{2}{c}{e \backslash t} \\\hline
+    \multicolumn{5}{c}{t}
+\end{array}
+\end{equation}
+%%
+This induces the following constituent structure.
+%%
+\begin{equation}
+((\mbox{\tt every}\; \mbox{\tt cat})\;
+(\mbox{\tt sees}\; \mbox{\tt Peter}))
+\end{equation}
+%%
+Now we shall have to insert the meanings in place of the words
+and calculate. This means converting into normal form. For
+by convention, a constituent has the meaning that arises from
+applying the meaning of one immediate part to the meaning of the other.
+That this is now well--defined is checked by the syntactic analysis.
+We calculate in several steps.  {\tt sees Peter} is a constituent
+and its meaning is
+%%
+\begin{equation}
+(\lambda x_e.\lambda y_e.\textsf{see}'(y_e, x_e))(%
+\textsf{peter}') = \lambda y_e. \textsf{see}'(y_e, \textsf{peter}') 
+\end{equation}
+%%
+Further,  {\tt every cat} is a constituent with the following
+meaning
+%%
+\begin{align}
+\begin{split}
+%\begin{array}{ll}
+  & (\lambda x_{e \pf t}. \lambda y_{e \pf t}.
+    (\forall x_e. x_{e \pf t}(x_e) \pf y_{e \pf t}(x_e)))
+    (\lambda x_e.\textsf{cat}'(x_e)) \\
+= &
+    \lambda y_{e \pf t}.\forall x_e.
+    ((\lambda x_e. \textsf{cat}'(x_e))(x_e) \pf
+    y_{e \pf t}(x_e)) \\
+= &
+    \lambda y_{e \pf t}.\forall x_e.
+    (\textsf{cat}'(x_e) \pf y_{e \pf t}(x_e))
+    \end{split}
+\end{align}
+%%
+Now we combine these two:
+%%
+\begin{align}
+\begin{split}
+ & (\lambda y_{e \pf t}.\forall x_e.
+    \textsf{cat}'(x_e) \pf y_{e \pf t}(x_e))(%
+    \lambda y_e. \textsf{see}'(y_e, \textsf{peter}')) \\
+    = &
+\forall x_e. (\textsf{cat}'(x_e) \pf
+    (\lambda y_e. \textsf{see}'(y_e, \textsf{peter}'))(x_e)) \\
+    = &
+\forall x_e. (\textsf{cat}'(x_e) \pf
+    \textsf{see}'(x_e, \textsf{peter}'))
+\end{split}
+\end{align}
+%%
+This is the desired result. Similarly to {\tt every} we define
+{\tt some}:
+%%
+\begin{equation}
+\auf \mbox{\tt some}, (t/(e \backslash t))/n, 
+    \lambda x_{e \pf t}. \lambda y_{e \pf t}.
+    \exists x_e. (x_{e \pf t}(x_e) \und y_{e \pf t}(x_e))\zu
+\end{equation}
+%%
+If we also want to have quantifiers for direct objects we have
+to introduce new modes.
+%%
+\begin{align}
+\begin{split}
+& \auf \mbox{\tt every}, ((e \backslash t)/((e \backslash t)/e))/n, \\
+& \qquad \lambda x_{e \pf t}. \lambda y_{e \pf (e \pf t)}.
+    \lambda y_e. \forall x_e. (x_{e \pf t}(x_e) \pf
+    y_{e \pf (e \pf t)}(x_e)(y_e))\zu \\
+\end{split} \\
+\begin{split}
+& \auf \mbox{\tt some}, ((e \backslash t)/((e \backslash t)/e))/n, \\
+& \qquad \lambda x_{e \pf t}. \lambda y_{e \pf (e \pf t)}.
+\lambda y_e. \exists x_e. (x_{e \pf t}(x_e) \pf
+    y_{e \pf (e \pf t)}(x_e)(y_e))\zu
+\end{split}
+\end{align}
+%%
+For {\tt every cat} as a direct object is analyzed as a constituent
+which turns a transitive verb into an intransitive verb. Hence it
+must have the category $(e \backslash t)/((e \backslash t)/e)$.
+From this follows immediately the category assignment for {\tt
+every}.
+
+Let us look at this using an example.
+%%
+\begin{equation}
+\mbox{\tt some cat sees every mouse}
+\end{equation}
+%%
+The constituent structure is as follows.
+%%
+\begin{equation}
+((\mbox{\tt some}\; \mbox{\tt cat})\;
+(\mbox{\tt sees}\; (\mbox{\tt every}\; \mbox{\tt mouse}))))
+\end{equation}
+%%
+The meaning of {\tt every mouse} is, as is easily checked, the
+following:
+%%
+\begin{equation}
+\lambda y_{e \pf (e \pf t)}. \lambda y_e.
+\forall x_e(\textsf{mouse}'(x_e) \pf y_{e \pf %
+(e \pf t)}(x_e)(y_e))
+\end{equation}
+%%
+From this we get for {\tt sees every mouse}
+%%
+\begin{align}
+\label{eq:sem}
+\begin{split}
+ & \lambda y_e. \forall x_e(\textsf{mouse}'(x_e) \pf
+(\lambda x_e. \lambda y_e.\textsf{see}'(y_e, x_e))%
+(x_e)(y_e)) \\
+= &
+\lambda y_e. \forall x_e(\textsf{mouse}'(x_e) \pf
+\textsf{see}'(y_e, x_e))
+\end{split}
+\end{align}
+%%
+{\tt some cat} is analogous to {\tt every cat}:
+%%
+\begin{equation}
+\label{eq:sc}
+\lambda y_{e \pf t}. \exists x_e. (\textsf{cat}'(x_e)
+    \und y_{e \pf t}(x_e))
+\end{equation}
+%%
+We combine \eqref{eq:sc} and \eqref{eq:sem}. 
+%%
+\begin{align}
+\begin{split}
+  & (\lambda y_{e \pf t}. \exists x_e. (\textsf{cat}'(x_e)
+    \und y_{e \pf t}(x_e))) \\
+  & \qquad (\lambda y_e. \forall x_e.(\textsf{mouse}'(x_e) \pf
+	\textsf{see}'(y_e, x_e))) \\
+= &
+\exists x_e. (\textsf{cat}'(x_e) \und
+(\lambda y_e. \forall x_e.(\textsf{mouse}'(x_e) 
+\pf \textsf{see}'(y_e, x_e)))(x_e)) \\
+= &
+\exists x_e.(\textsf{cat}'(x_e) \und
+\forall z_e.(\textsf{mouse}'(z_e) \pf
+\textsf{see}'(x_e, z_e))) 
+\end{split}
+\end{align}
+%%
+One can see that the calculations require
+some caution. Sometimes variables may clash and this calls
+for the substitution of a variable. This is the case for
+example when we insert a term and by doing so create a
+bound occurrences of a variable. The $\lambda$--calculus
+is employed to do this work for us. (On the other hand, 
+if we used plain functions here, this would again be needless.)
+
+Montague used the cancellation interpretation for his calculus,
+hence the sequent formulation uses the calculus $\textsf{E}$. We 
+have seen that this calculus can also be rendered into a sign grammar, 
+which has two modes, forward application ($\mbox{\tt A}_{\sgr}$) and
+backward application ($\mbox{\tt A}_{\skl}$). In syntactic theory,
+however, the most popular version of grammar is the
+Lambek--Calculus. However, the latter does not lend itself easily
+to a compositional interpretation. The fault lies basically in the
+method of hypothetical assumptions. Let us see why this is so. An
+adjective like {\tt big} has category $n/n$, and its
+type is $(e \pf t) \pf (e \pf t)$. (This is not quite
+true, but good enough for illustration.) This means that it can
+modify nouns such as {\tt car}, but not relational nouns
+such as {\tt friend} or {\tt neighbour}. Let us assume that the
+latter have category $n/g$ (where $g$ stands for the category 
+of a genitive argument). Now, in Natural Deduction style
+Lambek--Calculus we can derive a constituent {\tt big neighbour}
+by first feeding it a hypothetical argument and then abstracting
+over it.
+%%
+\begin{equation}
+\begin{array}{ccccc}
+\mbox{\tt big} & \quad & \mbox{\tt neighbour} & \quad & \\
+n/n : \textsf{big}' & &
+    n/g : \textsf{neighbour}' & & g : y \\\cline{3-5}
+\vdots & & \multicolumn{3}{c}{n : \textsf{neighbour}'(y)} \\\cline{1-5}
+\multicolumn{4}{c}{n : \textsf{big}'(\textsf{neighbour}'(y))}
+    \\\cline{1-5}
+\multicolumn{4}{c}{n/g : \lambda y.\textsf{big}'(\textsf{neighbour}'(y))}
+\end{array}
+\end{equation}
+%%
+This allows us, for example, to coordinate {\tt big neighbour} and
+{\tt friend} and then compose with {\tt of mine}. Notice that this 
+proof is not available in \textsf{E}. There also is a sign based 
+analogue of this. Introduce binary modes $\mbox{\tt L}_{\sgr}$ and 
+$\mbox{\tt L}_{\skl}$:
+%%
+\begin{equation}
+\begin{split}
+\mbox{\tt L}_{\sgr}(\auf \vec{x}, \alpha, M\zu,
+    \auf \vec{y}, \gamma, x_{\gamma}\zu)
+    & := \auf \vec{x}/\vec{y}, \alpha/\gamma,
+    (\lambda x_{\gamma}.Mx_{\gamma})\zu \\
+\mbox{\tt L}_{\skl}(\auf \vec{x}, \alpha, M\zu,
+    \auf \vec{y}, \gamma, x_{\gamma}\zu)
+    & := \auf \vec{y}\backslash\vec{x}, \gamma\backslash\alpha,
+    (\lambda x_{\gamma}.Mx_{\gamma})\zu
+\end{split}
+\end{equation}
+%%
+A condition on the application of these modes is that the
+variable $x_{\gamma}$ actually occurs free in the term.
+Now introduce a new 0--ary mode with exponent $\copyright$,
+which shall be a symbol not in the alphabet.
+%%
+\begin{equation}
+\mbox{\mtt V}_{\alpha\mbox{\smtt :}i} := \auf \copyright, \alpha,
+    x_{\alpha,i}\zu
+\end{equation}
+%%
+Consider the structure term
+%%
+\begin{equation}
+\mbox{\mtt L$_{\sgr}$A$_{\sgr}$BgA$_{\sgr}$NbV$_{\mbox{\smtt g:0}}$%
+V$_{\mbox{\smtt g:0}}$}
+\end{equation}
+%%
+Here, $\mbox{\tt Bg} := \auf \mbox{\tt big}, n/n, \textsf{big}'\zu$ 
+and $\mbox{\tt Nb} := \mbox{\tt neighbour}, n/g, \textsf{neighbour}'\zu$.
+On condition that it is definite, it has the following unfolding.
+%%
+\begin{equation}
+\auf \mbox{\tt big neighbour}, n/g,
+    \lambda x_{g,0}.\textsf{big}'\textsf{neighbour}'(x_{g,0})\zu
+\end{equation}
+%%
+These modes play the role of hypothetical arguments in
+Natural Deduction style derivations. However, the combined
+effect of these modes is not exactly the same as in the
+Lambek--Calculus. The reason is that abstraction can only be
+over a variable that is introduced right or left peripherally
+to the constituent. However, if we introduce two arguments in
+succession, we can abstract over them in any order we please,
+as the reader may check (see the exercises). The reason is
+that $\copyright$ bears no indication of the name of the variable
+that it introduces.  This can be remedied by introducing instead
+the following 0--ary modes.
+%%
+\begin{equation}
+\mbox{\tt T}_{\alpha\mbox{\smtt :}i} := \auf \copyright_{\alpha,i}, \alpha,
+    x_{\alpha,i}\zu
+\end{equation}
+%%
+Notice that these empty elements can be seen as the categorial
+analogon of traces in Transformational Grammar (see
+Section~\ref{kap5}.\ref{kap5-5}). Now the exponent reveals the exact
+identity of the variable and the Lambek--Calculus is exactly
+mirrorred by these modes. The price we pay is that there are
+structure terms whose exponents are not pronounceable: they
+contain elements that are strictly speaking not overtly visible.
+The strings are therefore not surface strings. 
+
+{\it Notes on this section.} Already in 
+\cite{harris:structural} the idea is defended that one must 
+%%%
+\index{Harris, Zellig S.}%%%
+%%%
+sometimes pass through `nonexistent' strings, and TG has made 
+much use of this. An alternative idea that suggests itself
+is to use combinators. This route has been taken by
+Steedman in \shortcite{steedman:gapping,steedman:surface}.
+%%%
+\index{Steedman, Mark}%%%
+%%%
+For example, the addition of the modes $\mbox{\tt B}_{\sgr}$ and
+$\mbox{\tt B}_{\skl}$ assures us that we can derive the these
+constituents as well. Steedman and Jacobson emphasize in their
+work also that variables can be dispensed with in favour of
+combinators. See \cite{jacobson:toward,jacobson:disorganisation} 
+(and references therein) for a defense of variable free semantics. 
+For a survey of approaches see \cite{boettnerthuemmel:free}.
+%%
+\vplatz
+\exercise
+Write an AB--grammar for predicate logic over
+a given signature and a given structure. {\it Hint.} You need two
+types of basic categories: $e$ and $t$, which now stand for
+{\it terms\/} and {\it truth--values}. 
+%%
+\vplatz
+\exercise
+The solutions we have presented here fall short of taking certain
+aspects of orthography into account. In particular, words are not 
+separated by a blank, sentences do not end in a period and the first 
+word of a sentence is written using lower case letters only. Can you 
+think of a remedy for this situation?
+%%
+\vplatz
+\exercise
+Show that with the help of $\mbox{\tt L}_{\skl}$ and 
+$\mbox{\tt L}_{\sgr}$ and the 0--ary modes 
+$\mbox{\tt V}_{\alpha\mbox{\smtt :}i}$ it is possible
+to derive the sign
+%%
+\begin{equation}
+\auf \mbox{\tt give}, (e\backslash t)/e/e,
+    \lambda x.\lambda y.\lambda z.\textsf{give}'(z)(x)(y)\zu
+\end{equation}
+%%
+from the sign
+%%
+\begin{equation}
+\auf \mbox{\tt give}, (e\backslash t)/e/e,
+    \lambda x.\lambda y.\lambda z.\textsf{give}'(z)(y)(x)\zu
+\end{equation}
+%%
+\vplatz
+\exercise
+\label{ex:boolesch}
+We have noted earlier that {\tt and}, {\tt or} and {\tt not} are
+polymorphic. The polymorphicity can be accommodated directly by
+defining polyadic operations in the $\lambda$--calculus. Here is
+how. Call a type $\alpha$ $t$--\textbf{final} if it has the following
+form: (a) $\alpha = t$, or (b) $\alpha = \beta \pf \gamma$, where
+$\gamma$ is $t$--final. Define $\mbox{\mtt\symbol{4}}_{\alpha}$, 
+$\mbox{\mtt\symbol{31}}_{\alpha}$ and $\mbox{\mtt\symbol{5}}_{\alpha}$ 
+by induction. Similarly, for every type $\alpha$ 
+define functions $\GSi_{\alpha}$ and $\GPi_{\alpha}$ of type 
+$\alpha \pf t$ that interpret the existential and universal
+quantifier. 
+%%
+\vplatz
+\exercise
+%%%
+\index{generalized quantifier}%%
+%%%%
+A (\textbf{unary}) \textbf{generalized quantifier} is a function
+from properties to truth values (so, it is an object of type
+$(e \pf t) \pf t$). Examples are {\tt some} and {\tt every},
+but there are many more:
+%%
+\begin{align}
+& \mbox{\tt more than three} \\
+& \mbox{\tt an even number of} \\
+& \mbox{\tt the director's}
+\end{align}
+%%
+First, give the semantics of each of the generalized
+quantifiers and define a sign for them. Now try to
+define the semantics of {\tt more than}. (It takes
+a number and forms a generalized quantifier.)
+%%
+\vplatz
+\exercise
+In $\CCG(\textsf{B})$, many (but not all) substrings are
+constituents. We should therefore be able to coordinate them
+with {\tt and}. As was noted for example by Eisenberg in
+\shortcite{eisenberg:identity}, such a coordination is
+constrained (the brackets enclose the critical constituents).
+%%
+\begin{align}
+& ^{\ast}[\mbox{\tt John said that I}]\; \mbox{\tt and}\;
+    [\mbox{\tt Mary said that she}] \\\notag
+& \quad \mbox{\tt is the best swimmer.} \\
+& [\mbox{\tt John said that I}] \;\mbox{\tt and}\;
+    [\mbox{\tt Mary said that she}] \\\notag
+    & \quad\mbox{\tt was the best swimmer.} 
+\end{align}
+%%
+The constraint is as follows. $\vec{x}\oconc\mbox{\tt and}\oconc\vec{y}
+\oconc\vec{z}$ is well--formed only if both $\vec{x}\oconc\vec{z}$ and
+$\vec{y}\oconc\vec{z}$ are. The suggestion is therefore that first
+the sentence $\vec{x}\oconc\vec{z}\oconc\mbox{\tt and}\oconc\vec{y}%
+\oconc\vec{z}$ is formed and then the first occurrence of $\vec{z}\oconc$ 
+is `deleted'. Can you suggest a different solution? {\it Note.} The 
+construction
+%%%
+\index{forward deletion}%%
+\index{backward deletion}%%
+%%%
+is known as {\bf forward deletion}. The more common {\bf backward
+deletion} gives $\vec{x}\oconc\vec{z}\oconc\mbox{\tt and}\oconc\vec{y}$, 
+and is far less constrained.
+%%

@@ -1,0 +1,1006 @@
+\chapter{PTIME Languages}
+\thispagestyle{empty}
+\label{kap4}
+%
+%
+%
+\section{Mildly--Context Sensitive Lan\-gua\-ges}
+\label{kap4-1}
+%
+%
+%
+The introduction of the Chomsky hierarchy has sparked off a lot of
+research into the complexity of formal and natural languages.
+Chomsky's own 
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+position was that language was not even of Type 1.
+In transformational grammar, heavy use of context sensitivity and
+deletion has been made. However, Chomsky insisted that these
+grammars were not actually models of performance, neither of
+sentence production nor of analysis; they were just models of
+competence. They were theories of language or of languages,
+couched in algorithmic terms. In the next chapter we shall study a
+different type of theory, based on axiomatic descriptions of
+structures. Here we shall remain with the algorithmic approach. If
+Chomsky is right, the complexity of the generated languages is
+only of peripheral interest and, moreover, cannot even be
+established by looking at the strings of the language. Thus, 
+if observable language data can be brought to bear on the 
+question of the `language faculty', we actually need to have 
+%%
+\begin{dinglist}{43}
+\item
+a theory of the human language(s),
+\item
+a theory of human sentence production, and
+\item
+a theory of human sentence analysis (and understanding).
+\end{dinglist}
+%%
+Namely, the reason that a language may fail to show its complexity 
+in speech or writing is that humans simply are unable to produce
+the more complex sentences, even though given enough further 
+means they would be able to produce any of them. The same
+goes for analysis. Certain sentences might be avoided not
+because they are illegitimate but because they are misleading
+or too difficult to understand. An analogy that might help is
+the notion of a programming language. A computer is thought to be 
+able to understand every program of a given computer language if 
+it has been endowed with an understanding of the syntactic primitives 
+and knows how to translate them into executable routines. Yet, some 
+programs may simply be too large for the computer to be translated 
+let alone executed. This may be remedied by giving it more memory
+(to store the program) or a bigger processing unit (to be able
+to execute it). None of the upgrading operations, however, seem
+to touch on the basic ability of the computer to understand the
+language: the translation or compilation program usually remains
+the same. Some people have advanced the thesis that certain
+monkeys possess the symbolic skills of humans but since they
+cannot handle recursion, so that their ability to use language is
+restricted to single clauses consisting of single word 
+phrases (see for example \cite{haider:exaptiv} and 
+\cite{haider:generativ}, Pages 8 -- 12).
+
+One should be aware of the fact that the average complexity of 
+spoken language is linear (= $O(n)$) for humans. We understand 
+sentences as they are uttered, and typically we seem to be able 
+to follow the structure and message word by word. To conclude that 
+therefore human languages must be regular is premature. For one 
+thing, we might just get to hear the easy sentences because they 
+are also easy to generate: it is humans who talk to humans. Additionally, 
+it is not known what processing device the human brain is. Suppose 
+that it is a finite state automaton. Then the conclusion is 
+certainly true. However, if it is a pushdown automaton, the language 
+can be deterministically context free. More complex devices can be 
+imagined giving rise to even larger classes of languages that can 
+be parsed in linear time. This is so since it is not clear that what 
+is one step for the human brain also is one step for, say, a Turing 
+machine. It is known that the human brain works with massive use of 
+parallelism, for example.
+
+Therefore, the problem with the line of approach advocated by
+Chomsky is that we do not possess a reliable theory of human
+sentence processing let alone of sentence production (see
+\cite{levelt:speaking} for an overview of the latter).
+Without them, however, it is impossible to assess the
+correctness of any proposed theory of grammar. Many people have
+therefore ignored this division of labour into three faculties
+(however reasonable that may appear) and tried to assess the
+complexity of the language as we see it. Thus let us ask once
+more:
+%%
+\begin{quote}
+How complex is human language (are human languages)?
+\end{quote}
+%%
+While the Chomsky hierarchy has suggested measuring complexity in
+terms of properties of rules, it is not without interest to try to
+capture its complexity in terms of resources (time and space
+complexity). The best approximation that we can so far give is this. 
+%%
+\begin{quote}
+Human languages are in \textbf{PTIME}.
+\end{quote}
+%%
+In computer science, \textbf{PTIME} problems are also called `tractable',
+since the time consumption grows slowly. On the other hand,
+\textbf{EXPTIME} problems are called `intractable'. Their time
+consumption grows too fast. In between the two lie the classes
+\textbf{NPTIME} and \textbf{PSPACE}. Still today it is not known whether
+or not \textbf{NPTIME} is contained in (and hence equal to) \textbf{PTIME}.
+Problems which are \textbf{NPTIME}--complete usually do possess algorithms 
+that run (deterministically) in polynomial time --- on the average.
+
+Specifically, Aravind Joshi 
+%%%
+\index{Joshi, Aravind}%%%
+%%%
+has advanced the claim that languages 
+are what he calls `mildly context sensitive' (see \cite{joshi-1985}). 
+Mildly context sensitive languages are characterized as follows.
+%%%
+\begin{defn}
+%%%
+\index{constant growth property}%%
+%%%
+$L \subseteq A^{\ast}$ has the \textbf{constant growth property} 
+if it is finite or there is a number $c_L$ such that for every 
+$\vec{x}\in L$ there is a $\vec{y}\in L$ such that 
+$|\vec{x}| < |\vec{y}| \leq |\vec{x}| + c_L$. 
+\end{defn}
+%%
+\begin{dingautolist}{192}
+\item Every context free language is mildly context sensitive.
+    There are mildly context sensitive languages which are
+    not context free.
+\item Mildly context sensitive languages can be recognized in
+    deterministic polynomial time.
+\item There is only a finite number of crossed dependency types.
+\item Mildly context sensitive languages have the constant
+    growth property. 
+\end{dingautolist}
+%%
+These conditions are not very strong except for the second.
+It implies that the mildly context sensitive languages
+form a proper subset of the context sensitive languages.
+\ding{192} needs no comment. \ding{195} is quite weak.
+Moreover, it seems that for every natural language there is a 
+number $d_L$ such that for every $n \geq d_L$ there is a string 
+of length $n$ in $L$. Rambow~\shortcite{rambow:formal} 
+%%%
+\index{Rambow, Owen}%%%
+%%%
+proposes to replace it with the requirement of semilinearity, but 
+that seems to be too strong (see Michaelis and 
+Kracht~\shortcite{michaeliskracht:semilinearity}).
+%%%
+\index{Michaelis, Jens}%%
+\index{Kracht, Marcus}%%%
+%%%
+Also \ding{194} is problematic. What exactly is a crossed dependency 
+type? In this chapter we shall study grammars in which the notion 
+of structure can be defined as with context free languages. 
+Constituents are certain subsets of disjoint (occurrences of) 
+subwords. If this definition is accepted, \ding{194} can be 
+interpreted as follows: there is a number $n$ such that a given 
+constituent has no more than $n$ parts. This is certainly not what Joshi 
+%%%
+\index{Joshi, Aravind}%%%
+%%%
+had in mind when formulating his conditions, but it is certainly not 
+easy to come up with a definition that is better than this one and
+as clear.
+
+So, the conditions are problematic with the exception of \ding{193}.
+Notice that \ding{193} implies \ding{192}, and, as we shall see, also 
+\ding{194} (if only weak equivalence counts here). \ding{195}
+shall be dropped. In order not to create confusion we shall call a 
+language a \textbf{PTIME language} 
+%%%%
+\index{language!PTIME}%%
+%%%%
+if it has a deterministic polynomial time recognition algorithm (see 
+Definition~\ref{defn:complang}).
+In general, we shall also say that a function
+$f \colon A^{\ast} \pf B^{\ast}$ is in \textbf{PTIME} if there is a
+deterministic Turing machine which computes that function.
+Almost all languages that we have considered so far are
+\textbf{PTIME} languages. This shall emerge from the theorems
+that we shall prove further below.
+%%%
+\begin{prop}
+Every context free language is in \textbf{PTIME}.
+\end{prop}
+%%
+This is a direct consequence of Theorem~\ref{thm:cky}.
+However, we get more than this.
+%%
+\begin{prop}
+\label{prop:schnitt}
+Let $A$ be a finite alphabet and $L_1$, $L_2$ languages
+over $A$. If $L_1, L_2 \in$ \textbf{PTIME} then so is
+$A^{\ast} - L_1$, $L_1 \cap L_2$ and $L_1 \cup L_2$.
+\end{prop}
+%%
+The proof of this theorem is very simple and left as an
+exercise. So we get that the intersection of CFLs,
+for example $\{\mbox{\tt a}^n \mbox{\tt b}^n \mbox{\tt c}^n :
+n \in \omega\}$, are \textbf{PTIME} languages. Condition \ding{193} 
+for mildly context sensitive languages is satisfied by the class
+of {\bf PTIME} languages. Further, we shall show that the
+full preimage of a \textbf{PTIME} language under the Parikh--map
+is again a \textbf{PTIME} language. To this end we shall
+identify $M(A)$ with the set of all strings of the form
+$\prod_{i < n} \mbox{\tt a}_i^{p_i}$.  The Parikh--map is
+identified with the function $\pi \colon A^{\ast} \pf A^{\ast}$,
+which assigns to a string $\vec{x}$ the string
+$\mbox{\tt a}_0^{p_0} \conc \mbox{\tt a}_1^{p_1} \conc
+\dotsb \conc \mbox{\tt a}_{n-1}^{p_{n-1}}$, where
+$p_j$ is the number of occurrences of $\mbox{\tt a}_j$ in
+$\vec{x}$. Now take an arbitrary polynomial time computable
+function $g \colon A^{\ast} \pf 2$. Clearly, $g \restriction 
+M(A)$ is also in {\bf PTIME}. The preimage of $1$ under this 
+function is contained in the image of $\pi$. $g^{-1}(1) 
+\cap M(A)$ can be thought of in a natural way as a subset of 
+$M(A)$.
+%%
+\begin{thm}
+\label{thm:semi}
+Let $L \subseteq M(A)$ be in \textbf{PTIME}. Then $\pi^{-1}[L]$, 
+the full preimage of $L$ under $\pi$, also is in \textbf{PTIME}. If
+$L$ is semilinear, $\pi^{-1}[L]$ is in \textbf{PTIME}.
+\end{thm}
+%%
+The reader is warned that there nevertheless are semilinear languages
+which are not in {\bf PTIME}. For {\bf PTIME} is countable, but
+there are uncountably many semilinear languages (see
+Exercise~\ref{ex:semilincont}). Theorem~\ref{thm:semi} follows 
+directly from
+%%
+\begin{thm}
+Let $f \colon B^{\ast} \pf A^{\ast}$ be in \textbf{PTIME} and
+$L \subseteq A^{\ast}$ in \textbf{PTIME}. Then
+$M := f^{-1}[L]$ also is in \textbf{PTIME}.
+\end{thm}
+%%
+\proofbeg
+By definition $\chi_L \in \mbox{\bf PTIME}$. Then
+$\chi_M = \chi_L \circ f \in \mbox{\bf PTIME}$. This is
+the characteristic function of $M$.
+\proofend
+
+Another requirement for mildly context sensitive languages
+was the constant growth property. We leave it to the reader 
+to show that every semilinear language has the constant growth 
+property but that there are languages which have the constant 
+growth property without being semilinear.
+
+We have introduced the Polish Notation for terms in
+Section~\ref{kap1}.\ref{einseins}. Here we shall introduce a somewhat
+exotic method for writing down terms, which has been motivated
+by the study of certain Australian languages (see \cite{ebertkracht}). 
+Let $\auf F, \Omega\zu$ be a finite signature. Further, let 
+%%%
+\index{$\Omega_{\intercal}$}%%
+%%%
+\begin{equation}
+\Omega_{\intercal} := \max \{\Omega(f) : f \in F\}
+\end{equation}
+%%%
+Inductively, we assign to every term $t$ a set 
+$M(t) \subseteq (F \cup \{\mbox{\tt 0},
+\mbox{\tt 1},\dotsc,\Omega_{\intercal} - 1\})^{\ast}$:
+%%
+\begin{dingautolist}{192}
+\item If $t = f$ with $\Omega(f) = 0$ then put $M(f) := \{f\}$.
+\item If $t = f(s_0, \dotsc, s_{\Omega(f)-1})$ then put
+%%
+    \begin{equation*}
+     M(t) := \{f\} \cup \bigcup_{i < \Omega(f)}
+        \{\vec{x}\conc i : \vec{x} \in M(s_i)\}
+    \end{equation*}
+\end{dingautolist}
+%%
+An element of $M(t)$ is a product $f \conc \vec{y}$,
+where $f \in F$ and $\vec{y}\in \Omega_{\intercal}^{\ast}$. We call
+$f$ the {\bf main symbol} and $\vec{y}$ its {\bf key}.
+%%%
+\index{key}%%
+\index{A--form}%%
+%%%
+We choose a new symbol, {\tt \#}. 
+Now we say that $\vec{y}$ is an {\bf A--form} of $t$ if $\vec{y}$
+is the product of the elements of $M(t)$ in an arbitrarily chosen
+(nonrepeating) sequence, separated by {\tt \#}. For example, 
+let $t := \mbox{\tt (((x+a)-y)+(z-c))}$. Then
+%%
+\begin{equation}
+M(t) = \{\mbox{\tt +}, \mbox{\tt -0}, \mbox{\tt -1},
+\mbox{\tt +00}, \mbox{\tt x000}, \mbox{\tt a001},
+\mbox{\tt y01}, \mbox{\tt z10}, \mbox{\tt c11}\}
+\end{equation}
+%%
+Hence the following string is an A--form of $t$:
+%%
+\begin{equation}
+\mbox{\tt c11\#z10\#+00\#-0\#-1\#y01\#x000\#a001\#+}
+\end{equation}
+%%
+\begin{thm}
+Let $\auf F, \Omega\zu$ be a finite signature and
+$L$ the language of A--forms of terms of this signature.
+Then $L$ is in \textbf{PTIME}.
+\end{thm}
+%%
+\proofbeg 
+For each A--form $\vec{x}$ there is a unique term $t$ such that 
+$\vec{x}$ is the A--form of $t$, and there is a method to calculate 
+$M(t)$ on the basis of $\vec{x}$. One simply has to segment $\vec{x}$ into 
+correctly formed parts. These parts are maximal sequences consisting 
+of a main symbol and a key, which we shall now simply call {\bf stalks}. 
+The segmentation into stalks is unique. We store $\vec{x}$ on a read and 
+write tape $\tau_i$. Now we begin the construction of $t$. $t$ will be 
+given in Polish Notation. $t$ will be constructed on Tape $\tau_o$ in 
+left--to--right order. We will keep track of the unfinished function 
+symbols Tape on $\tau_s$. We search through the keys (members of 
+$\Omega_{\intercal}^{\ast}$) in lexicographic order. On a separate tape, 
+$\tau_k$, we keep note of the current key. 
+%%%
+\begin{dingautolist}{192}
+\item $\tau_s := \varepsilon$, $\tau_k := \varepsilon$, $\tau_o := 
+	\varepsilon$.
+\item Match $\tau_i = \vec{y}\mbox{\tt \#}f\conc \tau_k\mbox{\tt 
+\#}\vec{z}$. If match succeeds, put $\tau_i := 
+	\vec{y}\mbox{\tt \#}\vec{z}$, $\tau_s := \tau_s \conc f$, 
+	$\tau_o := \tau_o\conc f$. Else exit: `String is not an 
+	A--form.'
+\item Let $g$ be the last symbol of $\tau_s$, $n$ the last symbol of 
+	$\tau_k$. 
+\begin{itemize}
+	\item
+	If $n = \Omega(g) - 1$, $\tau_s := \tau_s/g$, $\tau_k := 
+	(\tau_k/n)$. 
+\item Else
+	$\tau_s := \tau_s$, $\tau_k := (\tau_k/n)\conc (n+1)$. 
+\end{itemize}
+\item If $\tau_k = \tau_s = \varepsilon$, go to \ding{196} else 
+	go to \ding{193}.
+\item If $\tau_i = \varepsilon$ exit: `String is an A--form.' 
+	Else exit: `String is not an A--form.'
+\end{dingautolist}
+%%%
+It is left to the reader to check that this algorithm does what it 
+is supposed to do. Polynomial runtime is obvious. 
+\proofend
+
+Ebert and Kracht~\shortcite{ebertkracht} 
+%%%
+\index{Ebert, Christian}%%%
+\index{Kracht, Marcus}%%%
+%%%
+show that this algorithm requires $O(n^{3/2} \log n)$ time to 
+compute.  Now we shall start the proof of an important 
+theorem on the characterization of \textbf{PTIME} languages. An 
+important step is a theorem by Chandra, Kozen and Stockmeyer
+%%%
+\index{Chandra, A.~K.}%%
+\index{Stockmeyer, L.~J.}%%%
+\index{Kozen, Dexter C.}%%%
+%%%%
+\shortcite{chandraetal:alternation}, which characterizes the class
+\textbf{PTIME} in terms of space requirement. It uses 
+special machines, which look almost like Turing machines
+but have a special way of handling parallelism. Before we can
+%%%
+\index{Turing machine!logarithmically space bounded}%%
+%%
+do that, we introduce yet another class of functions. We say that a
+function $f \colon A^{\ast} \pf B^{\ast}$ is in \textbf{LOGSPACE} if
+%%%
+\index{\textbf{LOGSPACE}}%%%
+%%%
+it can be computed by a so called deterministic logarithmically
+bounded Turing machine. Here, a Turing machine is called
+\textbf{logarithmically space bounded} if it has $k + 2$ tapes (where
+$k$ may be $0$) such that the length of the tapes
+number 1 through $k$ is bounded by $\log_2 |\vec{x}|$.
+Tape 0 serves as the input tape, Tape $k+1$ as the output tape.
+Tape 0 is read only, Tape $k+1$ is write only. At the end of the
+computation, $T$ has to have written $f(\vec{x})$ onto that tape.
+(Actually, a moment's reflection shows that we may assume that the
+length of the intermediate tapes is bounded by $c \log_2 |\vec{x}|$, 
+for some $c > 0$, cf. also Theorem~\ref{thm:speedup}.) This means 
+that if $\vec{x}$ has length 12 the tapes $2$ to $k + 1$ have length 
+$3$ since $3 < \log_2 12 < 4$. It need not concern us further why 
+this restriction makes sense.  We shall see in 
+Section~\ref{kap4}.\ref{kap4-2} that it is well--motivated. We 
+emphasize that $f(\vec{x})$ can be arbitrarily large. It is
+not restricted at all in its length, although we shall see later
+that the machine cannot compute outputs that are too long
+anyway. The reader may reflect on the fact that we may require
+the machine to use the last tape only in this way: it moves
+strictly to the right without ever looking at the previous cells
+again. Further, we can see to it that the intermediate tapes
+only contain single binary numbers.
+%%
+\begin{defn}
+Let $A^{\ast}$ be a finite alphabet and $L \subseteq
+A^{\ast}$. We say that $L$ is in \textbf{LOGSPACE} if
+$\chi_L$ is deterministically \textbf{LOGSPACE}--computable.
+\end{defn}
+%%
+\begin{thm}
+Let $f \colon A^{\ast} \pf B^{\ast}$ be \textbf{LOGSPACE}--computable.
+Then $f$ is in \textbf{PTIME}.
+\end{thm}
+%%%
+\proofbeg
+We look at the configurations of the machine (see 
+Definition~\ref{defn:configuration}). A configuration
+is defined with the exception of the output tape. It consists
+of the positions of the read head of the first tape and the
+content of the intermediate tapes plus the position of the
+read/write heads of the intermediate tapes. Thus the configurations
+are $k$--tuples of binary numbers of length $\leq c \log_2 |\vec{x}|$, 
+for some $c$. A position on a string likewise corresponds to a binary 
+number. So we have $k+1$ binary numbers and there are at most
+%%
+\begin{equation}
+2^{(k+1)c \log_2 |\vec{x}|} = |\vec{x}|^{c(k+1)}
+\end{equation}
+%%
+of them. So the machine can calculate at most $|\vec{x}|^{c(k+1)}$
+steps. For if there are more the machine is caught in a loop, and
+the computation does not terminate. Since this was excluded,
+there can be at most polynomially many steps.
+\proofend
+
+Since $f$ is polynomially computable we immediately get that
+$|f(\vec{x})|$ is likewise polynomially bounded.  This shows
+that a space bound implies a time bound.  (In general, if $f(n)$
+is the space bound then $c^{f(n)}$ is the corresponding time bound 
+for a certain $c$.)
+
+We have found a subclass of \textbf{PTIME} which is defined by its space 
+consumption. Unfortunately, these classes cannot be shown to be equal. 
+(It has not been disproved but is deeemed unlikely that they are equal.) 
+We have to do much more work. For now, however, we remark the following.
+%%
+\begin{thm}
+Suppose that $f \colon A^{\ast} \pf B^{\ast}$ and
+$g \colon B^{\ast} \pf C^{\ast}$ are \textbf{LOGSPACE} computable.
+Then so is $g \circ f$.
+\end{thm}
+%%
+\proofbeg
+By assumption there is a logarithmically space bounded
+deterministic $k+2$--tape machine $T$ which computes $f$ and a
+logarithmically space bounded deterministic $\ell + 2$--tape
+machine $U$ which computes $g$. We cascade these machines in
+the following way. We use $k + \ell + 3$ tapes, of which the
+first $k+2$ are the tapes of $T$ and the last $\ell +2$ the
+tapes of $U$. We use Tape $k + 1$ both as the output tape of 
+$T$ and as the input tape of $U$. The resulting machine is 
+deterministic but not necessarily logarithmically space bounded. 
+The problem is Tape $k+1$. However, we shall now demonstrate that 
+this tape is not needed at all. For notice that $T$ cannot but move 
+forward on this tape and write on it, while $U$ on the other hand 
+can only progress to read the input. Now rather than having Tape $k$ 
+ready, it would be enough for $U$ if it can access the symbol number $i$ on 
+the output tape of $T$ on request. Clearly, as $T$ can compute that 
+symbol, $U$ only needs to communicate the request to $T$ by issuing 
+$i$ in binary. (This takes only logarithmic space. For we have 
+$|f(\vec{x})| \leq p(|\vec{x}|)$ for some polynomial $p$
+for the length of the output computed by $T$, so we have
+$\log_2 |f(\vec{x})| \leq \lambda \log_2 |\vec{x}|$ for some
+natural number $\lambda$.) The proof follows once we make this 
+observation: there is a machine $T'$ that computes the $i$th 
+symbol of the output tape of $T$, given the input for $T$ input 
+and $i$, using only logarithmic space. The rest is simple: everytime 
+$U$ needs a symbol, it calls $T'$ issuing $i$ in binary. The global 
+input $T'$ reads from $U$'s input tape.
+\proofend
+
+This proof is the key to all following proofs. We shall now show
+that there is a certain class of problems which are, as one says,
+{\it complete\/} with respect to the class {\bf PTIME} modulo {\bf
+LOGSPACE}--reductions. 
+
+An $n$--\textbf{ary boolean function} 
+%%%
+\index{boolean function}%%%
+%%%
+is an arbitrary function
+$f \colon 2^n \pf 2$. Every such function is contained in the
+polynomial clone of functions generated by the functions $\cup$,
+$\cap$ and $-$ (see Exercise~\ref{exercise:basis}). We shall now 
+assume that $f$ is composed from projections using the functions 
+$\cap$, $\cup$, and $-$. For example, let 
+$f(x_0, x_1, x_2) := - (- x_2 \cap (x_1 \cup x_0))$.
+Now for the variables $x_0$, $x_1$ and $x_2$ we insert concrete
+values (either 0 or 1). Which value does $f$ have? This problem 
+can clearly be solved in {\bf PTIME}. However, the formulation of 
+the problem is a delicate affair. Namely, we want to think of 
+$f$ not as a string, but as a network. (The difference is that 
+in a network every subterm needs to be represented only once.)
+To write down networks, we shall have to develop a more elaborate 
+coding. Networks are strings over the alphabet 
+$W := \{\mbox{\mtt (}, \mbox{\mtt )}, \mbox{\mtt ,},
+\mbox{\mtt 0}, \mbox{\mtt 1}, \mbox{\mtt a}, \mbox{\mtt b},
+\mbox{\mtt\symbol{4}}, \mbox{\mtt\symbol{31}}, \mbox{\mtt\symbol{5}}\}$. 
+%%%
+\index{cell}%%
+%%%
+A {\bf cell} is a string of the form
+{\mtt ($\vec{\alpha}$,$\vec{\varepsilon}$,$\vec{\eta}$,\symbol{31})},
+{\mtt ($\vec{\alpha}$,$\vec{\varepsilon}$,$\vec{\eta}$,\symbol{4})},
+or of the form {\mtt ($\vec{\alpha}$,$\vec{\varepsilon}$,\symbol{5})},
+where $\vec{\alpha}$ is a binary sequence --- written in the alphabet
+$\{\mbox{\tt a}, \mbox{\tt b}\}$ ---, and
+$\vec{\varepsilon}, \vec{\eta}$ either are binary strings
+(written down using the letters {\tt a} and {\tt b} in place
+of {\tt 0} and {\tt 1}) or a single symbol of the form {\tt 0}
+or {\tt 1}. $\vec{\alpha}$ is called the \textbf{number} 
+%%%
+\index{number}
+%%%
+of the cell and $\vec{\varepsilon}$ and $\vec{\eta}$ the 
+\textbf{argument key},
+%%%
+\index{argument key}%%%
+%%%
+unless it is of the form {\tt 0} or {\tt 1}.  Further, we assume
+that the number represented by $\vec{\varepsilon}$ and $\vec{\eta}$
+is smaller than the number represented by $\vec{\alpha}$. (This
+makes sure that there are no cycles.) A sequence of cells is called 
+a \textbf{network} 
+%%%
+\index{network}%%%
+%%%
+if (a) there are no two cells with identical number,
+(b) the numbers of cells are the numbers from 1 to a
+certain number $\nu$, and (c) for every cell with
+argument key $\vec{\varepsilon}$ (or $\vec{\eta}$) there
+is a cell with number $\vec{\varepsilon}$ ($\vec{\eta}$).
+The cell with the highest number is called the \textbf{goal}
+%%%
+\index{network!goal}%%
+%%%
+of the network. Intuitively, a network defines a boolean
+function into which some constant values are inserted for
+the variables. This function shall be evaluated.
+With the cell number $\vec{\alpha}$ we associate 
+a value $w_{\vec{x}}(\vec{\alpha})$ as follows.
+%%
+\begin{equation}
+w_{\vec{x}}(\vec{\alpha}) := 
+%%
+\begin{cases}
+w_{\vec{x}}(\vec{\varepsilon}) \cup w_{\vec{x}}(\vec{\eta}) &
+\text{ if $\vec{x}$ contains 
+{\mtt ($\vec{\alpha}$,$\vec{\varepsilon}$,$\vec{\eta}$,\symbol{31})},} \\
+%%
+w_{\vec{x}}(\vec{\varepsilon}) \cap w_{\vec{x}}(\vec{\eta}) &
+\text{ if $\vec{x}$ contains 
+{\mtt ($\vec{\alpha}$,$\vec{\varepsilon}$,$\vec{\eta}$,\symbol{4})},} \\
+%%
+- w_{\vec{x}}(\vec{\varepsilon}) &
+\text{ if $\vec{x}$ contains 
+{\mtt ($\vec{\alpha}$,$\vec{\varepsilon}$,\symbol{5})}.}
+\end{cases}
+%%
+\end{equation}
+%%
+We write $w(\vec{\alpha})$ in place of $w_{\vec{x}}(\vec{\alpha})$.
+%%%
+\index{$w(\vec{x})$}%%
+%%%
+The value of the network is the value of its goal (incidentally
+the cell with number $\nu$). Let $\xi \colon W^{\ast} \pf \{0,1,\star\}$
+%%%
+\index{$\xi(\vec{x})$}%%%
+%%%
+be the following function. $\xi(\vec{x}) := \star$ if $\vec{x}$ is
+not a network. Otherwise, $\xi(\vec{x})$ is the value of $\vec{x}$.
+We wish to define a machine calculating $\xi$. 
+We give an example. We want to evaluate 
+$f(x_0, x_1, x_2) = - (- x_2 \cap (x_1 \cup x_0))$
+for $x_0 := 0$, $x_1 := 1$ and $x_2 := 0$. Then we write down
+the following network:
+%%%
+\begin{equation}
+\mbox{\mtt (a,0,\symbol{5})(b,1,0,\symbol{31})(ba,a,b,\symbol{4}%
+)(bb,ba,\symbol{5})}
+\end{equation}
+%%%
+Now $w(\mbox{\mtt a}) = - 0 = 1$, $w(\mbox{\mtt b}) =
+1 \cup 0 = 1$, $w(\mbox{\mtt ba}) = w(\mbox{\mtt a}) \cap
+w(\mbox{\mtt b}) = 1 \cap 1 = 1$, and
+$v(\vec{x}) = w(\mbox{\mtt bb}) = - w(\mbox{\mtt ba}) =
+- 1 = 0$.
+%%
+\begin{lem}
+The set of all networks is in \textbf{LOGSPACE}.
+\end{lem}
+%%
+\proofbeg
+The verification is a somewhat longwinded matter but not difficult
+to do. To this end we shall have to run over the string several times
+in order to check the different criteria. The first condition is that 
+no two cells have the same number. To check that we need the following: 
+for every two positions $i$ and $j$ that begin a number, if $i \neq j$, 
+then the numbers that start there are different. To compare the numbers 
+means to compare the strings starting at these positions.  (To do that 
+requires to memorize only one symbol at a time, running back and forth
+between the strings.) This requires memorizing two further positions. 
+However, a position takes only logarithmic space. 
+\proofend
+%%
+\begin{thm}
+$\xi$ is in \textbf{PTIME}.
+\end{thm}
+%%
+\proofbeg
+Let $\vec{x}$ be given. First we compute whether $\vec{x}$ is a
+network. This computation is in \textbf{PTIME}. If $\vec{x}$ is not a network,
+output $\star$. If it is, we do the following. Moving up with the
+number $k$ we compute the value of the cell number $k$. For each
+cell we have to memorize its value on a separate tape, storing
+pairs $(\vec{\alpha}, w(\vec{\alpha}))$ consisting of the name
+and the value of that cell. This can also be done in polynomial time.
+Once we have reached the cell with the highest number we are done.
+\proofend
+
+It is not known whether the value of a network can be calculated 
+in \textbf{LOG\-SPACE}. The problem is that we may not be able
+to bound the number of intermediate values. Now the following holds.
+%%
+\begin{thm}
+Let $f \colon A^{\ast} \pf \{\mbox{\mtt 0},\mbox{\mtt 1}\}$ be in
+\textbf{PTIME}. Then there exists a function $N \colon A^{\ast} \pf W^{\ast}$
+in \textbf{LOGSPACE} such that for every $\vec{x} \in
+A^{\ast}$ $N(\vec{x})$ is a network and $f(\vec{x}) =
+(\xi \circ N)(\vec{x})$.
+\end{thm}
+%%
+\proofbeg
+First we construct a network and then show that it is in
+\textbf{LOGSPACE}. By assumption there exist numbers $k$ and $c$
+such that $f(\vec{x})$ is computable in $\rho := c \cdot
+|\vec{x}|^k$ time using a deterministic Turing machine $T$.
+We define a construction algorithm for a sequence $\CC(\vec{x})
+:= (C(i,j))_{i,j}$, where $0 \leq i, j \leq c \cdot |\vec{x}|^k$. 
+$\CC(\vec{x})$ is ordered in the following way:
+%%
+\begin{align}\notag
+& C(0,0), C(0,1), C(0,2), \dotsc, \\
+& C(1,0), C(1,1), C(1,2), \dotsc, \\\notag
+& C(2,0), C(2,1), C(2,2), \dotsc
+\end{align}
+%%
+$C(i,j)$ contains the following
+information: (a) the content of the $j$th cell of the tape
+of $T$ at time point $i$, (b) information, whether the read
+head is on that cell at time point $i$, (c) if the read head
+is on this cell at $i$ also the state of the automaton. This
+information needs bounded length. Call the bound $\lambda$.
+We denote by $C(i,j,k)$, $k < \lambda$, the $k$th binary digit 
+of $C(i,j)$. $C(i+1,j)$ depends only on $C(i,j-1)$, $C(i,j)$ 
+and $C(i,j+1)$. ($T$ is deterministic. Moreover, we assumed that 
+$T$ works on a tape that is bounded to the left. See 
+Exercise~\ref{ex:oneside} that this is no loss of generality.)
+$C(0,j)$ are determined by $\vec{x}$ alone.  (A) We have 
+$C(i+1,j) = C(i,j)$ if either (A1) at $i$ the head is not at
+$j-1$ or else did not move right, or (A2) at $i$ the head is not at
+$j+1$ or else did not move left; (B) $C(i+1,j)$ can be computed
+from (B1) $C(i,j-1)$ if the head was at $i$ positioned at $j$
+and moved right, (B2) $C(i,j)$ if the head was at $i$ positioned
+at $j$ and did not move, (B3) $C(i,j+1)$ if the head at $i$ was
+positioned at $j+1$ and moved left. Hence, for every $k < \lambda$
+there exist boolean functions $f^k_L$, $f^k_M$ and $f^k_R$ such that
+$f^k_L, f^k_R \colon \{0,1\}^{2\lambda} \pf \{0,1\}^{\lambda}$,
+$f^k_M \colon \{0,1\}^{3\lambda} \pf \{0,1\}^{\lambda}$, and
+%%
+\begin{align}
+\notag
+C(i+1,0,k) & = f_L(C(i,0), C(i,1)) \\
+C(i+1,j,k) & = f_M(C(i,j-1), C(i,j), C(i,j+1)) \\
+\notag
+C(i+1,\rho,k) & = f_R(C(i,\rho-1), C(i,\rho))
+\end{align}
+%%
+These functions can be computed from $T$ in
+time independent of $\vec{x}$. Moreover, we can compute
+sequences of cells that represent these functions. Basically,
+the network we have to construct results in replacing for every
+$i > 0$ and appropriate $j$ the cell $C(i,j)$ by a sequence of
+cells calling on appropriate other cells to give the value $C(i,j)$.
+This sequence is obtained by adding a fixed number to each argument
+key of the cells of the sequence computing the boolean functions.
+
+Now let $\vec{x}$ be given. We compute a sequence of cells
+$\gamma(i,j)$ corresponding to $C(i,j)$. The row $\gamma(0,j)$
+is empty. Then ascending in $i$, the rows $\gamma(i,j)$ are
+computed and written on the output tape. If row $i$ is
+computed, the following numbers are computed and remembered:
+the length of the $i$th row, the position of the read head at
+$i+1$ and the number of the first cell of $\gamma(i,j')$,
+where $j'$ is the position of the read head at $i$. Now the
+machine writes down $C(i+1,j)$ with ascending $j$. This is done
+as follows. If $j$ is not the position of the read head at $i+1$,
+the sequence is a sequence of cells that repeats the value of the
+cells of $\gamma(i,j)$. So, $\gamma(j+1,i,k)
+= \mbox{\mtt ($\vec{\alpha}$,$\vec{\varepsilon}$,1,\symbol{4})}$
+for $\vec{\alpha}$ the number of the actual cell and
+$\vec{\varepsilon}$ is $\vec{\alpha}$ minus some appropriate
+number, which is computed from the length of the $i$th row
+the length of the sequence $\gamma(i,j')$ and the length of
+the sequence $\gamma(i+1,j)$. If $j$ is the position of the
+read head, we have to insert more material, but basically
+it is a sequence shifted by some number, as discussed above. The 
+number by which we shift can be computed in \textbf{LOGSPACE} 
+from the numbers which we have remembered. Obviously, it can be 
+decided on the basis of this computation when the machine $T$ 
+terminates on $\vec{x}$ and therefore when to stop the sequence. 
+The last entry is the goal of the network.
+\proofend
+
+One also says that the problem of calculating the value of a 
+network is complete with respect to the class \textbf{PTIME}.
+A network is \textbf{monotone} 
+%%%
+\index{network!monotone}%%
+%%%
+if it does not contain the symbol {\mtt\symbol{5}}.
+%%
+\begin{thm}
+There exists a \textbf{LOGSPACE}--computable function $M$
+which transforms an arbitrary network into a monotone
+network with identical value.
+\end{thm}
+%%
+The proof is longwinded but rather straightforward, so we shall
+only sketch it. Call $g : 2^n \pf 2$ \textbf{monotone} 
+%%%
+\index{boolean function!monotone}%%%
+%%%
+if for every $\vec{x}$ and $\vec{y}$ such that $x_i \leq y_i$ for all 
+$i < n$, $g(\vec{x}) \leq g(\vec{y})$. (We write 
+$\vec{x} \leq \vec{y}$ if $x_i \leq y_i$ for all $i < n$.)
+%%%
+\begin{lem}
+\label{lem:monotone}
+Let $f$ be an $n$--ary boolean function. Then there exists a 
+$2n$--ary boolean function $g$ which is monotone such that 
+%%%
+\begin{equation}
+f(\vec{x}) = g(x_0, - x_0, x_1, - x_1, \dotsc, x_{n-1}, -x_{n-1})
+\end{equation}
+%%%
+\end{lem}
+%%%
+\begin{thm}
+Every monotone boolean function is a polynomial function over 
+$\cap$ and $\cup$.
+\end{thm}
+%%%
+\proofbeg
+One direction is easy. $\cap$ and $\cup$ is monotone, and 
+every composition of monotone functions is again monotone. 
+For the other direction, let $f$ be monotone. Let $M$ be 
+the set of minimal vectors $\vec{x}$ such that $f(\vec{x}) = 1$.
+For every vector $\vec{x}$, put $p(\vec{x}) := 
+\bigcap_{x_i = 1} x_i$. (If $\vec{x} = 0\dotsc 0$, then 
+$p(\vec{x}) := \mbox{\mtt 1}$.) Finally, put 
+%%%
+\begin{equation}
+\rho_M := \bigcup_{\vec{x} \in M} p(\vec{x})
+\end{equation}
+%%%
+If $M = \varnothing$, put $\rho_f := \mbox{\mtt 0}$. It is easily 
+seen that $f(\vec{x}) = \rho_f(\vec{x})$ for all $\vec{x} \in 2^n$.
+\proofend
+
+What is essential (and left for the reader to show) is that 
+the map $f \mapsto g$ translates into a \textbf{LOGSPACE} 
+computable map on networks. So, if $g$ is an arbitrary 
+\textbf{PTIME}--computable function from $A^{\ast}$ to $\{0,1\}$, 
+there exists a \textbf{LOGSPACE}--computable function $N^+$
+constructing monotone networks such that $g(\vec{x}) = 
+(\xi \circ N^+)(\vec{x})$ for all $\vec{x} \in A^{\ast}$.
+
+Now we shall turn to the promised new type of machines.
+%%
+\begin{defn}
+An \textbf{alternating Turing machine}
+%%%
+\index{Turing machine!alternating}%%
+%%%
+is a sextuple
+%%
+\begin{equation}
+\auf A, \mbox{\tt L}, Q, q_0, f, \gamma\zu
+\end{equation}
+%%
+where $\auf A, \mbox{\tt L}, Q, q_0, f\zu$ is a Turing machine
+and $\gamma \colon Q \pf \{\und, \oder\}$ an arbitrary function.
+A state $q$ is called \textbf{universal} if $\gamma(q) = \und$, and
+otherwise \textbf{existential}.
+%%
+\end{defn}
+%%
+We tacitly generalize the concepts of Turing machines to the
+alternating Turing machines (for example an {\it alternating
+$k$--tape Turing machine}, and a {\it logarithmically space bounded
+alternative Turing machine\/}). To this end one has to add the
+function $\gamma$ in the definitions. Now we have to define
+when a Turing machine accepts an input $\vec{x}$. This is done
+via configurations. A configuration is said to be
+\textbf{accepted} by $T$  if one of the following is the case:
+%%
+\begin{dinglist}{43}
+\item
+$T$ is in an existential state and one of the
+immediately subsequent configurations is accepted by $T$.
+\item
+$T$ is in a universal state and all immediately subsequent
+configurations are accepted by $T$.
+\end{dinglist}
+%%
+Notice that the machine accepts a configuration that has no
+immediately subsequent configurations if (and only if) it is 
+in a universal state. The difference between universal and 
+existential states is effective if the machine is not deterministic. 
+Then there can be several subsequent configurations. Acceptance
+by a Turing machine is defined as for an existential state if 
+there is a successor state, otherwise like a universal state. 
+If in a universal state, the machine must split itself into 
+several copies that compute the various subsequent alternatives. 
+Now we define \textbf{ALOGSPACE} 
+%%%
+\index{\textbf{ALOGSPACE}}%%%
+%%%
+to be the set of functions 
+computable by a logarithmically space bounded alternating 
+multitape Turing machine.
+%%
+\begin{thm}[Chandra \& Kozen \& Stockmeyer]
+%%%
+\index{Chandra, A.~K.}%%
+\index{Stockmeyer, L.~J.}%%%
+\index{Kozen, Dexter C.}%%%
+%%%%
+$$\mbox{\textbf{ALOGSPACE}} = \mbox{\textbf{PTIME}}.$$
+\end{thm}
+%%
+The theorem is almost proved. First, notice 
+%%
+\begin{lem}
+\label{lem:enth}
+\textbf{LOGSPACE} $\subseteq$ \textbf{ALOGSPACE}.
+\end{lem}
+%%
+For every deterministic logarithmically space bounded
+Turing machine also is an alternating machine
+by simply letting every state be universal. Likewise the
+following claim is easy to show, if we remind ourselves of
+the facts concerning \textbf{LOGSPACE}--computable functions.
+%%
+\begin{lem}
+\label{lem:verkn}
+Let $f \colon A^{\ast} \pf B^{\ast}$ and $g\colon B^{\ast} \pf C^{\ast}$ 
+be functions. If $f$ and $g$ are in \textbf{ALOG\-SPACE}, so is 
+$g \circ f$.
+\end{lem}
+%%
+\begin{lem}
+\textbf{ALOGSPACE} $\subseteq$ \textbf{PTIME}.
+\end{lem}
+%%
+Also this proof is not hard. We already know that there are
+at most polynomially many configurations. The dependency
+between these configurations can also be checked in polynomial
+time. (Every configuration has a bounded number of successors.
+The bound only depends on $T$.) This yields a computation
+tree which can be determined in polynomial time. Now we must
+determine in the last step whether the machine accepts the
+initial configuration. To this end we must determine by induction
+on the depth in a computation tree whether the respective
+configuration is accepted. This can be done as well in
+polynomial time. This completes the proof.
+
+Now the converse inclusion remains to be shown. For this we use
+the following idea. Let $f$ be in \textbf{PTIME}. We can write $f$ as
+$\xi \circ N^+$ where $N^+$ is a monotone network computing $f$. As
+remarked above we can construct $N^+$ in \textbf{LOGSPACE} and in
+particular because of Lemma~\ref{lem:enth} in \textbf{ALOGSPACE}.
+It suffices to show that $\xi$ is in \textbf{ALOGSPACE}. For then
+Lemma~\ref{lem:verkn} gives us that $f = \xi \circ N^+ \in 
+\textbf{ALOGSPACE}$.
+%%
+\begin{lem}
+$\xi \in$ \textbf{ALOGSPACE}.
+\end{lem}
+%%
+\proofbeg
+We construct a logarithmically space bounded alternating
+machine which for an arbitrary given monotone network
+$\vec{x}$ calculates its value $w(\vec{x})$. Let a network 
+be given. First move to the goal. Descending from it
+compute as follows.
+%%
+\begin{dingautolist}{192}
+\item
+If the cell contains {\mtt\symbol{4}} change into the universal 
+state $q_1$. Else change into the existential state $q_2$. 
+Goto \ding{194}.
+\item
+Choose an argument key $\vec{\alpha}$ of the current
+cell and go to the cell number $\vec{\alpha}$.
+\item
+If $\vec{\alpha}$ is not an argument key go into state
+$q_f$ if $\vec{\alpha} = \mbox{\mtt 1}$ and into $q_g$ if
+$\vec{\alpha} = \mbox{\mtt 0}$.
+Here $q_f$ is universal and $q_g$ existential
+and there are no transitions defined from $q_f$ and $q_g$.
+\end{dingautolist}
+%%
+All other states are universal; however, the machine works
+nondeterministically only in one case, namely if it gets the
+values of the arguments. Then it makes a nondeterministic choice.
+If the cell is an $\oder$--cell then it will accept that
+configuration if one argument has value 1, since the state is
+existential. If the cell is a $\und$--cell then it shall accept
+the configuration if both arguments have value $1$ for now the
+state is universal. The last condition is the termination
+condition. If the string is not an argument key then it is either
+{\mtt 0} or {\mtt 1} and its value can be computed without recourse
+to other cells. If it is {\mtt 1} the automaton changes into a
+final state which is universal and so the configuration is
+accepted. If the value is {\mtt 0} the automaton changes into a
+final state which is existential and the configuration is
+rejected. 
+\proofend
+
+{\it Notes on this section.} The gap between \textbf{PTIME} and 
+\textbf{NPTIME} is believed to be 
+a very big one, but it is not known whether the two really are 
+distinct. The fact that virtually all languages are in 
+\textbf{PTIME} is good news, telling us that natural languages 
+are tractable, at least syntactically. Concerning the tractability 
+of languages as sign systems not very much is known, however. 
+%%
+\vplatz
+\exercise
+Show Proposition~\ref{prop:schnitt}:
+{\it With $L_1$ and $L_2$ also $L_1 \cup L_2$, $L_1 \cap L_2$
+as well as $A^{\ast} - L_1$ are in \textbf{PTIME}.}
+%%
+\vplatz
+\exercise
+Show the following. {\it If $L_1$ and $L_2$ are in \textbf{PTIME}
+then so is $L_1 \cdot L_2$.}
+%%
+\vplatz
+\exercise
+Show that $L$ has the constant growth property if $L$ is semilinear.
+Give an example of a language which has the constant growth property
+but is not semilinear.
+%%
+\vplatz
+\exercise
+\label{exercise:basis}
+Let $f \colon 2^n \pf 2$ a boolean function. Show that it can be obtained
+from the projections and the functions $-$, $\cup$, and $\cap$.
+{\it Hint.} Start with the functions $g_{\vec{x}} \colon 2^n \pf 2$ such that
+$g_{\vec{x}}(\vec{y}) := 1$ iff $\vec{x} = \vec{y}$.
+Show that they can be generated from $-$ and $\cap$. Proceed
+to show that every boolean function is either the constant $0$
+or can be obtained from functions of type $g_{\vec{x}}$ using
+$\cup$.
+%%
+\vplatz
+\exercise
+Prove Lemma~\ref{lem:monotone}.
+%%
+\vplatz
+\exercise
+%%%
+\index{language!weakly semilinear}%%%
+%%%
+Call a language $L \subseteq A^{\ast}$ \textbf{weakly semilinear} if
+every intersection with a semilinear language $\subseteq A^{\ast}$
+has the constant growth property. Show that every semilinear language
+is also weakly semilinear. Let $M := \{\mbox{\tt a}^m
+\mbox{\tt b}^n : n \geq 2^m\}$. Show that $M \subseteq \{\mbox{\tt a},
+\mbox{\tt b}\}^{\ast}$ is weakly semilinear but not semilinear.
+%%
+\vplatz
+\exercise
+Show that every function $f \colon A^{\ast} \pf B^{\ast}$ which is
+computable using an alternating Turing machine can also be computed
+using a Turing machine. (It is not a priori clear that
+the class of alternating Turing machines is not more powerful
+than the class of Turing machines. This has to be shown.)

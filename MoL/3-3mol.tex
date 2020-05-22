@@ -1,0 +1,1426 @@
+\section{Basics of $\lambda$--Calculus and Combinatory Logic}
+\label{kap3-7}
+%
+%
+%
+%%%
+%\index{$\lambda$--Kalk\"ul}%%
+\nocite{hindley:combinatory}%%
+\nocite{barendregt:lambda}%%
+%%%
+There is a fundamental difference between a term and a function.
+The {\it term\/} $x^2 + 2xy$ is something that has a concrete
+value if $x$ and $y$ have a concrete value. For example, if $x$
+has value 5 and $y$ has value $2$ then $x^2 + 2xy = 25 + 20 = 45$.
+However, the function $f \colon \BZ \times \BZ \pf \BZ \colon \auf x, y\zu
+\mapsto x^2 + 2xy$ does not need any values for $x$ and $y$. It
+only needs a pair of {\it numbers\/} to yield a value. That we
+have used variables to define $f$ is of no concern here. We would
+have obtained the same function had we written $f \colon \auf x, u\zu
+\mapsto x^2 + 2xu$. However, the term $x^2 + 2xu$ is different
+from the term $x^2 + 2xy$. For if $u$ has value 3, $x$ has
+value 5 and $y$ value $2$, then $x^2 + 2xu = 25 + 30 = 55$, while
+$x^2 + 2xy = 45$. To accommodate this difference, the
+$\lambda$--calculus has been developed. The $\lambda$--calculus
+allows to define functions from terms. In the case above we may
+write $f$ as
+%%
+\begin{equation}
+f := \lambda xy.x^2 + 2xy
+\end{equation}
+%%
+This expression defines a function $f$ and by saying what it does to 
+its arguments. The prefix `$\lambda xy$' means that we are dealing
+with a function from pairs $\auf m, n\zu$ and that the function
+assigns this pair the value $m^2 + 2mn$. This is the same as
+what we have expressed with $\auf x, y\zu \mapsto x^2 + 2xy$. Now
+we can also define the following functions.
+%%
+\begin{equation}
+\lambda x.\lambda y.x^2 + 2xy, \qquad \lambda y.\lambda x.
+x^2 + 2xy
+\end{equation}
+%%
+The first is a function which assigns to every number $m$ the
+function $\lambda y.m^2 + 2my$; the latter yields the value
+$m^2 + 2mn$ for every $n$. The second is a function which gives
+for every $m$ the function $\lambda x.x^2 + 2xm$; this in turn
+yields $n^2 + 2nm$ for every $n$. Since in general $m^2 + 2mn \neq
+n^2 + 2nm$, these two functions are different.
+
+In $\lambda$--calculus one usually does not make use of the
+simultaneous abstraction of several variables, so one only allows
+prefixes of the form `$\lambda x$', not those of the form
+`$\lambda xy$'. This we shall also do here. We shall give a
+general definition of $\lambda$--terms. Anyhow, by introducing
+pairing and projection (see Section~\ref{kap3}.\ref{kap:lambek}) simultaneous 
+abstraction can be defined. The alphabet consists of a set 
+$F$ of function symbols (for which a signature $\Omega$ needs 
+to be given as well), {\tt\stlambda}, the variables 
+$V := \{\mbox{\tt x}_i : i \in \omega\}$ the brackets 
+{\tt (}, {\tt )} and the period `{\tt .}'.
+%%
+\begin{defn}
+%%%
+\index{$\lambda\Omega$--term}%%
+%%%
+The set of \textbf{$\lambda$--terms over the signature} $\Omega$,
+the set of \textbf{$\lambda\Omega$--terms} for short, is the
+smallest set $\Tm_{\lambda\Omega}(V)$ for which the
+following holds:
+%%
+\begin{dingautolist}{192}
+\item Every $\Omega$--term is in $\Tm_{\lambda\Omega}(V)$.
+\item If $M, N \in \Tm_{\lambda\Omega}(V)$ then also
+    $\mbox{\tt ($MN$)} \in \Tm_{\lambda\Omega}(V)$.
+\item If $M \in \Tm_{\lambda\Omega}$ and $x$ is a
+    variable then $\mbox{\tt (\stlambda$x$.$M$)}
+    \in \Tm_{\lambda\Omega}(V)$.
+\end{dingautolist}
+%%
+If the signature is empty or clear from the context we shall
+simply speak of \textbf{$\lambda$--terms}.
+\index{$\lambda$--term}%%
+\end{defn}
+%%
+Since in \ding{193} we do not write an operator symbol, Polish Notation 
+is now ambiguous. Therefore we follow standard usage and use the brackets 
+{\tt (} and {\tt )}. We agree now that $x$, $y$ and $z$ and so on 
+are metavariables for variables (that is, for elements of $V$). 
+Furthermore, upper case Roman letters like $M$, $N$ are metavariables 
+for $\lambda$--terms. One usually takes $F$ to be $\varnothing$, to
+concentrate on the essentials of functional abstraction.
+%%%
+\index{$\lambda$--term!pure}%%%
+%%%
+If $F = \varnothing$, we speak of \textbf{pure $\lambda$--terms}.
+It is customary to omit the brackets if the term is bracketed
+to the left. Hence $MNOP$ is short for {\tt ((($MN$)$O$)$P$)} 
+and {\tt \stlambda$x$.$MN$} short for {\tt ((\stlambda$x$.($MN$))}
+(and distinct from {\tt ((\stlambda$x$.$M$)$N$)}). However, this 
+abbreviation has to be used with care since the brackets are symbols 
+of the language. Hence {\mtt x$_{\snull}$x$_{\snull}$x$_{\snull}$} 
+is not a string of the language but only a shorthand for 
+{\mtt ((x$_{\snull}$x$_{\snull}$)x$_{\snull}$)}, a difference that 
+we shall ignore after a while. Likewise, outer brackets are often 
+omitted and brackets are not stacked when several $\lambda$--prefixes 
+appear. Notice that {\tt (x$_{\snull}$x$_{\snull}$)} is a term.  
+It denotes the application of {\tt x$_{\snull}$} to itself. 
+We have defined occurrences of a string $\vec{x}$ in a
+string $\vec{y}$ as contexts $\auf \vec{u}, \vec{v}\zu$ where 
+$\vec{u}\,\vec{x}\,\vec{v} = \vec{y}$. $\Omega$--terms are thought 
+to be written down in Polish Notation.
+%%%
+\begin{defn}
+%%%
+\index{variable!occurrence}%%%
+%%%
+Let $x$ be a variable. We define the set of \textbf{occurrences of} 
+$x$ in a $\lambda\Omega$--term inductively as follows.
+%%
+\begin{dingautolist}{192}
+\item If $M$ is an $\Omega$--term then the set of occurrences
+    of $x$ in the $\lambda\Omega$--term $M$ is the set of
+    occurrences of the variable $x$ in the $\Omega$--term $M$.
+\item The set of occurrences of $x$ in {\tt ($MN$)}
+    is the union of the set of pairs $\auf \mbox{\tt (}\vec{u},
+    \vec{v}N\mbox{\tt )}\zu$, where $\auf \vec{u}, \vec{v}\zu$ is
+    an occurrence of $x$ in $M$ and the set of pairs
+    $\auf \mbox{\tt (}M\vec{u},\vec{v}\mbox{\tt)}\zu$,
+    where $\auf \vec{u}, \vec{v}\zu$ is an occurrence of
+    $x$ in $N$.
+\item The set of occurrences of $x$ in {\tt (\stlambda$x$.$M$)}
+    is the set of all $\auf \mbox{\tt (\stlambda$x$.$\vec{u}$},
+    \vec{v}\mbox{\tt )}\zu$, where $\auf \vec{u}, \vec{v}\zu$
+    is an occurrence of $x$ in $M$.
+\end{dingautolist}
+\end{defn}
+%%
+So notice that --- technically speaking --- the occurrence of the
+string $x$ in the $\lambda$--prefix of {\tt (\stlambda$x$.$M$)} 
+is not an occurrence of the variable $x$. Hence {\tt x$_{\snull}$} does 
+not occur in {\tt (\stlambda$x_{\snull}$.x$_{\seins}$)} as a 
+$\lambda\Omega$--term although it does occur in it as a string!
+%%
+\begin{defn}
+%%%
+\index{variable!free}%%%
+\index{variable!bound}%%
+\index{$\lambda$--term!closed}%%
+%%%
+Let $M$ be a $\lambda$--term, $x$ a variable and $C$ an occurrence
+of $x$ in $M$. $C$ is a \textbf{free occurrence of} $x$ \textbf{in}
+$M$ if $C$ is not inside a term of the form {\tt (\stlambda$x$.$N$)} 
+for some $N$; if $C$ is not free, it is called \textbf{bound}. A 
+$\lambda$--term is called \textbf{closed} if no variable occurs free 
+in it. The set of all variables having a free occurrence in $M$ 
+is denoted by $\fr(M)$.  
+\end{defn}
+%%
+A few examples shall illustrate this. In $M = \mbox{\tt ({\stlambda}x%
+$_{\snull}$.(x$_{\snull}$x$_{\seins}$))}$ the variable {\tt x$_{\snull}$} 
+occurs only bound, since it only occurs inside a subterm of the form 
+{\tt ({\stlambda}x$_{\snull}$.$N$)} (for example $N := 
+\mbox{\tt (x$_{\snull}$x$_{\seins}$)}$). However, {\tt x$_{\seins}$} 
+occurs free. A variable may occur free as well as bound in a term. An 
+example is the variable {\tt x$_{\snull}$} in 
+{\tt (x$_{\snull}$({\stlambda}x$_{\snull}$.x$_{\snull}$))}.
+
+Bound and free variable occurrences behave differently under
+replacement.  If $M$ is a $\lambda$--term and $x$ a variable
+then denote by $[N/x]M$ the result of replacing $x$ by $N$.
+In this replacement we do not simply replace all occurrences
+of $x$ by $N$; the definition of replacement requires some care.
+%%
+\begin{subequations}
+\label{eq:sub}
+\begin{align}
+\label{eq:suba}
+ [N/x]y & := \begin{cases}
+	N & \text{if $x = y$,} \\
+	y & \text{otherwise.}
+	\end{cases} \\
+\label{eq:subb}
+[N/x]f(\vec{s}) & := 
+	f([N/x]s_0, \dotsc, [N/x]s_{\Omega(f)-1}) \\
+\label{eq:subc}
+ [N/x]\mbox{\tt (}MM'\mbox{\tt )} &
+    := \mbox{\tt (}([N/x]M)([N/x]M')\mbox{\tt )} \\
+\label{eq:subd}
+ [N/x]\mbox{\tt (\stlambda} x\mbox{\tt .}M\mbox{\tt )} &
+    := \mbox{\tt (\stlambda} x\mbox{\tt .}M\mbox{\tt )} \\
+\label{eq:sube}
+ [N/x]\mbox{\tt (\stlambda} y\mbox{\tt .}M\mbox{\tt )} &
+    := \mbox{\tt (\stlambda} y\mbox{\tt .}[N/x]M\mbox{\tt )} \\\notag
+  & \qquad 
+\text{if }y \neq x \text{ and: } y \not\in \fr(N) \text{ or }x \not\in \fr(M) \\
+\label{eq:subf}
+ [N/x]\mbox{\tt (\stlambda} y\mbox{\tt .}M\mbox{\tt )} &
+    := \mbox{\tt (\stlambda} z\mbox{\tt .}[N/x][z/y]M\mbox{\tt )} \\\notag
+    & \qquad \text{if }y \neq x, y \in \fr(N)
+    \text{ and }x \in \fr(M) 
+\end{align}
+\end{subequations}
+%%
+In \eqref{eq:subf} we have to choose $z$ in such a way that it does 
+not occur freely in $N$ or $M$. In order for substitution to be uniquely
+defined we assume that $z = \mbox{\tt x}_i$, where $i$ is the least 
+number such that $z$ satisfies the conditions. 
+The precaution in \eqref{eq:subf} of an additional
+substitution is necessary. For let $y = \mbox{\tt x}_{\seins}$
+and $M = \mbox{\tt x}_{\snull}$. Then without this substitution we would 
+get
+%%
+\begin{equation}
+[\mbox{\tt x}_{\seins}/\mbox{\tt x}_{\snull}]\mbox{\tt (\stlambda x}_{\snull}%
+\mbox{\tt .x}_{\seins}\mbox{\tt )} = \mbox{\tt (\stlambda x}_{\seins}%
+\mbox{\tt .}[\mbox{\tt x}_{\seins}/\mbox{\tt x}_{\snull}]%
+\mbox{\tt x}_{\snull}\mbox{\tt )} =
+\mbox{\tt (\stlambda x}_{\seins}\mbox{\tt .x}_{\seins}\mbox{\tt )}
+\end{equation}
+%%
+This is clearly incorrect. For
+{\tt (\stlambda x$_{\seins}$.x$_{\snull}$)} is the function which for
+given $a$ returns the value of $\mbox{\tt x}_{\snull}$.
+However, {\tt (\stlambda x$_{\seins}$.x$_{\seins}$)} is the identity
+function and so it is different from that function.
+Now the substitution of a variable by another variable
+shall not change the course of values of a function.
+%%
+\begin{subequations}
+\begin{align}
+%\begin{table}
+%\caption{Axioms and Rules of the $\lambda$--Calculus}
+%\label{tab:lambdaC}
+%\begin{array}{llrl}
+\label{eq:lea} 
+& M \boldsymbol{=} M & \\
+\label{eq:leb} 
+& M \boldsymbol{=} N \Pf N \boldsymbol{=} M & \\
+\label{eq:lec} 
+& M \boldsymbol{=} N, N \boldsymbol{=} L \Pf M \boldsymbol{=} L &  \\
+\label{eq:led} 
+& M \boldsymbol{=} N \Pf \mbox{\tt (}ML\mbox{\tt )} \boldsymbol{=} 
+\mbox{\tt (}NL\mbox{\tt )} & \\
+\label{eq:lee} 
+& M \boldsymbol{=} N \Pf \mbox{\tt (}LM\mbox{\tt )} \boldsymbol{=} 
+\mbox{\tt (}LN\mbox{\tt )} & \\
+\label{eq:lef} 
+& \mbox{\tt (\stlambda}x.M\mbox{\tt )}\boldsymbol{=} 
+\mbox{\tt (\stlambda} y.[y/x]M\mbox{\tt )} \quad  
+	y \not\in \fr(M) &
+    (\alpha\mbox{\rm --conversion)}\\
+%%%
+\index{conversion!$\alpha$--, $\beta$--, $\eta$--\faul}%%%
+%%%
+\label{eq:leg} 
+& \mbox{\tt (\stlambda} x.M\mbox{\tt )}N \boldsymbol{=} [N/x]M 
+	& (\beta\mbox{\rm --conversion}) \\
+%%%
+\label{eq:leh} 
+& \mbox{\tt (\stlambda} x.M\mbox{\tt )} \boldsymbol{=} M \qquad 
+        x \not\in \fr(M) &
+        (\eta\mbox{\rm --conversion}) \\
+%%%
+\label{eq:lei} 
+& M \boldsymbol{=} N \Pf \mbox{\tt (\stlambda}x.M\mbox{\tt )} 
+	\boldsymbol{=} \mbox{\tt (\stlambda} x.N\mbox{\tt )}
+	&  (\xi\mbox{\rm --rule}) &&
+%%%
+\index{$\xi$--rule}%%%
+%%%
+\end{align}
+\end{subequations}
+%%
+We shall present the theory of $\lambda$--terms which we
+shall use in the sequel. It consists in a set of equations
+$M \boldsymbol{=} N$, where $M$ and $N$ are terms. These are subject to
+the laws above. The theory axiomatized by \eqref{eq:lea} -- 
+\eqref{eq:leg} and \eqref{eq:lei} is called $\mbox{\sf\textgreek{l}}$, 
+the theory axiomatized by \eqref{eq:lea} --\eqref{eq:lei} 
+$\mbox{\sf\textgreek{lh}}$. Notice that \eqref{eq:lea} -- \eqref{eq:lee}
+ simply say that $\boldsymbol{=}$ is a congruence. A different rule 
+is the following so--called \textbf{extensionality rule}.
+%%
+\begin{align}
+& Mx \boldsymbol{=} Nx \Pf M \boldsymbol{=} N &
+\mbox{\rm (ext)}
+%%%
+\index{(ext)}%%%
+%%%
+\end{align}
+%%
+It can be shown that $\mbox{\sf\textgreek{l}} + \mbox{\rm (ext)} = 
+\mbox{\sf\textgreek{lh}}$.
+The model theory of $\lambda$--calculus is somewhat tricky. Basically,
+all that is assumed is that we have a domain $D$ together with a 
+binary operation $\bullet$ that interprets function application. 
+Abstraction is defined implicitly. Call a function $\beta : V \pf D$
+a \textbf{valuation}. %%%
+\index{valuation}%%%
+%%
+Now define $[M]^{\beta}$ inductively as follows.
+%%
+\begin{subequations}
+\begin{align}
+[\mbox{\tt x}_i]^{\beta} & := \beta(\mbox{\tt x}_i) \\
+[\mbox{\tt (}MN\mbox{\tt )}]^{\beta} & := 
+	[M]^{\beta}([N]^{\beta}) \\
+\label{eq:func}
+[\mbox{\tt (\stlambda} x.M\mbox{\tt )}]^{\beta} \bullet a &
+    := [M]^{\beta[x := a]}
+\end{align}
+\end{subequations}
+%%
+(Here, $a \in D$.)
+\eqref{eq:func} does not fix the interpretation of
+$\mbox{\tt (\stlambda} x.M\mbox{\tt )}$ uniquely on the basis of 
+the interpretation of $M$. If it does, however, the structure is 
+called {\it extensional}. We shall return to that issue below. 
+First we shall develop some more syntactic techniques for 
+dealing with $\lambda$--terms.
+%%
+\begin{defn}
+%%%
+\index{replacement}%%
+\index{$\lambda$--term!congruent}%%
+\index{$\rightsquigarrow_{\alpha}, \triangleright_{\alpha}, \equiv_{\alpha}$}%%
+%%%
+Let $M$ and $N$ be $\lambda$--terms. We say, $N$ \textbf{is obtained
+from $M$ by replacement of bound variables} or by 
+$\alpha$--\textbf{conversion} and write $M \rightsquigarrow_{\alpha} N$ 
+if there is a subterm {\tt (\stlambda$y$.$L$)} of $M$ and a variable 
+$z$ which does not occur in $L$ such that $N$ is the result of replacing 
+an occurrence of {\tt (\stlambda$y$.$L$)} by {\tt (\stlambda$z$.$[z/y]L$)}. 
+The relation $\triangleright_{\alpha}$ is the transitive closure of
+$\rightsquigarrow_{\alpha}$. $N$ is \textbf{congruent to} $M$, in symbols 
+$M \equiv_{\alpha} N$, if both $M \triangleright_{\alpha} N$ and $N
+\triangleright_{\alpha} M$.
+\end{defn}
+%%
+Similarly the definition of $\beta$--conversion.
+%%
+\begin{defn}
+%%%
+\index{$\lambda$--term!contraction}%%
+\index{$\rightsquigarrow_{\beta}, \triangleright_{\beta}, \equiv_{\beta}$}%%
+%%%
+Let $M$ be a $\lambda$--term. We write $M \rightsquigarrow_{\beta} N$ and
+say that $M$ \textbf{contracts to} $N$ if $N$ is the result of a
+single replacement of an occurrence of {\tt ((\stlambda$x$.$L$)$P$)}
+in $M$ by {\tt ($[P/x]L$)}. Further, we write $M \triangleright_{\beta} N$ 
+if $N$ results from $M$ by a series of contractions and 
+$M \equiv_{\beta} N$ if $M \triangleright_{\beta} N$ and 
+$N \triangleright_{\beta} M$.
+\end{defn}
+%%%%
+\index{redex}%%
+\index{contractum}%%
+\index{$\lambda$--term!evaluated}%%
+\index{normal form}%%
+%%%%
+A term of the form {\tt ((\stlambda$x$.$M$)$N$)} is called a 
+\textbf{redex} and $[N/x]M$ its \textbf{contractum}. The step from 
+the redex to the contractum 
+represents the evaluation of a function to its argument. A 
+$\lambda$--term is \textbf{evaluated} or \textbf{in normal form} 
+if it contains no redex.
+
+Similarly for the notation $\rightsquigarrow_{\alpha\beta}$,
+$\triangleright_{\alpha\beta}$ and $\equiv_{\alpha\beta}$. Call
+$M$ and $N$ $\alpha\beta$--\textbf{equi\-va\-lent}
+($\alpha\beta\eta$--\textbf{equivalent}) if $\auf M, N\zu$ is 
+contained in the least equivalence relation containing
+$\triangleright_{\alpha\beta}$
+($\triangleright_{\alpha\beta\eta})$.
+%%%
+\begin{prop}
+$\mbox{\sf\textgreek{l}} \vdash M \boldsymbol{=} N$ iff $M$ and $N$ are
+$\alpha\beta$--equivalent. $\mbox{\sf\textgreek{lh}} \vdash %
+M \boldsymbol{=} N$ iff $M$ and $N$ are $\alpha\beta\eta$--equivalent.
+\end{prop}
+%%%
+\index{normal form}%%
+%%%
+If $M \triangleright_{\alpha\beta} N$ and $N$ is in normal form
+then $N$ is called a \textbf{normal form of} $M$. Without proof we
+state the following theorem.
+%%
+\begin{thm}[Church, Rosser]
+Let $L, M, N$ be $\lambda$--terms such that
+$L \triangleright_{\alpha\beta} M$ and $L \triangleright_{\alpha\beta} 
+N$. Then there exists a $P$
+such that $M \triangleright_{\alpha\beta} P$ and $N
+\triangleright_{\alpha\beta} P$.
+\end{thm}
+%%
+The proof can be found in all books on the $\lambda$--calculus.
+This theorem also holds for $\triangleright_{\alpha\beta\eta}$.
+%%
+\begin{cor}
+Let $N$ and $N'$ be normal forms of $M$. Then $N \equiv_{\alpha}
+N'$.
+\end{cor}
+%%
+The proof is simple. For by the previous theorem there exists a $P$ such
+that $N \triangleright_{\alpha\beta} P$ and $N'
+\triangleright_{\alpha\beta} P$. But since $N$ as well as $N'$ do
+not contain any redex and $\alpha$--conversion does not introduce
+any redexes then $P$ results from $N$ and $N'$ by
+$\alpha$--conversion. Hence $P$ is $\alpha$--congruent with $N$
+and $N'$ and hence $N$ and $N'$ are $\alpha$--congruent.
+
+Not every $\lambda$--term has a normal form. For example
+%%
+\begin{align}
+& \mbox{\tt ((\stlambda x$_{\snull}$.(x$_{\snull}$x$_{\snull}$%
+))(\stlambda x$_{\snull}$.(x$_{\snull}$x$_{\snull}$)))} \\\notag
+\triangleright_{\beta} & 
+\mbox{\tt ((\stlambda x$_{\snull}$.(x$_{\snull}$x$_{\snull}$%
+))({\stlambda}x$_{\snull}$.(x$_{\snull}$x$_{\snull}$)))}
+\end{align}
+%%
+Or
+%%
+\begin{align}
+ & \mbox{\tt (({\stlambda}x$_{\snull}$.((x$_{\snull}$x$_{\snull}$%
+)x$_{\seins}$))({\stlambda}x$_{\snull}$.((x$_{\snull}$x$_{\snull}$%
+)x$_{\seins}$)))}
+\\\notag
+\triangleright_{\beta} &
+\mbox{\tt ((({\stlambda}x$_{\snull}$.((x$_{\snull}$x$_{\snull}$%
+)x$_{\seins}$))({\stlambda}x$_{\snull}$.((x$_{\snull}$x$_{\snull}$%
+)x$_{\seins}$)))x$_{\seins}$)}
+\\\notag
+\triangleright_{\beta} &
+\mbox{\tt (((({\stlambda}x$_{\snull}$.((x$_{\snull}$x$_{\snull}$%
+)x$_{\seins}$))({\stlambda}x$_{\snull}$.((x$_{\snull}$x$_{\snull}$%
+)x$_{\seins}$)))x$_{\seins}$)x$_{\seins}$)}
+\end{align}
+%%
+The typed $\lambda$--calculus differs from the calculus which has
+just been presented by an important restriction, namely that every
+term must have a type.
+%%
+\begin{defn}
+Let $B$ be a set. The set of \textbf{types over} $B$,
+$\Typ_{\pf}(B)$, is the smallest set $M$ for which
+the following holds.
+%%
+\begin{dingautolist}{192}
+\item $B \subseteq M$.
+\item If $\alpha \in M$ and $\beta \in M$ then $\alpha \pf \beta
+    \in M$.
+\end{dingautolist}
+%%
+\end{defn}
+%%
+In other words: types are simply terms in the signature
+$\{\pf\}$ with $\Omega(\pf) = 2$ over a set of basic types.
+Each term is associated with a type and the structure of terms
+is restricted by the type assignment. Further, all $\Omega$--terms
+are admitted. Their type is already fixed. The following rules
+are valid.
+%%
+\begin{dingautolist}{192}
+\item
+If $\mbox{\tt (}MN\mbox{\tt )}$ is a term of type $\gamma$ then
+there is a type $\alpha$ such that $M$ has the type
+$\alpha \pf \gamma$ and $N$ the type $\gamma$.
+\item
+If $M$ has the type $\gamma$ and $x_{\alpha}$ is a variable of
+type $\alpha$ then $\mbox{\tt (\stlambda} x_{\alpha} \mbox{\tt
+.}M\mbox{\tt )}$ is of type $\alpha \pf \gamma$.
+\end{dingautolist}
+%%
+Notice that for every type $\alpha$ there are countably many 
+variables of type $\alpha$. More exactly, the set of variables 
+of type $\alpha$ is 
+$V^{\alpha} := \{\mbox{\tt x}^i_{\alpha} : i \in \omega\}$.
+We shall often use the metavariables $x_{\alpha}$,
+$y_{\alpha}$ and so on. If $\alpha \neq \beta$ then also
+$x_{\alpha} \neq x_{\beta}$ (they represent different variables).
+With these conditions the formation of $\lambda$--terms is severely 
+restricted. For example $\mbox{\tt (\stlambda x$_{\snull}$.(x%
+$_{\snull}$x$_{\snull}$))}$ is not a typed term no matter which 
+type $\mbox{\tt x}_{\snull}$ has. One can show that a typed term 
+always has a normal form. This is in fact an easy matter. Notice 
+by the way that if the term {\tt (x$_{\snull}$+x$_{\seins}$)} has 
+type $\alpha$ and {\tt x$_{\snull}$} and {\tt x$_{\seins}$} also 
+have the type $\alpha$, the function 
+{\tt ({\stlambda}x$_{\snull}$.({\stlambda}x$_{\seins}$%
+.(x$_{\snull}$+x$_{\seins}$)))} has the type $\alpha
+\pf (\alpha \pf \alpha)$. The type of an $\Omega$--term is the
+type of its value, in this case $\alpha$. The types are nothing
+but a special version of {\it sorts}. Simply take 
+$\Typ_{\pf}(B)$ to be the set of sorts. However, while 
+application (written $\bullet$) is a single symbol in the typed 
+$\lambda$--calculus, we must now assume in place of it a family of 
+symbols $\bullet^{\beta}_{\alpha}$ of signature $\auf \alpha\pf\beta,
+\alpha, \beta\zu$ for every type $\alpha, \beta$. Namely,
+$M \bullet^{\beta}_{\alpha} N$ is defined iff
+$M$ has type $\alpha\pf\beta$ and $N$ type $\alpha$, and the
+result is of sort (= type) $\beta$. While the notation within many
+sorted algebras can get clumsy, the techniques (ultimately derived
+from the theory of unsorted algebras) are very useful, so the
+connection is very important for us. Notice that algebraically
+speaking it is not $\mbox{\tt \stlambda}$ but 
+$\mbox{\tt \stlambda x}_{\alpha}$
+that is a member of the signature, and once again, in the many
+sorted framework, $\mbox{\tt \stlambda x}_{\alpha}$ turns into a
+family of operations $\mbox{\tt \tlambda$^{\beta}$x}_{\alpha}$ of
+sort $\auf \beta, \alpha\pf\beta\zu$. That is to say, $\mbox{\tt
+\stlambda$^{\beta}$x}_{\alpha}$ is a function symbol that only
+forms a term with an argument of sort (= type) $\beta$ and yields
+a term of type $\alpha\pf \beta$.
+
+We shall now present a model of the $\lambda$--calculus. We begin 
+by studying the purely applicative structures and then turn to 
+abstraction after the introduction of combinators. In the untyped 
+case application is a function that is everywhere defined.
+The model structures are therefore so--called
+{\it applicative structures}.
+%%%
+\begin{defn}
+%%%%
+\index{applicative structure}%%
+\index{applicative structure!partial}
+\index{applicative structure!extensional}%%
+%%%%
+An \textbf{applicative structure} is a pair $\GA = \auf A,
+\bullet\zu$ where $\bullet$ is a binary operation on $A$. If
+$\bullet$ is only a partial operation, $\auf A, \bullet\zu$ is
+called a \textbf{partial applicative structure}. $\GA$ is called
+\textbf{extensional} if for all $a, b \in A$:
+%%
+\begin{equation}
+a = b \text{ iff for all }c \in A:
+    a \bullet c = b \bullet c 
+\end{equation}
+%%
+\end{defn}
+%%%
+\begin{defn}
+%%%
+\index{applicative structure!typed}%%%
+%%%%
+A \textbf{typed applicative structure} over a given set of basic
+types $B$ is a structure $\auf \{A_{\alpha} : \alpha \in \Typ_{\pf}(B)\},
+\bullet\zu$ such that (a) $A_{\alpha}$ is a set
+for every $\alpha$, (b) $A_{\alpha} \cap A_{\beta} = \varnothing$ 
+if $\alpha \neq \beta$ and (c) $a \bullet b$ is defined iff
+there are types $\alpha\pf \beta$ and $\alpha$
+such that $a \in A_{\alpha \pf \beta}$ and $b \in A_{\alpha}$,
+and then $a \bullet b \in A_{\beta}$.
+\end{defn}
+%%
+A typed applicative structure defines a partial applicative
+structure. Namely, put $A := \bigcup_{\alpha} A_{\alpha}$; then
+$\bullet$ is nothing but a partial binary operation on $A$. The
+typing is then left implicit. (Recovering the types of elements is
+not a trivial affair, see the exercises.) Not every partial
+applicative structure can be typed, though.
+
+One important type of models are those where $A$ consists of sets and
+$\bullet$ is the usual functional application as defined in sets.
+More precisely, we want that $A_{\alpha}$ is a set of sets for
+every $\alpha$. So if the type is associated with the set $S$ then
+a variable may assume as value any member of $S$. So, it follows
+that if $\beta$ is associated with the set $T$ and $M$ has the
+type $\beta$ then
+the interpretation of $\mbox{\tt (\stlambda x}_{\alpha}.%
+M\mbox{\tt )}$ is a function from $S$ to $T$. We set the
+realization of $\alpha \pf \beta$ to be the set of all functions
+from $S$ to $T$. This is an arbitrary choice, a different
+choice (for example a suitable subset) would do as well.
+
+Let $M$ and $N$ be sets. Then a function from $M$ to $N$
+is a subset $F$ of the cartesian product $M \times N$ which
+satisfies certain conditions (see Section~\ref{kap1}.\ref{kap1-1}).
+Namely, for every $x \in M$ there must be a $y \in N$
+such that $\auf x, y\zu \in F$ and if $\auf x, y\zu \in F$
+and $\auf x, y'\zu \in F$ then $y = y'$. (For partial
+functions the first condition is omitted. Everything else
+remains. For simplicity we shall deal only with totally
+defined functions.) Normally one thinks of a function
+as something that gives values for certain arguments.
+This is not so in this case. $F$ is not a function in this sense,
+it is just the \textbf{graph} of a function. In set theory
+one does not distinguish between a function and its graph.
+We shall return to this later. How do we have to picture $F$ as
+a set? Recall that we have defined
+%%
+\begin{equation}
+M \times N = \{\auf x,y\zu : x\in M, y\in N\}
+\end{equation}
+%%
+This is a set. Notice that $M \times (N \times O) \neq
+(M \times N) \times O$. 
+%For $M \times (N\times O)$
+%consists of all pairs of the form $\auf x, \auf y, z\zu\zu$,
+%where $x \in M$, $y \in N$ and $z \in O$, while
+%$(M \times N)\times O$ consists of all pairs of the form
+%$\auf \auf x,y\zu, z\zu$. And if
+%$\auf x, \auf y, z\zu\zu = \auf \auf x', y'\zu, z'\zu$,
+%then we must have $x = \auf x', y'\zu$ and
+%$\auf y, z\zu = z'$. From this follows $x' \in x$.
+%$M$ possesses an element which is minimal with respect to
+%$\in$, namely $x^{\ast}$. (This follows from the axiom of foundation.) 
+%If we put this element in place of $x$ we get a contradiction. 
+%This shows $M \times (N \times O) \neq (M \times N) \times O$.
+However, the mapping %%
+%%
+\index{$\rtimes$, $\ltimes$}%%
+%%
+\begin{equation}
+\rtimes \colon \auf x, \auf y, z\zu\zu \mapsto
+\auf \auf x, y\zu, z\zu \colon
+M \times (N\times O) \pf (M\times N)\times O
+\end{equation}
+%%
+is a bijection. Its inverse is the mapping
+%%
+\begin{equation}
+\ltimes\; \colon \auf \auf x, y \zu, z\zu \mapsto
+\auf x, \auf y, z\zu\zu \colon
+(M \times N)\times O \pf M\times (N\times O)
+\end{equation}
+%%
+Finally we put
+%%
+\begin{equation}
+M \pf N := \{F \subseteq M\times N: F \mbox{ a function }\}
+\end{equation}
+%%%
+\index{$M \pf N$}%%
+%%
+Elsewhere we have used the notation $N^M$ for that set.
+Now functions are also sets and their arguments are sets, too. 
+Hence we need a map which applies a function to an argument. 
+Since it must be defined for all cases of
+functions and arguments, it must by necessity be a partial
+function. If $x$ is a function and $y$ an arbitrary object, 
+we define $\mathsf{app}(x,y)$ as follows.
+%%%%
+\index{$\mathsf{app}(x,y)$}%%%
+%%
+\begin{equation}
+\mathsf{app}(x,y) := \begin{cases}
+        z & \text{ if $\auf y, z\zu \in x$,} \\
+        \star & \text{ if no $z$ exists such that 
+$\auf y,z\zu \in x$.}
+        \end{cases}
+\end{equation}
+%%
+$\mathsf{app}$ is a partial function. Its graph in the universe
+of sets is a proper class, however. It is the class of pairs
+$\auf \auf F, x\zu, y\zu$, where $F$ is a function and
+$\auf x, y\zu \in F$.
+
+Note that if $F \in M \pf (N \pf O)$ then
+%%%
+\begin{equation}
+F \subseteq M \times (N \pf O) \subseteq M\times (N\times O)
+\end{equation}
+%%%
+Then $\rtimes [F] \subseteq (M \times N) \times O$, and
+one calculates that $\rtimes [F] \subseteq (M \times N)
+\pf O$. In this way a unary function with values in
+$N \pf O$ becomes a unary function from $M\times N$
+to $O$ (or a binary function from $M$, $N$ to $O$). Conversely,
+one can see that if $F \in (M \times N) \pf O$ then
+$\ltimes [F] \in M \pf (N \pf O)$.
+%%%
+\begin{stz}
+Let $V_{\omega}$ be the set of finite sets. Then $\auf V_{\omega},
+\mathsf{app}\zu$ is a partial applicative structure.
+\end{stz}
+%%%
+In place of $V_{\omega}$ one can take any $V_{\kappa}$ where
+$\kappa$ is an ordinal. However, only if $\kappa$ is a limit 
+ordinal (that is, an ordinal without predecessor), the structure 
+will be combinatorially complete. A more general result is described 
+in the following theorem for the typed calculus. Its proof is 
+straightforward.
+%%%
+\begin{stz}
+Let $B$ be the set of basic types and $M_{b}$, $b \in B$,
+arbitrary sets. Let $M_{\alpha}$ be inductively defined
+by $M_{\alpha \pf \beta} := (M_{\beta})^{M_{\alpha}}$.
+Then 
+%%%
+\begin{equation}
+\auf \{M_{\alpha} : \alpha \in \Typ_{\pf}(B)\},
+\mathsf{app}\zu
+\end{equation}
+%%%
+is a typed applicative structure. Moreover, it is extensional.
+\end{stz}
+%%%
+For a proof of this theorem one simply has to check the conditions.
+
+In categorial grammar, with which we shall deal in this chapter,
+we shall use $\lambda$--terms to name meanings for symbols and
+strings. It is important however that the $\lambda$--term is only
+a formal entity (namely a certain string), and it is not the
+meaning in the proper sense of the word. To give an example,
+$\mbox{\tt (\stlambda x}_{\snull}\mbox{\tt .(\stlambda x}_{\seins}%
+\mbox{\tt .x}_{\snull}\mbox{\tt +x}_{\seins}\mbox{\tt ))}$ is a string which
+names a function. In the set universe, this function is a subset
+of $\BN \pf (\BN \pf \BN)$. For this reason one has to distinguish
+between equality $=$ and the symbol(s) $\equiv$/$\boldsymbol{=}$. $M = N$ 
+means that we are dealing with the same strings (hence literally the
+same $\lambda$--terms) while $M \equiv N$ means that $M$ and
+$N$ name the same function. In this sense $\mbox{\tt ({\stlambda}%
+x$_{\snull}$.({\stlambda}x$_{\seins}$.x$_{\snull}$+x$_{\seins}$%
+))(x$_{\snull}$)(x$_{\szwei}$)} \neq \mbox{\tt x$_{\snull}$+x%
+$_{\szwei}$}$, but they also denote the same value. Nevertheless, in 
+what is to follow we shall not always distinguish between a 
+$\lambda$--term and its interpretation, in order not to make the 
+notation too opaque.
+
+The $\lambda$--calculus has a very big disadvantage, namely that
+it requires some caution in dealing with variables. However, there 
+is a way to avoid having to use variables. This is achieved through 
+the use of combinators.
+%%%%
+\index{{\tt S}, {\tt K}, {\tt I}}%%
+%%%%
+Given a set $V$ of variables and the zeroary constants {\tt S},
+{\tt K}, {\tt I}, combinators are terms over the signature that
+has only one more binary symbol, $\bullet$. This symbol is
+generally omitted, and terms are formed using infix notation with
+brackets. Call this signature $\Gamma$.
+%%
+\begin{defn}
+%%%
+\index{combinator}%%%
+\index{combinatorial term}%%
+%%%
+An element of $\Tm_{\Gamma}(V)$ is called a \textbf{combinatorial term}. 
+A \textbf{combinator} is an element of $\Tm_{\Gamma}(\varnothing)$.
+\end{defn}
+%%
+Further, the redex relation $\triangleright$ is 
+defined as follows. 
+%%
+\begin{subequations}
+\begin{align}
+\label{eq:reda}
+& \mbox{\tt I}X \triangleright X \\
+\label{eq:redb}
+& \mbox{\tt K}XY \triangleright X \\
+\label{eq:redc}
+& \mbox{\tt S}XYZ \triangleright XZ(YZ) \\
+\label{eq:redd}
+& X \triangleright X \\
+\label{eq:rede}
+& \text{if }X \triangleright Y \text{ and }Y \triangleright Z 
+\text{ then }X \triangleright Z \\
+\label{eq:redf}
+& \text{if }X \triangleright Y\text{ then }\mbox{\mtt ($XZ$)} 
+\triangleright \mbox{\mtt ($YZ$)} \\
+\label{eq:redg}
+& \text{if }X \triangleright Y\text{ then }\mbox{\mtt ($ZX$)} 
+\triangleright \mbox{\mtt ($ZY$)} 
+\end{align}
+\end{subequations}
+%
+\index{combinatory logic}%%
+\index{$\mathsf{CL}$}%%
+%%%
+\textbf{Combinatory logic} ($\mathsf{CL}$) is \eqref{eq:reda} -- 
+\eqref{eq:rede}. It is an equational theory if we read $\triangleright$ 
+simply as equality. 
+(The only difference is that $\triangleright$ is not symmetric. So, to be 
+exact, the rule `if $X \boldsymbol{\doteq} Y$ then $Y \boldsymbol{\doteq} 
+X$' needs to be added.) We note that there is a combinator $\mathsf{C}$ 
+containing only {\tt K} and {\tt S} such that 
+$\mathsf{C} \triangleright \mbox{\tt I}$ (see
+Exercise~\ref{ex:ski}). This explains why {\tt I} is sometimes
+omitted.
+
+We shall now show that combinators can be defined by
+$\lambda$--terms and vice versa. First, define
+%%
+\begin{subequations}
+\begin{align}
+\mbox{\sf I} & := \mbox{\tt ({\stlambda}x$_{\snull}$.x$_{\snull}$)} \\
+\mbox{\sf K} & := \mbox{\tt ({\stlambda}x$_{\snull}$.({\stlambda}x%
+$_{\seins}$.x$_{\snull}$))} \\
+\mbox{\sf S} & := \mbox{\tt ({\stlambda}x$_{\snull}$.({\stlambda}%
+x$_{\seins}$.({\stlambda}x$_{\szwei}$.x$_{\snull}$x$_{\szwei}$(x%
+$_{\seins}$x$_{\szwei}$))))}
+\end{align}
+\end{subequations}
+%%
+Define a translation $^{\lambda}$ by $X^{\lambda} := X$ for $X \in
+V$, $\mbox{\tt S}^{\lambda} := \mathsf{S}$, $\mbox{\tt
+K}^{\lambda} := \mathsf{K}$, $\mbox{\tt I}^{\lambda} :=
+\mathsf{I}$. Then the following is proved by induction on the
+length of the proof.
+%%%
+\begin{thm}
+\label{thm:CombzuLambda} 
+Let $C$ and $D$ be combinators. If $C \triangleright D$ then $C^{\lambda}
+\triangleright_{\beta} D^{\lambda}$. Also, if 
+$\mathsf{CL} \vdash C \boldsymbol{=} D$ then 
+$\mbox{\sf\textgreek{l}} \vdash C^{\lambda} \boldsymbol{=} D^{\lambda}$.
+\end{thm}
+%%%
+The converse translation is more difficult. We shall define first 
+a function $[x]$ on combinatory terms. (Notice that there are no 
+bound variables, so $\var(M) = \fr(M)$ for any combinatorial term
+$M$.) 
+%%
+\begin{subequations}
+\begin{align}
+& [x]x := \mbox{\tt I}. \\
+\label{eq:abs2} & 
+	[x]M := \mbox{\tt K}M, \text{ if $x \not\in \var(M)$.} \\
+\label{eq:abs3} & 
+	[x]Mx := M, \text{ if $x \not\in \var(M)$.} \\
+\label{eq:abs4} & 
+	[x]MN := \mbox{\tt S}\mbox{\tt (}[x]M]\mbox{\tt )(}[x]N\mbox{\tt )},
+    \text{ otherwise.}
+\end{align}
+\end{subequations}
+%%
+(So, \eqref{eq:abs4} is applied only if \eqref{eq:abs2} and 
+\eqref{eq:abs3} cannot be applied.) 
+For example $[\mbox{\tt x$_{\seins}$}]\mbox{\tt x$_{\seins}$x$_{\snull}$} =
+\mbox{\tt S(}[\mbox{\tt x$_{\seins}$}]\mbox{\tt x$_{\seins}$)(}
+    [\mbox{\tt x$_{\seins}$}]\mbox{\tt x$_{\snull}$)}
+        = \mbox{\tt SI(Kx$_{\snull}$)}$.
+Indeed, if one applies this to {\tt x$_{\seins}$}, then one gets
+    %%
+\begin{equation}
+\mbox{\tt SI(Kx$_{\snull}$)x$_{\seins}$}
+\triangleright
+\mbox{\tt Ix$_{\seins}$(Kx$_{\snull}$x$_{\seins}$)}
+\triangleright
+\mbox{\tt x$_{\seins}$(Kx$_{\snull}$x$_{\seins}$)} 
+\triangleright 
+\mbox{\tt x$_{\seins}$x$_{\snull}$}
+\end{equation}
+%%
+Further, one has
+%%
+\begin{equation}
+\mathsf{U} := [\mbox{\tt x$_{\seins}$}]\mbox{\tt (}[\mbox{\tt %
+x$_{\snull}$}]\mbox{\tt x$_{\seins}$x$_{\snull}$)} 
+= [\mbox{\tt x$_{\seins}$}]\mbox{\tt SI(Kx$_{\snull}$)} 
+= \mbox{\tt S(K(SI))K}
+\end{equation}
+%%
+The reader may verify that 
+$\mathsf{U}\mbox{\tt x$_{\snull}$x$_{\seins}$}
+\triangleright \mbox{\tt x$_{\seins}$x$_{\snull}$}$. Now define
+$^{\kappa}$ by $x^{\kappa} := x$, $x \in V$, $\mbox{\tt (}MN%
+\mbox{\tt )}^{\kappa} := \mbox{\tt (}M^{\kappa}N^{\kappa}\mbox{\tt )}$
+and $\mbox{\tt (\stlambda}x.N\mbox{\tt )}^{\kappa} :=
+[x]N^{\kappa}$.
+%%
+\begin{thm}
+Let $C$ be a closed $\lambda$--term. Then
+$\mbox{\sf\textgreek{l}} \vdash C \boldsymbol{=} C^{\kappa}$.
+\end{thm}
+%%
+Now we have defined translations from $\lambda$--terms to
+combinators and back. It can be shown, however, that the theory
+$\mbox{\sf\textgreek{l}}$ is stronger than $\mathsf{CL}$ under 
+translation. Curry found a list $\mathbf{A}_{\beta}$ of five equations such
+%%%
+\index{Curry, Haskell B.}%%%
+%%%%
+that $\mbox{\sf\textgreek{l}}$ is as strong as $\mathsf{CL} +
+\mathbf{A}_{\beta}$ in the sense of
+Theorem~\ref{thm:LambdazuComb} below. Also, he gave a list
+$\mathbf{A}_{\beta\eta}$ such that $\mathsf{CL} + 
+\mathbf{A}_{\beta\eta}$ is equivalent to $\mbox{\sf\textgreek{lh}} =
+\mbox{\sf\textgreek{l}} + \mbox{\rm (ext)}$. $\mathbf{A}_{\beta\eta}$ 
+also is equivalent to the first--order postulate (ext): $(\forall
+xy)((\forall z)(x \bullet z \boldsymbol{=} y \bullet z) \pf x 
+\boldsymbol{=} y)$.
+%%%
+\begin{thm}[Curry]
+%%%
+\index{Curry, Haskell B.}%%%
+%%%%
+\label{thm:LambdazuComb}
+Let $M$ and $N$ be $\lambda$--terms.
+%%%
+\begin{dingautolist}{192}
+\item
+If $\mbox{\sf\textgreek{l}} \vdash M \boldsymbol{=} N$ then
+$\mathsf{CL} + \mathbf{A}_{\beta}
+\vdash M^{\kappa} \boldsymbol{=} N^{\kappa}$.
+\item
+If $\mbox{\sf\textgreek{lh}} \vdash M \boldsymbol{=} N$ then $\mathsf{CL} +
+\mathbf{A}_{\beta\eta} \vdash M^{\kappa} \boldsymbol{=} N^{\kappa}$.
+\end{dingautolist}
+\end{thm}
+%%%
+There is also a typed version of combinatorial logic. There are
+two basic approaches. The first is to define typed combinators.
+The basic combinators now split into infinitely many typed
+versions as follows.
+%%
+\begin{equation}
+$$\begin{array}{ll}
+\mbox{\rm Combinator} & \mbox{\rm Type} \\\hline
+\mbox{\tt I}_{\alpha} & \alpha \pf \alpha \\
+\mbox{\tt K}_{\alpha,\beta} & \alpha \pf (\beta \pf \alpha) \\
+\mbox{\tt S}_{\alpha,\beta,\gamma} &
+    (\alpha \pf (\beta \pf \gamma)) \pf ((\alpha \pf \beta)
+        \pf (\alpha \pf \gamma)) 
+\end{array}
+\end{equation}
+%%
+Together with $\bullet$ they form the typed signature $\Gamma^\tau$.
+For each type there are countably infinitely many variables
+of that type in $V$.
+%%%
+\index{combinatorial term!typed}%%
+\index{combinator!typed}%%
+%%%
+\textbf{Typed combinatorial terms} are elements
+of $\Tm_{\Gamma^{\tau}}(V)$, and \textbf{typed combinators}
+are elements of $\Tm_{\Gamma^{\tau}}$. Further, if $M$
+is a combinator of type $\alpha\pf\beta$ and $N$ a combinator of
+type $\alpha$  then $\mbox{\tt (}MN\mbox{\tt )}$ is a combinator
+of type $\beta$. In this way, every typed combinatorial term has
+a unique type.
+
+The second approach is to keep the symbols {\tt I}, {\tt K} and
+{\tt S} and to let them stand for any of the above typed
+combinators. In terms of functions, {\tt I} takes an argument $N$
+of any type $\alpha$ and returns $N$ (of type $\alpha$). Likewise,
+{\tt K} is defined on any $M$, $N$ of type $\alpha$ and $\beta$,
+respectively, and $\mbox{\tt K}MN = M$ of type $\alpha$. Also,
+$\mbox{\tt K}M$ is defined and of type $\beta \pf \alpha$. Basically,
+the language is the same as in the untyped case. A combinatorial
+term is
+%%%
+\index{combinatorial term!stratified}%%
+\index{combinator!stratified}%%
+%%%
+\textbf{stratified} if for each variable and each occurrence of {\tt
+I}, {\tt K}, {\tt S} there exists a type such that if that
+(occurrence of the) symbol is assigned that type, the resulting
+string is a typed combinatorial term. (So, while each occurrence
+of {\tt I}, {\tt K} and {\tt S}, respectively, may be given a
+different type, each occurrence of the same variable must have the
+same type.) For example, {\sf B} := {\tt S(KS)K} is stratified,
+while {\tt SII} is not.
+
+We show the second claim first. Suppose that there are types
+$\alpha$, $\beta$, $\gamma$, $\delta$, $\epsilon$ such that
+{\mtt ((S$_{\alpha,\beta,\gamma}$I$_{\delta}$)I$_{\epsilon}$)} 
+is a typed combinator.
+%%
+\begin{equation}
+$$\begin{array}{ccc}
+\mbox{\tt ((S}_{\alpha,\beta,\gamma} & {\tt I}_{\delta} \mbox{\tt
+)} & {\tt I}_{\epsilon}\mbox{\tt )}
+\\\hline
+(\alpha \pf (\beta\pf\gamma)) & \delta \pf\delta & \epsilon\pf\epsilon \\
+	\quad \pf ((\alpha \pf\beta) \pf (\alpha\pf\gamma)) 
+	& & 
+\end{array}
+\end{equation}
+%%
+Then, since $\mbox{\tt S}_{\alpha,\beta,\gamma}$ is applied to 
+$\mbox{\tt I}_{\delta}$ we must have $\delta \pf \delta = \alpha %
+\pf (\beta\pf \gamma)$, whence $\alpha = (\beta\pf\gamma)$. So, 
+{\mtt (S$_{\alpha,\beta,\gamma}$I$_{\delta}$)} has the type 
+%%%
+\begin{equation}
+((\beta \pf \gamma) \pf \beta) \pf ((\beta \pf \gamma) \pf \gamma)
+\end{equation}
+%%%
+This combinator is applied to $\mbox{\tt I}_{\epsilon}$, and so we have 
+$(\beta\pf\gamma)\pf\beta = \epsilon\pf\epsilon$, whence
+$\beta\pf\gamma = \epsilon = \beta$, which is impossible. So, {\tt
+SII} is not stratified. On the other hand, {\sf B} is stratified.
+Assume types such that $\mbox{\tt S}_{\zeta,\eta,\theta}\mbox{\tt
+(K}_{\alpha,\beta} \mbox{\tt S}_{\gamma,\delta,\epsilon}\mbox{\tt
+)}\mbox{\tt K}_{\iota,\kappa}$ is a typed combinator. First, ${\tt
+K}_{\alpha,\beta}$ is applied to ${\tt
+S}_{\gamma,\delta,\epsilon}$. This means that
+%%
+\begin{equation}
+\alpha = (\gamma \pf (\delta\pf\epsilon)) \pf ((\gamma\pf\delta)
+\pf (\gamma\pf\epsilon))
+\end{equation}
+%%
+The result has type
+%%
+\begin{equation}
+\beta \pf ((\gamma \pf (\delta\pf\epsilon)) \pf ((\gamma\pf\delta)
+\pf (\gamma\pf\epsilon)))
+\end{equation}
+%%
+This is the argument of ${\tt S}_{\zeta,\eta,\theta}$. Hence we
+must have
+%%
+\begin{multline}
+\zeta \pf (\eta \pf \theta) \\
+= \beta \pf ((\gamma \pf
+(\delta\pf\epsilon)) \pf ((\gamma\pf\delta)
+\pf (\gamma\pf\epsilon)))
+\end{multline}
+%%
+So, $\zeta = \beta$, $\eta = \gamma\pf(\delta\pf\epsilon)$,
+$\theta = (\gamma\pf\delta)\pf(\gamma\pf\epsilon)$. The resulting
+type is $(\zeta\pf\eta)\pf(\zeta\pf\theta)$. This is applied to
+$\mbox{\tt K}_{\iota,\kappa}$ of type $\iota\pf(\kappa\pf\iota)$.
+For this to be well--defined we must have $\iota\pf(\kappa\pf\iota)
+= \zeta\pf\eta$, or $\iota = \zeta = \beta$ and $\kappa\pf\iota =
+\eta = \gamma\pf(\delta\pf\epsilon)$. Finally, this results in
+$\kappa = \gamma$, $\iota = \beta = \delta\pf\epsilon$. So,
+$\alpha$, $\gamma$, $\delta$ and $\epsilon$ may be freely chosen,
+and the other types are immediately defined.
+
+It is the second approach that will be the most useful for us
+later on. We call combinators \textbf{implicitly typed} if they
+are thought of as typed in this way. (In fact, they simply
+are untyped terms.) The same can be done with $\lambda$--terms,
+giving rise to the notion of a stratified $\lambda$--term. In
+the sequel we shall not distinguish between combinators and their
+representing $\lambda$--terms.
+
+Finally, let us return to the models of the $\lambda$--calculus.
+Recall that we have defined abstraction only implicitly, using
+Definition~\eqref{eq:func} repeated below:
+%%%
+\begin{equation}
+[\mbox{\tt (\stlambda} x.M\mbox{\tt )}]^{\beta} \bullet a 
+    := [M]^{\beta[x := a]}
+\end{equation}
+%%%
+In general, this object need not exist, in which case we do not have 
+a model for the $\lambda$--calculus. 
+%%%
+\begin{defn}
+%%%
+\index{applicative structure!combinatorially complete}%%%
+%%%
+An applicative structure $\GA$ is called \textbf{combinatorially
+complete} if for every term $t$ in the language with free
+variables from $\{\mbox{\tt x}_i : i < n\}$
+there exists a $y$ such that for all $b_i \in A$, $i < n$:
+%%
+\begin{equation}
+(\dotsb ((y \bullet b_0) \bullet b_1) \bullet
+\dotsb \bullet b_{n-1}) = t(b_0, \dotsc, b_{n-1})
+\end{equation}
+%%
+\end{defn}
+%%
+This means that for every term $t$ there exists an element
+which represents this term: 
+%%
+\begin{equation}
+\mbox{\tt ({\stlambda}x$_{\snull}$.({\stlambda}x$_{\seins}$.}%
+\dotsb\mbox{\tt .({\stlambda}x}_{n-1}\mbox{\tt .}t(\mbox{\tt x}_{\snull},
+    \dotsc, \mbox{\tt x}_{n-1})\mbox{\tt )}\dotsb
+    \mbox{\tt ))} 
+\end{equation}
+%%
+Thus, this defines the notion of an applicative structure in which 
+every element can be abstracted. It is these structures that can 
+serve as models of the $\lambda$--calculus. Still, no explicit way 
+of generating the functions is provided. One way is to use countably 
+many abstraction operations, one for every number $i < \omega$
+(see Section~\ref{kap6}.\ref{kap6-4b}). Another way is to translate 
+$\lambda$--terms into combinatory logic using $[-]$ for abstraction.
+In view of the results obtained above we get the following result.
+%%
+\begin{thm}[Sch\"onfinkel]
+%%%
+\index{Sch\"onfinkel, Moses}%%%
+%%%
+$\GA$ is combinatorially complete iff there are elements
+$k$ and $s$ such that
+%%
+\begin{equation}
+((k \bullet a) \bullet b) = a \qquad
+(((s \bullet a) \bullet b) \bullet c) =
+(a \bullet c) \bullet (b \bullet c)
+\end{equation}
+%%
+\end{thm}
+%%
+\begin{defn}
+\index{combinatory algebra}%%%
+\index{combinatory algebra!extensional}%%%
+\index{$\lambda$--algebra}%%
+%%%
+A structure $\GA = \auf A, \bullet,
+\mbox{\sf k}, \mbox{\sf s}\zu$ is called a \textbf{combinatory
+algebra} if $\GA \vDash \mbox{\sf k} \bullet x \bullet y \boldsymbol{=} x,
+\mbox{\sf s} \bullet x \bullet y \bullet z \boldsymbol{=} x \bullet z
+\bullet (y \bullet z)$. It is a
+$\lambda$--\textbf{algebra} (or \textbf{extensional}) if it satisfies
+$\mathbf{A}_{\beta}$ ($\mathbf{A}_{\beta\eta}$) in addition.
+\end{defn}
+%%
+So, the class of combinatory algebras is an equationally definable
+class. (This is why we have not required $|A|>1$, as is often
+done.) Again, the partial case is interesting. Hence, we can use
+the theorems of Section~\ref{kap1}.\ref{kap1-1} to create structures. Two
+models are of particular significance. One is based on the algebra
+of combinatorial terms over $V$ modulo derivable identity, the
+other is the algebra of combinators modulo derivable identity.
+Indirectly, this also shows how to create models for the
+$\lambda$--calculus. We shall explain a different method below
+in Section~\ref{kap6}.\ref{kap6-4b}.
+
+Call a structure $\auf A, \bullet, \mathsf{k}, \mathsf{s}\zu$
+%%%%
+\index{combinatory algebra!partial}%%
+%%%%
+a \textbf{partial combinatory algebra} if (i) $\mathsf{s} \bullet x
+\bullet y$ is always defined and (ii) the defining equations hold
+in the intermediate sense, that is, if one side is defined so is
+the other and they are equal (cf. Section~\ref{kap1}.\ref{kap1-1}). 
+Consider once again the universe $V_{\omega}$. Define
+%%
+\begin{align}
+\Gk & := \{\auf x, \auf y, x\zu\zu : x, y \in V_{\omega}\} \\
+\Gs & := \{\auf x, \auf y, \auf z, \mathsf{app}(\mathsf{app}(x,z), 
+\mathsf{app}(y,z))\zu\zu : x, y, z \in V_{\omega}\}
+\end{align}
+%%
+$\auf V_{\omega}, \mbox{\sf app}, \Gk, \Gs\zu$ is not a
+partial combinatory algebra because
+$\mathsf{app}(\mathsf{app}(\Gk, x), y)$ is not always
+defined. So, the equation $(k \bullet x) \bullet y \boldsymbol{=} x$ 
+does not hold in the intermediate sense (since the right hand is 
+obviously always defined). The defining equations hold
+only in the weak sense: if both sides are defined, then they are
+equal. Thus, $V_{\omega}$ is a useful model only in the typed 
+case.
+
+In the typed case we need a variety of combinators. More exactly:
+for all types $\alpha$, $\beta$ and $\gamma$ we need elements
+$\mathsf{k}_{\delta} \in A_{\delta}$, $\delta = \alpha \pf %
+(\beta \pf \alpha)$ and $\mathsf{s}_{\eta} \in A_{\eta}$, $\eta
+= (\alpha \pf (\beta\pf \gamma)) \pf  ((\alpha \pf \beta) \pf (\alpha %
+\pf \gamma))$ such that for all $a \in A_{\alpha}$ and %
+$b \in A_{\beta}$ we have
+%%
+\begin{equation}
+(\mathsf{k}_{\delta} \bullet a) \bullet b = a
+\end{equation}
+%%
+and for every $a \in A_{\alpha \pf (\beta \pf \gamma)}$,
+$b \in A_{\alpha \pf \beta}$ and $c \in A_{\alpha}$ we have
+%%
+\begin{equation}
+((\mathsf{s}_{\eta} \bullet a) \bullet b) \bullet c =
+(a \bullet c) \bullet (b \bullet c) 
+\end{equation}
+
+We now turn to an interesting connection between intuitionistic
+logic and type theory, known as the
+{\it Curry--Howard--Isomorphism}.
+%%%
+\index{Curry, Haskell B.}%%%
+\index{Curry--Howard--Isomorphism}%%
+\index{Howard, William}%%%
+%%%
+Write $M : \varphi$ if $M$ is a $\lambda$--term of type $\varphi$.
+Notice that while each term has exactly one type, there are
+infinitely many terms having the same type. The following
+is a Gentzen--calculus for statements of the form $M : \varphi$.
+Here, $\Gamma$, $\Delta$, $\Theta$ denote arbitrary sets of such
+statements, $x$, $y$ individual variables (of appropriate type),
+and $M$, $N$ terms. The rules are shown in Table~\ref{tab:CHI}.
+%%
+\begin{table}
+\caption{Rules of the Labelled Calculus}
+\label{tab:CHI}
+$$\begin{array}{l}
+\mbox{\rm (axiom)} \quad
+x : \varphi \bvdash x : \varphi
+\qquad
+\mbox{\rm (M)} \quad \begin{array}{c}
+\Gamma \bvdash M : \varphi \\\hline
+\Gamma, x : \chi \bvdash M : \varphi
+\end{array} \\
+\mbox{\rm (cut)} \quad
+\begin{array}{c}
+\Gamma \bvdash M : \varphi  \quad \Delta, x : \varphi, \Theta \bvdash
+    N : \chi \\\hline
+\Delta, \Gamma, \Theta \bvdash [M/x]N : B
+\end{array}
+\\
+\mbox{(\textbf{E}{\mtt\symbol{25}})}\quad
+\begin{array}{c}
+\Gamma \bvdash M : \mbox{\mtt ($\varphi$\symbol{25}$\chi$)}%
+	\quad \Delta \bvdash N : \varphi
+\\\hline
+\Gamma, \Delta \bvdash \mbox{\tt (}MN\mbox{\tt )} : \chi
+\end{array}
+    \\
+\mbox{(\textbf{I}{\mtt\symbol{25}})}\quad
+\begin{array}{c}
+\Gamma, x : \varphi \bvdash M : \chi \\\hline
+\Gamma \bvdash \mbox{\tt (\stlambda$x$.$M$)} :
+    \mbox{\mtt ($\varphi$\symbol{25}$\chi$)}
+\end{array}
+\end{array}$$
+\end{table}
+%%
+First of all notice that if we strip off the labelling by
+$\lambda$--terms we get a natural deduction calculus for
+intuitionistic logic (in the only connective {\mtt\symbol{25}}). 
+Hence if a sequent $\{M_i : \varphi_i : i < n\} \bvdash N : \chi$ 
+is derivable then $\stackrel{\CH}{\rightsquigarrow} 
+\{ \varphi_i : i < n\}\bvdash \chi$, whence 
+$\{\varphi_i : i < n\} \vdash^{\mathsf{H}} \chi$. 
+Conversely, given a natural deduction proof of 
+$\{\varphi_i : i < n\} \bvdash \chi$, we can decorate the proof with
+$\lambda$--terms by assigning the variables at the leaves of the
+tree for the axioms and then descending it until we hit the root.
+Then we get a proof of the sequent $\{M_i : \varphi_i : i < n\}
+\bvdash N : \chi$ in the above calculus.
+
+Now we interpret the intuitionistic formulae in this proof calculus
+as types. For a set $\Gamma$ of $\lambda$--terms over the set $B$
+of basic types we put
+%%
+\begin{equation}
+|\Gamma| := \{\varphi \in \Typ_{\pf}(B) :
+    \mbox{ there is } M \in \Gamma \mbox{ of type } \varphi\}
+\end{equation}
+%%
+\begin{defn}
+For a set $\Gamma$ of types and a single type $\varphi$ over a set $B$ 
+of basic types we put $\Gamma \vdash^{\boldsymbol{\lambda}} \varphi$ if 
+there is a term $M$ of type $\varphi$ such that every type of a variable 
+occurring free in $M$ is in $\Gamma$.
+\end{defn}
+%%
+Returning to our calculus above we notice that if
+%%
+\begin{equation}
+\{M_i : \varphi_i : i < n\} \bvdash N : \chi
+\end{equation}
+%%
+is derivable, we also have 
+$\{\varphi_i : i < n\} \vdash^{\boldsymbol{\lambda}}
+\chi$. This is established by induction on the proof.
+Moreover, the converse also holds (by induction on the
+derivation). Hence we have the following result.
+%%
+\begin{thm}[Curry]
+%%%
+\index{Curry, Haskell B.}%%%
+%%%
+$\Gamma \vdash^{\boldsymbol{\lambda}} \varphi$ iff 
+$\Gamma \vdash^{\mathsf{H}} \varphi$.
+\end{thm}
+%%
+The correspondence between intuitionistic formulae and types has
+also been used to obtain a rather nice characterization of
+shortest proofs. Basically, it turns out that a proof of $\Gamma
+\bvdash N : \varphi$ can be shortened if $N$ contains a redex.
+Suppose, namely, that $N$ contains the redex {\tt ((\stlambda
+$x$.$M$)$U$)}. Then, as is easily seen, the proof
+contains a proof of $\Delta \bvdash \mbox{\tt (\stlambda$x$.$M$%
+)$U$)} : \chi$. This proof part can be shortened. To
+simplify the argument here we assume that no use of (cut) and (M)
+has been made. Observe that we can assume that this very sequent
+has been introduced by the rule (\textbf{I}{\mtt\symbol{25}}) and 
+its left premiss by the rule (\textbf{E}{\mtt\symbol{25}}) and 
+$\Delta = \Delta' \cup \Delta''$.  
+%%
+\begin{equation}
+\begin{array}{ccc}
+\Delta', x : \psi \bvdash M : \chi & \qquad & \\\cline{1-1}
+\Delta' \bvdash \mbox{\tt (\stlambda$x$.$M$)} :
+    \mbox{\mtt ($\psi$\symbol{25}$\chi$)} & & \Delta'' 
+	\bvdash U : \psi \\\hline
+\multicolumn{3}{c}{%
+\Delta', \Delta'' \bvdash \mbox{\tt ((\stlambda$x$.$M$)$U$)} : \chi}
+\end{array}
+\end{equation}
+%%
+Then a single application of (cut) gives this:
+%%
+\begin{equation}
+\begin{array}{c}
+\Delta'' \bvdash U : \psi \qquad \Delta', x : \psi \bvdash
+    M : \chi \\\hline
+\Delta', \Delta'' \bvdash [M/x]U : \chi
+\end{array}
+\end{equation}
+%%
+While the types and the antecedent have remained constant, the
+conclusion now has a term associated to it that is derived from
+contracting the redex. The same can be shown if we take
+intervening applications of (cut) and (M), but the proof is more
+involved. Essentially, we need to perform more complex proof
+transformations. There is another simplification that can be made,
+namely when the derived term is explicitly $\alpha$--converted.
+Then we have a sequent of the form $\Gamma \bvdash \mbox{\tt (%
+\stlambda} x\mbox{\tt .}Mx\mbox{\tt )} : \mbox{\mtt ($\varphi$%\
+\symbol{25}$\chi$)}$. Then, again putting aside intervening 
+occurrences of (cut) and (M), the proof is as follows.
+%%
+\begin{equation}
+\begin{array}{c}
+\Gamma \bvdash \mbox{\tt (\stlambda} x\mbox{\tt .}Mx\mbox{\tt )}
+    : \varphi\pf\chi  \qquad y : \varphi \bvdash y : \varphi \\\hline
+\Gamma, y : \varphi \bvdash \mbox{\tt (}My\mbox{\tt )} : \chi
+\\\hline \Gamma \bvdash \mbox{\tt (\stlambda} y\mbox{\tt
+.}My\mbox{\tt )} : \mbox{\mtt ($\varphi$\symbol{25}$\chi$)}
+\end{array}
+\end{equation}
+%%
+This proof part can be eliminated completely, leaving only the
+proof of the left hand premiss. An immediate corollary of this
+fact is that if the sequent 
+$\{x_i : \varphi_i : i < n\} \bvdash N : \chi$ is
+provable for some $N$, then there is an $N'$ obtained from $N$ by
+a series of $\alpha$--/$\beta$-- and $\eta$--normalization steps
+such that the sequent $\{x_i : \varphi_i : i < n\} \bvdash N' : \chi$ 
+is also derivable. The proof of the latter formula is shorter than the
+first on condition that $N$ contains a subterm that can be
+$\beta$-- or $\eta$--reduced.
+
+{\it Notes on this section.} $\lambda$--abstraction already
+appeared in \cite{frege:funktion} (written in 1891). 
+%%%
+\index{Frege, Gottlob}%%%
+%%%%
+Frege wrote $\stackrel{\boldmath{,}}{\mbox{\textgreek{e}}}$.$f$(\textgreek{e}). 
+The first to study abstraction systematically was Alonzo Church 
+%%%
+\index{Church, Alonzo}%%
+%%%
+(see \cite{church:foundation}). Combinatory logic on the other hand has 
+appeared first in the work of Moses Sch\"onfinkel 
+%%%
+\index{Sch\"onfinkel, Moses}%%%
+%%%
+\shortcite{schoenfinkel:bausteine} and Haskell
+Curry \shortcite{curry:grundlagen}. The typing is reminiscent of 
+%%%
+\index{Curry, Haskell B.}%%%
+%%%
+Husserl's 
+%%%
+\index{Husserl, Edmund}%%%
+%%%
+semantic categories. More on that in
+Chapter~\ref{kap6}. Suffice it to say that two elements are of the
+same semantic category iff they can meaningfully occur in the same
+terms. There are exercises below on applicative structures that
+demonstrate that Husserl's conception characterizes exactly the
+types up to renaming of the basic types.
+%%
+\vplatz
+\exercise
+Show that in $\mathsf{ZFC}$,  $M \times (N \times O) \neq 
+(M \times N) \times O$. 
+\vplatz%%
+\exercise%%
+Find combinators $\mathsf{G}$ and $\mathsf{C}$ such that $\mathsf{G}XYZ
+\triangleright X(ZYZ)$ and $\mathsf{C}XYZ \triangleright XZY$.
+%%
+\vplatz%%
+\exercise%%
+Determine all types of $\mathsf{G}$ and $\mathsf{C}$ of the previous
+exercise.
+%%
+\vplatz%%
+\exercise%%
+\label{ex:ski}%%
+We have seen in Section~\ref{kap3}.\ref{kap:prop} that 
+{\mtt ($\varphi$\symbol{25}$\varphi$)} can be derived from (a0) and 
+(a1). Use this proof to give a
+definition of {\tt I} in terms of {\tt K} and {\tt S}.
+%%
+\vplatz
+\exercise
+Show that any combinatorially complete applicative structure with
+more than one element is infinite.
+%%
+\vplatz
+\exercise
+Show that $\bullet$, $\Gk$ and $\Gs$ defined on $V_{\omega}$
+are proper classes in $V_{\omega}$. {\it Hint.} It suffices
+to show that they are infinite. However, there is a proof that 
+works for any universe $V_{\kappa}$, so here is a more general 
+method. Say that $C \subseteq V_{\kappa}$ is {\it rich\/} if for 
+every $x \in V_{\kappa}$, $x \in^+ C$. Show that no set is rich. 
+Next show that $\bullet$, $\Gk$ and $\Gs$ are rich.
+%%
+\vplatz%%
+\exercise%%
+Let $\auf \{A_{\alpha} : \alpha \in \Typ_{\pf}(B)\}, %
+\bullet\zu$ be a typed applicative structure. Now define the 
+partial algebra $\auf A, \bullet\zu$ where $A :=
+\bigcup_{\alpha} A_{\alpha}$. Show that if the applicative
+structure is combinatorially complete, the type assignment is
+unique up to permutation of the elements of $B$. Show also that if
+the applicative structure is not combinatorially complete,
+uniqueness fails. {\it Hint.} First, establish the elements of
+basic type, and then the elements of type $b \pf c$, where $b, c
+\in C$ are basic. Now, an element of type $b \pf c$ can be applied 
+to all and only the elements of type $c$. This allows
+to define which elements have the same basic type. 
+%%
+\vplatz%%
+\exercise%%
+Let $V := \{\mbox{\tt p}\vec{\alpha} :
+\vec{\alpha} \in \{\mbox{\tt 0}, \mbox{\tt 1}\}^{\ast}\}$. Denote
+the set of all types of combinators that can be formed over the
+set $V$ by $C$. Show that $C$ is exactly the set of
+intuitionistically valid formulae, that is, the set of formulae
+derivable in $\vdash^{\mathsf{H}}$.
+%%

@@ -1,0 +1,737 @@
+\section{GPSG and HPSG}
+\label{kap5-6}
+%
+%
+%
+In the 1980s, several alternatives to transformational grammar were
+being developed. One alternative was categorial grammar, which we have
+discussed in Chapter~\ref{kap3}. Others were the grammar
+formalisms that used a declarative (or model theoretic) definition
+of syntactic structures. These are 
+%%%%
+\index{Generalized Phrase Structure Grammar}
+%%%%
+Generalised Phrase Structure Grammar (mentioned already in
+Section~\ref{kap5}.\ref{kap5-1}) and 
+%%%%
+\index{LFG (see Lexical Functional Grammar)}%%
+\label{Lexical Functional Grammar}%%
+%%%%
+\textbf{Le\-xi\-cal--Func\-tio\-nal Grammar} (\textbf{LFG}).
+GPSG later developed into 
+%%%%
+\index{Head Driven Phrase Structure Grammar}%%
+%%%%
+HPSG. In  this section we shall deal mainly with GPSG and HPSG. 
+Our aim is twofold. We shall give an overview of the
+expressive mechanism that is being used in these theories,
+and we shall show how to translate these expressive devices
+into a suitable polymodal logic.
+
+In order to justify the introduction of transformational grammar, Chomsky 
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+had given several arguments to show that traditional 
+theories were completely inadequate. In particular, he targeted 
+the theory of finite automata (which was very popular in the 1950s) 
+and the structuralism. His criticism of finite automata is up to 
+now unchallenged. His negative assessment of structuralism, however, 
+was based on factual errors. First of all, Chomsky has made a 
+caricature of Bloomfields 
+%%%
+\index{Bloomfield, Leonard}%%%
+%%%
+structuralism by equating it with the 
+claim that natural languages are strongly context free (see the 
+discussion by Manaster--Ramer 
+%%%
+\index{Manaster--Ramer, Alexis}%%
+\index{Kac, Michael B.}%%
+%%%
+and Kac~\shortcite{manasterramerkac:concept}). Even if
+this was not the case, his arguments of the insufficiency of CFGs
+are questionable. Some linguists, notably Gerald Gazdar 
+%%%
+\index{Gazdar, Gerald}%%%
+\index{Pullum, Geoffrey}%%%
+%%%
+and Geoffrey Pullum, after reviewing these and other proofs
+eventually came to the conclusion that contrary to what has
+hitherto been believed all natural languages were context free.
+However, the work of Riny Huybregts 
+%%%
+\index{Huybregts, Riny}%%%
+%%%
+and Stuart Shieber, 
+%%%
+\index{Shieber, Stuart}%%
+%%%
+which we have discussed already in Section~\ref{kap2}.\ref{kap2-6} 
+put a preliminary end to this story. On the other hand, as 
+Rogers~\shortcite{rogers:mso} 
+%%%
+\index{Rogers, James}%%%
+%%%
+and Kracht~\shortcite{kracht:codes} 
+%%%
+\index{Kracht, Marcus}%%
+%%%
+have later shown, the theories of 
+English proposed inside of GB actually postulated an essentially 
+context free structure for it. Hence English is still (from a 
+theoretical point of view) strongly context free.
+
+An important argument against context free rules has been the fact
+that simple regularities of language such as agreement cannot be
+formulated in them. This was one of the main arguments by Paul
+Postal~\shortcite{postal:constituent}  
+%%%
+\index{Postal, Paul}%%%
+%%%
+against the structuralists 
+(and other people), even though strangely enough TG and GB did not 
+have much to say about it either. Textbooks only offer vague 
+remarks about agreement to the effect that heads agree with their 
+specifiers in certain features. Von Stechow 
+%%%
+\index{von Stechow, Arnim}%%%
+\index{Sternefeld, Wolfgang}%%%
+%%%
+and Sternefeld \shortcite{stechowsternefeld} are more
+precise in this respect. In order to formulate this exactly, one
+needs AVSs and variables for values (and structures). These tools
+were introduced by GPSG into the apparatus of context free rules,
+as we have shown in Section~\ref{kap5}.\ref{kap5-1}. Since we have discussed 
+this already, let us go over to word order variation. Let us note
+that GPSG takes over $\oli{X}$--syntax more or less without
+change. It does, however, not insist on binary branching. (It 
+allows even unbounded branching, which puts it just slightly 
+outside of context freeness. However, the bound on branching 
+may seem unnatural, see Section~\ref{kap5}.\ref{kap5-4}.) Second,
+GPSG separates the context free rules into two components: one is
+responsible for generating the dominance relation, the other for
+the precedence relation between sisters. The following rule
+determines that a node with label {\rm VP} can have daughters,
+which may occur in any order.
+%%
+\begin{equation}
+\mbox{\rm VP} \pf
+\mbox{\rm NP}[\mbox{\it nom\/}]\;
+\mbox{\rm NP}[\mbox{\it dat\/}]\;
+\mbox{\rm NP}[\mbox{\it acc\/}]\;
+\mbox{\rm V}
+\end{equation}
+%%
+This rule stands for no less than 24 different context free rules.
+In order to get for example the German 
+%%%
+\index{German}
+%%%
+word order of the subordinate clause we now add the following condition.
+%%
+\begin{equation}
+\mbox{\rm N} \prec \mbox{\rm V}
+\end{equation}
+%%
+This says that every daughter with label {\rm N} is to the left of
+any daughter with label {\rm V}. Hence there only remain 6 context
+free rules, namely those in which the verb is at the end of the
+clause. (See in this connection the examples \eqref{ex:6519} --
+\eqref{ex:6522}.) For German one would however not propose this
+analysis since it does not allow to put any adverbials in
+between the arguments of the verb. If one uses binary branching 
+trees, the word order problems reappear again in the form of order 
+of discharge (for which GPSG has no special mechanism). There are 
+languages for which this is better suited.
+For example, Staal~\shortcite{staal:sanskrit} 
+%%%
+\index{Staal, J.~F.}%%
+%%%
+has argued that Sanskrit
+has the following word orders: SVO, SOV, VOS and OVS. If we allow
+the following rules without specifying the linear order, these
+facts are accounted for.
+%%
+\begin{equation}
+\mbox{\rm VP} \pf \mbox{\rm NP}[\mbox{\it nom\/}]\quad
+\mbox{\rm V}^1,
+\qquad
+\mbox{\rm V}^1 \pf \mbox{\rm NP}[\mbox{\it acc\/}]\quad 
+\mbox{\rm V}^0
+\end{equation}
+%%
+All four possibilities can be generated --- and no more.
+
+Even if we ignore word order variation of the kind just described there
+remain a lot of phenomena that we must account for. GPSG has
+found a method of capturing the effect of a single movement
+transformation by means of a special device. It first of all
+defines \textbf{metarules},
+%%%%%
+\index{metarule}%%
+%%%%%
+which generate rules from rules. For example, to account for movement 
+we propose that in addition to $[[\dotsb Y\dotsb]_W]_V$ also the 
+tree $[Y_i\; [\dotsb t_i\dotsb]_W]_V$ will be a legitimate tree. 
+To make this happen, there shall be an additional unary rule that 
+allows to derive the latter tree whenever the former is derivable. 
+The introduction 
+of these rules can be captured by a general scheme, a metarule. 
+However, in the particular case at hand one must be a bit more 
+careful. It is actually necessary to do a certain amount of bookkeeping 
+with the categories. GPSG borrows from categorial grammar the category 
+$W/Y$, where $W$ and $Y$ are standard categories. In place of the rule 
+$V \pf W$ one writes $V \pf Y\; W/Y$. The official notation is
+%%
+\begin{equation}
+\left[\begin{array}{l}
+W \\
+\mbox{\sc slash} \; :\;  Y
+\end{array}\right]
+\end{equation}
+%%
+How do we see to it that the feature $[\mbox{\sc slash} \; : \; Y]$ is
+%%%
+\index{feature}%%
+%%%
+correctly distributed? Also here GPSG has tried to come up with a
+principled answer. GPSG distinguishes \textbf{foot features} from
+\textbf{head features}. Their behaviour is quite distinct. Every
+feature is either a foot feature or a head feature. The attribute
+{\sc slash} is
+%%%
+\index{feature!head}%%
+\index{feature!foot}%%
+%%%
+classified as a foot feature. (It is perhaps unfortunate that it
+is called a feature and not an attribute, but this is a minor
+issue.) For a foot feature such as {\sc slash}, the {\sc
+slash}--features of the mother are the \textbf{unification} of 
+the {\sc slash}--features of the daughters, which corresponds to the 
+logical meet. 
+%%%
+\index{unification}%%
+%%%%
+Let us look more closely into that. If $W$ is 
+an AVS and $f$ a feature then we denote by $f(W)$ the value 
+of $f$ in $W$.
+%%%
+\begin{defn}
+Let $G$ be a set of rules over AVSs. $f$ is a
+\textbf{foot feature in} $G$ if for every maximally instantiated rule
+$A \pf B_0\dotsb B_{n-1}$ the following holds.
+%%
+\begin{equation}
+f(A) = \gund_{i < n} f(B_i)
+\end{equation}
+\end{defn}
+%%%
+So, what this says is that the {\sc slash}--feature can be passed
+on from mother to any number of its daughters. In this way 
+\cite{gazdarpullumsag:gpsg} have seen to it that parasitic gaps 
+can also be handled (see the previous section on this phenomenon). 
+However, extreme care is needed. For the rules do not allow to count 
+how many constituents of the same category have been extracted. 
+\textbf{Head features} are being distributed roughly as follows.
+%%%
+\begin{quote}
+{\sl Head Feature Convention.}
+Let $A \pf B_0 \dotsb B_{n-1}$ be a rule with head $B_i$, and
+$f$ a head feature. Then $f(A) = f(B_i)$.
+\end{quote}
+%%
+The exact formulation of the distribution scheme for head features
+however is much more complex than for foot features.  We shall not
+go into the details here.
+
+This finishes our short introduction to GPSG. It is immediately
+clear that the languages generated by GPSG are context free
+if there are only finitely many category symbols and bounded 
+branching. In order for this to be the case, the syntax of paths 
+in an AVS was severely restricted.
+%%%%
+\begin{defn}
+%%%
+\index{path}%%%
+%%%
+Let $A$ be an AVS. A \textbf{path in} $A$ is a sequence
+$\auf f_i : i < n\zu$ such that $f_{n-1} \circ \dotsb \circ f_0(A)$
+is defined. The value of this expression is the \textbf{value} of the
+path.
+\end{defn}
+%%%%
+In \cite{gazdarpullumsag:gpsg} it was required that only those paths
+were legitimate in which no attribute occurs twice. In this way the
+finiteness is a simple matter. The following is left to the reader
+as an exercise.
+%%%%
+\begin{prop}
+\label{prop:endkat}
+Let $A$ be a finite set of attributes and $F$ a finite set of paths
+over $A$. Then every set of pairwise non--equivalent AVSs is finite.
+\end{prop}
+%%%%%
+Subsequently to the discovery on the word order of Dutch and Swiss
+German this restriction finally had to fall. Further, some people
+had anyway argued that the syntactic structure of the verbal complex
+is quite different, and that this applies also to German. The verbs
+in a sequence of infinitives were argued to form a constituent, the
+so called
+%%%
+\index{verb cluster}%%
+\index{German}%%%
+%%%%
+\textbf{verb cluster}. This has been claimed in the GB framework for
+German and Dutch. 
+%%%
+\index{Dutch}%%%
+%%%
+Also, Joan Bresnan, Ron Kaplan, Stanley Peters and Annie Zaenen 
+argue in \shortcite{bresnanetal:dutch}
+%%%
+\index{Bresnan, Joan}%%%
+\index{Kaplan, Ron}%%%
+\index{Peters, Stanley}%%
+\index{Zaenen, Annie}%%%
+%%%
+for a different analysis, based on principles of LFG. Central to LFG 
+is the assumption that there are three (or even more) distinct 
+structures that are being built simultaneously:
+%%%
+\index{f--structure}\index{a--structure}\index{c--structure}%%%
+%%
+\begin{dinglist}{43}
+\item
+\textbf{c--structure} or constituent structure: this is the structure
+where the linear precedence is encoded and also the syntactic
+structure.
+\item
+\textbf{f--structure} or functional structure: this is the structure
+where the grammatical relations (subject, object) but also
+discourse relations (topic) are encoded.
+\item
+\textbf{a--structure} or argument structure: this is the structure
+that encodes argument relations ($\theta$--roles).
+\end{dinglist}
+%%
+A rule specifies a piece of c-, f- and a--structure together with
+correspondences between the structures.
+For simplicity we shall ignore a--structure from now on. An
+example is provided in Table~\ref{tab:lfg}.
+%%
+\begin{table}
+\caption{An LFG--Grammar}
+\label{tab:lfg}
+$$\begin{array}{lccc}
+\mbox{\rm S} & \quad\pf\quad & \mbox{\rm NP} & \mbox{\rm VP} \\
+             &               & (\uparrow \mbox{\sc subj} =
+             \downarrow) & \uparrow = \downarrow \\
+             \\
+\mbox{\rm NP} & \quad \pf \quad & \mbox{\rm Det} & \mbox{\rm N} \\
+              &   & \uparrow = \downarrow & \uparrow = \downarrow
+              \\
+              \\
+\mbox{\rm VP} & \quad\pf\quad & \mbox{\rm V} & \mbox{\rm PP} \\
+              &               & \uparrow = \downarrow &
+                (\uparrow \mbox{\sc obj} = \downarrow)
+\end{array}$$
+\end{table}
+%%
+The rules have two lines: the upper line specifies a context free
+phrase structure rule of the usual kind for the c--structure. The 
+lower line tells us how the c--structure relates to the f--structure. 
+These correspondences will allow to define a unique f--structure
+(together with the universal rules of language). The rule if
+applied creates a local tree in the c--structure, consisting of
+three nodes, say 0, 00, 01, with label {\rm S}, {\rm NP} and {\rm
+VP}, respectively. The corresponding f--structure is different.
+This is indicated by the equations. To make the ideas precise, we
+shall assume two sets of nodes in the universe, $C$ and $F$, which
+are sets of c--structure and f--structure nodes, respectively. And we
+assume a function {\sc func}, which maps $C$ to $F$. It is clear
+now how to translate context free rules into first--order
+formulae. We directly turn to the f--structure statements.
+C--structure is a tree, F--structure is an AVS. Using the function
+{\sc up} to map a node to its mother, the equation $(\uparrow
+\mbox{\sc subj} = \downarrow)$ is translated as follows:
+%%
+\begin{equation}
+(\uparrow \mbox{\sc subj} = \downarrow)(x) :=
+\mbox{\sc subj} \circ \mbox{\sc func} \circ \mbox{\sc up}(x)
+\doteq \mbox{\sc func}(x)
+\end{equation}
+%%
+In simpler terms: I am my mother's subject. The somewhat simpler
+statement $\uparrow = \downarrow$ is translated by
+%%
+\begin{equation}
+(\uparrow = \downarrow)(x) :=
+\mbox{\sc func} \circ \mbox{\sc up}(x) \doteq \mbox{\sc func}(x)
+\end{equation}
+%%
+Here the f--structure does not add a node, since the predicate
+installs itself into the root node (by the second condition),
+while the subject NP is its {\sc subj}--value. Notice that the
+statements are local path equations, which are required to hold of
+the c--structure node under which they occur. LFG uses the fact
+that f--structure is flatter than c--structure to derive the Dutch
+and Swiss German sentences using rules of this kind, despite the
+fact that the c--structures are not context free.
+
+While GPSG and LFG still assume a phrase structure skeleton that
+plays an independent role in the theory, HPSG actually offers a
+completely homogeneous theory that makes no distinction between
+the sources from which a structure is constrained. What made this
+possible is the insight that the attribute value formalism can
+also encode structure. A very simple possibility of taking care of
+the structure is the following. Already in GPSG there was a
+feature {\sc subcat} whose value was the subcategorization frame
+of the head. Since the subcategorization frame must map into a
+structure we require that in the rules
+%%
+\begin{equation}
+X \pf Y[\mbox{\sc subcat}\; : \; A]\quad B
+\end{equation}
+%%
+where $B \leq A$. (Notice that the order of the constituents does 
+not play any role.) This means nothing but that $B$ is being
+subsumed under $A$ that is to say that it is a special $A$. The
+difference with GPSG is now that we allow to stack the feature
+{\sc subcat} arbitrarily deep. For example, we can attribute to
+the German word {\tt geben} (`to give') the following category.
+%%%%
+\begin{equation}
+\left[\begin{array}{l@{\; :\;}l}
+\mbox{\sc cat} & v \\
+\mbox{\sc subcat} &
+    \left[
+    \begin{array}{l@{\; :\;}l}
+        \mbox{\sc cat} & \mbox{\rm NP} \\
+    \mbox{\sc case} & \mbox{\it nom\/} \\
+    \mbox{\sc subcat} &
+        \left[
+        \begin{array}{l@{\; :\;}l}
+            \mbox{\sc cat} & \mbox{\rm NP} \\
+        \mbox{\sc case} & \mbox{\it dat\/} \\
+        \mbox{\sc subcat} &
+            \left[
+            \begin{array}{l@{\; :\;}l}
+                \mbox{\sc cat} & \mbox{\rm NP} \\
+            \mbox{\sc case} & \mbox{\it acc\/}
+            \end{array}\right]
+        \end{array}\right]
+    \end{array}\right]
+\end{array}\right]
+\end{equation}
+%%%%
+The rules of combination for category symbols have to be adapted
+accordingly. This requires some effort but is possible without
+problems. HPSG essentially follows this line, however pushing the
+use of AVSs to the limit. Not only the categories, also the entire
+geometrical structure is now coded using AVSs. HPSG also uses
+structure variables. This is necessary in particular for the
+semantics, which HPSG treats in the same way as syntax. (In this
+it differs from GPSG. The latter uses a Montagovian approach,
+pairing syntactic rules with semantical rules. In HPSG --- and 
+LFG for that matter ---, the semantics is coded up like syntax.) 
+Parallel to the development of GPSG and related frameworks, the 
+so called {\it constraint based approaches\/} to natural language 
+processing were introduced.  \cite{shieber:constraint} provides 
+a good reference.
+%%
+\begin{defn}
+\index{$s \doteq t$, $s \uparrow$}%%%
+\index{constraint}%%%
+\index{constraint!basic}%%%
+%%%
+A \textbf{basic constraint language} is a finite set $F$ of unary 
+function symbols. A \textbf{constraint} is either an equation 
+`$s(x) \boldsymbol{\doteq} t(x)$' or a statement `$s(x) \uparrow$'. 
+A \textbf{constraint model} is a partial algebra 
+$\GA = \auf A, \Pi\zu$ for the signature.
+We write $\GA \vDash s \boldsymbol{\doteq} t$ iff for every $a$,
+$s^{\GA}(a)$ and $t^{\GA}(a)$ are defined and equal. $\GA \vDash
+s(x)\boldsymbol{\uparrow}$ iff for every $a$, $s^{\GA}(a)$ is defined.
+\end{defn}
+%%%
+Often, one has a particular constant $\uli{o}$, which serves as
+the root, and one considers equations of the form $s(\uli{o})
+\boldsymbol{\doteq} t(\uli{o})$. Whereas the latter type of equation 
+holds only at the root, the above type of equations are required to 
+hold {\it globally}. We shall deal only with globally valid equations.
+Notice that we can encode atomic values into this language by
+interpreting an atom $p$ as a unary function $f_p$ with the idea
+being that $f_p$ is defined at $b$ iff $p$ holds of
+$b$. (Of course, we wish to have $f_p(f_p(b)) = f_p(b)$ if the
+latter is defined, but we need not require that.) We give a
+straightforward interpretation of this language into modal logic.
+For each $f \in F$, take a modality, which we call by the same
+name. Every $f$ satisfies $\auf f\zu p \und \auf f\zu  q . \pf.
+\auf f\zu (p \und q)$. (This logic is known as $\mathsf{K.alt_1}$, 
+see \cite{kracht:av}.) With each term $t$ we associate a modality in 
+the obvious way: $f^{\mu} := f$, $(f(t))^{\mu} := f; t^{\mu}$. Now, 
+the formula $s \boldsymbol{\doteq} t$ is translated by
+%%
+\begin{equation}
+\begin{split}
+(s^{\mu} \boldsymbol{\doteq} t^{\mu}) & 
+	:= \auf s^{\mu}\zu p \dpf \auf t^{\mu}\zu p \\
+(s \boldsymbol{\uparrow})^{\mu} & := \auf s^{\mu}\zu \top
+\end{split}
+\end{equation}
+%%
+Finally, given $\GA = \auf A, \Pi\zu$ we define a Kripke--frame
+$\GA^{\mu} := \auf A, R\zu$ with $x\; R(f)\; y$ iff
+$f(x)$ is defined and equals $y$. Then
+%%
+\begin{equation}
+\GA \vDash s \boldsymbol{\doteq} t
+\quad\Dpf\quad
+\GA^{\mu} \vDash (s \boldsymbol{\doteq} t)^{\mu}
+\end{equation}
+%%
+Further,
+%%
+\begin{equation}
+\GA \vDash (s \boldsymbol{\uparrow})
+\quad\Dpf\quad
+\GA^{\mu} \vDash (s \boldsymbol{\uparrow})^{\mu}
+\end{equation}
+%%
+Now, this language of constraints has been extended in various
+ways. The attribute--value structures of Section~\ref{kap5}.\ref{kap5-1}
+effectively extend this language by boolean connectives. $[C \; :
+\; A]$ is a shorthand for $\auf C\zu A^{\mu}$, where $A^{\mu}$ is
+the modal formula associated with $A$. Moreover, following the
+discussion of Section~\ref{kap5}.\ref{kap5-4} we use $\links$, $\rechts$,
+$\oben$ and $\unten$ to steer around in the phrase structure
+skeleton. HPSG uses a different encoding. It assumes an attribute
+called {\sc daughters}, whose value is a list. A list in turn is
+an AVS which is built recursively using the predicates {\sc first}
+and {\sc rest}. (The reader may write down the path language for
+lists.) The notions of a Kripke--frame and a generalized
+Kripke--frame are then defined as usual. The
+Kripke--frames take the role of the actual syntactic objects,
+while the AVSs are simply formulae to talk about them.
+
+The logic $L_0$ is of course not very interesting. What we want to
+have is a theory of the existing objects, not just all conceivable
+ones. A particular concern in syntactic theory is therefore the
+formulation of an adequate theory of the linguistic objects, be
+it a universal theory of all linguistic objects, or be it a theory of
+the linguistic objects of a particular language. We may cast this
+in logical terms in the following way. We start with a set (or
+class) $\CK$ of Kripke--frames. The theory of that class is
+$\mathsf{Th}\, \CK$. It would be most preferrable if for any
+given Kripke--frame  $\GF$ we had $\GF \vDash \mathsf{Th}\, \CK$
+iff $\GF \in \CK$. Unfortunately, this is not always
+the case. We shall see, however, that the situation is as good as
+one can hope for. Notice the implications of the setup. Given,
+say, the admissible structures of English, we get a modal logic
+$L_M(\mbox{\rm Eng})$, which is an extension of $L_0$. Moreover,
+if $L_M(\mbox{\rm Univ})$ is the modal logic of all existing
+linguistic objects, then $L_M(\mbox{\rm Eng})$ furthermore is an
+axiomatic extension of $L_M(\mbox{\rm Univ})$. There are sets
+$\Gamma$ and $E$ of formulae such that
+%%
+\begin{equation}
+L_0 \subseteq L_M(\mbox{\rm Univ}) = L_0 \oplus \Gamma
+\subseteq L_M(\mbox{\rm Eng}) = L_0 \oplus \Gamma \oplus E
+\end{equation}
+%%
+If we want to know, for example, whether a particular formula
+$\varphi$ is satisfiable in a structure of English it is not
+enough to test it against the postulates of the logic $L_0$, nor
+those of $L_M(\mbox{\rm Univ})$. Rather, we must show that it
+is consistent with $L_M(\mbox{\rm Eng})$. These problems can have
+very different complexity. While $L_0$ is decidable, this need not
+be the case for $L_M(\mbox{\rm Eng})$ nor for $L_M(\mbox{\rm
+Univ})$. The reason is that in order to know whether there is a
+structure for a logic that satisfies the axioms we must first
+guess that structure before we can check the axioms on it. If we
+have no indication of its size, this can turn out to be
+impossible. The exercises shall provide some examples. Another way
+to see that there is a problem is this. $\varphi$ is a theorem of
+$L_M(\mbox{\rm Eng})$ if it can be derived from $L_0 \cup \Gamma
+\cup E$ using modus ponens (MP), substitution and (MN). However,
+$\Gamma \cup E \Vdash_{L_0} \varphi$ iff $\varphi$ can
+be derived from $L_0 \cup\Gamma \cup E$ using (MP) and (MN) alone.
+Substitution, however, is very powerful. Here we shall be
+concerned with the difference in expressive power of the basic
+constraint language and the modal logic. The basic constraint
+language allows to express that two terms (called paths for
+obvious reasons) are identical. There are two ways in which such
+an identity can be enforced. (a) By an axiom: then this axiom must 
+hold of all structures under consideration. An example is provided 
+by the agreement rules of a language. (b) As a datum: then we are 
+asked to satisfy the equation in a particular structure. In modal 
+logic, only equations as axioms are expressible. Except for trivial 
+cases there is no formula $\varphi(s,t)$ in polymodal 
+$\mathsf{K.alt_1}$ such that
+%%
+\begin{equation}
+\auf \GA^{\mu}, \beta, x\zu \vDash \varphi \Dpf
+    s^{\GA}(x) = t^{\GA}(x)
+\end{equation}
+%%
+Hence, modal logic is expressibly weaker than predicate logic,
+in which such a condition is easily written down. Yet, it is not
+clear that such conditions are at all needed in natural language.
+All that is needed is to be able to state conditions of that
+kind on all structures --- which we can in fact do. (See
+\cite{kracht:av} for an extensive discussion.)
+
+HPSG also uses {\it types}. Types are properties of nodes. As
+such, they can be modelled by unary predicates in $\mathsf{MSO}$, or by
+boolean constants in modal logic. For example, we have represented
+the atomic values by proposition constants.  In GPSG, the atomic
+values were assigned only to Type 0 features. HPSG goes further
+than that by typing AVSs. Since the AVS is interpreted in a
+Kripke--frame, this creates no additional difficulty. Reentrancy
+is modelled by path equations in constraint languages, and can 
+be naturally expressed using modal languages, as we have
+seen.  As an example, we consider the agreement rule \eqref{eq:61ddd} 
+again.
+%%
+\begin{equation}
+\left[\begin{array}{l@{\; : \;}l}
+\mbox{\sc cat} & \mbox{\it s}
+\end{array}\right]
+\pf
+\left[\begin{array}{l@{\; : \;}l}
+\mbox{\sc cat} & \mbox{\it np} \\
+\mbox{\sc agr} & \framebox{1}
+\end{array}\right]
+\qquad
+\left[\begin{array}{l@{\; : \;}l}
+\mbox{\sc cat} & \mbox{\it vp} \\
+\mbox{\sc agrs} & \framebox{1} \\
+\end{array}\right]
+\end{equation}
+%%
+In the earlier \cite{pollardsag:hpsg1} the idea of reentrancy was
+motivated by {\it information sharing}. What the label
+$\framebox{1}$ says is that any information available under that
+node in one occurrence is available at any other occurrence. One
+way to make this true is to simply say that the two occurrences of
+$\framebox{1}$ are not distinct in the structure. (An analogy
+might help here. In the notation $\{a, \{a,b\}\}$ the two
+occurrences of $a$ do not stand for different things of the
+universe: they both denote $a$, just that the linear notation
+forces us to write it down twice.) There is a way to enforce this
+in modal logic. Consider the following formula.
+%%
+\begin{equation}
+\begin{array}{l}
+\auf \mbox{\sc cat}\zu \mathsf{s} \und
+    \unten(\links \bot \und \auf \mbox{\sc cat}\zu
+    \mathsf{np} \und \rechts (\auf \mbox{\sc cat}\zu\mathsf{vp}
+    \und \rechts \bot)) \\
+\qquad \pf \unten(\links \bot \und \auf\mbox{\sc agr}\zu p \dpf
+    \rechts \auf \mbox{\sc agrs}\zu p)
+\end{array}
+\end{equation}
+%%
+This formula says that if we have an S which consists of an NP and
+a VP, then whatever is the value of {\sc agr} of the NP also is
+the value of {\sc agrs} of the VP.
+
+The constituency structure that the rules specify can be written
+down using quantified modal logic. As an exercise further down
+shows, $\mathsf{QML}$ is so powerful that first--order $\mathsf{ZFC}$ can 
+be encoded. (See Section~\ref{kap1}.\ref{kap1-1} for the definition 
+of $\mathsf{ZFC}$.) 
+In $\mathsf{MSO}(\boldsymbol{\in}, \boldsymbol{=})$ one can 
+write down an axiom that forces sets to be well--founded with 
+respect to $\in$ and even write down the axioms of $\mathsf{NBG}$ 
+(von Neumann--G\"odel--Bernays Set Theory), which differs from 
+$\mathsf{ZFC}$ in having a simpler scheme for set comprehension. In 
+its place we have this axiom.
+%%
+\begin{quote}
+{\sl Class Comprehension.} $(\forall P)(\forall x)(\exists y)(%
+    \forall z)(z \in y \dpf z \in x \und P(z))$.
+\end{quote}
+%%
+It says that from a set $x$ and an arbitrary subset of the
+universe $P$ (which does not have to be a set)  there is a {\it
+set\/} of all things that belong to both $x$ and $P$. In presence
+of the results by Thatcher, Doner and Wright all this may sound
+paradoxical. However, the introduction of structure variables has
+made the structures into acyclic graphs rather than trees.
+However, our reformulation of HPSG is not expressed in $\mathsf{QML}$
+but in the much weaker polymodal logic. Thus, theories of
+linguistic objects are extensions of polymodal $\mathsf{K}$. However,
+as \cite{kracht:kuznetsov} 
+%%%
+\index{Kracht, Marcus}%%%
+%%%
+shows, by introducing enough
+modalities one can axiomatize a logic such that a Kripke--frame
+$\auf F, R\zu$ is a frame for this logic iff $\auf F,
+R(\boldsymbol{\in})\zu$ is a model of $\mathsf{NGB}$. This means that 
+effectively any higher order logic can be encoded into HPSG notation, 
+since it is reducible to set theory, and thereby to polymodal logic. 
+Although this is not per se an argument against using the notation, it
+shows that anything goes and that a claim to the effect that such
+and such phenomenon can be accounted for in HPSG is empirically
+vacuous.
+
+{\it Notes on this section.} One of the seminal works in GPSG 
+besides \cite{gazdarpullumsag:gpsg} is the study of word order 
+in German 
+%%%
+\index{German}%%%
+by Hans Uszkoreit~\shortcite{uszkoreit:german}. 
+%%%
+\index{Uszkoreit, Hans}%%%
+%%%
+The constituent structure of the continental Germanic languages has been 
+a focus of considerable debate between the different grammatical frameworks.
+The discovery of Swiss German 
+%%%
+\index{Swiss German}%%%
+%%%
+actually put an end to the debate
+whether or not context free rules are appropriate. In GSPG it is
+assumed that the dominance and the precedence relations are
+specified separately. Rules contain a dominance skeleton and a
+specification that says which of the orderings is admissible.
+However, as Almerindo Ojeda~\shortcite{ojeda:precedence} has shown,
+GPSG can also generate cross serial dependencies of the Swiss
+German type. One only has to relax the requirement that the
+daughters of a node must be linearly ordered to a requirement that
+the yield of the tree must be so ordered.
+%%%
+\vplatz 
+\exercise 
+Show that all axioms of $\mathsf{ZFC}$ and also {\sl Class Comprehension} 
+are expressible in $\mathsf{MSO}(\boldsymbol{\in}, \boldsymbol{=})$.
+%%
+\vplatz 
+\exercise 
+Show that the logic $L_0$ of any number of basic
+modal operators satisfying $\wD p \und \wD q \pf \wD (p \und q)$
+is decidable. This shows the decidability of $L_0$. {\it Hint.}
+Show that any formula is equivalent to a disjunction of
+conjunctions of statements of the form $\auf \delta\zu\pi$, where
+$\delta$ is a sequence of modalities and $\pi$ is either nonmodal
+or of the form $[m]\bot$.
+%%%
+\vplatz 
+\exercise 
+Write a grammar using LFG--rules of the kind described above to 
+generate the crossing dependencies of Swiss German.
+%%
+\vplatz 
+\exercise 
+Let $A$ be an alphabet, $T$ a Turing machine over $A$. The computation 
+of $T$ can be coded onto a grid of numbers $\BZ \times \BN$. Take this 
+grid to be a Kripke--structure, with basic relations the immediate 
+horizontal successor and predecessor, the transitive closure of these
+relations, and the vertical successor. Take constants $c_a$ for
+every $a \in A \cup Q \cup \{\nabla\}$. $c_{\nabla}$ codes the
+position of the read write head. Now formulate an axiom
+$\varphi_T$ such that a Kripke--structure satisfies $\varphi_T$ 
+iff it represents a computation of $T$.

@@ -1,0 +1,883 @@
+\section{Partiality and Discourse Dynamics}
+\label{kap4x7}
+%
+%
+%
+After having outlined the basic setup of Montague Semantics, we
+%%%
+\index{Montague Semantics}%%%
+%%%
+shall deal with an issue that we have so far tacitly ignored, namely
+{\it partiality}. The name `partial logic' covers a wide variety of 
+logics that deal with radically different problems. We shall look at 
+two of them. The first is that of partiality as undefinedness. The
+second is that of partiality as ignorance. We start with
+partiality as undefinedness.
+
+Consider the assignment $y := (x+1)/(u^2 - 9)$ to $y$ in a program.
+This clause is potentially dangerous, since $u$ may equal 3, in
+which case no value can be assigned to $y$. Similarly, for a sequence
+$\Ga = (a_n)_{n \in \omega}$, $\lim \Ga := \lim_{n \pf \infty} a_n$
+is defined only if the series is convergent. If not, no value can be
+given. Or in type theory, a function $f$ may only be applied to $x$ if
+$f$ has type $\alpha\pf\beta$ for certain $\alpha$ and $\beta$ $x$ has
+type $\alpha$. In the linguistic and philosophical literature, this
+phenomenon is known as \textbf{presupposition}. It is defined as a 
+relation between propositions (see \cite{vandersandt:presupposition}).
+%%
+\begin{defn}
+%%%
+\index{presupposition}%%
+\index{$\gg_{\vdash}$}%%
+%%%
+A proposition $\varphi$ \textbf{presupposes} $\chi$ if both
+$\varphi \vdash \chi$ and $\nicht\varphi \vdash \chi$.
+We write $\varphi \gg_{\vdash} \chi$ (or simply $\varphi \gg
+\chi$) to say that $\varphi$ presupposes $\chi$.
+\end{defn}
+%%
+The definition needs only the notion of a negation in order to be
+well--defined. Clearly, in boolean logic this definition gives
+pretty uninteresting results. $\varphi$ presupposes $\chi$ in 
+$\mathsf{PC}$ iff $\chi$ is a tautology. However, if we have more
+than two truth--values, interesting results appear. First, notice
+that we have earlier remedied partiality by assuming a `dummy'
+element $\star$ that a function assumes as soon as it is not
+defined on its regular input. Here, we shall remedy the situation
+by giving the expression itself the truth--value $\star$. That is
+to say, rather than making functions themselves total, we make the
+assignment of truth--values a total function. This has different
+consequences, as will be seen. Suppose that we totalize the
+operator $\lim_{n \pf \omega}$ so that it can be applied to all
+sequences. Then if $(a_n)_{n \in \omega}$ is not a convergent
+series, say $a_n = (-1)^n$, $3 = \lim_{n \pf \infty} a_n$ is not
+true, since $\lim_{n \pf \omega} a_n = \star$ and $3 \neq \star$.
+The negation of the statement will then be true. This is
+effectively what Russel~\shortcite{russell:denoting} and
+%%%
+\index{Russell, Bertrand}%%
+%%%
+Kempson~\shortcite{kempson:presupposition} 
+%%%
+\index{Kempson, Ruth}%%
+%%%
+claim. Now suppose we say
+that $3 = \lim_{n \pf \infty} a_n$ has no truth--value; then $3
+\neq \lim_{n \pf \infty} a_n$ also has no truth--value. To
+nevertheless be able to deal with such sentences rather than
+simply excluding them from discourse, we introduce a third 
+truth--value, $\star$. The question is now: how do we define the
+3--valued counterparts of $-$, $\cap$ and $\cup$? In order to keep
+confusion at a minimum, we agree on the following conventions.
+%%%
+\index{$\vdash_3$}%%%
+%%%
+$\vdash_3$ denotes the 3--valued consequence relation determined
+by a matrix $\GM = \auf \{0,1,\star\}, \Pi, \{1\}\zu$, where $\Pi$
+is an interpretation of the connectives. We shall assume that $F$
+consists of a subset of the set of the 9 unary and 27 binary
+symbols, which represent the unary and binary functions on the
+three element set. This defines $\Omega$. Then $\vdash_3$ is
+uniquely fixed by $F$, and the logical connectives will receive a
+distinct name every time we choose a different function on
+$\{0,1,\star\}$. What remains to be solved, then, is not what
+logical language to use but rather by what connective to translate
+the ordinary language connectors {\tt not}, {\tt and}, {\tt or},
+and {\tt if$\dotsb$then}. Here, we assume that whatever interprets
+them is a function on $\{0,1,\star\}$ (or $\{0,1,\star\}^{2}$),
+whose restriction to $\{0,1\}$ is its boolean counterpart, which
+is already given. For those functions, the 2--valued consequence
+is also defined and denoted by $\vdash_2$.
+%%%%
+\index{$\vdash_2$}%%%
+%%%
+
+Now, if $\star$ is the truth--value reserved for the otherwise truth
+valueless statements, we get the following three valued logic, 
+due to Bochvar~\shortcite{bochvar:three}. Its characteristics is the
+fact that undefinedness is strictly hereditary.
+%%
+\begin{equation}
+\begin{array}{l|l}
+        & - \\\hline
+0       & 1 \\
+1       & 0 \\
+\star   &  \star
+\end{array}
+\qquad
+\begin{array}{l|lll}
+\cap    & 0     & 1     & \star \\\hline
+0       & 0     & 0     & \star \\
+1       & 0     & 1     & \star \\
+\star   & \star & \star & \star
+\end{array}
+\qquad
+\begin{array}{l|lll}
+\cup    & 0     & 1     & \star \\\hline
+0       & 0     & 1     & \star \\
+1       & 1     & 1     & \star \\
+\star   & \star & \star & \star
+\end{array}
+\end{equation}
+%%%
+The basic connectives are $\nicht$, $\und$ and $\oder$, which
+are interpreted by $-$, $\cap$ and $\cup$. Here is a characterization
+of presupposition in Bochvar's Logic. Call a connective
+%%%
+\index{connective!Bochvar}%%
+%%%%
+\ding{67} a \textbf{Bochvar}--\textbf{connective} if 
+$\Pi(\mbox{\ding{67}})(\vec{x}) = \star$ iff $x_i = \star$ 
+for some $i < \Omega(\mbox{\ding{67}})$.
+%%
+\begin{prop}
+Let $\Delta$ and $\chi$ be composed using only Boch\-var--con\-nec\-tives.
+Then $\Delta \vdash_3 \chi$ iff (i) $\Delta$ is not classically satisfiable 
+or (ii) $\Delta \vdash_2 \chi$ and $\var(\chi) \subseteq \var[\Delta]$.
+\end{prop}
+%%
+\proofbeg
+Suppose that $\Delta \vdash_3 \chi$ and that
+$\Delta$ is satisfiable. Let $\beta$ be a valuation such that
+$\oli{\beta}(\delta) = 1$ for all $\delta \in \Delta$. Put
+$\beta^+(p) := \beta(p)$ for all $p \in \var(\Delta)$
+and $\beta^+(p) := \star$ otherwise. Suppose that
+$\var(\chi) - \var(\Delta) \neq \varnothing$.
+Then $\oli{\beta^+}(\chi) = \star$, contradicting our assumption.
+Hence, $\var(\chi) \subseteq \var(\Delta)$.
+It follows that every valuation that satisfies $\Delta$ also
+satisfies $\chi$, since the valuation does not assume $\star$
+on its variables (and can therefore be assumed to be a classical
+valuation). Now suppose that $\Delta \nvdash_3 \chi$.
+Then clearly $\Delta$ must be satisfiable. Furthermore, by the
+argument above either $\var(\chi) - \var(\Delta)
+\neq \varnothing$ or else $\Delta \vdash_2 \chi$.
+\proofend
+%%%
+
+This characterization can be used to derive the following corollary.
+%%%
+\begin{cor}
+Let $\varphi$ and $\chi$ be composed by Bochvar--connectives.
+Then $\varphi \gg \chi$ iff $\var(\chi) \subseteq \var(\varphi)$ 
+and $\vdash_2 \chi$.
+\end{cor}
+%%%
+Hence, although Bochvar's logic makes room for undefinedness, the
+notion of presupposition is again trivial. Bochvar's Logic seems
+nevertheless adequate as a treatment of the $\iota$--operator. It
+is formally defined as follows.
+%%
+\begin{defn}
+$\iota$ is a partial function from predicates to objects such that
+$\iota x.\chi(x)$ is defined iff there is exactly one
+$b$ such that $\chi(b)$, and in that case $\iota x. \chi(x) := b$.
+\end{defn}
+%%
+Most mathematical statements which involve presuppositions are instances
+of a (hidden) use the $\iota$--operator. Examples are the derivative, 
+the integral and the limit. In ordinary language, $\iota$ corresponds 
+to the definite
+determiner {\tt the}. Using the $\iota$--operator, we can bring out
+the difference between the bivalent interpretation and the three
+valued one. Define the predicate $\textsf{cauchy}'$ on infinite
+sequences of real numbers as follows:
+%%%
+\begin{equation}
+\textsf{cauchy}'(\Ga) :=
+    (\forall \varepsilon > 0)(\exists n)(\forall m \geq n)
+    |\Ga(m) - \Ga(n)| < \varepsilon
+\end{equation}
+%%%
+This is in formal terms the definition of a Cauchy sequence.
+Further, define a predicate $\textsf{cum}'$ as follows.
+%%%
+\begin{equation}
+\textsf{cum}'(\Ga)(x) := (\forall \varepsilon > 0)(\exists n)%
+    (\forall m \geq n)|\Ga(m) - x| < \varepsilon
+\end{equation}
+%%%
+This predicate says that $x$ is a cumulation point of $\Ga$.
+Now, we may set $\lim \Ga := \iota x.\textsf{cum}'(\Ga)(x)$.
+Notice that $\textsf{cauchy}'(\Ga)$ is equivalent to
+%%%
+\begin{equation}
+(\exists x)(\textsf{cum}'(\Ga)(x) \und (\forall y)(\textsf{cum}'(\Ga)(y) 
+\pf y \doteq x)) 
+\end{equation}
+%%%
+This is exactly what must be true for $\lim \Ga$ to be defined.
+%%%
+\begin{align}
+\label{eq:471} & \mbox{\tt The limit of $\Ga$ equals three.} \\
+\label{eq:472} & \iota x.\textsf{cum}'(\Ga)(x) \doteq 3 \\
+\label{eq:473} & (\exists x)(\textsf{cum}'(\Ga)(x) \und
+    (\forall y)(\textsf{cum}'(\Ga)(y) \pf y \doteq x)
+    \und x \doteq 3).
+\end{align}
+%%%
+Under the analysis \eqref{eq:472} the sentence \eqref{eq:471}
+presupposes that $\Ga$ is a Cauchy--sequence. \eqref{eq:473} does
+not presuppose that. However, the dilemma for the translation
+\eqref{eq:473} is that the negation of \eqref{eq:471} is also
+false (at least in ordinary judgement). What this means is that
+the truth--conditions of \eqref{eq:474} are not expressed by 
+\eqref{eq:476}, but by \eqref{eq:477} which in three valued 
+logic is \eqref{eq:475}.
+%%%
+\begin{align}
+\label{eq:474} & \mbox{\tt The limit of $\Ga$ does not equal three.} \\
+\label{eq:475} & \nicht (\iota x.\textsf{cum}'(\Ga)(x) \doteq 3) \\
+\label{eq:476} & \nicht (\exists x)(\textsf{cum}'(\Ga)(x) \und
+    (\forall y)(\textsf{cum}'(\Ga)(y) \pf y \doteq x)
+    \und x \doteq 3) \\
+\label{eq:477} & (\exists x)(\textsf{cum}'(\Ga)(x) \und
+    (\forall y)(\textsf{cum}'(\Ga)(y) \pf y \doteq x)
+    \und \nicht(x \doteq 3))
+\end{align}
+%%%
+It is difficult to imagine how to get the translation \eqref{eq:477} 
+in a bivalent approach, although a proposal is made below. The problem 
+with a bivalent analysis is that it can be shown to be inadequate, 
+because it rests on the assumption that the primitive predicates are
+bivalent. However, this is problematic. The most clear--cut case is that 
+of the truth--predicate. Suppose we define the semantics of $\mathsf{T}$ 
+on the set of natural numbers as follows.
+%%
+\begin{equation}
+\label{eq:47dagger}
+\mathsf{T}(\ulcorner \varphi \urcorner) \dpf \varphi
+\end{equation}
+%%
+Here, $\ulcorner \varphi \urcorner$ is, say, the G\"odel code of
+$\varphi$. It can be shown that there is a $\chi$ such
+that $\mathsf{T}(\ulcorner \chi \urcorner) \dpf \nicht\chi$ is
+true in the natural numbers. This contradicts 
+\eqref{eq:47dagger}. The sentence $\chi$ corresponds to the 
+following liar paradox.
+%%
+\begin{align}
+\label{eq:478} & \mbox{\tt This sentence is false.}
+\end{align}
+%%
+Thus, as Tarski has observed, a truth--predicate that is consistent
+with the facts in a sufficiently rich theory must be partial. As
+sentence \eqref{eq:478} shows, natural languages are sufficiently
+rich to produce the same effect. Since we do not want to give up
+the correctness of the truth--predicate (or the falsity predicate),
+the only alternative is to assume that it is partial. If so, however,
+there is no escape from the use of three valued logic, since
+bivalence must fail.
+
+Let us assume therefore that we three truth--values. What Bochvar's
+logic gives us is called the logic of hereditary undefinedness.
+For many reasons it is problematic, however. Consider the
+following two examples.
+%%%
+\begin{align}
+\label{eq:479} & \mbox{\tt If $\Ga$ and $\Gb$ are convergent sequences,
+    $\lim (\Ga + \Gb)$} \\\notag
+        & \quad \mbox{\tt $= \lim \Ga + \lim \Gb$.} \\
+\label{eq:4710} & \textsf{if $u \neq 3$ then $y := (x+1)/(u^2 - 9)$
+    else $y := 0$ fi}
+\end{align}
+%%%
+By Bochvar's Logic, \eqref{eq:479} presupposes that
+$\Ga$, $\Gb$ and $\Ga + \Gb$ are convergent series. \eqref{eq:4710}
+presupposes that $u \neq 3$. However, none of
+the two sentences have nontrivial presuppositions. Let us illustrate
+this with \eqref{eq:479}. Intuitively, the if--clause preceding the
+equality statement excludes all sequences from consideration
+where $\Ga$ and $\Gb$ are nonconvergent sequences. One can show
+that $\Ga + \Gb$, the pointwise sum of $\Ga$ and $\Gb$, is then
+also convergent. Hence, the if--clause covers all cases of
+partiality. The statement $\lim (\Ga + \Gb) = \lim \Ga + \lim \Gb$
+never fails. Similarly, {\tt and} has the power to eliminate
+presuppositions.
+%%%
+\begin{align}
+\label{eq:4711} & \mbox{\tt $\Ga$ and $\Gb$ are convergent series
+    and $\lim (\Ga + \Gb)$} \\\notag
+        & \quad \mbox{\tt $= \lim \Ga + \lim \Gb$.} \\
+\label{eq:4712} & u:= 4; y := (x+1)/(u^2 - 9)
+\end{align}
+%%%
+As it turns out, there is an easy fix for that. Simply associate
+the following connectives with {\tt if$\dotsb$then} and {\tt and}.
+%%
+\index{$\und'$, $\oder'$, $\pf'$}%%%
+\begin{equation}
+\begin{array}{l|lll}
+\pf' &  0    &  1    & \star  \\\hline
+0     &  1    &  1    &  1    \\
+1     &  0    &  1    & \star \\
+\star & \star & \star & \star
+\end{array}
+\qquad
+\begin{array}{l|lll}
+\und' &  0    &  1    & \star \\\hline
+0     &  0    &  0    &  1    \\
+1     &  0    &  1    & \star \\
+\star & \star & \star & \star
+\end{array}
+\qquad
+\begin{array}{l|lll}
+\oder'  &  0    &  1    & \star    \\\hline
+0       &  0    &  1    & \star    \\
+1       &  1    &  1    & 1        \\
+\star   & \star & \star & \star
+\end{array}
+\end{equation}
+%%
+The reader may take notice of the fact that while $\und'$ and
+$\pf'$ are reasonable candidates for {\tt and} and 
+{\tt if$\dotsb$then}, $\oder'$ is not as good for {\tt or}.
+
+In the linguistic literature, various attempts have been made to
+explain these facts. First, we distinguish the {\it presupposition\/} 
+of a sentence from its {\it assertion}. The definition of
+these terms is somewhat cumbersome. The general idea is that the
+presupposition of a sentence is a characterization of those
+circumstances under which it is either true or false, and the
+assertion is what the sentence says when it is either true of
+false (that is to say, the assertion tells us when the sentence is
+true given that it is either true or false). Let us attempt to define
+this.  Let $\varphi$ be a proposition. Call $\chi$ a 
+%%%
+\index{presupposition!generic}%%
+%%%%
+\textbf{generic presupposition of} $\varphi$ if the following holds. 
+(a) $\varphi \gg \chi$, (b) if $\varphi \gg \psi$ then 
+$\chi \vdash_3 \psi$.  If $\chi$ is a generic presupposition of 
+$\varphi$, $\chi \pf \varphi$ is called an 
+%%%
+\index{assertion}%%
+%%%
+\textbf{assertion} of $\varphi$. First, notice
+that presuppositions are only defined up to interderivability.
+This is not a congruence. We may have $\varphi {\dashv\vdash}_3
+\chi$ without $\varphi$ and $\chi$ receiving the same truth--value
+under all assignments. Namely, $\varphi {\dashv\vdash}_3 \chi$ 
+iff $\varphi$ and $\chi$ are truth--equivalent, that is,
+$\oli{\beta}(\varphi) = 1$ exactly when $\oli{\beta}(\chi) = 1$.
+In order to have full equivalence, we must also require
+$\nicht \varphi {\dashv\vdash}_3 \nicht \chi$. Second, notice 
+that $\varphi \oder \nicht \varphi$ satisfies (a) and (b).
+However, $\varphi\oder\nicht\varphi$ presupposes itself, 
+something that we wish to avoid. 
+%%%
+\index{bivalence}%%%
+%%%%
+So, we additionally require the generic presupposition to be 
+\textbf{bivalent}. Here, $\varphi$ is \textbf{bivalent} if for 
+every valuation $\beta$ into $\{0,1,\star\}$: $\oli{\beta}(\varphi) 
+\in \{0,1\}$. Define the following connective.
+%%
+\begin{equation}
+%%%
+\index{$\downarrow$}%%%
+%%%%
+\begin{array}{l|lll}
+\downarrow & 0     & 1     & \star \\\hline
+0          & \star & 0     & \star \\
+1          & \star & 1     & \star \\
+\star      & \star & \star & \star
+\end{array}
+\end{equation}
+%%
+\begin{defn}
+%%%
+\index{presupposition!generic}%%
+\index{assertion}%%
+%%%
+Let $\varphi$ be a proposition. $\chi$ is a \textbf{generic
+presupposition of} $\varphi$ \textbf{with respect to} $\vdash_3$ if
+(a) $\varphi \gg \chi$, (b) $\chi$ is bivalent and (c) if $\varphi
+\gg \psi$ then $\chi \vdash_3 \psi$. $\chi$ is the \textbf{assertion}
+of $\varphi$ if (a) $\chi$ is bivalent and (b) $\chi \dashv\vdash_3
+\varphi$. Write $P(\varphi)$ for the generic presupposition (if it
+exists), and $A(\varphi)$ for the assertion.
+\end{defn}
+%%%
+It is not a priori clear that a proposition has a generic
+presupposition. A case in point is the truth--predicate.
+%%%
+\index{$\equiv_3$}%%%
+%%%%
+Write $\varphi \equiv_3 \chi$ if $\beta(\varphi) = \beta(\chi)$ 
+for all $\beta$.
+%%%
+\begin{prop}
+$\varphi \equiv_3 \; {A(\varphi)\downarrow P(\varphi)}$.
+\end{prop}
+%%%
+\index{projection algorithm}%%%
+%%%%
+The \textbf{projection algorithm} is a procedure that assigns generic
+presuppositions to complex propositions by induction over their
+structure. Table~\ref{tab:projection} shows a projection algorithm
+for the connectives defined so far.
+%%%
+\begin{table}
+\caption{The Projection Algorithm}%%
+\label{tab:projection}
+$$\begin{array}{l@{\; = \;}l@{\qquad}l@{\; = \;}l}
+A(\nicht \varphi) & \nicht A(\varphi) & P(\nicht \varphi) &
+        P(\varphi) \\
+A(\varphi\und\chi) & A(\varphi)\und A(\chi) &
+    P(\varphi\und\chi) & P(\varphi) \und P(\chi) \\
+A(\varphi\oder\chi) & A(\varphi)\oder A(\chi) &
+    P(\varphi\oder\chi) & P(\varphi) \und P(\chi) \\
+A(\varphi\pf\chi) & A(\varphi) \pf A(\chi) &
+    P(\varphi\pf\chi) & P(\varphi) \und P(\chi) \\
+A(\varphi\und'\chi) & A(\varphi)\und A(\chi) &
+    P(\varphi\und'\chi) & P(\varphi) \\
+    \multicolumn{2}{r}{} &
+    \multicolumn{2}{r}{\und (A(\varphi) \pf P(\chi))} \\
+A(\varphi\oder'\chi) & A(\varphi) \oder A(\chi) &
+    P(\varphi\oder'\chi) & P(\varphi) \\
+    \multicolumn{2}{r}{} &
+    \multicolumn{2}{r}{\und (\nicht A(\varphi) \pf P(\chi))} \\
+A(\varphi\pf'\chi) & (A(\varphi)\und P(\varphi)) &
+    P(\varphi\pf'\chi) & P(\varphi) \\
+    \multicolumn{2}{r}{\pf A(\chi)} & \multicolumn{2}{r}{\und
+    (A(\varphi) \pf P(\chi))}
+\end{array}$$
+\end{table}
+%%%%
+It is an easy matter to define projection algorithms for all
+connectives. The prevailing intuition is that the three valued
+character of {\tt and}, {\tt or} and {\tt if$\dotsb$then}
+%%%%
+\index{context change}%%%
+%%%
+is best explained in terms of \textbf{context change}. A
+%%%
+\index{text}%%
+%%%
+\textbf{text} is a sequence of propositions, say $\Delta =
+\auf \delta_i : i < n\zu$. A text is \textbf{coherent}
+%%%
+\index{text!coherent}%%
+%%%
+if for every $i < n$: $\auf \delta_j : j < i\zu \vdash_3
+\delta_i \oder \nicht\delta_i$. In other words, every member
+is either true or false given that the previous propositions are
+considered true. (Notice that the order is important now.)
+In order to extend this to parts of the $\delta_j$
+we define the \textbf{local context} as follows.
+%%%
+\begin{defn}
+%%%
+\index{context!local}%%
+%%%%
+Let $\Delta = \auf \delta_i : i < n\zu$. The \textbf{local context} of
+$\delta_j$ is $\auf \delta_i : i < j\zu$. For a subformula occurrence
+of $\delta_j$, the \textbf{local context} of that occurrence is defined
+as follows.
+%%%
+\begin{dingautolist}{192}
+\item If $\Sigma$ is the local context of $\varphi\und'\chi$ then
+    (a) $\Sigma$ is the local context of $\varphi$ and (b)
+    $\Sigma;\varphi$ is the local context of $\chi$.
+\item If $\Sigma$ is the local context of $\varphi\pf'\chi$ then
+    (a) $\Sigma$ is the local context of $\varphi$ and (b)
+    $\Sigma;\varphi$ is the local context of $\chi$.
+\item If $\Sigma$ is the local context of $\varphi\oder'\chi$ then
+    (a) $\Sigma$ is the local context of $\varphi$ and (b)
+    $\Sigma;\nicht\varphi$ is the local context of $\chi$.
+\end{dingautolist}
+%%%
+\index{bivalence}%%%%%
+%%%%
+$\delta_j$ is \textbf{bivalent in its local context} if for all
+valuations that make all formulae in the local context true,
+$\delta_j$ is true or false.
+\end{defn}
+%%%
+The presupposition of $\varphi$ is the formula $\chi$ such that
+$\varphi$ is bivalent in the context $\chi$, and which implies all
+other formulae that make $\varphi$ bivalent. It so turns out that
+the context dynamics define a three valued extension of a
+2--valued connective, and conversely. The above rules are an exact
+match. Such formulations have been given by Irene
+Heim~\shortcite{heim:context}, %%
+%%%
+\index{Heim, Irene}%%%
+%%%
+Lauri Karttunen~\shortcite{karttunen:context} 
+%%%
+\index{Kartttunen, Lauri}%%%
+%%%
+and also Jan van Eijck~\shortcite{vaneijck:presupposition}. 
+%%%
+\index{van Eijck, Jan}%%%
+%%%
+It is easy to understand 
+this in computer programs. A computer program may contain clauses 
+carrying presuppositions (for example clauses involving divisions), 
+but it need not fail. For if whenever a clause carrying a 
+presupposition is evaluated, that presupposition 
+is satisfied, no error ever occurs at runtime. In
+other words, the local context of that clause satisfies the
+presuppositions. What the local context is, is defined by the
+evaluation procedure for the connectives. In computer languages, 
+the local context is always to the left. But this is not necessary.
+The computer evaluates $\alpha\; \mathsf{and}\; \beta$ by first
+evaluating $\alpha$ and then $\beta$ only if $\alpha$ is true --- 
+but it could also evaluate $\beta$ first and then evaluate $\alpha$ whenever 
+$\beta$ is true. In \cite{kracht:control} it is shown
+that in the definition of the local context all that needs to be
+specified is the directionality of evaluation. The rest follows 
+from general principles. Otherwise one gets connectives that extend 
+the boolean connectives in an improper way (see below on that notion).
+
+The behaviour of presuppositions in quantification and propositional 
+attitude reports is less straightforward. We shall only give a sketch.
+%%%
+\begin{align}
+\label{eq:4713} & \mbox{\tt Every bachelor of the region 
+	got a letter from} \\\notag
+   & \quad \mbox{\tt that marriage agency.} \\
+\label{eq:4714} & \mbox{\tt Every person in that region is a bachelor.} \\
+\label{eq:4715} & \mbox{\tt John believes that his neighbour is a
+    bachelor.}
+\end{align}
+%%%
+We have translated {\tt every} using the quantifier $\forall$ in 
+predicate logic. We wish to extend it to a three--valued quantifier, 
+which we also call $\forall$. \eqref{eq:4713} is true even if not 
+everybody in the region is a bachelor; in fact, it is true exactly 
+if there is no non--bachelor. Therefore we say that $(\forall x)\varphi$ 
+is true iff there is no $x$ for which $\varphi(x)$ is false. 
+$(\forall x)\varphi$ is false if there is an $x$ for which 
+$\varphi(x)$ is false. Thus, the presupposition effectively 
+restricts the range of the quantifier.  $(\forall x)\varphi$ 
+is bivalent. This predicts that \eqref{eq:4714}
+has no presuppositions. On \eqref{eq:4715} the intuitions vary.
+One might say that it does not have any presuppositions, or else
+that it presupposes that the neighbour is a man (or perhaps: that
+John believes that his neighbour is a man). This is deep water
+(see \cite{geurts:presupposition}).
+
+Now we come to the second interpretation of partiality, namely
+{\it ignorance}. Let $\star$ now stand for the fact that the
+truth--value is not known. Also here the resulting logic is not
+unique. Let us take the example of a valuation $\beta$ that is
+only defined on some of the variables. Now let us be given
+a formula $\varphi$. Strictly speaking $\oli{\beta}(\varphi)$
+is not defined on $\varphi$ if the latter contains a variable
+that is not in the domain of $\beta$. On the other hand, there
+are clear examples of propositions that receive a definite
+truth--value no matter how we extend $\beta$ to a total function.
+For example, even if $\beta$ is not defined on $p$, every extension
+of it must make $p \oder \nicht p$ true. Hence, we might say
+that $\beta$ also makes $p \oder \nicht p$ true. This is the idea
+%%%
+\index{supervaluation}%%
+%%%%
+of \textbf{supervaluations} by Bas van Fraassen. 
+%%%
+\index{van Fraassen, Bas}%%%
+%%%
+Say that
+$\varphi$ is \textbf{sv--true} (\textbf{sv--false}) under $\beta$ if
+$\varphi$ is true under every total $\gamma \supseteq \beta$.
+If $\varphi$ is neither sv--true nor sv---false, call it
+\textbf{sv--indeterminate}. Unfortunately, there is no logic
+to go with this approach. Look at the interpretation of {\tt or}.
+Clearly, if either $\varphi$ or $\chi$ is sv--true, so is
+their disjunction. However, what if both $\varphi$ and $\chi$
+are sv--indeterminate?
+%%
+\begin{equation}
+\begin{array}{l|lll}
+\cup  & 0     & 1 & \star \\\hline
+0     & 0     & 1 & \star \\
+1     & 1     & 1 & 1     \\
+\star & \star & 1 & ?
+\end{array}
+\end{equation}
+%%
+The formula $p \oder q$ is sv--indeterminate under the empty valuation.
+It has no definite truth--value, because both $p$ and $q$ could turn out
+to be either true or false. On the other hand, $p \oder \nicht p$ is
+sv--true under the empty valuation, even though both $p$ and $\nicht p$
+are sv--indeterminate. So, the supervaluation approach is not so
+well--suited. Stephen Kleene actually had the idea of doing a worst
+case interpretation: if you can't always say what the value is, fill
+%%%
+\index{Kleene, Stephen C.}%%%
+\index{connective!strong Kleene}%%%
+%%%
+in $\star$. This gives the so--called \textbf{Strong Kleene Connectives}
+(the weak ones are like Bochvar's).
+%%
+\index{$\cap^{\diamond}$, $\cup^{\diamond}$}%%%
+%%
+\begin{equation}
+\begin{array}{l|l}
+        & - \\\hline
+0       & 1 \\
+1       & 0 \\
+\star   &  \star
+\end{array}
+\qquad
+\begin{array}{l|lll}
+\cap^{\diamond}    & 0     & 1     & \star \\\hline
+0         & 0     & 0     & 0     \\
+1         & 0     & 1     & \star \\
+\star     & 0     & \star & \star
+\end{array}
+\qquad
+\begin{array}{l|lll}
+\cup^{\diamond}  & 0     & 1     & \star \\\hline
+0       & 0     & 1     & \star \\
+1       & 1     & 1     & 1     \\
+\star   & \star & 1     & \star
+\end{array}
+%%\qquad
+%\begin{array}{l|lll}
+%\supset^{\diamond}  & 0     & 1     & \star \\\hline
+%0          & 1     & 1     & 1     \\
+%1          & 0     & 1     & \star \\
+%\star      & \star & 1     & \star
+%\end{array}
+\end{equation}
+%%%
+These connectives can be defined in the following way.
+Put $1^{\diamond} := \{1\}$, $0^{\diamond} := \{0\}$
+and $\star := \{0,1\}$. Now put
+%%
+\begin{equation}
+f^{\diamond}(x_0^{\diamond},x_1^{\diamond}) :=
+f[x_0^{\diamond} \times x_1^{\diamond}]
+\end{equation}
+%%
+For example, $\cup^{\diamond}(\auf 0^{\diamond},\star^{\diamond}\zu)
+= \cup[\{0\} \times \{0,1\}] = \{0 \cup 0, 0 \cup 1\} = \{0,1\} =
+\star^{\diamond}$. So, we simply take sets of truth--values and
+calculate with them.
+
+A more radical account of ignorance is presented by constructivism 
+and intuitionism. A constructivist denies that the truth or falsity 
+of a statement can always be assessed directly. In particular, an 
+existential statement is true only if we produce an instance that 
+satisfies it. A universal statement can be considered true only if we
+possess a proof that any given element satisfies it. For example,
+Goldbach's conjecture is that every even number greater than 2 is
+the sum of two primes. According to a constructivist, at present
+it is neither true nor false. For on the one hand we have no proof
+that it holds, on the other hand we know of no even number greater
+than 2 which is not the sum of two primes. Both
+constructivists and intuitionists unanimously reject axiom (a2).
+(Put $\bot$ for $p_1$. Then in conjunction with the other rules 
+this gives $(\nicht p_0 \pf p_0) \pf p_0$. This corresponds to 
+the \textbf{Rule of Clavius}: from $\nicht p_0 \pf p_0$ conclude 
+$p_0$.) They also reject $p \oder \nicht p$, the so--called 
+%%%
+\index{law of the excluded middle}%%
+%%%
+\textbf{Law of the Exluded Middle}. The difference between a 
+constructivist and an intuitionist is the treatment of negative 
+evidence. While a
+constructivist accepts basic negative evidence, for example, that
+this lemon is not green, for an intuitionist there is no such
+thing as direct evidence to the contrary. We only witness the
+absence of the fact that the lemon is green. Both, however, are
+reformist in the sense that they argue that the mathematical
+connectives {\tt and}, {\tt or}, {\tt not}, and {\tt if$\dotsb$then} 
+have a different meaning. However, one can actually give a
+reconstruction of both inside classical mathematics. We shall deal
+first with intuitionism. Here is a new set of connectives, 
+defined with the help of $\qu$, which satisfies $\mathsf{S4}$.
+%%
+\begin{equation}
+\begin{split}
+\nicht^i \varphi & := \qu (\nicht \varphi) \\
+\varphi \oder^i \chi & := \varphi \oder \chi \\
+\varphi \und^i \chi & := \varphi \und \chi \\
+\varphi \pf^i \chi & := \qu (\varphi \pf \chi)
+\end{split}
+\end{equation}
+%%
+Call an I--proposition a proposition formed from variables and
+$\bot$ using only the connectives just defined.
+%%
+\begin{defn}
+%%%
+\index{I--model}%%
+%%%
+An \textbf{I--model} is a pair $\auf P, \leq, \beta\zu$, where
+$\auf P, \leq\zu$ is a partially ordered set and $\beta(p) =
+\, \uparrow\!\beta(p)$ for all variables $p$.
+\end{defn}
+%%
+Intuitively, the nodes of $P$ represent stages in the development
+of knowledge. Knowledge develops in time along $\leq$. We say that
+$x$ \textbf{accepts} $\varphi$ if $\auf P, \leq, x, \beta\zu \vDash
+\varphi$, and that $x$ \textbf{knows} $\varphi$ if $\auf P, \leq,
+x, \beta\zu \vDash \qu \varphi$. By definition of $\beta$, once a
+proposition $p$ is accepted, it is accepted for good and therefore
+considered known. Therefore G\"odel simply translated variables $p$ 
+by the formula $\qu p$. Thus, intuitionistically the statement that 
+$p$ may therefore be understood as `$p$ is known' rather than `$p$ 
+is accepted'. The systematic conflation of knowledge and simple 
+temporary acceptance as true is the main feature of intuitionistic 
+logic.
+%%
+\begin{prop}
+Let $\auf P, \leq, \beta\zu$ be an I--model and $\varphi$ an
+I--pro\-po\-si\-tion. Then $\oli{\beta}(\varphi) =\; {\uparrow
+\oli{\beta}(\varphi)}$ for all $\varphi$.
+\end{prop}
+%%
+Constructivism in the definition by Nelson adds to intuitionism
+a second valuation for those variables that are definitely
+rejected, and allows for the possibility that neither is the
+case. (However, nothing can be both accepted and rejected.)
+This is reformulated as follows.
+%%
+\begin{defn}
+%%%
+\index{C--model}%%
+%%%
+A \textbf{C--model} is a pair $\auf P, \leq, \beta\zu$, where
+$\auf P, \leq\zu$ is a partially ordered set and $\beta \colon V \times P
+\pf \{0,1,\star\}$ such that if $\beta(p,v) = 1$ and $v \leq w$
+then also $\beta(p,w) = 1$, and if $\beta(p,v) = 0$ and $v  \leq w$
+then $\beta(p,w) = 0$. We write $\auf P, \leq, x, \beta\zu \vDash^+
+p$ if $\beta(p,x) = 1$ and $\auf P, \leq, x, \beta\zu \vDash^- p$
+if $\beta(p,x) = 0$.
+\end{defn}
+%%
+We can interpret any propositional formula over 3--valued logic that
+we have defined so far. We have to interpret $\qu$ and $\wD$,
+however.
+%%
+\begin{equation}
+\begin{split}
+x \vDash^+ \qu \varphi & :\Dpf \text{ for no }
+    y \geq x: y\vDash^- \varphi \\
+x \vDash^- \qu \varphi & :\Dpf \text{ there is }
+    y \geq x: y \vDash^- \varphi \\
+x \vDash^+ \wD \varphi & :\Dpf \text{ there is }
+    y \geq x: y\vDash^+ \varphi \\
+x \vDash^- \wD \varphi & :\Dpf \text{ for no }
+    y \geq x: y\vDash^+ \varphi
+\end{split}
+\end{equation}
+%%
+Now define the following new connectives.
+%%
+\begin{equation}
+\begin{split}
+\nicht^c \varphi & := \nicht \varphi \\
+\varphi \oder^c \chi & := \varphi \oder^{\diamond} \chi \\
+\varphi \und^c \chi & := \varphi \und^{\diamond} \chi \\
+\varphi \pf^c \chi & := \qu (\varphi \pf^{\diamond} \chi)
+\end{split}
+\end{equation}
+%%
+In his data semantics (see \cite{veltman:conditionals}), Frank
+Veltman 
+%%%
+\index{Veltman, Frank}%%%
+%%%
+uses constructive logic and proposes to interpret {\tt
+must} and {\tt may} as $\qu$ and $\wD$, respectively. What is
+interesting is that the set of points accepting $\wD \varphi$ is
+lower closed but {\it not\/} necessarily upper closed, while the
+set of points rejecting it is upper but not necessarily lower
+closed. The converse holds with respect to $\qu$. This is natural,
+since if our knowledge grows there are less things that {\it
+may\/} be true but more that {\it must\/} be.
+
+The interpretation of the arrow carries the germ of the relational
+interpretation discussed here. A different strand of thought is
+the theory of conditionals (see again \cite{veltman:conditionals}
+and also \cite{gaerdenfors:flux}). The conditional $\varphi >
+\chi$ is accepted as true under Ramsey's interpretation 
+%%%
+\index{Ramsey, Frank}%%%
+%%%
+if, on taking $\varphi$ as a hypothetical assumption (doing as if
+$\varphi$ is the case) and performing the standard reasoning, we
+find that $\chi$ is true as well. Notice that after this routine
+of hypothetical reasoning we retract the assumption that
+$\varphi$. In G\"ardenfors models there are no assignments in the
+ordinary sense. A proposition $\varphi$ is mapped directly onto a
+function, the update function $U_{\varphi}$. The states in the
+G\"ardenfors model carry no structure.
+%%%
+\begin{defn}
+%%%
+\index{G\"ardenfors model}%%
+%%%%
+\index{G\"ardenfors, Peter}%%%
+%%%
+A \textbf{G\"ardenfors model} is a pair $\auf G, U\zu$, where
+$G$ is a set, and $U \colon \Tm_{\Omega} \pf G^G$ subject to the
+following constraints.
+%%%
+\begin{dingautolist}{192}
+\item For all $\chi$: $U_{\chi} \circ U_{\chi} = U_{\chi}$.
+\item For all $\varphi$ and $\chi$:
+    $U_{\varphi} \circ U_{\chi} = U_{\chi} \circ U_{\varphi}$.
+\end{dingautolist}
+%%%
+We say that $x \in G$ \textbf{accepts} $\varphi$ if $U_{\varphi}(x) = x$.
+%%%
+\end{defn}
+%%%
+Put $x \leq y$ iff
+there is a finite set $\{\chi_i : i < n\}$ such that 
+%%%
+\begin{equation}
+y = U_{\chi_0} \circ U_{\chi_1} \circ \dotsb \circ U_{\chi_{n-1}}(x)
+\end{equation}
+%%%
+The reader may verify that this relation is reflexive and transitive.
+If we require that $x = y$ iff $x$ and $y$ accept the
+same propositions, then this ordering is also a partial ordering.
+We can define as follows. If $U_{\chi} = U_{\varphi} \circ
+U_{\psi}$ then we write $\chi = \varphi\und\psi$. Hence, if our
+language actually has a conjunction, the latter is a condition on
+the interpretation of it. To define $\pf$, G\"ardenfors does the
+following. Suppose that for all $\varphi$ and $\chi$ there exists
+a $\delta$ such that $U_{\varphi} \circ U_{\delta} = U_{\chi}
+\circ U_{\delta}$. Then we simply put $U_{\varphi \dpf \psi}
+:= U_{\delta}$. Finally, since $\varphi\pf\psi$ is equivalent to
+$\varphi\dpf \varphi\und \psi$, once we have $\und$ and $\dpf$, we
+can also define $\pf$. For negation we need to assume the
+existence of an inconsistent state. The details need not concern
+us here. Obviously, G\"ardenfors models are still more general
+than data semantics. In fact, any kind of logic can be modelled by
+a G\"ardenfors model (see the exercises).
+
+{\it Notes on this section.} It is an often discussed problem whether
+or not a statement of the form $(\forall x)\varphi$ is true if there
+are no $x$ at all. Equivalently, in three valued logic, it might be
+said that $(\forall x)\varphi$ is undefined if there is no $x$ such
+that $\varphi(x)$ is defined.
+%%%
+\vplatz
+\exercise
+A three valued binary connective \ding{67} satisfies the
+%%%
+\index{Deduction Theorem}%%%
+%%%%
+Deduction Theorem if for all $\Delta$, $\varphi$ and
+$\chi$: $\Delta; \varphi \vdash_3 \chi$ iff
+$\Delta \vdash_3 \varphi \mbox{\ding{67}} \chi$. Establish all 
+truth--tables for binary connectives that satisfy the Deduction 
+Theorem. Does any of the implications defined above have this 
+property?
+%%%
+\vplatz \exercise Let $\CL$ be a language and $\vdash$ a
+structural consequence relation over $\CL$. Let $G_{\vdash}$ be
+the set of theories of $\vdash$. For $\varphi \in \CL$, let
+$U_{\varphi} \colon T \mapsto (T \cup \{\varphi\})^{\vdash}$. Show that
+this is a G\"ardenfors model. Show that the set of formulae
+accepted by all $T \in G_{\vdash}$ is exactly the set of
+tautologies of $\vdash$.

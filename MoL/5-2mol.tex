@@ -1,0 +1,833 @@
+\section{Literal Movement Grammars}
+\label{kap4-2}
+%
+%
+%
+The concept of a literal movement grammar --- \textbf{LMG} for short 
+--- has been introduced by Annius Groenink in \shortcite{groenink:surface} 
+%%%
+\index{Groenink, Annius}%%%
+%%%
+(see also \cite{groenink:lmgs}). With the help of these grammars one 
+can characterize the \textbf{PTIME} languages by means of a generating 
+device. The idea to this characterization goes back to a result by
+William Rounds \shortcite{rounds:ptime}. 
+%%%
+\index{Rounds, William}%%
+%%%
+Many grammar types
+turn out to be special subtypes of LMGs. The central feature of 
+LMGs is that the rules contain a context free skeleton which describes 
+the abstract structure of the string and in addition to this
+a description of the way in which the constituent is formed
+from the basic parts. The notation is different from that of 
+CFGs. In an LMG, nonterminals denote properties 
+of strings and therefore one writes `$Q(\vec{x})$' in place 
+of just `$Q$'. The reason for this will soon become obvious. 
+If $Q(\vec{x})$ obtains for a given string $\vec{x}$ we say 
+that $\vec{x}$ has the property $Q$ or that $\vec{x}$ \textbf{is a}
+$Q$--\textbf{string}. The properties play the role of the 
+nonterminals in CFGs, but technically speaking they are 
+handled differently. Since $\vec{x}$ is metavariable for strings, 
+we now need another set of (official) variables for strings in the 
+formulation of the LMGs. To this end we use the plain symbols $x$, 
+$y$, $z$ and so on (possibly with subscripts) for these variables. 
+In addition to these variables there are also constants {\tt a}, 
+{\tt b}, for the symbols of our alphabet $A$. We give a simple 
+example of an LMG. It has two rules.
+%%
+\begin{equation}
+S(xx) \hrn S(x).; \qquad S(\mbox{\tt a}) \hrn.
+\end{equation}
+%%
+These rules are written in Horn--clause format, as in Prolog, 
+and they are exactly interpreted in the same way: the left hand side 
+obtains with the variables instantiated to some term if the right 
+hand obtains with the variables instantiated in the same way. 
+So, the rules correspond to more familar looking formulae:
+%%%
+\begin{equation}
+S(\mbox{\tt a}), \quad (\forall x)(S(x) \pf S(x \conc x))
+\end{equation}
+%%%%
+(Just reverse the arrow and interpret the comma as conjunction.)
+%%%
+\begin{defn}
+%%%%
+\index{Horn--formula}%%
+%%%%
+A formulae $\varphi$ of predicate logic is called a 
+\textbf{Horn--formula} iff it has the form 
+%%%
+\begin{equation}
+(\forall x_0)\dotso (\forall x_{q-1})(\bigwedge_{i < n} \chi_i %
+\pf \varphi)
+\end{equation}
+%%%%
+where the $\chi_i$, $i < n$, and $\varphi$ are atomic formulae. 
+\end{defn}
+%%%
+Here, it is assumed that only the variables $x_i$, $i < q$, 
+occur in the $\chi_i$ and in $\varphi$. We abbreviate 
+$(\forall x_0) \dotso (\forall x_{p-1})$ by $(\forall \vec{x})$.
+Now, consider the case where the language has the following 
+functional signature: for every letter from $A$ a zeroary 
+function symbol (denoted by the same letter), $\varepsilon$ 
+(zeroary) and $^{\smallfrown}$ (binary). Further, assume the 
+following set of axioms:
+%%%
+\begin{multline}
+S_G := \{(\forall xyz)(x^{\smallfrown}(y^{\smallfrown}z) \doteq 
+(x^{\smallfrown}y)^{\smallfrown}z),  \\
+(\forall x)(\varepsilon^{\smallfrown}x \doteq x), 
+(\forall x)(x^{\smallfrown}\varepsilon \doteq x)\}
+\end{multline}
+%%%
+Then a Horn--clause is of the form
+%%%
+\begin{equation}
+(\forall \vec{x})(U_0(s_0) \und U_1(s_1) \und \dotso %
+\und U_{n-1}(s_{n-1}) \pf T(t))
+\end{equation}
+%%%
+where $t$ and the $s_i$ ($i < n$) are string polynomials. 
+This we shall write as
+%%
+\begin{equation}
+\label{rule:generic}
+T(t) \hrn U_0(s_0),U_1(s_1),\dotsc, U_{n-1}(s_{n-1}).
+\end{equation}
+%%%
+\begin{defn}
+%%%
+\index{literal movement grammar (LMG)}%%
+\index{LMG (see literal movement grammar)}%%
+%%%
+A \textbf{literal movement grammar}, or \textbf{LMG} for short,
+is a quintuple $G =  \auf A, R, \Xi, S, H\zu$, where $A$ is the 
+alphabet of terminal symbols, $R$ a set of so--called 
+%%%
+\index{predicate}%%%
+%%%%
+\textbf{predicates}, $\Xi : R \pf \omega$ a signature, 
+$S \in R$ a distinguished symbol such that $\Xi(S) = 1$, and
+$H$ a set of Horn--formulae in the language consisting of 
+constants for every letter of $A$, the empty string, concatenation, 
+and the relation symbols of $R$. $\vec{x}$ is a $G$--\textbf{sentence}
+iff $S(\vec{x})$ is derivable from $H$ and $S_G$:
+%%%%
+\begin{equation}
+L(G) := \{\vec{x} : \; S_G;H \vdash S(\vec{x})\}
+\end{equation}
+\end{defn}
+%%%
+We call $G$ a $k$--\textbf{LMG} if $\max \{\Xi(Q) : Q \in R\} \leq k$. 
+The grammar above is a 1--LMG.
+%%
+\begin{prop}
+$L(G) = \{\mbox{\tt a}^{2^n} : 0 \leq n\}$.
+\end{prop}
+%%
+\proofbeg
+Surely $\mbox{\tt a} \in L(G)$. This settles the case
+$n = 0$. By induction one shows $\mbox{\tt a}^{2^n} \in L(G)$
+for every $n > 0$. For if $\mbox{\tt a}^{2^n}$ is a string
+of category $S$ so is $\mbox{\tt a}^{2^{n+1}} =
+\mbox{\tt a}^{2^n} \conc \mbox{\tt a}^{2^n}$.
+This shows that $L(G) \supseteq \{\mbox{\tt a}^{2^n} :
+n \geq 0\}$. On the other hand this set satisfies the formula
+$\varphi$. For we have $\mbox{\tt a} \in L(G)$ and
+with $\vec{x} \in L(G)$ we also have $\vec{x}\, \vec{x} \in L(G)$.
+For if $\vec{x} = \mbox{\tt a}^{2^n}$ for a certain
+$n \geq 0$ then $\vec{x} \, \vec{x} = \mbox{\tt a}^{2^n \cdot 2} =
+\mbox{\tt a}^{2^{n+1}} \in L(G)$.
+\proofend
+
+There is an inductive definition of $L(G)$ by means of generation. 
+We write $\vdash_G S(\vec{x})$ (vector arrow!), if either
+$S(\vec{x}) \hrn.$ is a rule or $\vec{x} = \vec{y}\, \vec{y}$
+and $\vdash_G S(\vec{y})$. Both definitions define the same set 
+of strings. Let us elaborate the notion of a 1--LMG in more detail.
+The maximum of all $n$ such that $G$ has an $n$--ary rule is 
+called
+%%
+\index{branching number}%%
+%%%
+the \textbf{branching number of} $G$. In the rule
+%%
+\begin{equation}
+S(xx) \hrn S(x).
+\end{equation}
+%%
+we have $n = 1$ and $T = U_0 = S$, $t = xx$ and $s_0 = x$. 
+In the rule
+%%
+\begin{equation}
+S(\mbox{\tt a}) \hrn .
+\end{equation}
+%%
+we have $n = 0$, $T = S$ and $t = \mbox{\tt a}$.
+%%%
+\begin{defn}
+%%%
+\index{$\vdash_G$}%%%
+%%%
+Let $G = \auf A, R, \Xi, S, H\zu$ be an LMG. Then we write 
+$\Gamma \vdash^n_G \gamma$ iff $\Gamma;H;S_G \vdash^n \gamma$ in 
+predicate logic and $\Gamma \vdash_G \gamma$ iff $\Gamma; 
+H; S_G \vdash \gamma$ in predicate logic.
+\end{defn}
+%%%
+We shall explain in some detail how we determine whether or not 
+$\vdash_G^n Q(\vec{x})$ ($Q$ unary). Call a \textbf{substitution} a 
+function $\alpha$ which associates a term to each variable; 
+and a \textbf{valuation} a function that associates a string 
+in $A^{\ast}$ to each string variable.
+%%%
+\index{substitution}%%%
+\index{valuation}%%
+%%%
+Given $\alpha$ we define $s^{\alpha}$ for a polynomial
+by homomorphic extension. For example, if $s = \mbox{\tt a} \,
+x^2 \, \mbox{\tt b} \, y$ and $\alpha(x) = \mbox{\tt ac}$, 
+$\alpha(y) = \mbox{\tt bba}$ then $s^{\alpha} = \mbox{\tt aacacbbba}$, 
+as is easily computed. Notice that strings can be seen as constant 
+terms modulo equivalence, a fact that we shall exploit here by 
+confusing valuations with substitutions that assign constant 
+terms to the string variable. (The so--called \textbf{Herbrand--universe} 
+%%%
+\index{Herbrand--universe}%%%
+%%%
+is the set of constant terms. It is known that any Horn--formula 
+that is not valid can be falsified in the Herbrand--universe, 
+in this case $\GZ(A)$.)
+%%
+\begin{equation}
+T(\vec{x}) \hrn U_0(\vec{y}_0), U_1(\vec{y}_1),\dotsc,
+U_{m-1}(\vec{y}_{m-1}).
+\end{equation}
+%%
+\index{rule!instance}%%
+%%%%
+is an \textbf{instance} of the rule
+%%
+\begin{equation}
+T(t) \hrn U_0(s_0),U_1(s_1),\dotsc, U_{m-1}(s_{m-1}).
+\end{equation}
+%%
+if there is a valuation $\beta$ such that
+$\vec{x} = t^{\beta}$ and $\vec{y}_i = s^{\beta}_i$
+for all $i < m$. Similarly, 
+%%
+\begin{equation}
+T(t') \hrn U_0(s'_0),U_1(s'_1),\dotsc, U_{m-1}(s'_{m-1}).
+\end{equation}
+%%
+is an instance of 
+%%
+\begin{equation}
+T(t) \hrn U_0(s_0),U_1(s_1),\dotsc, U_{m-1}(s_{m-1}).
+\end{equation}
+%%
+if there is a substitution $\alpha$ such that $s'_i = (s_i)^{\alpha}$ 
+for all $i < m$ and $t' = t^{\alpha}$. The notion of generation by an 
+LMG can be made somewhat more explicit.
+%%%
+\begin{prop}
+(a) $\vdash_G^0 Q(\vec{x})$ iff $Q(\vec{x}) \hrn .$ is a ground 
+instance of a rule of $G$. 
+(b) $\vdash_G^{n+1} Q(\vec{x})$ iff $\vdash_G^n Q(\vec{x})$ or
+there is a number $m$, predicates $R_i$, $i < m$, and strings
+$\vec{y}_i$, $i < m$, such that
+%%
+\begin{dingautolist}{192}
+\item $\vdash_G^n R_i(\vec{y}_i)$, and
+\item $Q(\vec{x}) \hrn R_0(\vec{y}_0),\dotsc, R_{m-1}(\vec{y}_{m-1})$
+is a ground instance of a rule of $G$.
+\end{dingautolist}
+\end{prop}
+%%
+We shall give an example to illustrate these definitions.
+Let $K$ be the following grammar.
+%%
+\begin{equation}
+S(vxyz) \hrn S(vyxz).;
+    \qquad S(\mbox{\tt abc}\conc x) \hrn S(x).;
+    \quad S(\varepsilon) \hrn.
+\end{equation}
+%%
+Then $L(K)$ is that language which contains all strings
+that contain an identical number of {\tt a}, {\tt b} and
+{\tt c}. To this end one first shows that $(\mbox{\tt abc})^{\ast}
+\subseteq L(K)$ and in virtue of the first rule $L(K)$ is closed
+under permutations. Here $\vec{y}$ is a \textbf{permutation of} 
+%%%
+\index{permutation}%%%
+%%%
+$\vec{x}$ if $\vec{y}$ and $\vec{x}$ have identical
+image under the Parikh map. Here is an example (the general case is
+left to the reader as an exercise). We can derive
+$S(\mbox{\tt abc})$ in one step from
+$S(\varepsilon)$ using the second rule, and
+$S(\mbox{\tt abcabc})$ in two steps, using
+again the second rule. In a third step we can derive
+$S(\mbox{\tt aabbcc})$ from this, using the
+first rule this time. Put $\alpha(v) := \mbox{\tt a}$,
+$\alpha(x) := \mbox{\tt ab}$, $\alpha(y) := \mbox{\tt bc}$
+and $\alpha(z) := \mbox{\tt c}$. Then
+%%
+\begin{equation}
+(vxyz)^{\alpha} = \mbox{\tt aabbcc}, \quad (vyxz)^{\alpha} =
+\mbox{\tt abcabc}
+\end{equation}
+
+
+Let $H$ be a CFG. We define a 1--LMG $H^{\spadesuit}$ as follows.  
+(For the presentation we shall assume that $H$ is already in Chomsky 
+normal form.) For every nonterminal $A$ we introduce a unary 
+predicate $\uli{A}$. The start symbol is $\uli{\mbox{\tt S}}$.
+If $A \pf BC$ is a rule from $H$ then $H^{\spadesuit}$ contains the rule
+%%
+\begin{equation}
+\uli{A}(xy) \hrn \uli{B}(x),\uli{C}(y).
+\end{equation}
+%%
+If $A \pf a$ is a terminal rule then we introduce the following 
+rule into $H^{\spadesuit}$:
+%%
+\begin{equation}
+\uli{A}(a) \hrn .
+\end{equation}
+%%
+One can show relatively easily that $L(H) = L(H^{\spadesuit})$.
+
+The 1--LMGs can therefore generate all CFLs.
+Additionally, they can generate languages without constant
+growth, as we have already seen. Let us note the following facts.
+%%
+\begin{thm}
+\label{thm:lbgschnitt}
+Let $L_1$ and $L_2$ be languages over $A$ which can be generated
+by 1--LMGs. Then there exist 1--LMGs generating the languages
+$L_1 \cap L_2$ and $L_1 \cup L_2$.
+\end{thm}
+%%
+\proofbeg
+Let $G_1$ and $G_2$ be 1--LMGs which generate $L_1$ and $L_2$,
+respectively. We assume that the set of nonterminals of
+$G_1$ and $G_2$ are disjoint. Let $S_i$
+be the start predicate of $G_i$, $i \in \{1,2\}$.
+Let $H_{\cup}$ be constructed as follows. We form the
+union of the nonterminals and rules of $G_1$ and $G_2$.
+Further, let $S^{\heartsuit}$ be a new
+predicate, which will be the start predicate of $G_{\cup}$.
+At the end we add the following rules:
+%%
+$S^{\heartsuit}(x) \hrn S_1(x).$;
+$S^{\heartsuit}(x) \hrn S_2(x)$.
+%%
+This defines $G_{\cup}$. $G_{\cap}$ is defined similarly,
+only that in place of the last two rules we have a single
+rule, $S^{\heartsuit}(x) \hrn S_1(x), S_2(x)$. It is easily checked that
+$L(G_{\cup}) = L_1 \cup L_2$ and $L(G_{\cap}) = L_1 \cap L_2$.
+We show this for $G_{\cap}$. We have $\vec{x} \in L(G_{\cap})$
+if there is an $n$ with $\vdash_{G_{\cap}}^n S^{\heartsuit}(\vec{x})$.  
+This in turn is the case exactly if $n > 0$ and 
+$\vdash_{G_{\cap}}^{n-1} S_1(\vec{x})$ as well as 
+$\vdash_{G_{\cap}}^{n-1} S_2(\vec{x})$.  This is nothing but 
+$\vdash_{G_1}^{n-1} S_1(\vec{x})$ and 
+$\vdash_{G_2}^{n-1} S_1(\vec{x})$. Since $n$
+was arbitrary, we have $\vec{x} \in L(G_{\cap})$ iff
+$\vec{x} \in L(G_1) = L_1$ and $\vec{x} \in L(G_2) = L_2$,
+as promised.
+\proofend
+
+The 1--LMGs are quite powerful, as the following theorem shows.
+%%
+\begin{thm}
+\label{thm:lbgra}
+Let $A$ be a finite alphabet and $L \subseteq A^{\ast}$.
+$L = L(G)$ for a 1--LMG iff $L$ is recursively
+enumerable.
+\end{thm}
+%%
+The proof is left to the reader as an exercise. Since the set of
+recursively enumerable languages is closed under union and
+intersection, Theorem~\ref{thm:lbgschnitt} already follows from
+Theorem~\ref{thm:lbgra}. It also follows that the complement
+of a language that can be generated by a 1--LMG does not have
+to be such a language again. For the complement of a recursively
+enumerable language does not have to be recursively enumerable
+again. (Otherwise every recursively enumerable set would also
+be decidable, which is not the case.)
+
+In order to arrive at interesting classes of languages we shall
+restrict the format of the rules. Let $\rho$ be the following rule.
+%%
+\begin{equation}
+\rho := T(t) \hrn U_0(s_0),U_1(s_1),\dotsc, U_{n-1}(s_{n-1}).
+\end{equation}
+%%
+%%
+\index{literal movement grammar!nondeleting}%%
+%%
+\begin{dinglist}{43}
+\item $\rho$ is called \textbf{upward nondeleting} if
+	\index{rule!upward nondeleting}
+    every variable which occurs in one of the $s_i$, $i < n$,
+    also occurs in $t$.
+\item $\rho$ is called \textbf{upward linear} if no variable
+	\index{rule!upward linear}
+    occurs more than once in $t$.
+\item $\rho$ is called \textbf{downward nondeleting} if every
+	\index{rule!downward nondeleting}
+    variable which occurs in $t$ also occurs in one of
+    the $s_i$.
+\item $\rho$ is called \textbf{downward linear} if none of the
+	\index{rule!downward linear}
+    variables occurs twice in the $s_i$. (This means:
+    the $s_i$ are pairwise disjoint in their variables
+    and no variable occurs twice in any of the $s_i$.)
+\item $\rho$ is called \textbf{noncombinatorial} if the
+%%%
+	\index{rule!noncombinatorial}
+\index{literal movement grammar!noncombinatorial}%%
+%%%
+    $s_i$ are variables.
+\item $\rho$ is called \textbf{simple} if it is noncombinatorial,
+%%%%
+	\index{rule!simple}
+\index{literal movement grammar!simple}%%
+%%%%
+    upward nondeleting and upward linear.
+\end{dinglist}
+%%
+$G$ has the property $\CP$ if all rules of $G$ possess
+$\CP$. In particular the type of simple grammars shall
+be of concern for us. The definitions are not always
+what one would intuitively expect. For example, the following
+rule is called upward nondeleting even though applying this
+rule means deleting a symbol:
+$\mbox{\tt U}(x) \hrn \mbox{\tt U}(x \conc \mbox{\tt a})$.
+This is so since the definition focusses on the variables
+and ignores the constants. Further, downward linearity could
+alternatively be formulated as follows. One requires any
+symbol to occur in $t$ as often as it occurs in the
+$s_i$ taken together. This, however, is too strong a 
+requirement. One would like to allow a variable to occur 
+twice to the right even though on the left it occurs only once.
+%%
+\begin{lem}
+\label{lem:einf}
+Let $\rho$ be simple. Further, let 
+%%
+\begin{equation}
+Q(\vec{y}) \hrn R_0(\vec{x}_0),R_1(\vec{x}_1),
+\dotsc, R_{n-1}(\vec{x}_{n-1}).
+\end{equation}
+%%
+be an instance of $\rho$. Then $|\vec{y}| \geq \sum_{i < n} 
+|\vec{x}_i| \geq \max \{|\vec{x}_i| : i < n\}$. Further, $\vec{x}_i$ 
+is a subword of $\vec{y}$ for every $i < n$.
+\end{lem}
+%%
+\begin{thm}
+\label{thm:1pol}
+Let $L \subseteq A^{\ast}$ be generated by some simple 1--LMG.
+Then $L$ is in \textbf{PTIME}.
+\end{thm}
+%%
+\proofbeg
+Let $\vec{x}$ be an arbitrary string and $n := \sharp
+N \cdot |\vec{x}|$. Because of Lemma~\ref{lem:einf}  for every
+predicate $Q$: $\vdash_G Q(\vec{x})$ iff
+$\vdash_G^n Q(\vec{x})$.  From this follows that every
+derivation of $S(\vec{x})$ has length at most
+$n$. Further, in a derivation there are only predicates of the
+form $Q(\vec{y})$ where $\vec{y}$ is a subword of $\vec{x}$.
+The following chart--algorithm (which is a modification of the
+standard chart--algorithm) only takes polynomial time:
+%%
+\begin{dinglist}{43}
+\item For $i = 0, \dotsc, n$:
+    For every substring $\vec{y}$ of length $i$ and every
+    predicate $Q$ check if there are subwords
+    $\vec{z}_j$, $j < p$, of length $< i$ and
+    predicates $R_j$, $j < p$, such that $Q(\vec{y})
+    \hrn R_0(\vec{z}_0),R_1(\vec{z}_1),\dotsc, R_{p-1}(\vec{z}_{p-1}).$
+    is an instance of a rule of $G$.
+\end{dinglist}
+%%
+The number of subwords of length $i$ is proportional to $n$. For 
+given $p$, a string of length $n$ can be decomposed in $O(n^{p-1})$ 
+ways as product of $p$ (sub)strings. Thus for every $i$, $O(n^p)$ 
+many steps are required, in total $O(n^{p+1})$ on a deterministic 
+multitape Turing machine.
+\proofend
+
+The converse of Theorem~\ref{thm:1pol} is in all likelihood
+false. Notice that in an LMG, predicates need not be unary.
+Instead, we have allowed predicates of any arity. There
+sometimes occurs the situation that one wishes to have uniform
+arity for all predicates. This can be arranged as follows. For an
+$i$--ary predicate $A$ (where $i < k$) we introduce
+a $k$--ary predicate $A^{\ast}$ which satisfies
+%%
+\begin{equation}
+A^{\ast}(x_0, \dotsc, x_{k-1}) \dpf
+A(x_0, \dotsc, x_{i-1}) \und \gund_{j = i}^{k-1}
+    x_j \doteq \varepsilon.
+\end{equation}
+%%
+There is a small difficulty in that the start predicate is required
+to be unary. So we lift also this restriction and allow the
+start predicate to have any arity. Then we put
+%%
+\begin{equation}
+L(G) := \{\prod_{i < \Omega(S)} \vec{x}_i :\; \vdash_G S(\vec{x}_0,
+    \dotsc, \vec{x}_{\Omega(S)-1})\} 
+\end{equation}
+%%
+This does not change the generative power. An important class of LMGs, 
+which we shall study in the sequel, is the class of simple LMGs.
+Notice that in virtue of the definition of a simple rule a variable
+is allowed to occur on the right hand side several times, while on
+the left it may not occur more than once. This restriction however
+turns out not to have any effect. Consider the following grammar $H$.
+%%
+\begin{equation}
+\label{egalite}
+\begin{array}{l@{\quad \hrn \quad}l@{\qquad}l}
+E(\varepsilon, \varepsilon)  & . & \\
+E(a,a) & . & (a \in A)  \\
+E(xa, ya) & E(x,y). & (a \in A)
+\end{array}
+\end{equation}
+%%
+It is easy to see that $\vdash_H E(\vec{x}, \vec{y})$ iff 
+$\vec{x} = \vec{y}$. $H$ is simple. Now take a rule
+in which a variable occurs several times on the left hand side.
+%%
+\begin{equation}
+S(xx) \leftarrow S(x).
+\end{equation}
+%%
+We replace this rule by the following one and add \eqref{egalite}.
+%%
+\begin{equation}
+S(xy) \leftarrow S(x), \quad E(x,y).
+\end{equation}
+%%
+This grammar is simple and generates the same strings.
+Furthermore, we can see to it that no variable occurs more than
+three times on the right hand side, and that $s^j_i \neq s^j_k$
+for $i \neq k$.  Namely, replace $s^j_i$ by distinct variables,
+say $x^j_i$, and add the clauses $E(x^j_i, x^{j'}_{i'})$, if $s^j_i =
+s^{j'}_{i'}$. We do not need to introduce all of these clauses.
+For each variable we only need two. (If we
+want to have $A_i = A_j$ for all $i < n$ we simply have to require
+$A_i = A_j$ for all $j \equiv i+1 \pmod{n}$.)
+
+With some effort we can generalize Theorem~\ref{thm:1pol}.
+%%
+\begin{thm}
+\label{thm:npol}
+Let $L \subseteq A^{\ast}$ be generated by a simple LMG.
+Then $L$ is in \textbf{PTIME}.
+\end{thm}
+%%
+The main theorem of this section will be to show that the
+converse also holds. We shall make some preparatory remarks.
+We have already seen that {\bf PTIME} = {\bf ALOGSPACE}. Now 
+we shall provide another characterization of this class. Let $T$ 
+be a Turing machine. We call $T$ {\bf read only} if none of 
+its heads can write. If 
+$T$ has several tapes then it will get the input on all of its 
+tapes. (A read only tape is otherwise useless.) Alternatively, 
+we may think of the machine as having only one tape but several read
+heads that can be independently operated.
+%%
+\begin{defn}
+Let $L \subseteq A^{\ast}$. We say that $L$ is in \textbf{ARO}
+%%%
+\index{\textbf{ARO}}%%%
+%%%%
+if there is an alternating read only Turing machine
+which accepts $L$.
+\end{defn}
+%%
+\begin{thm}
+$\mbox{\textbf{ARO}} = \mbox{\textbf{ALOGSPACE}}$.
+\end{thm}
+%%
+\proofbeg
+Let $L \in \mbox{\bf ARO}$. Then there exists an alternating read
+only Turing machine $T$ which accepts $L$. We have to find a
+logarithmically space bounded alternating Turing machine that
+recognizes $L$. The input and output tape remain, the other
+tapes are replaced by read and write tapes, which are initially
+empty. Now, let $\tau$ be a read only tape. The actions that
+can be performed on it are: moving the read head to the left
+or to the right (and reading the symbol). We code the position
+of the head using binary coding. Evidently, this coding needs only
+$\log_2 |\vec{x}| + 1$ space. Calculating the successor and
+predecessor (if it exists) of a binary number is {\bf LOGSPACE}
+computable (given some extra tapes). Accessing the $i$th symbol
+of the input, where $i$ is given in binary code, is as well.
+This shows that we can replace the read only tapes by 
+logarithmically space bounded tapes. Hence $L \in 
+\mbox{\bf ALOGSPACE}$. Suppose now that $L \in \mbox{\bf ALOGSPACE}$. 
+Then $L = L(U)$ for an alternating, logarithmically space bounded 
+Turing machine $U$. We shall construct a read only alternating 
+Turing machine which accepts the same language. To this end we 
+shall replace every intermediate Tape $\tau$ by several read 
+only tapes which together perform the same actions. Thus, all we
+need to show is that the following operations are computable on
+read only tapes (using enough auxiliary tapes). (For simplicity,
+we may assume that the alphabet on the intermediate tapes is just
+{\tt 0} and {\tt 1}.) (a) Moving the head to the right, (b) moving
+the head to the left, (c) writing {\tt 0} onto the tape, (d)
+writing {\tt 1} onto the tape. Now, we must use at least two
+read only tapes; one, call it $\tau_a$, contains the content of
+Tape $\tau$, $\tau_b$ contains the position of the head of
+$\tau$. The position $i$, being bounded by $\log_2 |\vec{x}|$,
+can be coded by placing the head on the cell number $i$. Call 
+$i_a$ the position of the head of $\tau_a$, $i_b$ the position 
+of the head of $\tau_b$. Arithmetically, these steps correspond 
+to the following functions: (a) $i_b \mapsto i_b+1$, 
+(b) $i_b+1 \mapsto i_b$, (c) replacing the $i_b$th symbol
+in the binary code of $i_a$ by {\tt 0}, (d) replacing the
+$i_b$th symbol in the binary code of $i_a$ by {\tt 1}. We must
+show that we can compute (c) and (d). (It is easy to see that
+if we can compute this number, we can reset the head of $\tau_b$
+onto the position corresponding to that number.) (A) The
+$i_b$th symbol in the binary code of $i_a$ is accessed as follows.
+We successively divide $i_a$ by $2$, exactly $i_b$ times,
+throwing away the remainder. If the number is even, the result
+is {\tt 0}, otherwise it is {\tt 1}. (B) $2^{i_b}$ is computed
+by doubling $1$ $i_b$ times. So, (c) is performed as follows.
+First, check the $i_b$th digit in the representation.
+If it is {\tt 0}, leave $i_a$ unchanged. Otherwise, substract
+$2^{i_b}$. Similarly for (d). This shows that we can find an
+alternating read only Turing machine that recognizes $L$.
+\proofend
+
+Now for the announced proof. Assume that $L$ is in
+\textbf{PTIME}. Then we know that there is an alternating
+read only Turing machine which accepts $L$. This machine
+works with $k$ tapes. For simplicity we shall assume that
+the machine can move only one head in a single step.
+We shall construct a $2k+2$--LMG $G$ such that $L(G) = L$.
+Assume for each $a \in A$ two binary predicates, $L^a$ and $R^a$, 
+with the following rules.
+%%
+\begin{align}
+L^a(\varepsilon,a) & \hrn . & L^a(xc,yc) & \hrn L^a(x,y). \\
+R^a(\varepsilon,a) & \hrn . & R^a(cx,cy) & \hrn R^a(x,y).
+\end{align}
+%%
+It is easy to see that $L^a(\vec{x},\vec{y})$ is derivable iff
+$\vec{y} = a \vec{x}$ and $R^a(\vec{x},\vec{y})$ is derivable iff
+$\vec{y} = \vec{x}\, a$. 
+
+If $\vec{w}$ is the input we can code the position of
+a read head by a pair $\auf \vec{x}, \vec{y}\zu$ for which
+$\vec{x}\,\vec{y} = \vec{w}$. A configuration
+is simply determined by naming the state of the machine and
+$k$ pairs $\auf \vec{x}_i, \vec{y}_i\zu$ with
+$\vec{x}_i \, \vec{y}_i = \vec{w}$. Our grammar will
+monitor the actions of the machine step by step.
+To every state $q$ we associate a predicate $q^{\star}$.
+If $q$ is existential the predicate is $2k+2$--ary.
+If $q$ changes to $r$ when reading the letter
+$a$ and if the machine moves to the left on Tape
+$j$ then the following rule is added to $G$.
+%%
+\begin{multline}
+\label{rule:left}
+q^{\star}(w, x_j y_j, x_0, y_0, \dotsc, x_{j-1}, y_{j-1},
+    x'_j, y'_j, x_{j+1}, y_{j+1}, 
+\dotsc, x_{k-1}, y_{k-1})
+    \\
+\; \hrn 
+    r^{\star}(w, w, x_0, y_0, \dotsc, x_{k-1}, y_{k-1}),
+    L^a(y_j, y'_j), R^a(x'_j,x_j).
+\end{multline}
+%%
+If the machine moves the head to the right we instead add the
+following rule.
+%%
+\begin{multline}
+\label{rule:right}
+q^{\star}(w, x_j y_j, x_0, y_0, \dotsc, x_{j-1}, y_{j-1},
+    x'_j, y'_j, x_{j+1}, y_{j+1}, \dotsc, x_{k-1}, y_{k-1})
+    \\ 
+\; \hrn
+    r^{\star}(w, w, x_0, y_0, \dotsc, x_{k-1}, y_{k-1}),
+    R^a(x_j, x'_j), L^a(y'_j, y_j).
+\end{multline}
+%%
+If the machine does not move the head, then the following rule is
+added.
+%%
+\begin{equation}
+\label{rule:stay}
+q^{\star}(w, w', x_0, y_0, \dotsc, x_{k-1}, y_{k-1}) 
+\hrn 
+   r^{\star}(w, w', x_0, y_0, \dotsc, x_{k-1}, y_{k-1}).
+\end{equation}
+%%
+Notice that the first two argument places of the predicate are used
+to get rid of `superfluous' variables. If the state $q$ is
+universal and if there are exactly $p$ transitions with
+successor states $r_i$, $i < p$, which do not need to be
+different, then $q^{\star}$ becomes $2k+2$--ary and we
+introduce symbols $q(i)^{\star}$, $i < p$, which are
+$2k+2$--ary. Now, first the following rule is introduced.
+%%
+\begin{align}
+& q^{\star}(w, w', x_0, y_0, \dotsc, x_{k-1}, y_{k-1}) \hrn \\\notag
+& \qquad q(0)^{\star}(w, w', x_0, y_0, \dotsc, x_{k-1}, y_{k-1}), \\\notag
+& \qquad q(1)^{\star}(w, w', x_0, y_0, \dotsc, x_{k-1}, y_{k-1}), \\\notag
+& \qquad \dotsc, \\\notag
+& \qquad q(p-1)^{\star}(w, w', x_0, y_0, \dotsc, x_{k-1}, y_{k-1}).
+\end{align}
+%%
+Second, if the transition $i$ consists in the state $q$ changing 
+to $r_i$ when reading the symbol $a$ and if the machine moves to 
+the left on Tape $j$, $G$ gets \eqref{rule:left} with $q^{\star}(i)$ 
+in place $q^{\star}$ and $r^{\star}_j$ in place of $r^{\star}$.
+If movement is to the right, instead we use \eqref{rule:right}.
+If the machine does not move the head, then \eqref{rule:stay} 
+is added.
+
+All of these rules are simple. If $q$ is an accepting state,
+then we also take the following rule on board.
+%%
+\begin{equation}
+q^{\star}(w,w',x_0, y_0, \dotsc, x_{k-1}, y_{k-1}) \hrn .
+\end{equation}
+%%
+The last rule we need is
+%%
+\begin{equation}
+S(w) \hrn q_0^{\star}(w, w, \varepsilon,
+    w, \varepsilon, w, \dotsc, \varepsilon, w).
+\end{equation}
+%%
+This is a simple rule. For the variable $w$ occurs to the
+left only once. With this definition made we have to show
+that $L(G) = L$. Since $L = L(T)$ it suffices to show
+that $L(G) = L(T)$. We have $\vec{w} \in L(T)$ if
+there is an $n \in \omega$ such that $T$ moves into an
+accepting state from the initial configuration for
+$\vec{w}$. Here the initial configuration is as follows.
+On all tapes we have $\vec{w}$ and the read heads are
+to the left of the input. An end configuration is a
+configuration from which no further moves are possible.
+It is accepted if the machine is in a universal state.
+
+We say that $\zeta := q^{\star}(\vec{w}, \vec{w}, %
+\vec{x}_0, \vec{y}_0, \dotsc, \vec{x}_{k-1}, \vec{y}_{k-1})$
+codes the configuration $\zeta^K$ where $T$ is in state $q$, 
+and for each $i < k$ (a) Tape $i$ is filled  by $x_iy_i$, 
+and (b) the read head Tape $i$ is on the symbol immediately 
+following $\vec{x}_i$. Now we have:
+%%
+\begin{dingautolist}{192}
+\item $\vdash_G^0 \zeta$ iff
+    $\zeta^K$ is an accepting end configuration.
+\item If $q$ is existential then $\zeta \hrn \eta$ is an
+    instance of a rule of $G$ iff
+    $T$ computes $\eta^K$ from $\zeta^K$ in one step.
+\item If $q$ is universal then $\zeta$ is derivable from
+     $\eta_i$, $i < p$, in two rule steps iff
+    $T$ computes the transitions
+    $\zeta^K \pf \eta_i^K$ ($i < p$).
+\end{dingautolist}
+%%
+Let $\vec{w} \in L(G)$. This means that
+$\vdash_G^n S(\vec{w})$ and so
+%%
+\begin{equation}
+\vdash_G^{n-1} \zeta := q_0^{\star}(\vec{w}, \vec{w}, \varepsilon,
+    \vec{w}, \varepsilon, \vec{w}, \dotsc, \varepsilon,
+    \vec{w}).
+\end{equation}
+%%
+This corresponds to the initial configuration of
+$T$ for the input $\vec{w}$. We conclude from what we have said
+above that if $\vdash_G^{n-1} \zeta$ there exists a
+$k \leq n$ such that $T$ accepts $\zeta^K$ in $k$ steps.
+Furthermore: if $T$ accepts $\zeta^K$ in $k$ steps, then
+$\vdash_G^{2k} \zeta$. Hence we have $L(G) = L(T)$.
+%%
+\begin{thm}[Groenink]
+%%%
+\index{Groenink, Annius}%%%
+%%%
+$L$ is accepted by a simple LMG iff
+$L \in \mbox{\textbf{PTIME}}$.
+\end{thm}
+%%
+{\it Notes on this section.} 
+LMGs are identical to \textbf{Elementary Formal Systems} (\textbf{EFS}s) %%%
+%%%
+\index{elementary formal system}%%
+%%% 
+defined in \cite{smullyan:formal}, Page 4. Smullyan used them to 
+define recursion without the help of a machine. \cite{post:formal} 
+did the same, however his rules are more akin to actions of a Turing 
+machine than to rules of an EFS (or an LMG). There is an alternative 
+characterization of \textbf{PTIME}--languages. Let 
+$\mathsf{FOL}(\mathsf{LFP})$ be 
+the expansion of first--order predicate logic (with constants for 
+each letter and a single binary symbol $<$ in addition to equality)
+by the least--fixed point operator. Then the \textbf{PTIME}--languages 
+are exactly those that can be defined in $\mathsf{FOL}(\mathsf{LFP})$. 
+A proof can be found in \cite{ebbinghausflum:finite}. 
+%%
+\vplatz
+\exercise
+Prove Theorem~\ref{thm:lbgra}. {\it Hint.} You have to simulate
+the actions of a Turing machine by the grammar. Here we code the
+configuration by means of the string, the states by means of
+the predicates.
+%%
+\vplatz
+\exercise
+Prove Theorem~\ref{thm:npol}.
+%%
+\vplatz
+\exercise
+Construct a simple 1--LMG $G$ such that 
+$\{\mbox{\tt a}^n\mbox{\tt b}^n\mbox{\tt c}^n :
+n \in \omega\} = L(G)$.
+%%
+\vplatz
+\exercise
+Let $G = \auf A, R, \Xi, S, H\zu$ be an LMG which generates
+$L$. Furthermore, let $U$ be the language of all
+$\vec{x}$ whose Parikh image is that of some $\vec{y} \in L$.
+(In other words: $U$ is the permutation closure of $L$.)
+Let 
+%%%
+\begin{equation}
+G^p := \auf A, R \cup \{S^{\heartsuit}\}, \Xi^{\heartsuit},
+S^{\heartsuit}, H^p\zu
+\end{equation}
+%%%
+where $\Xi(S^{\heartsuit}) = 1$, and let
+%%
+\begin{equation}
+H^p := R \cup \{S^{\heartsuit}(x) \hrn
+    S(x).; S^{\heartsuit}(vyxz) \hrn S^{\heartsuit}(vxyz).\}
+\end{equation}
+%%
+Show that $L(G^p) = U$.
+%%
+\vplatz
+\exercise
+Let $L$ be the set of all theorems of intuitionistic logic. Write
+a 1--LMG that generates this set. {\it Hint.} You may use the
+Hilbert--style calculus here.

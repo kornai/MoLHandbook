@@ -1,0 +1,999 @@
+\section{Semigroups and Strings}
+\label{einseins}
+\label{kap1-2}
+%
+%
+%
+In formal language theory, languages are sets of strings over some
+alphabet. We assume throughout that an alphabet is a finite,
+nonempty set, usually called $A$. It has no further structure (but
+see Section~\ref{kap1}.\ref{kap1-3}), it only defines the material of
+primitive letters. We do not make any further assumptions on the
+size of $A$. The Latin alphabet consists of 26 letters, which
+actually exist in two variants (upper and lower case), and we also
+use a few punctuation marks and symbols as well as the blank. On
+the other hand, the Chinese `alphabet' consists of several
+thousand letters!
+
+Strings are very fundamental structures. Without a proper
+understanding of their workings one could not read this
+book, for example. A string over $A$ is nothing but the result
+of successively placing elements of $A$ after each other. It
+is not necessary to always use a fresh letter. If, for example,
+$A = \{\mbox{\tt a}, \mbox{\tt b}, \mbox{\tt c}, \mbox{\tt d}\}$,
+then {\tt abb}, {\tt bac}, {\tt caaba} are strings over $A$.
+We agree to use typewriter font to mark actual symbols (= pieces
+of ink), while letters in different font are only proxy for
+letters (technically, they are variables for letters). Strings
+are denoted by a vector arrow, for example $\vec{w}$, $\vec{x}$,
+$\vec{y}$ and so on, to distinguish them from individual letters.
+Since paper is of bounded length, strings are not really written
+down in a continuous line, but rather in several lines, and
+on several pieces of paper, depending on need. The way a string is
+cut up into lines and pages is actually immaterial for its
+abstract constitution (unless we speak of paragraphs and similar
+textual divisions). We wish to abstract from these details.
+Therefore we define strings formally as follows.
+%%
+\begin{defn}
+%%
+\index{string}
+\index{segment}
+\index{letter}
+\index{alphabet}
+%%
+Let $A$ be a set. A \textbf{string over} $A$ is a function
+$\vec{x} \colon n \pf A$ for some natural number $n$. $n$ is called
+the \textbf{length of} 
+%%%%
+\index{string!length}%%%
+\index{$"|\vec{x}"|$}%%%
+%%%%
+$\vec{x}$ and is denoted by $|\vec{x}|$.
+$\vec{x}(i)$, $i < n$, is called the $i$\textbf{th segment} or
+the $i$\textbf{th letter of} $\vec{x}$. The unique string
+of length 0 is denoted by $\varepsilon$. If $\vec{x} \colon m \pf A$ and
+$\vec{y} \colon n \pf A$ are strings over $A$ then 
+$\vec{x}\conc\vec{y}$ denotes the unique string of 
+length $m+n$ for which the following holds:
+%%
+\index{$\vec{x}\conc\vec{y}$, $\varepsilon$}%%%
+%%%
+\begin{equation}
+(\vec{x}\conc\vec{y})(j) := 
+\begin{cases}
+    \vec{x}(j) & \text{ if $j < m$,}  \\
+    \vec{y}(j - m) & \text{ else.}
+\end{cases}
+\end{equation}
+    %%
+We often write $\vec{x}\, \vec{y}$ in place of $\vec{x}\conc\vec{y}$.
+In connection with this definition the set $A$ is called the
+\textbf{alphabet}, an element of $A$ is also referred to as a 
+\textbf{letter}. Unless stated otherwise, $A$ is finite and nonempty.
+\end{defn}
+%%
+So, a string may also be written using simple concatenation. Hence
+we have $\mbox{\tt abc} \conc \mbox{\tt baca} = \mbox{\tt abcbaca}$.
+Note that there no blank is inserted between the two strings;
+for the blank is a {\it letter}. We denote it by $\Box$. Two words
+of a language are usually separated by a blank possibly using
+additional punctuation marks. That the blank is a symbol is
+felt more clearly when we use a typewriter. If we want to
+have a blank, we need to press down a key in order to get it.
+For purely formal reasons we have added the empty
+string to the set of strings. It is not visible (unlike the
+blank). Hence, we need a special symbol for it, which is
+$\varepsilon$, in some other books also $\lambda$. We have
+%%
+\begin{equation}
+\label{eqn:null}
+\vec{x} \conc \varepsilon = \varepsilon \conc \vec{x} =
+\vec{x}
+\end{equation}
+%%
+\index{unit}%%
+%%%
+We say, the empty string is the 
+\textbf{unit} with respect to concatenation. For any triple of
+strings $\vec{x}$, $\vec{y}$ and $\vec{z}$ we have
+%%
+\begin{equation}
+\label{eqn:eins}
+\vec{x} \conc (\vec{y} \conc \vec{z}) =
+    (\vec{x} \conc \vec{y}) \conc \vec{z}
+\end{equation}
+%%
+\index{associativity}%%
+%%%
+We therefore say that concatenation, $\conc$, is \textbf{associative}.
+More on that below. We define the notation
+${\vec{x}\,}^i$ by induction on $i$.
+%%
+\index{${\vec{x}\,}^i$, $\prod_{i < n} \vec{x}_n$}%%%
+%%%
+\begin{equation}
+\begin{split}
+{\vec{x}\,}^0     & := \varepsilon \\
+{\vec{x}\,}^{i+1} & := {{\vec{x}\,}^i}\conc \vec{x} 
+\end{split}
+\end{equation}
+%%
+Furthermore, we define $\prod_{i < n} \vec{x}_i$ as follows.
+%%
+\begin{equation}
+\prod_{i < 0} \vec{x}_i := \varepsilon, \qquad
+\prod_{i < n+1} := (\prod_{i < n} \vec{x}_i) \conc \vec{x}_n 
+\end{equation}
+%%
+Note that the letter {\tt a} is technically distinct from the
+string $\vec{x} \colon 1 \pf A \colon 0 \mapsto \mbox{\tt a}$. They are
+nevertheless written in the same way, namely {\tt a}.
+If $\vec{x}$ is a string over $A$ and $A \subseteq B$,
+then $\vec{x}$ is a string over $B$. The set of all strings
+over $A$ is denoted by $A^{\ast}$.
+
+Let $<$ be a linear order on $A$. We define the so--called
+\textbf{lexicographical ordering} (\textbf{with respect to} $<$)
+as follows.
+%%%
+\index{ordering!lexicographical}%%
+%%%
+Put $\vec{x} <_L \vec{y}$ if there exist $\vec{u}$, $\vec{v}$ and
+$\vec{w}$ as well as $a$ and $b$ such that $\vec{x} = \vec{u}
+\conc a \conc \vec{v}$, $\vec{y} = \vec{u} \conc b \conc \vec{w}$
+and $a < b$. Notice that $\vec{x} <_L \vec{y}$ can obtain even if
+$\vec{x}$ is longer than $\vec{y}$. Another important ordering
+is the following one. Let $\mu(a) := k$ if $a$ is the $k$th symbol
+of $A$ in the ordering $<$. Further, put $n := |A|$. For $\vec{x}
+= x_0 x_1 \dotsb x_{p-1}$ we associate the following number.
+%%
+%%%
+\index{$Z(\vec{x})$}%%%
+%%%
+\begin{equation}
+Z(\vec{x}) := \sum_{i = 0}^{p-1} (\mu(x_i)+1) (n+1)^{p-i-1}
+\end{equation}
+%%
+Now put $\vec{x} <_N \vec{y}$ if and only if $Z(\vec{x}) <
+Z(\vec{y})$. This ordering we call the \textbf{numerical ordering}.
+%%%
+\index{ordering!numerical}%%
+%%%%
+Notice that both orderings depend on the choice of $<$. We shall 
+illustrate these orderings with $A := \{\mbox{\tt a},\mbox{\tt b}\}$ 
+and $\mbox{\tt a} < \mbox{\tt b}$. 
+Then the numerical ordering is as follows.
+%%
+\begin{center}
+\begin{tabular}{l|ccccccccccc}
+$\vec{x}$ &
+$\varepsilon$ & \mbox{\tt a} & \mbox{\tt b} & \mbox{\tt aa} &
+\mbox{\tt ab} & \mbox{\tt ba} & \mbox{\tt bb} & \mbox{\tt aaa} &
+\mbox{\tt aab} & \mbox{\tt aba} & $\dotsc$ \\\hline
+$Z(\vec{x})$ &
+0 & 1 & 2 & 4 & 5 & 7 & 8 & 13 & 14 & 16 & \\
+\end{tabular}
+\end{center}
+%%
+This ordering is linear. The map sending $i \in \omega$ to the
+$i$th element in this sequence is known as the \textbf{dyadic
+representation} of the numbers.
+%%%
+\index{dyadic representation}%%
+%%%
+In the dyadic representation, $0$ is represented by the
+empty string, 1 by {\tt a}, 2 by {\tt b}, 3 by {\tt aa}
+and so on. (Actually, if one wants to avoid using the empty
+string here, one may start with {\tt a} instead.)
+
+The lexicographical ordering is somewhat more complex. We
+illustrate it for words with at most four letters.
+%%
+\begin{center}
+\begin{tabular}{llllll}
+$\varepsilon$, & {\tt a},    & {\tt aa},   & {\tt aaa},
+    & {\tt aaaa}, & {\tt aaab}, \\
+{\tt aab}, & {\tt aaba}, & {\tt aabb}, & {\tt ab},
+    & {\tt aba},  & {\tt abaa}, \\
+{\tt abab}, & {\tt abb},  & {\tt abba}, & {\tt abbb},
+    & {\tt b},    & {\tt ba},  \\
+{\tt baa},  & {\tt baaa}, & {\tt baab}, & {\tt bab},  
+    & {\tt baba}, & {\tt babb}, \\
+{\tt bb},  & {\tt bba},  & {\tt bbaa}, & {\tt bbab}, 
+    & {\tt bbb}, & {\tt bbba},  \\
+{\tt bbbb}
+\end{tabular}
+\end{center}
+%%
+In the lexicographical as well as the numerical ordering
+$\varepsilon$ is the smallest element. Now look at the ordered
+tree based on the set $A^{\ast}$. It is a tree in which every node 
+is $n$--ary branching (cf.\ Section~\ref{kap1}.\ref{kap1-4}). Then the 
+lexicographical ordering corresponds to the linearization obtained 
+by depth--first search in this tree, while the numerical ordering 
+corresponds to the linearization obtained by breadth--first search 
+(see Section~\ref{kap2}.\ref{kap2-2}).
+%%%
+\begin{figure}
+\begin{center}
+\begin{picture}(24,13)
+\put(12,11.5){\makebox(0,0){$\varepsilon$}}
+    \put(12,11){\line(-1,-1){3}}
+    \put(12,11){\line(1,-1){3}}
+\put(9,7.5){\makebox(0,0){\tt a}}
+    \put(9,7){\line(-2,-3){2}}
+    \put(9,7){\line(2,-3){2}}
+\put(15,7.5){\makebox(0,0){\tt b}}
+    \put(15,7){\line(-2,-3){2}}
+    \put(15,7){\line(2,-3){2}}
+\put(7,3.5){\makebox(0,0){\tt aa}}
+    \put(7,3){\line(-1,-4){.5}}
+    \put(7,3){\line(1,-4){.5}}
+    \put(7,0.5){\makebox(0,0){$\dotsc$}}
+\put(11,3.5){\makebox(0,0){\tt ab}}
+    \put(11,3){\line(-1,-4){.5}}
+    \put(11,3){\line(1,-4){.5}}
+    \put(11,0.5){\makebox(0,0){$\dotsc$}}
+\put(13,3.5){\makebox(0,0){\tt ba}}
+    \put(13,3){\line(-1,-4){.5}}
+    \put(13,3){\line(1,-4){.5}}
+    \put(13,0.5){\makebox(0,0){$\dotsc$}}
+\put(17,3.5){\makebox(0,0){\tt bb}}
+    \put(17,3){\line(-1,-4){.5}}
+    \put(17,3){\line(1,-4){.5}}
+    \put(17,0.5){\makebox(0,0){$\ldots$}}
+\end{picture}
+\end{center}
+\caption{The Tree $A^{\ast}$}
+\label{fig:praefix}
+\end{figure}
+
+%%
+\index{monoid}%%
+%%%
+A \textbf{monoid} is a triple $\GM = \auf M, 1, \circ\zu$
+where $\circ$ is a binary operation on $M$ and $1$ an element
+such that for all $x, y, z \in M$ the following holds.
+%%
+\begin{subequations}
+\begin{align}
+x \circ 1 & = x \\
+1 \circ x & = x\\
+x \circ (y \circ z) & = (x \circ y) \circ z
+\end{align}
+\end{subequations}
+%%
+A monoid is therefore an algebra with signature 
+$\Omega \colon 1 \mapsto 0, \cdot \mapsto 2$, which in addition
+satisfies the above equations. An example is the algebra 
+$\auf 4, 0, \max\zu$ (recall that $4 = \{0,1,2,3\}$), or 
+$\auf \omega, 0, +\zu$. 
+%%%
+\index{$\GZ(A)$}%%
+%%
+\begin{prop}
+Let $\GZ(A) := \auf A^{\ast}, \varepsilon, \cdot\zu$. Then
+$\GZ(A)$ is a monoid.
+\end{prop}
+%%
+The function which assigns to each string 
+its length is a homomorphism from $\GZ(A)$ onto the monoid $\auf
+\omega, 0, +\zu$. It is surjective, since $A$ is always assumed to
+be nonempty. $\GZ(A)$ are special monoids: 
+%%%
+\begin{prop}
+The monoid $\GZ(A)$ is freely generated by $A$.
+\end{prop}
+%%
+\proofbeg
+Let $\GN = \auf N, 1, \circ\zu$ be a monoid and $v \colon A \pf N$ an
+arbitrary map. Then we define a map $\oli{v}$ as follows.
+%%
+\begin{equation}
+\begin{split}
+\oli{v}(\varepsilon) & := 1 \\
+\oli{v}(\vec{x} \conc a) & := \oli{v}(\vec{x}) \circ v(a)
+\end{split}
+\end{equation}
+%%
+This map is surely well defined. For the defining clauses are mutually
+exclusive. Now we must show that this map is a
+homomorphism. To this end, let $\vec{x}$ and $\vec{y}$ be words.
+We shall show that
+%%
+\begin{equation}
+\oli{v}(\vec{x} \conc \vec{y}) = \oli{v}(\vec{x}) \circ
+    \oli{v}(\vec{y}) 
+\end{equation}
+%%
+This will be established by induction on the length of $\vec{y}$.
+If it is 0, the claim is evidently true. For we have $\vec{y} =
+\varepsilon$, and hence $\oli{v}(\vec{x} \conc \vec{y}) =
+    \oli{v}(\vec{x}) = \oli{v}(\vec{x}) \circ 1 =
+    \oli{v}(\vec{x}) \circ \oli{v}(\vec{y})$.
+Now let $|\vec{y}| > 0$. Then $\vec{y} = \vec{w} \conc a$
+for some $a \in A$.
+%%
+\begin{equation}
+\begin{split}
+\oli{v}(\vec{x} \conc \vec{y}) & = \oli{v}(\vec{x} \conc \vec{w} \conc a) \\
+               &  = \oli{v}(\vec{x} \conc \vec{w}) \circ v(a) \\
+%    & \text{ by definition} 
+               &  = (\oli{v}(\vec{x}) \circ \oli{v}(\vec{w})) \circ v(a) \\
+%    & \text{ by induction hypothesis} 
+               &  = \oli{v}(\vec{x}) \circ (\oli{v}(\vec{w}) \circ v(a)) \\
+%    & \text{ since $\GN$ is a monoid} 
+               &  = \oli{v}(\vec{x}) \circ \oli{v}(\vec{y}) \\
+%    & \text{ by definition}
+\end{split}
+\end{equation}
+%%
+This shows the claim.
+\proofend
+
+The set $A$ is the only set that generates $\GZ(A)$ freely. For
+a letter cannot be produced from anything longer than a letter.
+The empty string is always dispensable, since it occurs anyway
+in the signature. Hence any generating set must contain $A$, and
+since $A$ generates $A^{\ast}$ it is the only minimal set that
+does so. A non--minimal generating set can
+never freely generate a monoid. For example, let
+$X = \{\mbox{\tt a}, \mbox{\tt b}, \mbox{\tt bba}\}$. 
+$X$ generates $\GZ(A)$, but it is not minimal. Hence it does not
+generate $\GZ(A)$ freely. For example, let $v \colon \mbox{\tt a} \mapsto
+\mbox{\tt a}, \mbox{\tt b} \mapsto \mbox{\tt b}, \mbox{\tt bba}
+\mapsto \mbox{\tt a}$. Then there is no homomorphism that extends
+$v$ to $A^{\ast}$. For then on the one hand
+$\oli{v}(\mbox{\tt bba}) = \mbox{\tt a}$, on the other
+$\oli{v}(\mbox{\tt bba}) = v(\mbox{\tt b}) \conc v(\mbox{\tt b})
+\conc v(\mbox{\tt a}) = \mbox{\tt bba}$.
+
+The fact that $A$ generates $\GZ(A)$ freely has various noteworthy
+consequences. First, a homomorphism from $\GZ(A)$ into an
+arbitrary monoid need only be fixed on $A$ in order to be defined.
+Moreover, {\it any\/} such map can be extended to a homomorphism
+into the target monoid. As a particular application we get that
+every map $v \colon A \pf B^{\ast}$ can be extended to a homomorphism
+from $\GZ(A)$ to $\GZ(B)$. Furthermore, we get the following result, 
+which shows that the monoids $\GZ(A)$ are up to isomorphism the only 
+freely generated monoids (allowing infinite alphabets). They reader 
+may note that the proof works for algebras of any signature.
+%%
+\begin{thm}
+Let $\GM = \auf M, \circ, 1\zu$ and $\GN = \auf N, \circ, 1\zu$
+be freely generated mo\-no\-ids. Then either \ding{192} or \ding{193}
+obtains.
+%%
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\begin{dingautolist}{192}
+\item
+There is an injective homomorphism $i \colon \GM \mono \GN$ and a
+surjective homomorphism $h \colon \GN \epi \GM$ such that $h \circ i = 1_M$.
+\item
+There exists an injective homomorphism $i \colon \GN \mono \GM$ and a
+surjective homomorphism $h \colon \GM \epi \GN$ such that $h \circ i = 1_N$.
+\end{dingautolist}
+\end{thm}
+%%
+\proofbeg Let $\GM$ be freely generated by $X$, $\GN$ freely
+generated by $Y$. Then either $|X| \leq |Y|$ or $|Y| \leq |X|$.
+Without loss of generality we assume the first. Then there is an
+injective map $p \colon X \mono Y$ and a surjective map $q \colon Y \epi X$
+such that $q \circ p = 1_X$. Since $X$ generates $\GM$ freely,
+there is a homomorphism $\oli{p} \colon \GM \pf \GN$ with $\oli{p}
+\restriction X = p$. Likewise, there is a homomorphism $\oli{q} \colon
+\GN \pf \GM$ such that $\oli{q} \restriction Y = q$, since $\GN$
+is freely generated by $Y$. The restriction of $\oli{q} \circ
+\oli{p}$ to $X$ is the identity. (For if $x \in X$ then $\oli{q}
+\circ \oli{p}(x) = \oli{q}(p(x)) = q(p(x)) = x$.) Since $X$ 
+freely generates $\GM$, there is only one homomorphism
+which extends $1_X$ on $\GM$ and this is the identity. Hence
+$\oli{q} \circ \oli{p} = 1_M$. It immediately follows that
+$\oli{q}$ is surjective and $\oli{p}$ injective. Hence 
+\ding{192} obtains. If $|Y| \leq |X|$ holds, \ding{193} is 
+shown in the same way.
+\proofend
+%%
+\begin{thm}
+In $\GZ(A)$ the following cancellation laws hold.
+%%
+\begin{dingautolist}{192}
+\item
+If $\vec{x} \conc \vec{u} = \vec{y} \conc \vec{u}$,
+then $\vec{x} = \vec{y}$.
+\item
+If $\vec{u} \conc \vec{x} = \vec{u} \conc \vec{y}$,
+then $\vec{x} = \vec{y}$.
+\end{dingautolist}
+\end{thm}
+%%
+$\vec{x}^T$ is defined as follows.
+%%
+\begin{equation}
+\left(\prod_{i < n} x_i\right)^T := \prod_{i < n} x_{n-1-i}
+\end{equation}
+%%
+\index{$\vec{x}^T$}%%
+\index{mirror string}%%
+%%%
+$\vec{x}^T$ is called the \textbf{mirror string} of $\vec{x}$. It is
+easy to see that $(\vec{x}^T)^T = \vec{x}$. The reader is asked to 
+convince himself that the map $\vec{x} \mapsto \vec{x}^T$ is 
+{\it not\/} a homomorphism if $|A| > 1$.
+%%
+\begin{defn}
+%%%
+\index{prefix}%%
+\index{postfix}%%
+\index{suffix}%%
+\index{substring}%%
+%%%
+Let $\vec{x}, \vec{y} \in A^{\ast}$. Then $\vec{x}$ is a
+\textbf{prefix of} $\vec{y}$ if $\vec{y} = \vec{x} \conc
+\vec{u}$ for some $\vec{u} \in A^{\ast}$. $\vec{x}$ is called a
+\textbf{postfix} or \textbf{suffix of} $\vec{y}$ if $\vec{y} = \vec{u}
+\conc \vec{x}$ for some $\vec{u} \in A^{\ast}$.
+$\vec{x}$ is called a \textbf{substring of} $\vec{y}$ if
+$\vec{y} = \vec{u} \conc \vec{x} \conc \vec{v}$ for some
+$\vec{u}, \vec{v} \in A^{\ast}$.
+\end{defn}
+%%
+It is easy to see that $\vec{x}$ is a prefix of $\vec{y}$
+exactly if $\vec{x}^T$ is a postfix of $\vec{y}^T$.
+Notice that a given string can have several occurrences
+in another string. For example, {\tt aa} occurs four
+times is {\tt aaaaa}. The occurrences are in addition
+not always disjoint. An occurrence of $\vec{x}$ in
+$\vec{y}$ can be defined in several ways. We may for
+example assign {\it positions\/} to each letters.
+%%%
+\index{position}%%
+%%%
+In a string $x_0 x_1 \dotsc x_{n-1}$ the numbers $< n+1$
+are called \textbf{positions}. The positions are actually thought
+of as the spaces between the letters. The $i$th letter, $x_i$,
+occurs between the position $i$ and the position $i+1$. The
+substring $\prod_{i \leq j < k} x_i$ occurs between the positions
+$i$ and $k$. The reason for doing it this way is that it allows
+us to define occurrences of the empty string as well. For each
+$i$, there is an occurrence of $\varepsilon$ between position
+$i$ and position $i$. We may interpret positions as time points
+in between which certain events take place, here the utterance
+of a given sound. Another definition of an occurrence is via
+the context in which the substring occurs.
+%%%
+\begin{defn}
+%%%
+\index{context}%%
+\index{substring occurrence}%%
+\index{substitution!string}%%
+%%%
+A \textbf{context} is a pair $C = \auf \vec{y}, \vec{z}\zu$ of 
+strings. The  \textbf{substitution of} $\vec{x}$ \textbf{into} 
+$C$, in symbols $C(\vec{x})$, is defined to be the string
+$\vec{y} \conc \vec{x} \conc \vec{z}$. We say that
+$\vec{x}$ \textbf{occurs in} $\vec{v}$ \textbf{in the
+context} $C$ if $\vec{v} = C(\vec{x})$. Every occurrence
+of $\vec{x}$ in a string $\vec{v}$ is uniquely defined by
+its context. We call $C$ a \textbf{substring occurrence of}
+$\vec{x}$ \textbf{in} $\vec{v}$.
+%%%
+\end{defn}
+%%%
+Actually, given $\vec{x}$ and $\vec{v}$, only one half of the
+context defines the other. However, as will become clear, contexts
+defined in this way allow for rather concise statements of facts
+in many cases. Now consider two substring occurrences $C$, $D$ in
+a given word $\vec{z}$. Then there are various ways in which the
+substrings may be related with respect to each other.
+%%
+\begin{defn}
+%%%
+\index{substring occurrence!overlapping}%%
+\index{substring occurrence!contained}%%
+%%%
+Let $C = \auf \vec{u}_1, \vec{u}_2\zu$ and $D = \auf \vec{v}_1,
+\vec{v}_2\zu$ be occurrences in $\vec{z}$ of the strings $\vec{x}$ 
+and $\vec{y}$, respectively. We say that $C$ 
+%%%%
+\index{precedence}%%%
+%%%%
+\textbf{precedes} $D$ 
+if $\vec{u}_1\conc\vec{x}$ is a prefix of $\vec{v}_1$. $C$ and $D$ 
+\textbf{overlap} if $C$ does not precede $D$ and $D$ does not precede 
+$C$. $C$ \textbf{is contained in} $D$ if $\vec{v}_1$ is a prefix of 
+$\vec{u}_1$ and $\vec{v}_2$ is a suffix of $\vec{u}_2$.
+\end{defn}
+%
+Notice that if $\vec{x}$ is a substring of $\vec{y}$ then every
+occurrence of $\vec{y}$ contains an occurrence of $\vec{x}$; but
+not every occurrence of $\vec{x}$ is contained in a given
+occurrence of $\vec{y}$.
+%
+\begin{defn}
+%%%
+\index{language}%%
+\index{language!string}%%
+%%%
+\label{defn:sprache} %%
+A (\textbf{string}) \textbf{language over the
+alphabet} $A$ is a subset of $A^{\ast}$.
+\end{defn}
+%%
+This definition admits that $L = \varnothing$ and that $L = A^{\ast}$.
+Moreover, $\varepsilon \in L$ also may occur. The admission of
+$\varepsilon$ is often done for technical reasons (like the
+introduction of a zero). 
+%%
+\begin{thm}
+Suppose $A$ is not empty, and $|A| \leq \aleph_0$. Then there are 
+exactly $2^{\aleph_0}$ languages.
+\end{thm}
+%%%
+\proofbeg
+This is a standard counting argument. We establish that $|A^{\ast}| = 
+\aleph_0$. The claim then follows since there are as many languages as 
+there are subsets of $\aleph_0$, namely $2^{\aleph_0}$. 
+If $A$ is finite, we can enumerate $A^{\ast}$ by enumerating the 
+strings of length 0, the strings of length 1, the strings of length 2, 
+and so on. If $A$ is infinite, we have to use cardinal arithmetic: 
+the set of strings of length $k$ of any finite $k$ is countable, 
+and $A^{\ast}$ is therefore the countable union of countable sets, 
+again countable.
+\proofend
+
+One can prove the previous result directly using the following argument.
+(The argument works even when $C$ is countably infinite.)
+%%
+\begin{thm}
+\label{bijektion}
+Let $C = \{c_i : i < p\}$, $p > 2$, be an arbitrary alphabet
+and $A = \{\mbox{\tt a}, \mbox{\tt b}\}$.
+Further, let $\oli{v}$ be the homomorphic extension of
+$v \colon c_i \mapsto {\mbox{\tt a}^i}\conc \mbox{\tt b}$. The map
+$S \mapsto \oli{v}[S] \colon \wp(C^{\ast}) \pf \wp(A^{\ast})$ defined by
+$V(S) = \oli{v}[S]$ is a bijection between $\wp(C^{\ast})$ and
+those languages which are contained in the direct image of
+$\oli{v}$.
+\end{thm}
+%%
+The proof is an exercise. The set of all languages over $A$ is closed
+under $\cap$, $\cup$, and $-$, the relative complement with respect
+to $A^{\ast}$.  Furthermore, we can define the following operations on
+languages.
+%%
+\index{$L \cdot M$, $L^n$, $L^+$, $L^{\ast}$, $L/M$, $L\backslash M$}%%%%
+%%
+\begin{subequations}
+\begin{align}
+L \cdot M & := \{\vec{x} \conc \vec{y} : \vec{x} \in L, \vec{y} \in M\} \\
+L^0      & := \{\varepsilon\}\\
+L^{n+1}  & := L^n \cdot L\\
+L^{\ast} & := \bigcup_{n \in \omega} L^n\\
+L^+      & := \bigcup_{0 < n \in\omega} L^n \\
+L / M & := \{\vec{y} \in A^{\ast} : (\exists \vec{x} \in M)(\vec{y}\conc
+\vec{x} \in L)\} \\
+M \backslash L & := \{\vec{y} \in A^{\ast} :
+    (\exists \vec{x} \in M)(\vec{x}\conc \vec{y} \in L)\}
+\end{align}
+\end{subequations}
+%%
+%%%
+\index{Kleene star}%%
+%%%
+$^{\ast}$ is called the \textbf{Kleene star}. For example,
+$L/A^{\ast}$ is the set of all strings which can be extended
+to members of $L$; this is exactly the set of prefixes of
+members of $L$. We call this set the 
+%%%%
+\index{prefix closure}%%%
+%%%
+\textbf{prefix closure} of $L$, in symbols $L^P$.
+%%%%
+\index{$L^P$, $L^S$}%%
+%%%%
+Analogously, $L^S := A^{\ast}\backslash L$ is the
+\textbf{suffix} or \textbf{postfix closure} 
+%%%
+\index{postfix closure}%%%
+%%%
+of $L$. It follows that $(L^P)^S$ is nothing but the substring
+closure of $L$.
+
+In what is to follow, we shall often encounter string languages 
+with a special distinguished symbol, the \textbf{blank}, 
+%%%%
+\index{blank}%%%
+\index{$\Box$, $\oconc$}%%%
+%%%
+typically written $\Box$. Then we use the abbreviation 
+%%%
+\begin{align}
+\vec{x}\oconc\vec{y} & := \vec{x}\conc\Box\conc\vec{y} & 
+L \oconc M & := \{\vec{x}\oconc\vec{y} : \vec{x} \in L, 
+\vec{y} \in M\} 
+\end{align}
+
+Let $L$ be a language over $A$, $C = \auf \vec{x}, \vec{y}\zu$
+a context and $\vec{u}$ a string. We say that $C$ \textbf{accepts}
+$\vec{u}$ \textbf{in} $L$, and write $\vec{u} \dashv_L C$, if 
+%%%%
+\index{$\dashv_L$}%%
+%%%%
+$C(\vec{u}) \in L$. The triple 
+$\auf A^{\ast}, A^{\ast} \times A^{\ast}, \dashv_L\zu$
+is a context in the sense of the previous section. Let $M \subseteq
+A^{\ast}$ and $P \subseteq A^{\ast} \times A^{\ast}$. Then denote
+by $C_L(M)$ the set of all $C$ which accept all strings from $M$
+in $L$ (intent); and denote by $Z_L(P)$ the set of all strings which
+are accepted by all contexts from $P$ in $L$ (extent).
+%%%%
+\index{$C_L(M)$, $Z_L(P)$}%%
+%%
+%%%%%
+\index{Sestier--closure}%
+\index{Sestier--operator}%%
+\nocite{sestier:contributions}%%
+%%%%%
+We call $M$ ($L$--)\textbf{closed} if $M = Z_L(C_L(M))$.
+The closed sets form the so--called \textbf{distribution classes}
+of strings in a language.
+%%%%
+\index{distribution classes}%%
+%%%%%
+$Z_L(C_L(M))$ is called the \textbf{Sestier--closure} of $M$ and the map
+$S_L \colon M \mapsto Z_L(C_L(M))$ the \textbf{Sestier--operator}. From
+Proposition~\ref{prop:closure} we immediately get this result.
+%%
+\begin{prop}
+The Sestier--operator is a closure operator.
+\end{prop}
+%%
+
+For various reasons, identifying terms with strings that
+represent them is a dangerous affair. As is well--known,
+conventions for writing down terms can be misleading, since 
+they might be ambiguous. Therefore we defined the term as an
+entity in itself. The string by which we denote the term is 
+only as a representative of that term.
+%%
+\begin{defn}
+%%
+\index{representation}%%
+\index{representative!unique}%%
+\index{string!representing}%%
+\index{readability!unique}%%
+%%
+Let $\Omega$ be a signature. A \textbf{representation of
+terms} (\textbf{by means of strings over} $A$) is a relation
+$R \subseteq \Tm_{\Omega} \times A^{\ast}$ such that
+for each term $t$ there exists a string $\vec{x}$ with
+$\auf t, \vec{x}\zu \in R$. $\vec{x}$ is called a
+\textbf{representative} or \textbf{representing string}
+of $t$ \textbf{with respect to} $R$. $\vec{x}$ is called 
+\textbf{unambiguous} if from $\auf t, \vec{x}\zu, \auf u, 
+\vec{x}\zu \in R$ it follows that $t = u$. $R$ is called 
+\textbf{unique} or \textbf{uniquely readable} if every 
+$\vec{x} \in A^{\ast}$ is unambiguous.
+\end{defn}
+%%
+$R$ is uniquely readable iff it is an injective function
+from $\Tm_{\Omega}$ to $A^{\ast}$ (and therefore its
+converse a partial injective function).  We leave it to the reader
+to verify that the representation defined in the previous section
+is actually uniquely readable. This is not self evident. It could be
+that a term possesses several representing strings. Our usual way of
+denoting terms is in fact not uniquely readable.  For example, one 
+writes ${\tt 2+3+4}$ even though this could be a representative of the 
+term $+(+(2,3),4)$ or of the term $+(2,+(3,4))$. This hardly matters, 
+since the two terms denote the same number, but nevertheless they are 
+different terms.
+
+There are many more conventions for writing down terms. We give a few
+examples.  (a) A binary symbol is typically written in between its
+arguments (this is called the \textbf{infix notation}).
+%%%
+\index{notation!infix}%%
+%%%
+So, we do not write {\tt +(2,3)} but {\tt (2+3)}. (b) Outermost
+brackets may be omitted: {\tt (2+3)} denotes the same term as
+{\tt 2+3}. (c) The multiplication sign binds stronger than {\tt +}.
+So, the following strings all denote the same term.
+%%
+\begin{equation}
+%%\begin{center}
+\mbox{\mtt (2+(3\symbol{42}5))} \quad \mbox{\mtt 2+(3\symbol{42}5)} \quad
+\mbox{\mtt (2+3\symbol{42}5)} \quad \mbox{\mtt 2+3\symbol{42}5}
+%%\end{center}
+\end{equation}
+%%
+In logic, it was customary to use dots in place of brackets.
+In this notation, {\mtt p\symbol{4}q.\symbol{25}.p} means the same 
+as the more common {\mtt (p\symbol{4}q)\symbol{25}p}. The dots are 
+placed to the left or right (sometimes both) of the operation sign. 
+Ambiguity is resolved by using more than one dot, for example `{\mtt :}'. 
+(See \cite{curry:logic} on this notation.) Also, let $\circ$ 
+be a binary operation symbol, written in infix notation. Suppose 
+that $\ell$ defines a string for every term in the following way.
+%%%
+\begin{align}
+\notag
+\ell(x) & := x && \text{$x$ basic} \\
+\ell(\circ(x,y)) & := \ell(x) \circ y 
+	&& \text{$y$ basic}\\
+\notag
+\ell(\circ(x,t)) & := \ell(x) \circ \mbox{\mtt (}\ell(t)\mbox{\mtt )} 
+	&& \text{$t$ complex}
+\end{align}
+%%
+\index{associativity!left--\faul}%%
+\index{associativity!right--\faul}%%
+If $\ell(t)$ represents $t$, we say that $\circ$ is 
+\textbf{left--associative}. If on the other hand $\rho(t)$ 
+represents the term $t$, $\circ$ is said to be 
+\textbf{right--associative}.
+%%%
+\begin{align}
+\notag
+\rho(y) & := x && \text{$y$ basic} \\
+\rho(\circ(x,y)) & := x \circ \rho(y) 
+	&& \text{$x$ basic}\\
+\notag
+\ell(\circ(t,y)) & := \mbox{\mtt (}\rho(t)\mbox{\mtt )} \circ \rho(y)
+	&& \text{$t$ complex}
+\end{align}
+%%
+
+Since the string {\mtt (2+3)\symbol{42}5} represents a different term
+than {\mtt 2+3\symbol{42}5} (and both have a different value) the
+brackets cannot be omitted. That we can do without brackets is an 
+insight we owe to the Polish logician Jan {\L}ukasiewicz. In his 
+notation, which is also called \textbf{Polish Notation} (\textbf{PN}), 
+the function symbol is always placed in front of its arguments.
+%%
+\index{notation!Polish}%%
+\index{notation!Reverse Polish}%%
+%%%
+Alternatively, the function symbol may be consistently placed
+behind its arguments (this is the so--called \textbf{Reverse Polish
+Notation}, \textbf{RPN}). There are some calculators (in addition to the
+programming language FORTH) 
+%%%
+\index{FORTH}%%%
+%%%%
+which have implemented RPN. In place
+of the (optional) brackets there is a key called  `{\tt enter}'.
+It is needed to separate two successive operands. For in RPN,
+the two arguments of a function follow each other immediately.
+If nothing is put in between them, both the terms $+(13,5)$
+and $+(1,35)$ would both be written {\tt 135+}. To prevent this,
+`{\tt enter}' is used to separate the first from the second
+input string. You therefore need to enter into the computer
+{\tt 13\framebox{enter}5+}. (Here, the box is the usual way
+in computer handbooks to turn a sequence into a `key'.
+In Chapter~\ref{kap3} we shall deal again with the problem
+of writing down numbers.) Notice that in practice (i.e.~as far 
+as the tacit conventions go) the choice between Polish and Reverse 
+Polish Notation only affects the position of the function symbol, and 
+not the way in which arguments are placed with respect to each other. 
+For example, suppose there is a key \framebox{\tt exp} for the 
+exponential function. Then to get the result of $2^3$, you enter
+\mbox{\tt 2\framebox{enter}3\framebox{exp}} on a machine using RPN  
+and {\tt \framebox{exp}2\framebox{enter}3=} on a machine using PN. 
+Hence, the relative order between base ({\tt 2}) and exponent 
+({\tt 3}) remains. (Notice incidentally the need for typing in 
+{\tt =} or something else that indicates the end of the second 
+operand in PN!) This effect is also noted in natural languages: 
+the subject precedes the object in the overwhelming majority of 
+languages irrespective of the place of the verb. The mirror image 
+of an VSO language is an SOV language, not OSV.
+
+Now we shall show that Polish Notation is uniquely readable.
+Let $F$ be a set of symbols and $\Omega$ a signature over $F$.
+Each symbol $f \in F$ is assigned an arity $\Omega(f)$. Next, 
+we define a set of strings over $F$, which we assign to the various 
+%%%%
+\index{$\PN_{\Omega}$}%%
+%%%%
+terms of $\Tm_{\Omega}$. $\PN_{\Omega}$ is the 
+smallest set $M$ of strings over $F$ for which the following holds.
+%%
+\begin{center}
+For all $f \in F$ and for all $\vec{x}_i \in M$,
+    $i < \Omega(f)$: \\
+        $f \conc \vec{x}_0 \conc \dotsb \conc \vec{x}_{\Omega(f)-1}
+            \in M$.
+\end{center}
+%%
+(Notice the special case $n = 0$. Further, notice that no special
+treatment is needed for variables, by the remarks of the preceding
+section.) This defines the set $\PN_{\Omega}$, members
+of which are called \textbf{well--formed strings}. Next we
+shall define which string represents which term.
+The string `$f$', $\Omega(f) = 0$, represents the term `$f$'.
+If $\vec{x}_i$ represents $t_i$,  $i < \Omega(f)$, then
+$f \conc \vec{x}_0 \conc \dotsb \conc \vec{x}_{\Omega(f)-1}$
+represents $f(t_0,\dotsc,t_{\Omega(f)-1})$. We shall
+now show that this relation is bijective. (A different proof than 
+the one used here can be found in Section~\ref{kap2}.\ref{kap2-4}, 
+proof of Theorem~\ref{thm:pn}.) Here we use an important principle, 
+namely induction over the length of the string. The following is 
+for example proved by induction on $|\vec{x}|$.
+%%
+\begin{dingautolist}{192}
+\item No proper prefix of $|\vec{x}|$ is a well--formed string.
+\item If $\vec{x}$  is a well--formed string
+then $\vec{x}$ has length at least 1 and the following holds.
+%%
+\begin{enumerate}
+\item If $|\vec{x}| = 1$, then $\vec{x} = f$
+    for some $f \in F$ with $\Omega(f) = 0$.
+\item If $|\vec{x}| > 1$, then there are $f$ and $\vec{y}$ such that
+    $\vec{x} = f \conc \vec{y}$, and $\vec{y}$ is the
+    concatenation of exactly $\Omega(f)$ many uniquely
+    defined well--formed strings.
+\end{enumerate}
+\end{dingautolist}
+%%
+The proof is as follows. Let $t$ and $u$ be terms represented by
+$\vec{x}$. Let  $|\vec{x}| = 1$. Then $t = u = f$, for some $f \in F$ 
+with $\Omega(f) = 0$. A proper prefix is the empty string, which is 
+clearly not well formed.
+Now for the induction step. Let $\vec{x}$ have length at least 2.
+Then there is an $f \in F$ and a sequence $\vec{y}_i$, $i < \Omega(f)$,
+of well--formed strings such that
+%%
+\begin{equation}
+\label{eq:dagger}
+\vec{x} = f \conc \vec{y}_0 \conc \dotsb \conc
+    \vec{y}_{\Omega(f)-1} 
+\end{equation}
+    %%
+Therefore for each $i < \Omega(f)$ there is a term $u_i$ 
+represented by $\vec{y}_i$. By \ding{193}, the $u_i$ are
+uniquely determined by the $\vec{y}_i$. Furthermore, the 
+symbol $f$ is uniquely determined, too. Now let $\vec{z}_i$, 
+$i < \Omega(f)$, be well--formed strings with
+%%
+\begin{equation}
+\vec{x} = f \conc \vec{z}_0 \conc \dotsb \conc
+    \vec{z}_{\Omega(f)-1}
+\end{equation}
+    %%
+Then $\vec{y}_0 = \vec{z}_0$. For no proper prefix of $\vec{z}_0$
+is a well--formed term, and no proper prefix of $\vec{y}_0$ is a
+term. But they are prefixes of each other, so they cannot be
+proper prefixes of each other, that is to say, they are equal. If
+$\Omega(f) = 1$, we are done. Otherwise we carry on in the same
+way, establishing by the same argument that $\vec{y}_1 =
+\vec{z}_1$, $\vec{y}_2 = \vec{z}_2$, and so on. The fragmentation
+of the string in $\Omega(f)$ many well--formed strings is
+therefore unique. By inductive hypothesis, the individual strings
+uniquely represent the terms $u_i$. So, $\vec{x}$ uniquely
+represents the term $f(\vec{u})$.
+This shows \ding{193}.
+
+Finally, we shall establish \ding{192}. Look again at the 
+decomposition \eqref{eq:dagger}. If $\vec{u}$ is a well--formed prefix, 
+then $\vec{u} \neq \varepsilon$. Hence $\vec{u} = f \conc \vec{v}$ 
+for some $\vec{v}$ which can be decomposed into $\Omega(f)$ many 
+well--formed strings $\vec{w}_i$. As before we shall argue that 
+$\vec{w}_i = \vec{x}_i$  for every $i < \Omega(f)$. Hence 
+$\vec{u} = \vec{x}$, which shows that no proper prefix of $\vec{x}$ 
+is well--formed.
+
+{\it Notes on this section.} Throughout this book the policy is to 
+regard any linguistic object as a string. Strings are considered 
+the fundamental structures. This in itself is no philosophical 
+commitment, just a matter of convenience. Moreover, when we refer 
+to sentences qua material objects (signifiers) we take them to be 
+strings over the Latin alphabet. This again is only a matter of 
+convenience. Formal language theory very often treats words rather 
+than letters as units. If one does so, their composite nature has 
+to be ignored. Yet, while most arguments can still be performed 
+(since a transducer can be used to switch between these 
+representations), some subtleties can get lost in this abstraction. 
+We should also point out that since alphabets must be finite, there 
+can be no infinite set of variables as a primitive set of letters, 
+as is often assumed in logic. 
+%%
+\vplatz
+\exercise
+%%
+Prove Theorem~\ref{bijektion}.
+%%
+\vplatz
+\exercise
+(The `Typewriter Model'.) Fix an alphabet $A$. For each $a \in A$ 
+assume a unary symbol $\mbox{\tt s}_a$. Finally, let {\tt 0} be 
+a zeroary symbol. This defines the signature $\Psi$. Define a 
+map $t : \Tm_{\Psi} \pf A^{\ast}$ as follows. $\tau(\mbox{\tt 0}) := 
+\varepsilon$, and $\tau(\mbox{\tt s}_a(s)) := \tau(s)^{\smallfrown}a$.
+Show that $\tau$ is bijective. Further, show that there is no 
+term $u$ over $\Psi$ such that $\tau(u(x,y)) = 
+\tau(x)^{\smallfrown}\tau(y)$, and not even a term 
+$v_{\vec{x}}(y)$ such that $\tau(v_{\vec{x}}(y)) = \vec{x}^{\smallfrown}%
+\tau(y)$, for any given $\vec{x} \in A^+$. On the other hand 
+there {\it does\/} exist a $w_{\vec{y}}$ such that 
+$\tau(w_{\vec{y}}(x)) = \tau(x)^{\smallfrown}\vec{y}$ for 
+any given $\vec{y} \in A^{\ast}$.
+%%%
+\vplatz
+\exercise
+Put $Z^{\ast}(\vec{x}) := \sum_{i < p} \mu(x_i)n^{p-i-1}$. Now put
+$\vec{x} <_{N^{\ast}} \vec{y}$ if and only if $Z^{\ast}(\vec{x})
+< Z^{\ast}(\vec{y})$. Show that $<_{N^{\ast}}$ is transitive and
+irreflexive, but not total.
+%%
+\vplatz
+\exercise
+%%
+Show that the postfix relation is a partial ordering,
+likewise the prefix and the subword relation. Show that
+the subword relation is the transitive closure of the
+union of the postfix relation with the prefix relation.
+%%
+\vplatz
+\exercise
+%%
+Let $F$, $X$ and $\{\mbox{\tt (}, \mbox{\tt )}\}$ be three
+pairwise disjoint sets, $\Omega$ a signature over $F$.
+We define the following function from $\Omega$--terms into
+strings over $F \cup X \cup \{\mbox{\tt (},
+\mbox{\tt )}\}$:
+%%
+\begin{equation}
+\begin{split}
+x^+ & := x \\
+f(t_0, \dotsc, t_{\Omega(f)-1})^+ & :=
+    f\conc \mbox{\tt (} \conc t_0^+ \conc \dotsb \conc t_{\Omega(f)-1}^+
+    \conc\mbox{\tt )}
+\end{split}
+\end{equation}
+%%
+(To be clear: we represent terms by the string that we have
+used in Section~\ref{kap1}.\ref{kap1-1} already.) Prove the unique
+readability of this notation. Notice that this does not already
+follow from the fact that we have chosen this notation to
+begin with. (We might just have been mistaken ...)
+%%
+\vplatz
+\exercise
+%%
+Give an exact upper bound on the number of prefixes (postfixes)
+of a given string of length $n$, $n$ a natural number. Also give
+a bound for the number of subwords. What can you say about the
+exactness of these bounds in individual cases?
+%%
+\vplatz
+\exercise
+\label{ex:kuerzdef}
+%%
+Let $L, M \subseteq A^{\ast}$. Define
+%%
+\index{$M\backslash\backslash L$, $L {//} M$}%%%
+\begin{subequations}
+\begin{align}
+L {/\! /} M & :=
+\{\vec{y} : (\forall \vec{x} \in M)(\vec{y} \conc \vec{x} \in L)\} \\
+M {\backslash\!\backslash} L & :=
+\{\vec{y} : (\forall \vec{x} \in M)(\vec{x} \conc \vec{y} \in L)\}
+\end{align}
+\end{subequations}
+%%
+Show the following for all $L, M, N \subseteq A^{\ast}$:
+%%
+\begin{equation}
+M \subseteq L {\backslash\!\backslash} N
+\quad\Leftrightarrow\quad
+L \cdot M \subseteq N
+\quad\Leftrightarrow\quad
+L \subseteq N {/\! /} M
+\end{equation}
+%%
+\vplatz
+\exercise
+Show that not all equivalences are valid if  in place of
+${\backslash\! \backslash}$ and ${/\! /}$ we choose
+$\backslash$ and $/$. Which implications remain valid, though?

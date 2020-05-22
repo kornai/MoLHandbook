@@ -1,0 +1,1086 @@
+\section{Axiomatic Classes I: Strings}
+\label{kap5-2}
+%
+%
+%
+For the purposes of this chapter we shall code strings in a new
+way. This will result in a somewhat different formalization than 
+the one discussed in Section~\ref{kap1}.\ref{kap1-4}. The differences are, 
+however, marginal.
+%%%%
+\nocite{ebbinghausflum:finite}
+%%%
+\begin{defn}
+%%%
+\index{Z--structure}%%
+%%%
+A \textbf{Z--structure over the alphabet} $A$ is a triple of the
+form $\GL = \auf L, \prec, \{Q_a : a \in A\}\zu$, where $L$ is 
+an arbitrary finite set, $\{Q_a : a \in A\}$ a partition of $L$ 
+and $\prec$ a binary relation on $L$ such that both $\prec^+$ 
+and its inverse are linear, irreflexive, total orderings of 
+$L$.
+\end{defn}
+%%
+Z--structures are not strings. However, it is not difficult to 
+define a map which assigns a string to each Z--structure. However,
+if $L \neq \varnothing$ there are infinitely many Z--structures 
+which have the same string associated with them and they form 
+a proper class.
+
+Fix $A$ and denote by $\mathsf{MSO}$ the MSO--language of the binary 
+relation symbol $\uli{\prec}$ as well as a unary predicate constant
+$\uli{a}$ for every $a \in A$.
+%%%
+\begin{defn}
+%%%
+\index{theory!MSO--}%%
+\index{model class}%%
+%%%
+Let $\CK$ be a set or class of Z--structures over an alphabet
+$A$. Then $\mathsf{Th}\, \CK$ denotes the set
+$\{\varphi \in \mathsf{MSO} : \mbox{ for all }\GL  \in
+\CK: \GL \vDash \varphi\}$, called the \textbf{MSO--theory
+of} $\CK$. If $\Phi$ is a set of sentences from $\mathsf{MSO}$ then 
+let $\mathsf{Mod}\, \Phi$ be the set of all $\GL$ which satisfy 
+every sentence from $\Phi$. $\mathsf{Mod}\, \Phi$ is called the 
+\textbf{model class of} $\Phi$.
+\end{defn}
+%%
+Recall from Section~\ref{kap1}.\ref{kap1-1} the notion of a context. It is
+easy to see that $\vDash$ together with the class of Z--structures
+and the MSO--formulae form a context. From this we directly get the
+following
+%%
+\begin{thm}
+The map $\rho \colon \CK \mapsto \mathsf{Mod}\, \mathsf{Th}\, \CK$
+is a closure operator on the class of of classes Z--structures over
+$A$. Likewise, $\lambda \colon \Phi \mapsto \mathsf{Th}\, \mathsf{Mod}\,
+\Phi$ is a closure operator on the set of all subsets of
+$\mathsf{MSO}$.
+\end{thm}
+%%
+(We hope that the reader does not get irritated by the difference
+between classes and sets. In the usual set theory one has to
+distinguish  between sets and classes. Model classes are except for
+trivial exception always classes  while classes of formulae are
+always sets, because they are subclasses of the set of formulae.
+This difference can be neglected in what is to follow.)
+%%%%
+\index{logic}%%
+\index{class!axiomatic}%%
+\index{class!finitely MSO--axiomatisable}%%
+%%%
+We now call the sets of the form $\lambda(\CK)$ \textbf{logics} and
+the classes of the form $\rho(\Phi)$ \textbf{axiomatic classes}. A
+class is called \textbf{finitely MSO--axiomatizable} if it has the 
+form $\mathsf{Mod}(\Phi)$ for a finite $\Phi$, while a logic is 
+\textbf{finitely MSO--axiomatizable} if it is the logic of a finitely
+axiomatizable class. We call a class of Z--structures over $A$
+\textbf{regular} if it is the class of all Z--structures of a regular
+language. Formulae are called \textbf{valid} if they hold in all 
+structures. The following result from \cite{buechi:weak} is the 
+central theorem of this section.
+%%
+\begin{thm}[B\"uchi]
+\index{B\"uchi, J.}%%
+\label{thm:buechi} 
+A class of Z--structures is finitely
+MSO--axiomatizable iff it corresponds to a regular language 
+which does not contain $\varepsilon$.
+\end{thm}
+%%
+This sentence says that with the help of $\mathsf{MSO}$ we can only 
+define regular classes of Z--structures. If one wants to describe 
+nonregular classes, one has to use stronger logical languages (for 
+example $\mathsf{SO}$). The proof of this theorem requires a lot of 
+work. Before we begin, we have to say something about the formulation
+of the theorem. By definition, models are only defined on
+nonempty sets. This is why a model class always defines a
+language not containing $\varepsilon$. It is possible to change
+this but then the Z--structure of $\varepsilon$ (which is
+actually unique) is a model of every formula, and then
+$\varnothing$ is regular but not MSO--axiomatizable.
+So, complete correspondence cannot be expected. But this is the 
+only exception.
+
+Let us begin with the simple direction. This is the claim that
+every regular class is finitely MSO--axiomatizable. Let $\CK$ be 
+a regular class and $L$ the corresponding regular language. Then 
+there exists a finite state automaton
+$\GA = \auf A, Q, i_0, F, \delta\zu$ with $L(\GA) = L$. We
+may choose $Q := n$ for a natural number $n$ and $i_0 = 0$.
+Look at the sentence $\delta(\GA)$ defined in Table~\ref{tab:diagram}.
+%%
+\begin{table}
+\caption{The Formula $\delta(\GA)$}
+%%%
+\index{$\delta(\GA)$}%%%
+%%%
+\label{tab:diagram}
+$$\begin{array}{lll@{\quad}l}
+\delta(\GA) :=
+    & & (\forall xyz)(x \uli{\prec} y \und
+    x \uli{\prec} z. \pf .y \doteq z)  & \mbox{\rm (a)} \\
+    & \und & (\forall xyz)(y \uli{\prec} x \und
+    z \uli{\prec} x. \pf .y \doteq z) & \mbox{\rm (b)} \\
+    & \und & (\forall P)\{(\forall xy)(x \uli{\prec} y. \pf
+        .P(x) \pf P(y)) \und (\exists x)P(x). \\ 
+	& & \quad 
+	\pf .  (\exists x)(P(x) \und (\forall y)(x \uli{\prec} y 
+        \pf \nicht P(y)))\} & \mbox{\rm (c)} \\
+    & \und & (\forall P)\{(\forall xy)(x \uli{\prec} y. \pf
+        .P(y) \pf P(x)) \und (\exists x)P(x).  \\
+	& & \quad 
+	\pf .(\exists x)(P(x) \und (\forall y)(y \uli{\prec} x 
+        \pf \nicht P(y)))\} & \mbox{\rm (d)} \\
+    & \und & (\forall P)\{(\forall xy)(x \uli{\prec} y \pf
+        (P(x) \dpf P(y))) \\
+	& & \quad \und (\exists x)P(x). \pf. 
+	(\forall x)P(x)\} &
+            \mbox{\rm (e)} \\
+    & \und & (\forall x)\goder_{a \in A} \uli{a}(x) &
+        \mbox{\rm (f)} \\
+    & \und & (\forall x)\gund_{a \neq b} \uli{a}(x) \pf \nicht
+        \uli{b}(x) & \mbox{\rm (g)} \\
+    & \und & (\exists P_0P_1\dotsb P_{n-1})\{(\forall x)((\forall y)\nicht(y
+        \uli{\prec} x).  \pf . P_0(x)) \\
+        &      & \qquad \und (\forall x)((\forall y)\nicht (x
+        \uli{\prec} y).  \pf .
+        \goder_{i \in F} P_i(x)) \\
+        &      & \qquad \und (\forall xy)(x \uli{\prec} y \pf
+        \gund_{a \in A}  [\uli{a}(y) \und P_i(x). \\
+        & & \qquad\qquad \pf . \goder_{j \in \delta(i,a)} P_j(y)])\} & 
+\mbox{\rm (h)}
+\end{array}$$
+\end{table}
+%%
+\begin{lem}
+Let $\GL$ be an MSO--structure. Then $\GL \vDash \delta(\GA)$ iff 
+$\GL$ is a Z--structure and its associated string is in $L(\GA)$.
+\end{lem}
+%%
+\proofbeg
+Let $\GL \vDash \delta(\GA)$ and let $\GL$ be an
+MSO--structure. Then there exists a binary relation
+$\prec$ (the interpretation of $\uli{\prec}$) and for every
+$a \in A$ a subset $Q_a \subseteq L$. By (a) and (b)
+an element $x$ has at most one $\prec$--successor and at most 
+one $\prec$--predecessor. By (c), every nonempty subset which 
+is closed under $\prec$--successors contains a last element,  and
+by (d) every nonempty subset which is closed under $\prec$--predecessors
+contains a first element. Since $L$ is not empty, it has a least 
+element, $x_0$. Let $H := \{x_i : i < \kappa\}$ be a maximal set 
+such that $x_{i+1}$ is the (unique) $\prec$--successor of $x_i$.  
+$H$ cannot be infinite, for otherwise $\{x_i : i < \omega\}$ 
+would be a successor closed set without last element. So, $H$ 
+is finite. $H$ is also closed under predecessors. So, $H$ is a 
+maximal connected subset of $L$. By (e), every maximal connected 
+nonempty subset of $L$ is identical to $L$. So, $H = L$, and hence
+$L$ is finite, connected, and linear in both directions.
+
+Further, by (f) and (g) every $x \in L$ is contained in exactly one 
+set $Q_a$. Therefore $\GL$ is a Z--structure. We have to show that its 
+string is in $L(\GA)$. (h) says that we can find sets 
+$H_i \subseteq L$ for $i < n$ such that if $x$ is the first element 
+with respect to $\prec$ then $x \in H_0$, if $x$ is the last element 
+with respect to $\prec$ then $x \in H_j$ for some $j \in F$ and if 
+$x \in  H_i$, $y \in Q_a$, $x \prec y$ then $y \in H_j$ for some 
+$j \in \delta(i,a)$. This means that the string is in $L(\GA)$. (There 
+is namely a biunique correspondence between accepting runs of the 
+automaton and partitions into $H_i$. Under that partition $x \in H_i$ 
+means exactly that the automaton is in state $i$ at $x$ in that run.) 
+Now let $\GL \nvDash \delta(\GA)$. Then either $\GL$ is not a 
+Z--structure or there exists no accepting run of the automaton $\GA$. 
+Hence the string is not in $L(\GA)$.
+This concludes the proof.
+\proofend
+
+Notice that we can define $<$, the transitive closure of $\prec$, and
+$>$, the transitive closure of $\succ$ (and converse of $<$) by an 
+MSO--formula (see Exercise~\ref{ex:transclose}). 
+Further, we will write $x \leq y$ for $x < y \oder x \doteq y$, 
+and $x \prec y$ in place of $x \uli{\prec} y$. Now, given a 
+Z--structure $\GL = \auf L, \prec, \{Q_a : a \in A\}\zu$ put
+%%
+\begin{equation}
+M(\GL) := \auf L, \prec, \succ, <, >, \{Q_a : a \in A\}\zu 
+\end{equation}
+%%
+\index{MZ--structure}%%
+%%%%
+A structure of the form $M(\GL)$ we call an \textbf{MZ--structure}.
+
+Now we shall prove the converse implication of 
+Theorem~\ref{thm:buechi}. To this end we shall make a detour. We put 
+$M := \{+,-,\prec, \succ\}$ and $C := \{c_a : a \in A\}$.
+Then we call $\mathsf{QML}$ the language of quantified modal logic 
+with basic modalities from $M$ and propositional constants from 
+$C$. Now we put
+%%
+\begin{equation}
+\begin{array}{ll@{}l@{\und}l}
+\sigma := &  & \auf\prec\zu p \pf \auf +\zu p &
+    \auf\succ\zu p \pf \auf-\zu p \\
+  & \und & p \pf [\succ] \auf\prec\zu p &
+    p \pf [\prec]\auf \succ\zu p \\
+  & \und & \auf \prec \zu p \pf [\prec]p &
+    \auf\succ\zu p \pf [\succ]p \\
+  & \und & \auf+\zu\auf+\zu p \pf \auf+\zu p
+    & \auf-\zu\auf-\zu p \pf \auf-\zu p \\
+  & \und & [+]([+] p \pf p) \pf [+] p &
+    [-]([-]p \pf p) \pf [-]p  \\
+  & \und & \gund_{a \neq b} c_a \pf \nicht c_b 
+   & \goder_{a \in A} c_a
+\end{array}
+\end{equation}
+%%%
+\index{structures!connected}%%
+%%%
+We call a structure \textbf{connected} if it is not of the form
+$\GF \oplus \GG$ with nonempty $\GF$ and $\GG$. As already 
+mentioned, QML--formulae cannot distinguish between 
+connected and nonconnected structures.
+%%
+\begin{thm}
+Let $\GF$ be a connected Kripke--frame for $\mathsf{QML}$.
+Put $Z(\GF) := \auf F, R(\prec), R(\succ), R(+), R(-),
+\{K(c^a) : a \in A\}\zu$. $\GF \vDash \sigma$ iff
+$Z(\GF)$ is an MZ--struc\-ture over $A$.
+\end{thm}
+%%
+\proofbeg
+The proof is not hard but somewhat lengthy. It consists of the 
+following facts (the others are dual to these).
+%%%
+\begin{dingautolist}{192}
+\item 
+{\it $\GF \vDash \auf\prec\zu p \pf \auf +\zu p$ 
+iff $R(\prec) \subseteq R(+)$}. 
+\item {\it $\GF \vDash p \pf [\succ] \auf\prec\zu p$ iff
+$R(\succ) \subseteq R(\prec)^{\smallsmile}$.} 
+\item
+{\it $\GF \vDash \auf \prec\zu p \pf [\prec] p$ iff
+every point has at most one $R(\prec)$--successor.}, 
+\item 
+{\it $\GF \vDash
+\auf+\zu\auf+\zu p \pf \auf+\zu p$ iff $R(+)$ is
+transitive.} 
+\item
+{\it $\GF \vDash [+](p \pf [+] p) \pf [+] p$ iff 
+$R(+)$ is transitive and free of infinite ascending chains 
+	(or cycles).} 
+\end{dingautolist}
+%%%
+We show only \ding{192} and \ding{196}.
+\ding{192} For this let $\GF \nvDash \auf\prec\zu p \pf \auf+\zu p$. Then 
+there exists $\beta$ and $x$ such that
+$\auf \GF, \beta, x\zu \vDash \auf \prec\zu p; \nicht \auf+\zu p$.
+This means that there is a $y \in F$ with $y \in \beta(p)$
+and $x\; R(\prec)\; y$. If $x \; R(+)\; y$ then $x \vDash \auf+\zu p$, 
+contradiction. This shows $R(\prec) \nsubseteq R(+)$. Assume conversely
+$R(\prec) \nsubseteq R(+)$.  Then there exist $x$ and $y$ such
+that $x\; R(\prec)\; y$ but not $x\; R(+)\; y$. Now set
+$\beta(p) := \{y\}$. Then we have $\auf \GF, \beta, x\zu \vDash
+\auf \prec\zu p; \nicht\auf+\zu p$. 
+\ding{196} Because of \ding{195} we restrict ourselves to 
+proving this for transitive $R(+)$. Assume $\GF \nvDash 
+[+]([+]p \pf p) \pf [+]p$. Then there exists a $\beta$ and 
+a $x_0$ with $\auf \GF, \beta, x\zu \vDash
+[+](p \pf [+]p); \auf +\zu \nicht p$. So there exists a
+$x_1$ with $x_0\; R(+)\; x_1$ and $x_1 \not\in \beta(p)$.
+Then $x_1 \vDash [+]p \pf p$ and therefore $x_1 \vDash %
+\auf +\zu \nicht p$. Because of the transitivity of $R(+)$
+we also have $x_1 \vDash [+]([+]p \pf p)$. Repeating this argument 
+we find an infinite chain $\auf x_i : i \in \omega\zu$ such that
+$x_i\; R(+)\; x_{i+1}$. Therefore, $R(+)$ contains an infinite 
+ascending chain. Conversely, assume that $R(+)$ has an infinite 
+ascending chain. Then there exists a set $\auf x_i : i \in \omega\zu$
+with $x_i\; R(+)\; x_{i+1}$ for all $i \in \omega$. Put $\beta(p) :=
+\{y : \mbox{ there is } i \in \omega: y \; R(+)\; x_i\}$.
+Then it holds that $\auf \GF, \beta, x_0\zu
+\vDash [+]([+]p \pf p); \auf+\zu \nicht p$.
+For let $x\; R(+)\; y$ and suppose that $y \vDash [+]p$. 
+Then there exists an $i$ with $y \; R(+)\; x_i$ (for $R(+)$ 
+is transitive). Hence $y \vDash p$, whence $y \vDash [+]p \pf p$. 
+Since $y$ was arbitrary, we have $x \vDash [+]([+]p \pf p)$. 
+Also $x_1 \nvDash p$ and $x_0 \; R(+)\; x_1$. Hence
+$x_0 \vDash \auf+\zu \nicht p$, as required. 
+\proofend
+
+Notice that a finite frame has an infinite ascending chain iff 
+it has a cycle. Now we define an embedding of $\mathsf{MSO}$ into 
+$\mathsf{QML}$. To this end we need some preparations. As one convinces 
+oneself easily the following laws hold.
+%%
+%%% Verschiebe das nach Kap 4
+\begin{dingautolist}{192}
+\item $(\forall x)\varphi \dpf \nicht (\exists x)(\nicht
+        \varphi)$, $\nicht\nicht \varphi \dpf \varphi$.
+\item $(\forall x)(\varphi_1 \und \varphi_2) \dpf
+	(\forall x)\varphi_1 \und (\forall x)\varphi_2$, \\
+        $(\exists x)(\varphi_1 \oder \varphi_2)
+	\dpf (\exists x)\varphi_1 \oder (\exists x)\varphi_2$.
+\item $(\forall x)(\varphi_1 \oder \varphi_2) \dpf
+	(\varphi_1 \oder (\forall x)\varphi_2)$,
+	$(\exists x)(\varphi_1 \und \varphi_2) \dpf
+	(\varphi_1 \und (\exists x)\varphi_2)$,
+        if $x$ does not occur freely in $\varphi_1$.
+%\item $(\forall x)(\varphi_1 \oder \varphi_2) \dpf
+%(\varphi_2 \oder (\forall x)\varphi_1)$,
+%$(\exists x)(\varphi_1 \und \varphi_2) \dpf
+%(\varphi_2 \und (\exists x)\varphi_1)$,
+%    if $x$ does not occur freely in $\varphi_2$.
+\end{dingautolist}
+%%
+Finally, for every variable $y \neq x$:
+%%
+\begin{align}
+(\forall x)\varphi(x) \dpf & \phantom{\mbox{}\und\mbox{}}
+    (\forall x)(x < y \pf \varphi(x)) 
+\\\notag
+   & \und (\forall x)(y < x \pf \varphi(x)) \und \varphi(y)
+\end{align}
+%%
+We now define following quantifiers.
+%%
+\begin{equation}
+\begin{split}
+(\forall x < y)\varphi & := (\forall x)(x < y \pf \varphi) \\
+(\forall x > y)\varphi & := (\forall x)(x > y \pf \varphi) \\
+(\exists x < y)\varphi & := (\exists x)(x < y \pf \varphi) \\
+(\exists x > y)\varphi & := (\exists x)(x > y \pf \varphi)
+\end{split}
+\end{equation}
+%%%
+\index{quantifier!restricted}%%
+%%%
+We call these quantifiers \textbf{restricted}. Evidently, we can
+replace an unrestricted quantifier $(\forall x)\varphi$
+by the conjunction of restricted quantifiers.  
+%%
+\begin{lem}
+For every MSO--formula $\varphi$ with at least one free
+object variable there is an MSO--formula
+$\varphi^g$ with restricted quantifiers such that
+in all Z--struc\-tu\-res $\GL$: $\GL \vDash \varphi \dpf \varphi^g$.
+\end{lem}
+%%
+We define the following functions $f$, $f^+$, $g$ and $g^+$ on 
+unary predicates.
+%%
+\begin{equation}
+\begin{split}
+(f(\varphi))(x) & := (\exists y \prec x)\varphi(y) \\
+(g(\varphi))(x) & := (\exists y \succ x)\varphi(y) \\
+(f^+(\varphi))(x) & := (\exists y < x)\varphi(y) \\
+(g^+(\varphi))(x) & := (\exists y > x)\varphi(y)
+\end{split}
+\end{equation}
+%%
+A somewhat more abstract approach is provided by the notion of
+a {\it universal modality}.
+%%
+\begin{defn}
+\index{modality!universal}%%
+%%%
+Let $M$ be a set of modalities and $\omega \in M$. Further, let $L$
+be a $\mathsf{QML}(M)$--modal logic. $\omega$ is called a
+\textbf{universal modality of} $L$ if the following
+formulae are contained in $L$:
+%%%
+\begin{dingautolist}{192}
+\item $[\omega]p \pf p$, $[\omega]p \pf [\omega][\omega]p$, 
+	$p \pf [\omega]\auf \omega\zu p$.
+\item $[\omega]p \pf [m]p$, for all $m \in M$.
+\end{dingautolist}
+\end{defn}
+%%%
+\begin{prop}
+Let $L$ be a $\mathsf{QML}(M)$--logic, $\omega \in M$ a
+universal modality and $\GF = \auf F, R\zu$ a
+connected Kripke--frame with $\GF \vDash L$.
+Then $R(\omega) = F \times F$.
+\end{prop}
+%%%
+The proof is again an exercise. The logic of Z--structures allows 
+to define a universal modality. Namely, set
+%%
+\begin{equation}
+[\omega]\varphi := \varphi \und [+]\varphi \und [-]\varphi
+\end{equation}
+%%
+This satisfies the requirements above.
+
+The obvious mismatch between $\mathsf{MSO}$ and $\mathsf{QML}$ is that the
+former allows for several object variables to occur freely,
+while the latter only contains one free object variable (the world
+variable), which is left implicit. However, given that $\varphi$
+contains only one free object variable, we can actually massage it
+into a form suitable for $\mathsf{QML}$. Let $P_x$ be a predicate
+variable which does not occur in $\varphi$. Define
+$\{P_x/x\}\varphi$ inductively as in Table~\ref{tab:62sub}. 
+(Here, assume that $x \not\in \{v,w\}$ and $x \neq y$.)
+%%
+\begin{table}
+\caption{Mimicking the Variables in $\mathsf{QML}$}
+\index{$\{P_x/x\}\varphi$}%%%
+\label{tab:62sub}
+$$\begin{array}{l@{\; := \;}l@{\quad}l@{\; := \;}l}
+\{P_x/x\}(x \doteq y) & P_x(y) &
+\{P_x/x\}(y \doteq x)  & P_x(y) \\
+%%%
+\{P_x/x\}(v \doteq w) & v \doteq w & 
+\{P_x/x\}(x \prec y) & (g(P_x))(y) \\
+%%%
+\{P_x/x\}(y \prec x)  & (f(P_x))(y) &
+\{P_x/x\}(v \prec w) & v \prec w \\
+%%%
+\{P_x/x\}(\uli{a}(x)) & \uli{a}(x) &
+\{P_x/x\}(\nicht \varphi) & \nicht \{P_x/x\}\varphi \\
+%%%%
+\{P_x/x\}(\varphi_1 \und \varphi_2) & \multicolumn{2}{l}{%
+\{P_x/x\}\varphi_1 \und \{P_x/x\}\varphi_2} \\
+%%%
+\{P_x/x\}(\varphi_1 \oder \varphi_2) & \multicolumn{2}{l}{%
+\{P_x/x\}\varphi_1 \oder \{P_x/x\}\varphi_2} \\
+%%%%
+\{P_x/x\}((\exists y)\varphi) & \multicolumn{2}{l}{%
+(\exists y)\{P_x/x\}\varphi} \\
+%%%
+\{P_x/x\}((\exists x)\varphi) & \multicolumn{2}{l}{(\exists x)\varphi} \\
+%%%%
+\{P_x/x\}((\forall P)\varphi) & \multicolumn{2}{l}{%
+(\forall P)\{P_x/x\}\varphi} \\
+%%%
+\{P_x/x\}((\exists P)\varphi) & \multicolumn{2}{l}{%
+(\exists P)\{P_x/x\}\varphi}
+%%%%
+\end{array}$$
+\end{table}
+%%
+Let $\gamma(P_x) = \{\beta(x)\}$. Then
+%%
+\begin{equation}
+\auf \GM, \gamma, \beta\zu \vDash \varphi
+\quad\Dpf\quad
+\auf \GM, \gamma, \beta\zu \vDash \{P_x/x\}\varphi
+\end{equation}
+%%
+\begin{lem}
+Let
+%%
+\begin{equation}
+\begin{split}
+\nu(P) := (\exists x)(P(x)) & \und 
+    (\forall x)(P(x) \pf \nicht (f^+(P))(x)) \\
+    & \und (\forall x)(P(x) \pf \nicht (g^+(P))(x))
+\end{split}
+\end{equation}
+%%
+Then $\auf \GM, \gamma, \beta\zu \vDash \nu(P)$ iff
+$\gamma(P) = \{x\}$ for some $x \in M$.
+\end{lem}
+%%
+This is easy to show. Notice that $\nu(P)$ contains no free
+occurrences of $x$. This is crucial, since it allows to
+directly translate $\nu(P)$ into a $\mathsf{QML}$--formula.
+
+Now we define an embedding of $\mathsf{MSO}$ into $\mathsf{QML}$.
+Let $h \colon P \pf \mbox{\it PV\/}$ be a bijection from the
+set of predicate variables of $\mathsf{MSO}$ onto the set of 
+propositional variables of $\mathsf{QML}$.
+%%
+\begin{equation}
+\begin{split}
+(\uli{a}(x))^{\diamond} & := c_a &
+(\nicht \varphi)^{\diamond} & := \nicht \varphi^{\diamond} \\
+(P(y))^{\diamond} & := h(P) &
+(\varphi_1 \und \varphi_2)^{\diamond} &
+   :=  \varphi_1^{\diamond} \und \varphi_2^{\diamond} \\
+(f(\varphi))^{\diamond} & := \auf\succ\zu \varphi^{\diamond} &
+(\varphi_1 \oder \varphi_2)^{\diamond} &
+   :=  \varphi_1^{\diamond} \oder \varphi_2^{\diamond} \\
+(g(\varphi))^{\diamond} & := \auf\prec\zu \varphi^{\diamond} &
+((\exists P)\varphi)^{\diamond} & := (\exists h(P))\varphi^{\diamond} \\
+(f^+(\varphi))^{\diamond} & := \auf-\zu \varphi^{\diamond} &
+((\forall P)\varphi)^{\diamond} & := (\forall h(P))\varphi^{\diamond} \\
+(g^+(\varphi))^{\diamond} & := \auf+\zu \varphi^{\diamond} & & 
+\end{split}
+\end{equation}
+%%
+For the first--order quantifiers we put
+%%%
+\begin{multline}
+((\forall x)\varphi(x))^{\diamond} := 
+(\forall p_x)((\auf \omega\zu p_x \und
+        (\forall p'_x)([\omega](p'_x \pf p_x) \\
+	\pf ([\omega]\nicht p_x. \oder. [\omega](p'_x \dpf p_x)))) 
+	    \pf \{p_x/p\}\varphi^{\diamond}) 
+\end{multline}
+and 
+\begin{multline}
+((\exists x)\varphi(x))^{\diamond} :=  
+(\forall p_x)((\auf \omega\zu p_x \und 
+	(\forall p'_x)([\omega](p'_x \pf p_x) \\
+	\pf ([\omega]\nicht p_x.  \oder .[\omega](p'_x \dpf p_x)))) 
+	    \und \{p_x/x\}\varphi^{\diamond})
+\end{multline}
+%%
+The correctness of this translation follows from the fact that
+%%
+\begin{multline}
+\auf \GF, \beta, x\zu \vDash 
+\auf \omega\zu p_x \und (\forall p'_x)([\omega](p'_x \pf p_x) \\
+\pf (([\omega]\nicht p_x) \oder [\omega](p'_x \dpf p_x)))
+\end{multline}
+%%
+exactly if $\beta(p_x) = \{v\}$ for some $v \in F$.
+%%
+\begin{thm}
+Let $\varphi \in \mathsf{MSO}$ contain at most one free 
+variable, the object variable $x_0$. Then there exists a
+QML--formula $\varphi^M$ such that for all Z--struc\-tu\-res
+$\CL$:
+%%
+\begin{equation}
+\auf \GL, \beta\zu \vDash \varphi(x_0)
+\mbox{ iff }\auf M(\GL), \beta(x_0)\zu \vDash
+\varphi(x_0)^M
+\end{equation}
+%%
+\end{thm}
+%%
+\begin{cor}
+\label{cor:mql}
+Modulo the identification $\GL \mapsto M(\GL)$, $\mathsf{MSO}$
+and $\mathsf{QML}$ define the same classes of connected
+nonempty and finite Z--structures. Further: $\CK$ is a finitely
+MSO--axiomatizable class of Z--structures iff $M(\CK)$ is a 
+finitely QML--axiomatizable class of MZ--structures.
+\end{cor}
+%%
+This shows that it is sufficient to prove that finitely 
+QML--axiomatizable classes of MZ--structures define regular 
+languages. This we shall do now. Notice that for the proof we 
+only have to look at grammars with rules of the form 
+$X \pf a \mid aY$ and no rules of the form $X \pf \varepsilon$. 
+Furthermore, instead of regular grammars we can work with 
+regular grammars$^{\ast}$, where we have a set of start symbols. 
+
+Let $G = \auf \Sigma, N, A, R\zu$ be a regular grammar$^{\ast}$
+and $\vec{x}$ a string. For a derivation of $\vec{x}$
+we define a Z--structure over $A \times N$ (!) as follows.
+We consider the grammar$^{\ast}$ $G^{\times} := \auf \Sigma,
+N, A \times N, R^{\times}\zu$ which consists of the following
+rules.
+%%
+\begin{align}
+R^{\times} := &  \phantom{\mbox{}\cup\mbox{}}
+\{X \pf \auf a,X\zu \; Y : X \pf aY \in R\} \\\notag
+              & \cup \{X \pf \auf a, X\zu : X \pf a \in R\}
+\end{align}
+%%
+The map $h \colon A \times N \pf A \colon \auf a, X\zu \mapsto a$
+defines a homomorphism from $(A \times N)^{\ast}$ to
+$A^{\ast}$, which we likewise denote by $h$. It also gives
+us a map from Z--structures over $A \times N$ to Z--structures
+over $A$. Every $G$--derivation of $\vec{x}$ uniquely defines
+a $G^{\times}$--derivation of a string $\vec{x}^{\times}$
+with $h(\vec{x}^{\times}) = \vec{x}$ and this in turn
+defines a Z--structure
+%%
+\begin{equation}
+\GM = \auf L, \prec, \{Q_{\auf a, X\zu}^{\GM} :
+\auf a, X\zu \in A \times N\}\zu
+\end{equation}
+%%
+From $\GM$ we define a model over the alphabet $A \cup N$, 
+also denoted by $\vec{x}^{\times}$.
+%%
+\begin{equation}
+\vec{x}^{\times} := \auf L, \prec, \{Q^{\GL}_a : a \in A\},
+\{Q^{\GL}_X : X \in N\}\zu
+\end{equation}
+%%
+Here $w \in Q^{\GL}_a$ iff $w \in Q_{\auf a,X\zu}^{\GM}$
+for some $X$ and $w \in Q^{\GL}_X$ iff $w \in
+Q_{\auf a,X\zu}^{\GM}$ for some $a \in A$. 
+%%
+\begin{defn}
+\index{grammar$^{\ast}$!faithful}%%
+\index{code}%%
+\index{formula!codable}%%%
+%%%%
+Let $G = \auf \Sigma, N,A,R\zu$ be a regular grammar$^{\ast}$
+and $\varphi \in \mathsf{QML}$ a constant formula (with constants 
+for elements of $A$). We say, $G$ is \textbf{faithful to} $\varphi$
+if there is a subset $H \subseteq N$ such that for
+every string $\vec{x}$, every $\vec{x}^{\times}$ and every
+$w$: $\auf \vec{x}^{\times}, w\zu \vDash \varphi$ iff
+there exists $X \in H$ with $w \in Q_X$. We say, $H$ 
+\textbf{codes} $\varphi$ \textbf{with respect to} $G$.
+\end{defn}
+%%
+The idea behind this definition is as follows. Given a set
+$H$ and a formula $\varphi$, $H$ codes $\varphi$
+with respect to $G$ if in every derivation of a string
+$\vec{x}$ $\varphi$ is true in $\vec{x}^{\times}$ at exactly 
+those nodes where the nonterminal $H$ occurs. The reader may 
+convince himself of the following facts.
+%%
+\begin{prop}
+\label{prop:boolcode}
+Let $G$ be a regular grammar$^{\ast}$ and let $H$
+code $\varphi$ and $K$ code $\chi$ with respect to $G$.
+Then the following holds.
+%%
+\begin{dingautolist}{192}
+\item $N - H$ codes $\nicht \varphi$ with respect to $G$.
+\item $H \cap K$ codes $\varphi \und \chi$ with respect to $G$.
+\item $H \cup K$ codes $\varphi \oder \chi$ with respect to $G$.
+\end{dingautolist}
+\end{prop}
+%%
+We shall inductively show that every QML--formula
+can be coded in a regular grammar$^{\ast}$ on condition that
+one suitably extends the original grammar.
+%%
+\begin{defn}
+\index{product of grammars$^{\ast}$}%%
+%%%
+Suppose that $G_1 = \auf \Sigma_1, N_1, A, R_1\zu$ and
+$G_2 = \auf \Sigma_2, N_2, A, R_2\zu$ are regular 
+grammars$^{\ast}$. Then put
+%%
+\begin{equation}
+\index{$G_1\times G_2$}%%%
+%%%
+G_1 \times G_2 := \auf \Sigma_1\times\Sigma_2, N_1 \times N_2,
+A, R_1 \times R_2\zu
+\end{equation}
+%%
+where
+%%
+\begin{align}
+R_1 \times R_2 := & \phantom{\mbox{}\cup\mbox{}}
+\{\auf X_1,X_2\zu \pf a \; \auf Y_1, Y_2\zu :
+    X_i \pf aY_i \in R_i\} \\\notag
+    & \cup  \{\auf X_1, X_2\zu \pf a : X_i \pf a \in R_i\}
+\end{align}
+%%
+\index{product}%%
+%%%%
+We call $G_1 \times G_2$ the \textbf{product} of the 
+grammars$^{\ast}$ $G_1$ and $G_2$.
+\end{defn}
+%%
+We have
+%%
+\begin{prop}
+Let $G_1$ and $G_2$ be grammars$^{\ast}$ over $A$. Then
+$L(G_1 \times G_2) = L(G_1) \cap L(G_2)$.
+\end{prop}
+%%
+The following theorem is not hard to show and therefore left
+as an exercise.
+%%
+\begin{lem}
+\label{lem:prodcode}
+Let $\varphi$ be coded in $G_2$ by $H$. Then
+$\varphi$ is coded in $G_1 \times G_2$ by $N_1 \times H$ and
+in $G_2 \times G_1$ by $H \times N_1$.
+\end{lem}
+%%
+\begin{defn}
+%%%
+\index{code}%%
+%%%
+Let $\varphi \in \mathsf{QML}$. A \textbf{code}
+for $\varphi$ is a pair $\auf G, H\zu$ where $L(G) = A^{\ast}$
+and $H$ codes $\varphi$ with respect to $G$. $\varphi$
+is called \textbf{codable} if it has a code.
+\end{defn}
+%%
+Assume $\auf G, H\zu$ is a code for $\varphi$ and let
+$G'$ be given. Then we have $L(G' \times G) = L(G')$ and
+$\varphi$ is coded in $G' \times G$ by $N' \times H$.
+Therefore, it suffices to name just one code for every
+formula. Moreover, the following fact makes life simpler 
+for us.
+%%
+\begin{lem}
+Let $\Delta$ be a finite set of codable formulae.
+Then there exists a grammar$^{\ast}$ $G$ and sets $H_{\varphi}$,
+$\varphi \in \Delta$, such that $\auf G, H_{\varphi}\zu$
+is a code of $\varphi$.
+\end{lem}
+%%
+\proofbeg
+%%
+\newcommand{\bigtimes}{\mathsf{X}}%%
+%%%
+Let $\Delta := \{\delta_i : i < n\}$
+and let $\auf G_i, M_i\zu$ be a code of $\delta_i$,
+$i < n$. Put $G := \bigtimes_{i < n} G_i$
+and $H_i := \bigtimes_{j < i} N_i \times
+H_i \times \bigtimes_{i < j < n} N_j$.
+Iterated application of Lemma~\ref{lem:prodcode}
+yields the claim.
+\proofend
+%%%
+\begin{thm}[Coding Theorem]
+\index{Coding Theorem}%%%
+%%%
+\label{thm:code}
+Every constant QML--formula is codable.
+\end{thm}
+%%
+\proofbeg
+The proof is by induction over the structure of the formula.
+We begin with the code of $\uli{a}$, $a \in A$. Define
+the following grammar$^{\ast}$ $G_{a}$. Put $N := \{X, Y\}$ and
+$\Sigma := \{X, Y\}$. The rules are
+%%
+\begin{equation}
+X \pf a \mid aX \mid aY, \quad Y \pf b \mid bX \mid bY 
+\end{equation}
+%%
+where $b$ ranges over all elements from $A - \{a\}$. The
+code is $\auf G_a, \{X\}\zu$ as one easily checks.
+The inductive steps for $\nicht$, $\und$, $\oder$
+and $\pf$ are covered by Proposition~\ref{prop:boolcode}.
+Now for the case $\varphi = \auf \prec\zu \eta$. We assume that
+$\eta$ is codable and that $C_{\eta} = \auf G_{\eta}, H_{\eta}\zu$
+is a code. Now we define $G_{\varphi}$. Let
+$N_{\varphi} := N_{\eta}\times \{0,1\}$ and $\Sigma_{\varphi} :=
+\Sigma_{\eta} \times \{0,1\}$. Finally, let the rules be of the 
+form
+%%
+\begin{equation}
+\auf X,1\zu \pf a\; \auf Y,0\zu, \quad
+\auf X,1\zu \pf a\; \auf Y,1\zu,
+\end{equation}
+%%
+where $X \pf aY \in R_{\eta}$ and $Y \in H_{\eta}$ and
+of the form
+%%
+\begin{equation}
+\auf X,0\zu \pf a\; \auf Y,0\zu, \quad
+\auf X,0\zu \pf a\; \auf Y,1\zu,
+\end{equation}
+%%
+where $X \pf aY \in R_{\eta}$ and $Y \not\in H_{\eta}$. Further,
+we take all rules of the form
+%%
+\begin{equation}
+\auf X,0\zu \pf a
+\end{equation}
+%%
+for $X \pf a \in R_{\eta}$. One easily checks that for every
+rule $X \pf aY$ or $X \pf a$ there is a rule $G_{\varphi}$.
+The code of $\varphi$ is now $\auf G_{\varphi}, N_{\eta} \times \{1\}\zu$.
+Now to the case $\varphi = \auf \succ\zu \eta$. Again we
+assume that $\eta$ is codable and that the code is
+$C_{\eta} = \auf G_{\eta}, H_{\eta}\zu$. Now we define
+$G_{\varphi}$. Let $N_{\varphi} := N_{\eta}\times \{0,1\}$,
+$\Sigma_{\varphi} := \Sigma_{\eta} \times \{0\}$. Finally, let
+$R_{\varphi}$ be the set of rules of the form
+%%
+\begin{equation}
+\auf X,0\zu \pf a\; \auf Y,1\zu, \quad
+\auf X,1\zu \pf a\; \auf Y,1\zu,
+\end{equation}
+%%
+where $X \pf aY \in R_{\eta}$ and $X \in H_{\eta}$ and
+of the form
+%%
+\begin{equation}
+\auf X,0\zu \pf a\; \auf Y,0\zu, \quad
+\auf X,1\zu \pf a\; \auf Y,0\zu,
+\end{equation}
+%%
+where $X \pf aY \in R_{\eta}$ and $X \not\in H_{\eta}$; and
+finally for every rule $X \pf a$ we take the rule
+%%
+\begin{equation}
+\auf X,0\zu \pf a, \quad \auf X, 1\zu \pf a
+\end{equation}
+%%
+on board. The code of $\varphi$ is now $\auf G_{\varphi}, N_{\eta}
+\times \{1\}\zu$. Now we look at $\varphi = \auf +\zu \eta$.
+Again we put $N_{\varphi} := N_{\eta} \times \{0,1\}$ as well
+as $\Sigma_{\varphi} := \Sigma_{\eta} \times \{0,1\}$. We take
+all rules of the form
+%%
+\begin{equation}
+\auf X,0\zu \pf a\;\auf Y,0\zu
+\end{equation}
+%%
+where $X \pf aY \in R_{\eta}$. Further, the rules have the form
+%%
+\begin{equation}
+\auf X,1\zu \pf a\;\auf Y,1\zu
+\end{equation}
+%%
+where $X \pf aY \in R_{\eta}$ and $Y \not\in H_{\eta}$.
+Moreover, we take the rules
+%%
+\begin{equation}
+\auf X,1\zu \pf a\;\auf Y,0\zu
+\end{equation}
+%%
+for $X \pf aY \in R_{\eta}$ and $Y \in H_{\eta}$,
+as well as all rules
+%%
+\begin{equation}
+\auf X,0\zu \pf a
+\end{equation}
+%%
+where $X \pf a \in R_{\eta}$. The code of $\varphi$ is then 
+$\auf G_{\varphi}, N_{\eta} \times \{1\}\zu$. Now we look at 
+$\varphi = \auf -\zu \eta$. Let $N_{\varphi} :=
+N_{\eta} \times \{0,1\}$, and $\Sigma_ {\varphi} :=
+\Sigma_{\eta} \times \{0\}$. The rules are of the form
+%%
+\begin{equation}
+\auf X,1\zu \pf a\;\auf Y,1\zu
+\end{equation}
+%%
+for $X \pf aY \in R_{\eta}$. Further there are rules of the form
+%%
+\begin{equation}
+\auf X,0\zu \pf a\;\auf Y,1\zu
+\end{equation}
+%%
+for $X \pf aY \in R_{\eta}$ and $X \in H_{\eta}$.
+Moreover, we take the rules
+%%
+\begin{equation}
+\auf X,0\zu \pf a\;\auf Y,0\zu
+\end{equation}
+%%
+where $X \pf aY \in R_{\eta}$ and $X \not\in H_{\eta}$,
+and, finally, all rules of the form
+%%
+\begin{equation}
+\auf X,0\zu \pf a, 
+\qquad
+\auf X,1\zu \pf a, 
+\end{equation}
+%%
+where $X \pf a \in R_{\eta}$. The code of $\varphi$ is then 
+$\auf G_{\varphi}, N_{\eta} \times \{1\}\zu$.
+The biggest effort goes into the last case, $\varphi = (\forall p_i)\eta$.
+To start, we introduce a new alphabet, namely  $A \times \{0,1\}$,
+and a new constant, $\mathsf{c}$. Let
+$\uli{a} := \uli{\auf a,0\zu} \oder \uli{\auf a,1\zu}$.
+Further, assume that $\mathsf{c} \dpf \goder_{a \in A} \uli{\auf a,1\zu}$ 
+holds. Then $\uli{\auf a,1\zu} \dpf \uli{a} \und \mathsf{c}$
+and $\uli{\auf a,0\zu} \dpf  \uli{a} \und \nicht \mathsf{c}$.
+Then let $\eta' := \eta[\mathsf{c}/p_i]$. We can apply the inductive
+hypothesis to this formula. Let $\Delta$ be the set of subformulae
+of $\eta'$. For  an arbitrary subset $\Sigma  \subseteq \Delta$
+let
+%%
+\begin{equation}
+L_{\Sigma} := \gund_{\delta \in \Sigma} \delta \und
+    \gund_{\delta \not\in \Sigma} \nicht\delta 
+\end{equation}
+%%
+We can find a grammar$^{\ast}$ $G$ and for each $\delta \in \Delta$
+sets $H_{\delta}$ such that $\auf G, H_{\delta}\zu$ codes $\delta$. 
+Hence for every $\Sigma \subseteq \Delta$ there exist $H_{\Sigma}$ 
+such that $\auf G, H_{\Sigma}\zu$ codes $L_{\Sigma}$. Now we first 
+form the grammar$^{\ast}$ $G^1$ with the nonterminals 
+$N \times \wp(\Delta)$ and the
+alphabet $A \times \{0,1\}$. The set of rules is the set
+of all
+%%
+\begin{equation}
+\auf X,\Sigma\zu \pf \auf a,i\zu \quad\auf X',\Sigma'\zu
+\end{equation}
+%%
+where $X \pf aX' \in R$, $X \in H_{\Sigma}$ and $X' \in
+H_{\Sigma'}$; further all rules of the form
+%%
+\begin{equation}
+\auf X, \Sigma\zu \pf \auf a,i\zu
+\end{equation}
+%%
+where $X \pf a \in R$ and $X \in H_{\Sigma}$. Put
+$H^1_{\Sigma} := H_{\Sigma} \times \{\Sigma\}$.
+Again one easily sees that $\auf G^1, H^1_{\Sigma}\zu$
+is a code for $\Sigma$ for every $\Sigma \subseteq
+\Delta$. We now step over to the grammar$^{\ast}$ $G^2$ with
+$N^2 := N \times \{0,1\} \times \wp(\Delta)$ and
+$A^2 := A$ as well as all rules
+%%
+\begin{equation}
+\auf X,i,\Sigma\zu \pf a \quad\auf X',i',\Sigma'\zu
+\end{equation}
+%%
+where $\auf X,\Sigma\zu \pf \auf a,i\zu \quad\auf X',\Sigma'\zu
+\in R^1$
+%%
+and
+%%
+\begin{equation}
+\auf X, i, \Sigma\zu \pf a
+\end{equation}
+%%
+where $\auf X, \Sigma\zu \pf \auf a,i\zu \in R^1$.  Finally, we
+define the following grammar$^{\ast}$. $N^3 := 
+N \times \wp(\wp(\Delta))$, $A^3 := A$, and let
+%%
+\begin{equation}
+\auf X, \BA\zu \pf a \quad \auf Y, \BB\zu
+\end{equation}
+%%
+be a rule iff $\BB$ is the set of all $\Sigma'$ for which
+$\Sigma \in \BA$ and there are $i, i' \in \{0,1\}$ such that
+%%
+\begin{equation}
+\auf X, i, \Sigma\zu \pf a \quad\auf Y, i', \Sigma'\zu \in R^2
+\end{equation}
+%%
+Likewise
+%%
+\begin{equation}
+\auf X, \BA\zu \pf a \in R^3
+\end{equation}
+%%
+iff there is a $\Sigma \in \BA$ and some $i \in \{0,1\}$ with
+%%
+\begin{equation}
+\auf X,i,\Sigma\zu \pf a \in R^2
+\end{equation}
+%%
+Put $H_{\varphi} := \{\Sigma : \eta' \in \Sigma\}$. We claim:
+$\auf G^3, H_{\varphi}\zu$ is a code for $\varphi$. For a proof
+let $\vec{x}$ be a string and let a $G^3$--derivation of $\vec{x}$
+be given. We construct a $G^1$--derivation. Let
+$\vec{x} = \prod_{i < n} x_i$. By assumption we have a
+derivation
+%%
+\begin{equation}
+\auf X_i, \BA_i\zu \pf x_i \quad \auf X_{i+1}, \BA_{i+1}\zu
+\end{equation}
+%%
+for $i < n-1$ and
+%%
+\begin{equation}
+\auf X_{n-1}, \BA_{n-1}\zu \pf x_{n-1}
+\end{equation}
+%%
+By construction there exists a $j_{n-1}$ and a $\Sigma_{n-1}
+\in \BA_{n-1}$ such that
+%%
+\begin{equation}
+\auf X_{n-1}, j_{n-1}, \Sigma_{n-1}\zu \pf a \in R^2
+\end{equation}
+%%
+Descending we get for every $i < n-1$ a $j_i$ and a $\Sigma_i$
+with
+%%
+\begin{equation}
+\auf X_i, j_i, \Sigma_i\zu \pf a\quad
+\auf X_{i+1}, j_{i+1}, \Sigma_{i+1}\zu \in R^2
+\end{equation}
+%%
+We therefore have a $G^2$--derivation of $\vec{x}$. From this we
+immediately get a $G^1$--derivation. It is over the alphabet
+$A \times \{0,1\}$. By assumption $\eta'$ is coded in $G^1$
+by $H_{\eta'}$. Then $\eta'$ holds in all nodes $i$ with
+$X_i \in H_{\eta'}$. This is the set of all $i$ with
+$X_i \in H_{\Sigma}$ for some $\Sigma \subseteq \Delta$ with
+$\eta' \subseteq \Delta$. This is exactly the set of all
+$i$ with $\auf X_i, \BA_i\zu \in H_{\varphi}$. Hence we have
+$\auf X_i, \BA_i\zu \in H_{\varphi}$ iff the
+Z--structure of $\vec{x}$ satisfies $\varphi$ in the given
+$G^3$--derivation at $i$. This however had to be shown.
+Likewise from a $G^1$--derivation of a string a $G^3$--derivation
+can be constructed, as is easily seen.
+\proofend
+
+Now we are almost done. As our last task we have to show that
+from the fact that a formula is codable we also get a grammar
+which only generates strings that satisfy this formula. So let
+$\Phi \subseteq \mathsf{MSO}$ be finite. We may assume that 
+all members are sentences (if not, we quantify over the free
+variables with a universal quantifier). By Corollary~\ref{cor:mql}
+we can assume that in place of MSO--sentences we are
+dealing with QML--formulae. Further, a finite conjunction
+of QML--formulae is again a QML--formula so that we
+are down to the case where $\Phi$ consists of a single
+QML--formula $\varphi$. By Theorem~\ref{thm:code}, 
+$\varphi$ has a code $\auf G,H\zu$, with $G = \auf \Sigma, N, A, R\zu$.
+Put $G^{\varphi} := \auf \Sigma \cap H, N \cap H, A, R_H\zu$, where
+%%
+\begin{align}
+R_H := & \phantom{\mbox{}\cup\mbox{}}
+\{X \pf aY \in R : X, Y \in H\} \\\notag
+  & \cup \{X \pf a \in R : X \in H\}
+\end{align}
+%%
+Now there exists a $G^{\varphi}$--derivation of $\vec{x}$
+iff $\vec{x}^{\times} \vDash  \varphi$.
+
+{\it Notes on this section.} Some remarks are in order about FOL--definable
+classes of Z--structures over the signature containing {\mtt <} (!) 
+and $\uli{a}$, $a \in A$. A regular term is \textbf{$\ast$--free} if it 
+does not contain $^{\ast}$, but may contain occurrences of 
+$-$, which is a unary operator forming the complement of a language. 
+Then the following are equivalent.
+%%%
+\begin{dingautolist}{192}
+\item
+The class of Z--structures for $L$ are finitely FO--axiomatizable.
+\item
+$L = L(t)$ for a $\ast$--free regular term $t$. 
+\item
+There is a $k \geq 1$ such that for every $\vec{y} \in A^+$ and 
+$\vec{x}, \vec{z} \in A^{\ast}$: $\vec{x}\,{\vec{y}\,}^k\vec{z} \in L$ 
+iff $\vec{x}\, {\vec{y}\,}^{k+1}\vec{z} \in L$.
+\end{dingautolist}
+%%%
+See \cite{ebbinghausflum:finite} and references therein.
+%%
+\vplatz
+\exercise
+Show that every (!) language is an intersection of regular languages.
+(This means that we cannot omit the condition of finite axiomatizability 
+in Theorem~\ref{thm:buechi}.)
+%%
+\vplatz
+\exercise
+Let $\Phi$ be a finite MSO--theory, $L$ the regular language which
+belongs to $\Phi$. $L$ is recognizable in $O(n)$--time
+using a finite state automaton. Give upper bounds for the
+number of states  of a minimal automaton recognizing $L$.
+Use the proof of codability. Are the derived bounds optimal?
+%%%
+%\vplatz
+%\exercise
+%(Continuing the previous exercise.) Give an explicit constant
+%$c_{\Phi}$ such that a single tape Turing machine  recognizes
+%$L$ in $\leq c_{\Phi} \cdot n$ time. How does $c_{\Phi}$
+%depend on $\Phi$?
+%%%%
+\vplatz
+\exercise
+An MSO--sentence is said to be in $\Sigma^1_1$ if it has the form
+%%
+\begin{equation}
+(\exists P_0)(\exists P_1)
+\dotsb (\exists P_{n-1})\varphi(P_0, \dotsc, P_{n-1})
+\end{equation}
+%%%
+where $\varphi$ does not contain second order quantifiers.
+$\varphi$ is said to be in $\Pi^1_1$ if it has the form
+$(\forall P_0)(\forall P_1) \dotsb (\forall P_{n-1})\varphi(P_0, %
+\dotsc, P_{n-1})$ where $\varphi$ does not contain second order
+quantifiers. Show the following: {\it Every MSO--axiomatizable 
+class $\CK$ of Z--structures is axiomatizable by a set of
+$\Sigma^1_1$--sentences. If $\CK$ is finitely MSO--axiomatizable 
+then it is axiomatizable by finitely many $\Sigma^1_1$--sen\-ten\-ces.}

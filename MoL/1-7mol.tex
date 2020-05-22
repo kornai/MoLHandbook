@@ -1,0 +1,890 @@
+\section{Turing machines}
+\label{einsfuenf}
+%
+%
+%
+We owe to \cite{turing:computable} and \cite{post:combinatory} the 
+%%%
+\index{Turing, Alan}\index{Post, Emil}%%
+%%%
+concept of a machine which is very simple and nevertheless capable 
+of computing all functions that are believed to be computable. 
+Without going into the details of what makes a function computable, 
+it is nowadays agreed that there is no loss
+if we define `computable' to mean {\it computable by a Turing
+machine}. The essential idea was that computations on objects
+can be replaced by computations on strings. The number $n$ can
+for example be represented by $n+1$ successive strokes on a piece of
+paper. (So, the number $0$ is represented by a single stroke.
+This is really necessary.) In addition to the stroke we have a
+blank, which is used to separate different numbers. The Turing
+machine, however powerful, takes a lot of time to compute even the
+most basic functions. Hence we agree from the start that it has an
+arbitrary, finite stock of symbols that it can use in addition to 
+the blank. A Turing machine is a physical device, consisting of a 
+tape which is infinite in both directions. That is, it contains 
+cells numbered by the set of integers (but the numbering is irrelevant 
+for the computation). Each cell may carry a symbol 
+from an alphabet $A$ or a blank. The machine possesses a read and 
+write head, which can move between the cells, one at a time. 
+Finally, it has finitely many states, and can be programmed
+in the following way. We assign instructions for the machine 
+that tell it what to do on condition that it is in state $q$ 
+and reads a symbol $a$ from the tape. These instruction tell the 
+machine whether it should write a symbol, then move the head one 
+step or leave it at rest, and subsequently change to a state 
+$q'$.
+%%
+\begin{defn}
+%%%
+\index{Turing machine}%%
+\index{Turing machine!deterministic}%%
+\index{blank}%%
+\index{state}%%
+\index{state!initial}%%
+\index{state!accepting}%%
+%%%
+A \textbf{(nondeterministic) Turing machine} is a quintuple
+%%%
+\begin{equation}
+T = \auf A, L, Q, q_0, f\zu
+\end{equation}
+%%%
+where $A$ is a finite set, the 
+\textbf{alphabet}, $L \not\in A$ is the so--called \textbf{blank},
+$Q$ a finite set, the set of (\textbf{internal}) \textbf{states},
+$q_0 \in Q$ the  \textbf{initial state} and 
+%%
+\begin{equation}
+f \colon A_L \times Q 
+\pf \wp(A_L\times \{-1,0,1\} \times Q)
+\end{equation}
+%%%
+the \textbf{transition function}.  If for all $b \in A_L$ and 
+$q \in Q$ $|f(b,q)| \leq 1$, the machine is called 
+\textbf{deterministic}.
+\end{defn}
+%%
+Here, we have written $A_L$ in place of $A \cup \{L\}$. Often,
+we use {\tt L} or even $\square$ as particular blanks. What
+this describes physically is a machine that has a two--sided
+infinite tape (which we can think of as a function $\tau \colon
+\BZ \pf A_L$), with a read/write head positioned on one of the cells.
+A \textbf{computation step} 
+%%%
+\index{computation step}%%%
+%%%
+is as follows. Suppose the machine
+scans the symbol $a$ in state $q$ and is on cell $i \in \BZ$.
+Then if $\auf b, 1, q'\zu \in f(a,q)$, the machine may write
+$b$ in place of $a$, advance to cell $i+1$ and change to state
+$q'$. If $\auf b, 0, q'\zu \in f(a,q)$ the machine may
+write $b$ in place of $a$, stay in cell $i$ and change
+to state $q'$. Finally, if $\auf b,-1,q'\zu \in f(a,q)$,
+the machine may write $b$ in place of $a$, move to cell $i-1$
+and switch to state $q'$. Evidently, in order to describe
+the process we need (i) the tape, (ii) the position of the
+head of that tape, (iii) the state the machine is currently
+in. We assume throughout that the tape is almost everywhere 
+filled by a blank. (The locution `almost all' and `almost everywhere' 
+is often used in place `all but finitely many' and `all but finitely 
+many places', respectively.) This means that 
+the content of the tape plus the information on the machine may be 
+coded by a single string, called {\it configuration}. Namely, if the 
+tape is almost everywhere filled by a blank, there is a unique 
+interval $[m, n]$ which contains all non--blank squares and 
+the head of the machine. Suppose that the machine head is 
+on Tape~$\ell$. Then let $\vec{x}_1$ be the string defined 
+by the interval $[m, \ell -1]$ (it may be empty), and 
+$\vec{x}_2$ the string defined by the interval $[\ell, n]$. 
+Finally, assume that the machine is in state $q$. Then the 
+string $\vec{x}_1\conc q \conc \vec{x}_2$ is the configuration 
+corresponding to that phyical configuration.  So, the state
+of the machine is simply written behind the symbol of the
+cell that is being scanned. (Obviously, $A$ and $Q$ are assumed 
+to be disjoint.)
+%%%
+\begin{defn}
+%%
+\label{defn:configuration}
+\index{configuration}%%
+%%%
+Let $T = \auf A, \mbox{\tt L}, Q, q_0, f\zu$ be a Turing machine.
+A $T$--\textbf{con\-fi\-gu\-ra\-tion} is a string $\vec{x}q\vec{y} \in
+A_L^{\ast} \times Q \times A_L^{\ast}$ such that
+$\vec{x}$ does not begin and $\vec{y}$ does not end
+with a blank.
+\end{defn}
+%%%
+This configuration corresponds to a situation that the tape
+is almost empty (that is, almost all occurrences of symbols on
+it are blanks). The nonempty part is a string $\vec{x}$, with
+the head being placed somewhere behind the prefix $\vec{u}$.
+Since $\vec{x} = \vec{u}\, \vec{v}$ for some $\vec{v}$, we insert
+the state the machine is in between $\vec{u}$ and $\vec{v}$.
+The configuration omits most of the blanks, whence we have
+agreed that $\vec{u}q\vec{v}$ is the same configuration as
+$\square\vec{u}q\vec{v}$ and the same $\vec{u}q\vec{v}\square$.
+
+We shall now describe the working of the machine using configurations.
+We say,
+%%%
+\index{$\vec{x} \conc q \conc \vec{y} \vdash_T
+    \vec{x}_1 \conc q_1 \conc \vec{y}_1$}%%
+%%%
+$\vec{x} \conc q \conc \vec{y}$ is \textbf{transformed by} $T$
+\textbf{in one step into} $\vec{x}_1 \conc q_1 \conc \vec{y}_1$
+and write $\vec{x} \conc q \conc \vec{y} \vdash_T
+\vec{x}_1 \conc q_1 \conc \vec{y}_1$ if one of the following
+holds.
+%%
+\begin{dingautolist}{192}
+\item $\vec{x}_1 = \vec{x}$, and for some $\vec{v}$ and
+    $b$ and $c$ we have
+    $\vec{y} = b \conc \vec{v}$ and $\vec{y}_1 = c \conc  \vec{v}$,
+    as well as $\auf c, 0, q_1\zu  \in f(b,q)$.
+\item We have $\vec{x}_1 = \vec{x} \conc c$ and
+    $\vec{y} = b \conc \vec{y}_1$ as well as
+     $\auf c, 1, q_1\zu \in f(b,q)$.
+\item We have $\vec{x} = \vec{x}_1 \conc c$ and
+    $\vec{y}_1 = b \conc \vec{y}$
+    as well as $\auf c, -1, q_1\zu \in f(b,q)$.
+\end{dingautolist}
+%%
+Now, for $T$--configurations
+$Z$ and $Z'$ we define $Z \vdash^n_T Z'$ inductively by
+(a) $Z \vdash_T^0 Z'$ iff $Z = Z'$ and
+(b) $Z \vdash_T^{n+1} Z'$ iff for some $Z''$
+we have $Z \vdash_T^n Z'' \vdash_T Z'$.
+
+It is easy to see that we can define a semi Thue system on
+configurations that mimicks the computation of $T$. The canonical 
+Thue system, $C(T)$, 
+%%%
+\index{$C(T)$}%%
+%%%
+is shown in Table~\ref{tab:canThue}. 
+($x$ and $y$ range over $A_L$ and $q$ and $q'$ over $Q$.)
+%%
+\begin{table}
+\caption{The Canonical Thue System}
+\label{tab:canThue}
+$$\begin{array}{lll}
+C(T) := &  & \{\auf \vec{u}qx\vec{v}, \vec{u}yq'\vec{v}\zu :
+    \auf y,1,q'\zu \in f(x,q); \vec{u} \neq \varepsilon \mbox{ or }
+    y \in A; \\
+    & & \multicolumn{1}{r}{ \vec{v} \neq \varepsilon \mbox{ or } x \in A\}} \\
+& \cup & \{\auf \vec{u}q, \vec{u}yq'\zu : \auf y,1,q'\zu \in
+    f(\square,q); \vec{u} \neq \varepsilon
+    \mbox{ or } y \in A\} \\
+& \cup & \{\auf qx\vec{v}, q'\vec{v}\zu : \auf \square,1,q'\zu
+    \in f(x,q); \vec{v} \neq \varepsilon \mbox{ or } x\in A\} \\
+& \cup & \{\auf q, q'\zu : \auf \square,\alpha,q'\zu
+    \in f(\square,q), \alpha \in \{-1,0,1\}\} \\
+& \cup & \{\auf \vec{u}xq\vec{v}, \vec{u}q'y\vec{v}\zu :
+    \auf y,-1,q'\zu \in f(x,q); \\
+    & & \multicolumn{1}{r}{
+    \vec{u} \neq \varepsilon \mbox{ or } x \in A; 
+    \vec{v} \neq \varepsilon \mbox{ or } y \in A\}} \\
+& \cup & \{\auf q\vec{v}, q'y\vec{v}\zu : \auf y,-1,q'\zu \in
+    f(\square,q); \vec{v} \neq \varepsilon \mbox{ or }
+    y \in A\} \\
+& \cup & \{\auf \vec{u}xq, \vec{u}q'\zu :
+    \auf \square,-1,q'\zu \in f(x,q); \vec{u} \neq
+    \varepsilon \mbox{ or } x \in A\} \\
+& \cup & \{\auf \vec{u}qx\vec{v}, \vec{u}q'y\vec{v}\zu :
+    \auf y,0,q'\zu \in f(x,q); \\
+    & & \multicolumn{1}{r}{\vec{v} \neq \varepsilon\mbox{ or }
+    x, y \in A\}}
+\end{array}$$
+\end{table}
+%%
+Notice that we have to take care not to leave a blank at the
+left and right end of the strings. This is why the definition is
+more complicated than expected. The alphabet of the semi Thue system
+is $(Q \cup A_L)^{\ast}$. The following is easily shown
+by induction.
+%%
+\begin{prop}
+Let $T$ be a Turing machine, $C(T)$ be its associated semi Thue
+system. Then for all $T$--configurations $Z$ and $Z'$ and for all 
+$n >0$: $Z \vdash^n_T Z'$ iff $Z \Pf_{C(T)}^n Z'$.
+Moreover, if $Z$ is a $T$--configuration and $Z \Pf_{C(T)}^n
+\vec{u}$ for an arbitrary string $\vec{u} \in (Q \cup A_L)^{\ast}$,
+then $\vec{u}$ is a $T$--configuration and $Z \vdash^n_T \vec{u}$.
+\end{prop}
+%%
+Of course, the semi Thue system defines transitions on strings
+that are not configurations, but this is not relevant for the
+theorem.
+%%
+\begin{defn}
+%%%
+\index{end configuration}%%
+\index{language!accepted}%%
+\index{$L(T)$}%%
+%%%
+Let $T$ be a Turing machine, $Z$ a configuration
+and $\vec{x} \in A^{\ast}$. $Z$ is called an
+\textbf{end configuration} if there is no configuration $Z'$
+such that $Z \vdash_T Z'$. $T$ \textbf{accepts} $\vec{x}$
+if there is an end configuration $Z$ such that
+$q_0 \conc \vec{x} \vdash^{\ast}_T Z$. The \textbf{language
+accepted by} $T$, $L(T)$, is the set of all strings from
+$A^{\ast}$ which are accepted by $T$.
+\end{defn}
+%%
+It takes time to get used to the concept of a Turing
+machine and the languages that are accepted by such
+machines. We suggest to the interested reader to play
+a little while with these machines and see if he can
+program them to compute a few very easy functions.
+A first example is the machine which computes the successor 
+function on binary strings. Assume our alphabet is $\{\mbox{\tt 0}, %
+\mbox{\tt 1}\}$.  We want to build a machine which computes the 
+next string for $\vec{x}$ in the numerical encoding (see 
+Section~\ref{kap1}.\ref{einseins} for its definition). This means that if 
+the machine starts with $q_0 \conc \vec{x}$ it shall halt in the 
+configuration $q_0 \conc \vec{y}$ where $\vec{y}$ is the word 
+immediately following $\vec{x}$ in the numerical ordering. (If in the
+sequel we think of numbers rather than strings we shall simply
+think instead of the string $\vec{x}$ of the number $n$, where
+$\vec{x}$ occupies the $n$th place in the numerical ordering.)
+
+How shall such a machine be constructed? We need four states,
+$q_i$, $i < 4$. First, the machine advances the head to the right
+end of the string, staying in $q_0$ until it reads $\square$.
+Finally, when it hits $\square$, it changes to state $q_1$
+and starts moving to the left. As long as it reads {\tt 1},
+it changes {\tt 1} to {\tt 0} and continues in state $q_1$,
+moving to the left. When it hits {\tt 0}, it replaces it by
+{\tt 1}, moves left and changes to state $q_2$. When it sees
+a blank, that blank is filled by {\tt 0} and the machine
+changes to state $q_3$, the final state. In $q_2$, the machine
+simply keeps moving leftwards until it hits a blanks and then
+stops in state $q_3$. The machine is shown in
+Table~\ref{tab:successormachine}.
+%%%
+\begin{table}
+\caption{The Successor Machine}
+\label{tab:successormachine}
+$$\begin{array}{ll@{\quad\mapsto\quad}l}
+q_0 & \mbox{\tt 0} & \auf \mbox{\tt 0}, 1, q_0\zu \\
+    & \mbox{\tt 1} & \auf \mbox{\tt 1}, 1, q_0\zu \\
+    & \square      & \auf \square, -1, q_1\zu \\
+q_1 & \mbox{\tt 0} & \auf \mbox{\tt 1}, -1, q_2\zu \\
+    & \mbox{\tt 1} & \auf \mbox{\tt 0}, -1, q_1\zu \\
+    & \square      & \auf \mbox{\tt 0}, -1, q_3\zu \\
+q_2 & \mbox{\tt 0} & \auf \mbox{\tt 0}, -1, q_2\zu \\
+    & \mbox{\tt 1} & \auf \mbox{\tt 1}, -1, q_2\zu \\
+    & \square      & \auf \square, 0, q_3\zu \\
+q_3 & \multicolumn{2}{c}{}
+\end{array}$$
+\end{table}
+%%
+(If you want a machine that computes the successor in the binary 
+encoding, you have to replace Line 6 by 
+$\square \mapsto \auf \mbox{\tt 1}, -1, q_3\zu$.)
+In recursion theory the notions of computability are defined
+for functions on the set of natural numbers. By means of the
+function $Z$, which is bijective, these notions can be
+transferred to functions on strings.
+%%
+\begin{defn}
+%%%
+\index{function!computable}%%
+%%%
+Let $A$ and $B$ be alphabets and $f \colon A^{\ast} \pf B^{\ast}$ a 
+function. $f$ is called \textbf{computable} if there is a
+deterministic Turing machine $T$ such that for every
+$\vec{x} \in A^{\ast}$ there is a $q_t \in Q$ such that 
+$q_0 \conc \vec{x} \vdash_T^{\ast} q_t \conc f(\vec{x})$ 
+and $q_t \conc f(\vec{x})$ is
+an end configuration. Let $L \subseteq A^{\ast}$. $L$
+is called \textbf{recursively enumerable} 
+%%%
+\index{language!recursively enumerable}%%
+%%%
+if $L = \varnothing$ or
+there is a computable function $f \colon \{\mbox{\tt 0},
+\mbox{\tt 1}\}^{\ast} \pf A^{\ast}$ such that
+$f[\{\mbox{\tt 0}, \mbox{\tt 1}\}^{\ast}] = L$.
+$L$ is \textbf{decidable} if both $L$ and $A^{\ast} - L$ are 
+recursively enumerable.
+%%%
+\index{language!decidable}%%
+%%%
+\end{defn}
+%%
+\begin{lem}
+Let $f \colon A^{\ast} \pf B^{\ast}$ and $g \colon B^{\ast} \pf C^{\ast}$
+be computable functions. Then $g \circ f \colon A^{\ast} \pf C^{\ast}$
+is computable as well.
+\end{lem}
+%%%
+The proof is a construction of a machine $U$ from machines $T$ and
+$T'$ computing $f$ and $g$, respectively. Simply write $T$ and
+$T'$ using disjoint sets of states, and then take the union of
+the transition functions. However, make the transition function of
+$T$ first such that it changes to the starting state of $T'$ as
+soon as the computation by $T$ is finished (that is, whenever $T$ 
+does not define any transitions).
+%%%
+\begin{lem}
+Let $f \colon A^{\ast} \pf B^{\ast}$ be computable and bijective. Then
+$f^{-1} \colon B^{\ast} \pf A^{\ast}$ also is computable (and bijective).
+\end{lem}
+%%%
+Write a machine that generates all strings of $A^{\ast}$ in successive
+order (using the successor machine, see above), and computes
+$f(\vec{x})$ for all these strings. As soon as the target string
+is found, the machine writes $\vec{x}$ and deletes everything else.
+%%%
+\begin{lem}
+\label{lem:bij}
+Let $A$ and $B$ be finite alphabets. Then there are computable
+bijections $f \colon A^{\ast} \pf B^{\ast}$ and $g \colon 
+B^{\ast} \pf A^{\ast}$ such that $f = g^{-1}$.
+\end{lem}
+%%
+In this section we shall show that the recursively enumerable sets 
+are exactly the sets which are accepted  by a Turing machine.
+Further, we shall show that these are exactly the Type 0
+languages. This establishes the first correspondence result
+between types of languages and types of automata. Following
+this we shall show that the recognition problem for Type 0
+languages is in general not decidable. The proofs proceed
+by a series of reduction steps for Turing machines. First,
+we shall generalize the notion of a Turing machine.
+%%%
+\index{Turing machine!multitape}%%
+%%%
+A $k$--\textbf{tape Turing machine} is a quintuple
+$\auf A, L, Q, q_0, f\zu$ where $A$,
+$L$, $Q$, and $q_0$ are as before but now
+%%
+\begin{equation}
+f \colon A_L^k \times Q \pf
+    \wp(A_L^k \times \{-1, 0, 1\} \times Q) 
+\end{equation}
+%%
+This means, intuitively speaking, that the Turing machine
+manipulates $k$ tapes in place of a single tape. There is
+a read and write head on each of the tapes. In each step
+the machine can move only one of the heads. The next state depends
+on the symbols read on all the tapes plus the current internal
+state. The initial configuration is as follows. All tapes
+except the first are empty. The heads are anywhere on these
+tapes (we may require them to be in position 0). On the first
+tape the head is immediately to the left of the input.
+The $k$--tape machine has $k-1$ additional tapes for
+recording intermediate results. The reader may verify that we
+may also allow such configurations as initial configurations
+in which the other tapes are filled with some finite string,
+with the head immediately to the left of it. This does not
+increase the recognition power. However, it makes the definition
+of a machine easier which computes a function of several 
+variables. We may also allow that the information to the right of the
+head consists in a sequence of strings each separated by
+a blank (so that when two successive blanks follow the machine 
+knows that the input is completely read). Again, there is a
+way to recode these machines using a basic multitape Turing
+machine, modulo computable functions. We shall give a little
+more detail concerning the fact that also $k$--tape Turing
+machines (in whatever of the discussed forms) cannot compute
+more functions than 1--tape machines. For this define the
+following coding of the $k$ tapes using a single tape.
+We shall group $2k$ cells together to a macro cell.
+The (micro) cell $2kp + 2m$ corresponds to the entry on
+cell $p$ on Tape~$m$. The (micro) cell number $2kp + 2m +1$
+only contains {\tt 1} or {\tt 0} depending on whether the head 
+of the machine is placed on cell $p$ on tape $m$. (Hence, every 
+second micro cell is filled only with {\tt 1} or {\tt 0}.)
+Now given a $k$--tape Turing machine $T$ we shall define a
+machine $U$ that simulates $T$ under the given coding.
+This machine operates as follows. For a single step of $T$
+it scans the actual string for the positions of the read and
+write heads and remembers the symbols on which they are
+placed (they can be found in the adjacent cell). Remembering
+this information requires only finite amount of memory, and
+can be done using the internal states. The machine scans the
+tape again for the head that will have to be changed in position. 
+(To identify it, the machine must be able to do calculations 
+modulo $2k$. Again finite memory is sufficient.) It adjusts its 
+position and the content of the adjacent cell. Now it changes
+into the appropriate state. Notice that each step of $T$
+costs $2k \cdot |\vec{x}|$ time for $U$ to simulate, where
+$\vec{x}$ is the longest string on the tapes. If there is
+an algorithm taking $f(n)$ steps to compute then the
+simulating machine needs at most $2k(f(n)+n)^2$ time to
+compute that same function under simulation. (Notice
+that in $f(n)$ steps the string(s) may acquire length at most
+$f(n) + n$.)
+
+We shall use this to show that the nondeterministic Turing
+machines cannot compute more functions than the deterministic
+ones.
+%%
+\begin{prop}
+Let $L = L(T)$ for a Turing machine. Then there is a
+deterministic Turing machine $U$ such that
+$L = L(U)$.
+\end{prop}
+%%
+\proofbeg
+Let $L = L(T)$. Choose a number $b$ such that $|f(q,x)| < b$ for 
+all $q \in Q$, $x \in A$. We fix an ordering on $f(q,x)$ for all 
+$x$ and $q$. $V$ is a 3--tape machine that does the following. On the 
+first tape $V$ writes the input $\vec{x}$. On the second tape we 
+generate all sequences $\vec{p}$ of numbers $< b$ of length $n$, 
+for increasing $n$. These sequences describe the action sequences 
+of $T$. For each sequence $\vec{p} = a_0 a_1 \dotsb a_{n-1}$ we 
+copy $\vec{x}$ from Tape~1 onto Tape~3 and let $V$ work as follows. 
+
+The head on Tape~2 is to the left of the sequence $\vec{a}$. In the 
+first step $V$ follows the $a_0$th alternative for machine $T$ on 
+the 3rd tape and advances head number 2 one step to the right. In the 
+second step it follows the alternative $a_1$ in the transition set of 
+$T$ and executes it on Tape~3. Then the head of Tape~2 is advanced
+one step to the right. If $a_{n-1} < b$ and the $a_{n-1}$st alternative 
+does not exist for $T$ but there is a computation for 
+$a_0a_1 \dotsb a_{n-2}a'$ for some $a' < a_{n-1}$, $V$ exits the 
+computation on Tape~3 and deletes $\vec{p}$ on Tape~2. If $a_{n-1} = b$, 
+the $a_{n-1}$st alternative does not exist for $T$, and none exists 
+for any $a' < b$, then $V$ halts. In this way $V$ executes on Tape~3 
+a single computation of $T$ for the input and checks the prefixes 
+for paths for which a computation exists. 
+Clearly, $V$ is deterministic. It halts iff for some $n$ $T$ halts 
+on some alternative sequences of length $n-1$. 
+\proofend
+
+It is easy to see that we can also write a machine that enumerates 
+all possible outputs of $T$ for a given input.
+%%
+\begin{lem}
+\label{lem:aufz}
+$L$ is recursively enumerable iff $L = L(T)$
+for a Turing machine $T$.
+\end{lem}
+%%
+\proofbeg
+The case $L = \varnothing$ has to be dealt with separately.
+It is easy to construct a machine that halts on no word. This
+shows the equivalence in this case.  Now assume that $L \neq
+\varnothing$. Let $L$ be recursively enumerable. Then there
+exists a function $f \colon \{\mbox{\tt 0}, \mbox{\tt 1}\}^{\ast} 
+\pf A^{\ast}$ such that $f[\{\mbox{\tt 0}, \mbox{\tt 1}\}^{\ast}] 
+= L$ and a Turing machine $U$ which computes $f$. Now we construct 
+a (minimally) 3--tape Turing machine $V$ as follows. The input 
+$\vec{x}$ will be placed on the first tape. On the second tape $V$ 
+generates all strings $\vec{y} \in \{\mbox{\tt 0},\mbox{\tt 1}\}^{\ast}$
+starting with $\varepsilon$, in the numerical order. In order to do 
+this we use the machine computing the successors in this ordering. 
+If we have computed the string $\vec{y}$ on the second tape the 
+machine computes the value $f(\vec{y})$ on
+the third tape. (Thus, we emulate machine $T$ on the third tape,
+with input given on the second tape.) Since $f$ is computable,
+$V$ halts on Tape~3. Then it compares the string on Tape~3,
+$f(\vec{y})$, with $\vec{x}$. If they are equal, it halts, if
+not it computes the successor of $\vec{y}$ and starts the process 
+over again. It is easy to see that $L = L(V)$. By the previous 
+considerations, there is a one tape Turing machine $W$ such that 
+$L = L(W)$. Now conversely, let $L = L(T)$ for some Turing machine $T$.
+We wish to show that $L$ is recursively enumerable. We may
+assume, by the previous theorem, that $T$ is deterministic.
+We leave it to the reader to construct a machine $U$ which 
+computes a function $f \colon \{\mbox{\tt 0},\mbox{\tt 1}\}^{\ast} 
+\pf A^{\ast}$ whose image is $L$. 
+\proofend
+%%
+\begin{thm}
+\label{thm:typ0}
+The following are equivalent.
+\begin{dingautolist}{192}
+\item
+$L$ is of Type 0.
+\item
+$L$ is recursively enumerable.
+\item
+$L = L(T)$ for a Turing machine $T$.
+\end{dingautolist}
+\end{thm}
+%%
+\proofbeg
+We shall show \ding{192} $\Pf$ \ding{193} and \ding{194} $\Pf$ \ding{192}. 
+The theorem then follows with Lemma~\ref{lem:aufz}. Let $L$ be of Type 0. 
+Then there is a grammar $\auf \mbox{\tt S}, N, A, R\zu$ which generates 
+$L$. We have to construct a Turing machine which lists all strings 
+that are derivable from {\tt S}. To this end it is enough to construct 
+a nondeterministic machine that matches the grammar. This machine 
+always starts at input {\tt S} and in each cycle it scans the string 
+for a left hand side of a rule and replaces that substring by the 
+right hand side. This shows \ding{193}. Now let $L = L(T)$ for some 
+Turing machine. Choose the following grammar $G$: in addition to the 
+alphabet let {\tt X} be the start symbol, {\tt 0} and {\tt 1} two 
+nonterminals, and let each $q \in Q$ $\mbox{\tt Y}_q$ be a 
+nonterminal. The rules are as follows.
+%%
+\begin{align}\notag
+\mbox{\tt X}\pf & \mbox{\tt X0} \mid \mbox{\tt X1}
+    \mid \mbox{\tt Y}_{q_0} \\\notag
+\mbox{\tt Y}_q b \pf & c \mbox{\tt Y}_r 
+	&& \text{if $\auf c, 1, r\zu \in f(b,q)$} \\
+\mbox{\tt Y}_q b \pf & \mbox{\tt Y}_r c 
+	&& \text{if $\auf c, 0, r\zu \in f(b,q)$} \\\notag
+\mbox{\tt Y}_q b \pf & \mbox{\tt Y}_r c b 
+	&& \text{if $\auf c, -1, r\zu \in f(b,q)$} \\\notag
+\mbox{\tt Y}_q b \pf & b 
+	&& \text{if $f(b,q) = \varnothing$}
+\end{align}
+%%
+Starting with {\tt X} this grammar generates strings of the form
+$\mbox{\tt Y}_{q_0} \vec{x}$, where $\vec{x}$ is a binary string.
+This codes the input for $T$. The additional rules code in a
+transparent way the computation of $T$ on the string. If the
+computation stops, it is allowed to eliminate $\mbox{\tt Y}_q$.
+If the string is terminal it will be generated by $G$. In this
+way it is seen that $L(G) = L(T)$.
+\proofend
+%%
+
+Now we shall derive an important fact, namely that there exist undecidable
+languages of Type 0. We first of all note that Turing machines can be
+regarded as semi Thue systems, as we have done earlier. Now one can
+design a machine $U$ which takes two inputs, one being the code
+of a Turing machine $T$ and the other a string $\vec{x}$, and
+$U$ computes what $T$ computes on $\vec{x}$.
+Such a machine is called a \textbf{universal Turing machine}%
+%%%
+\index{Turing machine!universal}%%
+%%%
+. The coding of Turing machines can
+be done as follows. We only use the letters {\tt a}, {\tt b} and
+{\tt c}, which are, of course, also contained in the alphabet $B$.
+Let $A = \{\mbox{\tt a}_i : i < n\}$. Then let $\gamma(\mbox{\tt
+a}_i)$ be the number $i$ in dyadic coding (over $\{\mbox{\tt
+a},\mbox{\tt b}\}$, where {\tt a} replaces {\tt 0} and {\tt b}
+replaces {\tt 1}). The number 0 is coded by {\tt a} to distinguish
+it from $\varepsilon$. Furthermore, we associate the number $n$
+with the blank, {\tt L}. The states are coded likewise; we assume
+that $Q = \{0, 1, \dotsc, n-1\}$ for some $n$ and that $q_0 = 0$.
+Now we still have to write down $f$. $f$ is a subset of
+%%
+\begin{equation}
+A_{\mbox{\smtt L}} \times Q \times A_{\mbox{\smtt L}} \times
+\{-1,0, 1\} \times Q 
+\end{equation}
+%%
+Each element $\auf a, q, b, m, r\zu$ of $f$ can be written down as
+%%
+\begin{equation}
+\vec{x} \conc \mbox{\tt c} \conc \vec{u} \conc \mbox{\tt c} \conc
+\vec{\mu} \conc \mbox{\tt c} \conc \vec{y} \conc \mbox{\tt c} \conc
+    \vec{v} \conc \mbox{\tt c} 
+\end{equation}
+%%
+where $\vec{x} = \gamma(a)$, $\vec{u} = Z^{-1}(q)$,
+$\vec{y} = \gamma(b)$, $\vec{v} = Z^{-1}(r)$.
+Further, we have $\vec{\mu} = \mbox{\tt a}$ if $m = -1$,
+$\vec{\mu} = \mbox{\tt b}$ if $m = 0$ and
+$\vec{\mu} = \mbox{\tt ab}$ if $m = 1$.
+Now we simply write down $f$ as a list, the entries being
+separated by {\tt cc}. (This is not necessary, but is easier to
+handle.) We call the code of $T$ $T^{\spadesuit}$. The set of
+all codes of Turing machines is decidable. (This is essential
+but not hard to see.) It should not be too hard to see that
+there is a machine $U$ with two tapes, which for two strings
+$\vec{x}$ and $\vec{y}$ does the following. If $\vec{y} =
+T^{\spadesuit}$ for some $T$ then $U$ computes on $\vec{x}$
+exactly as $T$ does. If $\vec{y}$ is not the code of a machine,
+$U$ moves into a special state and stops.
+
+Suppose that there is a Turing machine $V$ which decides for
+given $\vec{x}$ and $T^{\spadesuit}$ wether or not $\vec{x} \in L(T)$.
+Now we construct a two tape machine $W$ as follows. The input is
+$\vec{x}$, and it is given on both tapes. If $\vec{x} =
+T^{\spadesuit}$ for some $T$ then $W$ computes $T$ on $\vec{x}$.
+(This is done by emulating $V$.) If $T$ halts on $\vec{x}$,
+we send $W$ into an infinite loop. If $T$ does not halt,
+$W$ shall stop. (If $\vec{x}$ is not the code of a machine,
+the computation stops right away.) Now we have the following:
+$W^{\spadesuit} \in L(W)$ exactly if $W^{\spadesuit} \not\in
+L(W)$. For $W^{\spadesuit} \in L(W)$ exactly when $W$ stops
+if applied to $W^{\spadesuit}$. This however is the case exactly
+if $W$ does {\it not\/} stop. If on the other hand $W^{\spadesuit}
+\not\in L(W)$ then $W$ does not stop if applied to $W^{\spadesuit}$,
+which we can decide with the help of machine $V$, and then $W$
+does halt on the input  $W^{\spadesuit}$.  Contradiction. Hence,
+$V$ cannot exist. There is, then, no machine that can decide for
+any Turing machine (in code) and any input whether that machine
+halts on that string. It is still conceivable that this is
+decidable for every $T$, but that we simply do
+not know how to extract such an algorithm for given $T$.
+Now, in order to show that this too fails, we use the universal
+Turing machine $U$, in its single tape version. Suppose that $L(U)$
+is decidable.  Then we can decide whether $U$ halts on
+$\vec{x}\conc \mbox{\tt L}\conc T^{\spadesuit}$. Since $U$ 
+is universal, this means that we can decide for given $T$ and 
+given $\vec{x}$ whether $T$ halts on $\vec{x}$. We have seen 
+above that this is impossible.
+%%
+\nocite{markov:impossibility}%%
+\nocite{post:thue}%%
+%%
+\index{Post, Emil}%%
+\index{Markov, A.~A.}%%
+%%%
+\begin{thm}[Markov, Post]
+There is a recursively enumerable set which is not
+decidable. 
+\end{thm}
+%%
+So we also shown that the Type 1 languages are properly contained
+in the Type 0 languages. For it turns out that the Type 1
+languages are all decidable.
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+\begin{thm}[Chomsky]
+Every Type 1 language is decidable.
+\end{thm}
+%%
+\proofbeg
+Let $G$ be of Type 1 and let $\vec{x}$ be given. Put
+$n := |\vec{x}|$ and $\alpha := |A \cup N|$. If there
+is a derivation of $\vec{x}$ that has length $>
+\alpha^n$, there is a string that occurs twice in it,
+since all occurring strings must have length $\leq n$.
+Then there exists a shorter derivation for $\vec{x}$.
+So, $\vec{x} \in L(G)$ iff it has a
+$G$--derivation of length $\leq \alpha^n$. This is
+decidable.
+\proofend
+%%%
+\begin{cor}
+\label{0-1-echt}
+$\mbox{\rm CSL} \subsetneq \mbox{\rm GL}$.
+\end{cor}
+%%%
+Chomsky~\shortcite{chomsky:properties} credits Hilary Putnam 
+%%%
+\index{Putnam, Hilary}%%%
+%%%
+with the observation that not all decidable languages are of Type 1.
+Actually, we can give a characterization of context sensitive
+languages as well. Say that a Turing machine is \textbf{linearly
+space bounded} 
+%%%%
+\index{Turing machine!linearly space bounded}%%
+%%%%
+if given input $\vec{x}$ it may use only
+$O(|\vec{x}|)$ on each of its tapes. Then the following holds.
+%%%
+\nocite{myhill:lba}
+\nocite{landweber:three}
+\nocite{kuroda:classes}
+\index{Landweber, Peter S.}%%
+\index{Kuroda, S.--Y.}%%
+%%%
+\begin{thm}[Landweber, Kuroda]
+A language $L$ is context sensitive iff $L = L(T)$
+for some linear space bounded Turing machine $T$.
+\end{thm}
+%%
+The proof can be assembled from Theorem~\ref{thm:noncontracting}
+and the proof of Theorem~\ref{thm:typ0}.
+
+We briefly discuss so--called {\it word problems}. Recall from
+Section~\ref{kap1}.\ref{kap1-5} the definition of a Thue process $T$. Let
+$A$ be an alphabet. Consider the monoid $\GZ(A)$. The set of
+pairs $\auf s, t\zu \in A^{\ast} \times A^{\ast}$ such that
+$s \Pf^{\ast}_T t$ is a congruence on $\GZ(A)$. Denote the
+factor algebra by $\goth{Mon}(T)$. (One calls the pair 
+$\auf A, T\zu$ a \textbf{presentation} 
+%%%
+\index{presentation}%%%
+%%%
+of $\goth{Mon}(T)$.)
+It can be shown to be undecidable whether $\goth{Mon}(T)$ is
+the one element monoid. From this one deduces that it is
+undecidable whether or not $\goth{Mon}(T)$ is a finite
+monoid, whether it is isomorphic to a given finite monoid,
+and many more.
+
+Before we close this chapter we shall introduce a few measures for
+the complexity of computations. In what is to follow we shall
+often have to deal with questions of how fast and with how much
+space a Turing machine can compute a given problem.  Let $f \colon
+\omega \pf \omega$ be a function, $T$ a Turing machine which
+computes a function $g \colon A^{\ast} \pf B^{\ast}$. We say that $T$
+needs $O(f)$--\textbf{space} if there is a constant $c$ such that for
+all but finitely many $\vec{x} \in A^{\ast}$ there is a
+computation of an accepting configuration $q_t \conc g(\vec{x})$ 
+from $q_0 \conc \vec{x}$ in which every configuration has length 
+$\leq c \times f(|\vec{x}|)$. 
+For a multi tape machine we simply add the
+lengths of all words on the tapes. We say that $T$ needs
+$O(f)$--\textbf{time} if for almost all $\vec{x} \in A^{\ast}$ there
+is a $k \leq c \times f(|\vec{x}|)$ such that $q_0 \conc \vec{x}
+\vdash_T^{k} q_0 \conc g(\vec{x})$. We denote by $\mbox{\bf
+DSPACE}(f)$ ($\mbox{\bf DTIME}(f)$)  the set of all functions
+which for some $k$ are computable by a deterministic $k$--tape
+Turing machine in $O(f)$--space ($O(f)$--time). Analogously the
+notation $\mbox{\bf NSPACE}(f)$ and $\mbox{\bf NTIME}(f)$ is
+defined for nondeterministic machines. We always have
+%%
+\begin{equation}
+\mathbf{DTIME}(f) \subseteq \mathbf{NTIME}(f)
+\subseteq \mathbf{NSPACE}(f)
+\end{equation}
+%%
+as well as
+%%
+\begin{equation}
+\mathbf{DSPACE}(f) \subseteq \mathbf{NSPACE}(f) 
+\end{equation}
+%%
+For a machine can fill at most $k$ cells in $k$ steps, regardless 
+of whether it is deterministic or nondeterministic. This applies 
+as well to multi tape machines, since they can only write on one 
+cell and move one head at a time.
+
+The reason for not distinguishing  between the time complexity 
+$f(n)$ and the $cf(n)$ ($c$ a constant) is the following result.
+%%
+\begin{thm}[Speed Up Theorem]
+\label{thm:speedup}
+Let $f$ be a computable function and let $T$ be a Turing machine
+which computes $f(\vec{x})$  in at most
+$g(|\vec{x}|)$ steps (using at most $h(|\vec{x}|)$ cells) where
+$\inf_{n \pf \infty} g(n)/n = \infty$.
+Further, let $c$ be an arbitrary real number $> 0$. Then there
+exists a Turing machine $U$ which computes $f$ in at most
+$c \cdot g(|\vec{x}|)$ steps (using at most $c \cdot h(|\vec{x}|)$
+cells).
+\end{thm}
+%%
+The proof results from the following fact. In place of the original 
+alphabet $A_L$ we may introduce a new alphabet $B'_{L'} :=  A \cup B 
+\cup \{L'\}$, where each symbol from $B$ corresponds to a sequence 
+of length $k$ of symbols from $A_L$. The symbol $L'$ then corresponds 
+to $L^k$. The alphabet $A_L$ is still used for giving the input. The 
+new machine, upon receiving $\vec{x}$ recodes the input and calculates 
+completely inside $B'_L$.
+
+Since to each single letter corresponds a block of $k$
+letters in the original alphabet, the space requirement
+shrinks by the factor $k$. (However, we need to ignore the
+length of the input.) Likewise, the time is cut by a factor
+$k$, since one move of the head simulates up to $k$ moves.
+However, the exact details are not so easy to sum up.
+They can be found in \cite{hopcroftullman:formal}.
+
+Typically, one works with the following complexity classes.
+%%
+\begin{defn}
+%%%%
+\index{PTIME}\index{NP}\index{PSPACE}\index{EXPTIME}\index{NEXPTIME}%%
+%%%
+\textbf{PTIME} is the class of functions computable in
+deterministic polynomial time, \textbf{NP} the class
+of functions computable in nondeterministic polynomial
+time. \textbf{PSPACE} is the class of functions computable
+in polynomial space, \textbf{EXPTIME} (\textbf{NEXPTIME}) the
+class of functions computable in deterministic (nondeterministic)
+exponential time.
+\end{defn}
+%%
+\begin{defn}
+\label{defn:complang}
+A language $L \subseteq A^{\ast}$ is in a complexity class $\CP$
+iff $\chi_L \in \CP$.
+\end{defn}
+%%
+\mbox{}
+
+{\it Notes on this section.} In the mid 1930s, several people have
+independently studied the notion of feasibility. Alonzo Church
+%%%
+\index{Church, Alonzo}%%
+%%%
+and Stephen Kleene 
+%%%
+\index{Kleene, Stephen C.}%%%
+%%%
+have defined the notion of $\lambda$--definablity 
+and of a general recursive function, Emil Post and Alan Turing
+%%%
+\index{Post, Emil}\index{Turing, Alan}%%%
+%%%
+the notion of computability by a certain machine, now called the
+Turing machine. All three notions can be shown to identify the
+same class of functions, as these people have subsequently shown.
+It is known as Church's Thesis that these are all the functions that
+humans can compute, but for the purpose of this book it is
+irrelevant whether it is correct. We shall define the
+$\lambda$--calculus later in Chapter~\ref{kap3}, without
+going into the details alluded to here, however. It is to be 
+kept in mind that the Turing machine is a physical device. 
+Hence, its computational capacities depend on the structure of 
+the space--time continuum. This is not any more a speculation. 
+Quantum computing exploits the different physical behaviour of 
+quantum physics to do parallel computation. This radically 
+changes the time complexity of problems (see
+\cite{deutschetal:machines}). This asks us to be cautious 
+not to attach too much significance to complexity 
+results in connection with human behaviour since we do not know 
+too well how the brain works. 
+%
+\vplatz
+\exercise
+Construct a Turing machine which computes the lexicographic
+predecessor of a string, and which returns $\varepsilon$ for
+input $\varepsilon$.
+%%
+\vplatz
+\exercise
+Construct a Turing machine which, given a list of strings 
+(each string  separated from the next by a single blank),
+moves the first string onto the end of the list.
+%%
+\vplatz
+\exercise
+Let $T$ be a Turing machine over $A$. Show how to write a Turing 
+machine over $\{\mbox{\tt 0}, \mbox{\tt 1}\}$ which computes the
+same partial function over $A$ under a coding that
+assigns each letter of $A$ a unique block of fixed length.
+%%
+\vplatz
+\exercise
+\label{ex:oneside}
+In many definitions of a Turing machine the tape is only
+one sided. Its cells can be numbered by natural
+numbers. This requires the introduction
+of a special symbol {\tt \#} that marks the left end
+of the tape, or of a predicate {\sf left-end}, which is
+true each time the head is at the left end of the tape.
+The transitions are different depending on whether the
+machine is at the left end of the tape or not.
+(There is an alternative, namely to stop the computation
+once that the left end is reached, but this is not recommended.
+Such a machine can compute only very uninteresting functions.)
+Show that for a Turing machine with a one sided tape
+there is a corresponding Turing machine in our sense computing
+the same function, and that for each Turing machine in our sense
+there is a one sided machine computing the same function.
+%%
+\vplatz
+\exercise
+Prove Lemma~\ref{lem:bij}. {\it Hint.} Show first that it is
+enough to look at the case $|A| = 1$.
+%%
+\vplatz
+\exercise
+Show that $L \subseteq A^{\ast}$ is decidable iff 
+$\chi_L : A^{\ast} \pf \{\mbox{\tt 0}, \mbox{\tt 1}\}$ 
+is computable.
+%%
+%\vplatz
+%\exercise
+%Show that context sensitive languages are in {\bf PSPACE}.

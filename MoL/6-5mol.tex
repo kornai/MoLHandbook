@@ -1,0 +1,935 @@
+\section{Transformational Grammar}
+\label{kap5-5}
+%
+%
+%
+In this section we shall discuss the so--called
+\textbf{Transformational Grammar}, or \textbf{TG}.
+%%%%
+\index{Transformational Grammar}%%
+\index{TG (see Transformational Grammar)}%%
+%%%%%
+Transformations have been introduced by Zellig Harris. They were
+operations that change one syntactic structure into another
+without changing the meaning. The idea to use transformations 
+has been adopted by Noam Chomsky, who developed a very rich
+theory of transformations. Let us look at a simple example, 
+a phenomenon known as \textbf{topicalization}.
+%%
+\index{topicalisation}%%
+%%
+\index{English}%%%
+%%
+\begin{align}
+\label{ex:651} & \mbox{\tt Harry likes trains.} \\
+\label{ex:652} & \mbox{\tt Trains, Harry likes.} 
+\end{align}
+%%
+We have two different English sentences, of which the first is in
+normal serialization, namely SVO, and the second in OSV order.
+In syntactic jargon we say that in the second sentence the
+object has been topicalized. (The metaphor is by the way a
+dynamic one. Speaking statically, one would prefer to express that
+differently.) The two sentences have different uses and
+probably also different meanings, but the meaning difference
+is hard to establish. For the present discussion this is however
+not really relevant.  A transformation is a rule that allows us
+for example to transform \eqref{ex:651} into \eqref{ex:652}.
+Transformations have the form $\mbox{\rm SD} \Longrightarrow
+%%%
+\index{structural description}%%
+\index{structural change}%%
+%%%
+\mbox{\rm SC}$. Here {\rm SD} stands for \textbf{structural
+description} and {\rm SC} for \textbf{structural change}. The rule
+\textbf{TOP}, for \textbf{topicalization}, may be formulated as follows.
+%%
+\begin{equation}
+\label{eq:trans}
+\mbox{\rm NP$_1$ V NP$_2$ Y} \Longrightarrow
+    \mbox{\rm NP$_2$ NP$_1$ V Y}
+\end{equation}
+%%
+This means the following. If a structure can be decomposed into an
+NP followed by a V and a second NP followed in turn by an arbitrary 
+string, then the rule may be applied. In that case it moves the 
+second NP to the position immediately to the left of the first NP. 
+Notice that Y is a variable for arbitrary strings while NP and V are 
+variables for constituents of category NP and V, respectively. Since 
+a string can possess several NPs or Vs we must have for every
+category a denumerable set of variables. Alternatively, we may
+write $[W]_{\text{NP}}$. This denotes an arbitrary string
+which is an NP--constituent. We agree that \eqref{eq:trans} can 
+also be applied to a subtree of a tree (just as the string replacement 
+rules of Thue--processes apply to substrings).  
+
+Analogously, we may formulate also the reversal of this rule:
+%%
+\begin{equation}
+\mbox{\rm NP$_2$ NP$_1$ V Y} \Longrightarrow
+    \mbox{\rm NP$_1$ V NP$_2$ Y}
+\end{equation}
+%%
+However, one should be extremely careful with such rules. They
+often turn out to be too restrictive and often also too liberal.
+Let us look again at \textbf{TOP}. As formulated, it cannot be
+applied to \eqref{ex:653} and \eqref{ex:655}, even though
+topicalization is admissible, as \eqref{ex:654} and
+\eqref{ex:656} show.
+%%%
+\begin{align}
+\label{ex:653} & \mbox{\tt Harry might like trains.} \\
+\label{ex:654} & \mbox{\tt Trains, Harry might like.} \\
+\label{ex:655} & \mbox{\tt Harry certainly likes trains.} \\
+\label{ex:656} & \mbox{\tt Trains, Harry certainly likes.}
+\end{align}
+%
+The problem is that in the SD {\rm V} only stands for the verb,
+not for the complex consisting of the verb and the auxiliaries.
+So, we have to change the SD in such a way that it allows the
+examples above. Further, it must not be disturbed by eventually
+intervening adverbials.
+
+German exemplifies a construction which is one of  
+the strongest arguments in favour of transformations, namely the 
+so--called V2--phenomenon. In German, the verb is at the end of the
+clause if that clause is subordinate. In a main clause, however,
+the part of the verb cluster that carries the inflection is
+moved to second position in the sentence. Compare the following
+sentences.
+%%
+\begin{align}
+\label{ex:657} & \dotsc,\mbox{\tt da{\ss} Hans sein Auto repariert.} \\\notag
+                & \mbox{..., that Hans his car repairs.} \\
+\label{ex:658} & \mbox{\tt Hans repariert sein Auto.} \\\notag
+                & \mbox{Hans repairs his car.} \\
+\label{ex:659} & \dotsc,\mbox{\tt da{\ss} Hans nicht in die Oper %
+gehen will.} \\\notag
+                & \mbox{..., that Hans not into the opera go wants.} \\
+\label{ex:6510} & \mbox{\tt Hans will nicht in die Oper gehen.} \\\notag
+                & \mbox{Hans wants not into the opera go.} \\
+\label{ex:6511} & \dotsc,\mbox{\tt da{\ss} Hans im Unterricht %
+selten aufpa{\ss}t.} \\\notag
+                 & \mbox{..., that Hans in class rarely %
+{\sc pref}--attention.pay.} \\
+\label{ex:6512} & \mbox{\tt Hans pa{\ss}t im Unterricht selten auf.} \\\notag
+                 & \mbox{Hans attention.pay in class rarely {\sc pref}.}
+\end{align}
+%%
+As is readily seen, the auxiliaries and the verb are together in the
+subordinate clause, in the main clause the last of the series
+(which carries the inflection) moves into second place.  Furthermore,
+as the last example illustrates, it can happen that certain
+prefixes of the verb are left behind when the verb moves.
+In transformational grammar one speaks of
+%%%%%
+\index{V2--movement}%%%
+%%%%%
+\textbf{V2--movement}. This is a transformation that takes the
+inflection carrier and moves it to second place in a main clause.
+A similar phenomenon is what might be called \textbf{damit}- or 
+%%%
+\index{damit--split}%%%
+\textbf{davor--split}, which is found mainly in northern Germany.
+%%%
+\index{German}%%%
+%%
+\begin{align}
+\label{ex:6513} & \mbox{\tt Da hat er mich immer vor gewarnt.} \\\notag
+                 & \mbox{{\sc da} has he me always {\sc vor} warned.} \\\notag
+                 & \mbox{\it He has always warned me of that.} \\
+\label{ex:6514} & \mbox{\tt Da konnte ich einfach nicht mit rechnen.} \\\notag
+                 & \mbox{{\sc da} could I simply not {\sc mit} reckon.} \\\notag
+                 & \mbox{\it I simply could not reckon with that.} 
+\end{align}
+%%
+We leave it to the reader to picture the complications that arise
+when one wants to formulate the transformations when V2--move\-ment
+and {\rm damit}- or {\rm davor}--split may operate. Notice also
+that the order of application of these rules must be reckoned
+with.
+
+A big difference between V2--movement and {\rm damit}--split is
+that the latter is optional and may apply in subordinate clauses,
+while the former is obligatory and restricted to main clauses.
+%%
+\begin{align}
+\label{ex:6515} & \mbox{\tt Er hat mich immer davor gewarnt.} \\
+\label{ex:6516} & ^{\ast}\mbox{\tt Er mich immer davor gewarnt hat.} \\
+\label{ex:6517} & \mbox{\tt Ich konnte einfach nicht damit rechnen.} \\
+\label{ex:6518} & ^{\ast}\mbox{\tt Ich damit einfach nicht rechnen konnte.}
+\end{align}
+%%
+In \eqref{ex:6516} we have reversed the effect of both transformations
+of \eqref{ex:6513}. The sentence is ungrammatical. If we only apply
+V2--movement, however, we get \eqref{ex:6515}, which is grammatical.
+Likewise for \eqref{ex:6518} and \eqref{ex:6517}. In contrast to
+Harris, Chomsky 
+%%%
+\index{Harris, Zellig S.}%%%
+\index{Chomsky, Noam}%%
+%%%
+did not construe transformations as mediating between
+grammatical sentences (although also Harris did allow to pass through
+illegitimate structures). He insisted that there is a two layered
+process of generation of structures. First, a simple grammar
+(context free, preferrably) generates so--called \textbf{deep structures}.
+%%%%
+\index{deep structure}%%
+%%%%
+These deep structures may be seen as the canonical
+representations, like Polish Notation or infix notation, where the
+meaning can be read off immediately. However, these structures may
+not be legitimate objects of the language. For example, at deep
+structure, the verb of a German sentence appears in final position
+(where it arguably belongs) but alas these sentences are not
+grammatical as main clauses. Hence, transformations must apply.
+Some of them apply optionally, for example {\rm damit}- and {\rm
+davor}--split, some obligatorily, for example V2--movement. At the
+end of the transformational cycle stands the \textbf{surface
+structure}.
+%%%%
+\index{surface structure}%%
+\index{derivation}%%
+%%%%
+The second process is also called (somewhat ambiguously) 
+\textbf{derivation}. The split between these two processes has its
+advantages, as can be seen in the case of German. For if we assume
+that the main clause is not the deep structure, but derived from a
+deep structure that looks like a surface subordinate clause, the
+entire process for generating German sentences is greatly
+simplified. Some have even proposed that all languages have
+universally the same deep structure, namely SVO in 
+\cite{kayne:antisymmetry}; or right branching, allowing 
+both SVO and SOV deep structure. The latter has been defended 
+in \cite{haider:branching} (dating from 1991) and 
+\cite{haider:downright,haider:extraposition}. Since
+the overwhelming majority of languages belongs to either of these
+types, such claims are not without justification. The differences
+that can be observed in languages are then caused not by the first
+process, generating the deep structure, but entirely by the
+second, the transformational component. However, as might be
+immediately clear, this is on the one hand theoretically possible
+but on the other hand difficult to verify empirically. Let us look
+at a problem. In German, the order of nominal constituents is free
+(within bounds).
+%%%%%
+\begin{align}
+\label{ex:6519} & \mbox{\tt Der Vater schenkt dem Sohn einen Hund.} \\
+\label{ex:6520} & \mbox{\tt Einen Hund schenkt der Vater dem Sohn.} \\
+\label{ex:6521} & \mbox{\tt Dem Sohn schenkt der Vater einen Hund.} \\
+\label{ex:6522} & \mbox{\tt Dem Sohn schenkt einen Hund der Vater.} \\\notag
+                 & \mbox{\it The father gives a dog to the son.}
+\end{align}
+%%
+How can we decide which of the serializations are generated at
+deep structure and which ones are not? (It is of course conceivable
+that all of them are deep structure serializations and even that
+none of them is.) This question has not found a satisfactory
+answer to date. The problem is what to choose as a diagnostic tool
+to identify the deep structure. In the beginning of
+transformational grammar it was thought that the meaning of a
+sentence is assigned at deep structure. The transformations are
+not meaning related, they only serve to make the structure
+`speakable'. This is reminiscent of Harris' idea that
+transformations leave the meaning invariant, the only difference
+being that Harris' conceived of transformations as mediating
+between sentences of the language. Now, if we assume this then
+different meanings in the sentences suffice to establish that the
+deep structures of the corresponding sentences are different,
+though we are still at a loss to say which sentence has which deep
+structure. Later, however, the original position was given up (on
+evidence that surface structure did contribute to the meaning in
+the way that deep structure did) and a new level was introduced,
+the so--called \textbf{Logical Form} (\textbf{LF}),
+%%%%%
+\index{logical form}%%
+%%%%%
+which was derived from surface structure by means of further
+transformations. We shall not go into this, however. Suffice it
+to say that this increased even more the difficulty in establishing
+with precision the deep structure(s) from which a given sentence
+originates.
+
+Let us return to the sentences \eqref{ex:6519} --
+\eqref{ex:6522}. They are certainly not identical.
+\eqref{ex:6519} sounds more neutral, \eqref{ex:6521} and
+\eqref{ex:6520} are somewhat marked, and \eqref{ex:6522} finally
+is somewhat unusual. The sentences also go together with different
+stress patterns, which increases the problem here somewhat.
+However, these differences are not exactly semantical, and indeed
+it is hard to say what they consist in.
+
+Transformational grammar is very powerful. Every recursively
+enumerable language can be generated by a relatively simple
+TG. This has been shown by Stanley Peters and R.~Ritchie 
+\shortcite{petersritchie:base,petersritchie:power}.
+In  the exercises the reader is asked to prove a variant of these
+theorems. The transformations that we have given above are
+problematic for a simple reason. The place from which material
+has been moved is lost. The new structure is actually not
+distinguishable from the old one. Of course, often we can know
+what the previous structure was, but only when we know which
+transformation has been applied. However, it has been observed
+that the place from which an element has been moved influences
+the behaviour of the structure. For example, Chomsky 
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+has argued that {\tt want to} can be contracted to {\tt wanna} in 
+American English; 
+%%%
+\index{English}%%%
+%%%
+however, this happens only if no element has been placed 
+between {\tt want} and {\tt to} during the derivation. For 
+example, contraction is permitted in \eqref{ex:6524},
+in \eqref{ex:6526} however it is not, since {\tt the man} was
+the subject of the lower infinitive (standing to the left of
+the verb), and had been raised from there.
+%%%
+\begin{align}
+\label{ex:6523} & \mbox{\tt We want to leave.} \\
+\label{ex:6524} & \mbox{\tt We wanna leave.} \\
+\label{ex:6525} & \mbox{\tt This is the man we want to leave us alone.} \\
+\label{ex:6526} & ^{\ast}\mbox{\tt This is the man we wanna leave us alone.}
+\end{align}
+%%
+The problem is that the surface structure does not know that the
+element {\tt the man} has once been in between {\tt want} and {\tt
+to}. Therefore, one has assumed that the moved element leaves
+behind a so--called \textbf{trace}, written $t$.
+%%%
+\index{trace}%%
+%%%%
+For other reasons the trace also got an index, which is a natural
+number, the same one that is given to the moved element (=
+antecedent of the trace). So, \eqref{ex:652} `really' looks like
+this.
+%%
+\begin{equation}
+\label{ex:6527} \mbox{\tt Trains$_1$, Harry likes $t_1$.}
+\end{equation}
+%%
+We have chosen the index $1$ but any other would have done equally
+well. The indices as well as the $t$ are not audible, and they
+are not written either (except in linguistic textbooks, of course).
+Now the surface structure contains traces and is therefore markedly
+different from what we actually hear or read. Whence one assumed
+--- finally --- that there is a further process turning a surface
+structure into a pronounceable structure, the so--called 
+\textbf{Phonological Form} (\textbf{PF}).
+%%%%%
+\index{Phonological Form}%%
+%%%%%
+PF is nothing but the phonological representation of the sentence.
+On PF there are no traces and no indices, no (or hardly any)
+constituent brackets.
+
+One of the most important arguments in favour of traces and the
+instrument of coindexing was the distribution of pronouns.
+In the theory one distinguishes
+%%%%%
+\index{referential expression}%%
+\index{anaphor}%%
+%%%%%
+\textbf{referential expressions} (like {\tt Harry} or {\tt the
+train}) from \textbf{anaphors}. To the latter belong pronouns ({\tt
+I}, {\tt you}, {\tt we}) as well as reflexive pronouns ({\tt
+oneself}). The distribution of these three is subject to certain
+rules which are regulated in part by structural criteria.
+%%%
+\begin{align}
+\label{ex:6528} & \mbox{\tt Harry likes himself.} \\
+\label{ex:6529} & \mbox{\tt Harry believed that John was responsible
+    for} \\\notag
+	& \quad \mbox{\tt himself.} \\
+\label{ex:6530} & \mbox{\tt Harry believed to be responsible for himself.}
+\end{align}
+%%
+{\tt Himself} is a subject--oriented anaphor. Where it appears, it
+refers to the subject of the same sentence. Semantically, it is
+interpreted as a variable which is identical to the variable of the
+subject. As \eqref{ex:6529} shows, the domain of a reflexive ends
+with the finite sentence. The antecedent of {\tt himself} must be
+taken to be John, not Harry. Otherwise, we would have to have {\tt
+him} in place of {\tt himself}. \eqref{ex:6530} shows that
+sometimes also phonetically empty pronouns can appear. In other
+languages they are far more frequent (for example in 
+%%%
+\index{Latin}%%%
+%%%
+Latin or in
+%%%
+\index{Italian}%%
+%%%
+Italian). Subject pronouns may often be omitted. One says that
+these languages have an empty pronoun, called {\rm pro} (`little
+PRO').
+%%%
+\index{little pro}%%
+%%%
+Additionally to the question of the subject also structural factors
+are involved.
+%%
+\begin{align}
+\label{ex:6531} & \mbox{\tt Nat was driving his car and Peter, too.} \\
+\label{ex:6532} & \mbox{\tt His car made Nat happy  and Peter, too.}
+\end{align}
+%%
+We may understand \eqref{ex:6531} in two ways: either Peter
+was driving his (= Peter's) car or Nat's car.
+\eqref{ex:6532} allows only one reading (on condition that `his' refers 
+to Nat, which it does not have to): Peter was happy
+about Nat's car, not Peter's. This has arguably nothing to do
+with semantical factors, but only with the fact that in the
+first sentence, but not in the second, the pronoun is bound
+by its antecedent. Binding is defined as follows.
+%%%
+\begin{defn}
+%%%
+\index{binding}%%
+%%%
+Let $\GT$ be a tree with labelling $\ell$. $x$ \textbf{binds} $y$ if
+(a) the smallest branching node that properly dominates
+$x$ dominates $y$, but $x$ does not dominate $y$, and
+(b) $x$ and $y$ carry the same index.
+\end{defn}
+%%%
+The structural condition (a) of the definition is called
+\textbf{c--command}.
+%%%
+\index{c--command}%%
+%%%
+(A somewhat modified definition is found below.) The antedecent
+c--commands the pronoun in case of binding. In \eqref{ex:6531}
+the pronoun {\tt his} is c--commanded by {\tt Nat}. For the
+smallest constituent properly containing {\tt Nat} is the
+entire sentence. In \eqref{ex:6532} the pronoun {\tt his} is not
+c--commanded by {\tt Nat}. (This is of course not entirely clear
+and must be argued for independently.)
+
+There is a rule of distribution for pronouns that is as follows:
+the reflexive pronoun has to be bound by the subject of the
+sentence. A nonreflexive pronoun however may not be bound
+by the subject of the sentence. This applies to German as well
+as to English. Let us look at \eqref{ex:6533}.
+%%%%%
+\begin{equation}
+\label{ex:6533} \mbox{\tt Himself, Harry likes.}
+\end{equation}
+%%%%%
+If this sentence is grammatical, then binding is computed not only
+at surface structure but at some other level. For the pronoun {\tt
+himself} is not c--commanded by the subject {\tt Harry}. The
+structure that is being assumed is [{\tt Himself} [{\tt Harry
+likes}]]. Such consideration have played a role in the
+introduction of traces. Notice however that none of the conclusions
+is inevitable. They are only inevitable moves within a certain 
+theory (because it makes certain assumptions). It has to be 
+said though that binding was {\it the\/} central diagnostic tool 
+of transformational grammar. Always if it was diagnosed that there
+was no c--command relation between an anaphor and some element one
+has concluded that some movement must have taken place from a
+position, where c--command still applied.
+
+In the course of time the concept of transformation has undergone
+revision. TG allowed deletions, but only if they were recoverable: this
+means that if one has the output structure and the name of the
+transformation that has been applied one can reconstruct the input
+structure. (Effectively, this means that the transformations are
+partial injective functions.) In the so--called \textbf{Theory of
+Government and Binding} (\textbf{GB})
+%%%%
+\index{GB (see Theory of Government and Binding)}%%
+\index{Theory of Government and Binding}%%
+\index{Chomsky, Noam}%%%
+%%%%
+Chomsky has banned deletion altogether from the list of options.
+The only admissible transformation was movement, which was
+later understood as copy and delete (which in effect had the
+same result but was theoretically a bit more elegant).
+The movement transformation was called \textbf{Move}--$\alpha$
+%%%
+\index{Move--$\alpha$}%%%
+%%%
+and allowed to move any element anywhere (if only the landing site
+had the correct syntactic label). Everything else was regulated by
+conditions on the admissibility of structures.
+
+Quite an interesting complication arose in the form of the
+so--called \textbf{parasitic gaps}.
+%%%
+\index{parasitic gap}%%
+%%%
+\begin{equation}
+\label{ex:6534} \mbox{\tt Which papers did you file without reading?}
+\end{equation}
+%%%
+We are dealing here with two verbs, which share the same direct object
+({\tt to file} and {\tt to read}). However, at deep structure only
+one them could have had the overt object phrase {\tt which papers} as
+its object and so at deep structure we either had something like
+\eqref{ex:6535} or something like \eqref{ex:6536}.
+%%%
+\begin{align}
+\label{ex:6535} & \mbox{\tt you did file which papers without reading?} \\
+\label{ex:6536} & \mbox{\tt you did file without reading which papers?}
+\end{align}
+%%%
+It was assumed that essentially \eqref{ex:6535} was the deep structure
+while the verb {\tt to read} (in its form {\tt reading}, of course)
+just got an empty coindexed object.
+%%%
+\begin{equation}
+\label{ex:6537} \mbox{\tt you did file which papers$_1$ without reading $e_1$?}
+\end{equation}
+%%%
+However, the empty element is not bound in this configuration.
+English does not allow such structures. The transformation that
+moves the wh--constituent at the beginning of the sentence however
+sees to it that a surface structure the pronoun is bound. This
+means that binding is not something that is decided at deep
+structure alone but also at surface structure. However, it cannot
+be one of the levels alone (see \cite{frey:bedingungen}). We
+have just come to see that deep structure alone gives the wrong
+result. If one replaces {\tt which papers} by {\tt which paper
+about yourself} then we have an example in which the binding
+conditions apply neither exclusively at deep structure nor
+exclusively at surface structure. And the example shows that
+traces form an integral part of the theory.
+
+A plethora of problems have since appeared that challenged the view and
+the theory had to be revised over and over again in order to cope
+with them. One problem area were the quantifiers and their scope.
+In German, 
+%%%
+\index{German}%%%
+%%%
+quantifiers have scope more or less as in the surface
+structure, while in English 
+%%%
+\index{English}%%%
+%%%
+matters are different (not to mention
+other languages here). Another problem is coordination. In a
+coordinative construction we may intuitively speaking delete
+elements. However, deletion is not an option any more.  So, one
+has to assume that the second conjunct contains empty elements,
+whose distribution must be explained. The deep structure of
+\eqref{ex:6538} is for example \eqref{ex:6539}. For many
+reasons, \eqref{ex:6540} or \eqref{ex:6541} would however
+be more desirable.
+%%%%
+\begin{align}
+\label{ex:6538} & \mbox{\tt Karl hat Maria ein Fahrrad gestohlen und
+    Peter} \\\notag
+	& \quad \mbox{\tt ein Radio.} \\\notag
+    & \mbox{Karl has Maria a bicycle stolen and Peter a radio.} \\\notag
+        & \mbox{\it Karl has stolen a bicycle from Maria and %
+	a radio from Peter.} \\
+\label{ex:6539} & \mbox{\tt Karl$_1$ Maria ein Fahrrad}\; [\mbox{\tt
+    gestohlen hat}]_2 \\\notag
+    & \quad \mbox{\tt und}\; e_1\; \mbox{\tt Peter ein Radio $e_2$.} \\
+\label{ex:6540} & \mbox{\tt Karl}\; [[\mbox{\tt Maria ein Fahrrad}] 
+	\;\mbox{\tt und}\; [\mbox{\tt Peter ein Auto}]] \\\notag
+	& \quad \mbox{\tt gestohlen hat.} \\
+\label{ex:6541} & \mbox{\tt Karl}\; 
+	[[\mbox{\tt Maria ein Fahrrad gestohlen hat}]\\\notag
+    & \quad 
+	\mbox{\tt und}\; [\mbox{\tt Peter ein Radio gestohlen hat.}]]
+\end{align}
+%%
+We shall conclude this section with a short description of GB. It is 
+perhaps not an overstatement to say that GB has been the most popular 
+variant of TG, so that it is perhaps most fruitful to look at this 
+theory rather than previous ones (or even the subsequent 
+\textbf{Minimalist Program}).  
+%%%
+\index{Minimalist Program}%%%
+%%%
+GB is divided into several subtheories, so--called
+%%%
+\index{module}%%
+%%%
+\textbf{modules}. Each of the modules is responsible for its
+particular set of phenomena. There is
+%%%%
+\begin{dingautolist}{192}
+\item Binding Theory,
+\item the ECP (Empty Category Principle),
+\item Control Theory,
+\item Bounding Theory,
+\item the Theory of Government,
+\item Case Theory,
+\item $\Theta$--Theory,
+\item Projection Theory.
+\end{dingautolist}
+%%%%
+The following four  levels of representation were distinguished.
+%%%
+\begin{dingautolist}{202}
+\item D--Structure (formerly {\it deep structure\/}),
+\item S--Structure (formerly {\it surface structure\/}),
+\item Phonetic Form (PF) and
+\item Logical Form (LF).
+\end{dingautolist}
+%%%%
+There is only one transformation, called \textbf{Move}--$\alpha$. It
+takes a constituent of category $\alpha$ ($\alpha$ arbitrary) and
+moves it to another place either by putting it in place of an
+empty constituent of category $\alpha$ (substitution) or by
+adjoining it to a constituent. Binding Theory however requires
+that trace always have to be bound, and so movement always is into
+a position c--commanding the trace. Substitution is defined as
+follows. Here $X$ and $Y$ are variables for strings $\alpha$ and
+$\gamma$ category symbols. $i$ is a variable for a natural number.
+It is part of the representation (more exactly, it is part of the
+label, which we may construe as a pair of a category symbol and a
+set of natural numbers). $i$ may occur in the left hand side (SC) 
+namely, if it figures in the label $\alpha$.  So, if 
+$\alpha = \auf C, I\zu$, $C$ a category label and $I \subseteq 
+\omega$, $\alpha \oplus i := \auf C, I \cup \{i\}\zu$.
+%%%
+\begin{equation}
+\mbox{\rm Substitution:} \quad
+    [X\; [e]_{\alpha}\; Y\; [Z]_{\alpha}\; W] 
+    \Longrightarrow
+    [X\; [Z]_{\alpha\oplus i}\; Y\; [t_i]_{\alpha}\; W]
+\end{equation}
+%%%
+Adjunction is the following transformation.
+%%%
+\begin{equation}
+\mbox{\rm Adjunction:}\quad
+    [X\; [Y]_{\alpha}\; Z]_{\gamma} \Longrightarrow
+        [[Y]_{\alpha\oplus i}\; [X\; [t_i]_{\alpha}\; Z]_{\gamma}]_{\gamma}
+\end{equation}
+%%%%
+Both rules make the constituent move leftward. Corresponding rightward 
+rules can be formulated analogously. (In present day theory it is 
+assumed that movement is always to the left. We shall not go into this, 
+however.) In both cases the constituent on the right hand side,
+%%%
+\index{antecedent}%%
+\index{trace}%%
+%%%
+$[X]_{\alpha \oplus i}$, is called the \textbf{antecedent} of the
+trace, $t_i$. This terminology is not arbitrary: traces in GB are
+considered as anaphoric elements. In what is to follow we shall
+not consider adjunction since it leads to complications that
+go beyond the scope of this exposition. For details we refer 
+to \cite{kracht:adjunction}. For the understanding of the
+basic techniques (in particular with respect to
+Section~\ref{kap5}.\ref{kap5-7}) it is enough if we look at substitution.
+
+As in TG, the D--structure is generated first. How this is done
+is not exactly clear. Chomsky 
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+assumes in \shortcite{chomsky:lgb} that
+it is freely generated and then checked for conformity with the
+principles. Subsequently, the movement transformation operates
+until the conditions for an S--structure are satisfied. Then a
+copy of the structure is passed on to the component which transforms
+it into a PF. (PF is only a level of representation, therefore
+there must be a process to arrive at PF.) For example,
+symbols like $t_i$, $e$, which are empty, are deleted together
+with all or part of the constituent brackets. The original structure
+meanwhile is subjected to another transformational process
+until it has reached the conditions of Logical Form and is
+directly interpretable semantically. Quantifiers appear in their
+correct scope at LF. This model is also known as the 
+%%%
+\index{T--model}
+%%%
+\textbf{T--model}.
+
+We begin with the phrase structure, which is conditioned by the
+theory of projection. The conditions of theory of projection must
+in fact be obeyed at all levels (with the exception of PF).
+This theory is also known as
+%%%%
+\index{$\oli{X}$--syntax}%%
+%%%%
+$\oli{X}$--\textbf{syntax}. It differentiates between simple
+categorial labels (for example V, N, A, P, I and C, to name the
+most important ones) and a level of projection. The categorial
+labels are either
+%%%
+\index{category!lexical}%%
+\index{category!functional}%%
+%%%%
+\textbf{lexical} or \textbf{functional}. Levels of projection are natural
+numbers, starting with 0. The higher the number the higher the level.
+In the most popular version one distinguishes exactly 3 levels
+for all categories (while in \cite{jackendoff:xbar} it was 
+originally possible to specify the numbers of levels for each 
+category independently).
+The levels are added to the categorial label as superscripts.
+So $\mbox{\rm N}^2$ is synonymous with
+%%
+\begin{equation}
+\left[\begin{array}{l@{\quad : \quad}l}
+    \mbox{\sc cat} & \mbox{\rm N} \\
+    \mbox{\sc proj} & 2
+    \end{array}\right]
+\end{equation}
+%%
+If X is a categorial symbol then XP is the highest projection. In
+our case NP is synonymous with $\mbox{\rm N}^2$. The rules are at
+most binary branching. The non--branching rules are
+%%
+\begin{equation}
+X^{j+1} \pf X^j
+\end{equation}
+%%
+\index{head}%%
+%%%%
+$\mbox{\rm X}^j$ is the \textbf{head of} $\mbox{\rm X}^{j+1}$. There
+are, furthermore, the following rules:
+%%
+\begin{equation}
+X^{j+1} \pf X^j\quad \mbox{\rm YP},
+\qquad X^{j+1} \pf \mbox{\rm YP}\quad X^j
+\end{equation}
+%%
+\index{complement}%%
+\index{specifier}%%
+%%%%%
+Here, {\rm YP} is called the \textbf{complement} of $\mbox{\rm X}^j$
+if $j = 0$, and the \textbf{specifier} if $j = 1$.  Finally, we have
+these rules.
+%%
+\begin{equation}
+X^j \pf X^j\quad \mbox{\rm YP},
+\qquad X^j \pf \mbox{\rm YP}\quad X^j
+\end{equation}
+%%
+\index{adjunct}%%
+%%%%
+Here {\rm YP} is called the \textbf{adjunct of} $X^j$. The last rules
+create a certain difficulty. We have two occurrences of the symbol
+$\mbox{\rm X}^j$. This motivated the distinction between a
+%%%
+\index{category}%%
+\index{segment}%%
+%%%%
+\textbf{category} (= connected sets of nodes carrying the same label)
+and \textbf{segments} thereof.
+The complications that arise from this definition have been widely
+used by Chomsky in \shortcite{chomsky:barriers}. The relation
+\textbf{head of} is transitive. Hence $x$ with category $\mbox{\rm N}^i$
+is the head of $y$ with $\mbox{\rm N}^j$, if all nodes $z$ with
+$x < z < y$ have category $\mbox{\rm N}^k$ for some $k$.
+By necessity, we must have $i \leq k \leq j$.
+
+Heads possess in addition to their category label also a
+%%%
+\index{subcategorization frame}%%
+%%%
+\textbf{subcategorization frame}. This frame determines which 
+arguments the head needs and to which arguments it assigns case 
+and/or a $\theta$--role. $\theta$--roles are needed to recover 
+an argument in the semantic representation. For example, there 
+are roles for \textbf{agent}, \textbf{experiencer}, \textbf{theme}, 
+\textbf{instrument} and so on. These are coded by suggestive names 
+such as $\theta_a$, $\theta_e$, $\theta_{th}$, $\theta_{inst}$, and so on.  
+{\tt see} gets for example the following subcategorization frame.
+%%%
+\begin{equation}
+\mbox{\tt see}: \qquad \auf \mbox{\rm NP}[\theta_e], \mbox{\rm
+NP}[\mbox{\sc acc}, \theta_{th}]\zu
+\end{equation}
+%%
+It is on purpose that the verb does not assign case to its subject.
+It only assigns a $\theta$--role. The case is assigned only by
+virtue of the verb getting the finiteness marker. The subcategorization
+frames dictate how the local structure surrounding a head looks
+%%%
+\index{licensing}%%
+%%%
+like. One says that the head \textbf{licenses} nodes in the deep
+structure, namely those which correspond to entries of its
+subcategorization frame. It will additionally determine that
+certain elements get case and/or a $\theta$--role. Case- and
+$\Theta$--Theory determine which elements need
+case/$\theta$--roles and how they can get them from a head.
+%%%
+\index{argument!internal}%%
+\index{argument!external}%%
+%%%%
+One distinguishes between \textbf{internal} and \textbf{external
+arguments}. There is at most one external argument, and it is
+signalled  in the frame by underlining it. It is found at deep
+structure outside of the maximal projection of the head (some
+theorists also think that it occupies the specifier of the
+projection of the head, but the details do not really matter
+here). Further, only one of the internal arguments is a
+complement. This is already a consequence of $\oli{X}$--syntax;
+the other arguments therefore have to be adjuncts at D--structure.
+
+One of the great successes of the theory is the analysis of {\tt
+seem}. The uninflected {\tt seem} has the following frame.
+%%
+\begin{equation}
+\mbox{\tt seem}: \qquad \auf \mbox{\rm INFL}^2[\theta_t]\zu
+\end{equation}
+%%
+(INFL is the symbol of inflection. This frame is valid only for
+the variant which selects infinitives.) This verb has an internal
+argument, which must be realized by the complement in the
+syntactic tree. The verb assigns a $\theta$--role to this
+argument. Once it is inflected, it has a subject position, which
+is assigned case but no $\theta$--role. A caseless NP inside the
+complement must be moved into the subject position of {\tt seem}
+in syntax, since being an NP it needs case. It can only appear in
+that position, however, if at deep structure it has been assigned
+a $\theta$--role. The subject of the embedded infinitive however
+is a canonical choice: it only gets a $\theta$--role, but still
+needs case.
+%%%%
+\begin{align}
+\label{ex:6542} & \mbox{\mtt Jan$_{\seins}$ seems $[t_{\seins}$
+to sleep}] \\
+\label{ex:6543} & ^{\ast}\mbox{\mtt Seems \mbox{\rm [}Jan to sleep%
+\mbox{\rm ]}}
+\end{align}
+%%%
+It is therefore possible to distinguish two types of intransitive
+verbs, those which assign a $\theta$--role to their subject ({\tt
+fall}) and those which do not ({\tt seem}). There were general
+laws on subcategorization frames, such as
+%%%
+\begin{quote}
+\index{Burzio, Luigi}%%
+%%%
+{\sl Burzio's Generalization.} A verb assigns case to its
+    governed NP--argument if and only it assigns a
+    $\theta$--role to its external argument.
+\end{quote}
+%%
+The Theory of Government is responsible among other for case
+assignment. It is assumed that nominative and accusative could
+not be assigned by heads (as we --- wrongly, at least according to
+this theory --- said above) but only in a specific configuration.
+The simplest configuration is that between head and complement. A
+verb having a direct complement licenses a direct object position.
+This position is qua structural property (being sister to an
+element licensing it) assigned accusative. The following is taken
+from \cite{stechowsternefeld}, p. 293.
+%%
+\begin{defn}
+%%%%
+\index{government}%%
+\index{government!proper}%%
+%%%%
+$x$ with label $\alpha$ \textbf{governs} $y$ with label $\beta$ 
+iff (1) $x$ and $y$ are dominated by the same nodes with
+label $X${\rm P}, $X$ arbitrary, and (2) either $\alpha = X^0$,
+where $X$ is lexical or $\alpha = \mbox{\rm AGR}^0$ and (3) $x$
+c--commands $y$. $x$ \textbf{governs} $y$ \textbf{properly} if $x$
+governs $y$ and either $\alpha = X^0$, $X$ lexical, or $x$ and $y$
+are coindexed.
+\end{defn}
+%%
+(Since labels are currently construed as pairs $\auf X^i, P\zu$,
+where $X^i$ is a category symbol with projection and $P$ a set of
+natural numbers, we say that $x$ and $y$ are coindexed if the
+second component of the label of $x$ and the second component of
+the label of $y$ are not disjoint.) The ECP is responsible for
+the distribution of empty categories. In GB there is a whole army
+of different empty categories: $e$, a faceless constituent
+into which one could move, $t$, the trace, {\rm PRO} and {\rm
+pro}, which were pronouns. The ECP says among other that $t$ must
+always be properly governed, while  {\rm PRO} may never be
+governed. We remark that traces are not allowed to move. In
+Section~\ref{kap5}.\ref{kap5-7} we consider this restriction more closely.
+The Bounding Theory concerns itself with the distance that
+syntactic processes may cover. It (or better: notions of distance)
+is considered in detail in Section~\ref{kap5}.\ref{kap5-7}. Finally, we
+remark that Transformational Grammar also works with conditions on
+derivations. Transformations could not be applied in any order but
+had to follow certain orderings. A very important one (which was
+the only one to remain in GB)
+%%%
+\index{cyclicity}%%
+%%%
+was \textbf{cyclicity}. Let $y$ be the antecedent of $x$ after
+movement and $z \succ y$. Then let the interval $[x,z]$ be
+called the \textbf{domain} of this instance of movement.
+%%%
+\begin{defn}
+%%%%
+\index{cyclicity}%%
+\index{bounding node}%%
+%%%%
+Let $\Gamma$ be a set of syntactic categories.  $x$ is called a
+\textbf{bounding node} if the label of $x$ is in $\Gamma$. A
+derivation is called \textbf{cyclic} if for any two instances of
+movement $\beta_1$ and $\beta_2$ and their domains $B_1$ and $B_2$
+the following holds: if $\beta_1$ was applied before $\beta_2$
+then every bounding node from $B_1$ is dominated (not necessarily
+properly) by some bounding node from $B_2$ and every bounding node
+from $B_2$ dominates (not necessarily properly) a bounding node
+from $B_1$.
+\end{defn}
+%%%
+Principally, all finite sentences are bounding nodes. However, it
+has been argued by Rizzi (and others following him) that the
+choice of bounding categories is language dependent.
+
+{\it Notes on this section.}
+This exposition may suffice to indicate how complex the theory
+was. We shall not go into the details of parametrization of
+grammars and learnability. We have construed transformations 
+as acting on labelled (ordered) trees. No attempt has been 
+made to precisify the action of transformations on trees. 
+Also, we have followed common practice to write $t_{\seins}$, 
+even though strictly speaking $t$ is a symbol. So, it would 
+have been more appropriate to write $\mbox{\tt\textgreek{t}}_{\seins}$, 
+say, to make absolutely clear that there is a symbol that gets 
+erased. (In TG, deletion really erased the symbol. Today transformations 
+may not delete, but deletion must take place on the way to 
+PF, since there are plenty of `empty' categories.)
+%%
+\vplatz
+\exercise
+Coordinators like {\tt and}, {\tt or} and {\tt
+not} have quite a flexible syntax, as was already remarked at the
+end of Section~\ref{kap3}.\ref{kap3-3}. We have {\tt cat and dog}, 
+{\tt read and write}, {\tt green and blue} and so on. What difficulties
+arise in connection with $\oli{X}$--syntax for these words? What
+solutions can you propose?
+%%
+\vplatz
+\exercise
+A transformation is called {\it minimal} if it
+replaces at most two adjacent symbols by at most two adjacent
+symbols. Let $L$ be a recursively enumerable language. Construct a
+regular grammar $G$ and a finite set of minimal transformations
+such that the generated set of strings is $L$. Here the criterion
+for a derivation to be finished is that no transformation can be
+applied. {\it Hint.} If $L$  is recursively enumerable there is a
+Turing machine which generates $L$ from a given regular set of
+strings.
+%%
+\vplatz
+\exercise
+(Continuing the previous exercise.) We additionally require that
+the deep structure generated by $G$ as well as all intermediate
+structures conform to $\oli{X}$--syntax.
+%%
+\vplatz 
+\exercise 
+Write a 2--LMG that accommodates German V2 and
+{\rm damit}-- and {\rm davor}--split.
+%%
+\vplatz
+\exercise
+It is believed that if traces are allowed to move, we can create
+unbound traces by movement of traces. Show that this is not
+a necessary conclusion. However, the ambiguities that arise from
+allowing such movement on condition that it does not make itself
+unbound are entirely harmless.

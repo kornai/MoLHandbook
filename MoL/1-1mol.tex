@@ -1,0 +1,1274 @@
+\chapter{Fundamental Structures}
+\thispagestyle{empty}
+\label{kap1}
+%%%
+\section{Algebras and Structures}
+\label{kap1-1}
+%
+%
+%
+In this section we shall provide definitions of basic terms
+and structures which we shall need throughout this book.
+Among them are the notions of {\it algebra\/} and {\it structure}.
+Readers for whom these are entirely new are advised
+to read this section only cursorily and return to it only when
+they hit upon something for which they need background
+information.
+
+We presuppose some familiarity with mathematical thinking,
+in particular some knowledge of elementary set theory
+%%%
+\index{set}%%
+%%%
+and proof techniques such as induction. For basic concepts
+in set theory see \cite{vaught:set} or
+\cite{justweese:set1,justweese:set2}; for background
+in logic see \cite{goldsternjudah}.
+Concepts from algebra (especially universal algebra) can
+be found in \cite{burris} and \cite{graetzer:algebra}, and in 
+\cite{burmeister:partial} and \cite{burmeister:lecturenotes} 
+for partial algebras; for general background on
+lattices and orderings see \cite{graetzer:lattice}
+and \cite{davey}.
+
+We use the symbols
+%%%
+\index{$\cap$, $\cup$, $-$, $\varnothing$}%%
+\index{$\wp$, $\wp_{fin}$}%%
+%%%
+$\cup$ for the union, $\cap$ for the intersection of two sets.
+Instead of the difference symbol $M\backslash N$ we use $M - N$.
+$\varnothing$ denotes the empty set. $\wp(M)$ denotes the set of
+subsets of $M$, $\wp_{fin}(M)$ the set of finite subsets of $M$.
+Sometimes it is necessary to take the union of two sets that does
+not identify the common symbols from the different sets. In that
+case one uses $+$. %
+%%%
+\index{$+$}%%
+\index{$\in$, $\doteq$, $\subseteq$}%%
+%%%%
+We define $M + N := M \times \{0\} \cup N \times
+\{1\}$ ($\times$ is defined below). This is called the 
+\textbf{disjoint union}. For reference, we
+fix the background theory of sets that we are using. This is the theory
+{\sf ZFC} (Zermelo Fraenkel Set Theory with Choice). It is
+essentially a first order theory with only two two place relation
+symbols, $\in$ and $\doteq$. (See Section~\ref{kap3}.\ref{kap3-6} for a
+definition of first order logic.) We define $x \subseteq y$ 
+by $(\forall z)(z \in x \pf x \in y)$. Its axioms are as follows.
+%%%
+\begin{enumerate}
+\item {\sl Singleton Set Axiom}.
+    $(\forall x)(\exists y)(\forall z)(z \in y
+    \dpf z \doteq x)$.  \\
+    This makes sure that for every $x$ we have a set $\{x\}$.
+\item {\sl Powerset Axiom}. $(\forall x)(\exists y)(\forall z)(%
+    z \in y \dpf z \subseteq x)$. \\
+    This ensures that for every $x$ the power set $\wp(x)$
+    of $x$ exists.
+\item {\sl Set Union}. $(\forall x)(\exists y)(%
+    \forall z)(z \in y \dpf (\exists u)(z \in u \und u \in x))$.
+    \\
+    $u$ is denoted by $\bigcup_{z \in x} z$ or simply by
+    $\bigcup x$. The axiom guarantees its existence.
+\item {\sl Extensionality}. $(\forall x)(\forall y)(x \doteq y \dpf
+    (\forall z)(z \in x \dpf z \in y))$.
+\item {\sl Replacement.} If $f$ is a function with domain
+    $x$ then the direct image of $x$ under $f$ is a set.
+    (See below for a definition of {\it function}.)
+\item {\sl Weak Foundation}. 
+	$$(\forall x)(x \neq \varnothing \pf
+    (\exists y)(y \in x \und (\forall z)(z \in x \pf
+    z \not\in y)))$$
+    This says that in every set there exists an element that
+    is minimal with respect to $\in$.
+\item {\sl Comprehension}. If $x$ is a set and $\varphi$ a
+    first order formula with only $y$ occurring free, then 
+	$\{y : y \in x \und \varphi(y)\}$ also is a set.
+\item {\sl Axiom of Infinity}. There exists an $x$ and an injective
+    function $f \colon x \pf x$ such that the direct image of
+    $x$ under $f$ is not equal to $x$.
+\item {\sl Axiom of Choice}. For every set of sets $x$ there
+    is a function $f : x \pf \bigcup x$ with
+    $f(y) \in y$ for all $y \in x$.
+\end{enumerate}
+%%%
+We remark here that in everyday discourse, comprehension is
+generally applied to all collections of sets, not just elementarily
+definable ones. This difference will hardly matter here; we only
+mention that in monadic second order logic this stronger from of 
+comprehension is expressible and also the axiom of foundation.
+%%%
+\begin{quote}
+%%%
+\index{comprehension}
+%%%%
+{\sl Full Comprehension.} For every class $P$ and every set $x$, 
+$\{y : y \in x \text{ and }x \in P\}$ is a set.
+\end{quote}
+%%%
+Foundation is usually defined as follows 
+%%%
+\begin{quote}
+%%%
+\index{foundation}%%%
+%%%
+{\sl Foundation.} There is no infinite
+chain $x_0 \ni x_1 \ni  x_2 \ni \dotsb$.
+\end{quote}
+%%%
+In mathematical usage, one often forms certain collections of
+sets that can be shown not to be sets themselves. One example
+is the collection of all finite sets. The reason that it is not a
+set is that for every set $x$, $\{x\}$ also is a set. The
+function $x \mapsto \{x\}$ is injective (by extensionality), and so
+there are as many finite sets as there are sets. If the collection of
+finite sets were a set, say $y$, its powerset has strictly more elements
+than $y$ by a theorem of Cantor. But this is impossible, since $y$
+has the size of the universe. Nevertheless, mathematicians do use these
+collections (for example, the collection of $\Omega$--algebras).
+This is not a problem, if the following is observed. A collection 
+of sets is called a \textbf{class}. %%
+%%%
+\index{class}%%
+%%%%
+A class is a set iff it is contained in a set as an element. (We 
+use `iff' to abbreviate `if and only if'.)
+
+In set theory, numbers are defined as follows.
+%%
+\begin{equation}
+\begin{split}
+0   & := \varnothing \\
+n+1 & := \{k : k < n\} = \{0, 1, 2, \dotsc, n-1\}
+\end{split}
+\end{equation}
+%%
+\index{$\omega$, $\aleph_0$}%%
+\index{$\wp(M)$}%%
+%%%
+The set of so--constructed numbers is denoted by $\omega$. It
+is the set of \textbf{natural numbers}.
+%%%
+\index{natural number}%%
+\index{ordinal}%%
+%%%
+In general, an \textbf{ordinal} (\textbf{number}) is a set that is
+transitively and linearly ordered by $\in$. (See below for these
+concepts.) For two ordinals $\kappa$ and $\lambda$, either $\kappa
+\in \lambda$ (for which we also write $\kappa < \lambda$) or
+$\kappa = \lambda$ or $\lambda \in \kappa$. 
+%%%
+\begin{thm}
+For every set $x$ there exists an ordinal $\kappa$ and a bijective 
+function $f \colon \kappa \pf x$.
+\end{thm}
+%%%
+\index{well--ordering}%%%
+%%%
+$f$ is also referred to as a \textbf{well--ordering} of $x$.
+The finite ordinals are exactly the natural numbers defined above.
+%%%
+\index{cardinal}%%
+%%%
+A \textbf{cardinal} (\textbf{number}) is an ordinal $\kappa$ such 
+that for every ordinal $\lambda < \kappa$ there is no onto map 
+$f \colon \lambda \pf \kappa$. It is not hard to see that every set 
+can be well--ordered by a cardinal number, and this cardinal is unique. 
+It is denoted by $|M|$ and called the \textbf{cardinality of} $M$. The 
+smallest infinite cardinal is denoted by $\aleph_0$. The following is 
+of fundamental importance.
+%%%
+\begin{thm}
+For two sets $x$, $y$ exactly one of the following holds: $|x| < 
+|y|$, $|x| = |y|$ or $|x| > |y|$.
+\end{thm}
+%%%
+By definition, $\aleph_0$ is actually identical to $\omega$ so that 
+it is not really necessary to distinguish the two. However, we shall 
+do so here for reasons of clarity. (For example, infinite cardinals 
+have a different arithmetic than ordinals.) If $M$ is finite, its 
+cardinality is a natural number. If $|M| = \aleph_0$, $M$ is called 
+\textbf{countable}; it is \textbf{uncountable} otherwise.
+%%%
+\index{set!countable}%%
+%%%
+If $M$ has cardinality $\kappa$, the cardinality of $\wp(M)$
+is denoted by $2^{\kappa}$. $2^{\aleph_0}$ is the cardinality
+of the set of all real numbers. $2^{\aleph_0}$ is strictly
+greater than $\aleph_0$ (but need not be the smallest uncountable 
+cardinal). We remark here that the set of finite sets of natural 
+numbers is countable.
+
+If $M$ is a set, a \textbf{partition} 
+%%%
+\index{partition}%%
+%%%
+of $M$ is a set $P \subseteq \wp(M)$ such that every member of $P$ 
+is nonempty, $\bigcup P = M$ and for all $A, B \in P$ such that 
+$A \neq B$, $A \cap B = \varnothing$. 
+If $M$ and $N$ are sets, $M \times N$ denotes the set of all
+pairs $\auf x, y\zu$, where $x \in M$ and $y \in N$.
+A definition of $\auf x,y\zu$, which goes back to Kuratowski 
+and Wiener, is as follows.
+%%
+\begin{equation}
+\auf x, y\zu := \{x, \{x,y\}\}
+\end{equation}
+%%
+\begin{lem}
+$\auf x, y\zu = \auf u, v\zu$ iff $x = u$ and $y = v$.
+\end{lem}
+%%
+\proofbeg
+By extensionality, if $x = u$ and $y = v$ then $\auf x, y\zu =
+\auf u, v\zu$. Now assume that $\auf x, y\zu = \auf u, v\zu$.
+Then either $x = u$ or $x = \{u, v\}$, and $\{x, y\} = u$ or $\{x,y\} =
+\{u,v\}$. Assume that $x = u$. If $u = \{x,y\}$ then $x = \{x, y\}$, 
+whence $x \in x$, in violation to foundation. Hence we have 
+$\{x,y\} = \{u, v\}$. Since $x = u$, we must have $y = v$. This 
+finishes the first case. Now assume that $x = \{u,v\}$. Then 
+$\{x,y\} = u$ cannot hold, for then $u = \{\{u,v\},y\}$, whence 
+$u \in \{u,v\} \in u$. So, we must have $\{x,y\} = \{u,v\}$. 
+However, this gives $x = \{x,y\}$, once again a contradiction.
+So, $x = u$ and $y = v$, as promised.
+\proofend
+
+With these definitions, $M \times N$ is a set if $M$ and $N$ are
+sets. A
+%%%
+\index{relation}%%
+%%%
+\textbf{relation} from $M$ to $N$ is a subset of
+$M \times N$. We write $x\, R\, y$ if $\auf x, y\zu
+\in R$. Particularly interesting is the case $M = N$.
+A relation $R \subseteq M \times M$ is called
+%%%
+\index{relation!reflexive}%%
+\index{relation!symmetric}%%
+\index{relation!transitive}%%
+\index{equivalence relation}%%
+%%%
+\textbf{reflexive} if $x \, R\, x$ for all $x \in M$;
+\textbf{symmetric} if from $x\, R\, y$ follows that
+$y \, R\, x$. $R$ is called \textbf{transitive} if from
+$x \, R\, y$ and $y \, R\, z$ follows $x \, R \, z$.
+An \textbf{equivalence relation} on $M$ is a reflexive,
+symmetric and transitive relation on $M$.
+%%%
+\index{ordered set}%%
+%%%
+A pair $\auf M, <\zu$ is called an \textbf{ordered set}
+if $M$ is a set and $<$ a transitive, irreflexive binary relation
+on $M$. $<$ is then called a
+%%%
+\index{ordering}%%
+%%%
+(\textbf{strict}) \textbf{ordering on} $M$ and $M$ is then called
+\textbf{ordered by $<$}. $<$ is \textbf{linear} if for any two
+elements $x, y \in M$ either $x < y$ or $x = y$ or $y < x$.
+A \textbf{partial ordering} is a relation which is reflexive,
+transitive and antisymmetric; the latter means that
+from $x\, R \, y$ and $y\, R\, x$ follows $x = y$.
+
+If $R \subseteq M \times N$ is a relation, we write
+$R^{\smallsmile} := \{\auf x, y\zu : y\, R\, x\}$ for the
+so--called \textbf{converse of} $R$. This is a relation from
+$N$ to $M$. If $S \subseteq N \times P$ and $T \subseteq M \times N$
+are relations, put
+%%%%
+\index{$R \circ S$, $R \cup S$}%%%
+%%%%
+\begin{align}
+R \circ S & := \{\auf x,y\zu : \text{ for some } 
+	z\colon x\, R\, z \, S\, y\} \\\notag
+R \cup T  & := \{\auf x,y\zu : x \, R\, y \text{ or } x \, T\, y\}
+\end{align}
+%%
+We have $R \circ S \subseteq M \times P$ and $R \cup T \subseteq
+M \times N$. In case $M = N$ we still make further definitions.
+We put $\Delta_M := \{\auf x,x\zu : x \in M\}$ and call this set
+the \textbf{diagonal on} $M$. Now put
+%%%
+\index{diagonal}%%
+\index{$\Delta$, $R^n$, $R^+$, $R^{\ast}$}%%%
+%%
+\begin{align}
+R^0      & := \Delta_M & R^{n+1}  & := R \circ R^n \\\notag
+R^+      & := \bigcup_{0 < i \in \omega} R^i & R^{\ast} 
+& := \bigcup_{i \in \omega} R^i
+\end{align}
+%%
+$R^+$ is the smallest transitive relation which contains $R$.
+%%%
+\index{transitive closure}%%
+%%%
+It is therefore called the \textbf{transitive closure of} $R$.
+$R^{\ast}$ is the smallest reflexive and transitive relation
+containing $R$.
+
+%%%
+\index{function}%%
+\index{function!partial}%%
+%%%%
+A \textbf{partial function} from $M$ to $N$ is a relation $f \subseteq
+M \times N$ such that if $x \, f \, y$ and $x \, f \, z$
+then $y = z$. $f$ is a \textbf{function} if for every $x$ there is a 
+$y$ such that $x\; f\; y$. We write $y = f(x)$ to say that $x\, f\, y$
+and $f \colon M \pf N$ to say that $f$ is a function from $M$ to
+$N$. If $P \subseteq M$ then $f \restriction P :=
+f \cap (P \times N)$.
+%%%
+\index{$f \restriction P$}%%
+%%%
+Further, $f \colon M \epi N$ abbreviates that $f$ is a
+%%%
+\index{function!surjective}%%
+\index{$\epi$, $\mono$}%%
+%%%
+\textbf{surjective} function, that is, every $y \in N$ is of
+the form $y = f(x)$ for some $x \in M$. And we write
+%%%
+\index{function!injective}%%
+%%%
+$f \colon M \mono N$ to say that $f$ is \textbf{injective}, that is,
+for all $x, x' \in M$, if $f(x) = f(x')$ then $x = x'$.
+%%%
+\index{function!bijective}%%
+%%%
+$f$ is \textbf{bijective} if it is injective as well as surjective.
+Finally, we write $f \colon x \mapsto y$ if $y = f(x)$. If
+$X \subseteq M$ then $f[X] := \{f(x) : x \in X\}$ is the
+%%%
+\index{direct image}%%
+\index{$f[X]$}%%
+%%%
+so--called \textbf{direct image of} $X$ \textbf{under}
+$f$. We warn the reader of the difference between
+$f(X)$ and $f[X]$. For example, let
+$\Suc \colon \omega \pf \omega \colon x \mapsto x + 1$. Then
+according to the definition of natural numbers above
+we have $\Suc(4) = 5$ and $\Suc[4] = \{1,2,3,4\}$, since
+$4 = \{0,1,2,3\}$. Let $M$ be an arbitrary set. There
+is a bijection between the set of subsets of $M$ and the 
+set of functions from $M$ to $2 = \{0,1\}$, which is defined 
+as follows.  For $N \subseteq M$ we call $\chi_N \colon M \pf \{0,1\}$ 
+the \textbf{characteristic function}
+%%%%
+\index{characteristic function}%%
+%%%%
+of $N$ if $\chi_N(x) = 1$ iff $x \in N$.
+%%%
+\index{$\chi_N$}%%
+%%
+Let $y \in N$ and $Y \subseteq N$; then put
+$f^{-1}(y) := \{x : f(x) = y\}$ and
+$f^{-1}[Y]  := \{x : f(x) \in Y\}$. If $f$ is injective,
+$f^{-1}(y)$ denotes the unique $x$ such that $f(x) = y$
+(if that exists). We shall see to it that this overload
+in notation does not give rise to confusions.
+
+$M^n$, $n \in \omega$, denotes the set of $n$--tuples
+of elements from $M$. 
+%%
+\begin{align}
+M^1     & := M & M^{n+1} & := M^n \times M
+\end{align}
+%%
+In addition, $M^0 := 1 (= \{\varnothing\})$.
+Then an $n$--tuple of elements from $M$ is an element of
+$M^n$. Depending on need we shall write
+$\auf x_i : i < n\zu$ or $\auf x_0, x_1, \dotsc, x_{n-1}\zu$
+for a member of $M^n$.
+
+An $n$--\textbf{ary relation} on $M$ is a subset of $M^n$,
+an $n$--\textbf{ary function} on $M$ is a function $f \colon M^n \pf M$.
+$n = 0$ is admitted. A 0--ary relation is a subset of $1$, hence 
+it is either the empty set or the set $1$ itself. A 0--ary function 
+on $M$ is a function $c \colon 1 \pf M$. We also call it a 
+\textbf{constant}.
+%%%
+\index{constant}%%
+%%%
+The \textbf{value} of this constant is the element $c(\varnothing)$.
+Let $R$ be an $n$--ary relation and $\vec{x} \in M^n$. Then we
+write $R(\vec{x})$ in place of $\vec{x} \in R$.
+
+Now let $F$ be a set and $\Omega \colon F \pf \omega$.
+%%%
+\index{signature}%%
+%%%
+The pair $\auf F, \Omega\zu$, also denoted by $\Omega$
+alone, is called a \textbf{signature} and $F$ the set of
+\textbf{function symbols}.
+%%
+\begin{defn}
+%%%
+\index{algebra}%%
+\index{algebra!$\Omega$--}%%%
+%%%
+Let $\Omega \colon F \pf \omega$ be a signature and $A$
+a nonempty set. Further, let $\Pi$ be a mapping
+which assigns to every $f \in F$ an $\Omega(f)$--ary
+function on $A$. Then we call the pair $\GA := \auf
+A, \Pi\zu$ an \textbf{$\Omega$--algebra}. $\Omega$--algebras
+are in general denoted by upper case German letters.
+\end{defn}
+%%
+In order not to get drowned in notation we write $f^{\GA}$ 
+for the function $\Pi(f)$. In place of denoting $\GA$ by the 
+pair $\auf A, \Pi\zu$ we shall denote it somewhat ambiguously 
+by $\auf A, \{f^{\GA} : f \in F\}\zu$. We warn the reader that 
+the latter notation may give rise to confusion since
+functions of the same arity can be associated with different
+function symbols. However, this problem shall not arise.
+
+%%%
+\index{$\Tm_{\Omega}$}%%
+\index{term}%%%
+%%%
+The set of $\Omega$--terms is the smallest set $\Tm_{\Omega}$ 
+such that if $f \in F$ and $t_i \in \Tm_{\Omega}$, 
+$i < \Omega(f)$, also $f(t_0, \dotsc, t_{\Omega(f)-1}) \in
+    \Tm_{\Omega}$.
+Terms are abstract entities; they are not to be equated
+with functions nor with the strings by which we denote them.
+%%%
+\index{term!level of a \faul}%
+%%%
+To begin we define the \textbf{level} of a term. If $\Omega(f) = 0$,
+then $f()$ is a term of level 0, which we also denote by `$f$'.
+If $t_i$, $i < \Omega(f)$, are terms of level $n_i$,
+then $f(t_0, \dotsc, t_{\Omega(f)-1})$ is a term of level
+$1 + \max \{n_i : i < \Omega(f)\}$. Many proofs
+run by induction on the level of terms, we therefore speak about
+{\it induction on the construction of the term}. Two terms $u$ and
+$v$ are equal, in symbols $u = v$, if they have identical level and
+either they are both of level 0 and there is an $f \in F$ such
+$u = v = f()$ or there is an $f \in F$, and terms $s_i$, $t_i$,
+$i < \Omega(f)$, such that $u = f(s_0, \dotsc, s_{\Omega(f)-1})$
+and $v = f(t_0, \dotsc, t_{\Omega(f) -1})$ as well as $s_i = t_i$
+for all $i < \Omega(f)$.
+
+An important example of an $\Omega$--algebra is the so--called {\it
+term algebra}. We choose an arbitrary set $X$ of symbols, which
+must be disjoint from $F$. The signature is extended to $F \cup X$
+such that the symbols of $X$ have arity 0. The terms over this new
+signature are called $\Omega$--\textbf{terms over} $X$.
+%%%
+\index{term!$\Omega$--\faul}%%
+%%%
+The set of $\Omega$--terms over $X$ is denoted by
+$\Tm_{\Omega}(X)$. Then we have $\Tm_{\Omega} = 
+\Tm_{\Omega}(\varnothing)$. For many purposes (indeed 
+most of the purposes of this book) the terms $\Tm_{\Omega}$ 
+are sufficient. For we can always resort to the following trick. 
+For each $x \in X$ add a 0--ary function symbol $\uli{x}$ to $F$. 
+This gives a new signature $\Omega_X$, also called the 
+%%%
+\index{signature!constant expansion}%%%
+%%%
+\textbf{constant expansion of} $\Omega$ by $X$. Then 
+$\Tm_{\Omega_X}$ can be canonically identified with 
+$\Tm_{\Omega}(X)$.
+
+There is an algebra which has as its objects the terms and 
+which interprets the function symbols as follows.
+%%
+\begin{equation}
+\Pi(f) \colon \auf t_i : i < \Omega(f)\zu \mapsto
+    f(t_0, \dotsc, t_{\Omega(f)-1}) 
+\end{equation}
+%%
+\index{$\goth{Tm}_{\Omega}(X)$}%%
+%%%
+Then $\goth{Tm}_{\Omega}(X) := \auf \Tm_{\Omega}(X), \Pi\zu$ is
+%%%
+\index{term algebra}%%
+%%%
+an $\Omega$--algebra, called the \textbf{term algebra generated by}
+$X$. It has the following property. For any $\Omega$--algebra
+$\GA$ and any map $v \colon X \pf A$ there is exactly one homomorphism
+$\oli{v} \colon \Tm_{\Omega}(X) \pf \GA$ such that $\oli{v}
+\restriction X = v$. This will be restated in 
+Proposition~\ref{prop:freegen}.
+%%%
+\begin{defn}
+Let $\GA$ be an $\Omega$--algebra and $X \subseteq A$. We say that
+$X$ \textbf{generates} $\GA$ if $A$ is the smallest subset which
+contains $X$ and which is closed under all functions $f^{\GA}$. If
+$|X| = \kappa$ we say that $\GA$ is $\kappa$--\textbf{generated}.
+Let $\CK$ be a class of $\Omega$--algebras and $\GA \in \CK$. We
+say that $\GA$ is \textbf{freely generated by $X$ in $\CK$} if for 
+every $\GB \in \CK$ and maps $v \colon X \pf B$ there is exactly 
+one homomorphism $\oli{v} \colon \GA \pf \GB$ such that $\oli{v} 
+\restriction X = v$. If $|X| = \kappa$ we say that $\GA$ is 
+%%%%
+\index{algebra!freeely ($\kappa$-)generated}%%%
+%%%%
+\textbf{freely $\kappa$--generated in} $\CK$.
+\end{defn}
+%%%
+\begin{prop}
+\label{prop:freegen}
+Let $\Omega$ be a signature, and let $X$ be disjoint from $F$. Then
+the term algebra over $X$, $\goth{Tm}_{\Omega}(X)$, is freely generated
+by $X$ in the class of all $\Omega$--algebras.
+\end{prop}
+%%%
+The following is left as an exercise. It is the justification
+for writing $\goth{Fr}_{\CK}(\kappa)$ for the (up to isomorphism
+unique) freely $\kappa$--generated algebra of $\CK$. In varieties 
+such an algebra always exists.
+%%%
+\begin{prop}
+\label{prop:free}
+Let $\CK$ be a class of $\Omega$--algebras and $\kappa$ a
+cardinal number. If $\GA$ and $\GB$ are both freely $\kappa$--generated
+in $\CK$ they are isomorphic.
+\end{prop}
+%%%
+Maps of the form $\sigma \colon X \pf \Tm_{\Omega}(X)$,
+as well as their homomorphic extensions are called
+%%%%
+\index{substitutions}%%
+%%%
+\textbf{substitutions}. If $t$ is a term over $X$, we also write
+$\sigma(t)$ in place of $\oli{\sigma}(t)$. Another notation,
+frequently employed in this book, is as follows. Given terms
+$s_i$, $i < n$, we write $[s_i/x_i \colon i < n]t$ in place of
+$\sigma(t)$, where $\sigma$ is defined as follows.
+%%%
+\begin{equation}
+\sigma(y) := \begin{cases}
+    s_i & \text{ if $y = x_i$,} \\
+    y   & \text{ else.}
+\end{cases}
+\end{equation}
+%%%
+(Most authors write $t[s_i/x_i \colon i < n]$, but this notation will
+cause confusion with other notation that we use.)
+
+Terms induce term functions on a given $\Omega$--algebra $\GA$.
+Let $t$ be a term with variables $x_i$, $i < n$. (None of these
+variables has to occur in the term.) Then $t^{\GA} \colon A^n \pf A$ is
+defined inductively as follows (with $\vec{a} = \auf a_i : i <
+\Omega(f)\zu$).
+%%%
+\index{term function}%%%
+\index{term function!clone of}%%%
+%%%
+\begin{align}
+x_i^{\GA}(\vec{a}) & := a_i \\\notag
+(f(t_0, \dotsc, t_{\Omega(f)-1}))^{\GA}
+    (\vec{a}) & := f^{\GA}(t_0^{\GA}(\vec{a}), \dotsc,
+    t_{\Omega(f)-1}^{\GA}(\vec{a}))
+\end{align}
+%%
+We denote by $\Clo_n(\GA)$ the set of $n$--ary term
+functions on $\GA$. This set is also called the \textbf{clone of}
+$n$--\textbf{ary term functions of} $\GA$. 
+%%%
+\index{polynomial}%%
+%%%
+A \textbf{polynomial of}
+$\GA$ is a term function over an algebra that is like $\GA$ but
+additionally has a constant for each element of $A$. (So, we form
+the constant expansion of the signature with every $a \in A$.
+Moreover, $\uli{a}$ (more exactly, $\uli{a}()$) shall have value
+$a$ in $A$.) The clone of $n$--ary term functions of this algebra 
+is denoted by $\Pol_n(\GA)$. For example, $((x_0 + x_1) 
+\cdot x_0)$ is a term and
+denotes a binary term function in an algebra for the signature
+containing only $\cdot$ and $+$. However, $(2 + (x_0 \cdot x_0))$
+is a polynomial but not a term. Suppose that we add a constant
+\textbf{1} to the signature, with denotation 1 in the natural numbers.
+Then $(2 + (x_0 \cdot x_0))$ is still not a term of the expanded
+language (it lacks the symbol $2$), but the associated function
+actually is a term function, since it is identical with the function
+induced by the term $((\mbox{\bf 1}+\mbox{\bf 1}) + (x_0 \cdot x_0))$.
+%%
+\begin{defn}
+%%%
+\index{homomorphism}%%
+\index{isomorphism}%%
+\index{automorphism}%%
+\index{endomorphism}%%
+%%%
+Let $\GA = \auf A, \{f^{\GA} \colon f \in F\}\zu$ and
+$\GB = \auf B, \{f^{\GB} \colon f \in F\}\zu$ be $\Omega$--algebras
+and $h \colon A \pf B$. $h$ is called a \textbf{homomorphism}
+if for every $f \in F$ and every $\Omega(f)$--tuple
+$\vec{x} \in A^{\Omega(f)}$ we have
+%%
+\begin{equation}
+h(f^{\GA}(\vec{x})) = f^{\GB}(h(x_0), h(x_1), \dotsc, h(x_{\Omega(f)-1}))
+\end{equation}
+%%
+We write $h \colon \GA \pf \GB$ if $h$ is a homomorphism from
+$\GA$ to $\GB$. Further, we write $h \colon \GA \epi \GB$ if $h$
+is a surjective homomorphism and $h \colon \GA \mono \GB$ if $h$
+is an injective homomorphism. $h$ is an \textbf{isomorphism}
+if $h$ is injective as well as surjective. $\GB$ is called
+\textbf{isomorphic} to $\GA$, in symbols $\GA \cong \GB$ if there 
+is an isomorphism from $\GA$ to $\GB$. If $\GA = \GB$
+we call $h$ an \textbf{endomorphism of} $\GA$; if $h$ is 
+additionally bijective then $h$ is called an
+\textbf{automorphism} of $\GA$.
+\end{defn}
+%%
+If $h \colon A \pf B$ is an isomorphism from $\GA$ to $\GB$ then
+$h^{-1} \colon B \pf A$ is an isomorphism from $\GB$ to $\GA$.
+%%
+\begin{defn}
+%%%
+\index{congruence relation}%%
+%%%
+Let $\GA$ be an $\Omega$--algebra and $\Theta$ a
+binary relation on $A$. $\Theta$ is called a
+\textbf{congruence relation on} $\GA$ if $\Theta$ is an
+equivalence relation and for all $f \in F$ and
+all $\vec{x}, \vec{y} \in A^{\Omega(f)}$ we have:
+%%
+\begin{equation}
+\label{eq:congr}
+\text{If $x_i\, \Theta\, y_i$ for all $i < \Omega(f)$
+then $f^{\GA}(\vec{x})\, \Theta\, f^{\GA}(\vec{y})$.}
+\end{equation}
+%%
+\end{defn}
+%%
+We also write $\vec{x}\; \Theta\; \vec{y}$ in place of `$x_i \; \Theta \; 
+y_i$ for all $i < \Omega(f)$'. If $\Theta$ is an equivalence relation put
+%%%
+\index{$[x]\Theta$}%%%
+%%%
+\begin{equation}
+[x]\Theta := \{y : x \, \Theta\, y\} 
+\end{equation}
+%%
+%%%
+\index{equivalence class}%%
+%%%
+We call $[x]\Theta$ the \textbf{equivalence class of}
+$x$. Then for all $x$ and $y$ we have either $[x]\Theta = [y]\Theta$
+or $[x]\Theta \cap [y]\Theta = \varnothing$. Further,
+we always have $x \in [x]\Theta$. If $\Theta$ additionally is
+a congruence relation then the following holds: if
+$y_i \in [x_i]\Theta$ for all $i < \Omega(f)$ then
+$f^{\GA}(\vec{y}) \in [f^{\GA}(\vec{x})]\Theta$. Therefore
+the following definition is independent of representatives.
+%%%%
+\begin{equation}
+[f^{\GA}]\Theta([x_0]\Theta, [x_1]\Theta, \dotsc,
+[x_{\Omega(f)-1}]\Theta)  
+:= [f^{\GA}(\vec{x})]\Theta 
+\end{equation}
+%%
+Namely, let $y_0 \in [x_0]\Theta,\dotsc, y_{\Omega(f)-1} \in 
+[x_{\Omega(f)-1}]\Theta$. Then $y_i \; \Theta\; x_i$ for all 
+$i < \Omega(f)$.  Then because of \eqref{eq:congr} we immediately
+have $f^{\GA}(\vec{y}) \; \Theta\; f^{\GA}(\vec{x})$.
+This simply means $f^{\GA}(\vec{y}) \in [f^{\GA}(\vec{x})]\Theta$.
+Put 
+%%%%
+\index{$\GA/\Theta$}%%%%
+%%%%
+\begin{align}
+A/\Theta & := \{[x]\Theta : x \in A\} \\
+ \GA/\Theta & := \auf A/\Theta, \{[f^{\GA}]\Theta : f \in F\}\zu
+\end{align}
+%%%%
+\index{factorization}%%%
+%%%%
+We call $\GA/\Theta$ the \textbf{factorization of} $\GA$ \textbf{by}
+$\Theta$. The map $h_{\Theta} \colon x \mapsto [x]\Theta$ is easily
+proved to be a homomorphism.
+
+Conversely, let $h \colon \GA \pf \GB$ be a homomorphism.
+Then put 
+%%%
+\index{$\ker$}%%%
+\begin{equation}
+\ker(h) := \{\auf x, y\zu \in A^2 :  h(x) = h(y)\}
+\end{equation}
+%%%
+$\ker(h)$ is a congruence relation on $\GA$. Furthermore,
+$\GA/\ker(h)$ is isomorphic to $\GB$ if $h$ is surjective. 
+A set $B \subseteq A$ is \textbf{closed under} $f \in F$ if for 
+all $\vec{x} \in B^{\Omega(f)}$ we have $f^{\GA}(\vec{x}) \in B$.
+%%
+\begin{defn}
+%%%
+\index{subalgebra}%%
+%%%
+Let $\auf A, \{f^{\GA} : f \in F\}\zu$ be an
+$\Omega$--algebra and $B \subseteq A$ closed under all
+$f \in F$. Put $f^{\GB} := f^{\GA} \restriction B^{\Omega(f)}$.
+The pair $\auf B, \{f^{\GB} : f \in F\}\zu$ is called a
+\textbf{subalgebra} of $\GA$.
+\end{defn}
+%%
+The product of the algebras $\GA_i$, $i \in I$, is defined as 
+follows.  The carrier set is the set of functions $\alpha \colon I % 
+\pf \bigcup_{i \in I} A_i$ such that $\alpha(i) \in A_i$ for all 
+$i \in I$. Call this set $P$. For an $n$--ary function symbol $f$ 
+put
+%%%
+\index{algebra!product}%%
+\index{product of algebras}%%
+%%
+\begin{multline}
+f^{\GP}(\alpha_0, \dotsc, \alpha_{n-1})(i)  \\
+      := \auf f^{\GA_i}(\alpha_0(i)), f^{\GA_i}(\alpha_1(i)),
+    \dotsc, f^{\GA_i}(\alpha_{n-1}(i))\zu
+\end{multline}
+%%
+The resulting algebra is denoted by $\prod_{i \in I} \GA_i$.
+One also defines the product $\GA \times \GB$ in the following
+way. The carrier set is $A \times B$ and for an $n$--ary function
+symbol $f$ we put
+%%
+\begin{multline}
+f^{\GA\times\GB}(\auf a_0,b_0\zu, \dotsc, \auf a_{n-1}, b_{n-1}\zu)
+    \\
+    := \auf f^{\GA}(a_0, \dotsc, a_{n-1}), f^{\GB}(b_0, \dotsc,
+    b_{n-1})\zu
+\end{multline}
+%%
+The algebra $\GA\times \GB$ is isomorphic to the algebra
+$\prod_{i \in 2} \GA_i$, where $\GA_0 := \GA$, $\GA_1 := \GB$.
+However, the two algebras are not identical. (Can you verify
+this?)
+
+A particularly important concept is that of a {\it variety}
+or {\it equationally definable class of algebras}.
+%%%
+\begin{defn}
+%%%
+\index{variety}%%
+%%%
+Let $\Omega$ be a signature. A class of $\Omega$--algebras is
+called a \textbf{variety} if it is closed under isomorphic copies,
+subalgebras, homomorphic images, and (possibly infinite)
+products.
+\end{defn}
+%%%
+Let $V := \{x_i : i \in \omega\}$ be the set of variables.
+%%%%
+\index{equation}%%%
+%%%%
+An \textbf{equation} is a pair $\auf s, t\zu$ of $\Omega$--terms
+(involving variables from $V$). We introduce a formal symbol 
+`$\boldsymbol{\doteq}$' and write $s \boldsymbol{\doteq} t$ 
+for this pair. An algebra $\GA$ satisfies the equation 
+$s \boldsymbol{\doteq} t$ iff for all maps $v : V \pf A$, 
+$\oli{v}(s) = \oli{v}(t)$. We then write 
+$\GA \vDash s \boldsymbol{\doteq} t$. A class $\CK$ of 
+$\Omega$--algebras satisfies this equation if every algebra of 
+$\CK$ satisfies it.  We write $\CK \vDash s \boldsymbol{\doteq} t$.
+%%%
+\begin{prop}
+\label{prop:eqcalc}
+The following holds for all classes $\CK$ of $\Omega$--algebras.
+%%
+\begin{dingautolist}{192}
+\item $\CK \vDash s \boldsymbol{\doteq} s$.
+\item If $\CK \vDash s \boldsymbol{\doteq} t$ then 
+$\CK \vDash t \boldsymbol{\doteq} s$.
+\item If $\CK \vDash s \boldsymbol{\doteq} t; t \boldsymbol{\doteq} u$ 
+	then $\CK \vDash s \boldsymbol{\doteq} u$.
+\item If $\CK \vDash s_i \boldsymbol{\doteq} t_i$ for all $i < \Omega(f)$ 
+	then $\CK \vDash f(\vec{s}) \boldsymbol{\doteq} f(\vec{t})$.
+\item If $\CK \vDash s \boldsymbol{\doteq} t$ and $\sigma \colon V \pf
+    \Tm_{\Omega}(V)$ is a substitution, then
+    $\CK \vDash \sigma(s) \boldsymbol{\doteq} \sigma(t)$.
+\end{dingautolist}
+%%%
+\end{prop}
+%%%
+The verification of this is routine. It follows from the first three
+facts that equality is an equivalence relation on the algebra
+$\goth{Tm}_{\Omega}(V)$, and together with the fourth that
+the set of equations valid in $\CK$ form a congruence
+on $\goth{Tm}_{\Omega}(V)$. There is a bit more we can say. Call
+%%%
+\index{congruence!fully invariant}%%
+%%%
+a congruence $\Theta$ on $\GA$ \textbf{fully invariant} if for all
+endomorphisms $h \colon \GA \pf \GA$: if $x \; \Theta\; y$ then
+$h(x) \; \Theta\; h(y)$. The next theorem follows immediately
+once we observe that the endomorphisms of $\goth{Tm}_{\Omega}(V)$
+are exactly the substitution maps. To this end, let $h\colon 
+\goth{Tm}_{\Omega}(V) \pf \goth{Tm}_{\Omega}(V)$. Then
+$h$ is uniquely determined by $h \restriction V$, since
+$\goth{Tm}_{\Omega}(V)$ is freely generated by $V$. It is easily
+computed that $h$ is the substitution defined by $h \restriction V$.
+Moreover, every map $v \colon V \pf \goth{Tm}_{\Omega}(V)$ induces
+a homomorphism $\oli{v} \colon \goth{Tm}_{\Omega}(V) \pf
+\goth{Tm}_{\Omega}(V)$, which is unique. Now write $\mbox{\rm Eq}(\CK) :=
+\{\auf s, t\zu : \CK \vDash s \boldsymbol{\doteq} t\}$.
+%%%
+\begin{cor}
+Let $\CK$ be a class of $\Omega$--algebras. Then $\mbox{\rm Eq}(\CK)$
+is a fully invariant congruence on $\goth{Tm}_{\Omega}(V)$.
+\end{cor}
+%%%
+Let $E$ be a set of equations. Then put
+%%
+\begin{equation}
+%%%
+\index{$\mathsf{Alg}(E)$}%%
+%%%
+\mathsf{Alg}(E) := \{\GA : \text{ for all }
+\auf s, t\zu \in E:  \GA \vDash s \boldsymbol{\doteq} t\}
+\end{equation}
+%%
+This is a class of $\Omega$--algebras. Classes of $\Omega$--algebras
+that have the form $\mathsf{Alg}(E)$ for some $E$ are
+%%%%
+\index{equationally definable class}%%%
+%%%
+called \textbf{equationally definable}. 
+%%%
+\begin{prop}
+Let $E$ be a set of equations. Then $\mathsf{Alg}(E)$ is
+a variety.
+\end{prop}
+%%%
+We state without proof the following result.
+%%%
+\begin{thm}[Birkhoff]
+Every variety is an equationally definable class. Furthermore,
+there is a biunique correspondence between varieties and fully
+invariant congruences on the algebra $\goth{Tm}_{\Omega}(\aleph_0)$.
+\end{thm}
+%%%
+The idea for the proof is as follows. It can be shown that every
+variety has free algebras. For every cardinal number $\kappa$,
+$\goth{Fr}_{\CK}(\kappa)$ exists. Moreover, a variety is uniquely
+characterized by $\goth{Fr}_{\CK}(\aleph_0)$. In fact, every
+algebra is a subalgebra of a direct image of some product of
+$\goth{Fr}_{\CK}(\aleph_0)$. Thus, we need to investigate the
+equations that hold in the latter algebra. The other algebras will
+satisfy these equations, too. The free algebra is the image of
+$\goth{Tm}_{\Omega}(V)$ under the map $x_i \mapsto i$. The induced
+congruence is fully invariant, by the freeness of
+$\goth{Fr}_{\CK}(\aleph_0)$. Hence, this congruence simply {\it is\/}
+the set of equations valid in the free algebra, hence in the whole
+variety. Finally, if $E$ is a set of equations, we write $E \vDash
+t \boldsymbol{\doteq} u$ if $\GA \vDash t \boldsymbol{\doteq} u$ 
+for all $\GA \in \mathsf{Alg}(E)$.
+%%%
+\begin{thm}[Birkhoff]
+$E \vDash t \boldsymbol{\doteq} u$ iff $t \boldsymbol{\doteq} u$ 
+can be derived from $E$ by means of the rules given in
+Proposition~\ref{prop:eqcalc}.
+\end{thm}
+
+The notion of an algebra can be extended into two directions, both
+of which shall be relevant for us. The first is the concept of a
+many--sorted algebra.
+%%%
+\begin{defn}
+\index{signature!sorted}%%
+\index{sort}%%
+A \textbf{sorted signature} is a triple $\auf F, \CS, \Omega\zu$,
+where $F$ and $\CS$ are sets, the set of \textbf{function symbols}
+and of \textbf{sorts}, respectively, and $\Omega \colon F \pf \CS^+$ a
+function assigning to each element of $F$ its so--called 
+\textbf{signature}. We shall denote the signature by the letter 
+$\Omega$, as in the unsorted case.%%
+\end{defn}%%
+%%
+So, the signature of a function is a (nonempty) sequence of sorts.
+The last member of that sequence tells us what sort the result
+has, while the others tell us what sort the individual arguments
+of that function symbol have.
+%%
+\begin{defn}%%
+%%%
+\index{algebra!many--sorted}%%
+%%%
+A (\textbf{sorted}) \textbf{$\Omega$--algebra} is a pair $\GA = \auf
+\{A_{\sigma} : \sigma \in \CS\}, \Pi\zu$ such that for every
+$\sigma \in \CS$ $A_{\sigma}$ is a set and for every $f \in F$
+such that $\Omega(f) = \auf \sigma_i : i < n+1\zu$
+%%%
+\begin{equation}
+\Pi(f) \colon A_{\sigma_0} \times A_{\sigma_1} \times \cdots \times
+A_{\sigma_{n-1}} \pf A_{\sigma_n} 
+\end{equation}
+%%
+If $\GB = \auf \{B_{\sigma} : \sigma \in \CS\}, \Sigma\zu$ is another 
+%%%
+\index{homomorphism!sorted}%%
+%%%
+$\Omega$--algebra, a (\textbf{sorted}) \textbf{homomorphism from} $\GA$ 
+\textbf{to} $\GB$ is a set $\{h_{\sigma} \colon A_{\sigma} \pf B_{\sigma} 
+: \sigma \in \CS\}$ of functions such that for each $f \in F$ with 
+signature $\auf \sigma_i : i < n+1\zu$:
+%%%
+\begin{equation}
+h_{\sigma_n}(f^{\GA}(a_0, \dotsc, a_{n-1})) =
+f^{\GB}(h_{\sigma_0}(a_0), \dotsc, h_{\sigma_{n-1}}(a_{n-1}))
+\end{equation}
+%%%
+A \textbf{many--sorted algebra} is an $\Omega$--algebra of some
+signature $\Omega$.
+\end{defn}
+%%
+Evidently, if $\CS = \{\sigma\}$ for some $\sigma$, then the
+notions coincide (modulo trivial adaptations) with those of
+unsorted algebras. Terms are defined as before, but now they are 
+sorted. First, for each sort we assume a countably infinite set 
+$V_{\sigma}$ of variables. Moreover, $V_{\sigma} \cap V_{\tau} 
+= \varnothing$ whenever $\sigma \neq \tau$. Now, every term is 
+given a unique sort in the following way.
+%%%
+\begin{dingautolist}{192}
+\item If $x \in V_{\sigma}$, then $x$ has sort $\sigma$.
+\item $f(t_0, \dotsc, t_{n-1})$ has sort $\sigma_n$, if
+$\Omega(f) = \auf \sigma_i : i < n+1\zu$ and $t_i$ has sort 
+$\sigma_i$ for all $i < n$.
+\end{dingautolist}
+%%
+The set of terms over $V$ is denoted by $\Tm_{\Omega}(V)$. This can 
+be turned into a sorted $\Omega$--algebra; simply let 
+$\Tm_{\Omega}(V)_{\sigma}$
+be the set of terms of sort $\sigma$. Again, given a map $v$ that
+assigns to a variable of sort $\sigma$ an element of $A_{\sigma}$,
+there is a unique homomorphism $\oli{v}$ from the
+$\Omega$--algebra of terms into $\GA$. If $t$ has sort $\sigma$,
+then $\oli{v}(t) \in A_{\sigma}$. A 
+%%%
+\index{equation!sorted}%%%
+%%%
+\textbf{sorted equation} is a pair
+$\auf s, t\zu$, where $s$ and $t$ are of equal sort. We denote
+this pair by $s \boldsymbol{\doteq} t$. We write $\GA \vDash s 
+\boldsymbol{\doteq} t$ if for all maps $v$ into $\GA$, 
+$\oli{v}(s) = \oli{v}(t)$. The Birkhoff Theorems have direct 
+analogues for the many sorted algebras, and can be proved in the 
+same way.
+
+Sorted algebras are one way of introducing partiality. To be able
+to compare the two approaches, we first have to introduce partial
+algebras. We shall now return to the unsorted notions, although it
+is possible --- even though not really desirable --- to introduce
+partial many--sorted algebras as well.
+%%%
+\begin{defn}
+Let $\Omega$ be an unsorted signature. A \textbf{partial
+$\Omega$--algebra} is a pair $\auf A, \Pi\zu$, where $A$ is a set
+and for each $f \in F$: $\Pi(f)$ is a partial function from
+$A^{\Omega(f)}$ to $A$.
+\end{defn}
+%%%
+The definitions of canonical terms split into different notions in
+the partial case.
+%%%
+\begin{defn}
+%%%
+\index{homomorphism}%%
+%%%
+Let $\GA$ and $\GB$ be partial $\Omega$--algebras, and $h \colon A \pf
+B$ a map. $h$ is a 
+%%%
+\index{homomorphism!weak}%%
+%%%%
+\textbf{weak homomorphism from} $\GA$ \textbf{to} $\GB$
+if for every $\vec{a} \in A^{\Omega(f)}$ we have $h(f^{\GA}(\vec{a})) =
+f^{\GB}(h(\vec{a}))$ if both sides are defined. $h$ is a 
+\textbf{homomorphism} if it is a weak homomorphism and for every
+$\vec{a}\in A^{\Omega(f)}$ if $h(f^{\GA}(\vec{a}))$ is defined
+then so is $f^{\GB}(h(\vec{a}))$. Finally, $h$ is a
+%%%
+\index{homomorphism!strong}%%
+%%%%
+\textbf{strong homomorphism} if it is a homomorphism and
+$h(f^{\GA}(\vec{a}))$ is defined iff $f^{\GB}(h(\vec{a}))$ is. 
+$\GA$ is a 
+%%%%
+\index{subalgebra!strong}%%
+%%%%
+\textbf{strong subalgebra of} $\GB$ if $A \subseteq B$ 
+and the identity map is a strong homomorphism.
+\end{defn}
+%%%
+\begin{defn}
+\label{defn:pcongruence}
+An equivalence relation $\Theta$ on $A$ is called a 
+%%%%
+\index{congruence!weak}%%
+%%%
+\textbf{weak congruence of} $\GA$ if for every $f \in F$ and every 
+$\vec{a}, \vec{c} \in A^{\Omega(f)}$ if $\vec{a}\; \Theta\; \vec{c}$ 
+and $f^{\GA}(\vec{a})$, $f^{\GA}(\vec{c})$ are both
+defined, then $f^{\GA}(\vec{a})\; \Theta\; f^{\GA}(\vec{c})$.
+$\Theta$ is 
+%%%%
+\index{congruence!strong}%%
+%%%%
+\textbf{strong} if in addition $f^{\GA}(\vec{a})$
+is defined iff $f^{\GA}(\vec{c})$ is.
+\end{defn}
+%%%
+It can be shown that the equivalence relation induced by a weak (strong)
+homomorphism is a weak (strong) congruence, and that every weak (strong)
+congruence defines a surjective weak (strong) homomorphism.
+
+%%%%
+\index{$\vDash^w$, $\vDash^s$}%%
+%%%%
+Let $v \colon V \pf A$ be a function, $t = f(s_0, \dotsc, s_{\Omega(f)-1})$ 
+a term. Then $\oli{v}(t)$ is defined iff 
+(a) $\oli{v}(s_i)$ is defined for every $i < \Omega(f)$ and (b)
+$f^{\GA}$ is defined on $\auf \oli{v}(s_i) : i < n\zu$. Now, we
+write  $\auf \GA, v\zu \vDash^w s \boldsymbol{\doteq} t$ if $\oli{v}(s) =
+\oli{v}(t)$ in case both are defined and equal; $\auf \GA, v\zu \vDash^s s
+\boldsymbol{\doteq} t$ if $\oli{v}(s)$ is defined iff $\oli{v}(t)$
+is and if one is defined the two are equal. An equation 
+$s \boldsymbol{\doteq} t$ is said to hold in $\GA$ in the \textbf{weak} 
+(\textbf{strong}) \textbf{sense}, if 
+$\auf \GA, v\zu \vDash^w s \boldsymbol{\doteq} t$ 
+($\auf \GA, v\zu \vDash^s s \boldsymbol{\doteq} t$) for all 
+$v \colon V \pf A$. Proposition~\ref{prop:eqcalc}
+holds with respect to $\vDash^s$ but not with respect to
+$\vDash^w$. Also, algebras satisfying an equation in the strong
+sense are closed under products, strong homomorphic images and
+under strong subalgebras.
+
+The relation between classes of algebras and sets of equations is
+called a 
+%%%%
+\index{Galois correspondence}%%
+%%%%
+\textbf{Galois correspondence}. It is useful to know a few
+facts about such correspondences. Let $A$, $B$ be sets and $R
+\subseteq A \times B$ ($A$ and $B$ may in fact also be classes). 
+The triple $\auf A, B, R\zu$ is called
+%%%
+\index{context}%%
+%%%
+a \textbf{context}. Now define the following operators:
+%%
+\begin{align}
+^{\uparrow} \colon \wp(A) \pf \wp(B) \colon & O \mapsto
+    \{y \in B : \mbox{ for all }x \in O: x\; R\; y\} \\
+^{\downarrow} \colon \wp(B) \pf \wp(A) \colon & P \mapsto
+    \{x \in A : \mbox{ for all }y \in P: x\; R\; y\}
+\end{align}
+%%
+One calls $O^{\uparrow}$ the 
+%%%
+\index{intent}%%%
+%%%%
+\textbf{intent of} $O \subseteq A$ and $P^{\downarrow}$ the 
+%%%
+\index{extent}%%%
+%%%%
+\textbf{extent} of $P \subseteq B$.
+%%%
+\begin{thm}
+Let $\auf A, B, R\zu$ be a context. Then the following holds
+for all $O, O^{\ast} \subseteq A$ and all $P, P^{\ast} \subseteq B$.
+%%
+\begin{dingautolist}{192}
+\item
+$O \subseteq P^{\downarrow}$ iff $O^{\uparrow} \supseteq P$.
+\item
+If $O \subseteq O^{\ast}$ then $O^{\uparrow} \supseteq O^{\ast\uparrow}$.
+\item
+If $P \subseteq P^{\ast}$ then $P^{\downarrow} \supseteq P^{\ast\downarrow}$.
+\item
+$O \subseteq O^{\uparrow\downarrow}$.
+\item
+$P \subseteq P^{\downarrow\uparrow}$.
+\end{dingautolist}
+\end{thm}
+%%%
+\proofbeg 
+Notice that if $\auf A, B, R\zu$ is a context, $\auf B,
+A, R^{\smallsmile}\zu$ also is a context, and so we only need to show
+\ding{192}, \ding{193} and \ding{195}. \ding{192}. $O \subseteq 
+P^{\downarrow}$ iff every $x \in O$ stands in relation $R$ to every 
+member of $P$ iff $P \subseteq O^{\uparrow}$. \ding{193}. If $O
+\subseteq O^{\ast}$ and $y \in O^{\ast\uparrow}$, then for every $x \in
+O^{\ast}$: $x\; R \; y$. This means that for every $x \in O$: $x\; R\;
+y$, which is the same as $y \in O^{\uparrow}$. \ding{195}. Notice that
+$O^{\uparrow} \supseteq O^{\uparrow}$ by \ding{192} implies $O \subseteq
+O^{\uparrow\downarrow}$. \proofend
+%%
+\begin{defn}
+%%%
+\index{closure operator}%%
+%%%
+Let $M$ be a set and $H \colon \wp(M) \pf \wp(M)$ a function.
+$H$ is called a \textbf{closure operator on} $M$ if
+for all $X, Y \subseteq M$ the following holds.
+%%
+\begin{dingautolist}{192}
+\item $X \subseteq H(X)$.
+\item If $X \subseteq Y$ then $H(X) \subseteq H(Y)$.
+\item $H(X) = H(H(X))$.
+\end{dingautolist}
+%%%
+A set $X$ is called \textbf{closed} if $X = H(X)$.
+\end{defn}
+%%
+\begin{prop}
+\label{prop:closure} Let $\auf A, B, R\zu$ be a context. Then $O
+\mapsto O^{\uparrow\downarrow}$ and $P \mapsto P^{\downarrow\uparrow}$ 
+are closure operators on $A$ and $B$, respectively. The closed sets 
+are the sets of the form $P^{\downarrow}$ for the first, and 
+$O^{\uparrow}$ for the second operator.
+\end{prop}
+%%
+\proofbeg
+We have $O \subseteq O^{\uparrow\downarrow}$, from which
+$O^{\uparrow} \supseteq O^{\uparrow\downarrow\uparrow}$. On
+the other hand, $O^{\uparrow} \subseteq O^{\uparrow\downarrow\uparrow}$,
+so that we get $O^{\uparrow} = O^{\uparrow\downarrow\uparrow}$.
+Likewise, $P^{\downarrow} = P^{\downarrow\uparrow\downarrow}$ is
+shown. The claims now follow easily.
+\proofend
+%%
+\begin{defn}
+\index{concept}%%
+Let $\auf A, B, R\zu$ be a context. A pair $\auf O, P\zu
+\in \wp(A) \times \wp(B)$ is called a \textbf{concept} if
+$O = P^{\downarrow}$ and $P = O^{\uparrow}$.
+\end{defn}
+%%
+\begin{thm}
+Let $\auf A, B, R\zu$ be a context. The concepts are exactly the
+pairs of the form $\auf P^{\downarrow}, P^{\downarrow\uparrow}\zu$,
+$P \subseteq B$, or, alternatively, the pairs of the form
+$\auf O^{\uparrow\downarrow}, O^{\uparrow}\zu$, $O \subseteq A$.
+\end{thm}
+%%%
+As a particular application we look again at the connection
+between classes of $\Omega$--algebras and sets of equations
+over $\Omega$--terms. (It suffices to take the set of
+$\Omega$--algebras of size $< \kappa$ for a suitable $\kappa$
+to make this work.) Let $\mathsf{Alg}_{\Omega}$ denote the
+class of $\Omega$--algebras, $\mbox{\sf Eq}_{\Omega}$ the
+set of equations. The triple $\auf \mathsf{Alg}_{\Omega},
+\mbox{\sf Eq}_{\Omega}, \vDash\zu$ is a context, and the
+map $^{\uparrow}$ is nothing but $\mbox{\sf Eq}$ and the map
+$^{\downarrow}$ nothing but $\mathsf{Alg}$. The classes
+$\mathsf{Alg}(E)$ are the equationally definable classes,
+$\mathsf{Eq}(\CK)$ the equations valid in $\CK$. Concepts
+are pairs $\auf \CK, E\zu$ such that $\CK = \mathsf{Alg}(E)$
+and $E = \mathsf{Eq}(\CK)$.
+
+Often we shall deal with structures in which there are
+also relations in addition to functions. The definitions,
+insofar as they still make sense, are carried over
+analogously. However, the notation becomes more clumsy.
+%%
+\begin{defn}
+Let $F$ and $G$ be disjoint sets and $\Omega \colon F \pf
+\omega$ as well as $\Xi \colon G \pf \omega$ functions. A
+pair $\GA = \auf A, \GI\zu$ is called an $\auf \Omega,
+\Xi\zu$--\textbf{structure} 
+%%%%
+\index{structure}%%
+%%%%
+if for all $f \in F$ $\GI(f)$
+is an $\Omega(f)$--ary function on $A$ and for each
+$g \in G$ $\GI(g)$ is a $\Xi(g)$--ary relation
+on $A$. $\Omega$ is called the 
+%%%
+\index{signature!functional}%%%
+\index{signature!relational}%%%
+%%%
+\textbf{functional signature}, $\Xi$ the \textbf{relational signature}
+of $\GA$.
+\end{defn}
+%%
+Whenever we can afford it we shall drop the qualification `$\auf
+\Omega, \Xi\zu$' and simply talk of `structures'. If $\auf A,
+\GI\zu$ is an $\auf \Omega, \Xi\zu$--structure, then $\auf A, \GI
+\restriction F\zu$ is an $\Omega$--algebra. An $\Omega$--algebra
+can be thought of in a natural way as a $\auf \Omega,
+\varnothing\zu$--structure, where $\varnothing$ is the empty
+relational signature. We use a convention similar to that of
+algebras. Furthermore, we denote relations by upper case Roman
+letters such as $R$, $S$ and so on. Let $\GA = \auf A,
+\{f^{\GA} : f \in F\}, \{R^{\GA} : R \in G\}\zu$ and $\GB = \auf
+B, \{f^{\GB} : f \in F\}, \{R^{\GB} : R \in G\}\zu$ be structures
+of the same signature. A map $h \colon A \pf B$ is called an 
+\textbf{isomorphism} from $\GA$ to $\GB$, if $h$ is bijective and for all
+$f \in F$ and all $\vec{x} \in A^{\Omega(f)}$ we have
+%%
+\begin{equation}
+h(f^{\GA}(\vec{x})) = f^{\GB}(h(\vec{x})) 
+\end{equation}
+%%
+as well as for all $R \in G$ and all $\vec{x} \in A^{\Xi(R)}$
+%%
+\begin{equation}
+R^{\GA}(\vec{x}) \quad\Dpf\quad
+R^{\GB}(h(x_0), h(x_1), \dotsc, h(x_{\Xi(R)-1})) 
+\end{equation}
+%%%
+\vplatz
+\exercise
+Since $y \mapsto \{y\}$ is an embedding of $x$ into $\wp(x)$, we 
+have $|x| \leq |\wp(x)|$. Show that $|\wp(x)| > |x|$ for every set. 
+{\it Hint.} Let $f : x \pf \wp(x)$ be any function. Look at the set 
+$\{y : y \not\in f(y)\} \subseteq x$. Show that it is not in 
+$\im(f)$.
+%%%
+\vplatz
+\exercise
+Let $f \colon M \pf N$ and $g \colon N \pf P$. Show that if 
+$g \circ f$ is surjective, $g$ is surjective, and that if $g \circ f$ 
+is injective, $f$ is injective. Give in each case an example that the 
+converse fails.
+%%%
+\vplatz
+\exercise
+In set theory, one writes ${^N}M$ for the set of functions
+from $N$ to $M$. Show that if $|N| = n$ and $|M| = m$, then
+$|{^N}M| = m^n$. Deduce that $|{^N}M| = |M^n|$. Can you find
+a bijection between these sets?
+%%%
+\vplatz
+\exercise
+Show that for relations $R, R' \subseteq M \times N$,
+$S, S' \subseteq N \times P$ we have
+%%%
+\begin{subequations}
+\begin{align}
+(R \cup R') \circ S & = (R \circ S) \cup (R' \circ S) \\
+R \circ (S \cup S') & = (R \circ S) \cup (R \circ S')
+\end{align}
+\end{subequations}
+%%%
+Show by giving an example that analogous laws for $\cap$ do not hold.
+%%%
+\vplatz 
+\exercise 
+Let $\GA$ and $\GB$ be $\Omega$--algebras for
+some signature $\Omega$. Show that if $h \colon \GA \epi \GB$ is a
+surjective homomorphism then $\GB$ is isomorphic to $\GA/\Theta$
+with $x \; \Theta\; y$ iff $h(x) = h(y)$.
+%%%
+\vplatz
+\exercise
+Show that every $\Omega$--algebra $\GA$ is the homomorphic image
+of a term algebra. {\it Hint.} Take $X$ to be the set underlying
+$\GA$.
+%%
+\vplatz
+\exercise
+Show that $\GA\times\GB$ is isomorphic to $\prod_{i \in \{0,1\}} \GA_i$,
+where $\GA_0 = \GA$, $\GA_1 = \GB$. Show also that $(\GA\times\GB)
+\times \GC$ is isomorphic to $\GA \times (\GB \times \GC)$.
+%%%
+\vplatz
+\exercise
+Prove Proposition~\ref{prop:free}.

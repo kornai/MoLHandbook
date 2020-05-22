@@ -1,0 +1,729 @@
+\section{Are Natural Languages Context Free?}
+\label{kap2-6}
+%
+%
+%
+We shall finish our discussion of CFLs by looking at some naturally 
+arising languages. We shall give examples of languages and constructions 
+which are definitely not context free. The complexity of natural 
+languages has been high on the agenda ever since the introduction 
+of this hierarchy. Chomsky's 
+%%%
+\index{Chomsky, Noam}%%%
+%%%%
+intention was in part to discredit 
+structuralism, which he identified with the view that natural 
+languages always are context free. By contrast, he claimed that 
+natural languages are not context free and gave many examples. 
+It is still widely believed that Chomsky had won his case. (For 
+an illuminating discussion read \cite{manasterramerkac:concept}.)
+
+It has emerged over the years
+that the arguments given by Noam Chomsky and Paul Postal 
+%%%
+\index{Postal, Paul}%%%
+%%%
+against the context freeness of natural languages were faulty. 
+Gerald Gazdar, Geoffrey Pullum 
+%%%
+\index{Gazdar, Gerald}%%%
+\index{Pullum, Geoffrey}%%
+%%%%
+and others have repeatedly found holes in the
+argumentation.  This has finally led to the bold claim that 
+natural languages are all context free (see 
+\cite{gazdarpullumsag:gpsg}). The first to deliver a correct
+proof of the contrary was Riny Huybregts, 
+%%%
+\index{Huybregts, Riny}%%%
+%%%
+only shortly later followed by Stuart Shieber. 
+%%%%
+\index{Shieber, Stuart}%%%
+%%%
+(See \cite{huybregts:overlapping}
+and \cite{shieber:evidence}.) Counterevidence from Bambara was 
+given by Culy \shortcite{culy:bambara}. Of course, it was hardly
+doubted that from structural point of view natural languages are
+not context free (see the analyses of Dutch and German within
+GB, for example, or \cite{bresnanetal:dutch}),
+but it was not shown decisively that they are not even weakly
+context free.
+
+How is a proof the non context freeness of a language $L$ possible? 
+A typical method is this. Take a suitable regular language $R$ and 
+intersect it with $L$. If $L$ is context free, so is $L \cap R$. Now 
+choose a homomorphism $h$ and map the language $L \cap R$ onto a known
+non--CFL. We give an example from the paper by Stuart Shieber. Look 
+at \eqref{ex:271} -- \eqref{ex:273}. If one looks at the nested 
+infinitives in Swiss German (first rows) we find that they are 
+structured differently from English (last rows) and High German 
+%%%
+\index{English}%%%
+\index{German}%%%
+\index{Swiss German}%%%
+%%%%
+(middle rows). (Instead of a gloss, we offer the following parallels: 
+{\tt das} $\bumpeq$ {\tt dass} $\bumpeq$ {\tt that}, 
+{\tt h\"alfe} $\bumpeq$ {\tt helfen} $\bumpeq$ {\tt help},
+{\tt aastriche} $\bumpeq$ {\tt anstreichen} $\bumpeq$ 
+{\tt paint}, {\tt huus} $\bumpeq$ {\tt Haus} $\bumpeq$ 
+{\tt house}, {\tt mer} $\bumpeq$ {\tt wir} $\bumpeq$ {\tt we}, 
+{\tt l\"ond} $\bumpeq$ {\tt lassen} $\bumpeq$ {\tt let}, 
+{\tt chind} $\bumpeq$ {\tt Kinder} $\bumpeq$ {\tt children}.)  
+%%
+%\begin{table}
+%\caption{Infinitives in Germanic Languages}
+%\label{tab:swiss}
+%\begin{tabular}{ll}
+\begin{align}
+\label{ex:271}
+ & \mbox{\tt Jan s\"ait, das Hans es huus aastricht.} \\\notag
+ & \mbox{\tt Jan sagt, dass Hans das Haus anstreicht.} \\\notag
+ & \mbox{\tt Jan says that Hans is painting the house.} \\
+%%%
+\label{ex:272}
+ & \mbox{\tt Jan s\"ait, das mer em Hans es huus h\"alfed} \\\notag
+    & \quad \mbox{\tt aastriche.}  \\\notag
+ & \mbox{\tt Jan sagt, dass wir Hans das Haus anstreichen} \\\notag
+    & \quad \mbox{\tt helfen.} \\\notag
+ & \mbox{\tt Jan says that we help Hans paint the house.} \\
+\label{ex:273}
+  & \mbox{\tt Jan s\"ait, das mer d'chind em Hans es huus} \\\notag
+    & \quad \mbox{\tt l\"ond h\"alfe aastriche.} \\\notag
+& \mbox{\tt Jan sagt, dass wir die Kinder Hans das Haus} \\\notag
+    & \quad \mbox{\tt anstreichen helfen lassen.} \\\notag
+& \mbox{\tt Jan says that we let the children help Hans} \\\notag
+    & \quad \mbox{\tt paint the house.} \\
+%%%
+\label{ex:274}
+ & ^{\ast}\mbox{\tt Jan s\"ait, das mer de Hans es huus h\"alfed} \\\notag
+    & \quad \mbox{\tt aastriche.} \\
+\label{ex:275}
+ & ^{\ast}\mbox{\tt Jan s\"ait, das mer em chind em Hans es huus} \\\notag
+    & \quad \mbox{\tt l\"ond h\"alfe aastriche.}
+%\end{tabular}
+%\end{table}
+\end{align}
+%%
+By asking who does what to whom (we let, the children help, Hans
+paints) we see that the constituents are quite different in the
+three languages. Subject and corresponding verb are together in
+English (see \eqref{eq:english-wo}), in High German they are on 
+opposite sides of the embedded infinitive (see \eqref{eq:german-wo}, 
+this is called the \textbf{nesting order}).
+%%%
+\index{order!nesting}%%
+%%%
+Swiss German, however, is still different. The verbs follow
+each other in the reverse order as in German (so, they occur
+in the order of the subjects, see \eqref{eq:swiss-wo}). This is 
+called the \textbf{crossing order}.
+%%%
+\index{order!crossing}%%
+%%%
+\begin{subequations}
+\begin{align}
+\label{eq:english-wo}
+& S_1\; V_1\; S_2\; V_2\; S_3\; V_3\; \dotso \\
+\label{eq:german-wo}
+& S_1\; S_2\; S_3\; \dotso\; V_3\; V_2\; V_1 \\
+\label{eq:swiss-wo}
+& S_1\; S_2\; S_3\; \dotso\; V_1\; V_2\; V_1\dotso  
+\end{align}
+\end{subequations}
+%%%%
+Now we assume --- this is an empirical assumption, to be
+sure --- that this is the general pattern. It shall be
+emphasized that the processing of such sentences becomes
+difficult with four or five infinitives. Nevertheless, the
+resulting sentences are considered grammatical.
+
+Now we proceed as follows. The verbs require accusative
+or dative on their complements. The following examples
+show that there is a difference between dative and accusative.
+In \eqref{ex:274} {\tt de Hans} is accusative and the complement
+of {\tt aastriche}, which selects dative. The resulting sentence
+is ungrammatical. In \eqref{ex:275}, {\tt em chind} is dative,
+while {\tt l\"ond} selects accusative. Again the sentence is
+ungrammatical. We now define the following regular language 
+(recall the definition of $\diamond$ from Section~\ref{kap1}.\ref{kap1-2}).
+%%
+\begin{align}
+R := & \mbox{\tt Jan}\oconc\mbox{\tt s\"ait}\conc\mbox{\tt ,}\oconc
+	\mbox{\tt das} \oconc \mbox{\tt mer} \\\notag 
+     & \oconc ((\mbox{\tt em}\conc\Box \cup \mbox{\tt d'} \cup 
+	\mbox{\tt de}\conc\Box) \conc (\mbox{\tt chind}\conc\Box \cup 
+	\mbox{\tt Hans}\conc\Box))^{\ast} \\\notag 
+     & \conc \mbox{\tt es}\oconc \mbox{\tt huus} \\\notag
+     & \oconc (\mbox{\tt laa}\conc\Box \cup \mbox{\tt l\"ond}\conc\Box 
+	\cup \mbox{\tt h\"alfe}\conc\Box)^{\ast} \conc
+	\mbox{\tt aastriche}\conc\mbox{\tt .}
+\end{align}
+%%
+This is defined over the standard alphabet. It is not hard to see 
+(invoking the Transducer Theorem, 
+%%%
+\index{Transducer Theorem}%%%
+%%%
+\ref{cor:transducer}) that the 
+corresponding language over the alphabet of lexemes is also regular. 
+We define the following mapping from the lexemes (denoted by their 
+strings). $v$ sends {\tt d'}, {\tt de}, {\tt laa} and {\tt l\"ond} 
+to {\tt a}, {\tt em} and {\tt h\"alfe} to {\tt d}, everything else 
+inculding the blank is mapped to $\varepsilon$. The claim is that
+%%
+\begin{equation}
+h[S \cap R] = \{\vec{x}\, \vec{x} : \vec{x} \in
+\mbox{\tt a} \cdot (\mbox{\tt a} \cup \mbox{\tt d})^{\ast}\}
+\end{equation}
+%%
+To this end we remark that a verb is sent to {\tt d} if it has a
+dative object and to {\tt a} if it has an accusative object. An
+accusative object is of the form $\mbox{\tt de}\; N$ or $\mbox{\tt
+d'}\,  N$ ($N$ a noun) and is mapped to {\tt a} by $\oli{v}$. A
+dative object has the form $\mbox{\tt em}\;  N$, $N$ a noun, and
+is mapped onto {\tt d}. Since the nouns are in the same order as
+the associated infinitives we get the desired result.
+
+In mathematics we find a phenomenon similar to Swiss German.
+%%%
+\index{Swiss German}%%%
+%%%
+Consider the integral of a function. If $f(x)$ is a function,
+the integral of $f(x)$ in the interval $[a,b]$ is denoted by
+%%
+\begin{equation}
+\int_{a}^{b} f(x)dx
+\end{equation}
+%%
+This is not in all cases well formed. For example,
+$\int_0^1 x^{-1}dx$ is ill formed, since there Riemann approximation
+leads to a sequence which is not bounded, hence has no limit.
+Similarly, $\lim_{n \pf \infty} (-1)^n$ does not exist. Notice
+that the value range of $x$ is written at the integral sign
+without saying with what variable the range is associated.
+For example, let us look at
+%%
+\begin{equation}
+\int_{a}^b \int_{c}^d f(x,y)dxdy
+\end{equation}
+%%
+The rectangle over which we integrate the function is
+$a \leq x \leq b$ and $c \leq y \leq d$. Hence, the first
+integral sign corresponds to the operator $dx$, which occurs
+first in the list. Likewise for three integrals:
+%%
+\begin{equation}
+\int_{a_0}^{b_0} \int_{a_1}^{b_1} \int_{a_2}^{b_2}
+f(x_0,x_1,x_2) dx_0dx_1dx_2
+\end{equation}
+%%
+where the value range is $a_i \leq x_i \leq b_i$ for all
+$i < 3$. Consider the following functions:
+%%
+\begin{equation}
+f(x_0, \dotsc, x_n) := \prod_{i < n} x_i^{\alpha_i}
+\end{equation}
+%%
+with $\alpha_i \in \{-1,1\}$, $i < n$.
+Further, we allow for the interval $[a_i,b_i]$ either
+$[0,1]$ or $[1,2]$. Then an integral expression
+%%
+\begin{equation}
+\int_{a_0}^{b_0} \int_{a_1}^{b_1} \dotsi \int_{a_{n-1}}^{b_{n-1}}
+f(x_0,x_1,\dotsc, x_{n-1}) dx_0dx_1\dotsb dx_{n-1}
+\end{equation}
+%%
+is well formed iff $a_i > 0$ for all
+$i < n$ such that $\alpha_i = -1$. The dependencies are
+crossing, and the order of elements is exactly as in Swiss
+German (considering the boundaries and the variables).
+The complication is the mediating function, which determines
+which of the boundary elements must be strictly positive.
+
+In \cite{kacmanasterramerrounds:simultaneous}, it is argued that 
+%%%
+\index{English}%%%
+%%%
+even English is not context free. The argument applies a theorem 
+from \cite{ogdenrosswinkelmann:interchange}. If $L$ is a 
+language, let $L_n$ denote the set of strings that are in $L$ and 
+have length $n$. The following theorem makes use of the fact that 
+a string of length $n$ possesses $n(n+1)/2$ proper substrings and 
+that $n(n+1)/2 < n^2$ for all $n > 1$. Denote by $\ulcorner c \urcorner$ 
+the smallest integer $\geq c$.  
+%%%
+\begin{thm}[Interchange Lemma]
+\index{Interchange Lemma}%%%
+%%%
+\label{thm:interchange}
+Let $L$ be a CFL. Then there exists a real number 
+$c_L$ such that for every natural number $n > 0$ and every set 
+$Q \subseteq L_n$ there is a $k \geq \ulcorner |Q|/(c_L n^2)\urcorner$, 
+and strings $\vec{x}_i$, $\vec{y}_i$, $\vec{z}_i$, $i < k$, such that 
+%%
+\begin{dingautolist}{192}
+\item for all $i < i < k$: $|\vec{x}_i| = |\vec{x}_j|$, 
+$|\vec{y}_i| = |\vec{y}_j|$, 
+and $|\vec{z}_i| = |\vec{z}_j|$.
+\item for all $i < k$: $|\vec{y}_i|, |\vec{x}_i\vec{z}_i| > 0$, 
+\item for all $i < k$: $\vec{x}_i\vec{y}_i\vec{z}_i \in Q$, and 
+\item for all $i, j < k$: $\vec{x}_i\vec{y}_j\vec{z}_i \in L_n$.
+\end{dingautolist}
+\end{thm}
+%%%
+\proofbeg
+Let $G$ be a CFG that generates $L$. Let $c_L := |N|$. We show 
+that $c_L$ satisfies the above conditions. Take any set $Q \subseteq 
+L_n$. Then there is $E \subseteq Q$ of cardinality $\geq 2 |Q|/(n+1)n$ 
+and numbers $k \geq 0$ and $\ell > 0$ such that every member of $E$ 
+possesses a decomposition $\vec{x}\,\vec{y}\,\vec{z}$ where $\vec{x}$ has 
+length $k$, $\vec{y}$ has length $\ell$, and $\auf \vec{x}, \vec{z}\zu$ 
+is a constituent occurrence of $\vec{y}$ in the string. It is 
+then clear that there is a subset $F \subseteq E$ of cardinality 
+$\geq 2 |Q|/((n+1)n |N|) > |Q|/(c_L n^2)$ such that 
+all $\auf \vec{x}, \vec{z}\zu$ are constituent occurrences of 
+identical nonterminal category. The above conditions are now 
+satisfied for $F$. Moreover, 
+$|F| \geq \ulcorner |Q|/(c_L n^2)\urcorner$, which had to be shown.   
+\proofend
+
+Note that if the sequence of numbers $L_n/n^2$ is bounded, then 
+$L$ satisfies the conditions of the Interchange Lemma. For assume 
+that there is a $c$ such that for all $n$ we have $L_{n}/n^2 \leq c$. 
+Then $c_L := \sup \{|L_{n}|/n^2 : n \in \BN\} \leq c$. Then for every 
+$n$ and every subset $Q$ of $L_n$, $\ulcorner |Q|/(c_L n^2)\urcorner 
+\leq \ulcorner |L_n|/(c_L n^2)\urcorner \leq 1$. However, with $k = 1$ 
+the conditions above become empty. 
+%%%
+\begin{thm}
+\label{subquadratic}
+Let $L \subseteq A^{\ast}$ be a language such that 
+$(|L_n|/n^2)_{n \in \BN}$ is a bound\-ed sequence. Then $L$ 
+satisfies the conditions of the Interchange Lemma. This is  
+always the case if $|A| = 1$. 
+\end{thm}
+%%%%
+Kac, Manaster--Ramer and Rounds use constructions with 
+{\tt respectively} shown below, in which 
+there is an equal number of nouns and verb phrases to be matched. 
+In these constructions, the $n$th noun must agree in number with 
+the $n$th verb phrase.  
+%%%
+%%%\begin{table}
+%\caption{`Respectively'--Constructions}
+%\label{tab:respectively}
+%\begin{tabular}{l@{$\;$}l}
+\begin{align}
+ & \mbox{\tt This land can be expected to sell itself}/\\\notag 
+  & \quad ^{\ast}\mbox{\tt themselves.}  \\\notag
+ & \mbox{\tt These woods can be expected to sell }^{\ast}\mbox{\tt %
+itself}/ \\\notag
+	& \quad \mbox{\tt themselves.} \\
+ & \mbox{\tt This land and these woods can be expected to rent} \\\notag
+  & \quad \mbox{\tt itself and sell themselves respectively.} \\
+ & ^{\ast}\mbox{\tt This land and these woods can be expected to rent} 
+\\\notag 
+ & \quad \mbox{\tt themselves and sell itself respectively.} \\
+\label{ex:279}
+ & \mbox{\tt This land and these woods and this land can be} \\\notag 
+ & \quad \mbox{\tt expected to sell themselves and rent themselves} \\\notag
+	& \quad \mbox{\tt respectively.}
+\end{align}
+%\end{tabular}
+%\end{table}
+%%%
+The problematic aspect of these constructions is illustrated by 
+\eqref{ex:279}. There need not be an exact match of NPs and 
+VPs, and when there is no match, agreement becomes obscured (though 
+it follows clear rules). Now let 
+%%
+\begin{align}
+A := & (\mbox{\tt this}\oconc \mbox{\tt land} \cup \mbox{\tt these}
+	\oconc \mbox{\tt woods})\oconc \mbox{\tt and} \\\notag
+& \oconc (\mbox{\tt this}\oconc\mbox{\tt land}\conc\Box \cup 
+	\mbox{\tt these}\oconc\mbox{\tt woods}\conc\Box)^+ \\\notag 
+	& \conc \mbox{\tt can}\oconc\mbox{\tt be}\oconc\mbox{\tt expected}
+	\oconc\mbox{\tt to} \\\notag
+	& \oconc (\mbox{\tt rent} \cup \mbox{\tt sell})\oconc
+	(\mbox{\tt itself}\conc\Box \cup 
+	\mbox{\tt themselves}\conc\Box)^+ \\\notag
+	& \conc\mbox{\tt and} \oconc 
+	(\mbox{\tt rent} \cup \mbox{\tt sell}) \oconc
+	(\mbox{\tt itself}\conc\Box \cup \mbox{\tt themselves}\conc\Box)^+ 
+	\\\notag
+	& \conc\mbox{\tt respectively}\conc\mbox{\tt .}
+\end{align}
+%%%
+and let $D$ be the set of strings of $A$ that contain as many nouns 
+as they contain pronouns. $B$ is that subset of $D$ where the $i$th 
+noun is {\tt land} iff the $i$th pronoun is {\tt itself}. The empirical 
+fact about English is that the intersection of English with $D$ is exactly 
+$B$. Based on this we show that English is not context free. For suppose 
+it were. Then 
+we have a constant $c_L$ satisfying the Interchange Lemma. (We ignore 
+the blanks and the period from now on.) Let $n$ be given. Choose 
+$Q := B_n$, the set of strings of length $n$ in $B$. Notice that 
+$|B_n| \geq 2^{(n - 8)/2}$ for all $n$. Therefore, for some $n$, 
+$|B_n| > 2 n^2 c_L$ so that $\ulcorner |B_n|/c_L n^2\urcorner \geq 2$. 
+This means that there are $\vec{x}_1$, $\vec{x}_2$, $\vec{z}_1$, 
+$\vec{z}_2$ and $\vec{y}_1$ and $\vec{y}_2$ such that $B_n$ contains 
+$\vec{x}_1\vec{y}_1\vec{z}_1$ as well as $\vec{x}_2\vec{y}_2\vec{z}_2$, 
+but $\vec{x}_1\vec{y}_2\vec{z}_1$ and $\vec{x}_2\vec{y}_1\vec{z}_2$ 
+are also grammatical (and therefore even in $B_n$). It is easy to see 
+that this cannot be.
+
+The next example in our series is modelled after the proof of
+the non context freeness of ALGOL. 
+%%%
+\index{ALGOL}%%%
+%%%
+It deals with a quite
+well known language, namely predicate logic. Predicate logic is
+defined as a language over a set of relation and function
+symbols of varying arity and a set of variables $\{\mbox{\mtt x}_i 
+: i \in \omega\}$. In order to be able to conceive of predicate logic 
+as a language in our sense, we code the variables as consisting
+of sequences $\mbox{\mtt x}\vec{\alpha}$, where $\vec{\alpha} \in 
+\{\mbox{\mtt 0}, \mbox{\mtt 1}\}^{\ast}$.
+We have $\mbox{\mtt x}\vec{\alpha} = \mbox{\mtt x}\vec{\beta}$
+iff $\vec{\alpha} = \vec{\beta}$. (Leading zeros
+are not suppressed. The numbers are usually put as subscripts, but 
+we shall not do that here.) We restrict ourselves to the language of
+pure equality. The alphabet is $\{\mbox{\mtt\symbol{20}}, 
+\mbox{\mtt\symbol{21}}, \mbox{\mtt (}, \mbox{\mtt )}, \mbox{\mtt =}, 
+\mbox{\mtt x}, \mbox{\mtt 0}, \mbox{\mtt 1}, \mbox{\mtt\symbol{4}}, 
+\mbox{\mtt\symbol{5}}, \mbox{\mtt\symbol{25}}\}$. 
+The grammar rules are as follows.
+%%
+\begin{align}
+\mbox{\mtt F} & \pf\mbox{\mtt Q(F)} \mid \mbox{\mtt \symbol{5}(F)} \mid
+    \mbox{\mtt (F)\symbol{4}(F)} \mid
+    \mbox{\mtt (F)\symbol{25}(F)} \mid 
+    \mbox{\mtt P} \\\notag
+\mbox{\mtt P} & \pf\mbox{\mtt V=V} \\\notag
+\mbox{\mtt Q} & \pf\mbox{\mtt (\symbol{20}V)F} 
+	\mid \mbox{\mtt (\symbol{21}V)F} \\\notag
+\mbox{\mtt V} & \pf \mbox{\tt x} \mid \mbox{\mtt xZ} \\\notag
+\mbox{\mtt Z} & \pf\mbox{\mtt 0Z} \mid \mbox{\mtt 1Z} \mid \mbox{\mtt 0}
+    \mid \mbox{\mtt 1}
+\end{align}
+%%
+Here {\mtt F} stands for the set of formulae {\mtt P} for the set of
+prime formulae {\mtt Q} for the set of quantifier prefixes,
+{\mtt V} the set of variables and {\mtt E} for the set of strings
+over {\mtt 0} and {\mtt 1}. Let $\vec{x}$ be a formula and $C$ an
+occurrence of a variable $\mbox{\mtt x}\vec{\alpha}$. We now
+say that this occurrence
+%%%
+\index{variable!bound}%%
+%%%
+of a variable is \textbf{bound} in $\vec{x}$ if it is an occurrence
+$D$ of a formula {\mtt ($Q$x$\vec{\alpha}$)$\vec{y}$} in $\vec{x}$
+with $Q \in \{\mbox{\mtt\symbol{20}}, \mbox{\mtt\symbol{21}}\}$ 
+which contains $C$. A formula is called a 
+%%%
+\index{sentence}%%
+%%%
+\textbf{sentence} if every occurrence of a variable is bound.
+%%
+\begin{thm}
+The set of sentences of predicate logic of pure equality is not
+context free.
+\end{thm}
+%%
+\proofbeg
+Let $L$ be the set of sentences of pure equality of predicate
+logic. Assume this set is context free. Then by the Pumping Lemma
+there is a $k$ such that every string of length $\geq k$ has a
+decomposition $\vec{u}\,\vec{x}\,\vec{v}\,\vec{y}\,\vec{w}$ such that
+$\vec{u}\,{\vec{x}\,}^i\vec{v}\,{\vec{y}\,}^i\vec{z} \in L$ for all $i$
+and $|\vec{x}\,\vec{v}\,\vec{y}| \leq k$.  Define the following
+formulae.
+%%
+\begin{equation}
+\mbox{\mtt (\symbol{20}x$\vec{\alpha}$)(x$\vec{\alpha}$=x$\vec{\alpha}$)}
+\end{equation}
+%%
+All these formulae are sentences. If $\vec{\alpha}$ is sufficiently
+long (for example, longer than $k$) then there is a decomposition
+as given. Since $\vec{x}\,\vec{v}\,\vec{y}$ must have length $\leq k$
+$\vec{x}$ and $\vec{y}$ cannot both be disjoint to all occurrences of
+$\vec{\alpha}$. On the other hand, it follows from this that
+$\vec{x}$ and $\vec{y}$ consist only of {\mtt 0} and {\mtt 1}, and so
+necessarily they are disjoint to some occurrence of $\vec{\alpha}$.
+If one pumps up $\vec{x}$ and $\vec{y}$, necessarily one occurrence
+of a variable will end up being unbound.
+\proofend
+
+We can strengthen this result considerably.
+%%
+\begin{thm}
+The set of sentence of predicate logic of pure equality
+is not semilinear.
+\end{thm}
+%%
+\proofbeg
+Let $P$ be the set of sentences of predicate logic of pure equality.
+Assume that $P$ is semilinear. Then let $P_1$ be the set of
+sentences which contain only one occurrence of a quantifier,
+and let this quantifier be {\mtt\symbol{21}}. $\mu[P_1]$ is the intersection
+of $\mu[P]$ with the set of all vectors whose {\mtt\symbol{21}}--component
+is 1 and whose {\mtt\symbol{20}}--component is $0$. This is then also
+semilinear. Now we consider the image of $\mu[P_1]$ under deletion
+of all symbols which are different from {\mtt x}, {\mtt 0}
+and {\mtt 1}. The result is denoted by $Q_1$.  $Q_1$ is semilinear.
+By construction of $P_1$ there is an $\vec{\alpha} \in \{\mbox{\mtt 0},
+\mbox{\mtt 1}\}^{\ast}$ such that every occurrence of a variable is
+of the form $\mbox{\mtt x}\vec{\alpha}$. If this variable occurs
+$k$ times and if $\vec{\alpha}$ contains $p$ occurrences of
+{\mtt 0} and $q$ occurrences of {\mtt 1} we get as a result the
+vector $k\mbox{\mtt x} + kp\mbox{\mtt 0} + kq\mbox{\mtt 1}$.
+It is easy to see that $k$ must be odd. For a variable occurs
+once in the quantifier and elsewhere once to the left and once
+to the right of the equation sign. Now we have among others
+the following sentences.
+%%
+\begin{equation}
+\begin{array}{l}
+\mbox{\mtt (\symbol{21}x$\vec{\alpha}$)(x$\vec{\alpha}$=x$\vec{\alpha}$)} \\
+\mbox{\mtt (\symbol{21}x$\vec{\alpha}$)((x$\vec{\alpha}$=x$\vec{\alpha}$)%
+\symbol{4}(x$\vec{\alpha}$=x$\vec{\alpha}$))} \\
+\mbox{\mtt (\symbol{21}x$\vec{\alpha}$)((x$\vec{\alpha}$=x$\vec{\alpha})$%
+\symbol{4}((x$\vec{\alpha}$=x$\vec{\alpha}$)\symbol{4}(x$\vec{\alpha}$%
+=x$\vec{\alpha}$)))}
+    \end{array}
+\end{equation}
+%%
+Since we may choose any sequence $\vec{\alpha}$ we have
+%%
+\begin{equation}
+Q_1 = \{(2k+3)(\mbox{\mtt x} + p\mbox{\mtt 0} +
+q\mbox{\mtt 1}) : k, p, q\in \omega\}
+\end{equation}
+%%
+$Q_1$ is an infinite union of planes of the form
+$(2k+3)(\mbox{\mtt x} + \omega\mbox{\mtt 0} + \omega
+\mbox{\mtt 1})$. We show: no finite union of linear planes equals
+$Q_1$. From this we automatically get a contradiction.
+So, assume that $Q_1$ is the union of $U_i$, $i < n$, $U_i$ linear.
+Then there exists a $U_i$ which contains infinitely many vectors
+of the form $(2k+3)\mbox{\mtt x}$. From this one easily deduces
+that $U_i$ contains a cyclic vector of the form $m\mbox{\mtt x}$,
+$m > 0$. (This is left as an exercise.) However, it is clear
+that if $v \in Q_1$ then we have $m\mbox{\mtt x} + v \not\in Q_1$,
+and then we have a contradiction.
+\proofend
+
+Now we shall present an easy example of a `natural' language
+which is not semilinear. It has been proposed in somewhat different
+form by Arnold Zwicky. Consider the number names of English.
+%%%
+\index{English}%%
+\index{Zwicky, Arnold}%%%
+%%%%
+The stock of primitive names for numbers is finite. It contains
+the names for digits ({\tt zero} up to {\tt nine}) the names
+for the multiples of ten ({\tt ten} until {\tt ninety}), the numbers
+from {\tt eleven} and {\tt twelve} until {\tt nineteen} as well as
+some names for the powers of ten: {\tt hundred}, {\tt thousand},
+{\tt million}, {\tt billion}, and a few more. (Actually, using
+Latin numerals we can go to very high powers, but few people master
+these numerals, so they will hardly know more than these.)
+Assume without loss of generality that {\tt million} is the
+largest of them. Then there is an additional recipe for naming
+higher powers, namely by stacking the word {\tt million}. The
+number $10^{6k}$ is represented by the $k$--fold iteration of
+the word {\tt million}. For example, the sequence 
+%%%
+\begin{equation}
+\mbox{\tt one million million million million} 
+\end{equation}
+%%%
+names the number $10^{24}$. (It is also called {\tt octillion}, 
+from Latin {\tt octo} `eight', because there are eight blocks 
+of three zeros.) For arbitrary numbers the schema is as follows. A number 
+in digital expansion is divided from right to left into blocks of six. 
+So, it is divided as follows:
+%%
+\begin{equation}
+\alpha_0 + \alpha_1 \times 10^6 + \alpha_2 \times 10^{12} \dotsb
+\end{equation}
+%%
+where $\alpha_i < 10^6$ for all $i$. The associated number name is 
+then as follows.
+%%
+\begin{equation}
+\dotsb\oconc\vec{\eta}_2\oconc\mbox{\mtt million}\oconc%
+\mbox{\mtt million}\oconc\vec{\eta}_1\oconc\mbox{\mtt million}
+\oconc\vec{\eta}_0
+\end{equation}
+%%
+where $\vec{\eta}_i$ is the number name of $\alpha_i$.
+If $\alpha_i = 0$ the $i$th block is omitted. Let $Z$ be the set 
+of number names. We define a function $\phi$ as follows. 
+$\phi({\tt million}) = \mbox{\tt b}$; $\phi(\Box) := \varepsilon$, 
+all other primitive names are mapped onto {\tt a}. The Parikh image 
+of $\phi[Z]$ is denoted by $W$. Now we have
+%%
+\begin{equation}
+W = \left\{ k_0\mbox{\tt a} + k_1 \mbox{\tt b} : k_1 \geq {{\llcorner
+k_0/9\lrcorner}\choose 2}\right\} 
+\end{equation}
+%%
+Here, $\llcorner k\lrcorner$ is the largest integer $\leq k$.
+We have left the proof of this fact to the reader.
+We shall show that $W$ is not semilinear. This shows that $Z$
+is also not semilinear. Suppose that $W$ is semilinear, say
+$W = \bigcup_{i < n} N_i$ where all the $N_i$ are linear. Let
+%%
+\begin{equation}
+N_i = u_i + \sum_{j < p_i} \omega v^i_j
+\end{equation}
+%%
+for certain $u_i$ and $v^i_j = \lambda^i_j \mbox{\tt a} +
+\mu^i_j \mbox{\tt b}$. Suppose further that for some $i$ and $j$
+we have $\lambda^i_j \neq 0$. Consider the set
+%%
+\begin{equation}
+P := u_i + \omega v^i_j = \{ u_i + k\lambda^i_j \mbox{\tt a} +
+    k\mu^i_j \mbox{\tt b} : k \in \omega\} 
+\end{equation}
+%%
+Certainly we have $P \subseteq N_i \subseteq W$. Furthermore, we
+surely have $\mu^i_j \neq 0$. Now put $\zeta :=
+\lambda^i_j/\mu^i_j$. Then
+%%
+\begin{equation}
+P = \{u_i + k\mu^i_j (\mbox{\tt a} + \zeta \mbox{\tt b}) : k \in \omega\}
+\end{equation}
+%%
+\begin{lem}
+For every $\varepsilon > 0$ almost all elements of $P$
+have the form $p\mbox{\tt a} + q\mbox{\tt b}$ where
+$q/p \leq \zeta + \varepsilon$.
+\end{lem}
+%%
+\proofbeg
+Let $u_i = x\mbox{\tt a} + y\mbox{\tt b}$. Then a general element
+of the set $P$ is of the form $(x + k\lambda^i_j)\mbox{\tt a} +
+(y + k\mu^i_j)\mbox{\tt b}$.  We have to show that for almost all
+$k$ the inequality
+%%
+\begin{equation}
+\frac{x+ k\lambda^i_j}{y + k\mu^i_j} \leq \varepsilon + \zeta
+\end{equation}
+%%
+is satisfied. Indeed, if $k > \frac{x}{\mu^i_j \varepsilon}$, then
+%%
+\begin{equation}
+\frac{x + k\lambda^i_j}{y + k\mu^j_i} \leq
+\frac{x + k\lambda^i_j}{k\mu^i_j} =
+\zeta + \frac{x}{k \mu^i_j}
+< \zeta + \frac{x}{\mu^i_j x/\mu^i_j \varepsilon}
+= \zeta + \varepsilon
+\end{equation}
+%%
+This holds for almost all $k$.
+%%
+\proofend
+%%
+\begin{lem}
+Almost all points of $P$ are outside of $W$.
+\end{lem}
+%%
+\proofbeg
+Let $n_0$ be chosen in such a way that
+${\llcorner n_0/9\lrcorner \choose 2} > n_0(\zeta + 1)$.
+Then for all $n \geq n_0$ we also have
+${\llcorner n/9\lrcorner \choose 2} > n(\zeta + 1)$.
+Let $p\mbox{\tt a} + q \mbox{\tt b} \in W$ with $p \geq n_0$.
+Then we have $\frac{q}{p} > \zeta + \varepsilon$, and therefore
+$p\mbox{\tt a} + q \mbox{\tt b} \not\in P$. Put $H := \{p\mbox{\tt a} 
++ q\mbox{\tt b} : p \geq n_0\}$. Then $P \cap H = \varnothing$. 
+However $W \cap - H$ is certainly finite. Hence $W \cap P$ is 
+finite, as required.
+\proofend
+%%
+
+Now have the desired contradiction. For on the one hand no vector
+is a multiple of {\tt a}; on the other hand there can be no vector
+$m\mbox{\tt a} + n \mbox{\tt b}$ with $n \neq 0$. Hence $W$ is not
+semilinear.
+
+{\it Notes on this section.} 
+The question concerning the complexity of variable binding is discussed in 
+\cite{marshpartee:binding}. It is shown there that the language of 
+sentences of predicate logic is not context free (a result that was 
+`folklore') but that it is at least an indexed language. (Indexed 
+languages neeed not be semilinear.) On the other hand, it has been
+conjectured that if we take $V$ to the set of formulae in which every 
+quantifier binds at least one free occurrence of a variable, the 
+language $V$ is not even an indexed language. See also 
+Section~\ref{kap4}.\ref{kap4-6}. Philip
+Miller~\shortcite{miller:scandinavian} 
+%%%
+\index{Miller, Philip H.}%%
+%%%%
+argues that 
+Swedish and Norwegian are not context free, and if right branching 
+analyses are assumed, they are not even indexed languages. 
+%%
+\vplatz
+\exercise
+Formalize the language of functions and integral expressions.
+Prove that the language of proper integral expressions is not
+context free.
+%%
+\vplatz
+\exercise
+Show the following: {\it Let $U$ be a linear set which contains infinitely
+many vectors of the form $k\mbox{\tt a}$. Then there exists a cyclic
+vector of the form $m\mbox{\tt a}$, $m > 0$.} {\it Hint.} Notice
+that the alphabet may consist of more than one letter.
+%%
+\vplatz
+\exercise
+Show that $W$ has the claimed form.
+%%
+\vplatz
+\exercise
+Show that the set $V$ is not semilinear.
+%%
+\begin{equation}
+V := \left\{ k_0 \mbox{\tt a} + k_1 \mbox{\tt b} :
+k_1 \leq {{k_0}\choose 2}\right\}
+\end{equation}
+%%
+{\it Hint.} Evidently, no linear set $\subseteq V$ may contain
+a vector $k \mbox{\tt b}$. Therefore the following is 
+well--defined.
+%%
+\begin{equation}
+\gamma := \max \left\{\frac{\mu^i_j}{\lambda^i_j} :
+i< n, j < p_i\right\}
+\end{equation}
+%%
+Show now that for every $\varepsilon > 0$ almost all elements of
+$W$ are of the form $x\mbox{\tt a} + y \mbox{\tt b}$ where $y \leq
+(\gamma + \varepsilon)x$. If we put for example $\varepsilon = 1$
+we now get a contradiction.
+%%
+\vplatz 
+\exercise 
+Prove the unique readability of predicate logic.
+{\it Hint.} Since we have strictly speaking not defined terms,
+restrict yourself to proving that the grammar given above is 
+unambiguous. You might try to show that it is also transparent.
+%%%
+\vplatz
+\exercise
+Let $\Omega \subseteq \omega$. Put $L_{\Omega} := \{\mbox{\tt a}^m%
+\mbox{\tt b}^n : m \neq n \text{ or } m \in \Omega\}$. Then 
+$\pi[L_{\Omega}] = V_{\Omega}$, as defined in Exercise~\ref{ex:omega}. 
+Show that $L_{\Omega}$ satisfies the properties of 
+Theorem~\ref{thm:multipump} and of Theorem~\ref{thm:interchange}. 
+It follows that there are $2^{\aleph_0}$ many languages over 
+{\tt a} and {\tt b} that satisfy these criteria for context freeness 
+and are not even semilinear. 

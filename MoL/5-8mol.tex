@@ -1,0 +1,831 @@
+\section{de Saussure Grammars}
+\label{kap4-8}
+%
+%
+%
+In his famous Cours de Linguistique G\'en\'erale, de Saussure 
+%%%
+\index{de Saussure, Ferdinand}%%%
+%%%
+speaks about linguistic signs and the nature of language as a system of
+signs. In his view, a sign is constituted by two elements: 
+its \textbf{signifier}
+%%%
+\index{signifier}%%
+\index{signified}%%
+%%%
+and its \textbf{signified}. In our terms, these are the exponent and the
+meaning, respectively. Moreover, de Saussure says that signifiers
+are {\it linear}, without further specifying what he means by that.
+To a modern linguist all this seems obviously false: there are
+categories, and linguistic objects are structured, they are not
+linear. Notably Chomsky 
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+has repeatedly offered arguments to support
+this view. He believed that structuralism was fundamentally mistaken.
+In this section we shall show that the rejection of de Saussure's ideas 
+is ill--founded. To make the point, we shall look at a few recalcitrant 
+syntactic phenomena and show how they can be dealt with using totally 
+string based notions. 
+
+Let us return to the idea mentioned earlier, that of
+$\lambda$--terms on strings. We call a \textbf{string term}
+%%%
+\index{string term}%%
+%%%%
+a $\lambda$--term over the algebra of strings (consisting of constants 
+for every $a \in A$, $\varepsilon$, and $\conc$). We assume here that
+strings are typed, and that we have strings of different type. Assume
+for the moment that there is only one type, that of a string, denoted
+by $s$. Then $\lambda x.\lambda y. y \conc x$ is the function of
+reverse concatenation, and it is of type $s \pf (s \pf s)$. Now we
+wish to implement restrictions on these terms that make sure we
+do not lose any material. Call a $\lambda$--term 
+%%%
+\index{$\lambda$--term!relevant}%%
+%%%
+\textbf{relevant} if for all subterms $\lambda x.N$, $x$ occurs at 
+least once free in $N$. $\lambda x.\lambda y. y \oconc x$ is relevant, 
+$\lambda x.  \lambda y. x$ is not. Clearly, relevance is a necessary 
+restriction. However, it is not sufficient. Let $\CP$ and $\CQ$ be variables 
+of type $s \pf s$, $x$ a variable of type $x$. Then function composition,
+$\lambda \CP.\lambda \CQ. \lambda x.\CP(\CQ(x))$, is a  relevant
+$\lambda$--term. But this is problematic. Applying this term leaves
+no visible trace on the string, it just changes the analysis.
+Thus, we shall also exclude {\it combinators}. This means, an
+admissible $\lambda$--term is a relevant term that contains
+$\conc$ or an occurrence of a constant at least once.
+%%%
+\begin{defn}
+%%%
+\index{string term!weakly progressive}%%%
+\index{string term!progressive}%%%
+%%%
+A string term $\tau$ is \textbf{weakly progressive} if it is relevant 
+and not a combinator. $\tau$ is \textbf{progressive} if it is weakly 
+progressive and does not contain $\varepsilon$.
+\end{defn}
+%%%
+\begin{defn}
+%%%
+\index{sign!de Saussure}%%%
+\index{grammar!de Saussure}%%%
+\index{de Saussure sign}%%%
+\index{de Saussure grammar}%%%
+%%%
+A \textbf{de Saussure sign} or simply \textbf{dS--sign} is a pair
+$\delta = \auf e,m\zu$, where $e$ is a progressive string term
+and $m$ a $\lambda$--term over meanings. The \textbf{type} of
+$\delta$ is the pair $\auf \sigma, \tau\zu$, where $\sigma$ is the
+type of $e$ and $\tau$ the type of $m$. If $\delta' =
+\auf e', m'\zu$ is another de Saussure sign then $\delta(\delta')$
+is defined iff $ee'$ is defined and $mm'$ is defined,
+and then
+%%
+\begin{equation}
+\delta(\delta') := \auf ee', mm'\zu
+\end{equation}
+%%
+\index{functor sign}%%
+\index{argument sign}%%
+%%%
+In this situation we call $\delta$ the \textbf{functor sign} and
+$\delta'$ the \textbf{argument sign}. A \textbf{de Saussure grammar}
+is a finite set of dS--signs.
+\end{defn}
+%%
+So, the typing regime of the strings and the typing regime of the
+meanings do all the work here.
+%%%
+\begin{prop}
+Let $\delta$ and $\delta'$ be dS--signs of type $\auf \sigma, \tau\zu$
+and $\auf \sigma',\tau'\zu$, respectively. Then $\delta(\delta')$
+is defined iff there are $\mu$, $\nu$ such that
+$\sigma = \sigma' \pf \mu$, $\tau = \tau' \pf \nu$, and then
+$\delta(\delta')$ has type $\auf \mu, \nu\zu$.
+\end{prop}
+%%%
+The rest is actually the same as in AB--grammars. Before we 
+shall prove any results, we shall
+comment on the definition itself. In Montague Grammar and much
+of Categorial Grammar there is a conflation of information
+that belongs to the realm of meaning and information that belongs
+to the realm of exponents. The category $\beta/\alpha$, for example,
+tells us that the meaning must be a function of type $\sigma(\alpha) 
+\pf \sigma(\beta)$, and that the exponent giving us the argument 
+must be found to the right. $\alpha \backslash \beta$, is different
+only in that the exponent is to be found to the left. While this
+seems to be reasonable at first sight, it is already apparent
+that the syntactic categories simply elaborate the semantic types.
+(This is why $\sigma$ is a homomorphism.) The information
+concerning the semantic types is however not necessary, since
+the merger would fail anyhow if we did not supply signs with
+the correct types. So, we could leave it to syntax to specify only
+the directionality. However, syntax is not well equipped for that.
+There are discontinuous constituents and this is not easily
+accommodated in categorial grammar. Much of the research can be
+seen as an attempt to upgrade the string handling potential in
+this direction. Notice further that the original categorial
+apparatus created distinctions that are nowhere attested.
+For example, adjectives in English are of category $n/n$. In 
+order to modify a relational noun, however, they must be
+lifted to the category of a relational noun. The lifting will have
+to specify whether the noun is looking for its complement on its
+right or on its left. Generally, however, modifiers and functors
+do not care very much about the makeup of their arguments. 
+However, in \textsf{AB} and \textsf{L}, categories must be 
+explicit about these details.
+
+De Saussure grammars do away with some of the problems that beset 
+CGs. They do not require to iterate the semantic types in the category, 
+and the string handling has more power than in standard categorial 
+grammar. We shall discuss a few applications of de Saussure grammars. 
+These will illustrate both the strength as well as certain 
+deficiencies.
+
+A striking fact about de Saussure grammars is that they allow
+for word order variation in the most direct way. Let us take a
+transitive verb, {\tt see}, with meaning 
+$\mbox{\sf see}' = \lambda x. \lambda y.
+\mbox{\sf see}'(y)(x)$. Its first argument is the direct object
+and the second its subject. We assume no case marking, so that
+the following nouns will be either subject or object.
+%%
+\begin{align}
+\mbox{\sc john} & := \auf \mbox{\tt John}, \mbox{\sf john}'\zu &
+\mbox{\sc mary} & := \auf \mbox{\tt Mary}, \mbox{\sf mary}'\zu 
+\end{align}
+%%
+Now we can give to the verb one of the following six signs.
+of which each corresponds to a different word order pattern.
+Recall that $x \oconc y = x \conc \square \conc y$.
+%%
+\begin{align}
+\mbox{\sc sees}_0 & := \auf \lambda x.\lambda y.
+    y \oconc x \oconc \mbox{\tt sees}, \mbox{\sf see}'\zu
+        && \mbox{\rm SOV} \\
+\mbox{\sc sees}_1 & := \auf \lambda x.\lambda y.
+    y \oconc \mbox{\tt sees} \oconc x, \mbox{\sf see}'\zu
+        && \mbox{\rm SVO} \\
+\mbox{\sc sees}_2 & := \auf \lambda x.\lambda y.
+    \mbox{\tt sees} \oconc y \oconc x, \mbox{\sf see}'\zu
+        && \mbox{\rm VSO} \\
+\mbox{\sc sees}_3 & := \auf \lambda x.\lambda y.
+    x \oconc y \oconc \mbox{\tt sees}, \mbox{\sf see}'\zu
+        && \mbox{\rm OSV} \\
+\mbox{\sc sees}_4 & := \auf \lambda x.\lambda y.
+    x \oconc \mbox{\tt sees} \oconc y, \mbox{\sf see}'\zu
+        && \mbox{\rm OVS} \\
+\mbox{\sc sees}_5 & := \auf \lambda x.\lambda y.
+    \mbox{\tt sees}\oconc x \oconc y, \mbox{\sf see}'\zu
+        && \mbox{\rm VOS}
+\end{align}
+%%
+The structure term for a basic sentence expressing that John sees
+Mary is in all cases the same. (Structure terms will be written 
+using brackets, to avoid confusion. The convention is that bracketing 
+is left--associative.) It is $\mbox{\sc sees}_i(\mbox{\sc mary})%
+(\mbox{\sc john})$, $i < 6$. Only that the order of the words
+is different in each case. For example,
+%%%
+\begin{align}
+ & \mbox{\sc sees}_0(\mbox{\sc mary})(\mbox{\sc john}) \\\notag
+ = & \auf \lambda x.\lambda y.
+    y \oconc x \oconc \mbox{\tt sees}, \mbox{\sf see}'\zu
+(\auf \mbox{\tt Mary}, \mbox{\sf mary}'\zu)
+(\auf \mbox{\tt John}, \mbox{\sf john}'\zu) \\\notag
+ = & \auf \lambda y. y \oconc \mbox{\tt Mary sees},
+    \mbox{\sf see}'(\mbox{\sf mary}')\zu
+    (\auf \mbox{\tt John}, \mbox{\sf john}'\zu) \\\notag
+ = & \auf \mbox{\tt John Mary sees}, \mbox{\sf see}'(\mbox{\sf %
+    mary}')(\mbox{\sf john}')\zu \\
+ & \mbox{\sc sees}_4(\mbox{\sc mary})(\mbox{\sc john}) \\\notag
+ = & \auf \lambda x.\lambda y.
+    x \oconc \mbox{\tt sees} \oconc y, \mbox{\sf see}'\zu
+(\auf \mbox{\tt Mary}, \mbox{\sf mary}'\zu)
+(\auf \mbox{\tt John}, \mbox{\sf john}'\zu) \\\notag
+ = & \auf \lambda y. \mbox{\tt Mary sees} \oconc
+    y, \mbox{\sf see}'(\mbox{\sf mary}')\zu
+    (\auf \mbox{\tt John}, \mbox{\sf john}'\zu) \\\notag
+ = & \auf \mbox{\tt Mary sees John}, \mbox{\sf see}'(\mbox{\sf %
+    mary}')(\mbox{\sf john}')\zu
+\end{align}
+%%
+Notice that this construction can be applied to heads in general,
+and to heads with any number of arguments. Thus, de Saussure
+grammars are more at ease with word order variation than categorial
+grammars. Moreover, in the case of OSV word order we see that the
+dependencies are actually crossing, since the verb does not form
+a constituent together with its subject.
+
+We have seen in Section~\ref{kap4}.\ref{kap4-3} how interpreted LMGs 
+can be transformed into AB--grammars using vector
+polynomials. Evidently, if we avail ourselves of vector polynomials
+(for example by introducing pair formation and projections and
+redefining the notion of progressivity accordingly) this result
+can be reproduced here for de Saussure grammars. Thus, de Saussure
+grammars suitably generalized are as strong as interpreted LMGs.
+However, we shall actually not follow this path. We shall not use
+pair formation; instead, we shall stay with the more basic apparatus.
+The examples that we shall provide below will give evidence that
+this much power is actually sufficient for natural languages, though
+some modifications will have to be made.
+
+Next we shall look at plural in Bahasa Indonesia (or Malay).
+%%%
+\index{Bahasa Indonesia}%%
+\index{Malay}%%
+%%%
+The plural is formed by reduplicating the noun. For example,
+the plural of {\tt orang} `man' is {\tt orang-orang},
+the plural of {\tt anak} `child' is {\tt anak-anak}. To
+model this, we assume one type of strings, $n$.
+%%
+\begin{equation}
+\mbox{\sc plu} := \auf \lambda x. x\conc\mbox{\tt -}\conc x,
+    \lambda \CP. \{x : \CP(x)\}\zu
+\end{equation}
+%%
+The term $\lambda x.x\conc\mbox{\tt -}\conc x$ is progressive.
+The plural operation can in principle be iterated; we shall see 
+below how this can be handled. (We see no obvious semantical 
+reason why it cannot, so it must be blocked morphologically.) 
+Now let us turn to English. In English, the
+%%%%
+\index{English}%%
+%%%%
+plural is formed by adding an {\tt s}. However, some
+morphophonological processes apply, and some nouns form their
+plural irregularly. Table~\ref{tab:engplu} gives an (incomplete) 
+list of plural formation. Above the line we find regular plurals, 
+below irregular plurals.
+%%
+\begin{table}
+\caption{Plural in English}
+\label{tab:engplu}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Singular & Plural & \\\hline
+{\tt tree} & {\tt trees} & plain suffix \\
+{\tt bush} & {\tt bushes} & e-insertion \\\hline
+{\tt ox}   & {\tt oxen} & en--suffix \\
+{\tt fish} & {\tt fish} & no change \\
+{\tt man}  & {\tt men}  & vowel change \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+%%
+As we have outlined in Section~\ref{kap1}.\ref{kap1-3}, these differences are
+explained by postulating different plural morphs, one for each noun
+class. We can account for that by introducing noun class distinctions
+in the semantic types. For example, we may introduce a semantic type
+for nouns endings in a nonsibilant, another for nouns ending in a
+sibilant, and so on. However, apart from introducing the distinction
+where it obviously does not belong, this proposal has another drawback.
+Recall, namely, that linguists speak of a plural {\it morpheme}, which
+abstracts away from the particular realizations of plural formation.
+Mel'\v{c}uk 
+%%%
+\index{Mel'\v{c}uk, Igor}%%%
+%%%
+defines a morpheme as a set of signs that have identical
+category and identical meaning. So, for him the plural morpheme is
+simply the set of plural morphs. Now, suppose that we want the
+morpheme to be a (de Saussure) {\it sign}. Then its meaning is that 
+of any of its morphs, but the string function cannot be a 
+$\lambda$--term. For it may act differently on identical strings of 
+different noun class. A good example is German {\tt Bank}. 
+%%%
+\index{German}%%%
+%%%
+Like its English counterpart it can denote (i) a money institute, (ii) 
+something to sit on, (iii) the bank of a river. However, in the first case 
+its plural is {\tt Banken} and in the other two it is {\tt B\"anke}. Now, 
+since the function forming the plural cannot access the meaning we 
+must distinguish two different string classes, one for nouns that 
+form the plural by umlaut plus added {\tt e}, and the other for 
+nouns that form the plural by adding {\tt en}. Further, we shall 
+assume that German {\tt Bank} is in both, but with different meanings.
+Thus, we have two signs with exponent {\tt Bank}, one to mean money
+institute and the other to mean something to sit on or the bank of
+a river. This is the common practice. The classes are morphological,
+that is, they do not pertain to meaning, just to form.
+
+Thus we are led to the introduction of string types. We assume that
+types are ordered by some partial ordering $\leq$, so that if
+$\alpha$ and $\beta$ are string types and $\alpha \leq \beta$ then
+any string of type $\alpha$ is a string of type $\beta$. Moreover, 
+we put $\alpha \pf \beta \leq \alpha' \pf \beta'$ iff 
+$\alpha \leq \alpha'$ and $\beta \leq \beta'$. No other relations 
+hold between nonbasic types. The basic type $s$ is the largest basic 
+type. Returning now to English, we shall split the type $n$ into 
+various subtypes. In particular, we need the types {\it ni}, {\it nr}, 
+of irregular and regular nouns.  We shall first treat the regular 
+nouns. The rule is that if a noun ends in a sibilant, the vowel 
+{\tt e} is inserted, otherwise not.  Since this is a completely 
+regular phenomenon, we can only define the string function if we 
+have a predicate {\sf sib} that is true of a string iff 
+it ends in a sibilant. Further, we need to be able to define a 
+function by cases. 
+%%
+\begin{equation}
+\mbox{\sf rplu} := \lambda x.\mbox{\sf if}\; \mbox{\sf sib}(x)\; 
+	\mbox{\sf then} \; x\conc\mbox{\tt es}\; 
+	\mbox{\sf else} \; x \conc \mbox{\tt s}\; \mbox{\sf fi;}
+\end{equation}
+%%
+Thus, we must have a basic type of booleans plus some functions.
+We shall not spell out the details here. Notice that definitions 
+by cases are not necessarily unique, so they have to be used with 
+care. Notice a further problem. The minute that we admit different 
+types we have to be specific about the type of the resulting string. 
+This is not an innocent matter. The operation $\conc$ is defined 
+on all strings. Suppose now that {\tt tree} is a string of type 
+{\it nr}, which type does {\tt trees} have? Obviously, we do not 
+want it to be just a string, and we may not want it to be of type 
+{\it nr\/} again. (The difference between regular and irregular is 
+needed only for plural formation.) Also, as we shall see below, there 
+are operations that simply change the type of a string without changing
+the string itself. Hence we shall move from a system of implicit
+typing to one of explicit typing (see \cite{mitchell:type} for an 
+overview). Rather than using variables for each type, we use a single 
+set of variables. $\lambda$--abstraction is now written 
+$\lambda x:\sigma.M : \tau$ in place of $\lambda x.M$. Here $x$  
+must be a variable of type $\sigma$, and the result will be of 
+type $\tau$. Thus, $\lambda x:\mbox{\it nr}.x \conc \mbox{\tt s} %
+: \mbox{\it n}$ denotes the function that turns and {\it nr\/}--string 
+into an {\it n\/}--string by appending {\tt s}. The reader may recall 
+from Section~\ref{kap6}.\ref{kap6-1} the idea that strings can be taken 
+to mean different things depending on what type they are paired with. 
+Internally, a typed string term is represented by $\auf N, \sigma\zu$, 
+where $N$ is the string term and $\sigma$ its type. The operation 
+$M : \tau$ does the following: it evaluates $M$ on $N$, and gives it 
+the type $\tau$.  Now, the function is also defined for all 
+$\sigma' \leq \sigma$, so we finally have
+%%
+\begin{equation}
+(\lambda x:\sigma.M:\tau)(N : \sigma')
+    = \begin{cases}
+    [N/x]M : \tau & \text{ if $\sigma' \leq
+        \sigma$,} \\
+    \ast & \text{ otherwise.}
+    \end{cases}
+\end{equation}
+%%
+Now we turn to the irregular plural. Here we face two choices.
+We may simply take all singular and plural nouns as being in the
+lexicon; or we devise rules for all occurring subcases. The
+first is not a good idea since it does not allow us to say that
+{\tt ox} and the plural morpheme actually occur in {\tt oxen}.
+The sign is namely an unanalyzable unit. So we discard the first
+alternative and turn to the second. In order to implement the
+plural we again need a predicate of strings that tells us whether
+a string equals some given string. The minimum we have to do is
+to introduce an equality predicate on strings. This allows to define
+the plural by cases. However, suppose we add a binary predicate
+$\mbox{\sf suf}(x,y)$ which is true of $x$ and $y$ iff
+$x$ is a suffix of $y$. Then the regular plural can be defined
+also as follows:
+%%
+\begin{align}
+\mbox{\sf rplu} := 
+	& \lambda x : \mbox{\it nr}.\; \mbox{\sf if } %
+	(\mbox{\sf suf}(\mbox{\tt s}, x)\;  
+	        \mbox{\sf or}\; \mbox{\sf suf}(\mbox{\tt sh}, x)) \\\notag
+	& \quad
+     		\mbox{\sf then} \;
+    x\conc\mbox{\tt es} \; 
+	\mbox{\sf else}\; x \conc \mbox{\tt s}\;
+	\mbox{\sf fi} : n;
+\end{align}
+%%
+Moreover, equality is definable from {\sf suf}. Evidently, since 
+we allow a function to be defined by cases, the irregular plural forms 
+can be incorporated here as well, as long as they are additive 
+(as is {\tt oxen} but not {\tt men}). For nonadditive plural 
+formations see the remarks on umlaut in Section~\ref{kap5}.\ref{kap5-3}.
+
+Now take another case, causatives. Many English verbs have causative 
+forms. Examples are {\tt laugh}, {\tt drink}, {\tt clap}.
+%%
+\begin{align}
+\label{ex:581} & \mbox{\tt The audience laughed the conductor off the 
+	stage.} \\
+\label{ex:582} & \mbox{\tt The manager drank his friends under the table.}
+\\
+\label{ex:583} & \mbox{\tt The audience was clapping the musician back onto} 
+\\\notag
+  & \quad \mbox{\tt the stage.}
+\end{align}
+%%
+In all these cases the meaning of the causative is regularly formed
+so that we may actually assume that there is a sign that performs
+the change. But it leaves no visible trace. Thus, we must at least 
+allow operators that perform type conversion even when they change 
+nothing in the semantics. In the type system we have advocated above 
+they can be succinctly represented by
+%%
+\begin{equation}
+\lambda x : \sigma. x : \tau
+\end{equation}
+%%
+Now, the conversion of a string of one type into another is often
+accompanied by morphological marking. For example, the gerund in
+English turns a verb into a noun ({\tt singing}). It is formed
+regularly by suffixing {\tt ing}. So, it has the following sign:
+%%
+\begin{equation}
+\mbox{\sc ger} := \auf \lambda x : v.x \conc \mbox{\tt ing} : n,
+    \lambda x.x\zu
+\end{equation}
+%%
+The semantics of these nominalizations is rather complex (see
+\cite{hammlambalgen:nominalization}), so we have put the identity 
+for simplicity here. Signs that consist of nothing more than a 
+%%%%
+\index{conversioneme}%%%
+%%%%
+type conversion are called \textbf{conversionemes}
+in \cite{melcuk:morphologie}. Obviously, they are not
+progressive in the intuitive sense. For we can in principle
+change a string from $\sigma$ to $\tau$ and back; and we could
+do this as often as we like. However, there is little harm in
+admitting such signs. The additional complexity can be handled
+in much the same way as unproductive context free rules.
+
+%%%
+\index{Swiss German}%%
+%%%
+Another challenge is Swiss German. Since we do not want to make
+use of products, it is not obvious how we can instrumentalize
+the $\lambda$--terms to get the word order right. Here is how
+this can be done. We distinguish the main (inflected) verb from
+its subordinate verbs, and raising from nonraising verbs.
+(See Table~\ref{tab:swissgerman}. We use `$\pm$i' short for 
+`$\pm$inflected', `$\pm$r' for `$\pm$raising', and `$\pm$t' for 
+`$\pm$transitive'. We have suppressed the type information as 
+it is of marginal relevance here.)
+%%%
+\begin{table}
+\caption{Swiss German Verbs}
+\label{tab:swissgerman}
+\begin{center}
+\begin{tabular}{lll}
+--i--r+t & {\sc aaste} & := $\auf\lambda x.\lambda y. \lambda z.
+    y \oconc x \oconc z \oconc \mbox{\tt aastriche},
+        \mbox{\sf paint}'\zu$ \\
++i--r+t & {\sc aast} & := $\auf\lambda x.\lambda y.y \oconc
+    x \oconc \mbox{\tt aastricht}, \mbox{\sf paint}'\zu$ \\
+--i--r--t & {\sc schwe} & := $\auf\lambda y. \lambda z.
+    y \oconc z \oconc \mbox{\tt schwimme},
+        \mbox{\sf sim}'\zu$ \\
++i--r--t & {\sc schw} & := $\auf\lambda x.x \oconc \mbox{\tt schwimmt},
+    \mbox{\sf swim}'\zu$ \\
+--i+r+t & {\sc laa} & := $\auf\lambda x. \lambda \CP. \lambda v.\lambda w.
+    \CP(v \oconc x)(w \oconc \mbox{\tt laa}), \mbox{\sf let}'\zu$ \\
++i+r+t & {\sc laat} & :=  
+	$\auf\lambda \CP. \lambda x.\CP(x)(\mbox{\tt laa}),
+    \mbox{\sf let}'\zu$
+\end{tabular}
+\end{center}
+\end{table}
+%%
+Here, $v$, $x$, $z$ are variables over NP--cluster strings, $w$, 
+$y$ variables over verb--cluster strings, and $\CP$ a variable for 
+functions from NP--cluster strings to functions from verb--cluster 
+strings to strings. NPs are by contrast very basic:
+%%
+\begin{align}
+\mbox{\sc mer} & := \auf \mbox{\tt mer}, \mathsf{we}'\zu &
+\mbox{\sc huus} & := \auf \mbox{\tt es huus}, \mathsf{house}'\zu
+\end{align}
+%%
+We ignore case for the moment.
+The lowest clause is translated as follows.
+%%
+\begin{align}
+& \mbox{\sc aaste}(\mbox{\sc huus}) \\\notag
+= & \auf \lambda y.\lambda z. y \oconc
+    \mbox{\tt es huus} \oconc z \oconc \mbox{\tt aastriche}, 
+   \mbox{\sf paint}'(\mbox{\sf house}')\zu
+\end{align}
+%%
+The recursive part, raising verb plus object, is translated as follows:
+%%
+\begin{equation}
+\begin{split}
+& \mbox{\sc h\"alfe}(\mbox{\sc chind}) \\
+= & \auf (\lambda x.\lambda \CP.\lambda v.\lambda w.\CP(v \oconc x)%
+(w \oconc \mbox{\tt h\"alfe}))(\mbox{\tt em chind}), \\
+  & \quad
+	\mbox{\sf help}'(\mbox{\sf children}')\zu \\
+= & \auf (\lambda \CP.\lambda v.\lambda w.\CP(v \oconc \mbox{\tt em chind})%
+(w \oconc \mbox{\tt h\"alfe})), \\
+  & \quad 
+	\mbox{\sf help}'(\mbox{\sf children}')\zu 
+\end{split}
+\end{equation}
+%%
+If we combine the two we get something that is of the same kind 
+as the lower infinitive, showing that the recursion is adequately 
+captured:
+%%
+\begin{equation}
+\begin{split}
+& \mbox{\sc h\"alfe}(\mbox{\sc chind})(\mbox{\sc aaste}(\mbox{\sc huus}))
+\\
+= &  \auf \lambda v.\lambda w. v \oconc \mbox{\tt em$\;$chind es$\;$huus}%
+\oconc w \oconc \mbox{\tt h\"alfe aastriche}, \\
+& \quad 
+\mbox{\sf help}'(\mbox{\sf children}')(\mbox{\sf paint}'(\mbox{\sf house}')))
+\end{split}
+\end{equation}
+%%
+Had we inserted a finite verb, the second `hole' would have been 
+closed. There would have been just a place for the subject. Once 
+that is inserted, there are no more holes left. The recursion is 
+finished. Notice that the structure term has the form of the 
+corresponding English structure. The $\lambda$--terms simply 
+transliterate it into Swiss German. Let us briefly speak about 
+%%%
+\index{case}%%
+%%%
+case. We insert only the bare nouns and let the verb attach the 
+appropriate case marker. For example, if $\mbox{\sc dat}$ is the 
+function that turns a DP into a dative marked DP, the sign 
+{\sc h\"alfe} will be 
+%%%
+\begin{equation}
+\mbox{\sc h\"alfe} := \auf\lambda x. \lambda \CP. \lambda v.\lambda w.
+    \CP(v \oconc \mbox{\sc dat}(x))(w \oconc \mbox{\tt laa}), 
+	\mbox{\sf help}'\zu
+\end{equation}
+%%%
+
+Next, we shall deal with case agreement inside a noun phrase. In 
+many languages, adjectives agree in case with the noun they modify. 
+We take our example from Finnish. 
+%%%
+\index{Finnish}%%
+%%%
+The phrase {\tt iso juna} `a/the big train' inflects in the 
+singular as follows. (We show only a fraction of the case system.)
+%%
+\begin{equation}
+\begin{array}{lll}
+\mbox{\rm nominative} & \mbox{\tt iso juna} \\
+\mbox{\rm genitive}   & \mbox{\tt ison junan} \\
+\mbox{\rm allative}   & \mbox{\tt isolle junalle} \\
+\mbox{\rm inessive}   & \mbox{\tt isossa junassa}
+\end{array}
+\end{equation}
+%%
+In the present case, it is the same suffix that is added to the
+adjective as well as the noun. Now, suppose we analyze the allative
+as a suffix that turns a caseless noun phrase into a case marked
+noun phrase. Then we want to avoid analyzing the allative
+{\tt isolle junalle} as consisting of occurrences of the allative
+case. We want to say that it occurs once, but is spelled out twice.
+To achieve this, we introduce two types: $\nu$, the type of 
+case marked nouns, and $\kappa$, the type of case markers. 
+Noun roots will be of type $\kappa \pf \nu$, adjectives of type 
+$(\kappa \pf \nu) \pf (\kappa \pf \nu)$. 
+%%
+\begin{align}
+\mbox{\sc juna} & := \auf \lambda x : \kappa.\mbox{\tt juna}\conc x : \nu, 
+	\mbox{\sf train}'\zu \\
+\mbox{\sc iso} & := \auf \lambda \CP : \kappa\pf\nu. \lambda x : \kappa. 
+	\mbox{\tt iso} \conc x \oconc \CP(x) : \nu, \mbox{\sf big}'\zu
+\end{align}
+%%
+So, $x$ has the type $\kappa$, $\CP$ the type $\kappa \pf \nu$. 
+These signs combine to 
+%%
+\begin{equation}
+\mbox{\sc iso}(\mbox{\sc juna}) =
+\auf \lambda x : \kappa.\mbox{\tt iso}\conc x \oconc \mbox{\tt juna} \conc x 
+	: \nu, \mbox{\sf big}'(\mbox{\sf train}')\zu
+\end{equation}
+%%
+Finally, assume the following sign for the allative.
+%%
+\begin{equation}
+\mbox{\sc all} := \auf \mbox{\tt lle} : \kappa, \mbox{\sf move-to}'\zu
+\end{equation}
+%%
+Then the last two signs combine to
+%%
+\begin{align}
+ & \mbox{\sc all}(\mbox{\sc iso}(\mbox{\sc juna})) \\\notag 
+= & \auf \mbox{\tt isolle junalle}: \nu, \mbox{\sf move-to}'%
+(\mbox{\sf big}'(\mbox{\sf train}'))\zu
+\end{align}
+%%
+This has the advantage that the tectogrammatical structure of signs 
+is much like their semantic structure, and that we can stack as many 
+adjectives as we like: the case ending will automatically be distributed 
+to all constituents. Notice that LMGs put a limit on the number of 
+occurrences that can be controlled at the same time, and so they 
+cannot provide the same analysis for agreeing adjectives. Thus, 
+de Saussure grammars sometimes provide more adequate analyses than 
+do LMGs. We remark here that the present analysis conforms to the idea 
+proposed in \cite{harris:structural}, 
+%%%
+\index{Harris, Zellig S.}%%%
+%%%
+who considers agreement simply
+as a multiple manifestation of a single morpheme. Case assignment
+can also be handled in a rather direct way. Standardly, a verb that
+takes a case marked noun phrase is assumed to select the noun phrase
+as a noun phrase of that case. Instead, however, we may assume that
+the sign for a case marking verb actually carries the case marker
+and attaches it to the NP. The Finnish verb {\tt tuntua} `to
+resemble' selects ablative case. Assume that it has an
+ablative marked argument that it takes directly to its right.
+Then its sign may be assumed to be like this (taking the 3rd person
+singular present form).
+%%
+\begin{equation}
+\mbox{\sc tuntuu} :=
+    \auf \lambda x.\mbox{\tt tuntuu}\oconc x(\mbox{\tt lta}), 
+	\mbox{\sf resemble}'\zu
+\end{equation}
+%%
+The reason is that if we simply insist that the noun phrase comes 
+equipped with the correct case, then it enters with its ablative 
+case meaning rather than with its typical NP meaning. Notice namely 
+that the ablative has an unmotivated appearance here given the 
+semantics of the ablative case in Finnish. (Moreover, it is the 
+only case possible with this verb.) So, semantically the situation
+is the same as if the verb was transitive. Notice that the fact
+that {\tt tuntua} selects an ablative NP is a coincidence in this 
+setup. The ablative form is directly added to the complement 
+selected. This is not the best way of arranging
+things, and in \cite{kracht:against} a proposal has been
+made to remedy the situation.
+
+There is a list of potential problems for de Saussure grammars. We
+%%%
+\index{German}%%
+%%%
+mention a few of them. The plural in German is formed with some
+stems by umlauting them (see Section~\ref{kap1}.\ref{kap1-3}). This is 
+(at least on the surface) an operation that is not additive. 
+As mentioned earlier, we shall discuss this phenomenon in 
+Section~\ref{kap5}.\ref{kap5-3}. Another problem is what is known 
+as \textbf{suppletion}. 
+%%%%
+\index{suppletion}%%%
+%%%%
+We exemplify this phenomenon with the gradation of Latin adjectives.
+%%%
+\index{Latin}%%
+%%%
+Recall that adjectives in many languages possess three forms: a
+positive ({\tt happy}) a comparative ({\tt happier}) and a
+superlative ({\tt happiest}). This is so in Latin. 
+Table~\ref{tab:gradation} gives some examples. Adjectives above 
+the line are regularly formed, the ones below are irregular.
+%%
+\begin{table}
+\caption{Gradation of Latin Adjectives}
+\label{tab:gradation}
+\begin{center}
+\begin{tabular}{lll}
+\mbox{\rm Positive} & \mbox{\rm Comparative} & \mbox{\rm Superlative} \\\hline
+\mbox{\tt parvus} & \mbox{\tt parvior} & \mbox{\tt parvissimus} \\
+\mbox{\tt beatus} & \mbox{\tt beatior} & \mbox{\tt beatissimus} \\\hline
+\mbox{\tt bonus}  & \mbox{\tt melior}  & \mbox{\tt optimus} \\
+\mbox{\tt malus}  & \mbox{\tt peior}   & \mbox{\tt pessimus} 
+\end{tabular}
+\end{center}
+\end{table}
+%%
+Interesting is the fact that it is not the comparative or 
+superlative suffix that is irregular: it is the root form itself.
+The expected form $^{\ast}${\tt bonior} is replaced by {\tt melior}: 
+the root changes from {\tt bon} to {\tt mel}. (The English adjective
+{\tt good} is also an example.) A different phenomenon is exhibited 
+by English {\tt worse}. The comparative is formed either by 
+adding {\tt er} ({\tt better}, {\tt faster}) or by adding 
+{\tt more}. The form {\tt worse} resists a decomposition into 
+a stem and a suffix. In the case of {\tt worse} we speak of a 
+%%%
+\index{portmanteau morph}
+%%%
+\textbf{portmanteau morph}. Portmanteau morphs can be treated in 
+de Saussure grammars only as lexical items (since we only allow 
+additive phonological processes).  
+
+{\it Notes on this section.} A proposal similar to de Saussure grammars 
+one has been made by Philippe de Groote~\shortcite{degroote:abstract}.
+%%%
+\index{de Groote, Philippe}%%
+%%
+\vplatz
+\exercise
+Recall from Section~\ref{kap3}.\ref{kap3-3} the notion of a combinatory
+extension of categorial grammar. We may attempt the same for
+de Saussure grammars. Define a new mode of combination, {\tt B},
+as follows.
+%%
+\begin{equation}
+\mbox{\tt B}(\auf e, m\zu)(\auf e', m'\zu) :=
+    \auf \lambda x.e(e'(x)), \lambda y.m(m'(y))\zu
+\end{equation}
+%%
+Here, $e$ is of type $\mu \pf \nu$, $e'$ of type $\lambda \pf \mu$
+and $x$ of type $\lambda$, so that the string term $\lambda x.
+e(e'(x))$ is of type $\lambda \pf \nu$. Likewise for the semantics.
+Show that this extension does not generate different signs, it
+just increases the set of structure terms. Contrast this with
+the analogous extension of AB--grammars. Look especially
+at mixed composition rules.
+%%
+\vplatz
+\exercise
+%%%
+\index{Arabic}%%
+%%%
+Review the facts from Exercise~\ref{ex:arabic} on Arabic. Write
+a de Saussure grammar that correctly accounts for them.
+{\it Hint.} This is not so simple. First, define {\it schemes},
+which are functions of type 
+%%%
+\begin{equation}
+s \pf (s \pf (s \pf (s \pf (s \pf (s \pf s)))))
+\end{equation}
+%%%
+They provide a way of combining consonantism
+(root) and vocalism. The first three arguments form the
+consonantism, the remaining three the vocalism. The change
+in consonantism or vocalism can be defined on schemes before
+inserting the actual consonantism and vocalism.
+%%
+\vplatz
+\exercise
+%%%
+\index{Mandarin}%%
+%%%
+Write a de Saussure grammar that generates the facts of Mandarin
+shown in Exercise~\ref{ex:chinese}.
+%%
+\vplatz
+\exercise
+In European languages, certain words inside a NP do not inflect for
+case (these are adverbs, relative clauses and other) and
+moreover, no word can more than two cases. Define case marking
+functions that take care of this. (If you need concrete examples,
+you may elaborate the Finnish example using English substitute
+words.)
+%%
+\vplatz
+\exercise
+We have talked briefly in Section~\ref{kap4}.\ref{kap4-1} about Australian
+case marking systems. We shall simplify the facts (in particular
+the word order) as follows. We define a recursive translation from
+$\PN_{\Omega}$ ($\Omega$--terms $t$ in Polish notation) 
+inductively as follows. We assume case markers 
+$\mbox{\tt c}_i$, $i < \Omega$. For a constant term $c$, put 
+$c^{\diamond} := c$. If $F$ is an $n$--ary function symbol and 
+$t_i$, $i < n$, terms then put
+%%
+\begin{equation}
+(Ft_0\dotsb t_{n-1})^{\diamond} := F\oconc
+    t_0^{\diamond}\conc \mbox{\tt c}_0 \oconc
+    t_1^{\diamond}\conc \mbox{\tt c}_1 \oconc
+    \dotsb \oconc
+    t_{n-1}^{\diamond}\conc \mbox{\tt c}_{n-1}
+\end{equation}
+%%
+Write a de Saussure grammar that generates the set 
+$\{\auf t^{\diamond}, t\zu : t \in \PN_{\Omega}\}$.
+%%
+\vplatz
+\exercise
+%%%
+\index{functional head}%%%
+%%%
+In many modern theories of grammar, so--called \textbf{functional
+heads} play a fundamental role. Functional elements are
+elements that are responsible for the correct shape of the
+structures, but have typically very little --- if any --- content.
+A particularly useful idea is to separate the content of an
+element from its syntax. For example, we may introduce
+the morphological type of a transitive verb ({\it tv\/})
+without specifying any selectional behaviour.
+%%
+\begin{equation}
+\mbox{\sc see} := \auf \mbox{\tt see} : \mbox{\it tv},
+    \mbox{\sf see}'\zu
+\end{equation}
+%%
+Then we assume one or two functional elements that turn this sign
+into the signs $\mbox{\sc see}_i$, $i < 6$. Show how this can
+be done for the particular case of the signs $\mbox{\sc see}_i$.
+Can you suggest a general recipe for words of arbitrary category?
+Do you see a solution of the problem of ablative case selection 
+in Finnish?

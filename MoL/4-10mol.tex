@@ -1,0 +1,204 @@
+\section{Translating Meaning to Form}
+%
+%
+%
+In this section we shall be concerned with the various ways in
+which languages express a given meaning. This will be useful in several
+ways. First, it illustrates how diverse human languages are and what
+kind of typological differentiation there is. Second, it shows us how
+complex the algorithms for mediating form and meaning really are in
+living languages. The reader will therefore get an idea of why
+linguistic theories are so incredibly complicated and diverse. Third,
+we shall see how the present analysis of languages as semiotic systems
+fits vis a vis other theoretical frameworks.
+
+We shall be concerned with the translation between form and
+meaning. However, if by meaning we understand simply
+model--theoretic meaning this task is at present impossible. Say
+we have a language using certain basic properties of individuals
+$P_i$, $i < m$, which are interpreted as subsets of the universe
+$M$. Boolean combinations are likewise interpreted as subsets of
+$M$. Now given an arbitary subset of $M$, which expression will be
+used to refer to this set? If the set is finite there seem to be
+tools available that make this possible, but if the set is
+infinite then this in turn depends on the mode in which that set
+is presented. (For example, suppose that the set is described by a
+recursive procedure, naming the first two elements, say 1 and 2,
+and then saying that the next element is the sum of all the
+previous elements. Would you have guessed that this is the set
+$\{1,2\} \cup \{3\cdot 2^n : n \in \omega\}$?) There is all reason
+to believe that this problem is not the one we should attempt to
+solve. Rather, given that we have a language (say, some language
+of simple type theory) in which we express meanings, then we
+should describe a procedure that takes elements of that language
+and translates them into expressions of the language in question.
+Thus, it may turn out that $t$ and $u$ are synomous terms but
+their translations are nevertheless different (but again
+synonymous if translation is biunique). This is the problem we
+shall attack here, progressing from simple to complex.
+
+First step. $F = \{\mbox{\tt a}, \mbox{\tt b}, \mbox{\tt c},
+\mbox{\tt d}\}$, {\tt a} and {\tt b} have the same type, $e$, {\tt
+c} has the type $e \pf t$ (intransitive verb) and {\tt d} the type
+$e \pf (e \pf t)$ (transitive verb). The wellformed expressions of
+this language are {\tt ca}, {\tt cb}, {\tt daa}, {\tt dab}, {\tt
+dba} and {\tt dbb}. Call the language $L$. We shall now study the
+ways in which these expressions are rendered in natural languages.
+The first observation we make is that languages differ in the
+relative order of the elements. English, for example, puts the
+subject before the verb, the object after. Thus, if {\tt a} is
+translated by {\tt Marcus}, {\tt b} by {\tt Paul}, {\tt c} by {\tt
+sleeps} and {\tt d} by {\tt chases}, we get the following
+correspondence.
+%%%
+\begin{center}
+\begin{tabular}{l|l}
+$L$ & English \\\hline
+{\tt ca} & {\tt Marcus sleeps.} \\
+{\tt cb} & {\tt Paul sleeps.} \\
+{\tt daa} & {\tt Marcus chases Marcus.} \\
+{\tt dab} & {\tt Marcus chases Paul.} \\
+{\tt dba} & {\tt Paul chases Marcus.} \\
+{\tt dbb} & {\tt Paul chases Paul.}
+\end{tabular}
+\end{center}
+%%
+In this way, we can highlight the different word order patterns.
+For English, we may postulate the following basic signs in an {\bf
+AB}--grammar.
+%%
+$$\auf \mbox{\tt Marcus}, e, \mbox{\tt a}\zu,
+\auf \mbox{\tt Paul}, e, \mbox{\tt b}\zu, \auf \mbox{\tt sleeps},
+e/t, \mbox{\tt c}\zu, \auf \mbox{\tt chases}, e/(e \backslash t),
+\mbox{\tt d}\zu$$
+%%
+Other languages have different word order patterns, as we have
+described earlier. However, more is in stock. Many languages use
+{\it cases\/} to distinguish the arguments. Hungarian, for
+example, marks the object of a transitive verb by a suffix {\tt
+t}.
+%%
+\begin{center}
+\begin{tabular}{l|l}
+$L$ & Hungarian \\\hline
+{\tt ca} & {\tt Marcusz alszik.} \\
+         & {\tt Alszik Marcusz.} \\
+{\tt ca} & {\tt P\'al alszik.} \\
+         & {\tt Alszik P\'al.} \\
+{\tt daa} & {\tt Marcusz l\'atja Marcuszt.} \\
+          & {\tt Marcusz Marcuszt l\'atja.} $\ldots$ \\
+{\tt dab} & {\tt Marcusz l\'atja P\'alt.} \\
+          & {\tt Marcusz P\'alt l\'atja.} $\ldots$
+\end{tabular}
+\end{center}
+%%
+Word order is irrelevant (in Hungarian it is constrained by other
+factors, so is not completely free). For the purpose of
+translating back from the Hungarian sentence into the term,
+however, word order is actually irrelevant, unlike in English.
+Suppose for the sake of the argument that any permutation of the
+sentences on the right hand side is a grammatical sentence of
+Hungarian whose meaning is the one given on the left. Then
+translation is still biunique. {\tt L\'atja P\'alt Marcusz.} for
+example has meaning {\tt dba}. All we have to do is to look for
+the word carrying the suffix {\tt t}. This word is the object.
+
+Additionally, Hungarian shows what is known as {\bf head marking}.
+Depending on whether the subject is singular or plural, and
+depending on whether it is 1st, 2nd or 3rd person the verb form is
+different (see also Section~\ref{kap5-1}).
+%%
+\\[2mm]
+\begin{tabular}{l|l|l}
+(Subject) & English & Hungarian \\\hline%%
+1 Sg & {\tt I give.} & {\tt Adom.} \\
+2 Sg & {\tt You give.} & {\tt Adsz.} \\
+3 Sg & {\tt He/She/It gives.} & {\tt Ad.} \\
+1 Pl & {\tt We give.} & {\tt Adunk.} \\
+2 Pl & {\tt You give.} & {\tt Adtok.} \\
+3 Pl & {\tt They give.} & {\tt Adnak.}
+\end{tabular}
+\\[2mm]
+%%
+We say that in Hungarian the verb agrees in number and person with
+its subject. %%
+%%%
+\index{agreement}%%
+%%%
+English has traces of that phenomenon: if the
+subject is in the first person singular the verb carries an
+additional suffix {\tt s}. The reason why this is called head
+marking is that this time it is the head (the verb) that is marked
+for properties of its argument. Some languages not only have
+agreement with the subject, they also have agreement with the
+object, some even with the indirect object. We remark here that
+this phenomenon is not restricted to verbs. A particularly
+widespread phenomenon is the so--called {\bf possessor agreement}.
+%%%
+\index{agreement!possessor}%%
+%%%
+Once again we can use Hungarian to exemplify it.
+%%%
+\begin{center}
+\begin{tabular}{l|l|l}
+(Possessor) & English & Hungarian \\\hline%%
+1 Sg & {\tt my car} & {\tt az \'en kocsim} \\
+2 Sg & {\tt your car} & {\tt a te kocsid} \\
+3 Sg & {\tt his/her/its car} & {\tt az \"o kocsija} \\
+1 Pl & {\tt our car} & {\tt a mi kocsink} \\
+2 Pl & {\tt your car} & {\tt a ti kocsitek} \\
+3 Pl & {\tt their car} & {\tt az \"o kocsijuk}
+\end{tabular}
+\end{center}
+%%
+In German, the possessive pronouns distinguish the gender of the
+possessor (in 3rd person) as well as number, gender and case of
+the possessed item. For example, it is {\tt sein Auto} for {\tt
+his car} but {\tt ihr Auto} for {\tt her car}. Put into the dative
+this would be {\tt seinem Auto} and {\tt ihrem Auto}, and {\tt
+seinen Autos}/{\tt ihren Autos} in the plural (and dative). Also,
+adjectives in many languages agree with the noun they modify in
+case, number, person and other categories. English possesses
+number agreement with respect to the demonstratives {\tt this} and
+{\tt that}. We have {\tt this city} but {\tt these cities}, and we
+have {\tt that cities} but {\tt those cities}.
+
+For the rest of this section we shall sketch the advantages and
+disadvantages of the various types of languages, and then turn to
+a formal analysis of case marking. Our discussion of the various
+representations of the terms concerns the question whether the
+representations are uniquely readable. Obviously, if they are not
+this is a source of potential confusion in communication. In
+logic, Polish Notation has been popular for a while since it is
+very economical: once one is used to it, it has many advantages.
+One is of course, that it does away with brackets. This means less
+work in writing or typing formulae. On the face of it it seems
+that any consistent way of putting the function symbol with
+respect to its arguments is the same as any other. This, however,
+is false. Suppose we write $\nicht$ before its argument and $\qu$
+after. Then $\nicht \mbox{\tt p0}\qu$ is ambiguous between
+$\mbox{\tt (}\qu\mbox{\tt (}\nicht \mbox{\tt p0))}$ and $\mbox{\tt
+(}\nicht\mbox{\tt (}\qu\mbox{\tt p0))}$. Thus, we must be
+consistent in either putting every functor before its arguments or
+every functor following them. On the other hand, if this fixed, we
+can specify for each functor independently in which way the
+arguments have to be written down. For example, we may require
+that $\pf$ takes its first argument second, and the second
+argument first. As long as do not additionally employ the standard
+notation this remains uniquely readable. Evidently, if
+$\pf\varphi\chi$ is actually taken to mean what $\pf\chi\varphi$
+means we had better use a different symbol, say $\leftarrow$. And
+if so, it is clear that we might just as well declare the argument
+that appears first to be the first argument {\it tout court}.
+Trivial as this point may seem, it allows to see that nothing much
+distinguishes a VSO language from a VOS language. However, one of
+the most famous linguistic universals in language typology is the
+claim that the subject precedes the object (Greenberg's Universal
+No.~1), thus favouring VSO, SVO and SOV. From the figures given in
+Section\ref{kap1-4} we conclude that this is the case in 19 out of
+20 languages. We shall not elaborate on why this is so. We mention
+only that theoretically SVO languages are at a disadvantage since
+they are not uniquely readable. However, other factors come into
+play. First, the immediate constituents of the verb typically are
+noun phrases, and their structures can be much different so that
+it is not immediate to what degree the ambiguity is real.

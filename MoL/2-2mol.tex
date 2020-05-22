@@ -1,0 +1,1044 @@
+\section{Normal Forms}
+\label{zweizwei}
+\label{kap2-2}
+%
+%
+%
+\index{language!context free}%%%
+In the remaining sections of this chapter we shall deal with
+CFGs and their languages. In view of the extensive
+literature about CFLs it is only possible to
+present an overview. In this section we shall deal in particular
+with normal forms. There are many normal forms for CFGs,
+each having a different purpose. However, notice that
+the transformation of a grammar into a normal form necessarily
+destroys some of its properties. So, to say that a grammar can
+be transformed into another is meaningless unless we specify
+exactly what properties remain constant under this transformation.
+If, for example, we are only interested in the language generated
+then we can transform any CFG into Chomsky Normal Form. However, 
+if we want to maintain the constituent
+structures, then only the so--called standard form is possible.
+A good exposition of this problem area can be found in
+\cite{miller:capacity}.
+
+Before we deal with reductions of grammars we shall study the
+relationship between derivations, trees and sets of rules.
+To be on the safe side, we shall assume that every symbol
+occurs at least once in a tree, that is, that the grammar is
+slender in the sense of Definition~\ref{def:schlank}. From the 
+considerations of Section~\ref{kap1}.\ref{einsvier} we conclude
+that for any two CFGs $G = \auf \mbox{\tt S}, N, A, R\zu$
+and $G' = \auf \mbox{\tt S}', N', A, R'\zu$ $L_B(G) = L_B(G')$ iff 
+$\der(G) = \der(G')$. Likewise we
+see that for all $X \in N \cup N'$ $\der(G,X) =
+\der(H,X)$ iff $R = R'$. Now let
+$G = \auf \mbox{\tt S}, N, A, R\zu$ and  a sequence
+$\Gamma = \auf \vec{\alpha}_i : i < n\zu$ be given.
+In order to test whether $\Gamma$ is a $G$--string sequence
+we have to check for each $i < n-1$ whether $\vec{\alpha}_{i+1}$
+can be derived from $\vec{\alpha}_i$ with a single application
+of a rule. To this end we have to choose an $\vec{\alpha}_i$
+and apply a rule and check whether the string obtained equals
+$\vec{\alpha}_{i+1}$. Checking this needs $a_G \times |\vec{\alpha}_i|$
+steps, where $a_G$ is a constant which depends only on $G$.
+Hence for the whole derivation we need $\sum_{i < n} a_G |\vec{\alpha}_i|$
+steps. This can be estimated from above by $a_G \times n \times
+|\vec{\alpha}_{n-1}|$ and if $G$ is strictly expanding also by
+$a_G \times |\vec{\alpha}_{n-1}|^2$. It can be shown that there are
+grammars for which this is the best possible bound. In order to
+check for an ordered labelled tree whether it can be generated
+by $\gamma G$ we need less time. We only need to check for each node
+whether the local tree at $x$ conforms to some rule of
+$G$. This can be done in constant time. The time therefore only 
+linearly depends on the size of the tree.
+
+There is a tight connection between derivations and trees.
+To begin, a derivation has a unique tree corresponding to it.
+Simply translate the derivation in $G$ into a derivation
+in $\gamma G$. Conversely, however, there may exist many
+derivations for the same tree. Their number can be very large.
+However, we can obtain them systematically in the following way.
+Let $\GB$ be an (exhaustively ordered, labelled) tree.
+%%%
+\index{linearisation}%%
+%%%
+Call $\lhd \subseteq B^2$ a \textbf{linearisation} if $\lhd$ is an
+irreflexive, linear ordering and from $x > y$ follows $x \lhd y$.
+Given a linearisation, a derivation is found as follows. We begin
+with the element which is smallest with respect to $\lhd$. This
+is, as is easy to see, the root. The root carries the label {\tt S}.
+Inductively, we shall construct cuts $\vec{\alpha}_i$ through
+$\GB$ such that the sequence $\auf \vec{\alpha}_i : i < n\zu$ is a
+derivation of the associated string. (Actually, the derivation is
+somewhat more complex than the string sequence, but we shall not
+complicate matters beyond need here.) The beginning is clear: we put 
+$\vec{\alpha}_0 := \mbox{\tt S}$. Now assume that $\vec{\alpha}_i$ has
+been established, and that it is not identical to the associated
+string of $\GB$. Then there exists a node $y$ with nonterminal
+label in $\vec{\alpha}_i$. (There is a unique correspondence
+between nodes of the cut and segments of the strings
+$\vec{\alpha}_i$.) We take the smallest such node with respect to
+$\lhd$. Let its label be $Y$. Since we have a $G$--tree, the local
+tree with root $y$ corresponds to a rule of the form $Y \pf
+\vec{\beta}$ for some $\vec{\beta}$. In $\vec{\alpha}_i$ $y$
+defines a unique instance of that rule. Then $\vec{\alpha}_{i+1}$
+is the result of replacing that occurrence of $Y$ by
+$\vec{\beta}$. The new string is then the result of applying a
+rule of $G$, as desired.
+
+It is also possible to determine for each derivation a
+linearisation of the tree which yields that derivation in the
+described manner. However, there can be several linearisations
+that yield the same derivation.
+%%
+\begin{thm}
+%%%
+\index{$\der(\lhd)$}%%%%
+%%%
+Let $G$ be a CFG and $\GB \in L_B(G)$. Further, let
+$\lhd$ be a linearisation of $\GB$. Then $\lhd$ determines
+a $G$--derivation $\der(\lhd)$ of the string
+which is associated to $\GB$. If $\shd$ is another linearisation
+of $\GB$ then $\der(\shd) = \der(\lhd)$
+is the case iff $\shd$ and $\lhd$ coincide on the
+interior nodes of $\GB$.
+\proofend
+\end{thm}
+%%
+Linearisations can also be considered as top down search strategies
+on a tree. We shall present examples. The first is a particular
+case of the so--called
+%%%
+\index{search!depth--first}%%
+\index{linearisation!leftmost}%%
+%%%
+\textbf{depth--first} search and the linearisation shall be called
+\textbf{leftmost linearisation}.  It is as follows.
+$x \lhd y$  iff $x > y$ or $x \sqsubset y$.
+For every tree there is exactly one leftmost linearisation.
+We shall denote the fact that there is a leftmost
+derivation of $\vec{\alpha}$ from $X$ by $X \vdash_G^{\ell}
+\vec{\alpha}$. We can generalize the situation as follows.
+Let $\shd$ be a linear ordering uniformly defined on the
+leaves of local  subtrees. That is to say, if $\GB$ and $\GC$
+are isomorphic local trees (that is, if they correspond to the
+same rule $\rho$) then $\shd$ orders the leaves $\GB$ linearly
+in the same way as $\lhd$ orders the leaves of $\GC$ (modulo
+the unique (!) isomorphism). In the case of the leftmost
+linearisation the ordering is the one given by $\sqsubset$.
+Now a minute's reflection reveals that every linearisation of
+the local subtrees of a tree induces a linearisation of the entire
+tree but not conversely (there are orderings which do not
+proceed in this way, as we shall see shortly).
+$X \vdash_G^{\shd} \vec{\alpha}$ denotes the fact that there
+is a derivation of $\vec{\alpha}$ from $X$ determined by
+$\shd$. Now call $\pi$
+%%%
+\index{priorisation}%%
+%%%
+a \mbox{priorisation for} $G = \auf \mbox{\tt S}, N, A, R\zu$ if
+$\pi$ defines a linearisation on the local tree $\GH_{\rho}$,
+for every $\rho \in R$. Since the root is always the first
+element in a linearisation, we only need to order the daughters
+of the root node, that is, the leaves. Let this ordering be
+$\shd$. We write $X \vdash_G^{\pi} \vec{\alpha}$ if
+$X \vdash_G^{\shd} \vec{\alpha}$ for the linearisation $\shd$
+defined by $\pi$.
+%%
+\begin{prop}
+Let $\pi$ be a priorisation. Then $X \vdash_G^{\pi} \vec{x}$
+iff $X \vdash_G \vec{x}$.
+\end{prop}
+%%%
+\index{search!breadth--first}%%
+%%%
+A different strategy is the {\it breadth--first search}. This
+search goes through the tree in increasing depth. Let $S_n$ be the
+set of all nodes $x$ with $d(x) = n$. For each $n$, $S_n$ shall be
+ordered linearly by $\sqsubset$. The \textbf{breadth--first search}
+is a linearisation $\Delta$, which is defined as follows. (a) If
+$d(x) = d(y)$ then $x\; \Delta\; y$ iff $x\sqsubset y$,
+and (b) if $d(x) < d(y)$ then $x\; \Delta\; y$. The difference
+between these search strategies, depth--first and breadth--first,
+can be made very clear with tree domains (see
+Section~\ref{kap1}.\ref{kap1-4}). The depth--first search traverses 
+the tree domain in the lexicographical order, the breadth--first 
+search in the numerical order. Let the following tree domain be given.
+%%
+\begin{center}
+\begin{picture}(8,11)
+\put(1,1.5){\makebox(0,0){00}}
+\put(3,1.5){\makebox(0,0){10}}
+\put(5,1.5){\makebox(0,0){11}}
+\put(7,1.5){\makebox(0,0){20}}
+\put(1,5.5){\makebox(0,0){0}}
+\put(4,5.5){\makebox(0,0){1}}
+\put(7,5.5){\makebox(0,0){2}}
+\put(4,9.5){\makebox(0,0){$\varepsilon$}}
+\put(1,2){\line(0,1){3}}
+\put(3,2){\line(1,3){1}}
+\put(5,2){\line(-1,3){1}}
+\put(7,2){\line(0,1){3}}
+\put(1,6){\line(1,1){3}}
+\put(4,6){\line(0,1){3}}
+\put(7,6){\line(-1,1){3}}
+\end{picture}
+\end{center}
+%%
+The depth--first linearisation is
+%%
+\begin{equation}
+\varepsilon, 0, 00, 1, 10, 11, 2, 20
+\end{equation}
+%%
+The breadth--first linearisation, however, is
+%%
+\begin{equation}
+\varepsilon, 0, 1, 2, 00, 10, 11, 20
+\end{equation}
+%%
+Notice that with these linearisations the tree domain
+$\omega^{\ast}$ cannot be enumerated. Namely, the
+depth--first linearisation begins as follows. 
+%%
+\begin{equation}
+\varepsilon, 0, 00, 000, 0000, \dotsc
+\end{equation}
+%%
+So we never reach 1. The breadth--first linearisation goes like this.
+%%
+\begin{equation}
+\varepsilon, 0, 1, 2, 3, \dotsc
+\end{equation}
+%%
+So, we never reach 00.
+On the other hand, $\omega^{\ast}$ is countable, so we do
+have a linearisation, but it is more complicated than the
+given ones.
+
+The first reduction of grammars we look at is the elimination
+of superfluous symbols and rules. Let 
+$G = \auf \mbox{\tt S}, A, N, R\zu$
+be a CFG. Call $X \in N$ \textbf{reachable}
+%%%
+\index{nonterminal!reachable}%%
+\index{nonterminal!completable}%%
+%%%
+if $G \vdash \vec{\alpha} \conc X \conc \vec{\beta}$ for some
+$\vec{\alpha}$ and $\vec{\beta}$. $X$ is called \textbf{completable}
+if there is an $\vec{x}$ such that $X \Pf^{\ast}_R \vec{x}$.
+%%
+\begin{equation}
+\begin{array}{l@{\quad \pf \quad}l@{\qquad}l@{\quad \pf \quad}l}
+\mbox{\tt S} & \mbox{\tt AB} & \mbox{\tt A} & \mbox{\tt CB} \\
+\mbox{\tt B} & \mbox{\tt AB} & \mbox{\tt A} & \mbox{\tt x}  \\
+\mbox{\tt D} & \mbox{\tt Ay} & \mbox{\tt C} & \mbox{\tt y}
+\end{array}
+\end{equation}
+%%
+In the given grammar {\tt A}, {\tt C} and {\tt D}
+are completable, and {\tt S}, {\tt A}, {\tt B} and {\tt C}
+are reachable. Since {\tt S}, the start symbol, is not completable,
+no symbol is both reachable and completable. The grammar generates
+no terminal strings.
+
+Let $N'$ be the set of symbols which are both reachable and
+completable. If $\mbox{\tt S} \not\in N'$ then $L(G) = \varnothing$. 
+In this case we put $N' := \{\mbox{\tt S}\}$ and $R' := \varnothing$. 
+Otherwise, let $R'$ be the restriction of $R$ to the symbols from 
+$A \cup N'$. This defines $G' = \auf \mbox{\tt S}, N', A, R'\zu$. 
+It may be that throwing away rules may make some nonterminals 
+unreachable or uncompletable. Therefore, this process must be 
+repeated until $G' = G$, in which case every element is both 
+reachable and completable. Call the resulting grammar $G^s$. It 
+is clear that $G \vdash \vec{\alpha}$ iff $G^s \vdash \vec{\alpha}$. 
+Additionally, it can be shown that every derivation in $G$ is a 
+derivation in $G^s$ and conversely.
+%%
+\begin{defn}
+\label{def:schlank}
+%%%
+\index{grammar!slender}%%
+%%%
+A CFG is called \textbf{slender} if either
+$L(G) = \varnothing$ and $G$ has no nonterminals except for
+the start symbol and no rules; or $L(G) \neq \varnothing$ and
+every nonterminal is both reachable and completable.
+\end{defn}
+%%
+Two slender grammars have identical sets of derivations iff
+their rule sets are identical.
+%%
+\begin{prop}
+Let $G$ and $H$ be slender. Then $G = H$ iff
+$\der(G) = \der(H)$.
+\end{prop}
+%%
+\begin{prop}
+For every CFG $G$ there is an effectively 
+constructable slender CFG $G^s = \auf\mbox{\tt S}, %
+N^s, A, R^s\zu$ such that $N^s \subseteq N$,
+which has the same set of derivations as $G$. In this case it also
+follows that $L_B(G^s) = L_B(G)$.
+\proofend
+\end{prop}
+%%
+Next we shall discuss the role of the nonterminals. Since these
+symbols do not occur in $L(G)$, their name is irrelevant for the
+purposes of $L(G)$. To make this precise we shall introduce the
+notion of a rule simulation. Let $G$ and $G'$ be grammars with
+sets of nonterminals $N$ and $N'$. Let $\sim\; \subseteq\; N
+\times N'$ be a relation. This relation can be extended to a
+relation $\approx \; \subseteq \; (N \cup A)^{\ast} \times (N'
+\cup A)^{\ast}$ by putting $\vec{\alpha} \approx \vec{\beta}$ if
+$\vec{\alpha}$ and $\vec{\beta}$ are of equal length and $\alpha_i
+\sim \beta_i$ for every $i$. A relation $\sim\; \subseteq N \times
+N'$ is called a \textbf{forward rule simulation} or
+an \textbf{R--simulation}
+%%%
+\index{rule simulation!forward}%%
+\index{R--simulation}%%
+%%%
+if (0) $\mbox{\tt S} \sim \mbox{\tt S}'$, (1) if $X \pf
+\vec{\alpha} \in R$ and $X \sim Y$ then there exists a
+$\vec{\beta}$ such that $\vec{\alpha} \approx \vec{\beta}$ and $Y
+\pf \vec{\beta} \in R'$, and (2) if $Y \pf \vec{\beta} \in R'$
+and $X \sim Y$ then there exists an $\vec{\alpha}$ such that
+$\vec{\alpha} \approx \vec{\beta}$ and $X \pf \vec{\alpha} \in R$.
+%%%
+\index{rule simulation!backward}%%
+%%%
+A \textbf{backward simulation} is defined thus.
+(0) From $\mbox{\tt S} \sim X$ follows $X = \mbox{\tt S}'$
+and from $Y \sim \mbox{\tt S}'$ follows $Y = \mbox{\tt S}$,
+(1) if $X \pf \vec{\alpha} \in R$ and $\vec{\alpha} \approx
+\vec{\beta}$ then $Y \pf \vec{\beta} \in R'$ for some $Y$
+such that $X \sim Y$, and (2) if $Y \pf \vec{\beta} \in R'$ and
+$\vec{\beta} \approx \vec{\alpha}$ then $X \pf \vec{\alpha} \in R$
+for some $X$ such that $X \sim Y$.
+
+We give an example of a forward simulation. Let
+$G$ and $G'$ be the following grammars.
+%%
+\begin{equation}%{l@{\quad\pf\quad}l@{\qquad\qquad}l@{\quad\pf\quad}l}
+\begin{array}{ll@{\qquad}ll}
+\mbox{\tt S} & \pf \mbox{\tt ASB} \mid \mbox{\tt AB} 
+	& \mbox{\tt S} & \pf \mbox{\tt ATB} \mid \mbox{\tt ASC}
+        \mid \mbox{\tt AC} \\
+\mbox{\tt A} & \pf \mbox{\tt b}  
+	& \mbox{\tt T} & \pf \mbox{\tt ATC} \mid \mbox{\tt AC} \\
+\mbox{\tt B} & \pf \mbox{\tt b}  
+	& \mbox{\tt A} & \pf \mbox{\tt a} \\
+             & & \mbox{\tt B} & \pf \mbox{\tt b} \\
+             & & \mbox{\tt C} & \pf \mbox{\tt b} \\
+\end{array}
+\end{equation}
+%%
+The start symbol is {\tt S} in both grammars.
+Then the following is an  R--simulation.
+%%
+\begin{equation}
+\sim := \{\auf \mbox{\tt A}, \mbox{\tt A}\zu,
+\auf \mbox{\tt B}, \mbox{\tt B}\zu, \auf \mbox{\tt S}, \mbox{\tt S}\zu,
+\auf \mbox{\tt B}, \mbox{\tt C}\zu, \auf \mbox{\tt S}, \mbox{\tt T}\zu\}
+\end{equation}
+%%
+Together with $\sim$ also the converse relation $\sim^{\smallsmile}$
+is an R--simulation. If $\sim$ is an R--simulation and
+$\auf \vec{\alpha}_i : i < n+1\zu$ is a $G$--derivation
+there exists a $G'$--derivation $\auf \vec{\beta}_i : i < n+1\zu$
+such that $\vec{\alpha}_i \approx \vec{\beta}_i$ for every $i < n+1$.
+We can say more exactly that if
+$\auf \vec{\alpha}_i, C, \vec{\alpha}_{i+1}\zu$ is an instance
+of a rule from $G$ where $C = \auf \kappa_1, \kappa_2\zu$ then
+there is a context $D = \auf \lambda_1, \lambda_2\zu$ such that
+$\auf \vec{\beta}_i, D, \vec{\beta}_{i+1}\zu$ is an instance
+of a rule from $G'$. In this way we get that for every
+$\GB = \auf B, <,\sqsubset, \ell\zu \in L_B(G)$ there is a
+$\GC = \auf B, <, \sqsubset, \mu\zu \in L_B(G')$ such that
+$\ell(x) = \mu(x)$ for every leaf and $\ell(x) \sim \mu(x)$
+for every nonleaf. Analogously to a rule simulation we can
+define a simulation of derivation by requiring that for every
+$G$--derivation $\Gamma$ there is a $G'$--derivation
+$\Delta$ which is equivalent to it.
+%%
+\begin{prop}
+Let $G_1$ and $G_2$ be slender CFGs and 
+$\sim\; \subseteq \; N_1 \times N_2$ be an R--simulation. 
+Then for every $G_1$--derivation
+$\auf \vec{\alpha}_i : i < n\zu$ there exists a $G_2$--derivation
+$\auf \vec{\beta}_i : i < n\zu$ such that $\vec{\alpha}_i \approx
+\vec{\beta}_i$, $i < n$.
+\proofend
+\end{prop}
+%%
+We shall look at two special cases of simulations.
+Two grammars $G$ and $G'$ are called
+%%%
+\index{equivalence}%%
+%%%
+\textbf{equivalent} if there is a bijection $b \colon N \cup A \pf
+N' \cup A$ such that $b(x) = x$ for every $x \in A$, $b(S) = S'$
+and $\oli{b}$ induces a bijection between $G$--derivations and
+$G'$--derivations. This notion is more restrictive than the
+one which requires that $\oli{b}$ is a bijection between the
+sets of rules.  For it may happen that certain rules can never be
+used in a derivation. For given CFGs we
+can easily decide whether they are equivalent. To begin, we
+bring them into a form in which all rules are used in a
+derivation, by removing all symbols that are not reachable
+and not completable. Such grammars are equivalent if there is a
+bijection $b$ which puts the rules into correspondence.
+The existence of such a bijection is easy to check.
+
+The notion of equivalence just proposed is too strict in
+one sense.  There may be nonterminal symbols which cannot
+be distinguished.  We say $G$ is \textbf{reducible to} $G'$ if
+%%%
+\index{reducibility}%%
+%%%
+there is a surjective function $b \colon N \cup A \epi N' \cup A'$
+such that $b(S) = S'$, $b(x) = x$ for every $x \in A$ and
+such that $\oli{b}$ maps every $G$--derivation onto a
+$G'$--derivation, while every preimage under $\oli{b}$
+of a $G'$--derivation is a $G$--derivation.
+(We do not require however that the preimage of the start symbol
+from $G'$ is unique; only that the start symbol from
+$G$ has {\it one\/} preimage which is a start symbol
+of $G'$.)
+%%
+\begin{defn}
+%%%
+\index{grammar!reduced}%%
+%%%
+$G$ is called \textbf{reduced} if every grammar $G'$ such that 
+$G$ is reducible onto $G'$ can itself be reduced onto $G$.
+\end{defn}
+%%
+Given $G$ we can effectively construct a reduced grammar
+onto which it can be reduced. We remark that in our example above
+$G'$ is not reducible onto $G$. For even though $\sim^{\smallsmile}$
+is a function (with $\mbox{\tt A} \mapsto \mbox{\tt A},
+\mbox{\tt B} \mapsto \mbox{\tt B},
+\mbox{\tt C} \mapsto \mbox{\tt B},
+\mbox{\tt S} \mapsto \mbox{\tt S},
+\mbox{\tt T} \mapsto \mbox{\tt S}$)
+and {\tt ASB} can be derived from {\tt S} in one step, {\tt ATB}
+cannot be derived from {\tt S} in one step. Given $G$ and the
+function $\sim^{\smallsmile}$ the following grammar is reduced
+onto $G$.
+%%
+\begin{align}
+\begin{split}
+%\begin{array}{l@{\quad \pf\quad}l}
+\mbox{\tt S} & \pf \mbox{\tt ASB} \mid \mbox{\tt ATB} \mid \mbox{\tt ASC}
+    \mid \mbox{\tt ATC} \mid \mbox{\tt AB} \mid \mbox{\tt AC} \\
+\mbox{\tt T} & \pf \mbox{\tt ASB} \mid \mbox{\tt ATB} \mid \mbox{\tt ASC}
+    \mid \mbox{\tt ATC} \mid \mbox{\tt AB} \mid \mbox{\tt AC} \\
+\mbox{\tt A} & \pf \mbox{\tt a} \\
+\mbox{\tt B} & \pf \mbox{\tt b} \\
+\mbox{\tt C} & \pf \mbox{\tt b}
+%\end{array}$$
+\end{split}
+\end{align}
+%%
+Now let $G$ be a CFG. We add to $A$ two more symbols,
+namely {\tt (} and {\tt )}, not already contained in $A$. Subsequently, 
+we replace every rule $X \pf \vec{\alpha}$ by the rule 
+$X \pf \mbox{\tt (}\conc %
+\vec{\alpha} \conc \mbox{\tt )}$. The so--constructed grammar
+is denoted by $G^b$.
+%%
+\begin{equation}
+\begin{array}{l@{\quad \pf\quad}l@{\qquad\qquad}l@{\quad\pf\quad}l}
+\multicolumn{2}{c}{G} & \multicolumn{2}{c}{G^b} \\
+\mbox{\tt S} & \mbox{\tt AS} \mid \mbox{\tt SB} \mid \mbox{\tt AB}
+    & \mbox{\tt S} & \mbox{\tt (AS)} \mid \mbox{\tt (SB)}
+        \mid \mbox{\tt (AB)} \\
+\mbox{\tt A} & \mbox{\tt a}        & \mbox{\tt A} & \mbox{\tt (a)} \\
+\mbox{\tt B} & \mbox{\tt b}        & \mbox{\tt B} & \mbox{\tt (b)}
+\end{array}
+\end{equation}
+%%
+The grammar $G$ generates the language 
+$\mbox{\tt a}^+ \mbox{\tt b}^+$. The string {\tt aabb} has several 
+derivations, which correspond to different trees.
+%%
+\begin{equation}
+\begin{array}{l}
+\auf \mbox{\tt S}, \mbox{\tt AS}, \mbox{\tt ASB},
+\mbox{\tt AABB}, \dotsc, \mbox{\tt aabb}\zu \\
+\auf \mbox{\tt S}, \mbox{\tt SB}, \mbox{\tt ASB},
+\mbox{\tt AABB}, \dotsc, \mbox{\tt aabb}\zu
+\end{array}
+\end{equation}
+%%
+If we look at the analogous derivations in $G^b$ we get the
+strings
+%%
+\begin{equation}
+\mbox{\tt ((a)(((a)(b))(b)))}, \qquad
+\mbox{\tt (((a)((a)(b)))(b))}
+\end{equation}
+%%
+These are obviously distinct. Define a homomorphism $\oli{e}$ by
+$\oli{e}(a) := a$, if $a \in A$, $\oli{e}\colon \mbox{\tt )} \mapsto %
+\varepsilon$ and  $\oli{e} \colon \mbox{\tt )} \mapsto \varepsilon$.
+Then it is not hard to see that
+%%
+\begin{equation}
+L(G) = \oli{e}[L(G^b)]
+\end{equation}
+%%
+Now look at the class of trees $L(G)$ and forget the labels of
+all nodes which are not leaves. Then the structure obtained
+shall be called a \textbf{bracketing analysis}
+%%%
+\index{bracketing analysis}%%
+%%%
+of the associated strings. The reason is that the bracketing
+analyses are in one--to--one correspondence with the strings which
+$L(G^b)$ generates. Now we will ask ourselves whether for two
+given grammars $G$ and $H$ it is decidable whether they generate
+the same bracketing analyses. We ask ourselves first what the
+analogon of a derivation of $G$ is in $G^b$. Let $\vec{\gamma} X
+\vec{\eta}$ be derivable in $G$, and let the corresponding
+$G^b$--string in this derivation be $\vec{\gamma}^b X
+\vec{\eta}^b$. In the next step $X$ is replaced by $\alpha$. Then
+we get $\vec{\gamma}\vec{\alpha}\vec{\eta}$,
+and in $G^b$ the string $\vec{\gamma}^b \mbox{\tt (}\vec{\alpha}%
+\mbox{\tt )}\vec{\delta}^b$. If we have an R--simulation to $H$
+then it is also an R--simulation from $G^b$ to $H^b$ provided
+that it sends the opening bracket of $G^b$ to the opening
+bracket of $H^b$ and the closing bracket of $G^b$ to the closing
+bracket of $H^b$. It follows that if there is an R--simulation
+from $G$ to $H$ then not only we have $L(G) = L(H)$ but also
+$L(G^b) = L(H^b)$.
+%%
+\begin{thm}
+We have $L(G^b) = L(H^b)$ if there is an R--si\-mu\-la\-tion
+from $G$ to $H$.
+\end{thm}
+%%
+The bracketing analysis is too strict for most purposes.
+First of all it is not customary to put a single symbol into
+brackets. Further, it makes no sense to distinguish between
+$\mbox{\tt ((}\vec{x}\mbox{\tt ))}$ and
+$\mbox{\tt (}\vec{x}\mbox{\tt )}$,
+since both strings assert that $\vec{x}$ is a
+constituent. We shall instead use what we call 
+\textbf{constituent analyses}.
+%%%
+\index{constituent analysis}%%
+%%%
+These are pairs $\auf \vec{x}, \GC\zu$ in which $\vec{x}$
+is a string and $\GC$ an exhaustively ordered constituent
+structure defined over $\vec{x}$. We shall denote by
+%%%%
+\index{$L_c(G)$}%%
+%%%%
+$L_c(G)$ the class of all constituent analyses generated by
+$G$. In order to switch from bracketing analyses to
+constituent analyses we only have to eliminate the unary
+rules. This can be done as follows. Simply replace every rule
+$\rho = Y \pf \vec{\alpha}$, where $|\vec{\alpha}| > 1$, 
+by the set $\rho^2 := \{Z \pf \vec{\alpha} : 
+Z \Pf^{\ast} Y\}$. $R^> := \bigcup \auf \rho^2 : \rho \in R\zu$. 
+Finally, let $G^> := \auf \mbox{\tt S}, N, A, R^>\zu$.
+Every rule is strictly productive and we have $L_c(G) = L_c(G^>)$. 
+(Exception needs to be made for $\mbox{\tt S} \pf \varepsilon$, 
+as usual. Also, if necessary, we shall assume that $G^{>}$ is slender.)
+%%
+\begin{defn}
+%%%
+\index{grammar!standard form}%%
+\index{grammar!Chomsky Normal Form}%%
+\index{standard form}%%
+\index{Chomsky Normal Form}%%
+%%%
+A CFG is in \textbf{standard form} if every
+rule different from $\mbox{\tt S} \pf \varepsilon$ has the form
+$X \pf \vec{Y}$ with $|\vec{Y}| > 1$ or the form $X \pf a$.
+A grammar is in \textbf{2--standard form} or
+\textbf{Chomsky Normal Form} if every rule is of the form
+$\mbox{\tt S} \pf \varepsilon$, $X \pf Y_0 Y_1$ or $X \pf a$.
+\end{defn}
+%%
+(Notice that by our conventions a CFG in
+standard form contains the rule $X \pf \varepsilon$  for
+$X = \mbox{\tt S}$, but this happens only if {\tt S} is not on the
+right hand side of a rule.) We already have proved that
+the following holds.
+%%
+\begin{thm}
+For every CFG $G$ one can construct a slender
+CFG $G^n$ in standard form which generates
+the same constituent structures as $G$.
+\end{thm}
+%%
+\begin{thm}
+For every CFG $G$ we can construct a slender
+CFG $G^c$ in Chomsky Normal Form such that
+$L(G^c) = L(G)$.
+\end{thm}
+%%
+\proofbeg
+We may assume that $G$ is in standard form.
+Let $\rho = X \pf Y_0 Y_1 \dotsb Y_{n-1}$ be a rule with $n > 2$.
+Let $Z^{\rho}_0, Z^{\rho}_1, \dotsc, Z^{\rho}_{n-2}$
+be new nonterminals. Replace $\rho$ by the rules
+%%
+\begin{multline}
+\rho^c_0 := X \pf Y_0 Z^{\rho}_0, \;
+\rho^c_1 := Z^{\rho}_0 \pf Y_1 Z^{\rho}_1, 
+\dotsc,  \\
+\rho^c_{n-2} := Z^{\rho}_{n-3} \pf Y_{n-2} Y_{n-1}
+\end{multline}
+%%
+Every derivation in $G$ of a string $\vec{\alpha}$ can be
+translated into a derivation in $G^c$ by replacing every
+instance of $\rho$ by a sequence $\rho^c_0, \rho^c_1, \dotsc, %
+\rho^c_{n-1}$. For the converse we introduce the following
+priorisation $\pi$ on the rules. Let $Z_i^{\rho}$ be always
+before $Y_i$. However, in $Z_{n-3}^{\rho} \pf Y_{n-2} Y_{n-1}$
+we choose the leftmost priorisation. We show $G \vdash^{\ell}
+\vec{x}$ iff $G^c \vdash^{\pi} \vec{x}$.
+For if $\auf \alpha_i : i < p+1\zu$ is a leftmost
+derivation of $\vec{x}$ in $G$, then replace every
+instance of a rule $\rho$ by the sequence $\rho^c_0$,
+$\rho^c_1$, and so on until $\rho^c_{n-2}$.
+This is a $G^c$--derivation, as is easily checked.
+It is also a $\pi$--derivation. Conversely, let
+$\auf \beta_j : j < q+1\zu$ be a $G^c$--derivation
+which is priorized with $\pi$. If $\beta_{i+1}$ is the
+result of an application of the rule $\rho^c_k$,
+$k < n-2$, then $i +2 < q+1$ and $\beta_{i+2}$ is the
+result of an application of $\rho^c_{k+1}$ on $\beta_{i+1}$,
+which replaced exactly the occurrence $Z_k$ of the previous
+instance. This means that every $\rho^c_k$ in a block
+of instances of $\rho^c_0$, $\rho^c_1, \dotsc, \rho^c_{n-2}$ 
+corresponds to a single instance of $\rho$. There exists a 
+$G$--derivation of $\vec{x}$, which can be obtained
+by backward replacement of the blocks. It is a leftmost
+derivation.
+\proofend
+%%
+
+For example, the right hand side grammar is the result of the
+conversion of the left hand grammar into Chomsky Normal Form.
+%%
+\begin{equation}
+\begin{array}{ll@{\qquad\qquad}ll}
+\mbox{\tt S} & \pf \mbox{\tt ASBBT} \mid \mbox{\tt ABB}
+    & \mbox{\tt S} & \pf \mbox{\tt AX} \mid \mbox{\tt AV} \\
+& & \mbox{\tt V} & \pf \mbox{\tt BB} \\
+& & \mbox{\tt X} & \pf \mbox{\tt SY} \\
+& & \mbox{\tt Y} & \pf \mbox{\tt BZ} \\
+& & \mbox{\tt Z} & \pf \mbox{\tt BT} \\
+\mbox{\tt T} & \pf \mbox{\tt CTD} \mid \mbox{\tt CD}
+    & \mbox{\tt T} & \pf \mbox{\tt CW} \mid \mbox{\tt CD} \\
+& & \mbox{\tt W} & \pf \mbox{\tt TD} \\
+\mbox{\tt A} & \pf \mbox{\tt a} & \mbox{\tt A} & \pf \mbox{\tt a} \\
+\mbox{\tt B} & \pf \mbox{\tt b} & \mbox{\tt B} & \pf \mbox{\tt b} \\
+\mbox{\tt C} & \pf \mbox{\tt c} & \mbox{\tt C} & \pf \mbox{\tt c} \\
+\mbox{\tt D} & \pf \mbox{\tt d} & \mbox{\tt D} & \pf \mbox{\tt d}
+\end{array}
+\end{equation}
+%%
+\begin{defn}
+%%%
+\index{grammar!invertible}%%
+%%%
+A CFG is called \textbf{invertible}
+if from $X \pf \vec{\alpha} \in R$ and $Y \pf \vec{\alpha}
+\in R$ it follows that $X = Y$.
+\end{defn}
+%%
+For an invertible grammar the labelling on the leaves uniquely
+determines the labelling on the entire tree. We propose an algorithm
+which creates an invertible grammar from a CFG.
+For simplicity a rule is of the form $X \pf \vec{Y}$ or
+$X \pf \vec{x}$. Now we choose our
+nonterminals from the set $\wp(N) - \{\varnothing\}$. The
+terminal rules are now of the form $\SX \pf \vec{x}$, where
+$\SX = \{X : X \pf \vec{x} \in R\}$.  The nonterminal rules
+are of the form $\SX \pf \SY_0 \SY_1 \dotsb \SY_{n-1}$ with
+%%
+\begin{equation}
+\SX = \{X : X \pf Y_0 Y_1 \dotsb Y_{n-1} \in R
+\text{ for some }Y_i \in \SY_i\} 
+\end{equation}
+%%
+Further, we choose a start symbol, $\Sigma$, and we take
+the rules $\Sigma \pf \vec{\SX}$ for every $\vec{X}$, for
+which there are $X_i \in \SX_i$ with $S \pf \vec{X} \in R$.
+This grammar we call $G^i$. It is not difficult to show
+that $G^i$ is invertible.  For let $\SY_0 \SY_1 \dotsb \SY_{n-1}$
+be the right hand side of a production. Then there exist
+$Y_i \in \SY_i$, $i < n$, and an $X$ such that $X \pf \vec{Y}$
+is a rule in $G$. Hence there is an $\SX$ such that $\SX \pf \vec{\SY}$
+is in $G^i$. $\SX$ is uniquely determined. Further, $G^i$ is
+in standard form (Chomsky  Normal Form), if this is the case
+with $G$.
+%%
+\begin{thm}
+\label{thm:invertierbar}
+Let $G$ be a CFG. Then we can construct an
+invertible CFG $G^i$ which generates the same
+bracketing analyses as $G$.
+\proofend
+\end{thm}
+%%
+The advantage offered by invertible grammars is that the labelling
+can be reconstructed from the labellings on the leaves. The reader
+may reflect on the fact that $G$ is invertible exactly if
+$G^b$ is.
+%%
+\begin{defn}
+%%%
+\index{grammar!perfect}%%
+%%%
+A CFG is called \textbf{perfect} if it is in
+standard form, slender, reduced and invertible.
+\end{defn}
+%%
+It is instructive to see an example of a grammar which is
+invertible but not reduced.
+%%
+\begin{equation}
+\begin{array}{l@{\quad\pf\quad}l@{\qquad}l@{\quad\pf\quad}l}
+\multicolumn{2}{c}{G} & \multicolumn{2}{c}{H} \\
+\mbox{\tt S} & \mbox{\tt AS} \mid \mbox{\tt BS} \mid \mbox{\tt A}
+    \mid \mbox{\tt B} & \mbox{\tt S} & \mbox{\tt CS} \mid
+        \mbox{\tt C} \\
+\mbox{\tt A} & \mbox{\tt a} & \mbox{\tt C} & \mbox{\tt a} \mid
+    \mbox{\tt b} \\
+\mbox{\tt B} & \mbox{\tt b} & \multicolumn{2}{c}{}
+\end{array}
+\end{equation}
+%%
+$G$ is invertible but not reduced. To this end look at
+$H$ and the map $\mbox{\tt A} \mapsto \mbox{\tt C}$, 
+$\mbox{\tt B} \mapsto \mbox{\tt C}$, 
+$\mbox{\tt S} \mapsto \mbox{\tt S}$.
+This is an $R$--simulation. $H$ is reduced and
+invertible.
+%%
+\begin{thm}
+For every CFG we can construct a perfect CFG which generates 
+the same constituent structures.
+\end{thm}
+%%
+Finally we shall turn to the so--called {\it Greibach Normal Form}.
+This form most important for algorithms recognizing languages by
+reading the input from left to right. Such algorithms have
+problems with rules of the form $X \pf Y \conc \vec{\alpha}$,
+in particular if $Y = X$.
+%%
+\begin{defn}
+%%%
+\index{Greibach Normal Form}%%
+%%%
+Let $G = \auf \mbox{\tt S}, N, A, R\zu$ be a CFG. $G$ is in 
+\textbf{Grei\-bach} (\textbf{Nor\-mal}) \textbf{Form} if every 
+rule is of the form $\mbox{\tt S} \pf \varepsilon$ or of the form
+$X \pf x \conc \vec{Y}$.
+\end{defn}
+%%
+\begin{prop}
+Let $G$ be in Greibach Normal Form. If $X \vdash_G \vec{\alpha}$ 
+then $\vec{\alpha}$ has a leftmost derivation from $X$ in $G$ 
+iff $\vec{\alpha} = \vec{y} \conc \vec{Y}$ for some 
+$\vec{y} \in A^{\ast}$ and $\vec{Y} \in N^{\ast}$ and 
+$\vec{y} = \varepsilon$ only if $\vec{Y} = X$.
+\end{prop}
+%%
+The proof is not hard.  It is also not hard
+to see that this property characterizes the Greibach form
+uniquely. For if there is a rule of the form
+$X \pf Y \conc \vec{\gamma}$ then there is a leftmost
+derivation of $Y \conc \vec{\gamma}$ from $X$, but not in the
+desired form. Here we assume that there are no rules of the form
+$X \pf X$.
+%%
+\nocite{greibach:normal}
+\begin{thm}[Greibach]
+\label{greibach}
+For every CFG one can effectively construct a
+grammar $G^g$ in Greibach Normal Form with $L(G^g) = L(G)$.
+\end{thm}
+%%
+Before we start with the actual proof we shall prove some
+auxiliary statements. We call $\rho$ an $X$--\textbf{production}
+if $\rho = X \pf \vec{\alpha}$
+%%%
+\index{production!$X$--\faul}%%
+\index{production!left recursive}%%
+%%%
+for some $\vec{\alpha}$. Such a production is called
+\textbf{left recursive} if it has the form
+$X \pf X \conc \vec{\beta}$. Let $\rho = X \pf \vec{\alpha}$
+be a rule; define $R^{- \rho}$ as follows. For every
+factorisation $\vec{\alpha} = \vec{\alpha}_1 \conc Y \conc %
+\vec{\alpha}_2$ of $\vec{\alpha}$ and every rule $Y \pf \vec{\beta}$
+add the rule $X \pf \vec{\alpha}_1 \conc \vec{\beta} \conc %
+\vec{\alpha}_2$ to $R$ and finally remove the rule $\rho$.
+Now let $G^{-\rho} := \auf \mbox{\tt S}, N, A, R^{- \rho}\zu$.
+Then $L(G^{- \rho}) = L(G)$. We call this construction
+as \textbf{skipping} the rule $\rho$.
+%%%
+\index{rule!skipping of a \faul}%%
+%%%
+The reader may convince himself that the tree for
+$G^{-\rho}$ can be obtained in a very simple way from
+trees for $G$ simply by removing all nodes $x$ which
+dominate a local tree corresponding to the rule
+$\rho$, that is to say, which are isomorphic to $\GH_{\rho}$.
+(This has been defined in Section~\ref{kap1}.\ref{einsvier}.)
+This technique works only if $\rho$ is not an
+{\tt S}--production. In this case we proceed as follows.
+Replace $\rho$ by all rules of the form $\mbox{\tt S} \pf %
+\vec{\beta}$ where $\vec{\beta}$ derives from $\vec{\alpha}$
+by applying a rule. Skipping a rule does not necessarily
+yield a new grammar. This is so if there are rules of the form
+$X \pf Y$ (in particular rules like $X \pf X$).
+%%
+\begin{lem}
+\label{lem:linksrek}
+Let $G = \auf \mbox{\tt S}, N, A, R\zu$ be a CFG 
+and let $X \pf X \conc \vec{\alpha}_i$, $i < m$, be all left recursive
+$X$--productions as well as $X \pf \vec{\beta}_j$, $j < n$, all
+non left recursive $X$--productions.  Now let $G^1 := \auf \mbox{\tt S},
+N \cup \{Z\}, A, R^1\zu$, where $Z \not\in N %
+\cup A$ and $R^1$ consists of all $Y$--productions from
+$R$ with $Y \neq X$ as well as the productions
+%%
+\begin{equation}
+\begin{array}{l@{\quad}l@{\qquad\qquad}l@{\quad}l}
+X \pf \vec{\beta}_j & j < n, &
+    Z \pf \vec{\alpha}_i & i < m, \\
+X \pf \vec{\beta}_j \conc Z & j < n, &
+    Z \pf \vec{\alpha}_i \conc Z & i < m.
+    \end{array}
+\end{equation}
+%%
+Then $L(G^1) = L(G)$.
+\end{lem}
+%%
+\proofbeg
+We shall prove this lemma rather extensively since the method is
+relatively tricky. We consider the following priorisation on
+$G^1$. In all rules of the form $X \pf \vec{\beta}_j$ and
+$Z \pf \vec{\alpha}_i$ we take the natural ordering (that is,
+the leftmost ordering) and in all rules $X \pf \vec{\beta}_jZ$
+as well as $Z \pf \vec{\alpha}_iZ$ we also put the left to right
+ordering except that $Z$ precedes all elements from $\vec{\alpha}_j$
+and $\vec{\beta}_i$, respectively. This defines the linearisation
+$\shd$. Now, let $M(X)$ be the set of all
+$\vec{\gamma}$ such that there is a leftmost derivation from
+$X$ in $G$ in such a way that $\vec{\gamma}$ is the first element
+not of the form $X \conc \vec{\delta}$.  Likewise, we define
+$P(X)$ to be the set of all $\vec{\gamma}$ which can be derived
+from $X$ priorized by $\shd$ in $G^1$ such that $\vec{\gamma}$ is
+the first element which does not contain $Z$. We claim that
+$P(X) = M(X)$. It can be seen that
+%%
+\begin{equation}
+M(X) = \bigcup_{j < n} \vec{\beta}_j \cdot (\bigcup_{i < m}
+\vec{\alpha}_i)^{\ast} = P(X)
+\end{equation}
+%%
+From this the desired conclusion follows thus.  Let
+$\vec{x} \in L(G)$. Then there exists a leftmost derivation
+$\Gamma = \auf A_i : i < n+1\zu$ of $\vec{x}$. (Recall that 
+the $A_i$ are instances of rules.) This derivation is cut into 
+segments $\Sigma_i$, $i < \sigma$, of length $k_i$, such that
+%%
+\begin{equation}
+\Sigma_i = \auf A_j :
+\sum_{p < i} k_p \leq j  < 1 + \sum_{p < i+1} k_i \zu
+\end{equation}
+%%
+This partitioning is done in such a way that
+each $\Sigma_i$ is a maximal portion of $\Gamma$ of
+$X$--productions or a maximal portion of $Y$--productions
+with $Y \neq X$. The $X$--segments can be replaced by a
+$\shd$--derivation $\wht{\Sigma}_i$ in $G^1$, by the previous
+considerations. The segments which do not contain $X$--productions
+are already $G^1$--derivations.  For them we put
+$\wht{\Sigma}_i := \Sigma_i$. Now let $\wht{\Gamma}$ be 
+result of stringing together the $\wht{\Sigma}_i$. This is 
+well--defined, since the first string of $\wht{\Sigma}_i$ 
+equals the first string of $\Sigma_i$, as the last string 
+of $\wht{\Sigma}_i$ equals the last string of
+$\Sigma_i$. $\wht{\Gamma}$ is a $G^1$--derivation,
+priorized by $\shd$. Hence $\vec{x} \in L(G^1)$.
+The converse is analogously proved, by beginning with a
+derivation priorized by $\shd$.
+\proofend
+%%
+
+Now to the proof of Theorem~\ref{greibach}. We may assume at the
+outset that $G$ is in Chomsky Normal Form. We choose an
+enumeration of $N$ as $N = \{X_i : i < p\}$. We claim first that
+by taking in new nonterminals we can see to it that we get a
+grammar $G^1$ such that $L(G^1) = L(G)$ in which the
+$X_i$--productions have the form $X_i \pf x \conc \vec{Y}$
+or $X_i \pf X_j \conc \vec{Y}$ with $j > i$. This we prove by
+induction on $i$. Let $i_0$ be the smallest $i$ such that
+there is a rule $X_i \pf X_j \conc \vec{Y}$ with $j \leq i$.
+Let $j_0$ be the largest $j$ such that $X_{i_0} \pf X_j \conc %
+\vec{Y}$ is a rule. We distinguish two cases. The first is
+$j_0 = i_0$. By the previous lemma we can eliminate the
+production by introducing some new nonterminal symbol $Z_{i_0}$.
+The second case is $j_0 < i_0$. Here we apply the induction
+hypothesis on $j_0$. We can skip the rule $X_{i_0} \pf X_{j_0} %
+\conc \vec{Y}$ and introduce rules of the form (a) $X_{i_0} \pf %
+X_k \conc \vec{Y'}$ with $k > j_0$. In this way the second case
+is either eliminated or reduced to the first.
+
+Now let $P := \{Z_i : i < p\}$ be the set of newly introduced
+nonterminals. It may happen that for some $j$ $Z_j$ does not
+occur in the grammar, but this does not disturb the proof.
+Let finally $P_i := \{Z_j : j < i\}$. At the end of this
+reduction we have rules of the form
+%%
+\begin{subequations}
+\begin{align}
+\label{eq:rule21a}
+& X_i \pf X_j \conc \vec{Y} & (j > i) \\
+\label{eq:rule21b}
+& X_i \pf x \conc \vec{Y} & (x \in A) \\
+\label{eq:rule21c}
+& Z_i \pf \vec{W} & (\vec{W} \in (N \cup P_i)^+
+    \conc (\varepsilon \cup Z_i)) 
+\end{align}
+\end{subequations}
+%%
+It is clear that every $X_{p-1}$--production already has the form
+$X_{p-1} \pf x \conc \vec{Y}$. If some $X_{p-2}$--production
+has the form \eqref{eq:rule21a} then we can skip
+this rule and get rules of the form $X_{p-2} \pf \vec{x}\vec{Y'}$.
+Inductively we see that all rules of the form can be eliminated in
+favour of rules of the form \eqref{eq:rule21b}. Now finally the rules 
+of type \eqref{eq:rule21c}. Also these rules can be skipped, and then 
+we get rules of the form $Z \pf x \conc \vec{Y}$ for some $x \in A$, 
+as desired.
+
+For example, let the following grammar be given.
+%%
+\begin{equation}
+\begin{array}{l@{\quad\pf\quad}l@{\qquad}l@{\quad\pf\quad}l}
+\mbox{\tt S} & \mbox{\tt SDA} \mid \mbox{\tt CC} &
+	\mbox{\tt A} & \mbox{\tt a} \\
+\mbox{\tt D} & \mbox{\tt DC} \mid \mbox{\tt AB} &
+	\mbox{\tt B} & \mbox{\tt b} \\
+\multicolumn{2}{c}{} &
+	\mbox{\tt C} & \mbox{\tt c}
+\end{array}
+\end{equation}
+%%
+The production $\mbox{\tt S} \pf \mbox{\tt SDA}$ is
+left recursive. We replace it according to the above lemma
+by
+%%
+\begin{equation}
+\mbox{\tt S} \pf \mbox{\tt CCZ},
+\quad \mbox{\tt Z} \pf \mbox{\tt DA},
+\quad \mbox{\tt Z} \pf \mbox{\tt DAZ} 
+\end{equation}
+%%
+Likewise we replace the production $\mbox{\tt D} \pf\mbox{\tt DC}$ by
+%%
+\begin{equation}
+\mbox{\tt D} \pf \mbox{\tt ABY},
+\quad \mbox{\tt Y} \pf \mbox{\tt C},
+\quad \mbox{\tt Y} \pf \mbox{\tt CY}
+\end{equation}
+%%
+With this we get the grammar
+%%
+\begin{equation}
+\begin{array}{l@{\quad\pf\quad}l@{\qquad}l@{\quad\pf\quad}l}
+\mbox{\tt S} & \mbox{\tt CC} \mid \mbox{\tt CCZ} &
+	\mbox{\tt A} & \mbox{\tt a} \\
+\mbox{\tt Z} & \mbox{\tt DA} \mid \mbox{\tt DAZ} &
+	\mbox{\tt B} & \mbox{\tt b} \\
+\mbox{\tt D} & \mbox{\tt AB} \mid \mbox{\tt ABY} &
+	\mbox{\tt C} & \mbox{\tt c} \\
+\mbox{\tt Y} & \mbox{\tt C} \mid \mbox{\tt CY} & 
+	\multicolumn{2}{c}{} \\
+\end{array}
+\end{equation}
+%%
+Next we skip the {\tt D}--productions.
+%%
+\begin{equation}
+\begin{array}{l@{\quad\pf\quad}l@{\qquad}l@{\quad\pf\quad}l}
+\mbox{\tt S} & \mbox{\tt CC} \mid \mbox{\tt CCZ} &
+	\mbox{\tt A} & \mbox{\tt a} \\
+\mbox{\tt Z} & \mbox{\tt ABA} \mid \mbox{\tt ABYA}
+    \mid \mbox{\tt ABAZ} \mid \mbox{\tt ABYAZ} & 
+	\mbox{\tt B} & \mbox{\tt b} \\
+\mbox{\tt D} & \mbox{\tt AB} \mid \mbox{\tt ABY} &
+	\mbox{\tt C} & \mbox{\tt c} \\
+\mbox{\tt Y} & \mbox{\tt C} \mid \mbox{\tt CY} & 
+	\multicolumn{2}{c}{} 
+\end{array}
+\end{equation}
+%%
+Next {\tt D} can be eliminated (since it is not reachable)
+and we can replace on the right hand side of the productions
+the first nonterminals by terminals.
+%%
+\begin{equation}
+\begin{array}{l@{\quad\pf\quad}l}
+\mbox{\tt S} & \mbox{\tt cC} \mid \mbox{\tt cCZ} \\
+\mbox{\tt Z} & \mbox{\tt aBA} \mid \mbox{\tt aBYA}
+    \mid \mbox{\tt aBAZ} \mid \mbox{\tt aBYZ} \\
+\mbox{\tt Y} & \mbox{\tt c} \mid \mbox{\tt cY}
+\end{array}
+\end{equation}
+%%
+Now the grammar is in Greibach Normal Form.
+%%
+\vplatz
+\exercise
+Show that for a CFG $G$ it is decidable
+(a) whether $L(G) = \varnothing$, (b) whether $L(G)$ is
+finite, (c) whether $L(G)$ is infinite.
+%%
+\vplatz
+\exercise
+Let $G^i$ be the invertible grammar constructed from
+$G$ as defined above.  Show that the relation $\sim$
+defined by
+%%
+\begin{equation}
+\SX \sim Y \quad \Dpf \quad Y \in \SX
+\end{equation}
+%%
+is a backward simulation from $G^i$ to $G$.
+%%
+\vplatz
+\exercise
+\label{uebung:zweig}
+%%%
+\index{branch expression}%%
+%%%
+Let $\auf B, <, \sqsubset, \ell\zu$ be an ordered labelled
+tree. If $x$ is a leaf then $\uppx{x}$ is a branch and can
+be thought of in a natural way as a string $\auf \uppx{x},
+>, \ell\zu$. Since the leaf $x$ plays a special role, we
+shall omit it. We say, a \textbf{branch expression of} $\GB$ is a
+string of the form $\auf \uppx{x} - \{x\}, >, \ell\zu$, $x$
+a leaf of $\GB$. We call it $\zeta(x)$. Show that the set of 
+all branch expressions of trees from $L_B(G)$ is regular.
+%%
+\vplatz
+\exercise
+Let $G$ be in Greibach Normal Form and $\vec{x}$ a terminal
+string of length $n > 0$. Show that every derivation of
+$\vec{x}$ has exactly the length $n$. How long is a derivation 
+for an arbitrary string $\vec{\alpha}$?

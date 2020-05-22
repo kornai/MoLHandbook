@@ -1,0 +1,690 @@
+\chapter{Context Free Languages}
+\thispagestyle{empty}
+\label{kap2}
+%
+%
+%
+\section{Regular Languages}
+\label{zweieins}
+\label{kap2-1}
+%
+%
+%
+\index{language!regular}%%%
+%%%%
+Type 3 or regular grammars are the most simple grammars in the
+Chomsky Hierarchy.  There are several characterizations of regular
+languages: by means of finite state automata, by means of 
+equations over strings, and by means of so--called regular expressions.
+Before we begin, we shall develop a simple form for regular
+grammars. First, all rules of the form $X \pf Y$ can be eliminated.
+To this end, the new set of rules will be
+%%
+\begin{equation}
+\begin{split}
+R^{\heartsuit} := & \phantom{\mbox{}\cup\mbox{}} \{X \pf a Y :
+X \vdash_G a Y\} \\ 
+& \cup \{X \pf \vec{x} : X \vdash_G \vec{x}, \vec{x} \in A_{\varepsilon}\}
+\end{split}
+\end{equation}
+%%
+It is easy to show that the grammar with $R^{\heartsuit}$ in place
+of $R$ generates the same strings. We shall introduce another
+simplification.  For each $a \in A$ we introduce a new nonterminal
+$U_a$. In place of the rules $X \pf a$ we now add the rules $X \pf a U_a$
+as well as $U_a \pf \varepsilon$. Now every rule with the
+exception of $U_a \pf \varepsilon$ is strictly expanding.
+This grammar is therefore not regular if $\varepsilon \in 
+L(G)$ but it generates the same language. However, the last kind 
+of rules can be used only once, at the end of the derivation.
+For the derivable strings all have the form $\vec{x} \conc Y$
+with $\vec{x} \in A^{\ast}$ and $Y \in N$. If one applies a
+rule $Y \pf \varepsilon$ then the nonterminal disappears
+and the derivation is terminated. We call a regular grammar
+\textbf{strictly binary}
+%%%
+\index{grammar!strictly binary}%%
+%%%
+if there are only rules of the form $X \pf a Y$ or $X \pf \varepsilon$.
+%%
+\begin{defn}
+%%%
+\index{automaton!finite state}%%
+\index{automaton!deterministic finite state}%%
+\index{transition function}%%
+\index{state!initial}%%
+\index{state!accepting}%%
+%%%
+Let $A$ be an alphabet. A (\textbf{partial}) \textbf{finite state
+automaton} is a quintuple $\GA = \auf A, Q, i_0, F, \delta\zu$
+such that $Q$ is a finite set, $i_0 \in Q$, $F \subseteq Q$ and 
+$\delta \colon Q \times A \pf \wp(Q)$. $Q$ is the set of \textbf{states}, 
+$i_0$ is called \textbf{the initial state}, $F$ the set of 
+\textbf{accepting states} and $\delta$ the \textbf{transition function}. 
+$\GA$ is called \textbf{deterministic} if $\delta(q,a)$ contains exactly 
+one element for each $q \in Q$ and $a \in A$.
+\end{defn}
+%%
+$\delta$ can be extended to sets of states and strings in the
+following way ($S \subseteq Q$, $a \in A$).
+%%
+\begin{subequations}
+\label{eq:sextend}
+\begin{align}
+\delta(S,\varepsilon) & := S \\
+\delta(S,a) & := \bigcup \auf \delta(q,a) : q \in S\zu \\
+\delta(S, \vec{x} \conc a) & := \delta(\delta(S, \vec{x}), a)
+\end{align}
+\end{subequations}
+%%
+With this defined, we can now define the accepted language.
+%%
+\index{$L(\GA)$}%%%
+%%%
+\begin{equation}
+L(\GA) = \{\vec{x} : \delta(\{i_0\}, \vec{x}) \cap F \neq
+\varnothing\}
+\end{equation}
+%%
+$\GA$ is strictly partial if there is a state $q$
+and some $a \in A$ such that $\delta(q,a) = \varnothing$.
+An automaton can always be transformed into an equivalent
+automaton which is not partial. Just add another state
+$q_{\varnothing}$ and add to the transition function the
+following transitions.
+%%
+\begin{equation}
+\delta^+(q,a) := 
+\begin{cases}
+\delta(q,a) & \text{if $\delta(q,a) \neq \varnothing$ and 
+	$q \neq q_{\varnothing}$,} \\
+q_{\varnothing} & \text{if $\delta(q,a) = \varnothing$ or 
+$q = q_{\varnothing}$.}
+\end{cases}
+\end{equation}
+%%
+Furthermore, $q_{\varnothing}$ shall {\it not\/} be an
+accepting state. In the case of a deterministic automaton
+we have $\delta(q, \vec{x}) = \{q'\}$ for some $q'$. In this
+case we think of the transition function as yielding
+states from states plus strings, that is, we now have
+$\delta(q, \vec{x}) = q'$. Then the definition of the
+language of an automaton $\GA$ can be refined as follows.
+%%
+\begin{equation}
+L(\GA) = \{\vec{x} : \delta(i_0, \vec{x}) \in F\}
+\end{equation}
+%%
+For every given automaton there is a deterministic automaton 
+that accepts the same language. Put
+%%
+\index{$\GA^d$}%%
+%%%
+\begin{equation}
+\GA^d := \auf A, \wp(Q), \{i_0\}, F^d, \delta\zu 
+\end{equation}
+%%
+where $F^d := \{G \subseteq Q : G \cap F \neq \varnothing\}$
+and $\delta$ is the transition function of $\GA$ extended to
+sets of states.
+%%
+\begin{prop}
+$\GA^d$ is deterministic and $L(\GA^d) = L(\GA)$.
+Hence every language accepted by a finite state automaton is
+a language accepted by a deterministic finite state
+automaton.
+\end{prop}
+%%
+The proof is straightforward and left as an exercise. Now we
+shall first show that a regular language is a language
+accepted by a finite state automaton. We may assume that
+$G$ is (almost) strictly binary, as we have seen above. So, let
+$G = \auf \mbox{\tt S}, N, A, R\zu$. We put $Q_G := N$, $i_0 := 
+\mbox{\tt S}$, $F_G := \{X : X \pf \varepsilon \in R\}$ as well as
+%%
+\begin{equation}
+\delta_G(X,a) :=  \{Y : X \pf a Y \in R\} 
+\end{equation}
+%%
+Now put $\GA_G := \auf A, Q_G, i_0, F_G, \delta_G\zu$.
+%%
+\begin{lem}
+\label{lem:labelchar}
+For all $X, Y \in N$ and $\vec{x}$ we have
+$Y \in \delta(X,\vec{x})$ iff $X \Pf^{\ast}_R \vec{x} \conc Y$.
+\end{lem}
+%%
+\proofbeg
+Induction over the length of $\vec{x}$. The case $|\vec{x}| =
+\varepsilon$ is evident. Let $\vec{x} = a \in A$.
+Then $Y \in \delta_G(X,a)$ by definition iff
+$X \pf a Y \in R$, and from this we get $X \Pf_R^{\ast} a Y$.
+Conversely, from $X \Pf^{\ast}_R a Y$ follows that $X \pf a Y \in
+R$. For since the derivation uses only strictly expanding rules 
+except for the last step, the derivation of $a Y$ from $X$ must 
+be the application of a single rule. This finishes the case of 
+length 1. Now let $\vec{x} = \vec{y} \conc a$. By definition of 
+$\delta_G$ we have
+%%
+\begin{equation}
+\delta_G(X, \vec{x}) = \delta_G(\delta_G(X,\vec{y}),a) 
+\end{equation}
+%%
+Hence there is a $Z$ such that $Z \in \delta_G(X, \vec{y})$ and
+$Y \in \delta_G(Z,a)$. By induction hypothesis this is equivalent
+with $X \Pf_R^{\ast} \vec{y}\conc  Z$ and $Z \Pf^{\ast}_R a Y$. 
+From this we get $X \Pf^{\ast}_R \vec{y}\conc  a \conc Y = \vec{x}\conc Y$.
+Conversely, from $X \Pf^{\ast}_R \vec{x}\conc Y$ we get 
+$X \Pf^{\ast}_R \vec{y} \conc Z$ and $Z \Pf^{\ast}_R a Y$ for some $Z$,
+since $G$ is regular. Now, by induction hypothesis,
+$Z \in \delta_G(X, \vec{y})$ and $Y \in \delta_G(Z,a)$, and
+so $Y \in \delta_G(\vec{x},X)$.
+\proofend
+%%
+\begin{prop}
+$L(\GA_G) = L(G)$.
+\end{prop}
+%%
+\proofbeg
+It is easy to see that
+$L(G) = \{\vec{x} : G \vdash \vec{x}\conc Y, Y \pf \varepsilon \in R\}$.
+By Lemma~\ref{lem:labelchar} $\vec{x} \conc Y \in L(G)$ iff
+$S \Pf^{\ast}_R \vec{x} \conc Y$. The latter is equivalent with
+$Y \in \delta_G(\mbox{\tt S}, \vec{x})$. And this is nothing but
+$\vec{x} \in L(\GA_G)$. Hence $L(G) = L(\GA_G)$.
+\proofend
+
+Given a finite state automaton $\GA = \auf A, Q, i_0, F, \delta\zu$ 
+put $N_{\GA} := Q$, $S_{\GA} := i_0$. $R_{\GA}$ consists of all 
+rules of the form $X \pf a Y$ where $Y \in \delta(X,a)$ as well 
+as all rules of the form $X \pf \varepsilon$ for $X \in F$. Finally, 
+$G_{\GA} := \auf S_{\GA}, N_{\GA}, A, R_{\GA}\zu$. 
+$G_{\GA}$ is strictly binary and $\GA_{G_{\GA}} = \GA$. 
+Therefore we have $L(G_{\GA}) = L(\GA)$.
+%%
+\begin{thm}
+The regular languages are exactly those languages that are
+accepted by some deterministic finite state automaton.
+\proofend
+\end{thm}
+%%
+\newcommand{\nll}{0}
+%%
+Now we shall turn to a further characterization of regular
+languages.
+%%%
+\index{term!regular}%%
+%%%
+A \textbf{regular term over} $A$ is a term which is composed from $A$
+with the help of the symbols $\nll$ (0--ary), $\varepsilon$
+(0--ary), $\cdot$ (binary), $\cup$ (binary) and $^{\ast}$ (unary).
+A regular term defines a language over $A$ as follows.
+%%
+\index{$\cdot$, $\cup$, $^{\ast}$}%%%
+\begin{subequations}
+\begin{align}
+L(\nll)        & := \varnothing \\
+L(\varepsilon)  & := \{\varepsilon\} \\
+L(a)         & := \{a\} \\
+L(R \cdot S) & := L(R) \cdot L(S) \\
+L(R \cup S)  & := L(R) \cup L(S) \\
+L(R^{\ast})  & := L(R)^{\ast}
+\end{align}
+\end{subequations}
+%%
+(Commonly, one writes $R$ in place of $L(R)$, a usage that we will
+follow in the sequel to this section.) Also, 
+%%%
+\index{$^+$}%%%
+%%%
+$R^+ := R^{\ast} \cdot R$ is an often used abbreviation.
+Languages which are defined by a regular term can also be viewed
+as solutions of some very simple systems of equations. We introduce
+variables (say $X$, $Y$ and $Z$) which are variables for subsets
+of $A^{\ast}$ and we write down equations for the terms over
+these variables and the symbols $\nll$, $\varepsilon$,
+$a$ ($a \in A$), $\cdot$, $\cup$ and $^{\ast}$. An example is the
+equation $X = \mbox{\tt b} \cup \mbox{\tt a} X$, whose solution is
+$X = \mbox{\tt a}^{\ast}\mbox{\tt b}$.
+%%
+\begin{lem}
+Assume $R \neq 0$ and $\varepsilon \not\in L(R)$.
+Then $R^{\ast}$ is the unique solution of
+$X = \varepsilon \cup R \cdot X$.
+\end{lem}
+%%
+\proofbeg
+The proof is by
+induction over the length of $\vec{x}$. $\vec{x} \in X$ means by
+definition that $\vec{x} \in \varepsilon \cup R \cdot X$.
+If $\vec{x} = \varepsilon$ then $\vec{x} \in R^{\ast}$.
+Hence let $\vec{x} \neq \varepsilon$; then $\vec{x} \in R
+\cdot X$ and so it is of the form $\vec{u}_0 \conc \vec{x}_0$
+where $\vec{u}_0 \in R$ and $\vec{x}_0 \in X$.  Since
+$\vec{u}_0 \neq \varepsilon$, $\vec{x}_0$ has smaller length
+than $\vec{x}$. By induction hypothesis we therefore have
+$\vec{x}_0 \in R^{\ast}$. Hence $\vec{x} \in R^{\ast}$. The
+other direction is as easy.
+\proofend
+%%
+\begin{lem}
+\label{lem:regsolution}
+Let $C, D$ be regular terms, $D \neq 0$ and $\varepsilon \not\in L(D)$.
+The equation 
+%%
+\begin{equation}
+X = C \cup D \cdot X
+\end{equation}
+%%%
+has exactly one solution, namely $X = D^{\ast} \cdot C$.
+\proofend
+\end{lem}
+%%
+We shall now show that regular languages can be seen as solutions
+of systems of equations. A general system of string equations is a 
+set of equations of the form $X_j = Q \cup \bigcup_{i < m} T^i$ where 
+$Q$ is a regular term and the $T^i$ have the form $R \cdot X_k$ where
+$R$ is a regular term. Here is an example.
+%%
+\begin{equation}
+\begin{array}{lr@{\; \cup\; }r}
+X_0 & = \mbox{\tt a}^{\ast} & \mbox{\tt c} \cdot
+    \mbox{\tt a} \cdot \mbox{\tt b} \cdot X_1   \\
+X_1 & = \mbox{\tt c}        & \mbox{\tt c}
+    \cdot \mbox{\tt b}^3 \cdot X_0
+\end{array}
+\end{equation}
+%%
+Notice that like in other systems of equations a variable
+need not occur to the right in every equation. Moreover,
+a system of equations contains any given variable only once
+on the left. The system is called \textbf{proper} if for all
+$i$ and $j$ we have $\varepsilon \not\in L(T^i_j)$. We shall call
+a system of equations \textbf{simple} if it is proper and $Q$ as well
+as the $T^i_j$ consist only of terms made from elements of
+$A$ using $\varepsilon$ and $\cup$.
+%%%
+\index{system of equations!proper}%%
+\index{system of equations!simple}%%
+%%%
+The system displayed above is proper but not simple.
+
+Let now $\auf \mbox{\tt S}, N, A, R\zu$ be a strictly binary
+regular grammar. Introduce for each nonterminal
+$X$ a variable $Q_X$. This variable $Q_X$ shall stand for the
+set of all strings which can be generated from $X$ in this
+grammar, that is, all strings $\vec{x}$ for which
+$X \Pf^{\ast}_R \vec{x}$. This latter set we denote by
+$[X]$. We claim that the $Q_X$ so interpreted satisfy the
+following system of equations.
+%%
+\begin{equation}
+\begin{split}
+Q_Y = & \phantom{\mbox{}\cup\mbox{}} 
+	\bigcup \{\varepsilon : Y \pf \varepsilon \in R \} \\
+    & \cup \bigcup \{a \cdot Q_X : Y \pf aX \in R\}
+\end{split}
+\end{equation}
+%%
+This system of equations is simple. We show $Q_Y = [Y]$ for all $Y
+\in N$. The proof is by induction over the length of the string.
+To begin, we show that $Q_Y \subseteq [Y]$. For let $\vec{y} \in
+Q_Y$. Then either $\vec{y} = \varepsilon$ and $Y \pf \varepsilon
+\in R$ or we have $\vec{y} = a \conc \vec{x}$ with $\vec{x} \in
+Q_X$ and $Y \pf a \conc \vec{x} \in R$. In the first case $Y \pf
+\varepsilon \in R$, whence $\varepsilon \in [Y]$. In the second
+case $|\vec{x}| < |\vec{y}|$ and so by induction hypothesis
+$\vec{x} \in [X]$, hence $X \Pf^{\ast}_R \vec{x}$. Then we have 
+$Y \Pf^{\ast}_R a \conc \vec{x} = \vec{y}$, from which $\vec{y} 
+\in [Y]$. This shows the first inclusion. Now we show that 
+$[Y] \subseteq Q_Y$. To this end let $Y \Pf^{\ast}_R \vec{y}$. 
+Then either $\vec{y} = \varepsilon$ and so $Y \pf \varepsilon 
+\in R$ or $\vec{y} = a \conc \vec{x}$ for some $\vec{x}$.  In 
+the first case $\vec{y} \in Q_Y$, by definition. In the second 
+case there must be an $X$ such that $Y \pf a X \in R$ and 
+$X \Pf^{\ast}_R \vec{x}$. Then $|\vec{x}| < |\vec{y}|$ and 
+therefore by induction hypothesis $\vec{x} \in Q_X$. Finally, 
+by definition of $Q_Y$, $\vec{y} \in Q_Y$, which had to be shown.
+
+So, a regular language is the solution of a simple system of
+equations. Conversely, every simple system of equations can be
+rewritten into a regular grammar which generates the solution
+of this system. Finally, it remains to be shown that regular terms
+describe nothing but regular languages. What we shall establish is
+more general and derives the desired conclusion. We shall show
+that every proper system of equations which has as many
+equations as it has variables has as its solution for each
+variable a regular language. To this end, let such a system
+$X_j = \bigcup_{i < m_j} T_j^i$ be given. We begin by eliminating
+$X_0$ from the system of equations. We distinguish two cases.
+(1) $X_0$ appears in the equation $X_0 = \bigcup_{i < m_0}
+T^i_j$ only to the left. This equation is fixed, and called the
+\textbf{pivot equation for} $X_0$. Then we can replace $X_0$
+in the other equations by $\bigcup_{i < m_0} T^i_j$. 
+(2) The equation is of the form $X_0 = C \cup D \cdot X_0$, 
+$C$ a regular term, which does not contain $X_0$, $D$
+free of variables and $\varepsilon \not\in L(D)$. Then
+$X_0 = D^{\ast} \cdot C$ by Lemma~\ref{lem:regsolution}.
+Now $X_0$ does not occur and we can replace $X_0$ in the other
+equations as in (1). The system of equations
+that we get is not simple, even if it was simple at the beginning.
+We can proceed in this fashion and eliminate step by step the
+variables from the right hand side (and putting aside the
+corresponding pivot equations) until we reach the last equation.
+The solution for $X_{n -1}$ does not contain any variables at all
+and is a regular term. The solution can be inserted into the
+other equations, and then we continue with $X_{n-2}$, then
+with $X_{n-3}$, and so on.
+%%
+As an example, we take the following system of equations.
+%%
+$$\begin{array}{ll@{\quad = \quad}rrr}
+\mbox{(I)} & X_0 & \mbox{\tt a} \cup\; \mbox{\tt a}\cdot X_0
+    & \cup\; \mbox{\tt b} \cdot X_1
+    & \cup\; \mbox{\tt c} \cdot X_2 \\
+    & X_1 &   \mbox{\tt c} \cdot X_0 &
+    & \cup \; \mbox{\tt a} \cdot X_2 \\
+    & X_2 & \mbox{\tt b} \cup\; \mbox{\tt a} \cdot X_0
+    & \cup \; \mbox{\tt b} \cdot X_1
+    & \\
+    \multicolumn{5}{c}{} \\
+\mbox{(II)} & X_0 & \mbox{\tt a}^+ & \cup \; \mbox{\tt a}^{\ast}
+    \mbox{\tt b} \cdot X_1
+    & \cup \; \mbox{\tt a}^{\ast}\mbox{\tt c} \cdot X_2 \\
+     & X_1 & \mbox{\tt ca}^+  & \cup \; \mbox{\tt ca}^{\ast}%
+    \mbox{\tt b} \cdot X_1
+    & \cup \; (\mbox{\tt ca}^{\ast}\mbox{\tt c} \cup %
+    \mbox{\tt a}) \cdot X_2 \\
+     & X_2 & \mbox{\tt b} \cup \mbox{\tt aa}^+ & \cup\;
+     (\mbox{\tt a}^+ \mbox{\tt b} \cup \mbox{\tt b})
+    \cdot X_1 & \cup \; \mbox{\tt a}^{\ast} \mbox{\tt c}
+    \cdot X_2 \\
+    \multicolumn{5}{c}{} \\
+\mbox{(III)} & X_1 & 
+    \multicolumn{3}{r}{%
+	(\mbox{\tt ca}^{\ast}\mbox{\tt b})^{\ast} \mbox{\tt ca}^+ 
+    \cup (\mbox{\tt ca}^{\ast}\mbox{\tt b})^{\ast}%
+    (\mbox{\tt ca}^{\ast}\mbox{\tt c} \cup \mbox{\tt a})
+    \cdot X_2} \\
+       & X_2 &  
+    \multicolumn{3}{r}{%
+       (\mbox{\tt b} \cup \mbox{\tt aa}^+) 
+    \cup [\mbox{\tt a}^{\ast}\mbox{\tt b}
+    (\mbox{\tt ca}^{\ast}\mbox{\tt b})^{\ast}
+    (\mbox{\tt ca}^{\ast}\mbox{\tt c} \cup \mbox{\tt a}) %
+    \cup \mbox{\tt a}^{\ast}\mbox{\tt c}] \cdot X_2} \\
+    \multicolumn{5}{c}{} \\
+\mbox{(IV)} & X_2 & \multicolumn{3}{l}{%
+    [\mbox{\tt a}^{\ast}\mbox{\tt b} 
+    (\mbox{\tt ca}^{\ast}\mbox{\tt b})^{\ast}
+    (\mbox{\tt ca}^{\ast}\mbox{\tt c} \cup \mbox{\tt a}) %
+    \cup \mbox{\tt a}^{\ast}\mbox{\tt c}]^{\ast} %
+    (\mbox{\tt b} \cup \mbox{\tt aa}^+)}
+    \end{array}$$
+%%
+Now that $X_2$ is known, $X_1$ can be determined by inserting the 
+regular term for $X_2$, and, finally, $X_0$ is obtained by inserting 
+the values for $X_2$ and $X_1$.
+%%
+\nocite{kleene:regular}
+\index{Kleene, Stephen C.}%%
+\begin{thm}[Kleene]
+\label{thm:reg}
+Let $L$ be a language over $A$. Then the following are equivalent:
+%%
+\begin{dingautolist}{192}
+\item
+$L$ is regular.
+\item
+$L = L(\GA)$ for a finite, deterministic automaton
+$\GA$ over $A$.
+\item
+$L = L(R)$ for some regular term $R$ over $A$.
+\item
+$L$ is the solution for $X_0$ of a simple system of equations
+over $A$ with variables $X_i$, $i < m$.
+\end{dingautolist}
+%%
+Further, there exist algorithms which (i) for a given automaton
+$\GA$ compute a regular term $R$ such that $L(\GA) = L(R)$; (ii)
+for a given regular term $R$ compute a simple system of equations
+$\Sigma$ over $\vec{X}$ whose solution for a given variable $X_0$
+is exactly $L(R)$; and (iii) which for a given simple system
+of equations $\Sigma$ over $\{X_i : i < m\}$ compute an automaton 
+$\GA$ such that $\vec{X}$ is its set of states and the solution for
+$X_i$ is exactly the set of strings which send the automaton from
+state $X_0$ into $X_i$. \proofend
+\end{thm}
+%%
+This is the most important theorem for regular languages.
+We shall derive a few consequences. Notice we can turn a 
+finite state automaton $\GA$ into a Turing machine $T$ 
+accepting the same language in linear time and no additional 
+space.  Therefore, the recognition problem for regular languages 
+is in $\textbf{DTIME}(n)$ and in $\textbf{DSPACE}(n)$. This 
+also applies to the parsing problem, as is easily seen.
+%%
+\begin{cor}
+The recognition and the parsing problem are in
+$\textbf{DTIME}(n)$ and $\textbf{DSPACE}(n)$.
+\end{cor}
+%%
+\begin{cor}
+\label{cor:con} The set of regular languages over $A$ is closed
+under intersection and relative complement. Further, for given
+regular terms $R$ and $S$ one can determine terms $U$ and $V$ such
+that $L(U) = A^{\ast} - L(R)$ and $L(V) = L(R) \cap L(S)$.
+\end{cor}
+%%
+\proofbeg
+It is enough to do this construction for automata.  Using
+Theorem~\ref{thm:reg} it follows that we can do it also for
+the corresponding regular terms. Let $\GA = \auf A, Q, i_0, F,
+\delta\zu$. Without loss of generality we may assume that
+$\GA$ is deterministic. Then let $\GA^- := \auf A, Q, i_0, Q - F,
+\delta\zu$. We then have $L(\GA^-) = A^{\ast} - L(\GA)$.
+This shows that for given $\GA$ we can construct an automaton
+which accepts the complement of $L(\GA)$.
+Now let $\GA' = \auf A, Q', i_0', F', \delta'\zu$.
+Put 
+%%
+\begin{equation}
+\GA  \times \GA' := \auf A, Q\times Q', \auf i_0, i_0'\zu,
+F \times F', \delta \times \delta'\zu
+\end{equation}
+%%%
+where
+%%%
+\begin{equation}
+(\delta \times \delta')(\auf q,q'\zu, a) := \{\auf
+r,r'\zu : r \in \delta(q,a), r' \in \delta'(q',a)\} 
+\end{equation}
+%%
+It is easy to show that $L(\GA \times \GA') =
+L(\GA) \cap L(\GA')$.
+\proofend
+%%
+
+\noindent
+The proof of the next theorem is an exercise.
+%%
+\begin{thm}
+\label{thm:abschluss}
+Let $L$ and $M$ be regular languages. Then so are $L/M$ and
+$M\backslash L$. Moreover, $L^T$, $L^P := L/A^{\ast}$
+as well as $L^S := A^{\ast}\backslash L$ are regular.
+\end{thm}
+%%
+Furthermore, the following important consequence can be
+established.
+%%
+\begin{thm}
+Let $\GA$ and $\GB$ be finite state automata.
+Then it is decidable whether $L(\GA) = L(\GB)$.
+\end{thm}
+%%
+\proofbeg
+Let $\GA$ and $\GB$ be given. By Theorem~\ref{thm:reg}
+we can compute a regular term $R$ with $L(R) = L(\GA)$
+as well as a regular term $S$ with $L(S) = L(\GB)$.
+Then $L(\GA) = L(\GB)$ iff $L(R) = L(S)$
+iff $(L(R) - L(S)) \cup (L(S) - L(R))
+= \varnothing$. By Corollary~\ref{cor:con} we can compute
+a regular term $U$ such that 
+%%
+\begin{equation}
+L(U) = (L(R) - L(S)) \cup (L(S) - L(R))
+\end{equation}
+%%%
+Hence $L(\GA) = L(\GB)$ iff $L(U) = \varnothing$. This is 
+decidable by Lemma~\ref{lem:leer}.
+\proofend
+%%
+\begin{lem}
+\label{lem:leer}
+The problem `$L(R) = \varnothing$', where $R$ is a regular 
+term, is decidable.
+\end{lem}
+%%
+\proofbeg
+By induction on $R$. If $R = \varepsilon$
+or $R = a$ then $L(R) \neq  \varnothing$. If $R = \nll$
+then by definition $L(R) = \varnothing$. Now assume that the
+problems `$L(R) = \varnothing$' and `$L(S) = \varnothing$'
+are decidable. Notice that (a) $L(R \cup S) = \varnothing$ iff
+$L(R) = \varnothing$ and $L(S) = \varnothing$, 
+(b) $L(R \cdot S) = \varnothing$ iff $L(R) = \varnothing$ or 
+$L(S) = \varnothing$ and (c) $L(R^{\ast}) = \varnothing$ iff
+$L(R) = \varnothing$. All three problems are decidable.
+\proofend
+%%
+
+We conclude with the following theorem, which we have used
+already in Section~\ref{kap1}.\ref{kap1-5}.
+%%
+\begin{thm}
+\label{thm:cfintersekt} Let $L$ be context free and $R$
+regular. Then $L \cap R$ is context free.
+\end{thm}
+%%
+\proofbeg
+Let be $G = \auf S, N, A, R\zu$ be a CFG
+with $L(G) = L$ and $\GA = \auf n, 0, F, \delta\zu$
+a deterministic automaton consisting of $n$  states such that
+$L(\GA) = R$. We may assume that rules of $G$ are of the form
+$X \pf a$ or $X \pf \vec{Y}$. We define new nonterminals, which
+are all of the form $^i X^j$, where $i, j < n$ and $X \in N$. The
+interpretation is as follows. $X$ stands for the set of all
+strings $\vec{\alpha} \in A^{\ast}$ such that $X \vdash_G
+\vec{\alpha}$. $^i X^j$ stands for the set of all
+$\vec{\alpha}$ such that $X \vdash_G \vec{\alpha}$ and
+$\delta(i,\vec{\alpha}) = j$. We have a set of start symbols,
+consisting of all $^0 S^{j}$ with $j \in F$. As we already know,
+this does not increase the generative power. A rule 
+$X \pf Y_0 Y_1 \dotsb Y_{k-1}$ is now replaced by the set of all
+rules of the form
+%%
+\begin{equation}
+^i X^j \pf ^i Y_0^{i_0}\conc ^{i_0}Y_1^{i_1} \conc \dotso
+\conc ^{i_{k-2}}Y_{k-1}^j
+\end{equation}
+%%
+Finally, we take all rules of the form $^i X^j \pf a$,
+$\delta(i,a) = j$. This defines the grammar $G_r$. We shall show:
+$\vdash_{G^r} \vec{x}$ iff $\vdash_G \vec{x}$ and
+$\vec{x} \in L(\GA)$. ($\Pf$) Let $\GB$ be a $G^r$--tree with
+associated string $\vec{x}$. The map ${^i X}^j \mapsto X$ turns
+$\GB$ into a $G$--tree. Hence $\vec{x} \in L(G)$. Further, it
+is easily shown that $\delta(0,x_0x_1\dotsb x_j) = k_j$, where
+$^{k_{j-1}} X^{k_j}$ is the node dominating $x_j$.
+Also, if $|\vec{x}| = n$, then $^0 S^{k_n}$ is the top node
+and by construction $k_n \in F$. Hence $\delta(\vec{x}, 0)
+\in F$ and so $\vec{x} \in L(\GA)$.
+($\Leftarrow$) Let $\vec{x} \in L(G)$ and $\vec{x} \in L(\GA)$.
+We shall show that $\vec{x} \in L(G^r)$. We take a $G$--tree
+$\GB$ for $\vec{x}$.  We shall now prove that one can replace the
+$G$--nonterminals in $\GB$ in such a way by $G^r$--nonterminals
+that we get a $G_r$--tree. The proof is by induction on the height
+of a node. We begin with nodes of height 1. Let
+$\vec{x} = \prod_{i < n} x_i$; and let $X_i$ be the nonterminal
+above $x_i$. Further let $\delta(0,\prod_{i < j} x_i) =
+j_i$. Then $p_0 = 0$ and $p_n \in F$. We replace $X_i$ by
+$^{p_i} X^{p_{i+1}}$. We say that two nodes $x$ and
+$y$ \textbf{connect} if they are adjacent and for the labels
+${^i X^j}$ of $x$ and $^k Y^{\ell}$ of $y$ we have $j = k$.
+Let $x$ be a node of height $n+1$ with label $X$ and let $x$ be
+mother of the nodes with labels $Y_0 Y_1 \dotsb Y_{n-1}$ in $G$.
+We assume that below $x$ all nodes carry labels from $G^r$ in such
+a way that adjacent nodes connect. Then there exists  a rule
+in $G_r$ such that $X$ can be labelled with superscripts,
+the left hand superscript of $Y_0$ to its left and the right hand
+superscript of $Y_{n-1}$ to its right. All adjacent nodes of height
+$n+1$ connect, as is easily seen. Further, the leftmost node
+carries the left superscript 0, the rightmost node carries a
+right superscript $p_n$, which is an accepting state. Eventually,
+the root has superscripts as well. It carries the label
+$^0 S^{p_n}$, and so we have a $G_r$--tree.
+\proofend
+%%
+\vplatz
+\exercise
+Prove Theorem~\ref{thm:abschluss}.
+%%
+\vplatz
+\exercise
+Show that a language is regular iff it can be
+generated by a grammar with rules of the form $X \pf Y$,
+$X \pf Ya$, $X \pf a$ and $X \pf \varepsilon$. Such a
+grammar is called
+%%%
+\index{grammar!left regular}%%
+\index{grammar!right regular}%%
+%%%
+\textbf{left regular}, in contrast to the grammars of
+Type 3, which we also call \textbf{right regular}.
+Show also that it is allowed to add rules of the form
+$X \pf \vec{x}$ and $X \pf Y \vec{x}$.
+%%
+\vplatz
+\exercise
+Show that there is a grammar with rules of the form
+$X \pf a$, $X \pf aY$ and $X \pf Ya$ which generates a
+nonregular language. This means that a Type 3 grammar may 
+contain (in general) only left regular rules or only right 
+regular rules, but not both.
+%%
+\vplatz
+\exercise
+Show that if $L$ and $M$ are regular, then so are
+$L/M$ and $M\backslash L$.
+%%
+\vplatz
+\exercise
+Let $L$ be a language over $A$. Define an equivalence relation
+$\sim_S$ over $A^{\ast}$ as follows.  $\vec{x} \sim_S \vec{y}$ iff
+for all $\vec{z} \in A^{\ast}$ we have
+$\vec{x} \conc \vec{z} \in L \Dpf \vec{y} \conc
+\vec{z} \in L$. $L$ is said to have \textbf{finite index}
+%%%%
+\index{language!finite index}%%
+%%%%
+if there are only finitely many equivalence classes
+with respect to $\sim_S$. Show that $L$ is regular iff
+it has finite index.
+%%
+\vplatz
+\exercise
+\label{ue:index}
+Show that the language $\{\mbox{\tt a}^n\mbox{\tt b}^n :
+n \in \omega\}$ does not have finite index. Hence it is
+not regular.
+%%
+\vplatz
+\exercise
+Show that the intersection of a context sensitive language with
+a regular language is again context sensitive.
+%%%
+\vplatz
+\exercise
+Show that $L$ is regular iff it is accepted by a read
+only 1--tape Turing machine.

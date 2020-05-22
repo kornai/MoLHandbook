@@ -1,0 +1,1145 @@
+\chapter{Categorial Grammar and Formal Semantics}
+\thispagestyle{empty}
+\label{kap3}
+%
+%
+%
+\section{Languages as Systems of Signs}
+\label{kap3-1}
+%
+%
+%
+Languages are certainly not sets of strings. They are systems for
+communication. This means in particular that the strings have
+meaning, a meaning which all speakers of the language more or 
+less understand. And since natural languages have potentially
+infinitely many strings, there must be a way to find out what meaning
+a given string has on the basis of finite information. An important
+principle in connection with this is the so--called
+%%%%
+\index{compositionality}%%
+%%%%
+{\it Principle of Compositionality\/}. It says in simple words that
+the meaning of a string only depends on its derivation. For a CFG this 
+means: if $\rho = \beta \pf \alpha_0 \alpha_1 \dotsb \alpha_{n-1}$ 
+is a rule and $\vec{u}_i$ a string of category $\alpha_i$ then 
+$\vec{v} := \vec{u}_0 \vec{u}_1 \dotsb \vec{u}_{n-1}$ is a
+string of category $\beta$ and the meaning of $\vec{v}$ depends only 
+on the meaning of the $\vec{u}_i$ and $\rho$. In this form the principle 
+of compositionality is still rather vague, and we shall refine
+and precisify it in the course of this section. However, for now we
+shall remain with this definition. It appears that we have admitted
+only context free rules. This is a restriction, as we know. We shall
+see later how we can get rid of it.
+
+To begin, we shall assume that meanings come from some set
+$M$, which shall not be specified further. As before, exponents
+are members of $A^{\ast}$, where $A$ is a finite alphabet.
+(Alternatives to this assumption will be discussed later.)
+%%
+\begin{defn}
+\index{interpreted string language}%%
+\index{language!interpreted}%%
+%%%
+An \textbf{interpreted} (\textbf{string}) \textbf{language over the
+alphabet} $A$ and \textbf{with meanings in} $M$ is a relation
+$\CI \subseteq A^{\ast} \times M$. The \textbf{string language
+associated with} $\CI$ is
+%%
+\index{$L(\CI)$, $M(\CI)$}%%
+%%%
+\begin{equation}
+L(\CI) := \{\vec{x} : \text{ there is }
+m \in M \text{ such that } \auf \vec{x}, m\zu \in \CI\}
+\end{equation}
+%%
+The meanings expressed by $\CI$ are
+%%
+\begin{equation}
+M(\CI) := \{m  : \text{ there is } \vec{x} \in A^{\ast}
+\text{ such that }\auf \vec{x}, m\zu \in \CI\}
+\end{equation}
+\end{defn}
+%%
+Alternatively, we may regard a language as a function from 
+$A^{\ast}$ to $\wp(M)$. Then $L(f) := \{\vec{x} : f(\vec{x})
+\neq \varnothing\}$ is the string language associated with
+$f$ and $M(f) := \bigcup_{\vec{x} \in A^{\ast}} f(\vec{x})$
+the set of expressed meanings of $f$. These definitions are 
+not equivalent when it comes to compositionality. In the 
+original definition, any particular meaning of a composite 
+expression is derived from some particular meanings of its 
+parts, in the second the totality of meanings is derived from 
+the totality of the meanings of the parts. 
+
+We give an example. We consider the number terms as known from
+everyday life as for example {\mtt ((3+5)\symbol{42}2)}. We 
+shall write a grammar with which we can compute the value of a 
+term as soon as its analysis is known. This means that we regard 
+an interpreted language as a set of pairs $\auf t, x\zu$ where 
+$t$ is an arithmetical term and $x$ its value. Of course, the 
+analysis does not directly reveal the value but we must in addition 
+to the rules of the grammar specify in which way the value of the 
+term is computed inductively over the analysis. Since the nodes 
+correspond to the subterms this is straightforward. Let $T$ be the 
+following grammar.
+%%
+\begin{equation}
+\label{eq:grammT}
+\begin{array}{l@{\quad \pf\quad}l}
+\mbox{\mtt T} & \mbox{\mtt (T+T)} \mid
+    \mbox{\mtt (T-T)} \mid \mbox{\mtt (T\symbol{42}T)} 
+	\mid \mbox{\mtt (T\symbol{47}T)} \\
+\mbox{\mtt T} & \mbox{\mtt Z} \mid \mbox{\mtt (-Z)} \\
+\mbox{\mtt Z} & \mbox{\mtt 0} \mid \mbox{\mtt 1} \mid
+    \mbox{\mtt 2} \mid \dotsb \mid \mbox{\mtt 9}
+\end{array}
+\end{equation}
+%%
+(This grammar only generates terms which have ciphers
+in place of decimal strings. But see Section~\ref{kap3}.\ref{kap3-2}.)
+Let now an arbitrary term be given. To this term corresponds
+a unique number (if for a moment we disregard division by 0).
+This number can indeed be determined by induction over the
+term. To this end we define a partial interpretation map $I$,
+which if defined assigns a number to a given term.
+%%
+\begin{equation}
+\begin{array}{l@{\quad := \quad}l}
+I(\mbox{\mtt ($\vec{x}$+$\vec{y}$)})
+    & I(\vec{x}) + I(\vec{y}) \\
+I(\mbox{\mtt ($\vec{x}$-$\vec{y}$)})
+    & I(\vec{x}) - I(\vec{y}) \\
+I(\mbox{\mtt ($\vec{x}$\symbol{42}$\vec{y}$)})
+    & I(\vec{x}) \times I(\vec{y}) \\
+I(\mbox{\mtt ($\vec{x}$\symbol{47}$\vec{y}$)})
+    & I(\vec{x}) \div I(\vec{y}) \\
+I(\mbox{\mtt (-$\vec{x}$)}) & - I(\vec{x}) \\
+I(\mbox{\mtt 0}) & 0 \\
+I(\mbox{\mtt 1}) & 1 \\
+\multicolumn{2}{c}{\dotsb} \\
+I(\mbox{\mtt 9}) & 9
+\end{array}
+\end{equation}
+%%
+If a function $f$ is undefined on $x$ we write $f(x) = \star$.
+We may also regard $\star$ as a value. The rules for $\star$
+are then as follows. If at least one argument is $\star$, so is the value.
+Additionally, $a / 0 = \star$ for all $a$. If $\vec{x}$ is a
+term, then $I(\vec{x})$ is uniquely defined. For either $\vec{x}$
+is a cipher from {\mtt 0} to {\mtt 9} or it is a negative cipher,
+or $\vec{x} = \mbox{\mtt ($\vec{y}_1\odot\vec{y}_2$)}$ for some 
+uniquely determined $\vec{y}_1$, $\vec{y}_2$ and 
+$\odot \in \{\mbox{\mtt +}, \mbox{\mtt -}, \mbox{\mtt\symbol{42}}, 
+\mbox{\mtt\symbol{47}}\}$. In this way one can calculate $I(\vec{x})$ 
+if one knows $I(\vec{y}_1)$ and $I(\vec{y}_2)$. The value of a term 
+can be found by naming a derivation and then computing the value of 
+each of its subterms. Notice that the grammar is transparent so that 
+only one syntactical analysis can exist for each string.
+
+The method just described has a disadvantage: the interpretation
+of a term is in general not unique, for example if a string is
+ambiguous. (For example, if we erase all brackets then the
+term {\mtt 3+5\symbol{42}2} has two values, 13 or 16.) As explained
+above, we could take the meaning of a string to be a set of numbers.
+If the language is unambiguous this set has at most one member.
+Further, we have $I(\vec{x}) \neq \varnothing$ only if $\vec{x}$
+is a constituent. However, in general we wish to avoid taking this
+step. Different meanings should arise only from different
+analyses. There is a way to implement this idea no matter what the
+grammar is. Let $U$ be the grammar which results from $T$ by
+deleting the brackets of $T$.
+%%
+\begin{equation}
+\begin{array}{l@{\quad \pf\quad}l}
+\mbox{\mtt T} & \mbox{\mtt T+T} \mid \mbox{\mtt T-T} \mid
+    \mbox{\mtt T\symbol{42}T} \mid
+    \mbox{\mtt T\symbol{47}T} \\
+\mbox{\mtt T} & \mbox{\mtt Z} \mid \mbox{\mtt -Z} \\
+\mbox{\mtt Z} & \mbox{\mtt 0} \mid \mbox{\mtt 1} \mid
+    \mbox{\mtt 2} \mid \dotsb \mid \mbox{\mtt 9}
+\end{array}
+\end{equation}
+%%
+The strings of $U$ can be viewed as images of a canonical transparent 
+grammar. This could be \eqref{eq:grammT}. However, for some 
+reason that will become clear we shall choose a different 
+grammar. Intuitively, we think of the string as the image 
+of a term which codes the derivation tree. This tree differs 
+from the structure tree in that the intermediate symbols are 
+not nonterminals but symbols for rules. The derivation tree 
+is coded by term in Polish Notation. 
+%%%%
+\index{Polish Notation}%%%
+%%%
+For each rule $\rho$ 
+we add a new symbol $\mbox{\tt R}_{\rho}$. In place of the 
+rule $\rho = A \pf \vec{\alpha}$ we now take the rule
+$A \pf \mbox{\mtt R}_{\rho} \vec{\alpha}$. This grammar,
+call it $V$, is transparent (see Exercise~\ref{ex:transparent}). 
+$\vec{x} \in L(V)$
+is called a \textbf{derivation term}. 
+%%%
+\index{derivation term}%%%
+%%%
+We define two maps
+$\zeta$ and $\iota$. $\zeta$ yields a string for each
+derivation term, and $\iota$ yields an interpretation.
+Both maps shall be homomorphisms from the
+term algebra, though the concrete definition is defined
+over strings. $\zeta$ can be uniformly defined by deleting
+the symbols $\mbox{\mtt R}_{\rho}$. However, notice that the
+rules below yield values only if the strings are derivation
+terms.
+%%
+\begin{equation}
+\begin{split}
+\zeta(\mbox{\mtt R}_{\rho}\vec{\alpha}_0 \dotsb
+    \vec{\alpha}_{n-1}) & := \zeta(\alpha_0) \conc
+        \zeta(\alpha_1) \conc \dotsb \conc
+        \zeta(\alpha_{n-1}) \\
+\zeta(\alpha) & := \alpha
+\end{split}
+\end{equation}
+%%
+In the last line, $\alpha$ is different from all $\mbox{\mtt R}_{\rho}$.
+We have assumed here that the grammar has no rules of the form
+$A \pf \varepsilon$ even though a simple adaptation can
+help here as well. Now on to the definition of $\iota$.
+In the case at hand this is without problems.
+%%
+\begin{equation}
+\begin{array}{l@{\quad := \quad}l}
+\iota(\mbox{\mtt R}_{\mbox{\smtt +}}\vec{\alpha}_0\mbox{\mtt +}\vec{\alpha}_1) 
+	& \iota(\vec{\alpha}_0) + \iota(\vec{\alpha}_1) \\
+\iota(\mbox{\mtt R}_{\mbox{\smtt -}^2}\vec{\alpha}_0\mbox{\mtt -}%
+\vec{\alpha}_1) &
+    \iota(\vec{\alpha}_0) - \iota(\vec{\alpha}_1) \\
+\iota(\mbox{\mtt R}_{\mbox{\smtt\symbol{42}}}\vec{\alpha}_0%
+\mbox{\mtt\symbol{42}}\vec{\alpha}_1) &
+    \iota(\vec{\alpha}_0) \times \iota(\vec{\alpha}_1) \\
+\iota(\mbox{\mtt R}_{\mbox{\smtt\symbol{47}}}\vec{\alpha}_0%
+\mbox{\mtt\symbol{47}}\vec{\alpha}_1) &
+    \iota(\vec{\alpha}_0) \div \iota(\vec{\alpha}_1) \\
+\iota(\mbox{\mtt R}_{\mbox{\smtt -}^1}\mbox{\mtt -}\vec{\alpha}) 
+	& - \iota(\vec{\alpha})
+\end{array}
+\end{equation}
+%%
+Here we have put the derivation term into Polish Notation, 
+%%%
+\index{Polish Notation}%%%
+%%%%
+since it is uniquely readable. However, this only holds under
+the condition that every symbol is unique. Notice, namely, that
+some symbols can have different meanings --- as in our example the
+minus symbol. To this end we have added an additional annotation
+of the symbols. Using a superscript we have distinguished between
+the unary minus and the binary one. Since the actual language does
+not do so (we write `{\mtt -}' without distinction), we have written
+$\mbox{\mtt R}_{\mbox{\smtt -}^1}$ if the rule for the unary symbol 
+has been used, and $\mbox{\mtt R}_{\mbox{\smtt -}^2}$ if the one for 
+the binary symbol has been used.
+
+The mapping $\iota$ is a homomorphism of the algebra of derivation
+terms into the algebra of real numbers with $\star$, which is
+equivalent to a partial homomorphism from the algebra of terms to
+the algebra of real numbers. For example the symbol $\mbox{\mtt
+R}_{\mbox{\smtt +}}$ is interpreted by the function $+ \colon
+\BR_{\star}\times\BR_{\star} \pf \BR_{\star}$, where $\BR_{\star}
+:= \BR \cup \{\star\}$ and $\star$ satisfies the laws specified
+above. In principle this algebra can be replaced by any other
+which allows to interpret unary and binary function symbols. We
+emphasize that it is not necessary that the interpreting
+functions are basic functions of the algebras.  It is enough 
+if they are polynomial functions (see \cite{hendriks:compositionality} 
+on this point). For example, we can introduce a 
+unary function symbol {\mtt d} whose interpretation is
+duplication. Now $2x = x + x$, and hence the duplication is a
+polynomial function of the algebra $\auf \BR, +, \cdot, 0, 1\zu$,
+but not basic. However, the formal setup is easier if we interpret 
+each function symbol by a basic function. (It can always be added, 
+if need be.)
+
+This exposition motivates a terminology which sees meanings and
+strings as images of abstract signs under a homomorphism. We shall
+now develop this idea in full generality. The basis is formed by
+an algebra of signs. Recall from Section~\ref{kap1}.\ref{kap1-1} the notion 
+of a strong (partial) subalgebra. A strong subalgebra is determined 
+by the set $B$. The functions on $B$ are the restrictions of the 
+respective functions on $A$. Notice that it is not allowed to 
+partialize functions additionally. For example, $\auf A, \Xi\zu$ 
+with $\Xi(f) = \varnothing$ is not a strong subalgebra of $\GA$ 
+unless $\Pi(f) = \varnothing$.
+
+A \textbf{sign} 
+%%%%%
+\index{sign}%%
+%%%%%
+is a triple $\sigma = \auf e, c, m\zu$
+where $e$ is the exponent of $\sigma$, usually some kind of string
+over an alphabet $A$, $c$ the category of $\sigma$ and $m$ its
+meaning. Abstractly, however, we shall set this up differently.
+We shall first define an algebra of signs as such, and introduce
+exponent, category and meaning as values of the signs under some
+homomorphisms. This will practically amount to the same, however.
+So, we start by fixing a signature $\auf F, \Omega\zu$. In this
+connection the function symbols from $F$ are called \textbf{modes}.
+%%%
+\index{mode}%%
+\index{$\auf F,\Omega\zu$}%%%
+%%%
+Over this signature we shall define an algebra of signs, of
+exponents, of categories and meanings. An algebra of signs over
+$\auf F, \Omega\zu$ is simply a 0--generated partial algebra
+$\GA$ over this signature together with certain homomorphisms,
+which will be defined later.
+%%%
+\begin{defn}
+%%%
+\index{algebra!$n$--generated}%%
+%%%
+A (partial) $\Omega$--algebra $\GA = \auf A, \Pi\zu$ is called
+$n$--\textbf{generated} if there is an $n$--element subset $X
+\subseteq A$ such that the smallest strong subalgebra containing
+$X$ is $\GA$.
+\end{defn}
+%%
+\begin{defn}
+The quadruple $\auf \GA, \varepsilon, \gamma, \mu\zu$ 
+%%%
+\index{$\varepsilon$, $\gamma$, $\mu$}%%%
+%%%%
+is called a \textbf{sign grammar over the  signature} $\Omega$
+if $\GA$ is a 0--generated partial $\Omega$--algebra
+and $\varepsilon \colon \GA \pf \GE$, $\gamma \colon \GA \pf \GC$
+and $\mu \colon \GA \pf \GM$ homomorphisms to certain partial
+$\Omega$--algebras such that the homomorphism
+$\auf \varepsilon, \gamma, \mu\zu$ is injective and strong.
+$\GA$ is called the \textbf{algebra of signs}, $\GE$ the
+\textbf{algebra of exponents}, $\GC$ the \textbf{algebra of categories}
+and $\GM$ the \textbf{algebra of meanings}.
+\end{defn}
+%%
+This means in particular:
+%%
+\begin{dinglist}{43}
+\item
+Every sign $\sigma$ is uniquely characterized by three things:
+\begin{itemize}
+\item
+its so--called \textbf{exponent} $\varepsilon(\sigma)$,
+%%%
+\index{exponent}%%
+%%%
+\item
+its (\textbf{syntactical}) \textbf{category} $\gamma(\sigma)$ (which 
+is also often called its \textbf{type}),
+%%%
+\index{category}%%
+\index{type}%%
+%%%
+\item
+its meaning $\mu(\sigma)$.
+\end{itemize}
+\item
+To every function symbol $f \in F$ corresponds an
+$\Omega(f)$--ary function $f^{\GE}$ in $\GE$, an 
+$\Omega(f)$--ary function $f^{\GC}$ in $\GC$ and an 
+$\Omega(f)$--ary function $f^{\GM}$ in $\GM$.
+\item
+Signs can be combined with the help of the function $f^{\GA}$
+any time their respective exponents can be combined with the help
+of $f^{\GE}$, their respective categories can be combined
+with $f^{\GC}$ and their respective meanings with $f^{\GM}$.
+(This corresponds to the condition of strongness.)
+\end{dinglist}
+%%
+\index{$f^{\varepsilon}$, $f^{\gamma}$, $f^{\mu}$}%%
+%%%
+In the sequel we shall write $f^{\varepsilon}$ in place of 
+$f^{\GE}$, $f^{\gamma}$ in place of $f^{\GC}$ and $f^{\mu}$ in 
+place of $f^{\GM}$. This will allow us to suppress mentioning 
+which actual algebras are chosen. If $\sigma$ is a sign, then 
+$\auf \varepsilon(\sigma), \gamma(\sigma), \mu(\sigma)\zu$ is 
+uniquely defined by $\sigma$, and on the other hand it uniquely 
+defines $\sigma$ as well. We shall call this triple the 
+%%%
+\index{realization}%%%
+%%%
+\textbf{realization} of $\sigma$. Additionally,
+we can represent $\sigma$ by a term in the free $\Omega$--algebra.
+We shall now deal with the correspondences between these
+viewpoints.
+
+Let $\goth{Tm}_{\Omega} := \auf \PN_{\Omega}, \{g^{\goth{Tm}_{\Omega}} 
+: g \in F\}\zu$, where $\PN_{\Omega}$ is the set of constant $\Omega$--terms
+written in Polish Notation and 
+%%
+\begin{equation}
+g^{\goth{Tm}_{\Omega}}(\vec{x}_0, \dotsc, \vec{x}_{\Omega(g)-1}) :=
+    g \conc \prod_{i < \Omega(g)} \vec{x}_i
+\end{equation}
+%%
+$\goth{Tm}_{\Omega}$ is a freely 0--generated $\Omega$--algebra.
+The elements of $\PN_{\Omega}$ are called 
+%%%
+\index{structure term}%%
+%%%%
+\textbf{structure terms}.  We use $\Gs$, $\Gt$, $\Gu$ and so on 
+as metavariables for structure terms. We give an example. Suppose 
+that $\mbox{\tt N}$ is a
+0--ary mode and $\mbox{\tt S}$ a unary mode. Then we have 
+$\mbox{\tt N}^{\goth{Tm}_{\Omega}} = \mbox{\tt N}$ and 
+$\mbox{\tt S}^{\goth{Tm}_{\Omega}} %
+\colon \vec{x} \mapsto \mbox{\tt S}\conc \vec{x}$. This yields
+the following strings as representatives of structure terms.
+%%
+\begin{equation}
+\mbox{\tt N}, \mbox{\tt SN}, \mbox{\tt SSN},
+\mbox{\tt SSSN}, \dotsc
+\end{equation}
+%%
+
+We denote by $h \colon M \stackrel{p}{\pf} N$ the fact that $h$
+is a partial function from $M$ to $N$. We now define
+partial maps $\dot{\varepsilon} \colon \PN_{\Omega} 
+\stackrel{p}{\pf} E$, $\dot{\gamma} \colon \PN_{\Omega} 
+\stackrel{p}{\pf} C$ and $\dot{\mu} \colon \PN_{\Omega}
+\stackrel{p}{\pf} M$ in the following way.
+%%%
+\begin{equation}
+\dot{\varepsilon}(g^{\goth{Tm}_{\Omega}}(\Gs_0, \dotsc, \Gs_{\Omega(g)-1}))
+    := g^{\varepsilon}(\dot{\varepsilon}(\Gs_0), \dotsc,
+    \dot{\varepsilon}(\Gs_{\Omega(g)-1}))
+\end{equation}
+%%%
+Here, the left hand side is defined iff the right hand
+side is and then the two are equal. If we have a 0--ary mode $g$,
+then it is a structure term $\dot{\varepsilon}(g) = g^{\varepsilon}
+\in E$. Likewise we define the other maps.
+%%
+\begin{align}
+\dot{\gamma}(g^{\goth{Tm}_{\Omega}}(\Gs_0, \dotsc, \Gs_{\Omega(g)-1}))
+    & := g^{\gamma}(\dot{\gamma}(\Gs_0), \dotsc,
+    \dot{\gamma}(\Gs_{\Omega(g)-1})) \\
+\dot{\mu}(g^{\goth{Tm}_{\Omega}}(\Gs_0, \dotsc, \Gs_{\Omega(g)-1}))
+    & := g^{\mu}(\dot{\mu}(\Gs_0), \dotsc,
+    \dot{\mu}(\Gs_{\Omega(g)-1}))
+\end{align}
+%%
+As remarked above, for every sign there is a structure term.
+The converse need not hold.
+%%
+\begin{defn}
+We say, a structure term $\Gs$ is
+%%%
+\index{structure term!orthographically definite}%%
+%%%
+\textbf{orthographically definite} if $\dot{\varepsilon}(\Gs)$
+is defined. $\Gs$ is \textbf{syntactically definite} %%
+%%%
+\index{structure term!syntactically definite}%%
+%%%
+if $\dot{\gamma}(\Gs)$ is defined and \textbf{semantically definite}
+%%%
+\index{structure term!semantically definite}%%
+%%%
+if $\dot{\mu}(\Gs)$ is defined. Finally, $\Gs$ is
+\textbf{definite}
+%%%
+\index{structure term!definite}%%
+%%%
+if $\Gs$ is orthographically, syntactically as well as semantically
+definite.
+\end{defn}
+%%
+\begin{defn}
+%%%
+\index{$\upsilon$}%%
+\index{unfolding map}%%
+%%%
+The partial map $\upsilon := \auf \dot{\varepsilon},
+\dot{\gamma}, \dot{\mu}\zu$ is called the \textbf{unfolding map}.
+\end{defn}
+%%%
+The reader is referred to Figure~\ref{fig:synopsis} for a synopsis 
+of the various algebras and maps between them.
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(30,22)
+\put(15,3){\makebox(0,0){$\GA$}}
+	\put(14.5,3.5){\vector(-1,1){3}}
+		\put(12.5,5){\makebox(0,0)[r]{$\varepsilon$}}
+	\put(15,3.5){\vector(0,1){3}}
+		\put(14.8,5.5){\makebox(0,0)[r]{$\gamma$}}
+	\put(15.5,3.5){\vector(1,1){3}}
+		\put(17.5,5){\makebox(0,0)[l]{$\mu$}}
+\put(14,3){\line(-1,0){7}}
+\put(7,3){\line(0,1){8}}
+	\put(6,7){\makebox(0,0)[r]{$\auf \varepsilon, \gamma, \mu\zu$}}
+\put(7,11){\vector(1,0){5}}
+\put(11,7){\makebox(0,0){$\GE$}}
+\put(15,7){\makebox(0,0){$\GC$}}
+\put(19,7){\makebox(0,0){$\GM$}}
+\put(15,11){\makebox(0,0){$\GE \times \GC \times \GM$}}
+	\put(14.5,10.5){\vector(-1,-1){3}}
+		\put(12.5,9){\makebox(0,0)[r]{$\pi_0$}}
+	\put(15,10.5){\vector(0,-1){3}}
+		\put(14.8,8.5){\makebox(0,0)[r]{$\pi_1$}}
+	\put(15.5,10.5){\vector(1,-1){3}}
+		\put(17.5,9.5){\makebox(0,0){$\pi_2$}}
+\put(15,15){\makebox(0,0){$\goth{Def}$}}
+	\put(15,15.5){\vector(0,1){3}}
+		\put(15.5,17){\makebox(0,0)[l]{$\mbox{\it id\/}$}}
+	\put(15,14.5){\vector(0,-1){3}}
+		\put(15.5,13){\makebox(0,0)[l]{$\upsilon = 
+		\auf\dot{\varepsilon}, \dot{\gamma}, \dot{\mu}\zu$}}
+\put(16,15){\line(1,0){7}}
+\put(23,15){\line(0,-1){12}}
+\put(23,3){\vector(-1,0){7}}
+\put(15,19){\makebox(0,0){$\goth{Tm}_{\Omega}$}}
+\end{picture}
+\end{center}
+\caption{Synopsis}
+\label{fig:synopsis}
+\end{figure}
+%%%
+In the sequel we shall often identify the structure term $\Gs$ 
+with its image under the unfolding map. This will result in rather 
+strange types of definitions, where on the left we find a string 
+(which {\it is\/} the structure term, by convention) and on the 
+right a triple. This abuse of the language shall hopefully present 
+no difficulty. $\GA$ is isomorphic to the partial algebra of all 
+$\auf \dot{\varepsilon}(\Gs), \dot{\gamma}(\Gs), \dot{\mu}(\Gs)\zu$,
+where $\Gs$ is a definite structure term. This we can also look 
+at differently. Let $D$ be the set of definite structure terms. This
+set becomes a partial $\Omega$--algebra together with the partial
+functions $g^{\goth{Tm}_{\Omega}} \restriction D$. We denote this algebra by
+$\goth{Def}$. $\goth{Def}$ is usually not a strong subalgebra of 
+$\goth{Tm}_{\Omega}$.  For let $j \colon \Gs \mapsto \Gs$ be the 
+identity map. Then we have 
+$j(g^{\goth{Def}}(\Gs_0, \dotsc, \Gs_{\Omega(g)-1})) = 
+g^{\goth{Tm}_{\Omega}}(j(\Gs_0), \dotsc, j(\Gs_{\Omega(g)-1}))$. 
+The right hand side is always defined, the left hand side need not be.
+
+The homomorphism $\upsilon \restriction D$ (which we also denote by
+$\upsilon$) is however strong. Now look at the relation
+$\Theta := \{\auf \Gs_0, \Gs_1\zu : \upsilon(\Gs_0) =
+\upsilon(\Gs_1)\}$. $\Theta$ is a congruence on $\goth{Def}$; for it clearly
+is an equivalence relation and if $\Gs_i\; \Theta\; \Gu_i$ for all 
+$i < \Omega(f)$ then $f(\vec{\Gs})$ is defined iff $f(\vec{\Gu})$ is. 
+And in this case we have $f(\vec{\Gs}) \; \Theta\; f(\vec{\Gu})$.
+We can now put:
+%%
+\begin{equation}
+f^{\GA}(\auf [\Gs_i]{\Theta} : i < \Omega(f)\zu)
+:= [f(\auf \Gs_i : i < \Omega(f)\zu)]{\Theta}
+\end{equation}
+%%
+This is well--defined and we get an algebra, the algebra
+$\goth{Def}/\Theta$. The following is easy to see.
+%%
+\begin{prop}
+$\GA \cong\goth{Def}/\Theta.$
+\end{prop}
+%%
+So, $\goth{Def}/\Theta$ is isomorphic to the algebra of signs. 
+For every sign there is a structure term, but there might 
+also be several. As an instructive example we look at the
+sign system of triples of the form $\auf \mbox{\showclock{4}{45}}, 
+T, 285\zu$, where \showclock{4}{45} is the arrangement of 
+hands of an ordinary clock (here showing 4:45), $T$ a fixed 
+letter, and $285$ the number of minutes past midnight/noon 
+that is symbolized by this arrangement. So, the above triple 
+is a sign of the language, while $\auf \mbox{\showclock{3}{10}}, 
+T, 177\zu$ is not, since the hands show 3:10, which equals 190 
+minutes, not 177. We propose two modes: {\mtt N} (the zero, 0--ary) 
+and {\mtt S} (the successor function, unary). So, the unfolding of 
+{\mtt N} is $\auf \mbox{\showclock{0}{0}}, T, 0\zu$, and the unfolding 
+of {\mtt S} is the advancement by one minute. Then 
+$\upsilon(\mbox{\mtt S})$ is a total function, and we have
+%%
+\begin{equation}
+\upsilon(\mbox{\mtt N}) = \upsilon(\mbox{\mtt S}^{720}\mbox{\mtt N}) 
+\end{equation}
+%%
+From this one easily gets that for every structure term 
+$\Gs$, $\upsilon(\Gs) = \upsilon(\mbox{\mtt S}^{720}\Gs)$. 
+Hence every sign has infinitely many structure terms, and so is
+inherently structurally ambiguous. If instead we take as meanings 
+the natural numbers (say, the minutes that elapsed since some fixed 
+reference point) and $\mbox{\mtt N}^{\mu} := 0$ as well as 
+$\mbox{\mtt S}^{\mu} := \lambda n.n+1$ then every structure term 
+represents a different sign! However, still there are only 720 
+exponents. Only that every exponent has infinitely many meanings.
+
+We shall illustrate the concepts of a sign grammar by proceeding
+with our initial example. Our alphabet is now
+%%
+\begin{equation}
+R := \{\mbox{\mtt 0},
+\mbox{\mtt 1}, \dotsc, \mbox{\mtt 9}, \mbox{\mtt +}, \mbox{\mtt -}, 
+\mbox{\mtt\symbol{42}}, \mbox{\mtt\symbol{47}}, \mbox{\mtt (},
+\mbox{\mtt )}\}
+\end{equation}
+%%
+The algebra $\GE$ consists of $R^{\ast}$ together with some functions
+that we still have to determine. We shall now begin to determine the
+modes. They are $\mbox{\mtt R}_{\mbox{\smtt +}}$, 
+$\mbox{\mtt R}_{\mbox{\smtt -}^2}$,
+$\mbox{\mtt R}_{\mbox{\smtt\symbol{42}}}$, 
+$\mbox{\mtt R}_{\mbox{\smtt\symbol{47}}}$, which are binary,
+$\mbox{\tt R}_{\mbox{\smtt -}^1}$, {\mtt V}, which are unary, and
+--- finally --- ten 0--ary modes, namely $\mbox{\mtt Z}_{\snull}$, 
+$\mbox{\mtt Z}_{\seins}, \dotsc, \mbox{\mtt Z}_{\sneun}$.
+
+We begin with the 0--ary modes. These are, by definition, signs.
+For their identification we only need to know the three components.
+For example, to the mode $\mbox{\mtt Z}_{\snull}$ corresponds the triple
+$\auf \mbox{\mtt 0}, \mbox{\mtt Z}, 0\zu$. This means: the exponent
+of the sign $\mbox{\mtt Z}_{\snull}$ (what we get to see) is the digit
+{\mtt 0}; its category is {\mtt Z}, and its meaning the number 0.
+Likewise with the other 0--ary modes. Now on to the unary modes.
+These are operations taking signs to make new signs.
+We begin with $\mbox{\mtt R}_{\mbox{\smtt -}^1}$. On the level of 
+strings we get the polynomial 
+$\mbox{\mtt R}_{\mbox{\smtt -}^1}^{\varepsilon}$,
+which is defined as follows.
+%%
+\begin{equation}
+\mbox{\mtt R}^{\varepsilon}_{\mbox{\smtt -}^1}(\vec{x}) :=
+    \mbox{\mtt (-$\vec{x}$)} 
+\end{equation}
+    %%
+On the level of categories we get the function
+%%
+\begin{equation}
+\mbox{\mtt R}^{\gamma}_{\mbox{\smtt -}^1}(c) :=
+    \begin{cases}
+    \mbox{\mtt T} & \text{ if $c = \mbox{\mtt Z}$,} \\
+    \star        & \text{ otherwise.}
+    \end{cases}
+\end{equation}
+%%
+Here $\star$ is again the symbol for the fact that the function is
+not defined. Finally we have to define 
+$\mbox{\mtt R}^{\mu}_{\mbox{\smtt -}^1}$. We put
+%%
+\begin{equation}
+\mbox{\mtt R}^{\mu}_{\mbox{\smtt -}^1}(x) := - x 
+\end{equation}
+%%
+Notice that even if the function $x \mapsto -x$ is iterable,
+the mode $\mbox{\mtt R}_{\mbox{\smtt -}^1}$ is not. This is made impossible
+by the categorial assignment. This is an artefact of the example.
+We could have set things up differently. The mode {\mtt V} finally
+is defined by the following functions.
+$\mbox{\mtt V}^{\varepsilon}(\vec{x}) := \vec{x}$,
+$\mbox{\mtt V}^{\mu}(x) := x$ and $\mbox{\mtt V}^{\gamma}(c) :=
+\mbox{\mtt R}_{\mbox{\smtt -}^1}(c)$. Finally we turn to the binary modes.
+Let us look at $\mbox{\mtt R}_{\mbox{\smtt\symbol{47}}}$. 
+$\mbox{\mtt R}^{\mu}_{\mbox{\smtt\symbol{42}}}$ 
+is the partial (!) binary function $\div$ on $\BR$. 
+Further, we put
+%%
+\begin{equation}
+\mbox{\mtt R}^{\varepsilon}_{\mbox{\smtt\symbol{47}}}(\vec{x},\vec{y})
+    := \mbox{\mtt ($\vec{x}$\symbol{47}$\vec{y}$)}
+\end{equation}
+    %%
+as well as
+%%
+\begin{equation}
+\mbox{\tt R}^{\gamma}_{\mbox{\smtt\symbol{47}}}(c,d) :=
+    \begin{cases}
+    \mbox{\mtt T} & \text{ if $c = d = \mbox{\mtt T}$,} \\
+    \star & \text{ otherwise.}
+    \end{cases}
+\end{equation}
+%%
+The string 
+{\mtt R$_{\mbox{\smtt\symbol{42}}}$R$_{\mbox{\smtt +}}%
+$Z$_{\sdrei}$Z$_{\sfuenf}$Z$_{\ssieben}$}
+defines --- as is easily computed --- a sign whose exponent is
+{\mtt ((3+5)\symbol{42}7)}. By contrast, 
+{\mtt R$_{\mbox{\smtt\symbol{47}}}$Z$_{\szwei}$Z$_{\snull}$}
+does {\it not\/} represent a sign. It is syntactically definite
+but not semantically, since we may not divide by 0.
+%%
+\begin{defn}
+%%%
+\index{sign system!linear}%%
+%%%
+A \textbf{linear system of signs} over the \textbf{alphabet} $A$,
+the set of \textbf{categories} $C$ and the set of \textbf{meanings} 
+$M$ is a set $\Sigma \subseteq A^{\ast}\times C\times M$. Further,
+let {\mtt S} be a category. Then the interpreted language of
+$\Sigma$ with respect to this category {\tt S} is defined by
+%%
+\begin{equation}
+\mbox{\mtt S}(\Sigma) :=
+\{\auf \vec{x}, m\zu : \auf \vec{x}, \mbox{\mtt S}, m\zu
+\in \Sigma\} 
+\end{equation}
+%%
+\end{defn}
+%%
+We added the qualifying phrase `linear' to distinguish this
+from sign systems which do not generally take strings as
+exponents. (For example, pictograms are nonlinear.)
+
+A system of signs is simply a set of signs. The question is
+whether one can define an algebra over it. This is always
+possible. Just take a 0--ary mode for every sign. Since this
+is certainly not as intended, we shall restrict the possibilities
+as follows.
+%%
+\begin{defn}
+%%%
+\index{sign system!compositional}%%
+%%%
+Let $\Sigma \subseteq E\times C\times M$ be a
+system of signs. We say that $\Sigma$ is
+\textbf{compositional} if there is a finite signature
+$\Omega$ and partial $\Omega$--algebras
+$\GE = \auf E, \{ f^{\GE} : f \in F\}\zu$,
+$\GC = \auf C, \{ f^{\GC} : f \in F\}\zu$,
+$\GM = \auf M, \{ f^{\GM} : f \in F\}\zu$ such that all
+functions are computable and $\Sigma$ is the carrier set 
+of the 0--generated partial (strong) subalgebra of  
+signs from $\GE \times \GC \times \GM$. $\Sigma$ is
+%%%
+\index{sign system!weakly compositional}%%
+%%%
+\textbf{weakly compositional} if there is  a compositional
+system $\Sigma'$ such that $\Sigma = \Sigma' \cap E \times 
+C \times M$.
+\end{defn}
+%%
+Notice that $\Sigma' \subseteq E' \times C' \times M'$ for certain 
+sets $E'$, $C'$ and $M'$. We remark that a partial function 
+$f \colon M^n \stackrel{p}{\pf} M$ in the sense of the definition 
+above is a computable total function
+$f^{\star} \colon M_{\star}^n \pf M_{\star}$ such that
+$f^{\star} \restriction M^n = f$. So, the computation always halts,
+and we are told at its end whether or not the function is defined
+and if so what the value is.
+
+Two conditions have been made: the signature has to be
+finite and the functions on the algebras computable. We shall
+show that however strong they appear, they do not really
+restrict the class of sign systems in comparison to weak
+compositionality.
+
+We start by drawing some immediate conclusions from the definitions. 
+If $\sigma$ is a sign we say that $\auf {\varepsilon}(\sigma), 
+{\gamma}(\sigma), {\mu}(\sigma)\zu$ (no dots!) is its \textbf{realization}. 
+%%%
+\index{sign!realization}%%%
+%%%%
+We have introduced the unfolding map $\upsilon$ above.
+%%
+\begin{prop}
+Let $\auf \GA, \varepsilon, \gamma, \mu\zu$ be a compositional
+sign grammar. Then the unfolding map is computable.
+\end{prop}
+%%
+Simply note that the unfolding of a structure term can be computed  
+inductively. This has the following immediate consequence.
+%%
+\begin{cor}
+\label{cor:recen}
+Let $\Sigma$ be compositional. Then $\Sigma$ is recursively
+enumerable.
+\end{cor}
+%%
+This is remarkable inasmuch as the set of all signs over
+$E \times C\times M$ need not even be enumerable. For
+typically $M$ contains uncountably many elements
+(which can of course not all be named by a sign)!
+%%
+\begin{thm}
+\label{thm:rekzeichen}
+A system of signs is weakly compositional iff it
+is recursively enumerable.
+\end{thm}
+%%
+\proofbeg
+Let $\Sigma \subseteq E \times C \times M$ be given. If
+$\Sigma$ is weakly compositional, it also is recursively
+enumerable. Now, let us assume that $\Sigma$ is recursively
+enumerable, say $\Sigma = \{\auf e_i, c_i, m_i\zu : 0 < i
+\in \omega\}$. (Notice that we start counting with 1.)
+Now let {\tt V} be a symbol and $\Delta :=
+\{\auf \mbox{\tt V}^n, \mbox{\tt V}^n, \mbox{\tt V}^n\zu :
+n \in \omega\}$ a system of signs. By properly choosing {\tt V}
+we can see to it that $\Delta \cap \Sigma = \varnothing$
+and that no $\mbox{\tt V}^n$ occurs in $E$, $C$ or $M$.
+Let $F := \{\mbox{\tt Z}_{\snull}, \mbox{\tt Z}_{\seins}, 
+\mbox{\tt Z}_{\szwei}\}$, $\Omega(\mbox{\tt Z}_{\snull}) 
+:= 0$, $\Omega(\mbox{\tt Z}_{\seins}) := 1$
+and $\Omega(\mbox{\tt Z}_{\szwei}) := 1$.
+%%
+\begin{equation}
+\begin{array}{l@{\quad := \quad}l}
+\mbox{\tt Z}_{\snull} & \auf \mbox{\tt V}, \mbox{\tt V}, \mbox{\tt V}\zu, \\
+\multicolumn{2}{c}{} \\
+\mbox{\tt Z}_{\seins}(\sigma) &
+    \begin{cases}
+    \auf \mbox{\tt V}^{i+1},
+    \mbox{\tt V}^{i+1}, \mbox{\tt V}^{i+1}\zu &
+        \text{ if $\sigma = \auf \mbox{\tt V}^i,
+        \mbox{\tt V}^i, \mbox{\tt V}^i\zu$,} \\
+    \star & \text{ otherwise,}
+    \end{cases} \\
+\multicolumn{2}{c}{} \\
+\mbox{\tt Z}_{\szwei}(\sigma) &
+    \begin{cases}
+    \auf e_i, c_i, m_i\zu & \text{ if 
+    $\sigma = \auf \text{\tt V}^i, \mbox{\tt V}^i, \mbox{\tt V}^i\zu$,} \\
+    \star & \mbox{ otherwise.}
+    \end{cases}
+\end{array}
+\end{equation}
+%%
+This is well--defined. Further, the functions are all computable.
+For example, the map $\mbox{\tt V}^i \mapsto e_i$ is computable
+since it is the concatenation of the computable functions
+$\mbox{\tt V}^i \mapsto i$, $i \mapsto \auf e_i, c_i,
+m_i\zu$ with $\auf e_i, c_i, m_i\zu \mapsto e_i$. We claim:
+the system of signs generated is exactly $\Delta \cup \Sigma$.
+For this we notice first that a structure term is definite iff
+it has the following form.
+(a) $t = \mbox{\tt Z}_{\seins}^i\mbox{\tt Z}_{\snull}$, or
+(b) $t = \mbox{\tt Z}_{\szwei}\mbox{\tt Z}_{\seins}^i\mbox{\tt Z}_{\snull}$.
+In Case (a) we get the sign $\auf \mbox{\tt V}^{i+1},
+\mbox{\tt V}^{i+1}, \mbox{\tt V}^{i+1}\zu$, in Case
+(b) the sign $\auf e_{i+1}, c_{i+1}, m_{i+1}\zu$.
+Hence we generate exactly $\Delta \cup \Sigma$. So,
+$\Sigma$ is weakly compositional.
+\proofend
+
+Notice that the algebra of exponents uses additional symbols
+which are only used to create new objects which are like
+natural numbers. The just presented algebra is certainly not
+very satisfying. (It is also not compositional.) Hence one has
+sought to provide a more systematic theory of categories and their
+meanings. A first step in this direction are the categorial
+grammars. To motivate them we shall give a construction for
+CFGs that differs markedly from the one in
+Theorem~\ref{thm:rekzeichen}. The starting point is once again
+an interpreted language $\CI = \{\auf \vec{x}, f(\vec{x})\zu :
+\vec{x} \in L\}$, where $L$ is context free and $f$
+computable. Then let $G = \auf \mbox{\tt S}, N, A, R\zu$ be
+a CFG with $L(G) = L$. Put
+$A' := A$, $C' := N \cup \{\mbox{\tt S}^{\heartsuit}\}$
+and $M' := M \cup A^{\ast}$. For simplicity we presuppose 
+that $G$ is already in Chomsky Normal Form.
+For every rule $\rho$ of the form $\rho = A \pf \vec{x}$
+we take a 0--ary mode $\mbox{\tt R}_{\rho}$, which is defined
+as follows:
+%%
+\begin{equation}
+\mbox{\tt R}_{\rho} := \auf \vec{x}, A, \vec{x}\zu 
+\end{equation}
+%%
+For every rule $\rho$ of the form $\rho = A \pf B\ C$ we take
+a binary mode $\mbox{\tt R}_{\rho}$ defined by
+%%
+\begin{equation}
+\mbox{\tt R}_{\rho}(\auf \vec{x}, B, \vec{x}\zu,
+    \auf \vec{y}, C, \vec{y}\zu) :=
+    \auf \vec{x}\, \vec{y}, A, \vec{x}\, \vec{y}\,\zu 
+\end{equation}
+%%
+Finally we choose a unary mode {\tt S}:
+%%
+\begin{equation}
+\mbox{\tt S}(\auf \vec{x}, \mbox{\tt S}, \vec{x}\zu) :=
+    \auf \vec{x}, \mbox{\tt S}^{\heartsuit}, f(\vec{x})\zu 
+\end{equation}
+    %%
+Then $\CI$ is indeed the set of signs with category
+$\mbox{\tt S}^{\heartsuit}$. As one can see, this algebra of signs
+is more perspicuous. The strings are just concatenated. The meanings,
+however, are not the ones we expect to see. And the category assignment
+is unstructured. This grammar is not compositional, since it still
+uses nonstandard meanings. Hence once again some pathological examples, 
+which will show that there exist nonrecursive compositional systems of
+signs.
+
+Suppose that $\Delta$ is a decidable system of signs. This means
+that there are countable sets $E$, $C$ and $M$ such that either 
+(i) $\Delta = E \times C \times M$, or (ii) $\Delta = \varnothing$, 
+or (iii) there are two computable functions, 
+%%%
+\begin{equation}
+d_{\bullet} : \omega \epi \Delta, \qquad 
+d_{\circ} : \omega \epi (E \times C \times M - \Delta)
+\end{equation}
+%%%%
+In particular, $E$, $C$ and $M$ are finite or countable. Also, we can 
+find a bijection $\delta_{\bullet} : \kappa \pf \Delta$, where 
+$\kappa = |\Delta|$. (Simply generate a list $d_{\bullet}(i)$ for 
+$i = 0,1,\dotsc$ and skip repeated items.) Its inverse is also 
+computable. Now we look at the projections $\pi_0 : \auf e, c, m\zu 
+\mapsto e$, $\pi_1 : \auf e,c,m\zu \mapsto c$ and $\pi_2 : \auf e,c,m\zu 
+\mapsto m$.
+%%%
+\begin{defn}
+%%%
+\label{sign system!enumerative}
+%%%
+Let $\Delta$ be a system of signs. $\Delta$ is called 
+\textbf{enumerative} if the projections $\pi_0$, $\pi_1$, 
+and $\pi_2$ are either bijective and computable or constant.
+\end{defn}
+%%%
+Here is an enumerative subsystem of English. Take $E$ to be 
+the set of number names of English (see Section~\ref{kap2}.\ref{kap2-6}), 
+$C = \{\nu\}$, where $\nu$ is the category of numbers, and 
+$M = \omega$. Now let $\CE$ be the set of signs $\auf \vec{x}, 
+\nu, n\zu$, where $\vec{x}$ names the number $n$ in English.
+It is straightforward to check that $\CE$ is enumerative.
+
+Let $\Delta$ be enumerative. We introduce two modes, {\mtt N} 
+(zeroary) and {\mtt S} (unary) and say that 
+%%%
+\begin{equation}
+\begin{split}
+\mbox{\mtt N} & := \delta_{\bullet}(0) \\
+\mbox{\mtt S}(\sigma) & := \delta_{\bullet}%
+(\delta_{\bullet}^{-1}(\sigma) +1)
+\end{split} 
+\end{equation}
+%%%
+This generates $\Delta$, as is easily verified. This, however, is 
+not compositional, unless we can show that the {\mtt S} can be 
+defined componentwise. Therefore put
+%%%
+\begin{equation}
+\mbox{\mtt S}^{\varepsilon}(e) := 
+\begin{cases} 
+e & \text{if $\pi_0$ is constant,} \\
+\pi_0(\mbox{\mtt S}(\pi_0^{-1}(e))) & \text{otherwise.}
+\end{cases}
+\end{equation}
+%%%
+This is computable if it is decidable whether or not $e$ is 
+in the image of $\pi_0$. So, the set $\pi_0[\Delta]$ must be 
+decidable. Similarly $\mbox{\mtt S}^{\gamma}$ and 
+$\mbox{\mtt S}^{\mu}$ are defined, and are computable if 
+$\pi_1[\Delta]$ and $\pi_2[\Delta]$, respectively, are decidable.
+%%%
+\begin{defn}
+%%%
+\index{sign system!modularly decidable}%%%
+%%%%
+$\Delta$ is called \textbf{modularly decidable} if $\Delta$, 
+$\pi_0[\Delta]$, $\pi_1[\Delta]$ and $\pi_2[\Delta]$ are decidable. 
+\end{defn}
+%%%
+\begin{thm}
+\label{thm:enum}
+Suppose that $\Delta$ is modularly decidable and enumerative. Then 
+$\Delta$ is compositional.
+\proofend
+\end{thm}
+%%%
+\begin{thm}[Extension]
+\label{thm:erweiterung}
+Let $\Sigma \subseteq E \times C \times M$ be a recursively 
+enumerable set of signs. Let $\Delta \subseteq \Sigma$ be 
+modularly decidable and enumerative. Assume that $E$ is finite 
+iff $\pi_0$ is constant on $\Delta$; similarly for $C$ and $M$. 
+Then $\Sigma$ is compositional.
+\end{thm}
+%%
+\proofbeg
+We first assume that $E$, $C$ and $M$ are all infinite. By 
+Theorem~\ref{thm:enum}, $\Delta$ is compositional. Further, 
+$\Sigma$ is recursively enumerable. So there is a computable function 
+$\xi : \omega \epi \Sigma$. Moreover, $\delta^{-1}_{\bullet}$ is 
+also computable, and so $\xi \circ \delta^{-1}_{\bullet} : 
+\Delta \epi \Sigma$ is computable. Add a unary mode 
+{\mtt F} to the signature and let 
+%%%
+\begin{align}
+\notag
+\mbox{\mtt F}^{\varepsilon}(e) := & 
+\pi_0((\xi \circ \delta^{-1}_{\bullet})(\pi_0^{-1}(e))) \\
+\mbox{\mtt F}^{\varepsilon}(c) := & 
+\pi_1((\xi \circ \delta^{-1}_{\bullet})(\pi_1^{-1}(c))) \\
+\notag
+\mbox{\mtt F}^{\varepsilon}(m) := & 
+\pi_2((\xi \circ \delta^{-1}_{\bullet})(\pi_2^{-1}(m))) 
+\end{align}
+%%%
+(On all other inputs the functions are not defined.)
+This is well--defined and surjective. $\auf \mbox{\tt F}^{\varepsilon}, 
+\mbox{\mtt F}^{\gamma}, \mbox{\mtt F}^{\mu}\zu$ is partial, computable, 
+and defined only on $\Delta$. Its full image is $\Sigma$.
+Now assume that one of the projections, say $\pi_0$, is constant. 
+Then $E$ is finite, by assumption on $\Sigma$, say 
+$E = \{e_i : i < n\}$ for some $n$. Then put $\Sigma_i := \Sigma 
+\cap (\{e_i\} \times C \times M)$. $\Sigma_i$ is also recursively 
+enumerable. We do the proof as before, with an enumeration 
+$\xi_i : \omega \epi \Sigma_i$ in place of $\xi$. Assume $n$ 
+new unary modes, $\mbox{\mtt G}_i$, and put
+%%%
+\begin{align}
+\notag
+\mbox{\mtt G}_i^{\varepsilon}(e) := & 
+e_i \\
+\mbox{\mtt G}_i^{\varepsilon}(c) := & 
+\pi_1((\xi_i \circ \delta^{-1}_{\bullet})(\pi_1^{-1}(c))) \\
+\notag
+\mbox{\mtt G}_i^{\varepsilon}(m) := & 
+\pi_2((\xi_i \circ \delta^{-1}_{\bullet})(\pi_2^{-1}(m))) 
+\end{align}
+%%%
+All $\auf \mbox{\mtt G}_i^{\varepsilon}, \mbox{\mtt G}_i^{\gamma}, 
+\mbox{\tt G}_i^{\mu}\zu$ are computable, partial, and defined 
+exactly on $\Delta$, which they map onto $\Sigma_i$. 
+%%%
+\proofend
+
+In this construction all occurring signs are in $\Sigma$. Still, we 
+do want to say that the grammar just constructed is compositional. 
+Namely, if we apply $\mbox{\mtt F}^{\varepsilon}$ to the string 
+$\vec{x}$ we may get a string that may have nothing to do with 
+$\vec{x}$ at all. Evidently, we need to further restrict our 
+operations, for example, by not allowing arbitrary 
+string manipulations. We shall deal with this problem in 
+Section~\ref{kap4}.\ref{kap4-7}.
+
+Compositionality in the weak sense defines semantics as an
+autonomous component of language. When a rule is applied,
+the semantics may not `spy' into the phonological form or
+the syntax to see what it is supposed to do. Rather, it acts
+autonomously, without that knowledge. Its only input is the
+semantics of the argument signs and the mode that is being
+applied. In a similar way syntax is autonomous from phonology
+and semantics. That this is desirable has been repeatedly
+argued for by Noam Chomsky. It means that syntactic rules apply
+regardless of the semantics or the phonological form. It is
+worthwile to explain that our notion of compositionality not
+only makes semantics autonomous from syntax and phonology, but
+also syntax autonomous from phonology and semantics and phonology
+autonomous from syntax and semantics.
+
+{\it Notes on this section.} The notion of sign defined here is
+the one that is most commonly found in linguistics. In essence
+it goes back to de Saussure \shortcite{desaussure:grundfragen}, 
+%%%
+\index{de Saussure, Ferdinand}%%%
+%%%
+published posthumously in 1916, who takes a linguistic 
+sign to consist of a signifier and denotatum 
+(see also Section~\ref{kap4}.\ref{kap4-8}). De Saussure therewith diverged 
+from Peirce, 
+%%%
+\index{Peirce, Charles S.}%%%
+%%%%
+for whom a sign was a triadic relation between the signifier, the 
+interpreting subject and the denotatum. (See also \cite{lyons:semantics}
+for a discussion.) On the other hand, following the mainstream we 
+have added to de Saussure signs the category, which is nothing but 
+a statement of the combinatorics of that sign. This structure of a 
+sign is most clearly employed, for example, in Montague Grammar and 
+%%%
+\index{Montague Grammar (see Montague Semantics)}%%
+\index{Montague Semantics}%%%
+in the Meaning--to--Text framework of Igor Mel'\v{c}uk 
+%%%
+\index{Mel'\v{c}uk, Igor}%%%
+%%%
+(see for example \cite{melcuk:morphologie}). Other theories, 
+for example early HPSG 
+and Unification Categorial Grammar also use the tripartite distinction 
+between what they call phonology, syntax and semantics, but signs 
+are not triples but much more complex in structure.
+
+The distinction between compositionality and weak compositionality
+turns on the question whether the generating functions should
+work inside the language or whether they may introduce new objects.
+We strongly opt for the former not only because it gives us a
+stronger notion. The definition in its informal rendering makes
+reference to the parts of an expression and their meanings --- and 
+in actual practice the parts from which we compose an expression 
+do have meanings, and it is these meanings we employ in forming 
+the meaning of a complex expression.
+%%
+%\vplatz
+%\exercise
+%Call $\Delta$ $\gamma$--{\bf unique} if the following holds:
+%%%
+%\begin{dingautolist}{192}
+%\item
+%If $\auf e, \gamma, m\zu, \auf e', \gamma, m\zu \in \Delta$ then
+%$e = e'$.
+%\item
+%If $\auf e, \gamma, m\zu, \auf e, \gamma, m'\zu \in \Delta$ then
+%$m = m'$.
+%\end{dingautolist}
+%%%
+%Let $C = \{\gamma\}$ and $\Delta$ be modularly decidable and
+%$\gamma$--unique. Show that $\Delta$ is compositional.
+%%
+%\vplatz
+%\exercise
+%Let $C$ be finite, $E = A^{\ast}$ and let $\Delta$ be
+%$\gamma$--unique for every $\gamma \in C$. Finally, let
+%$\Delta$ be modularly decidable. Show that $\Delta$ is
+%compositional. {\it Hint.} Define for every $\gamma$ a
+%binary mode $\mbox{\tt C}_{\gamma}$.  Let
+%$\mbox{\tt C}_{\gamma}^{\GE}$ be the
+%concatenation and $\mbox{\tt C}_{\gamma}^{\GC}(t,t') :=
+%t$ if $t = t' = \gamma$, and undefined otherwise. The
+%trick is the definition of $\mbox{\tt C}_{\GC}^{\mu}$.
+%%
+\vplatz
+\exercise
+\label{ex:transparent}
+Let $G = \auf \mbox{\tt S}, N, A, R\zu$ be a CFG. Put 
+$N' := N \cup \{\mbox{\tt R}_{\rho} : \rho \in R\}$, and
+$R" := \{X \pf \mbox{\tt R}_{\rho}\vec{\alpha} : \rho = X 
+	\pf \vec{\alpha} \in R\}$, 
+$G' := \auf \mbox{\tt S}, N', A, R'\zu$.  
+Show that $G'$ is transparent. 
+%%%
+\vplatz
+\exercise
+Show that English satisfies the conditions of
+Theorem~\ref{thm:erweiterung}. Hence English
+is compositional! 
+%%
+\vplatz
+\exercise
+Construct an undecidable set $\Delta$ such that its projections 
+$\pi_0[\Delta]$, $\pi_1[\Delta]$ and $\pi_2[\Delta]$ are decidable. 
+Construct a $\Delta$ which is decidable but not its projection
+$\pi_0[\Delta]$.
+%%%
+\vplatz
+\exercise
+Show that the functions postulated in the proof of
+Theorem~\ref{thm:erweiterung}, $z_{\gamma}$ and $m_{\gamma}$,
+do exist if $\Sigma$ is recursively enumerable.
+%%%
+\vplatz 
+\exercise 
+Say that $\Sigma \subseteq E \times C \times M$
+is \textbf{extra weakly compositional} if there exists a finite
+signature $\Omega$ and $\Omega$--algebras $\GE'$, $\GC'$ and
+$\GM'$ over sets $E' \supseteq E$, $C' \supseteq C$ and $M'
+\supseteq M$, respectively, such that $\Sigma$ is the carrier 
+set of the 0--generated partial subalgebra of 
+$\GE' \times \GC' \times \GM'$ which belong to the
+set $E \times C \times M$. (So, the definition is like that of
+weak compositionality, only that the functions are not
+necessarily computable.) Show that $\Sigma$ is extra weakly
+compositional iff it is countable. (See also
+\cite{zadrozny:compositionality}.)

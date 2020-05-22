@@ -1,0 +1,1098 @@
+\newcommand{\circplus}{\,\raisebox{.1em}{\footnotesize{$\oplus$}}\,}
+\newcommand{\circminus}{\,\raisebox{.1em}{\footnotesize{$\ominus$}}\,}
+%%%%
+\section{The Syntactic Calculus of Ca\-te\-go\-ries}
+\label{kap3-2}
+%
+%
+%
+Categorial grammars --- in contrast to phrase structure grammars ---
+specify no special set of rules, but instead associate with
+each lexical element a finite set of context schemata. These
+context schemata can either be defined over strings or over
+structure trees. The second approach is older and leads to the so
+called Aj\-du\-kie\-wicz--Bar Hillel--Calculus ($\mathsf{AB}$),
+%%%
+\index{Ajdukiewicz, Kazimierz}%%
+\index{Bar--Hillel, Yehoshua}%%
+\index{Ajdukiewicz--Bar Hillel Calculus}%%
+%%%
+the first to the Lambek--Cal\-cu\-lus ($\mathsf{L}$).
+%%%
+\nocite{ajdukiewicz:konnexitaet}
+\index{Lambek--Calculus}%%
+\index{Lambek, Joachim}%%%
+%%%
+We present first the calculus $\mathsf{AB}$.
+
+We assume  that all trees are strictly binary branching with
+exception of the preterminal nodes. Hence, every node whose
+daughter is not a leaf has exactly two daughters. The phrase
+structure rule $X \pf Y Z$ licenses the expansion of the symbol 
+$X$ to the sequence $YZ$.  In categorial grammar, the category 
+$Y$ represents the set of trees whose root has label $Y$, and 
+the rule says that trees with root label $Y$ and $Z$, respectively, 
+may be composed to a tree with root $X$. The approach is therefore 
+from bottom to top rather than top to bottom. The fact that a tree 
+of the named kind may be composed is coded by the so called
+%%%%
+\index{category assignment}%%
+%%%%
+\textbf{category assignment}. To this end we first have to define
+{\it categories}. Categories are simply terms over a signature.
+If the set of proper function symbols is $M$ and the set of 
+0--ary function symbols is $C$ we write $\Cat_M(C)$ 
+rather than $\Tm_M(C)$ for the set of terms over this 
+signature. The members are called \textbf{categories}
+%%%%
+\index{$\Cat_{\mbox{\smtt\tb}, \mbox{\smtt\tf}}(C)$}%%
+\index{category}%%%%
+%%%%
+while members of $C$ are called \textbf{basic categories}. %%%
+%%%
+\index{category!basic}%%
+%%%
+In the AB--Calculus we have $M = \{\mbox{\mtt\tb}, %
+\mbox{\mtt\tf}\}$. ($\mathsf{L}$ also has $\bullet$.) Categories 
+are written in infix notation. So, we write {\mtt (a{\tf}b)} in 
+place of {\mtt {\tf}ab}. Categories will be denoted by lower 
+case Greek letters, basic categories by lower case Latin letters. 
+If $C = \{\mbox{\mtt a}, \mbox{\mtt b}, \mbox{\mtt c}\}$ then 
+{\mtt ((a{\tf}b){\tb}c)}, {\mtt (c{\tf}a)} are categories. 
+Notice that we take the actual strings to be the categories. 
+This convention will soon be relaxed. Then we also use left 
+associative bracketing as with $\lambda$--terms. So, 
+{\mtt a$/$b$/$c$/$b$/$a} will be short for
+{\mtt ((((a{\tf}b){\tf}c){\tf}b){\tf}a)}. (Notice the change 
+in font signals that the way the functor is written down has 
+been changed.) The interpretation of categories in terms of 
+trees is as follows.  A {\it tree\/} is understood to be an 
+exhaustively ordered strictly binary branching tree with labels in 
+$\Cat_{\mbox{\smtt\tb}, \mbox{\smtt\tf}}(C)$, which 
+results from a constituent analysis. This means that nonterminal 
+nodes branch exactly when
+they are not preterminal. Otherwise they have a single daughter, 
+whose label is an element of the alphabet. The labelling function 
+$\ell$ must be correct in the sense of the following definition.
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\delta}{\gamma}{\mbox{\mtt ($\gamma${\tb}$\delta$)}}
+\qquad
+\binbaum{\delta}{\mbox{\mtt ($\delta${\tf}$\gamma$)}}{\gamma}
+\end{array}
+\end{equation}
+%%
+Call a tree \textbf{2--standard} if a node is at most binary branching,
+and if it is nonbranching iff it is preterminal.
+%%
+\begin{defn}
+Let $A$ be an alphabet and $\zeta \colon A_{\varepsilon} \pf
+\wp(\Cat_{\mbox{\smtt\tb}, \mbox{\smtt\tf}}(C))$ be 
+a function for which $\zeta(a)$ is always finite.  Then $\zeta$ 
+is called a \textbf{category assignment}.
+%%%%
+\index{category assignment}%%
+%%%
+Let $\GT = \auf T, <, \sqsubset, t\zu$ be a 2--standard tree
+with labels in $\Cat_{\mbox{\smtt\tb}, \mbox{\smtt\tf}}(C)$.
+$\GT$ is \textbf{correctly $\zeta$--labelled} %%
+%%%
+\index{tree!correctly labelled}%%
+%%%
+if (1) for every nonbranching $x$ with daughter $y$
+$\ell(x) \in \zeta(\ell(y))$, and (2) for every branching $x$
+which immediately dominates $y_0$, $y_1$ and $y_0 \sqsubset y_1$
+we have: $\ell(y_0) = \mbox{\mtt ($\ell(x)${\tf}$\ell(y_1)$)}$ or 
+$\ell(y_1) = \mbox{\mtt ($\ell(y_0)${\tb}$\ell(x)$)}$.
+\end{defn}
+%%
+\begin{defn}
+%%%%
+\index{categorial grammar!AB--\faul}%%
+%%%%
+The quadruple $K = \auf S, C, A, \zeta\zu$ is an 
+\textbf{AB}--\textbf{grammar} if $A$ and $C$ are finite sets, the 
+\textbf{alphabet} and the set of \textbf{basic categories},
+respectively, $S \in C$, and $\zeta  \colon A \pf \wp(\Cat_{\mbox{\smtt\tb}, 
+\mbox{\smtt\tf}}(C))$ a category assignment. The set of labelled 
+trees that is accepted by $K$ is denoted by $L_B(K)$.
+It is the set of 2--standard correctly $\zeta$--labelled trees
+with labelling $\ell \colon T \pf \Cat_{\mbox{\smtt\tb}, 
+\mbox{\smtt\tf}}(C)$ such that the root carries the label $S$.
+\end{defn}
+%%
+We emphasize that for technical reasons also the empty string
+must be assigned a category. Otherwise no language which contains
+the empty string is a language accepted by a categorial grammar.
+We shall ignore this case in the sequel, but in the exercises
+will shed more light on it.
+
+AB--grammars only allow to define the mapping
+$\zeta$. For given $\zeta$, the set of trees that are correctly
+$\zeta$--labelled are then determined and can be enumerated. To 
+this end we need to simply enumerate all possible constituents. 
+Then for each preterminal $x$ we choose an appropriate label $\gamma 
+\in \zeta(\ell(y))$, where $y \prec x$. The labelling function
+therefore is fixed on all other nodes. In other words, the 
+AB--grammars (which will turn out to be variants of CFGs) 
+are invertible. The algorithm for finding analysis trees is not very 
+effective. However, despite this we can show that already a CFG generates 
+all trees, which allows us to import the results on CFGs.
+%%
+\begin{thm}
+Let $K = \auf \mbox{\tt S}, C, A, \zeta\zu$ be an AB--grammar. 
+Then there exists a CFG $G$ such that $L_B(K) = L_B(G)$.
+\end{thm}
+%%
+\proofbeg
+Let $N$ be the set of all subterms of terms in $\zeta(a)$,
+$a \in A$. $N$ is clearly finite. It can be seen without problem 
+that every correctly labelled tree only carries labels from $N$. 
+The start symbol is that of $K$. The rules have the form
+%%
+\begin{align}
+\gamma & \pf \mbox{\mtt ($\gamma${\tf}$\delta$)} \quad \delta & \\
+\gamma & \pf \delta \quad \mbox{\mtt ($\delta${\tb}$\gamma$)} & \\
+\gamma & \pf a           & (\gamma \in \zeta(a))
+\end{align}
+%%
+where $\gamma$, $\delta$ run through all symbols of $N$ and $a$ 
+through all symbols from $A$. This defines $G := \auf \mbox{\tt S}, %
+N, A, R\zu$. If $\GT \in L_B(G)$ then the labelling is correct, as 
+is easily seen. Conversely, if $\GT \in L_B(K)$ then every local tree 
+is an instance of a rule from $G$, the root carries the symbol
+{\tt S}, and all leaves carry a terminal symbol. Hence $\GT \in L_B(G)$.
+\proofend
+
+%%
+Conversely every CFG can be converted into an AB--grammar; 
+however, these two grammars need not be strongly equivalent.
+Given $L$, there exists a grammar $G$ in Greibach Normal Form such that 
+$L(G) = L$. We distinguish two cases. Case 1. $\varepsilon \in L$.  
+We assume that {\tt S} is never on the right hand side of a 
+production. (This can be installed keeping to Greibach Normal Form; 
+see the exercises.) Then we choose a category assignment as in 
+Case 2 and add $\zeta(\varepsilon) := \{\mbox{\tt S}\}$. Case 2.
+$\varepsilon \not\in L$. Now define
+%%
+\begin{equation}
+\zeta_G(a) := \{X/Y_{n-1}/\dotsb/Y_1/Y_0
+: X \pf a \conc \prod_{i < n} Y_i \in R\}
+\end{equation}
+%%
+Put $K := \auf \mbox{\tt S}, N_G, A, \zeta_G\zu$. We claim that
+$L(K) = L(G)$. To this end we shall transform $G$
+by replacing the rules $\rho = X \pf a \conc \prod_{i < n} Y_i$
+by the rules
+%%
+\begin{equation}
+Z^{\rho}_0 \pf a Y_0, \quad Z^{\rho}_1 \pf Z_0 Y_1,
+    \quad \dotsc,
+        \quad Z^{\rho}_{n-1} \pf Y_{n-2} Y_{n-1}
+\end{equation}
+%%
+This defines the grammar $H$. We have $L(H) = L(G)$. Hence
+it suffices to show that $L(K) = L(H)$. In place of $K$
+we can also take a CFG $F$; the nonterminals
+are $N_F$. We show now that that $F$ and $H$ generate the same
+trees modulo the R--simulation $\sim\, \subseteq\, N_H \times N_F$,
+which is defined as follows. (a) For $X \in N_G$ we have
+$X \sim Y$ iff $X = Y$. (b) $Z^{\rho}_i \sim W$
+iff $W = X/Y_{n-1}/\dotsb/Y_{i+1}$ and
+$\rho = X \pf Y_0 \conc Y_1 \conc \dotsm \conc Y_{n-1}$
+for certain $Y_j$, $i < j < n$. To this end it suffices
+to show that the rules of $F$ correspond via $\sim$ to the
+rules of $H$. This is directly calculated.
+%%
+\begin{thm}[Bar--Hillel \& Gaifman \& Shamir]
+%%%
+\index{Bar--Hillel, Yehoshua}%%
+\index{Gaifman, Haim}%%%
+\index{Shamir, E.}%%%
+%%%
+Let $L$ be a language. $L$ is context free iff $L = L_B(K)$ for 
+some AB--grammar.
+\proofend
+\end{thm}
+%%
+Notice that we have used only {\mtt\tf}. It is easy to see that 
+{\mtt\tb} alone would also have sufficed.
+
+Now we look at Categorial Grammar from the standpoint of
+the sign grammars. We introduce a binary operation `$\cdot$'
+on the set of categories which satisfies the following equations.
+%%
+\begin{equation}
+\mbox{\mtt ($\gamma${\tf}$\delta$)} \cdot \delta = \gamma, \qquad
+\delta \cdot \mbox{\mtt ($\delta${\tb}$\gamma$)} = \gamma
+\end{equation}
+%%
+Hence $\delta \cdot \eta$ is defined only when
+$\eta = \mbox{\mtt ($\delta${\tb}$\gamma$)}$ or 
+$\delta = \mbox{\mtt ($\gamma${\tf}$\eta$)}$
+for some $\gamma$. Now let us look at the construction of a
+sign algebra for CFGs of Section~\ref{kap3}.\ref{kap3-1}.
+Because of the results of this section we can assume that
+the set $T'$ is a subset of $\Cat_{\mbox{\smtt\tb}, %
+\mbox{\smtt\tf}}(C)$ which is closed under $\cdot$. Then for 
+our proper  modes we may proceed as follows. If $a$ is of 
+category $\gamma$ then there exists a context free rule 
+$\rho = \gamma \pf a$ and we introduce a 0--ary mode 
+$\mbox{\tt R}_{\rho} := \auf a, \gamma, a\zu$. The other rules 
+can be condensed into a single mode
+%%
+\begin{equation}
+\mbox{\tt A}(\auf \vec{x}, \gamma, \vec{x}\zu,
+    \auf \vec{y}, \beta, \vec{y}\zu) :=
+    \auf \vec{x}\, \vec{y}, \gamma \cdot \beta,
+    \vec{x}\, \vec{y}\zu
+\end{equation}
+    %%
+(Notice that {\mtt A} is actually a structure term, so should 
+actually write $\upsilon(\mbox{\mtt A})$ is place of it. We will 
+not do so, however, to avoid clumsy notation.)
+
+However, this still does not generate the intended meanings.
+We still have to introduce $\mbox{\tt S}^{\heartsuit}$
+as in Section~\ref{kap3}.\ref{kap3-1}. We do not want to do this,
+however. Instead we shall deal with the question whether
+one can generate the meanings in a more systematic fashion.
+In general this is not possible, for we have only assumed
+that $f$ is computable. However, in practice it appears
+that the syntactic categories are in close connection to the
+meanings. This is the philosophy behind Montague Semantics.
+%%%
+\index{Montague Semantics}%%%
+
+Let an arbitrary set $C$ of basic categories be given. Further,
+let a set $B$ of basic types be given. From $B$ we can form types 
+in the sense of the typed $\lambda$--calculus and from $C$ categories 
+in the sense of categorial grammar. We shall require that these 
+two are connected by a homomorphism from the algebra of 
+categories to the algebra of types. Both are realized over
+strings. So, for each basic category $c \in C$ we choose a type 
+$\gamma_c$. Then we put
+%%
+\begin{align}
+%\begin{array}{l@{\quad := \quad}l}
+\notag
+\sigma(c) & := \gamma_c \\
+\sigma(\mbox{\mtt ($\gamma${\tf}$\delta$)}) & 
+	:= \mbox{\mtt ($\sigma(\delta)$\symbol{25}$\sigma(\gamma)$)} \\\notag
+\sigma(\mbox{\mtt ($\delta${\tb}$\gamma$)}) & 
+	:= \mbox{\mtt ($\sigma(\delta)$\symbol{25}$\sigma(\gamma)$)}
+\end{align}
+%%
+Let now $\GA = \auf \{A_{\alpha} \colon \alpha \in 
+\Typ_{\mbox{\smtt\symbol{25}}}(B)\}, \bullet\zu$ be a typed 
+applicative structure. $\sigma$ defines a \textbf{realization of} 
+$B$ in $\GA$ by assigning to each category $\gamma$ the set 
+$A_{\sigma(\gamma)}$, which we also denote by $\real{\gamma}$. 
+%%%
+\index{$\real{\gamma}$}%%%
+%%%
+We demonstrate this with our arithmetical terms. The applicative 
+structure shall be based on sets, using $\mathsf{app}$ as the interpretation 
+of function application. This means that $A_{\mbox{\smtt (}\alpha
+\mbox{\smtt\symbol{25}}\beta\mbox{\smtt )}} = A_{\alpha} \pf A_{\beta}$. 
+Consequently, $\real{\mbox{\mtt ($\gamma${\tf}$\delta$)}}  
+= \real{\mbox{\mtt ($\delta$\tb$\gamma$)}} = \real{\delta} \pf 
+\real{\gamma}$. There is the basic category {\tt Z}, and it is 
+realized by the set of numbers from $0$ to $9$. Further, there 
+is the category {\tt T} which gets realized by the rational 
+numbers $\BQ$ --- for example.
+%%
+\begin{align}
+\real{\mbox{\tt Z}} & := \{0, 1, \dotsc, 9\} \\\notag
+\real{\mbox{\tt T}} & := \BQ 
+\end{align}
+%%
+$+ \colon \BQ \times \BQ \pf \BQ$ is a binary function. We  can
+redefine it as shown in Section~\ref{kap3}.\ref{kap3-7} to an element of
+$\BQ \pf (\BQ \pf \BQ)$, which we also denote by $+$. The syntactic 
+category which we assign to $+$ has to match this. We choose
+{\mtt ((T{\tb}T){\tf}T)}.
+Now we have
+%%
+\begin{equation}
+\real{\mbox{\mtt ((T{\tb}T)/T)}}
+= \BQ \pf (\BQ \pf \BQ) 
+\end{equation}
+%%
+as desired. Now we have to see to it that the meaning of the
+string $\mbox{\tt 5+7}$ is indeed 12. To this end we require
+that if {\tt +}  is combined with {\tt 7} to the constituent
+{\tt +7} the meaning of {\tt +} (which is a function) is applied
+to the number $7$. So, the meaning of {\tt +7} is the function
+$x \mapsto x + 7$ on $\BQ$. If we finally group {\tt +7} and
+{\tt 5} together to a constituent then we get a constituent
+of category {\tt T} whose meaning is 12.
+
+If things are arranged in this way we can uniformly define two
+modes for $\mathsf{AB}$, $\mbox{\tt A}_{\sgr}$ and
+$\mbox{\tt A}_{\skl}$.
+%%%
+\index{$\mbox{\tt A}_{\sgr}$, $\mbox{\tt A}_{\skl}$}%%%
+%%
+\begin{subequations}
+\begin{align}
+\mbox{\tt A}_{\sgr}(\auf \vec{x}, \alpha, M\zu,
+    \auf \vec{y}, \beta, N\zu)
+    & := \auf \vec{x}\, \vec{y}, \alpha \cdot \beta,
+    MN\zu \\
+%%
+\mbox{\tt A}_{\skl}(\auf \vec{x}, \alpha, M\zu,
+    \auf \vec{y}, \beta, N\zu)
+    & := \auf \vec{x}\, \vec{y}, \alpha \cdot \beta, NM\zu
+    \end{align}
+\end{subequations}
+    %%
+We further assume that if $a \in A$ has category $\alpha$
+then there are only finitely many $M \in \real{\alpha}$ which are
+meanings of $a$ of category $\alpha$. For each such meaning
+$M$ we assume a 0--ary mode $\auf a, \alpha, M\zu$. Therewith
+$\mathsf{AB}$ is completely standardized. In the respective 
+algebras $\GZ$, $\GT$ and $\GM$ there is only one binary operation. 
+In $\GZ$ it is the concatenation of two strings, in $\GT$ it is 
+cancellation, and in $\GM$ function application. The variability 
+is not to be found in the proper modes, only in the 0--ary 
+modes, that is, the lexicon. Therefore one speaks of Categorial 
+Grammar as a `lexical' theory; all information about the
+language is in the lexicon.
+%%
+\begin{defn}
+%%%
+\index{sign grammar!AB--\faul}%%%
+%%%
+A sign grammar $\auf \GA, \varepsilon, \gamma, \mu\zu$ is called 
+an \textbf{AB--sign grammar} if the signature consists of the two 
+modes $\mbox{\tt A}_{\sgr}$ and $\mbox{\tt A}_{\skl}$  and finitely
+many 0--ary modes $\mbox{\tt M}_i$, $i < n$ such that 
+%%%
+\begin{dingautolist}{192}
+\item
+$\mbox{\tt M}_i^{\upsilon} = \auf \vec{x}_i, \gamma_i, N_i\zu$, 
+$i < n$,
+\item
+$\GZ = \auf A^{\ast}, \conc, \auf \vec{x}_i : i < n\zu\zu$,
+\item
+$\GT = \auf \Cat_{\mbox{\smtt\tb},\mbox{\smtt\tf}}(C), \cdot, 
+\auf \gamma_i : i < n\zu\zu$ for some set $C$,
+\item
+$\GM = \auf \{M_{\alpha} : \alpha \in 
+\Typ_{\pf}(B)\}, \bullet, \auf N_i : i < n\zu\zu$ 
+is an expansion of a typed applicative structure by constants, 
+\item
+and $N_i \in M_{\sigma(\gamma_i)}$, $i <n$.
+\end{dingautolist}
+%%%
+\end{defn}
+%%
+Notice that the algebra of meanings is partial and has as its 
+unique operation function application. (This is not defined if 
+the categories do not match.) As we shall see, the concept of 
+a categorial grammar is somewhat restrictive with respect to 
+the language generated (it has to be context free) and with 
+respect to the categorial symbols, but it is not restrictive 
+with respect to meanings. 
+
+We shall give an example. We look at our
+alphabet of ten digits. Every nonempty string over this
+alphabet denotes a unique number, which we name by this
+very sequence. For example, the sequence {\tt 721} denotes
+the number 721, which in binary is {\tt 101101001} or
+{\tt LOLLOLOOL}. We want to write an AB--grammar which
+couples a string of digits with its number.  This is not as easy
+as it appears at first sight. In order not to let the example
+appear trivial we shall write a grammar
+for binary numbers, with {\tt L} in place of 1 and {\tt O}
+in place of $0$. To start, we need a category
+{\tt Z} as in the example above. This category is realized by the
+set of natural numbers. Every digit has the category {\tt Z}.
+So, we have the following 0--ary modes.
+%%
+\begin{equation}
+\mbox{\tt Z}_{\snull} := \auf \mbox{\tt O}, Z, 0\zu \qquad
+\mbox{\tt Z}_{\seins} := \auf \mbox{\tt L}, Z, 1\zu 
+\end{equation}
+%%
+Now we additionally agree that digits have the category {\mtt
+Z{\tb}Z}. With this the number {\tt LOL} is analyzed in this way.
+%%
+\begin{equation}
+\begin{array}{ccc}
+\mbox{\tt L} & \mbox{\tt O} & \mbox{\tt L} \\
+\mbox{\mtt Z} & \mbox{\mtt (Z{\tb}Z)} &
+    \mbox{\mtt (Z{\tb}Z)} \\\cline{1-2}
+    \multicolumn{2}{c}{\mbox{\mtt Z}} &
+        \\\cline{1-3}
+            \multicolumn{3}{c}{\mbox{\mtt Z}}
+\end{array}
+\end{equation}
+%%
+This means that digits are interpreted as functions
+from $\omega$ to $\omega$. As one easily finds out these are the
+functions $\lambda x_0.2x_0+k$, $k \in \{0,1\}$. Here $k$ must be 
+the value of the digit. So, we additionally need the following 
+zeroary modes.
+%%
+\begin{align}
+\mbox{\tt M}_{\snull} & := \auf \mbox{\tt 0}, \mbox{\mtt (Z{\tb}Z)},
+    \lambda x_0.2x_0\zu \\
+\mbox{\tt M}_{\seins} & := \auf \mbox{\tt 1}, \mbox{\mtt (Z{\tb}Z)},
+    \lambda x_0.2x_0+1\zu
+\end{align}
+%%
+(Notice that we write $\lambda x_0.2x_0$ and not 
+\mbox{\tt (\stlambda x$_{\snull}$.(2{\mtt\symbol{42}}x$_{\snull}$))}, 
+since the latter is a string, while the former is actually a function 
+in a particular algebra.) However, the grammar does not have the ideal form.
+For every digit has two different meanings which do not need to
+have anything to do with each other. For example, we could have
+introduced the following mode in place of --- or even in addition 
+to --- $\mbox{\tt M}_{\seins}$.
+%%
+\begin{equation}
+\mbox{\tt M}_{\szwei} := \auf \mbox{\tt 0}, \mbox{\mtt (Z{\tb}Z)},
+    \lambda x_0.2x_0+1\zu
+\end{equation} 
+%%
+We can avoid this by introducing a second category symbol,
+{\tt T}, which stands for a sequence of digits, while
+{\tt Z} only stands for digits. In place of $\mbox{\tt M}_{\snull}$
+we now define the empty modes $\mbox{\tt N}_{\snull}$,
+and $\mbox{\tt N}_{\seins}$:
+%%
+\begin{align}
+\mbox{\tt N}_{\snull} & := \auf \varepsilon, \mbox{\mtt (T{\tf}Z)},
+    \lambda x_0.x_0\zu \\
+\mbox{\tt N}_{\seins} & := \auf \varepsilon, \mbox{\mtt ((T{\tf}T){\tf}Z)},
+    \lambda x_1.\lambda x_0.2x_1+x_0\zu
+\end{align}
+%%
+For example, we get {\tt LOL} as the exponent of the term
+%%
+\begin{equation}
+\mbox{\mtt A$_{\sgr}$A$_{\sgr}$N$_{\seins}$A$_{\sgr}$A$_{\sgr}$N%
+$_{\seins}$A$_{\sgr}$N$_{\snull}$Z$_{\seins}$Z$_{\snull}$Z$_{\seins}$} 
+\end{equation}
+%%
+The meaning of this term is calculated as follows.
+%%
+\begin{align}
+\begin{split}
+& (\mbox{\mtt A$_{\sgr}$A$_{\sgr}$N$_{\seins}$A$_{\sgr}$A$_{\sgr}$N%
+$_{\seins}$A$_{\sgr}$N$_{\snull}$Z$_{\seins}$Z$_{\snull}$Z$_{\seins}$}% 
+)^{\mu} \\
+	= & \mbox{\tt N}_{\seins}^{\mu}(\mbox{\tt N}_{\seins}^{\mu}(%
+    \mbox{\tt N}_{\snull}^{\mu}(\mbox{\tt Z}_{\seins}^{\mu})) %
+	(\mbox{\tt Z}_{\snull}^{\mu}))(\mbox{\tt Z}_{\seins}^{\mu}) \\
+    = &
+    \mbox{\tt N}_{\seins}^{\mu}(\mbox{\tt N}_{\seins}^{\mu}((%
+    \mbox{\tt N}_{\snull}^{\mu}(1)) (0))(1) \\
+    = & \mbox{\tt N}_{\seins}^{\mu}(\mbox{\tt N}_{\seins}^{\mu}(%
+    (\lambda x_0.x_0)(1))(0))(1) \\
+    = & \mbox{\tt N}_{\seins}^{\mu}(\mbox{\tt N}_{\seins}^{\mu}(1)(0))(1) \\
+    = & \mbox{\tt N}_{\seins}^{\mu}((\lambda x_1.\lambda x_0.(2x_1+x_0
+    ))(1)(0))(1) \\
+    = & \mbox{\tt N}_{\seins}^{\mu}(2)(1) \\
+    = & (\lambda x_1.\lambda x_0.(2x_1+x_0))(2)(1) \\
+    = & 5
+\end{split}
+\end{align}
+%%
+This solution is far more elegant than the first. Despite of
+this, it too is not satisfactory. We had to postulate
+additional modes which one cannot see on the string. Also, 
+we needed to distinguish strings from digits. For 
+comparison we show a solution that involves restricting the 
+concatenation function. Put 
+%%%
+\begin{equation}
+\vec{x} \star \vec{y} := 
+\begin{cases} 
+\vec{x}\conc \vec{y} & \text{if $\vec{y} \in A$,} \\
+\text{undefined} & \text{otherwise.}
+\end{cases}
+\end{equation}
+%%%
+Now take a binary symbol {\tt P} and set 
+%%%
+\begin{equation}
+\mbox{\tt P}(\auf \vec{x}, \mbox{\tt Z}, m\zu, 
+\auf \vec{y}, \mbox{\tt Z}, n\zu) = 
+\auf \vec{x} \star \vec{y}, \mbox{\tt Z}, 2m+n\zu 
+\end{equation}
+%%%
+One could also define two unary modes for appending a digit. 
+But this would mean making the empty string an exponent for 0, 
+or else it requires another set of two digits to get started. 
+A further problem is the restricted
+functionality in the realm of strings. With the example
+of the grammar $T$ of the previous section we shall exemplify
+this. We have agreed that every term is enclosed by brackets,
+which merely are devices to help the eye. These brackets are
+now symbols of the alphabet, but void of real meaning.
+To place the brackets correctly, some effort must be made.
+We propose the following grammar.
+%%
+\begin{align}
+\notag
+\mbox{\tt O}_{\seins} & := \auf \mbox{\mtt +}, \mbox{\mtt ((T{\tb}U){\tf}T)},
+    \lambda x_1.\lambda x_0.x_0+x_1 \zu\\
+\notag
+\mbox{\tt O}_{\szwei} & := \auf \mbox{\mtt -}, \mbox{\mtt ((T{\tb}U){\tf}T)},
+    \lambda x_1.\lambda x_0.x_0-x_1 \zu \\
+\notag
+\mbox{\tt O}_{\sdrei} & := \auf \mbox{\mtt \symbol{47}}, 
+	\mbox{\mtt ((T{\tb}U){\tf}T)},
+    \lambda x_1.\lambda x_0.x_0/x_1\zu \\
+\notag
+\mbox{\tt O}_{\svier} & := \auf \mbox{\mtt \symbol{42}}, 
+	\mbox{\mtt ((T{\tb}U){\tf}T)},
+    \lambda x_1.\lambda x_0.x_0x_1\zu \\
+\mbox{\tt O}_{\sfuenf} & := \auf \mbox{\mtt -}, (\mbox{\mtt U{\tf}T)},
+    \lambda x_0.-x_0 \zu \\
+\notag
+\mbox{\tt O}_{\ssechs} & := \auf \mbox{\tt (}, \mbox{\mtt (L{\tf}U)},
+    \lambda x_0.x_0 \zu \\
+\notag
+\mbox{\tt O}_{\ssieben} & := \auf \mbox{\tt )}, \mbox{\mtt (L{\tb}T)},
+    \lambda x_0.x_0\zu \\
+\notag
+\mbox{\tt Z}_{\snull} & := \auf \mbox{\mtt L}, \mbox{\mtt T}, 0\zu \\
+\notag
+\mbox{\tt Z}_{\seins} & := \auf \mbox{\mtt O}, \mbox{\mtt T}, 1\zu
+\end{align}
+%%
+The conception is that an operation symbol generates an
+unbracketed term which needs a left and a right bracket
+to become a `real' term. A semantics that fits with this
+analysis will assign the identity to all these. We simply
+take $\BQ$ for all basic categories. The brackets are interpreted
+by the identity function. If we add a bracket, nothing happens
+to the value of the term. This is a viable solution. However,
+it amplifies the set of basic categories without any increase in
+semantic types as well.
+
+The application of a function to an argument is by far not the
+only possible rule of composition. In particular Peter Geach has
+proposed in \cite{geach:program} to admit further rules of
+combination. This idea has been realized on the one hand in
+the Lambek--Calculus, which we will study later, and also in
+\textbf{combinatory categorial grammars}.
+%%
+\index{combinatory categorial grammar}%%
+%%
+The idea to the latter is as follows. Each mode in Categorial
+Grammar is interpreted by a semantical typed combinator.
+For example, $\mbox{\tt A}_{\skl}$ acts on the semantics like the
+combinator $\mathsf{U}$ (defined in Section~\ref{kap3}.\ref{kap3-7}) and
+$\mbox{\tt A}_{\sgr}$ is interpreted by the combinator {\tt I}.
+This choice of combinators is --- seen from the standpoint of
+combinatory logic --- only one of many possible choices. Let
+us look at other possibilities. We could add to the ones we
+have also the functions corresponding to the following closed 
+$\lambda$--term.
+%%
+\begin{equation}
+\mathsf{B} := \mbox{\tt (\stlambda x}_{\snull}\mbox{\tt .(%
+\stlambda x}_{\seins}\mbox{\tt .(\stlambda x}_{\szwei}\mbox{\tt %
+.(x}_{\snull}\mbox{\tt (x}_{\seins}\mbox{\tt x}_{\szwei}\mbox{\tt )))))} 
+\end{equation}
+%%
+$\mathsf{B}MN$ is nothing but function composition of the functions
+$M$ and $N$. For evidently, if $\mbox{\tt x}_{\szwei}$ has type $\gamma$
+then $\mbox{\tt x}_{\seins}$ must have the type $\beta \pf \gamma$ for 
+some $\beta$ and $\mbox{\tt x}_{\snull}$ the type $\alpha \pf \beta$ for 
+some $\alpha$. Then $\mathsf{B}\mbox{\tt x}_{\snull}\mbox{\tt x}_1 
+\triangleright \mbox{\tt (\stlambda x}_{\szwei}\mbox{\tt .(x}_{\snull}%
+\mbox{\tt (x}_{\seins}\mbox{\tt x}_{\szwei}\mbox{\tt )))}$ is of type 
+$\alpha \pf \gamma$. Notice that for each $\alpha$, $\beta$ and
+$\gamma$ we have a typed $\lambda$--term
+$\mathsf{B}_{\alpha,\beta,\gamma}$.
+%%
+\begin{equation}
+\mathsf{B}_{\alpha,\beta,\gamma} :=
+\mbox{\tt (\stlambda x}^{\snull}_{\alpha\pf\beta}\mbox{\tt .(\stlambda %
+x}^{\seins}_{\beta\pf\gamma}\mbox{\tt .(\stlambda x}^{\szwei}_{\alpha}%
+\mbox{\tt .(x}^{\snull}_{\alpha\pf\beta}\mbox{\tt %
+(x}^{\seins}_{\beta\pf\gamma}\mbox{\tt x}^{\szwei}_{\gamma}\mbox{\tt )))))} 
+\end{equation}
+%%
+However, as we have explained earlier, we shall not use the
+explicitly typed terms, but rather resort to the implicitly
+typed terms (or combinators). We define two new category 
+%%%
+\index{$\circplus$, $\circminus$}%%
+%%%
+products $\circplus$ and $\circminus$ by
+%%
+\begin{subequations}
+\begin{align}
+\mbox{\mtt ($\gamma${\tf}$\beta$)}   
+	\circplus \mbox{\mtt ($\beta${\tf}$\alpha$)} & 
+    := \mbox{\mtt ($\gamma${\tf}$\alpha$)} \\
+\mbox{\mtt ($\beta${\tf}$\alpha$)}  
+	\circminus \mbox{\mtt ($\beta${\tb}$\gamma$)} &
+    := \mbox{\mtt ($\gamma${\tf}$\alpha$)} \\
+\mbox{\mtt ($\gamma${\tf}$\beta$)}  
+	\circplus \mbox{\mtt ($\alpha${\tb}$\beta$)} &
+    := \mbox{\mtt ($\alpha${\tb}$\gamma$)} \\
+\mbox{\mtt ($\alpha${\tb}$\beta$)}  
+	\circminus \mbox{\mtt ($\beta${\tb}$\gamma$)} &
+    := \mbox{\mtt ($\alpha${\tb}$\gamma$)}
+\end{align}
+\end{subequations}
+%%
+Further, we define two new modes, $\mbox{\tt B}_{\sgr}$ and
+$\mbox{\tt B}_{\skl}$, as follows:
+%%
+\begin{align}
+\mbox{\tt B}_{\sgr}(\auf \vec{x},\alpha,M\zu,
+\auf \vec{y},\beta,N\zu) & := 
+\auf \vec{x}\conc\vec{y}, \alpha \circplus \beta, \mathsf{B}MN\zu \\
+\mbox{\tt B}_{\skl}(\auf \vec{x},\alpha,M\zu,
+\auf \vec{y},\beta,N\zu) & := 
+\auf \vec{x}\conc\vec{y}, \alpha \circminus \beta, \mathsf{B}NM\zu
+\end{align}
+%%
+Here, it is not required that the type of $M$ matches $\alpha$ in
+any way, or the type of $N$ the category $\beta$.
+In place of $\mathsf{B}NM$ we could
+have used $\mathsf{V}MN$, where
+%%
+\begin{equation}
+\mathsf{V} :=
+\mbox{\tt (\stlambda x}_{\snull}\mbox{\tt .(\stlambda x}_{\seins}%
+\mbox{\tt .(\stlambda x}_{\szwei}\mbox{\tt .(x}_{\seins}\mbox{\tt %
+(x}_{\snull}\mbox{\tt x}_{\szwei}\mbox{\tt )))))}
+\end{equation}
+%%
+We denote by $\CCG(\mathsf{B})$ the extension of $\mathsf{AB}$ by
+the implicitly typed combinator $\mathsf{B}$.
+%%%
+\index{$\CCG(\mathsf{B})$}%%
+%%
+This grammar not only has the modes $\mbox{\tt A}_{\sgr}$ and
+$\mbox{\tt A}_{\skl}$ but also the modes $\mbox{\tt B}_{\sgr}$ and
+$\mbox{\tt B}_{\skl}$. The resulting tree sets are however of a new
+kind. For now, if $x$ is branching with daughters $y_0$ and $y_1$,
+$x$ can have the category $\alpha/\gamma$ if $y_0$ has the
+category $\alpha/\beta$ and $y_1$ the category $\beta/\gamma$. In
+the definition of the products $\circplus$ and $\circminus$ there 
+is a certain arbitrariness. What we must expect from the semantic 
+typing regime is that the type of $\sigma(\alpha \circplus \beta)$ 
+and $\sigma(\beta \circminus \alpha)$ 
+equals $\eta \pf \theta$ if $\sigma(\alpha) = \zeta \pf \theta$ 
+and $\sigma(\beta) = \eta \pf \zeta$ for some $\eta$, $\zeta$ and 
+$\theta$.  Everywhere else the syntactic product should be undefined.
+However, in fact the syntactic product has been symmetrified, and
+the directions specified. This goes as follows. By applying a rule
+a category (here $\zeta$) is cancelled. In the category
+$\eta/\theta$ the directionality (here: right) is viewed as a
+property of the argument, hence of $\theta$. If $\theta$ is not
+cancelled, we must find $\theta$ being selected to the right
+again. If, however, it is cancelled from $\eta/\theta$, then the
+latter must be to the left of its argument, which contains some
+occurrence of $\theta$ (as a result, not as an argument). This
+yields the rules as given. We leave it to the reader to show that
+the tree sets that can be generated from an initial category
+assignment $\zeta$ are again all context free. Hence, not much
+seems to have been gained. We shall next study another extension,
+$\CCG(\mathsf{P})$. Here
+%%
+\begin{equation}
+\mathsf{P} := \mbox{\tt (\stlambda x}_{\snull}\mbox{\tt .(\stlambda
+x}_{\seins}\mbox{\tt .(\stlambda x}_{\szwei}\mbox{\tt .(\stlambda %
+x}_{\sdrei}\mbox{\tt .(x}_{\snull}\mbox{\tt (x}_{\seins}\mbox{\tt %
+x}_{\szwei}\mbox{\tt )x}_{\sdrei}\mbox{\tt )))))} 
+\end{equation}
+%%
+In order for this to be properly typed we may freely choose
+the type of $\mbox{\tt x}_{\szwei}$ and $\mbox{\tt x}_{\sdrei}$, 
+say $\beta$ and $\gamma$. Then $\mbox{\tt x}_{\seins}$ is of type
+$\gamma \pf (\beta \pf \delta)$ for some $\delta$ and
+$\mbox{\tt x}_{\snull}$ of type $\delta \pf \alpha$ for some
+$\alpha$. $\mbox{\tt x}_{\seins}$ stands for an at least binary function,
+$\mbox{\tt x}_{\snull}$ for a function that needs at least one argument.
+If the combinator is defined, the mode is fixed if we
+additionally fix the syntactic combinatorics. To this end
+%%%
+\index{$\gtrdot$, $\lessdot$}%%
+%%%
+we define the products $\gtrdot$, $\lessdot$ as in 
+Table~\ref{tab:bullet}.
+%%
+\begin{table}
+\caption{The Products $\gtrdot$ and $\lessdot$}
+\label{tab:bullet}
+$$\begin{array}{l@{\quad}c@{\quad}l@{\quad := \quad}l}
+\mbox{\mtt ($\alpha$\tf$\delta$)} & \gtrdot
+	 & \mbox{\mtt (($\delta$\tf$\beta$)\tf$\gamma$)} 
+	& \mbox{\mtt (($\alpha$\tf$\beta$)\tf$\gamma$)} \\
+\mbox{\mtt (($\delta$\tf$\beta$)\tf$\gamma$)} & \lessdot
+	& \mbox{\mtt ($\delta$\tb$\alpha$)} 
+        & \mbox{\mtt (($\alpha$\tf$\beta$)\tf$\gamma$)} \\
+\mbox{\mtt ($\alpha$\tf$\delta$)} & \gtrdot
+	& \mbox{\mtt (($\beta$\tb$\delta$)\tf$\gamma$)} 
+        & \mbox{\mtt (($\beta$\tb$\alpha$)\tf$\gamma$)} \\
+\mbox{\mtt (($\beta$\tb$\delta$)\tf$\gamma$)} & \lessdot
+	& \mbox{\mtt ($\delta$\tb$\alpha$)}
+        & \mbox{\mtt (($\beta$\tb$\alpha$)\tf$\gamma$)} \\
+\mbox{\mtt ($\alpha$\tf$\delta$)} & \gtrdot
+	& \mbox{\mtt ($\gamma${\tb}($\delta$\tf$\beta$))}
+        & \mbox{\mtt ($\gamma${\tb}($\alpha$\tf$\beta$)}) \\
+\mbox{\mtt ($\gamma${\tb}($\delta$\tf$\beta$))} & \lessdot
+	& \mbox{\mtt ($\delta$\tb$\alpha$)}
+        & \mbox{\mtt ($\gamma${\tb}($\alpha$\tf$\beta$))} \\
+\mbox{\mtt ($\alpha$\tf$\delta$)}  & \gtrdot
+	& \mbox{\mtt ($\gamma${\tb}($\beta$\tb$\delta$))}
+        & \mbox{\mtt ($\gamma${\tb}($\beta$\tb$\alpha$))} \\
+\mbox{\mtt ($\gamma${\tb}($\beta$\tb$\delta$))} & \lessdot
+	& \mbox{\mtt ($\delta$\tb$\alpha$)}
+        & \mbox{\mtt ($\gamma${\tb}($\beta$\tb$\alpha$))} 
+\end{array}$$
+\end{table}
+%%
+Now we define the following new modes:
+%%
+\begin{align}
+\mbox{\tt P}_{\sgr}(\auf \vec{x},\alpha,M\zu,
+\auf \vec{y},\beta,N\zu) & := 
+\auf \vec{x}\conc\vec{y}, \alpha \gtrdot \beta, \mathsf{P}MN\zu \\
+\mbox{\tt P}_{\skl}(\auf \vec{x},\alpha,M\zu,
+\auf \vec{y},\beta,N\zu) & := 
+\auf \vec{x}\conc\vec{y}, \alpha \lessdot \beta, \mathsf{P}NM\zu
+\end{align}
+%%
+We shall study this type of grammar somewhat closer. We take the
+following modes.
+%%
+\begin{align}
+\notag
+\mbox{\tt M}_{\snull} & := \auf \mbox{\tt A}, \mbox{\mtt ((c{\tf}a){\tf}c)}, 
+	\lambda x_0.\lambda x_1.x_0+x_1\zu \\
+\notag
+\mbox{\tt M}_{\seins} & := \auf \mbox{\tt B},\mbox{\mtt ((c{\tf}b){\tf}c)}, 
+	\lambda x_0.\lambda x_1.x_0x_1\zu \\
+\mbox{\tt M}_{\szwei} & := \auf \mbox{\tt a}, \mbox{\mtt a}, 1\zu \\
+\notag
+\mbox{\tt M}_{\sdrei} & := \auf \mbox{\tt b}, \mbox{\mtt b}, 2\zu \\
+\notag
+\mbox{\tt M}_{\svier} & := \auf \mbox{\tt C}, \mbox{\mtt (c{\tf}a)}, 
+	\lambda x_0.x_0\zu
+\end{align}
+%%
+Take the string {\tt ABACaaba}. It has two analyses, shown in 
+Figure~\ref{fig:abac}. In both analyses the meaning is $5$. In 
+the first analysis only the mode $\mbox{\tt A}_{\sgr}$ has been used. 
+%%
+\begin{figure}
+$$\begin{array}{cccccccc}
+\mbox{\tt A} & \mbox{\tt B} & \mbox{\tt A} & \mbox{\tt C} &
+    \mbox{\tt a} & \mbox{\tt a}
+    & \mbox{\tt b} & \mbox{\tt a} \\
+\mbox{\mtt ((c{\tf}a){\tf}c)} & \mbox{\mtt ((c{\tf}b){\tf}c)} 
+	& \mbox{\mtt ((c{\tf}a){\tf}c)} & \mbox{\mtt (c{\tf}a)} 
+	& \mbox{\mtt a} & \mbox{\mtt a} & \mbox{\mtt b} 
+	& \mbox{\mtt a} \\\cline{4-5}
+\vdots  & \vdots & \mbox{\mtt ((c{\tf}a){\tf}c)} 
+	& \multicolumn{2}{c}{\mbox{\mtt c}} & \vdots & \vdots
+    & \vdots
+        \\\cline{3-5}
+\vdots  & \vdots  & \multicolumn{3}{c}{\mbox{\mtt (c{\tf}a)}} 
+         & \mbox{\mtt a} & \vdots &
+\vdots
+        \\\cline{3-6}
+\vdots  & \mbox{\mtt ((c{\tf}b){\tf}c)} &  & 
+	\multicolumn{3}{c}{\mbox{\mtt c}}   & \vdots  & \vdots
+        \\\cline{2-5}
+\vdots  &         & \mbox{\mtt (c{\tf}b)} & & &  & \mbox{\mtt b} & \vdots
+        \\\cline{3-7}
+\mbox{\mtt ((c{\tf}a){\tf}c)} &  
+	& \multicolumn{5}{c}{\mbox{\mtt c}}             & \vdots
+\\\cline{1-5}
+\multicolumn{6}{c}{\mbox{\mtt (c{\tf}a)}} & & \mbox{\mtt a} 
+	\\\cline{2-8}
+        &       
+\multicolumn{7}{c}{\mbox{\mtt c}}
+\end{array}$$
+%%
+$$\begin{array}{ccccccccc}
+\mbox{\tt A} & \mbox{\tt B} & \mbox{\tt A} & & \mbox{\tt C} &
+    \mbox{\tt a} & \mbox{\tt a}
+    & \mbox{\tt b} & \mbox{\tt a} \\
+\mbox{\mtt ((c/a)/c)} & \mbox{\mtt ((c/b)/c)} 
+	& \mbox{\mtt ((c{\tf}a){\tf}c)} & & \mbox{\mtt (c{\tf}a)} 
+	& \mbox{\mtt a} & \mbox{\mtt a} & \mbox{\mtt b} 
+	& \mbox{\mtt a} \\\cline{2-3}
+\vdots  & \multicolumn{2}{c}{\mbox{\mtt (((c{\tf}b){\tf}a){\tf}c)}} 
+	& & \mbox{\mtt (c{\tf}a)} & \mbox{\mtt a}
+    & \vdots & \vdots & \vdots
+        \\\cline{1-3}\cline{5-6}
+\multicolumn{3}{c}{\mbox{\mtt ((((c{\tf}a){\tf}b){\tf}a){\tf}c)}}   
+	&  & \multicolumn{2}{c}{\mbox{\mtt c}} &
+    \vdots & \vdots & \vdots
+        \\\cline{1-6}
+\multicolumn{6}{c}{\mbox{\mtt (((c{\tf}a){\tf}b){\tf}a)}}   
+	& \mbox{\mtt a} & \vdots & \vdots
+        \\\cline{2-7}
+        &
+\multicolumn{6}{c}{\mbox{\mtt ((c{\tf}a){\tf}b)}} & \mbox{\mtt b} 
+	& \vdots \\\cline{3-8}
+        & &
+\multicolumn{6}{c}{\mbox{\mtt (c{\tf}a)}}             & \mbox{\mtt a}
+        \\\cline{4-9}
+        & & &
+\multicolumn{6}{c}{\mbox{\mtt c}}
+\end{array}$$
+\caption{Two Analyses of {\tt ABACaaba}}
+\label{fig:abac}
+\end{figure}
+%%
+The second analysis uses the mode $\mbox{\tt P}_{\sgr}$. Notice that 
+in the course of the derivation the categories get larger and larger 
+(and therefore also the types).
+%%
+\begin{thm}
+There exist $\CCG(\mathsf{P})$--grammars which generate non
+context free tree sets.
+\end{thm}
+%%
+We shall show that the grammar just defined is of this kind.
+To this end we shall make a few more considerations.
+%%
+\begin{lem}
+\label{lem:assoz}
+%%
+Let $\alpha = \eta_1/\eta_2/\eta_3$, $\beta =
+\eta_3/\eta_4/\eta_5$ and $\gamma = \eta_5/\eta_6/\eta_7$. Then
+%%
+\begin{equation}
+\alpha \gtrdot (\beta \gtrdot \gamma) =
+(\alpha \gtrdot \beta) \gtrdot \gamma
+\end{equation}
+%%
+\end{lem}
+%%
+\proofbeg
+Proof by direct computation. For example,
+$\alpha \gtrdot \beta = \eta_1/\eta_2/\eta_3/\eta_4/\eta_5$.
+\proofend
+
+%%
+In particular, $\gtrdot$ is associative if defined
+(in contrast to `$\cdot$'). Now, let us look at a string
+of the form $\vec{x}\mbox{\tt Ca}\vec{y}$,
+where $\vec{x} \in (\mbox{\tt A} \cup \mbox{\tt B})^{\ast}$,
+$\vec{y} \in (\mbox{\tt a} \cup \mbox{\tt b})^{\ast}$
+and $h(\vec{x})= {\vec{y}\,}^T$, where $h \colon \mbox{\tt A}
+\mapsto \mbox{\tt a}, \mbox{\tt B} \mapsto \mbox{\tt b}$.
+An example is the string {\tt AABACabaaa}. Then 
+with the exception of $\vec{x}\mbox{\tt C}$ all prefixes
+are constituents. For prefixes of $\vec{x}$ are constituents, 
+as one can easily see. It follows easily that the tree sets 
+are not context free. For if $\vec{x} \neq \vec{y}$ then 
+$\vec{x}\mbox{\tt Ca}h({\vec{y}\,}^T)$ is not derivable. However, 
+$\vec{x}\mbox{\tt Ca}h({\vec{x}\,}^T)$ is derivable. If the tree 
+set was context free, there cannot be infinitely many such 
+$\vec{x}$, a contradiction.
+
+So, we have already surpassed the border of context freeness.
+However, we can push this up still further. Let $\GN$ be the 
+following grammar.
+%%
+\begin{align}
+\notag
+\mbox{\tt N}_{\snull} & := \auf \mbox{\tt A}, \mbox{\mtt (c{\tb}(c{\tf}a))},
+    \lambda x_0.\lambda x_1.x_0+x_1\zu \\
+\notag
+\mbox{\tt N}_{\seins} & := \auf \mbox{\tt B}, \mbox{\mtt (c{\tb}(c/b))},
+    \lambda x_0.\lambda x_1.x_0\cdot x_1 \zu \\
+\mbox{\tt N}_{\szwei} & := \auf \mbox{\tt a}, \mbox{\mtt a}, 1\zu \\
+\notag
+\mbox{\tt N}_{\sdrei} & := \auf \mbox{\tt b}, \mbox{\mtt b}, 2\zu \\
+\notag
+\mbox{\tt N}_{\svier} & := \auf \mbox{\tt C}, \mbox{\mtt c}, 
+	\lambda x_0.x_0\zu
+\end{align}
+%%
+\begin{thm}
+$\GN$ generates a non context free language.
+\end{thm}
+%%
+\proofbeg
+Let $L$ be the language generated by $\GN$. Put
+$M := \mbox{\tt C}(\mbox{\tt A} \cup \mbox{\tt B})^{\ast}
+(\mbox{\tt a}\cup \mbox{\tt b})^{\ast}$. If $L$ is context free,
+so is $L \cap M$ (by Theorem~\ref{thm:cfintersekt}).
+Define $h$ by $h(\mbox{\tt A}) := h(\mbox{\tt a}) := \mbox{\tt a}$,
+$h(\mbox{\tt B}) := h(\mbox{\tt b}) := \mbox{\tt b}$ as well as
+$h(\mbox{\tt C}) := \varepsilon$. We show:
+%%
+\begin{equation}
+\label{eq:ast}
+\vec{x} \in L \cap M \text{ iff (a) } \vec{x} \in L 
+\text{ and (b) } h(\vec{x}) = \vec{y}\vec{y} \text{ for some } 
+\vec{y} \in (\mbox{\tt a}\cup\mbox{\tt b})^{\ast}
+\end{equation}
+%%
+Hence $h[L \cap M] = \{\vec{y}\, \vec{y} : \vec{y} \in
+(\mbox{\tt a}\cup \mbox{\tt b})^{\ast}\}$. The latter is not context
+free. From this follows by Theorem~\ref{thm:afl} that $L \cap M$
+is not context free, hence $L$ is not context free either. Now for
+the proof of \eqref{eq:ast}. If $\Delta = \auf \delta_i : i < n\zu$ 
+then let $\mbox{\mtt c}/\Delta$ denote the category 
+$\mbox{\mtt c}/\delta_0/\delta_1/ \dotsb/\delta_{n-1}$.
+Then we have:
+%%
+\begin{equation}
+\mbox{\mtt c}\backslash (\mbox{\mtt c}/\Delta_1) \gtrdot
+\mbox{\mtt c}\backslash (\mbox{\mtt c}/\Delta_2) =
+\mbox{\mtt c}\backslash (\mbox{\mtt c}/\Delta_2; \Delta_1)
+\end{equation}
+%%
+Now let $\mbox{\tt C}\vec{x}\vec{y}$ be such that
+$\vec{x} \in (\mbox{\tt A}\cup\mbox{\tt B})^{\ast}$ and
+$\vec{y} \in (\mbox{\tt a}\cup\mbox{\tt b})^{\ast}$.
+It is not hard to see that then $\mbox{\tt C}\vec{x}$ is a
+constituent. (Basically, one can either multiply or apply. 
+The complex categories cannot be applied to the right, they 
+can only be applied to the left, so this can happen only with 
+{\tt C}. If one applies {\mtt (c{\tb}(c{\tf}a))} to {\mtt c} 
+one gets {\mtt (c{\tf}a)}, which cannot be multiplied by 
+$\gtrdot$ with any other constituent formed. It 
+cannot be applied either (assuming that the string is not 
+{\tt CAa}, in which case {\tt CA} does become a constituent under 
+this analysis), because nothing on the right of it has category 
+{\tt a}. Now let $\vec{x} := x_0x_1\dotsb x_{n-1}$. 
+Further, let $d_i := \mbox{\tt a}$ if $x_i = \mbox{\tt A}$ and 
+$d_i := \mbox{\tt b}$ if $x_i = \mbox{\tt B}$, $i < n$. Then the 
+category of $\vec{x}$ equals 
+$\mbox{\mtt c}\backslash (\mbox{\mtt c}/\Delta)$ with 
+$\Delta = \auf d_{n-i-1}: i < n\zu$. Hence $\mbox{\tt C}\vec{x}$ 
+is a constituent of category $\mbox{\mtt c}/\Delta$. This 
+means, however, that $y_0$ has the category $d_0$ (because 
+$d_0$ is the last in the list hence the first to be discharged),
+$y_1$ the category $d_1$ and so on. But if $y_i$ has the
+category $d_i$ then $h(x_i) = y_i$, as is easily checked.
+This yields that $h(\vec{x}) = \vec{y}$. If on the other
+hand this is the case, the string is derivable.
+\proofend
+
+Hence we now have a grammar which generates a non context free
+language. CCGs are therefore stronger than AB--grammars.
+
+There is a still different way to introduce CCGs. There we do
+not enlarge the set of combinatorial rules but instead introduce
+empty modes.
+%%
+\begin{equation}
+\begin{split}
+\mbox{\tt B}_{\snull} & := \auf \varepsilon,
+   \gamma/\alpha/(\gamma/\beta)/(\beta/\alpha),
+   \mathsf{B} \zu \\
+\mbox{\tt B}_{\seins} & := \auf \varepsilon,
+   (\alpha\backslash \gamma)/(\gamma/\beta)/(\alpha\backslash\beta),
+   \mathsf{B}\zu \\
+\mbox{\tt B}_{\szwei} & := \auf \varepsilon,
+   \gamma/\alpha/(\beta\backslash\gamma)/(\beta/\alpha),
+   \mathsf{V}\zu \\
+\mbox{\tt B}_{\sdrei} & := \auf \varepsilon,
+   (\alpha\backslash \gamma)/(\beta\backslash%
+   \gamma)/(\alpha\backslash\gamma),
+   \mathsf{V}\zu
+\end{split}
+\end{equation}
+%%
+Here we do not have four but infinitely many modes, one for
+each choice of $\alpha$, $\beta$ and $\gamma$. Only in this
+way it is possible to generate non context free languages.
+Lexical elements that have a parametric (= implicitly typed) 
+set of categories (together with parametric meanings) are called 
+%%%%
+\index{polymorphism}%%
+%%%%
+\textbf{polymorphic}. Particularly interesting cases of polymorphic 
+elements are the logical connectors, {\tt and} and {\tt not}. 
+Syntactically, they have the category $(\alpha\backslash\alpha)/\alpha$ 
+and $\alpha/\alpha$, respectively, where $\alpha$ can assume any
+(non parametric) category. This means that two constituents
+of identical category can be conjoined by {\tt and} to another
+constituent of the same category, and every constituent can be
+turned by {\tt not} to a constituent of identical category.
+
+{\it Notes on this section.} Although we have said that the
+meanings shall be functions in an applicative structure, we
+sometimes put strings in their place. These strings only denote 
+these functions. This is not an entirely harmless affair. For example,
+the string $\mbox{\tt (\stlambda x}_{\snull}\mbox{\tt .x}_{\snull}%
+\mbox{\tt +1)}$ and the string $\mbox{\tt (\stlambda x}_{\seins}%
+\mbox{\tt .x}_{\seins}\mbox{\tt +1)}$ denote the same function. In 
+fact, for reduced terms terms uniqueness
+holds only up to renaming of bound variables. It is standard practice
+in $\lambda$--calculus to consider $\lambda$--terms `up to renaming
+of bound variables' (see \cite{pigozzisalibra:vb} for a discussion).
+A possible remedy might be to use combinators. But here the same
+problem arises. Different strings may denote the same function. This
+is why normalisation becomes important. On the other hand, strings as
+meanings have the advantage to be finite, and thus may function as
+objects that can be stored (like codes of a Turing machine, see the
+discussion of Section~\ref{kap6}.\ref{kap:feasibility}).
+%%
+\vplatz
+\exercise
+Let $\zeta \colon A_{\varepsilon} \pf \wp(\Cat_{\mbox{\smtt\tb}, %
+\mbox{\smtt\tf}}(C))$ be a category assignment. Show that the correctly 
+labelled trees form a context free tree set.
+%%
+\vplatz
+\exercise
+Show that for every CFG there exists a weakly equivalent grammar 
+in Greibach Normal Form, where the start symbol {\tt S} does not occur 
+on the right hand side of a production.
+%%
+\vplatz
+\exercise
+Let $\zeta \colon A_{\varepsilon} \pf \wp(\Cat_{\mbox{\smtt\tb}, %
+\mbox{\smtt\tf}}(C))$ be a category assignment. Further, let {\tt S} 
+be the distinguished category. $\zeta'$ is called \textbf{normal} if
+$\zeta(\varepsilon) = \mbox{\tt S}$ and no $\zeta(a)$ contains
+an $\alpha$ of the form $\gamma/\beta_0/\dotsb/\beta_{n-1}$
+with $\beta_i = \mbox{\tt S}$ for some $i < n$. Show that
+for any $\zeta$ there is a normal $\zeta'$ such that $\zeta'$ and
+$\zeta$ have the same language.
+%%
+\vplatz
+\exercise
+Let $L \subseteq A^{\ast}$ be context free and $f \colon A^{\ast} \pf M$ 
+a computable function. Write an AB--sign grammar whose 
+interpreted language is $\{\auf \vec{x}, f(\vec{x})\zu : \vec{x} \in L\}$.
+%%
+\vplatz
+\exercise
+Let $\auf \GA, \varepsilon, \gamma,\mu\zu$ be an AB--sign 
+grammar. Show for all signs $\auf \vec{x}, \alpha, M\zu$ generated 
+by that grammar: $M$ has the type $\sigma(\alpha)$.  {\it Hint.} 
+Induction on the length of the structure term.
+%%
+\vplatz 
+\exercise 
+\label{ueb:ab} 
+Show that the $\CCG(\mathsf{B})$ grammars only generate context free 
+string languages, even context free tree sets. {\it Hint.} Show the 
+following: if $A$ is an arbitrary finite set of categories, then with 
+$\mathsf{B}$ one can generate at most $|A|^n$ many categories.
+%%%
+\vplatz
+\exercise
+Suppose we defined a product $\circ$ on categories as follows. 
+$\alpha \circ \beta$ is defined whenever (a) $\alpha 
+\circplus \beta$ is defined (and has the same value), or 
+(b) $\alpha \circminus \beta$ is defined (and has the same value). 
+Show that this does not 
+allow to unambiguously define the semantics. (Additional question: 
+why does this problem not arise with $\cdot$?) {\it Hint.} Take 
+$\alpha = \beta = \mbox{\mtt ($\gamma${\tf}$\gamma$)}$. 

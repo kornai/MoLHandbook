@@ -1,0 +1,308 @@
+\chapter*{Introduction}
+\markboth{Introduction}{}
+%
+%
+%
+This book is --- as the title suggests --- a book about
+the mathematical study of language, that is, about the
+description of language and languages with mathematical
+methods. It is intended for students of mathematics,
+linguistics, computer science, and computational linguistics,
+and also for all those who need or wish to understand the
+formal structure of language. It is a mathematical book; it 
+cannot and does not intend to replace a genuine introduction
+to linguistics. For those who are not acquainted with
+general linguistics we recommend \cite{lyons:linguistik},
+which is a bit outdated but still worth its while. For a more 
+recent book see \cite{fromkin:introduction}. No linguistic 
+theory is discussed here in detail. This text only provides the 
+mathematical background that will enable the reader to fully 
+grasp the implications of these theories and understand them 
+more thoroughly than before. Several topics of mathematical 
+character have been omitted: there is for example no statistics, 
+no learning theory, and no optimality theory. All these 
+topics probably merit a book of their own. On the linguistic 
+side the emphasis is on syntax and formal semantics, though 
+morphology and phonology do play a role. These omissions are 
+mainly due to my limited knowledge. However, this book is 
+already longer than I intended it to be. No more material 
+could be fitted into it.
+
+The main mathematical background is algebra and logic on
+the semantic side and strings on the syntactic side. In
+contrast to most introductions to formal semantics we do not
+start with logic --- we start with strings and develop
+the logical apparatus as we go along. This is only a
+pedagogical decision. Otherwise, the book would start with
+a massive theoretical preamble after which the reader is
+kindly allowed to see some worked examples. Thus we have decided
+to introduce logical tools only when needed, not as
+overarching concepts.
+
+We do not distinguish between natural and formal languages. These
+two types of languages are treated completely alike. I believe
+that it should not matter in principle whether what we have is a
+natural or an artificial product. Chemistry applies to naturally
+occurring substances as well as artificially produced ones. All I
+will do here is study the structure of language. Noam Chomsky
+%%%
+\index{Chomsky, Noam}%%%
+%%%%
+has repeatedly claimed that there is a fundamental difference
+between natural and nonnatural languages. Up to this 
+moment, conclusive evidence for this claim is missing. Even if 
+this were true, this difference should not matter for this book. 
+To the contrary, the methods established here might serve as a tool
+in identifying what the difference is or might be. The present
+book also is not an introduction to the theory of formal
+languages; rather, it is an introduction to the mathematical
+theory of linguistics. The reader will therefore miss a few topics
+that are treated in depth in books on formal languages on the
+grounds that they are rather insignificant in linguistic theory.
+On the other hand, this book does treat subjects that are hardly
+found anywhere else in this form. The main characteristic of our
+approach is that we do not treat languages as sets of strings but
+as algebras of signs. This is much closer to the linguistic
+reality. We shall briefly sketch this approach, which will be
+introduced in detail in Chapter~\ref{kap3}.
+
+%%
+\index{sign}
+%%%
+A \textbf{sign} $\sigma$ is defined here as a triple $\auf e, c, m\zu$,
+%%
+\index{sign!exponent}%%
+\index{sign!category}%%
+\index{sign!meaning}%%
+%%%
+where $e$ is the \textbf{exponent of} $\sigma$, which typically is
+a string, $c$ the (\textbf{syntactic}) \textbf{category of} $\sigma$, 
+and $m$ its \textbf{meaning}. By this convention a string is connected
+via the language with a set of meanings. Given a set $\Sigma$ of signs, 
+$e$ \textbf{means} $m$ \textbf{in} $\Sigma$ if and only if (= iff) 
+there is a category $c$ such that $\auf e,c,m\zu \in \Sigma$. Seen 
+this way, the task of language theory is not only to say which are 
+the legitimate exponents of signs (as we find in the theory of
+formal languages as well as many treatises on generative
+linguistics which generously define language to be just syntax)
+but it must also say which string can have what meaning.
+The heart of the discussion is formed by the principle of
+compositionality,
+%%%
+\index{compositionality}%%
+%%%
+which in its weakest formulation says that the meaning of a
+string (or other exponent) is found by homomorphically mapping
+its analysis into the semantics. Compositionality shall be
+introduced in Chapter~\ref{kap3} and we shall discuss at
+length its various ramifications. We shall also deal with
+Montague Semantics, which arguably was the first to 
+implement this principle. Once again, the discussion will be
+rather abstract, focusing on mathematical tools rather than
+the actual formulation of the theory. Anyhow, there are good
+introductions to the subject which eliminate the need to
+include details. One such book is \cite{dowtywallpeters} and 
+the book by the collective of authors \cite{gamut:teil2}.
+%%
+\nocite{gamut:teil1}
+%%
+A \textbf{system of signs} is a partial algebra of signs.
+This means that it is a pair $\auf \Sigma, M\zu$,
+where $\Sigma$ is a set of signs and $M$  a finite set,
+%%%
+\index{mode}%%
+%%%
+the set of so--called \textbf{modes} (\textbf{of composition}).
+Standardly, one assumes $M$ to have only one nonconstant mode, 
+a binary function $\bullet$, which allows one to form a sign
+$\sigma_1 \bullet \sigma_2$ from two signs $\sigma_1$ and
+$\sigma_2$. The modes are generally partial operations.
+The action of $\bullet$ is explained by defining its
+action on the three components of the respective signs.
+We give a simple example. Suppose we have the following
+signs.
+%%
+$$\begin{array}{l@{\quad = \quad}l}
+\mbox{\tt `runs'} & \auf \mbox{\tt runs}, v, \rho\zu \\
+\mbox{\tt `Paul'} & \auf \mbox{\tt Paul}, n, \pi\zu
+\end{array}$$
+%%
+Here, $v$ and $n$ are the syntactic categories {\it (intransitive)
+verb\/} and {\it proper name}, respectively. $\pi$ is a constant,
+which denotes an individual, namely Paul, and $\rho$ is a  function
+from individuals to the set of truth values, which typically is 
+the set $\{0,1\}$. (Furthermore, $\rho(x) = 1$ if and only if $x$ 
+is running.) On the level of exponents we choose word concatenation,
+which is string concatenation (denoted by $^{\smallfrown}$) with an 
+intervening blank. (Perfectionists will also add the period at the 
+end...) On the level of meanings we choose function application.
+Finally, let $\circ$ be a partial function which is only defined if 
+the first argument is $n$ and the second is $v$ and which in this 
+case yields the value $t$. Now we put
+%%
+$$\auf e_1, c_1, m_1\zu \bullet
+    \auf e_2, c_2, m_2\zu :=
+\auf e_1^{\smallfrown}\Box^{\smallfrown}e_2, c_1 \circ c_2,
+m_2(m_1)\zu$$
+%%
+Then $\mbox{\tt `Paul'} \bullet \mbox{\tt `runs'}$
+is a sign, and it has the following form.
+%%
+$$\mbox{\tt `Paul'} \bullet \mbox{\tt `runs'} :=
+\auf \mbox{\tt Paul runs}, t, \rho(\pi)\zu$$
+%%
+We shall say that this sentence is true if and only if 
+$\rho(\pi) = 1$; otherwise we say that it is false. We hasten 
+to add that $\mbox{\tt `Paul'} \bullet \mbox{\tt `Paul'}$ is 
+{\it not\/} a sign. So, $\bullet$ is indeed a partial operation.
+
+The key construct is the free algebra generated by the constant
+modes alone. This algebra
+%%%
+\index{algebra of structure terms}
+%%%
+is called the \textbf{algebra of structure terms}. The structure
+terms can be generated by a simple context free grammar. However,
+not every structure term names a sign. Since the algebras of
+exponents, categories and meanings are partial algebras, it is in
+general not possible to define a homomorphism from the algebra of
+structure terms into the algebra of signs. All we can get is a
+partial homomorphism. In addition, the exponents are not always
+strings and the operations between them not only concatenation.
+Hence the defined languages can be very complex (indeed, every
+recursively enumerable language $\Sigma$ can be so generated).
+
+Before one can understand all this in full detail it is
+necessary to start off with an introduction into classical
+formal language theory using semi Thue systems and grammars
+in the usual sense. This is what we shall do in Chapter~\ref{kap1}. 
+It constitutes the absolute minimum one must know about these 
+matters. Furthermore, we have
+added some sections containing basics from algebra, set theory,
+computability and linguistics. In Chapter~\ref{kap2} we study
+regular and context free languages in detail. We shall deal
+with the recognizability of these languages by means of automata,
+recognition and analysis problems, parsing, complexity, and
+ambiguity. At the end we shall discuss semilinear languages and 
+Parikh's Theorem.
+
+In Chapter~\ref{kap3} we shall begin to study languages as 
+systems of signs. Systems of signs and grammars of signs are 
+defined in the first section.  Then we shall concentrate on 
+the system of categories and
+the so--called categorial grammars. We shall introduce
+both the Ajdukiewicz--Bar Hillel Calculus and the
+Lambek--Calculus. We shall show that both can generate exactly
+the context free string languages. For the Lambek--Calculus,
+this was for a long time an open problem, which was solved in
+the early 1990s by Mati Pentus.
+%%%
+\index{Pentus, Mati}%%%
+%%%
+
+Chapter~\ref{kap6} deals with formal semantics. We shall develop
+some basic concepts of algebraic logic, and then deal with boolean
+semantics. Next we shall provide a completeness theorem for simple 
+type theory and discuss various possible algebraizations. Then we 
+turn to the possibilities and limitations of Montague Semantics. 
+Then follows a section on partiality and presupposition. 
+
+In the fifth chapter we shall treat so--called PTIME languages.
+These are languages for which the parsing problem is decidable
+deterministically in polynomial time. The question whether or not
+natural languages are context free was considered settled negatively
+until the 1980s. However, it was shown that most of the arguments were
+based on errors, and it seemed that none of them was actually tenable.
+Unfortunately, the conclusion that natural languages are actually all
+context free turned out to be premature again. It now seems that natural
+languages, at least some of them, are not context free. However, all 
+known languages seem to be PTIME languages. Moreover, the so--called 
+weakly context sensitive languages also belong to this class. 
+A characterization of this class in terms of a generating device was 
+established by William Rounds, 
+%%%
+\index{Rounds, William}%%%
+%%%
+and in a different way by Annius Groenink, 
+%%%
+\index{Groenink, Annius}%%%
+%%%
+who introduced the notion of a literal movement grammar. We shall 
+study these types of grammars in depth. 
+In the final two sections we shall return to the question
+of compositionality in the light of Leibniz' Principle,
+and then propose a new kind of grammars, de Saussure grammars,
+which eliminate the duplication of typing information
+found in categorial grammar.
+
+The sixth chapter is devoted to the logical description of language. 
+This approach has been introduced in the 1980s and is currently 
+enjoying a revival. The close connection between this approach and
+the so--called constraint--programming is not accidental. It was 
+proposed to view grammars not as generating devices but as theories 
+of correct syntactic descriptions.  This is very far away from the 
+tradition of generative grammar advocated by Chomsky, 
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+who always insisted that language contains a generating device (though 
+on the other hand he characterizes this as a theory of competence). 
+However, it turns out that there is a method to convert descriptions 
+of syntactic structures into syntactic rules. This goes back
+to ideas by B\"uchi, 
+%%%
+\index{B\"uchi, J.}%%%
+\index{Thatcher, J.~W.}%%%
+\index{Doner, J.~E.}%%%
+\index{Wright, J.~B.}%%%
+%%%
+Wright as well as Thatcher and Doner on theories of strings and 
+theories of trees in monadic second order logic. However, the reverse 
+problem, extracting principles out of rules, is actually very hard, 
+and its solvability depends on the strength of the description
+language. This opens the way into a logically based language
+hierarchy, which indirectly also reflects a complexity
+hierarchy. Chapter~\ref{kap5} ends with an overview of the
+major syntactic theories that have been introduced in the
+last 25 years.
+
+{\sc Notation.} Some words concerning our notational conventions.
+We use typewriter font for true characters in print. For example:
+{\tt Maus} is the German word for `mouse'. Its English counterpart
+appears in (English) texts either as {\tt mouse} or as {\tt Mouse}, 
+depending on whether or not it occurs at the beginning of
+a sentence. Standard books on formal linguistics often ignore
+these points, but since strings are integral parts of signs we
+cannot afford this here. In between true characters in print we
+also use so--called {\it metavariables\/} (placeholders) such as
+$a$ (which denotes a single letter) and $\vec{x}$ (which denotes a
+string). The notation $\mbox{\tt c}_i$ is also used, which is
+short for the true letter {\tt c} followed by the binary code of
+$i$ (written with the help of appropriately chosen characters, 
+mostly {\tt 0} and {\tt 1}).  When defining languages as sets of
+strings we distinguish between brackets that appear in print
+(these are {\tt (} and {\tt )}) and those which are just used to
+help the eye. People are used to employ abbreviatory conventions,
+for example {\tt 5+7+4} in place of {\tt (5+(7+4))}. Similarly, in 
+logic one uses {\mtt p$_{\snull}$\symbol{4}(\symbol{5}p$_{\seins}$)} 
+or even {\mtt p$_{\snull}$\symbol{4}\symbol{5}p$_{\seins}$} in place 
+of {\mtt (p$_{\snull}$\symbol{4}(\symbol{5}p$_{\seins}$))}. We shall 
+follow that usage when the material shape of the formula is immaterial, 
+but in that case we avoid using the true function symbols and 
+the true brackets `{\mtt (}' and `{\tt )}', and use `$($' and 
+`$)$' instead. For {\mtt p$_{\snull}$\symbol{4}(\symbol{5}p$_{\seins}$)} 
+is actually {\it not\/} the same as 
+{\mtt (p$_{\snull}$\symbol{4}(\symbol{5}p$_{\seins}$))}. To the 
+reader our notation may appear overly pedantic. However, 
+since the character of the representation is part of what we are 
+studying, notational issues become syntactic issues, and syntactical 
+issues simply cannot be ignored. Notice that 
+`$\auf$' and `$\zu$' are truly metalinguistic symbols that
+are used to define sequences. We also use sans serife fonts for terms
+in formalized and computer languages, and attach a prime to refer
+to its denotation (or meaning). For example, the computer code for 
+a while--loop is written semi--formally as \textsf{while $i < 100$ do 
+$x := x \times (x + i)$ od}. This is just a string of symbols.
+However, the notation $\textsf{see}'(\textsf{john}', \textsf{paul}')$ 
+denotes the proposition that John sees Paul, not the
+sentence expressing that.

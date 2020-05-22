@@ -1,0 +1,1085 @@
+\chapter{Semantics}
+\thispagestyle{empty}
+\label{kap6}
+%%
+\section{The Nature of Semantical Representations}
+\label{kap6-1}
+\label{kap:feasibility}
+%
+%
+This chapter lays the foundation of semantics. In contrast
+to much of the current semantical theory we shall not use
+a model--theoretic approach but rather an algebraic one.
+As it turns out, the algebraic approach helps to circumvent
+many of the difficulties that beset a model--theoretic analysis,
+since it does not try to spell out the meanings in every detail,
+only in as much detail as is needed for the purpose at hand.
+
+In this section we shall be concerned with the question of
+feasibility of interpretation. Much of semantical theory
+simply defines mappings from strings to meanings without
+assessing the question whether such mappings can actually be
+computed. While on a theoretical level this gives satisfying
+answers, one still has to address the question how it is
+possible that a human being can actually understand a sentence.
+The question is quite the same for computers. Mathematicians
+`solve' the equation $x^{2} = 2$ by writing $x = \pm \sqrt{2}$.
+However, this is just a piece of notation. If we want to know
+whether or not $3^{\sqrt{2}} < 6$, this requires calculation.
+This is the rule rather than the exception (think of trigonometric 
+functions or the solutions of differential equations).
+However, hope is not lost. There are algorithms by which the
+number $\sqrt{2}$ can be approximated to any degree of precision
+needed, using only elementary operations. Much of mathematical
+theory has been inspired by the need to calculate difficult functions
+(for example logarithms)  by means of elementary ones.
+Evidently, even though we do not have to bother any more
+with them thanks to computers, the computer still has to do
+the job for us. Computer hardware actually implements sophisticated
+algorithms for computing nonelementary functions. Furthermore,
+computers do not compute with arbitrary degree of precision. Numbers
+are stored in fixed size units (this is not necessary, but the
+size is limited anyhow by the size of the memory of the
+computer). Thus, they are only {\it close\/} to the actual input,
+not necessarily equal. Calculations on the numbers propagate
+these errors and in bad cases it can happen that small
+errors in the input yield astronomic errors in the output
+(problems that have this property independently of any algorithm
+%%%%
+\index{problem!ill--conditioned}%%
+%%%%
+that computes the solution are called \textbf{ill--conditioned}).
+Now, what reason do we have to say that a particular machine
+with a particular algorithm computes, say, $\sqrt{2}$? One
+answer could be: that the program will yield {\it exactly\/}
+$\sqrt{2}$ given exact input and enough time. Yet, for approximative
+methods --- the ones we generally have to use --- the computation 
+is never complete. However, then it computes a series of numbers $a_n$,
+$n \in \omega$, which converges to $\sqrt{2}$. That is to say,
+if $\varepsilon > 0$ is any real number (the error) we have to name
+an $n_{\varepsilon}$ such that for all $n \geq n_{\varepsilon}$:
+$|a_n - \sqrt{2}| \leq \varepsilon$, given exact computation.
+That an algorithm computes such a series is typically shown using
+pure calculus over the real numbers. This computation is actually
+independent of the way in which the computation proceeds as long as it
+can be shown to compute the approximating series. For example,
+to compute $\sqrt{2}$ using Newton's method, all you have to
+do is to write a program that calculates
+%%
+\begin{equation}
+a_{n+1} := a_n - (a_n^2 -2)/2a_n
+\end{equation}
+%%
+For the actual computation on a machine it matters very much
+how this series is calculated. This is so because each operation
+induces an error, and the more we compute the more we depart
+from the correct value. Knowing the error propagation of the
+basic operations it is possible to compute exactly, given
+any algorithm, with what precision it computes. To sum up, in
+addition to calculus, computation on real machines needs two
+things:
+%%
+\begin{dinglist}{43}
+\item
+a theory of approximation, and
+\item
+a theory of error propagation.
+\end{dinglist}
+%%
+Likewise, semantics is in need of two things: a theory of
+approximation, showing us what is possible to compute and
+what not, and how we can compute meanings, and second a
+theory of error propagation, showing us how we can determine
+the meanings in approximation given only limited resources
+for computation. We shall concern ourselves with the first
+of these. Moreover, we shall look only at a very limited
+aspect, namely: what meanings can in principle be computed
+and which ones cannot.
+
+We have earlier characterized the computable functions as those
+that can be computed by a Turing machine. To see that this is
+by no means an innocent assumption, we shall look at
+propositional logic. Standardly, the semantics of classical
+propositional logic is given as follows. (This differs only
+slightly from the setup of Section~\ref{kap3}.\ref{kap:prop}.)
+The alphabet is $\{\mbox{\tt (}, \mbox{\tt )},
+\mbox{\tt p}, \mbox{\tt 0}, \mbox{\tt 1}, \mbox{\mtt\symbol{5}}, 
+\mbox{\mtt\symbol{4}}\}$ and the set of variables 
+$V := \mbox{\tt p}(\mbox{\tt 0}\cup\mbox{\tt 1})^{\ast}$.
+A function $\beta : V \pf 2$ is called a \textbf{valuation}.
+%%%
+\index{valuation}%%
+%%%
+We extend $\beta$ to a mapping $\oli{\beta}$ from
+the entire language to $2$.
+%%
+\begin{align}
+\notag
+\oli{\beta}(p) & := \beta(p) & (p \in V) \\
+\oli{\beta}(\mbox{\mtt (\symbol{5}$\varphi$)}) &
+    := - \oli{\beta}(\varphi) & \\
+\notag
+\oli{\beta}(\mbox{\mtt ($\varphi$\symbol{4}$\chi$)}) &
+    := \oli{\beta}(\varphi) \cap \oli{\beta}(\chi)
+\end{align}
+%%
+To obtain from this a compositional interpretation for the
+language we turn matters around and define the meaning of
+a proposition to be a function from valuations to $2$. Let
+$2^V$ be the set of functions from $V$ to $2$.
+Then for every proposition $\varphi$, $[\varphi]$ denotes
+the function from $2^V$ to $2$ that satisfies
+%%
+\begin{equation}
+[\varphi](\beta) = \oli{\beta}(\varphi)
+\end{equation}
+%%
+(The reader is made aware of the fact that what we have
+performed here is akin to type raising, turning the argument
+into a function over the function that applies to it.)
+Also $[\varphi]$ can be defined inductively.
+%%
+\begin{align}
+\notag
+[p] & := \{\beta : \beta(p) = 1\} & (p \in V) \\
+[\mbox{\mtt (\symbol{5}$\varphi$)}] & :=
+    2^V - [\varphi] & \\
+\notag
+[\mbox{\mtt ($\varphi$\symbol{4}$\chi$)}] & :=
+    [\varphi] \cap [\chi] &
+\end{align}
+%%
+Now notice that $V$ is infinite. However, we have excluded that
+the set of basic modes is infinite, and so we need to readjust
+the syntax. Rather than working with only one type of expression,
+we introduce a new type, that of a
+%%%
+\index{register}%%
+%%%
+\textbf{register}. Registers are elements of
+$G := (\mbox{\mtt 0} \cup \mbox{\mtt 1})^{\ast}$. Then $V =
+\mbox{\mtt p} \cdot G$. Valuations are now functions from
+$G$ to $2$. The rest is as above. Here is now a sign grammar
+for propositional logic. The modes are {\tt E} (0--ary),
+$\mbox{\mtt P}_{\snull}$, $\mbox{\mtt P}_{\seins}$, $\mbox{\tt V}$,
+$\mbox{\mtt J}_{\mbox{\smtt\symbol{5}}}$ (all unary), and 
+$\mbox{\mtt J}_{\mbox{\smtt\symbol{4}}}$ (binary). The exponents 
+are strings over the alphabets, categories are either $R$ or $P$, 
+and meanings are either registers (for expressions of category $R$) 
+or sets of functions from registers to $2$ (for expressions of 
+category $P$).
+%%
+\begin{subequations}
+\begin{align}
+\mbox{\mtt E} & := \auf \varepsilon, R, \varepsilon\zu \\
+\mbox{\mtt P}_{\snull}(\auf\vec{x}, R, \vec{y}\zu) & :=
+    \auf \vec{x}\conc\mbox{\mtt 0}, R, \vec{y}\conc\mbox{\mtt 0}\zu \\
+\mbox{\mtt P}_{\seins}(\auf\vec{x}, R, \vec{y}\zu) & :=
+    \auf \vec{x}\conc\mbox{\mtt 1}, R, \vec{y}\conc\mbox{\mtt 1}\zu \\
+\mbox{\mtt V}(\auf \vec{x}, R, \vec{x}\zu) & :=
+    \auf \mbox{\mtt p$\vec{x}$}, P, [\mbox{\mtt p$\vec{x}$}]\zu \\
+\mbox{\mtt J}_{\mbox{\smtt\symbol{5}}}(\auf \vec{x}, P, M\zu) & :=
+    \auf \mbox{\mtt (\symbol{5}$\vec{x}$)}, P,
+    2^V - M\zu \\
+\mbox{\mtt J}_{\mbox{\smtt\symbol{4}}}(\auf \vec{x}, P, M\zu, 
+	\auf\vec{y}, P, N\zu) &
+    := \auf\mbox{\mtt ($\vec{x}$\symbol{4}$\vec{y}$)}, P,
+    M \cap N\zu
+\end{align}
+\end{subequations}
+%%
+It is easily checked that this is well--defined. This defines
+a sign grammar that meets all requirements for being compositional
+except for one: the functions on meanings are not computable.
+Notice that (a) valuations are infinite objects, and (b) there
+are uncountably many of them.  However, this is not sufficient
+as an argument because we have not actually said how we encode sets
+of valuations as strings and how we compute with them. Notice
+also that the notion of computability is defined only on strings.
+Therefore, meanings too must be coded as strings. We may improve
+the situation a little bit by assuming that valuations are functions
+from finite subsets of $G$ to $2$. Then at least valuations can be
+represented as strings (for example, by listing pairs consisting of
+a register and its value). However, still the set of all valuations
+that make a given proposition true is infinite. On the other hand,
+there is an algorithm that can check for any given partial
+function whether it assigns $1$ to a given register
+(it simply scans the string for the pair whose first member
+is the given register). Notice that if the function is not defined
+on the register, we must still give an output. Let it be {\tt \#}.
+We may then simply take the code of the Turing machine computing
+that function as the meaning the variable (see
+Section~\ref{kap1}.\ref{einsfuenf} for a definition). Then, inductively, we
+can define for every proposition $\varphi$ a machine $T_{\varphi}$
+that computes the value of $\varphi$ under any given partial
+valuation that gives a value for the occurring variables, and
+assigns {\tt \#} otherwise. Then we assign as the meaning of
+$\varphi$ the code $T_{\varphi}^{\spadesuit}$ of that Turing
+machine. However, this approach suffers from a number of deficiencies.
+
+First, the idea of using partial valuations does not always help.
+To see this let us now turn to predicate logic
+(see Section~\ref{kap3}.\ref{kap3-6}). As in the case of propositional
+logic we shall have to introduce binary strings for registers,
+to form variables. The meaning of a formula $\varphi$ is by
+definition a function from pairs $\auf \GM, \beta\zu$ to $\{0,1\}$,
+where $\GM$ is a structure and $\beta$ a function from variables
+to the domain of $\GM$. Again we have the problem to name finitary
+or at least computable procedures. We shall give two ways of doing so
+that yield quite different results. The first attempt is to
+exclude infinite models. Then $\GM$, and in particular the domain
+$M$ of $\GM$, are finite.  A valuation is a partial function from
+$V$ to $M$ with a finite domain. The meaning of a term under such
+a valuation is a member of $M$ or $= \star$. (For if $x_{\alpha}$
+is in $t$, and if $\beta$ is not defined on $x_{\alpha}$ then
+$t^{\beta}$ is undefined.) The meaning of a formula is either a
+truth value or $\star$. The truth values can be inductively defined
+as in Section~\ref{kap3}.\ref{kap3-6}. $M$ has to be finite, since we usually
+cannot compute the value of $\forall x_{\alpha}.\varphi(x_{\alpha})$
+without knowing all values of $x_{\alpha}$.
+
+This definition has a severe drawback: it does not give the
+correct results. For the logic of finite structures is stronger
+than the logic of all structures. For example, the following set
+of formulae is not satisfiable in finite structures while it
+has an infinite model. (Here {\tt 0} is a 0--ary function symbol,
+and {\tt s} a unary function symbol.)
+%%
+\begin{prop}
+The theory $T$ is consistent but has no finite model.
+%%
+\begin{equation}
+T := \{\mbox{\mtt (\symbol{20}x$_{\snull}$)(\symbol{5}sx$_{\snull}$=0)},
+\mbox{\mtt (\symbol{20}x$_{\snull}$)(\symbol{20}x$_{\seins}$)(sx$_{\snull}$%
+=sx$_{\seins}$\symbol{25}x$_{\snull}$=x$_{\seins}$)}\}
+\end{equation}
+\end{prop}
+%%
+\proofbeg
+Let $\GM$ be a finite model for $T$. Then for some $n$ and some $k > 0$:
+$s^{n+k}0 = s^n0$. From this it follows with the second formula that
+$s^k 0 = 0$. Since $k > 0$, the first formula is false in $\GM$. There is,
+however, an infinite model for these formulae, namely the set of
+numbers together with 0 and the successor function.
+\proofend
+
+We remark here that the logic of finite structures is not
+recursively enumerable if we have two unary relation symbols.
+(This is a theorem from \cite{trakhtenbrodt:finite}.) 
+%%%
+\index{Trakht\'enbrodt, B.~A.}%%%
+%%%
+However,
+the logic of all structures is clearly recursively enumerable,
+showing that the sets are {\it very\/} different. This throws us 
+into a dilemma: we can obviously not compute the meanings of
+formulae in a structure directly, since quantification
+requires search throughout the entire structure. (This
+problem has once worried some logicians, see \cite{ferreiros:road}.
+Nowadays it is felt that these are not problems of logic proper.)
+So, once again we have to actually try out another {\it semantics}.
+
+The first route is to let a formula denote the set of all formulae
+that are equivalent to it. Alternatively, we may take the set of
+all formulae that follow from it. (These are almost the same in
+boolean logic. For example, $\varphi\dpf\chi$ can be defined
+using $\pf$ and $\und$; and $\varphi \pf \chi$ can be defined by
+$\varphi \dpf (\varphi\und\chi)$. So these approaches are not very 
+different. However the second one is technically speaking more 
+elegant.) This set is again infinite. Hence, we do something different. 
+We shall take a formula to denote any formula that follows from it. 
+(Notice that this makes formulae have infinitely many meanings.)
+Before we start we seize the opportunity to introduce a more abstract 
+%%%
+\index{language!propositional}%%
+%%%%
+theory. A \textbf{propositional language} is a language of formulas 
+generated by a set $V$ of variables and a signature. The identity of 
+$V$ is the same as for boolean logic above. As usual, propositions are
+considered here as certain strings. The language is denoted by the
+letter $L$. A 
+%%%%
+\index{substitution}%%%
+%%%%
+\textbf{substitution} is given by a map $\sigma \colon V \pf
+L$. $\sigma$ defines a map from $L$ to $L$ by replacement of
+occurrences of variables by their $\sigma$--image. We denote by
+$\varphi^{\sigma}$ the result of applying $\sigma$ to $\varphi$.
+%%
+\begin{defn}
+A \textbf{consequence relation over} 
+%%%%
+\index{consequence relation}%%%
+%%%%
+$L$ is a relation $\vdash\;
+\subseteq\; \wp(L) \times L$ such that the following holds.
+(We write $\Delta \vdash \varphi$ for the more complicated
+$\auf \Delta, \varphi\zu \in\; \vdash$.)
+%%%
+\begin{dingautolist}{192}
+\item $\varphi \vdash \varphi$.
+\item If $\Delta \vdash \varphi$
+and $\Delta \subseteq \Delta'$ then $\Delta' \vdash \varphi$.
+\item If $\Delta \vdash \chi$ and $\Sigma;\chi \vdash
+    \varphi$, then $\Delta; \Sigma \vdash \varphi$.
+\end{dingautolist}
+%%%
+$\vdash$ is called \textbf{structural} 
+%%%
+\index{consequence relation!structural}%%
+%%%
+if from $\Delta \vdash
+\varphi$ follows $\Delta^{\sigma} \vdash \varphi^{\sigma}$ for
+every substitution. $\vdash$ is \textbf{finitary} 
+%%%
+\index{consequence relation!finitary}%%%
+%%%
+if $\Delta \vdash \varphi$ implies that there is a finite subset 
+$\Delta'$ of $\Delta$ such that $\Delta' \vdash \varphi$.
+\end{defn}
+%%
+In the sequel consequence relations are always assumed to be
+structural. A rule is an element of $\wp(L) \times L$,
+that is, a pair $\rho = \auf \Delta, \varphi\zu$. $\rho$ is 
+%%%
+\index{rule!finitary}%%
+%%%
+\textbf{finitary} if $\Delta$ is finite; it is $n$--\textbf{ary} 
+if $|\Delta| = n$. Given a set $R$ of rules, we call $\vdash^R$ the 
+least structural consequence relation containing $R$. This relation
+can be explicitly defined. Say that $\chi$ is a \textbf{1--step}
+$R$--\textbf{consequence} of $\Sigma$ if there is a substitution
+$\sigma$ and some rule $\auf \Delta, \varphi\zu \in R$ such that
+$\Delta^{\sigma} \subseteq \Sigma$ and $\chi = \varphi^{\sigma}$.
+%%%
+\index{consequence!$n$--step \faul}%%%
+%%%%
+Then, an $n$--\textbf{step consequence} of $\Sigma$ is inductively
+defined.
+%%%
+\begin{prop}
+$\Delta \vdash^R \varphi$ iff there is a natural
+number $n$ such that $\varphi$ is an $n$--step $R$--consequence
+of $\Delta$.
+\end{prop}
+%%
+The reader may also try to generalize the notion of a proof from
+a Hilbert calculus and show that they define the same relation
+on condition that the rules are all finitary. We shall also give
+an abstract semantics and show its completeness. The notion of an
+$\Omega$--algebra has been defined.
+%%%
+\begin{defn}
+%%%
+\index{matrix}%%
+\index{truth value}%%
+\index{truth value!designated}%%
+%%%
+Let $L$ be a propositional logic over the signature $\Omega$. A
+\textbf{matrix} for $L$ and $\vdash$ is a pair $\GM = \auf \GA, D\zu$,
+where $\GA$ is an $\Omega$--algebra (the algebra of \textbf{truth values})
+and $D$ a subset of $A$, called the set of \textbf{designated
+truth values}. Let $h$ be a homomorphism from $\goth{Tm}_{\Omega}(V)$
+into $\GM$. We write $\auf \GM, h\zu \vDash \varphi$ if
+$h(\varphi) \in D$ and say that $\varphi$ is \textbf{true under}
+$h$ \textbf{in} $\GM$. Further, we write $\Delta \vDash_{\GM} \varphi$
+if for all homomorphisms $h \colon \goth{Tm}_{\Omega}(V) \pf \GA$: if
+$h[\Delta] \subseteq D$ then $h(\varphi) \in D$.
+\end{defn}
+%%
+\begin{prop}
+If $\GM$ is a matrix for $L$, $\vDash_{\GM}$ is a structural
+consequence relation.
+\end{prop}
+%%%
+Notice that in boolean logic $\GA$ is the 2--element boolean
+algebra and $D = \{1\}$, but we shall encounter other cases
+later on. Here is a general method for obtaining matrices.
+%%
+\begin{defn}
+%%%
+\index{set!deductively closed}%%
+\index{deductively closed set}%%
+\index{set!consistent}%%
+\index{set!maximally consistent}%%
+%%%
+Let $L$ be a propositional language and $\vdash$ a consequence
+relation. Put $\Delta^{\vdash} := \{\varphi : \Delta \vdash 
+\varphi\}$. $\Delta$ is \textbf{deductively closed} if $\Delta 
+= \Delta^{\vdash}$. It is \textbf{consistent} if $\Delta^{\vdash} 
+\neq L$. It is \textbf{maximally consistent} if
+it is consistent but no proper superset is.
+\end{defn}
+%%
+\index{matrix!canonical}%%%
+%%%%
+A matrix $\GS$ is \textbf{canonical} for $\vdash$ if 
+$\GS = \auf\goth{Tm}_{\Omega}(V), \Delta^{\vdash}\zu$ for some set
+$\Delta$. (Here, $\goth{Tm}_{\Omega}(V)$ is the canonical algebra
+with carrier set $L$ whose functions are just the associated string
+functions.) It is straightforward to verify that
+$\vdash\; \subseteq\; \vDash_{\GS}$. Now consider some set $\Delta$
+and a formula such that $\Delta \nvdash \varphi$. Then put $\GS :=
+\auf\goth{Tm}_{\Omega}(V), \Delta^{\vdash}\zu$ and let $h$
+be the identity. Then $h[\Delta] = \Delta \subseteq \Delta^{\vdash}$,
+but $h(\varphi) \not\in \Delta^{\vdash}$ by definition of
+$\Delta^{\vdash}$. So, $\Delta \nvDash_{\GS} \varphi$. This
+shows the following.
+%%%
+\begin{thm}[Completeness of Matrix Semantics]
+%%
+\label{thm:matrixcompleteness}
+%%%
+Let $\,\vdash\,$ be a structural consequence relation over $L$. Then
+%%
+\begin{equation}
+\vdash\; = \;\bigcap \auf \vDash_{\GS} : \GS \mbox{ canonical for }
+\vdash\zu
+\end{equation}
+%%
+\end{thm}
+%%
+(The reader may verify that an arbitrary intersection of consequence
+relations again is a consequence relation.) This theorem establishes
+that for any consequence relation we can find enough matrices such
+that they together characterize that relation. We shall notice also
+the following. Given $\vdash$ and $\GM = \auf \GA, D\zu$, then
+$\vDash_{\GM}\; \supseteq\; \vdash$ iff $D$ is closed under
+the consequence. (This is pretty trivial: all it says is that if
+$\Delta \vdash \varphi$ and $h$ is a homomorphism, then if
+$h[\Delta] \subseteq D$ we must have $h(\varphi) \in D$.) Such sets are
+%%%%
+\index{filter}%%
+%%%%
+called \textbf{filters}. Now, let $\GM = \auf \GA, D\zu$ be a matrix,
+and $\Theta$ a congruence on $\GA$. Suppose that for any $x$:
+$[x]\Theta \subseteq D$ or $[x]\Theta \cap D = \varnothing$.
+Then we call $\Theta$ 
+%%%
+\index{congruence relation!admissible}%%
+%%%%
+\textbf{admissible for} $\GM$ and put $\GM/\Theta := \auf \GA/\Theta, 
+D/\Theta\zu$, where $D/\Theta := \{[x]\Theta
+: x \in D\}$. The following is easy to show.
+%%%
+\begin{prop}
+\label{prop:redmatrix}
+Let $\GM$ be a matrix and $\Theta$ an admissible congruence on $\GM$.
+Then $\vDash_{\GM/\Theta}\; = \;\vDash_{\GM}$.
+\end{prop}
+%%
+\index{matrix!reduced}%%
+%%%
+Finally, call a matrix \textbf{reduced} if only the diagonal is an
+admissible congruence. Then, by Proposition~\ref{prop:redmatrix}
+and Theorem~\ref{thm:matrixcompleteness} we immediately derive that
+every consequence relation is complete with respect to reduced
+matrices. One also calls a class of matrices $\CK$ a (\textbf{matrix})
+%%%
+\index{matrix semantics}%%
+\index{matrix semantics!adequate}%%
+%%%
+\textbf{semantics} and says $\CK$ is \textbf{adequate for} a consequence
+relation $\vdash$ if $\vdash\; =\; \bigcap_{\GM \in \CK} \; \vDash_{\GM}$.
+
+Now, given $L$ and $\vdash$, the system of signs for the consequence
+relation is this.
+%%
+\begin{equation}
+\Sigma_P := \{\auf \vec{x}, R, \vec{x}\zu :
+    \vec{x} \in G\} \cup \{\auf \vec{x}, P, \vec{y}\zu :
+    \vec{x} \vdash \vec{y}\}
+\end{equation}
+%%
+How does this change the situation? Notice that we can axiomatize
+the consequences by means of rules. The following is a set of
+rules that fully axiomatizes the consequence. The proof of that
+will be left to the reader (see the exercises), since it is only
+peripheral to our interests.
+%%
+\begin{subequations}
+\label{eq:41bool}
+\begin{align}
+\rho_d & := \auf \{\mbox{\mtt (\symbol{5}(\symbol{5}p))}\}, 
+	\mbox{\mtt p}\zu \\
+\rho_{dn} & := \auf \{\mbox{\mtt p}\}, 
+	\mbox{\mtt (\symbol{5}(\symbol{5}p))}\zu \\
+\rho_{u} & := \auf \{\mbox{\mtt p}, \mbox{\mtt (\symbol{5}p)}\}, 
+	\mbox{\mtt p0}\zu \\
+\rho_c  & := \auf \{\mbox{\mtt p}, \mbox{\tt p0}\}, 
+	\mbox{\mtt (p\symbol{4}p0)}\zu \\
+\rho_{p0} & := \auf \{\mbox{\mtt (p\symbol{4}p0)}\}, \mbox{\mtt p}\zu \\
+\rho_{p1} & := \auf \{\mbox{\mtt (p\symbol{4}p0)}\}, \mbox{\mtt p0}\zu \\
+\rho_{mp} & := \auf \{\mbox{\mtt p}, 
+	\mbox{\mtt (\symbol{5}(p\symbol{4}(\symbol{5}p0)))}\}, 
+	\mbox{\mtt p0}\zu
+\end{align}
+\end{subequations}
+%%
+With each rule we can actually associate a mode. We only give
+examples, since the general scheme for defining modes is easily
+extractable.
+%%
+\begin{align}
+\mbox{\mtt F}_{\mbox{\smtt dn}}(\auf \vec{x}, P, 
+	\mbox{\mtt (\symbol{5}(\symbol{5}$\vec{y}$))} \zu 
+	& := \auf \vec{x}, P, \vec{y}\zu \\
+\mbox{\mtt F}_{\mbox{\smtt c}}(\auf \vec{x}, P, \vec{y}\,\zu, 
+	\auf\vec{x}, P, \vec{z}\, \zu) 
+	& :=
+\auf \vec{x}, P, \mbox{\mtt ($\vec{y}$\symbol{4}$\vec{z}$)}\zu
+\end{align}
+%%
+If we have {\mtt\symbol{25}} as a primitive symbol then the following 
+mode corresponds to the rule $\rho_{mp}$, Modus Ponens.
+%%
+\begin{equation}
+\mbox{\tt F}_{\mbox{\smtt mp}}(\auf\vec{x}, P, 
+	\mbox{\mtt ($\vec{y}$\symbol{25}$\vec{z}$)}\zu, 
+	\auf \vec{x}, P, \vec{y}\zu) :=
+    \auf \vec{x}, P, \vec{z}\zu
+\end{equation}
+%%
+This is satisfactory in that it allows to derive all and only
+the consequences of a given proposition. A drawback is that the
+functions on the exponents are nonincreasing. They always
+return $\vec{x}$. The structure term of the sign
+$\auf \vec{x}, P, \vec{y}\zu$ on the other hand encodes a
+derivation of $\vec{y}$ from $\vec{x}$.
+
+Now, the reader may get worried by the proliferation of different
+semantics. Aren't we always solving a different problem? Our
+answer is indirect. The problem is that we do not know exactly
+what meanings are. Given a natural language, what we can observe
+more or less directly is the exponents. Although it is not easy
+to write down rules that generate them, the entities are more or
+less concrete. A little less concrete are the syntactic categories.
+We have already seen in the previous chapter that the assignment
+of categories to strings (or other exponents, see next chapter)
+are also somewhat arbitrary. We shall return to this issue. Even
+less clearly definable, however, are the meanings. What, for
+example, is the meaning of \eqref{eq:410}?
+%%
+\begin{equation}
+\label{eq:410} 
+\mbox{\tt Caesar crossed the Rubicon.}
+\end{equation}
+%%
+The first answer we have given was: a truth value. For this sentence
+is either true or false. But even though it is true, it might have
+been false, just in case Caesar did not cross the Rubicon. What makes
+us know this? The second answer (for first--order theories) is: the
+meaning is a set of models. Knowing what the model is and what the
+variables are assigned to, we know whether that sentence is true. But
+we simply cannot look at all models, and still it seems that we know
+what \eqref{eq:410} means. Therefore the next answer is: its meaning
+is an algorithm, which, given a model, tells us whether the sentence
+is true. Then, finally, we do not have to know everything in order to
+know whether \eqref{eq:410} is true. Most facts are irrelevant, for
+example, whether Napoleon was French. On the other hand, suppose we
+witness Caesar walk across the Rubicon, or suppose we know for 
+sure that first he was north of the Rubicon and the next day to the 
+south of it. This will make us believe that \eqref{eq:410} is true. Thus, the
+algorithm that computes the truth value does not need all of a model;
+a small part of it actually suffices. We can introduce partial
+models and define algorithms on them, but all this is a variation
+on the same theme. A different approach is provided by our last
+answer: a sentence means whatever it implies.
+
+We may cast this as follows. Start with the set $L$ of propositions
+and a set (or class) $\CM$ of models. A \textbf{primary} (or 
+%%%
+\index{semantics!primary}%%
+%%%%
+\textbf{model theoretic}) \textbf{semantics} is given in terms of 
+a relation $\vDash \subseteq L \times \CM$. Most approaches are 
+variants of the primary semantics, since they more or less characterize
+meanings in terms of facts. However, from this semantics we may
+define a \textbf{secondary semantics}, 
+%%%%
+\index{semantics!secondary}%%
+%%%%
+which is the semantics of
+consequence. $\Delta \vDash \varphi$ iff for all $M \in
+\CM$: if $M \vDash \delta$ for all $\delta \in \Delta$ then $M
+\vDash \varphi$. (We say in this case that $\Delta$ entails
+$\varphi$.) Secondary semantics is concerned only with the
+relationship between the objects of the language, there is no
+model involved. It is clear that the secondary semantics is not
+fully adequate. Notice namely that knowing the logical
+relationship between sentences does not reveal anything about the
+nature of the models. Second, even if we knew what the models were:
+we could not say whether a given sentence is true in a given model
+or not. It is perfectly conceivable that we know English to the
+extent that we know which sentences entail which other sentences,
+but still we are unable to say, for example, whether or not
+\eqref{eq:410} is true even when we witnessed Caesar cross the
+Rubicon. An example might make this clear. Imagine that all I know 
+is which sentences of English imply which other sentences, but 
+that I know nothing more about their actual meaning. Suppose now 
+that the house is on fire. If I realize this I know that I am in 
+danger and I act accordingly. However, suppose that someone shouts 
+\eqref{eq:411} at me. Then I can infer that he thinks \eqref{eq:411}
+is true. This will certainly make me believe that \eqref{eq:411} 
+is true and even that \eqref{eq:412} is true as well. But still 
+I do not know that the house is on fire, nor that I am in danger. 
+%%
+\begin{align}
+\label{eq:411} & \mbox{\tt The house is on fire.} \\
+\label{eq:412} & \mbox{\tt I am in danger.}
+\end{align}
+%%
+Therefore, knowing how sentences hang together in a deductive
+system has little to do with the actual world. The situation
+is not simply remedied by knowing some of the meanings.
+Suppose I additionally know that \eqref{eq:411} means
+that the house is on fire. Then if I see that the house is on
+fire then I know that I am in danger, and I also know that
+\eqref{eq:412} is the case. But I still may fail to see that
+\eqref{eq:412} means that I am in danger. It may just mean
+something else that is being implied by \eqref{eq:411}.
+This is reminiscent of Searle's thesis that language is about
+the world: knowing what things mean is not constituted by an
+ability to manipulate certain symbols. We may phrase this as
+follows.
+%%
+\begin{quote}
+{\sl Indeterminacy of secondary semantics.} No secondary
+semantics can fix the truth conditions of propositions uniquely
+for any given language.
+\end{quote}
+%%
+Searle's claims go further than that, but this much is perhaps
+quite uncontroversial. Despite the fact that secondary semantics
+is underdetermined, we shall not deal with primary semantics at
+all. We are not going to discuss what a word, say, {\tt life} {\it
+really\/} means --- we are only interested in how its meaning
+functions language internally. Formal semantics really cannot do
+more than that.
+%%
+\nocite{zimmermann:meaning}
+%%
+In what is to follow we shall sketch an algebraic approach to
+semantics. This contrasts with the far more widespread
+model--theoretic approach. The latter may be more explicit
+and intuitive, but on the other hand it is quite
+inflexible.
+
+%%%
+\index{Leibniz' Principle}%%
+\index{Leibniz, Gottfried W.}%%
+%%%
+We begin by examining a very influential principle in semantics,
+called Leibniz' Principle.  We quote one of its original formulation
+from \cite{leibniz:kalkuel} (from {\it Specimen Calculi Coincidentium}, 
+(1), 1690). {\it Eadem vel Coincidentia sunt quae
+sibi ubique substitui possunt salva veritate. Diversa quae non
+possunt.} Translated it says: {\it The same or coincident are
+those which can everywhere be substituted for each other not
+affecting truth. Different are those that cannot.} Clearly,
+substitution must be understood here in the context of sentences,
+and we must assume that what we substitute is constituent
+occurrences of the expressions. We therefore reformulate the
+principle as follows.
+%%
+\begin{quote}
+{\sl Leibniz' Principle.}
+Two expressions $A$ and $B$ have the same meaning iff
+in every sentence any occurrence of $A$ can be substituted by $B$
+and any occurrence of $B$ by $A$ without changing the truth of
+that sentence.
+\end{quote}
+%%
+To some people this principle seems to assume bivalence. If
+there are more than two truth values we might interpret Leibniz'
+original definition as saying that substitution does not change
+the truth value rather than just truth. (See also Lyons for
+a discussion.) We shall not do that, however. First we give some 
+unproblematic examples.  In second order logic ($\mathsf{SO}$, see 
+Chapter~\ref{kap5-1}), the following is a theorem.
+%%
+\begin{equation}
+\label{eq:leibniz}
+(\forall x)(\forall y)(x \doteq y \dpf (\forall P)(P(x) \dpf P(y)))
+\end{equation}
+%%
+Hence, Leibniz' Principle 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+holds of second order logic with respect
+to terms. There is general no identity relation for predicates, but
+if there is, it is defined according to Leibniz' Principle: two
+predicates are equal iff they hold of the same individuals.
+This requires full second order logic, for what we want to have is the
+following for each $n \in \omega$ (with $P_n$ and $Q_n$ variables
+for $n$--ary relations):
+%%
+\begin{equation}
+(\forall P_n)(\forall Q_n)(P_n \doteq Q_n \dpf
+(\forall \vec{x})(P_n(\vec{x}) \dpf Q_n(\vec{x})))
+\end{equation}
+%%
+(Here, $\vec{x}$ abbreviates the $n$--tuple $x_0, \dotsc,
+x_{n-1}$.) \eqref{eq:leibniz} is actually the basis for Montague's
+%%%%
+\index{Montague, Richard}%%%
+%%%
+type raising. Recall that Montague identified an individual
+with the set of all of its properties. In virtue of \eqref{eq:leibniz}
+this identification does not conflate distinct individuals. To turn
+that around: by Leibniz' Principle, this identification is
+one--to--one. We shall see in the next section that boolean algebras
+of any kind can be embedded into powerset algebras. The background of
+this proof is the result that if there are two elements $x$, $y$ in a
+boolean algebra $\GB$ and for all homomorphisms $h \colon \GB  \pf 
+\mathbf{2}$ we have $h(x) = h(y)$, then $x = y$. (More on that in 
+the next section. We have to use homomorphisms here since properties are
+functions that commute with the boolean operations, that is to say,
+homomorphisms.) Thus, Leibniz' Principle also holds for boolean
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+semantics, defined in Section~\ref{kap6}.\ref{kap6-2}. Notice that the proof
+relies on the Axiom of Choice (in fact the somewhat weaker Prime
+Ideal Axiom), so it is not altogether innocent.
+
+We use Leibniz' Principle to detect whether two items have the same
+meaning. One consequence of this principle is that semantics is
+essentially unique. If $\mu \colon A^{\ast} \stackrel{p}{\epi} M$,
+$\mu' \colon A^{\ast} \stackrel{p}{\epi} M'$ are surjective functions
+assigning meanings to expressions, and if both satisfy Leibniz'
+Principle, then there is a bijection $\pi \colon M \pf M'$  such that
+$\mu' = \pi \circ \mu$ and $\mu = \pi^{-1} \circ \mu'$. Thus, as
+far as formal semantics is concerned, any solution is as good any
+other. 
+
+As we have briefly mentioned in Section~\ref{kap3}.\ref{kap3-3}, we may use
+the same idea to define types. This method goes back to Husserl,
+and is a key ingredient to the theory of compositionality by
+Wilfrid Hodges 
+%%%
+\index{Hodges, Wilfrid}%%%
+%%%
+(see his \shortcite{hodges:compositionality}). A
+type is a class of expressions that can be substituted for each other
+without changing meaningfulness. Hodges just uses pairs of
+exponents and meanings. If we want to assimilate his setup to
+ours, we may add a category $U$, and let for every mode $f$,
+$f^{\tau}(U, \dotsc, U) := U$. However, the idea is to do without
+categories.  If we further substract the meanings, we get what
+Hodges calls a {\it grammar}. We prefer to call it an 
+\textbf{H--grammar}. (The letter \textbf{H} honours Hodges here.)
+%%%
+\index{H--grammar}%%
+%%%
+Thus, an H--grammar is defined by some signature and corresponding
+operations on the set $E$ of exponents, which may even be partial.
+An
+%%%
+\index{H--semantics}%%
+%%%
+\textbf{H--semantics} is a partial map $\mu$ from the structure terms
+(!) to a set $M$ of meanings. Structure terms $\Gs$ and $\Gt$ are
+%%%%
+\index{synonymy}%%%
+%%%%
+\textbf{synonymous} if $\mu$ is defined on both and $\mu(\Gs) =
+\mu(\Gt)$. We write $\Gs \equiv_{\mu} \Gt$ to say that $\Gs$ and
+$\Gt$ are synonymous. (Notice that $\Gs \equiv_{\mu} \Gs$ iff
+$\mu$ is defined on $\Gs$.) An H--semantics $\nu$ is
+%%%%
+\index{equivalence}%%
+%%%%
+\textbf{equivalent} to $\mu$  if $\equiv_{\mu}\; =\; \equiv_{\nu}$.
+%%%
+\index{synonymy!H--\faul}%%
+%%%%
+An \textbf{H--synonymy} is an equivalence relation on a subset
+of the set of structure terms. We call that subset the \textbf{field}
+of the H--synonymy. Given an H--synonymy $\equiv$,
+we may define $M$ to be the set of all equivalence classes
+of $\equiv$, and set $\mu^{\equiv}(\Gs) := [\Gs]_{\equiv}$
+iff $\Gs$ is in that subset, and undefined otherwise.
+Thus, up to equivalence, H--synonymies and H--semantics
+are in one--to--one correspondence. We say that $\equiv'$
+\textbf{extends} $\equiv$ if the field of $\equiv'$ contains the
+field of $\equiv$, and the two coincide on the field of
+$\equiv$.
+%%%
+\begin{defn}
+%%%
+\index{category!$\mu$--\faul}%%
+%%%
+Let $G$ be an H--grammar and $\mu$ an H--semantics for it. We
+write $\Gs \sim_{\mu} \Gs'$ iff for every structure
+term $\Gt$ with a single free variable $x$, $[\Gs/x]\Gt$ is
+$\mu$--meaningful iff $[\Gs'/x]\Gt$ is
+$\mu$--meaningful. The equivalence classes of $\sim_{\mu}$
+are called the $\mu$--\textbf{categories}.
+\end{defn}
+%%
+This is the formal rendering of the `meaning categories' that
+Husserl defines.
+%%%
+\begin{defn}
+%%%%
+\index{synonymy!Husserlian}%%
+%%%%
+$\nu$ and its associated synonymy is called $\mu$--\textbf{Husserlian}
+if for all structure terms $\Gs$ and $\Gs'$: if $\Gs \equiv_{\nu}
+\Gs'$ then $\Gs \sim_{\mu} \Gs'$. $\mu$ is called
+\textbf{Husserlian} if it is $\mu$--Husserlian.
+\end{defn}
+%%
+It is worthwhile to compare this definition with Leibniz' Principle.
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+The latter defines identity in meaning via intersubstitutability
+in all sentences; what must remain constant is truth. Husserl's meaning
+categories are also defined by intersubstitutability in all sentences;
+however, what must remain constant is the meaningfulness. We may connect
+these principles as follows.
+%%%
+\begin{defn}
+%%%
+\index{structure term!sentential}%%%%
+\index{synonymy!Leibnizian}%%%
+%%%%
+Let $\Sent$ be a set of structure terms and $\Delta 
+\subseteq \Sent$. We call $\Gs$ \textbf{sentential}
+if $\Gs \in \Sent$, and \textbf{true} if $\Gs \in \Delta$. $\mu$ is
+\textbf{Leibnizian} if for all structure terms $\Gu$ and $\Gu'$:
+$\Gu \equiv_{\mu} \Gu'$ iff for all structure terms $\Gs$
+such that $[\Gu/x]\Gs \in \Delta$ also $[\Gu'/x]\Gs  \in \Delta$
+and conversely.
+\end{defn}
+%%%
+Under mild assumptions on $\mu$ it holds that Leibnizian
+implies Husserlian. The following is from
+\cite{hodges:compositionality}.
+%%%
+\begin{thm}[Hodges]
+%%%
+\index{Hodges, Wilfrid}%%%
+\label{thm:hodges}%%
+Let $\mu$ be an H--semantics for the H--grammar $G$. Suppose
+further that every subterm of a $\mu$--meaningful structure term is
+again $\mu$--meaningful. Then the following are equivalent.
+%%
+\begin{dingautolist}{192}
+\item
+For each mode $f$ there is an $\Omega(f)$--ary function $f^{\mu} \colon
+M^{\Omega(f)} \pf M$ such that $\mu$ is a homomorphism of partial
+algebras.
+\item
+If $\Gs$ is a structure term and $\Gu_i$, $\Gv_i$ ($i < n$) are
+structure terms such that $[\Gu_i/x_i : i < n]\Gs$ and
+$[\Gv_i/x_i : i < n]\Gs$ are both $\mu$--meaningful and if
+for all $i < n$ $\Gu_i \equiv_{\mu} \Gv_i$ then
+%%
+$$[\Gu_i/x_i : i < n]\Gs \equiv_{\mu} [\Gv_i/x_i : i < n]\Gs\; .$$
+%%
+\end{dingautolist}
+%%
+Furthermore, if $\mu$ is Husserlian then the second already
+holds if it holds for $n = 1$.
+\end{thm}
+%%%
+It is illuminating to recast the approach by Hodges in algebraic
+terms. This allows to compare it with the setup of
+Section~\ref{kap3}.\ref{kap3-1}. Moreover, it will also give a proof of
+Theorem~\ref{thm:hodges}. We start with a signature $\Omega$. The
+set $\Tm_{\Omega}(X)$ forms an algebra which we have
+denoted by $\goth{Tm}_{\Omega}(X)$. Now select a subset $D
+\subseteq \Tm_{\Omega}(X)$ of {\it meaningful terms}. It
+turns out that the embedding $i \colon D \mono \Tm_{\Omega}(X) 
+\colon x \mapsto x$ is a strong homomorphism iff 
+$D$ is closed under subterms. We denote the induced
+algebra by $\GD$. It is a partial algebra. The map $\mu \colon D \pf M$
+induces an equivalence relation $\equiv_{\mu}$. There are functions
+$f^{\mu} \colon M^{\Omega(f)} \pf M$ that make $M$ into an
+algebra $\GM$ and $\mu$ into a homomorphism iff
+$\equiv_{\mu}$ is a weak congruence relation (see
+Definition~\ref{defn:pcongruence} and the remark following it).
+This is the first claim of Theorem~\ref{thm:hodges}. For the
+second claim we need to investigate the structure of partial
+algebras.
+%%%
+\begin{defn}
+%%%
+\index{$\asymp_{\GA}$, $\asymp$}%%%
+%%%
+Let $\GA$ be a partial $\Omega$--algebra. Put $x \asymp_{\GA} y$
+(or simply $x \asymp y$) if for all $f \in \Pol_1(\GA)$:
+$f(x)$ is defined iff $f(y)$ is defined.
+\end{defn}
+%%%
+\begin{prop}
+\label{prop:strongcong}
+Let $\GA$ be a partial $\Omega$--algebra.
+(a) $\asymp_{\GA}$ is a strong congruence relation on $\GA$. (b) A
+weak congruence on $\GA$ is strong iff it is contained
+in $\asymp_{\GA}$.
+\end{prop}
+%%%
+\proofbeg%%
+(a) Clearly, $\asymp$ is an equivalence relation. So, let $f \in
+F$ and $a_i \asymp c_i$ for all $i < \Omega(f)$. We have to show
+that $f(\vec{a}) \asymp f(\vec{c})$, that is, for all $g \in
+\Pol_1(\GA)$: $g(f(\vec{a}))$ is defined iff
+$g(f(\vec{c}))$ is. Assume that $g(f(\vec{a}))$ is defined. The
+function $g(f(x_0, a_1, \dotsc, a_{\Omega(f)-1}))$ is a unary
+polynomial $h_0$, and $h_0(a_0)$ is defined. By definition of
+$\asymp$, $h_0(c_0) = g(f(c_0, a_1, \dotsc, a_{\Omega(f)-1}))$ 
+is also defined. Next, 
+%%%
+\begin{equation}
+h_1(x_1) := f(g(c_0, x_1, a_2, \dotsc, a_{\Omega(f)-1}))
+\end{equation}
+%%%%
+is a unary polynomial and defined on $a_1$. So, it is defined on $c_1$ 
+and we have $h_1(c_1) = f(g(c_0,
+c_1, a_2, \dotsc, a_{\Omega(f)-1}))$. In this way we show that
+$f(g(\vec{c}))$ is defined. (b) Let $\Theta$ be a weak congruence.
+Suppose that it is not strong. Then there is a polynomial $f$ and
+vectors $\vec{a}, \vec{c} \in A^{\Omega(f)}$ with $a_i\; \Theta\;
+c_i$ ($i < \Omega(f)$) such that $f(\vec{a})$ is defined but
+$f(\vec{c})$ is not. Now, for all $i < \Omega(f)$,
+%%
+\begin{multline}
+\label{eq:theta}
+f(a_0, \dotsc, a_{i-1}, a_i, c_{i+1}, \dotsc, c_{\Omega(f)-1})
+\\ \qquad
+\; \Theta\; f(a_0, \dotsc, a_{i-1}, c_i, c_{i+1}, \dotsc,
+c_{\Omega(f)-1})
+\end{multline}
+%%
+if both sides are defined. Now, $f(\vec{a})$ is not
+$\Theta$--congruent to $f(\vec{c})$. Hence there is an $i <
+\Omega(f)$ such that the left hand side of \eqref{eq:theta} 
+is defined and the right hand side is not. Put 
+%%
+\begin{equation}
+h(x) := f(a_0, \dotsc, a_{i-1}, x, c_{i+1}, \dotsc, 
+c_{\Omega(f)-1})
+\end{equation}
+%%
+Then $h(a_i)$ is defined, $h(c_i)$ is not, but $a_i\; \Theta \; c_i$. 
+So, $\Theta\; \nsubseteq\; \asymp$. Conversely, if $\Theta$ is strong 
+we can use \eqref{eq:theta} to show inductively that if $f(\vec{a})$ is 
+defined, so are all members of the chain. Hence $f(\vec{c})$ is defined. 
+And conversely.
+\proofend
+%%%
+\begin{prop}
+\label{prop:punary}%%
+Let $\GA$ be a partial algebra and $\Theta$ an
+equivalence relation on $\GA$. $\Theta$ is a strong congruence 
+iff for all $g \in \Pol_1(\GA)$ and all $a, c
+\in A$ such that $a\; \Theta\; c$: $g(a)$ is defined iff
+$g(c)$ is, and then $g(a)\; \Theta\; g(c)$.
+\end{prop}
+%%
+The proof of this claim is similar. To connect this with the
+theory by Hodges, notice that $\sim_{\mu}$ is the same as
+$\asymp_{\GD}$. $\equiv_{\mu}$ is Husserlian iff
+$\equiv_{\mu} \subseteq \asymp_{\GD}$.
+%%%
+\begin{prop}
+$\equiv_{\mu}$ is Husserlian iff it is contained in
+$\asymp_{\GD}$ iff it is a strong congruence.
+\end{prop}
+%%%
+Propositions~\ref{prop:strongcong} and \ref{prop:punary} together
+show the second claim of Theorem~\ref{thm:hodges}.
+
+If $\bullet$ is the only operation, we can actually use this
+method to define the types (see Section~\ref{kap3}.\ref{kap3-3}). In
+the following sections we shall develop an algebraic account
+of semantics, starting first with boolean algebras and then
+going over to intensionality, and finally carrying out the
+full algebraization.
+
+{\it Notes on this section.}
+The idea that the logical interconnections between sentences 
+constitute their meanings is also known as {\it holism}.
+This view and its implications for semantics is discussed 
+by Dresner \shortcite{dresner:holism}. 
+%%%
+\index{Dresner, Eli}%%
+%%%
+We shall briefly also mention the problem of reversibility
+(see Section~\ref{kap6}.\ref{kap6-2}).
+Most formalisms are designed only for assigning meanings 
+to sentences, but it is generally hard or impossible to assign 
+a sentence that expresses a given content. We shall briefly touch 
+on that issue in  Section~\ref{kap6}.\ref{kap6-2}. 
+%%
+\vplatz
+\exercise
+Prove Proposition~\ref{prop:redmatrix}.
+%%
+\vplatz
+\exercise
+Let $\rho = \auf \Delta, \varphi\zu$ be a rule. Devise a mode
+$\mbox{\tt M}_{\rho}$ that captures the effect of this rule
+in the way discussed above. Translate the rules given above
+into modes. What happens with 0--ary rules (that is, rules
+with $\Delta = \varnothing$)?
+%%
+\vplatz \exercise There is a threefold characterization of a
+consequence: as a consequence relation, as a closure operator, and
+as a set of theories. Let $\vdash$ be a consequence relation. Show
+that $\Delta \mapsto \Delta^{\vdash}$ is a closure operator. The
+closed sets are the theories. If $\vdash$ is structural the set of
+theories of $\vdash$ are inversely closed under substitutions. That
+is to say, if $T$ is a theory and $\sigma$ a substitution, then
+$\sigma^{-1}[T]$ is a theory as well. Conversely, show that every
+closure operator on $\wp(\goth{Tm}_{\Omega}(V))$ gives rise to a
+consequence relation and that the consequence relation is
+structural if the set of theories is inversely closed under
+substitutions.
+%%
+\vplatz
+\exercise
+Show that the rules \eqref{eq:41bool} are complete for boolean logic 
+in {\mtt\symbol{4}} and {\mtt\symbol{5}}.
+%%
+\vplatz
+\exercise
+Show that for any given finite signature the set of predicate
+logical formulae valid in all finite structures for that signature
+is co--recursively enumerable. (The latter means that its
+complement is recursively enumerable.)
+%%%
+\vplatz
+\exercise
+Let $L$ be a first--order language which contains at least the
+symbol for equality ({\mtt =}). Show that a first--order theory 
+$T$ in $L$ satisfies Leibniz' Principle if the following holds 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+for any relation symbol $r$
+%%
+\begin{equation}
+T; \{\mbox{\mtt ($x_i$=$y_i$)} : i < \Xi(r)\} \vdash^{\mathsf{FOL}}
+    \mbox{\mtt ($r$($\vec{x}$)\symbol{25}$r$($\vec{y}$))}
+\end{equation}
+%%
+and the following for every function symbol $f$:
+%%
+\begin{equation}
+T; \{\mbox{\mtt ($x_i$=$y_i$)} : i < \Omega(f)\} \vdash^{\mathsf{FOL}}
+    \mbox{\mtt ($f$($\vec{x}$)=$f$($\vec{y}$))}
+\end{equation}
+%%
+Use this to show that the first--order set theory $\mathsf{ZFC}$ 
+satisfies Leibniz' Principle. Further, show that every equational theory
+satisfies Leibniz' Principle.
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+%%

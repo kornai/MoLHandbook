@@ -1,0 +1,743 @@
+\section{Binding and Quantification}
+\label{kap6-4a}
+%
+%
+%
+Quantification and binding are one of the most intricate phenomena
+of formal semantics. Examples of quantifiers we have seen already:
+the English phrases {\tt every} and {\tt some}, and $\forall$ and 
+$\exists$ of predicate logic. Examples of binding without quantification 
+can be found easily in mathematics. The integral
+%%
+\begin{equation}
+h(\vec{y}) := \int_0^1 f(x,\vec{y})dx
+\end{equation}
+%%
+is a case in point. The integration operator takes a function (which
+may have parameters) and returns its integral over the interval 
+$[0,1]$. What this has in common with quantification is that the 
+function $h(\vec{y})$ does not depend on $x$. Likewise, the limit 
+$\lim_{n \pf \infty} a_n$ of a convergent series 
+$a \colon \omega \pf \BR$, is independent of $n$.
+(The fact that these operations are not everywhere defined shall
+not concern us here.) So, as with quantifiers, integration and
+limits take entities that depend on a variable $x$ and return an
+entity that is independent of it. The easiest way to analyze this
+phenomenon is as follows. Given a function $f$ that depends on $x$,
+$\lambda x.f$ is a function which is independent of $x$. Moreover,
+everything that lies encoded in $f$ is also encoded in $\lambda
+x.f$. So, unlike quantification and integration,
+$\lambda$--abstraction does not give rise to a loss of
+information. This is ensured by the identity $(\lambda x.f)x = f$.
+Moreover, extensionality ensures that abstraction also does not
+add any information: the abstracted function is essentially
+nothing more than the graph of the function. $\lambda$--abstraction
+therefore is {\it the\/} mechanism of binding. Quantifiers,
+integrals, limits and so on just take the
+$\lambda$--abstract and return a value. This is exactly how we
+have introduced the quantifiers: $\exists x.\varphi$
+was just an abbreviation of {\tt \GSi(\tlambda$x$.$\varphi$)}. 
+Likewise, the integral can be decomposed into two steps: first, 
+abstraction of a variable and then the actual integration. Notice, 
+how the choice of variable matters:
+%%
+\begin{equation}
+y/3 = \int_0^1 x^2y dx \neq x/2 = \int_0^1 x^2y dy
+\end{equation}
+%%
+The notation $dx$ actually does the same as $\lambda x$: it shows
+us over which variable we integrate. We may define integration
+as follows. First, we define an operation $I \colon {\BR}^{\BR} \pf {\BR}$,
+which performs the integration over the interval $[0,1]$ of $f
+\in {\BR}^{\BR}$. Then we define
+%%
+\begin{equation}
+\int_0^1 f(x)dx := I(\lambda x.f)
+\end{equation}
+%%
+This definition decouples the definition of the actual integration
+from the binding process that is involved. In general, any operator
+$O\auf x_i : i < n\zu.M$ which binds the variables $x_i$, $i < n$,
+and returns a value, can be defined as
+%%
+\begin{equation}
+\label{eq:integral}
+O\auf x_i : i < n\zu.M := \wht{O}(\lambda x_0.\lambda x_1.\dotsb.%
+\lambda x_{n-1}.M)
+\end{equation}
+%%
+for a suitable $\wht{O}$. In fact, since $O\vec{x}.M$ does not
+depend on $\vec{x}$, we can use \eqref{eq:integral} to define $\wht{O}$.
+What this shows is that $\lambda$--calculus can be used as a
+general tool for binding. It also shows that we can to some
+extent get rid of explicit variables, something that is quite
+useful for semantics. The elimination of variables 
+removes a point of arbitrariness in the representation that
+makes meanings nonunique. In this section, we shall introduce
+two different algebraic calculi.  The first is the algebraic
+approach to predicate logic using so called {\it cylindric
+algebras}, the other an equational theory of $\lambda$--calculus,
+which embraces the (marginally popular) variable free approach
+to semantics for first order logic.
+
+\index{logic!first--order}%%
+\index{first--order logic}%%
+\index{FOL}%%
+We have already introduced the syntax and semantics of first--order
+predicate logic. Now we are going to present an axiomatization. To
+this end we expand the set of axioms for propositional logic by
+the axioms (a13) -- (a21) in Table~\ref{tab:predlog}. 
+%%
+\begin{table}
+\caption{The Axioms for Predicate Logic (FOL)}
+\label{tab:predlog}
+\mbox{\sc Axioms.} \\[2mm]
+$\begin{array}{ll}
+\multicolumn{2}{l}{\mbox{\rm (a0) --- (a12)} +} \\
+\mbox{\rm (a13)} & (\forall x)(\varphi\pf\chi)
+    \pf ((\forall x)\varphi \pf (\forall x)\chi) \\
+\mbox{\rm (a14)} & (\forall x)\varphi \pf [t/x]\varphi \\
+\mbox{\rm (a15)} & \varphi \pf (\forall x)\varphi \qquad 
+    (x\not\in \fr(\varphi)) \\
+\mbox{\rm (a16)} & (\forall x)\varphi \pf
+    \nicht (\exists x)\nicht \varphi \\
+\mbox{\rm (a17)} & \nicht (\exists x)\nicht \varphi
+    \pf (\forall x)\varphi \\
+\mbox{\rm (a18)} & (\forall x)(x \doteq x) \\
+\mbox{\rm (a19)} & (\forall x)(\forall y)(x \doteq y \pf y \doteq x) \\
+\mbox{\rm (a20)} & (\forall x)(\forall y)(\forall z)(x \doteq y 
+	\und y \doteq z \pf x \doteq z) \\
+\mbox{\rm (a21)} & (\forall x_0)\dotsb (\forall x_{\Xi(R)-1})(\forall 
+	y)((\gund_{i < \Xi(R)} x_i
+\doteq y_i) \\
+    & \qquad \pf  (R(x_0, \dotsc, x_{\Xi(R)-1})
+    \dpf [y/x_i]R(x_0, \dotsc, x_{\Xi(R)-1})))
+\end{array}$
+\\[2mm]
+\mbox{\sc Rules.}\\[2mm]
+\mbox{\rm (mp)}~~$\begin{array}{c}
+    \varphi \quad \varphi\pf\chi \\\hline
+    \chi
+    \end{array}
+    \qquad
+  \mbox{\rm (gen)}~~\begin{array}{c}
+    \varphi \\\hline
+    (\forall x)\varphi
+    \end{array}$
+\end{table}
+%%
+\index{$\mathsf{FOL}$, $\vdash^{\mathsf{FOL}}$}%%%
+%%%
+The calculus (a0) -- (a21) with the rules (mp) and (gen) is called 
+%%%
+\index{first--order logic}%%
+%%%%
+$\mathsf{FOL}$. A \textbf{first--order theory} is a set of formulae 
+containing (a0) -- (a21) and which is closed under (mp). 
+We write $\Delta \vdash^{\mathsf{FOL}} \varphi$ if every theory 
+containing $\Delta$ also contains $\varphi$.
+In virtue of (a16) and (a17) we get that 
+$(\forall x)\varphi \dpf \nicht(\exists x)\nicht\varphi$ as well as 
+$(\exists x)\varphi \dpf \nicht(\forall x)\nicht\varphi$ which means 
+that one of the quantifiers can be defined from the other. In (a21), 
+we assume $i < \Xi(R)$. 
+
+We shall prove its completeness using a more powerful result due to Leon 
+Henkin that simple type theory ($\mathsf{STyp}$) is complete with respect 
+to Henkin--frames. Notice that the status of (gen) is the same as that 
+of (mn) in modal logic. (gen) is admissible with respect to the model 
+theoretic consequence $\vDash$ defined in Section~\ref{kap3}.\ref{kap3-6}, 
+but it is
+not derivable in it. To see the first, suppose that $\varphi$ is a
+theorem and let $x$ be a variable. Then $(\forall x)\varphi$ is a
+theorem, too. However, $\varphi \vDash (\forall x)\varphi$ does
+not follow. Simply take a unary predicate letter $P$ and a
+structure consisting of two elements, 0, 1, such that $P$ is true
+of 0 but not of 1. Then with $\beta(x) := 0$ we have $\auf \GM,
+\beta\zu \vDash P(x)$ but $\auf \GM, \beta\zu \nvDash (\forall
+x)P(x)$. Now let $\uli{P}$ be the set of all formulae that can be
+obtained from (a0) -- (a21) by applying (gen). Then the following
+holds.
+%%
+\begin{thm}
+\label{thm:genelim}
+$\vdash^{\mathsf{FOL}} \varphi$ iff $\varphi$ is derivable from 
+$\uli{P}$ using only (mp).
+\end{thm}
+%%
+\proofbeg
+Let $\Pi$ be a proof of $\chi$ from $\uli{P}$ using only (mp). 
+Transform the proof in the following way. First, prefix every 
+occurring formula by $(\forall x)$. Further, for every $k$ such 
+that $\varphi_k$ follows from $\varphi_i$ 
+and $\varphi_i \pf \varphi_j$ for some $i,j < k$, insert in front of 
+the formula $(\forall x)\varphi_j$ the sequence
+%%%
+\begin{equation}
+(\forall x)(\varphi_i \pf \varphi_j) \pf ((\forall x)\varphi_i \pf 
+	(\forall x)\varphi_j), 
+(\forall x)\varphi_i \pf (\forall x)\varphi_j 
+\end{equation}
+%%%
+The new proof is a proof of $(\forall x)\chi$ from $\uli{P}$, 
+since the latter is closed under (gen). Hence, the set of formulae 
+derivable from $\uli{P}$ using (mp) is closed under (gen). Therefore 
+it contains all tautologies of $\mathsf{FOL}$.
+\proofend
+
+The next theorem asserts
+that this axiomatization is complete.
+%%%
+\begin{defn}
+Let $\Delta$ be a set of formulae of predicate logic over a
+signature, $\varphi$ a formula over that same signature. Then
+$\Delta \vdash \varphi$ iff $\varphi$ can be proved from 
+$\Delta \cup \uli{P}$ using only (mp).
+\end{defn}
+%%%
+\begin{thm}[G\"odel]
+%%%
+\index{G\"odel, Kurt}%%%
+%%%
+\label{thm:ent}
+$\Delta \vdash^{\mathsf{FOL}} \varphi$ iff $\Delta \vDash \varphi$.
+\end{thm}
+%%%
+Recall from Section~\ref{kap3}.\ref{kap3-6} the definition of the simple
+theory of types. 
+%%%
+\index{simple type theory (STT)}%%%
+%%%
+There we have also defined the class of models,
+the so called {\it Henkin--frames}. Recall further that this
+theory has operators $\Pi^{\alpha}$, which allow to define the
+universal quantifiers in the following way.
+%%
+\begin{equation}
+(\forall x_{\alpha})N_t := (\Pi^{\alpha} (\lambda
+x_{\alpha}.N_t))
+\end{equation}
+%%
+The simple theory of types is axiomatized as follows. We define a
+calculus exclusively on the terms of type $t$ (truth values).
+However, it will also be possible to express that two terms are
+equal. This is done as follows. Two terms $M_{\alpha}$ and
+$N_{\alpha}$ of type $\alpha$ are equal if for every term
+$O_{\alpha\pf t}$ the terms $O_{\alpha\pf t}M_{\alpha}$ and
+$O_{\alpha\pf t}N_{\alpha}$ are equivalent.
+%%
+\newcommand{\neweq}{\triangleq}
+%%
+\begin{equation}
+M_{\alpha} \neweq N_{\alpha}  :=
+    (\forall z_{\alpha\pf t})(z_{\alpha\pf t}M_{\alpha}
+    \dpf z_{\alpha\pf t}N_{\alpha})
+\end{equation}
+%%
+For this definition we assume that $z_{\alpha\pf t}$ is free
+neither in $M_{\alpha}$ nor in $N_{\alpha}$. If one dislikes 
+the side conditions, one can prevent the accidental capture of 
+$z_{\alpha\pf t}$ using the following more refined version:
+%%
+\begin{equation}
+%%%
+\index{$M_{\alpha} \neweq N_{\alpha}$}%%%
+%%%
+M_{\alpha} \neweq N_{\alpha}  :=
+    (\lambda x_{\alpha}.\lambda y_{\alpha}.(\forall %
+    z_{\alpha\pf t})(z_{\alpha\pf t}x_{\alpha} \dpf %
+    z_{\alpha\pf t}y_{\alpha}))M_{\alpha}N_{\alpha}
+\end{equation}
+%%
+However, if $z_{\alpha\pf t}$ is properly chosen, no problem will
+ever arise. Now, let (s0) -- (s12) be the formulae (a0) -- (a12)
+appropriately translated into the language of types.
+%%
+\begin{table}
+\caption{The Simple Theory of Types}
+\index{$\mathsf{STyp}$}%%%
+\label{tab:styp}
+\mbox{\sc Axioms.} \\[2mm]
+\begin{tabular}{ll}
+\multicolumn{2}{l}{(s0) --- (s12) +} \\
+(s13) & $((\forall x_{\alpha})(y_t \pf M_{\alpha\pf t}x_{\alpha}))
+    \pf (y_t \pf \Pi^{\alpha}M_{\alpha\pf t})$ \\
+(s14) & $(\Pi^{\alpha} x_{\alpha \pf t}) \pf x_{\alpha\pf t}y_{\alpha}$ \\
+(s15) & $(x_{t} \dpf y_{t}) \pf x_t \neweq y_t$ \\
+(s16) & $((\forall z_{\alpha})(x_{\alpha\pf\beta}z_{\alpha}
+    \neweq y_{\alpha\pf\beta}z_{\alpha})) \pf
+    (x_{\alpha\pf\beta} \neweq y_{\alpha\pf\beta})$ \\
+(s17) & $x_{\alpha\pf t}y_{\alpha} \pf x_{\alpha\pf t}
+    (\iota^{\alpha}x_{\alpha \pf t})$
+\end{tabular}
+\\[2mm]
+\mbox{\sc Rules.} \\
+$\begin{array}{l@{\;}l@{\qquad}l@{\;}l}
+\mbox{\rm (mp)} & \begin{array}{c}
+              M_t \pf N_t \quad M_t \\\hline
+          N_t
+          \end{array}
+        &
+\mbox{\rm (ug)} & \begin{array}{c}
+           M_{\alpha \pf t}x_{\alpha} \\\hline
+           \Pi^{\alpha}M_{\alpha}
+           \end{array}
+           \quad x_{\alpha} \not\in \fr(M_{\alpha\pf t})
+         \\
+\mbox{\rm (conv)} & \begin{array}{c}
+           M_t \quad M_t \equiv_{\alpha\beta} N_t \\\hline
+           N_t
+           \end{array}
+          &
+\mbox{\rm (sub)} & \begin{array}{c}
+           M_{\alpha \pf t}x_{\alpha} \\\hline
+           M_{\alpha\pf t}N_{\alpha}
+           \end{array}
+           \quad
+           x_{\alpha} \not\in \fr(M_{\alpha\pf t})
+\end{array}$
+%%
+\end{table}
+%%
+We call the Hilbert--style calculus consisting of (s0) -- (s17) and 
+the rules given in Table~\ref{tab:styp} $\mathsf{STyp}$. 
+%%%
+\index{$\mathsf{STyp}$}%%%
+%%%%
+All instances of theorems of $\mathsf{PC}$ 
+are theorems of $\mathsf{STyp}$. For predicate logic this will also
+be true, but the proof of that requires work. The rule (gen) is a 
+derived rule of this calculus. To see this, assume that $M_{\alpha \pf
+t}z_{\alpha}$ is a theorem. Then, by (conv), $(\lambda
+z_{\alpha}.M_{\alpha\pf t}z_{\alpha})z_{\alpha}$ also is a
+theorem. Using (ug) we get $\Pi^{\alpha}(\lambda
+z_{\alpha}.M_{\alpha\pf t}z_{\alpha})$, which by abbreviatory
+convention is $(\forall z_{\alpha})M_{\alpha\pf t}$. We will also
+show that (a14) and (a15) are theorems of $\mathsf{STyp}$.
+%%
+\begin{lem}
+\label{lem:a14}%%
+$\mathsf{STyp} \vdash (\forall x_{\alpha})y_t \pf
+[N_{\alpha}/x_{\alpha}]y_t$.
+\end{lem}
+%%%
+\proofbeg %
+By convention, $(\forall x_{\alpha})y_t = \Pi^{\alpha}(\lambda
+x_{\alpha}.y_t)$. Moreover, by (s14), $\mathsf{STyp} \vdash ((\forall
+x_{\alpha})y_t) \pf (\lambda x_{\alpha}.y_t)x_{\alpha} = 
+((\forall x_{\alpha})y_t) \pf y_t$. 
+Using (sub) we get
+%%
+\begin{equation}
+\vdash^{\mathsf{STyp}}
+[N_{\alpha}/x_{\alpha}]((\forall x_{\alpha})y_t \pf y_t) =
+(\forall x_{\alpha})y_t \pf [N_{\alpha}/x_{\alpha}]y_t
+\end{equation}
+%%
+as required. \proofend
+%%%
+\begin{lem}
+Assume that $x_{\alpha}$ is not free in $N_t$. Then 
+%%
+\begin{equation}
+\mathsf{STyp} \vdash N_t \pf (\forall x_{\alpha})N_t\
+\end{equation}
+\end{lem}
+%%
+\proofbeg %
+With $N_t \pf N_t \equiv_{\alpha\beta} N_t \pf (\lambda
+x_{\alpha}.N_t)x_{\alpha}$ and the fact that $(\forall
+x_{\alpha})(N_t \pf N_t)$ is derivable (using (gen)), we get with
+(conv) $(\forall x_{\alpha})(N_t \pf ((\lambda%
+x_{\alpha}.N_t)x_{\alpha}))$ and with (s13) and (mp) we get 
+%%%
+\begin{equation}
+\vdash^{\mathsf{STyp}} N_t \pf \Pi^{\alpha}(\lambda x_{\alpha}.N_t) = 
+N_t \pf (\forall x_{\alpha})N_t
+\end{equation}
+%%%
+(The fact that $x_{\alpha}$ is 
+not free in $N_t$ is required when using (s13). In order for the 
+replacement of $N_t$ for $y_t$ in the scope of $(\forall x_{\alpha})$ 
+to yield exactly $N_t$ again, we need that $x_{\alpha}$ is not free 
+in $N_t$.) %%
+\proofend
+%%%
+\begin{lem}
+\label{lem:lambdaeta} 
+If $\mbox{\sf\textgreek{lh}} \vdash
+M_{\alpha} \boldsymbol{\doteq} N_{\alpha}$ then $\mathsf{STyp}\vdash
+M_{\alpha} \neweq N_{\alpha}$.
+\end{lem}
+%%
+\proofbeg 
+{\sf\textgreek{lh}} = {\sf\textgreek{l}} + (ext), and
+(ext) is the axiom (s16). Hence it remains to show that 
+$\mbox{\sf\textgreek{l}} \vdash M_{\alpha} \boldsymbol{\doteq} 
+N_{\alpha}$ implies $\vdash^{\mathsf{STyp}} M_{\alpha} 
+\neweq N_{\alpha}$. So, assume the first. Then we have $M_{\alpha}
+\equiv_{\alpha\beta} N_{\alpha}$. Hence
+%%%
+\begin{equation}
+z_{\alpha\pf t}M_{\alpha} \pf z_{\alpha\pf t}M_{\alpha}
+\equiv_{\alpha\beta} z_{\alpha\pf t}M_{\alpha} \pf z_{\alpha\pf
+t}N_{\alpha}
+\end{equation}
+%%%
+Hence, using (conv), and $\vdash^{\mathsf{STyp}} 
+z_{\alpha \pf t}M_{\alpha} \pf z_{\alpha\pf t}M_{\alpha}$
+we get 
+%%
+\begin{equation}
+\vdash^{\mathsf{STyp}} z_{\alpha\pf t}M_{\alpha}
+\pf z_{\alpha\pf t}N_{\alpha}
+\end{equation}
+%%
+By symmetry, $\vdash^{\mathsf{STyp}} z_{\alpha\pf t}M_{\alpha}
+\dpf z_{\alpha\pf t}N_{\alpha}$.
+%%
+Using (gen)  we get
+%%%
+\begin{equation}
+\vdash^{\mathsf{STyp}} (\forall z_{\alpha \pf t})%
+(z_{\alpha\pf t}M_{\alpha} \dpf z_{\alpha\pf t}N_{\alpha})
+\end{equation}
+%%%
+By abbreviatory convention, $\vdash^{\mathsf{STyp}} 
+M_{\alpha} \neweq N_{\alpha}$. 
+\proofend
+
+We shall now show that $\mathsf{STyp}$ is complete with respect to
+Henkin--frames where $\neweq$ simply is interpreted as identity.
+To do that, we first prove that $\neweq$ is a congruence relation.
+%%%
+\begin{lem}
+\label{lem:neweq}%%
+The following formulae are provable in $\mathsf{STyp}$.
+%%
+\begin{subequations}
+\begin{align}
+\label{eq:eq1}
+& x_{\alpha} \neweq x_{\alpha} \\
+\label{eq:eq2}
+& x_{\alpha} \neweq y_{\alpha} \pf
+    y_{\alpha} \neweq x_{\alpha} \\
+\label{eq:eq3}
+& x_{\alpha} \neweq y_{\alpha} \und y_{\alpha}
+\neweq z_{\alpha}
+    \pf x_{\alpha} \neweq z_{\alpha} \\
+\label{eq:eq4}
+& x_{\alpha\pf\beta} \neweq x'_{\alpha\pf\beta}
+\und
+    y_{\alpha} \neweq y'_{\alpha} .\pf.
+    x_{\alpha\pf\beta}y_{\alpha} \neweq
+    x'_{\alpha\pf\beta}y'_{\alpha}
+\end{align}
+\end{subequations}
+\end{lem}
+%%
+\proofbeg%%
+\eqref{eq:eq1} Let $z_{\alpha\pf t}$ be a variable of type $\alpha\pf t$.
+Then $z_{\alpha\pf t}x_{\alpha} \dpf z_{\alpha\pf t}x_{\alpha}$ is
+provable in $\mathsf{STyp}$ (as $p \dpf p$ is in $\mathsf{PC}$). Hence, 
+$(\forall z_{\alpha\pf t})(z_{\alpha\pf t}x_{\alpha} \dpf z_{\alpha\pf
+t}x_{\alpha})$ is provable, which is $x_{\alpha} \neweq x_{\alpha}$. 
+\eqref{eq:eq2} and \eqref{eq:eq3} are shown using 
+predicate logic. \eqref{eq:eq4} Assume $x_{\alpha\pf\beta} \neweq
+x'_{\alpha\pf\beta}$  and $y_{\alpha} \neweq y'_{\alpha}$. 
+Now,
+%%%%
+\begin{equation}
+z_{\beta\pf t}(x_{\alpha\pf\beta}y_{\alpha}) \equiv_{\alpha\beta}
+(\lambda u_{\alpha}.z_{\beta\pf t}(x_{\alpha\pf\beta}u_{\alpha}))
+(y_{\alpha})
+\end{equation}
+%%%
+Put $M_{\alpha\pf t} := (\lambda u_{\alpha}.z_{\beta\pf t}(%
+x_{\alpha\pf\beta}u_{\alpha}))$. Using the rule (conv), we get
+%%
+\begin{equation}
+\begin{split}
+y_{\alpha} \neweq y'_{\alpha} & \vdash^{\mathsf{STyp}} M_{\alpha}y_{\alpha} \dpf
+    M_{\alpha}y'_{\alpha} \\
+    & \vdash^{\mathsf{STyp}} z_{\beta\pf t}(x_{\alpha\pf\beta}y_{\alpha}) \dpf
+    z_{\beta\pf t}(x_{\alpha\pf\beta}y'_{\alpha})
+\end{split}
+\end{equation}
+%%
+Likewise, one can show that
+%%
+\begin{equation}
+y_{\alpha} \neweq y'_{\alpha} \vdash^{\mathsf{STyp}}
+    z_{\beta\pf t}(x'_{\alpha\pf\beta}y_{\alpha}) \dpf
+    z_{\beta\pf t}(x'_{\alpha\pf\beta}y'_{\alpha})
+\end{equation}
+%%
+Similarly, using $N_{(\alpha\pf\beta) \pf t} := (\lambda
+u_{\alpha\pf\beta}.z_{\beta\pf t}(u_{\alpha\pf \beta}
+    y_{\alpha}))$ one shows that
+%%
+\begin{equation}
+x_{\alpha\pf\beta} \neweq x'_{\alpha\pf\beta} \vdash^{\mathsf{STyp}}
+    z_{\beta\pf t}(x_{\alpha\pf\beta}y_{\alpha}) \dpf
+    z_{\beta\pf t}(x'_{\alpha\pf\beta}y_{\alpha}) 
+\end{equation}
+%%
+This allows to derive the desired conclusion. %%
+\proofend
+
+Now we get to the construction of the frame. Let $C_{\alpha}$ be
+the set of closed formulae of type $\alpha$. Choose a maximally
+consistent $\Delta \supseteq C_t$. Then, for each type
+$\alpha$, define $\approx^{\alpha}_{\Delta}$ by $M_{\alpha}
+\approx^{\alpha}_{\Delta} N_{\alpha}$ iff $M_{\alpha}
+\neweq N_{\alpha} \in \Delta$. By Lemma~\ref{lem:neweq} this
+is an equivalence relation for each $\alpha$, and, moreover, if
+$M_{\alpha\pf\beta} \approx^{\alpha\pf\beta}_{\Delta}
+M'_{\alpha\pf\beta}$ and $N_{\alpha} \approx^{\alpha}_{\Delta}
+N'_{\alpha}$, then also $M_{\alpha\pf\beta}N_{\alpha}
+\approx^{\beta}_{\Delta} M'_{\alpha\pf\beta}N'_{\alpha}$. For
+$M_{\alpha} \in C_{\alpha}$ put
+%%
+\begin{equation}
+[M_{\alpha}] := \{N_{\alpha} : M_{\alpha} \approx^{\alpha}_{\Delta}
+N_{\alpha}\}
+\end{equation}
+%%
+Finally, put $D_{\alpha} := \{[M_{\alpha}] : M_{\alpha} \in
+C_{\alpha}\}$. Next, $\bullet$ is defined as usual, $- :=
+[\mbox{\mtt\symbol{5}}]$, $\cap := [\mbox{\mtt\symbol{4}}]$, 
+$\pi^{\alpha} := [\GPi^{\alpha}]$ and 
+$\iota^{\alpha} := [\Giota^{\alpha}]$. This 
+defines a structure (where $\CS := \Typ_{\pf}(B)$).
+%%
+\begin{equation}
+\goth{Hfr}_{\Delta} := \auf \{D_{\alpha}:
+\alpha \in \CS\}, \bullet, -, \cap, \auf
+\pi^{\alpha} : \alpha \in \CS\}\zu, \auf
+\iota^{\alpha} : \alpha \in \CS\}\zu\zu
+\end{equation}
+%%
+\begin{lem}[Witnessing Lemma]
+\begin{equation*}
+\mathsf{STyp} \vdash^{\mathsf{STyp}} M_{\alpha\pf t}(\iota^{\alpha}(\lambda
+x_{\alpha}.\nicht M_{\alpha})) \pf \Pi^{\alpha}M_{\alpha}
+\end{equation*}
+\end{lem}
+%%%
+\proofbeg
+Write $\nicht N_{\alpha\pf t} := \lambda x_{\alpha}.\nicht %
+(N_{\alpha\pf t}x_{\alpha})$. Now, by (s17)
+%%
+\begin{equation}
+\vdash^{\mathsf{STyp}} (\nicht N_{\alpha\pf
+t})y_{\alpha} \pf (\nicht N_{\alpha\pf t})(\iota^{\alpha}(\nicht %
+N_{\alpha \pf t}))
+\end{equation}
+%%
+Using classical logic we obtain
+%%
+\begin{equation}
+\vdash^{\mathsf{STyp}} \nicht ((\nicht N_{\alpha\pf t})(\iota^{\alpha} %
+(\nicht N_{\alpha\pf t}))) \pf \nicht ((\nicht N_{\alpha\pf
+t})y_{\alpha})
+\end{equation}
+%%
+Now, $\nicht ((\nicht N_{\alpha\pf t})y_t) \triangleright_{\beta}
+\nicht \nicht (N_{\alpha\pf t}y_{\alpha})$, the latter being
+equivalent to $N_{\alpha\pf t}y_{\alpha}$. Similarly,
+$\nicht ((\nicht N_{\alpha\pf t})(\iota^{\alpha}(\nicht N_{\alpha\pf t})))$
+is equivalent with $N_{\alpha\pf t}(\iota^{\alpha}(\nicht
+N_{\alpha\pf t}))$. Hence
+%%
+\begin{equation}
+\vdash^{\mathsf{STyp}} N_{\alpha\pf t}(\iota^{\alpha}(\nicht
+N_{\alpha\pf t})) \pf N_{\alpha\pf t}y_{\alpha} 
+\end{equation}
+%%
+Using (gen), (s13) and (mp) we get
+%%
+\begin{equation}
+\vdash^{\mathsf{STyp}} (N_{\alpha\pf t}(\iota^{\alpha}(\nicht
+N_{\alpha\pf t}))) \pf \Pi^{\alpha}N_{\alpha\pf t}
+\end{equation}
+%%
+This we had to show.
+\proofend
+%%
+\begin{lem}
+$\goth{Hrf}_{\Delta}$ is a Henkin--frame.
+\end{lem}
+%%%
+\proofbeg%%
+By Lemma~\ref{lem:lambdaeta}, if $\mbox{\sf\textgreek{lh}} \vdash
+M_{\alpha} \neweq N_{\alpha}$, then $[M_{\alpha}] = [N_{\alpha}]$.
+So, the axioms of the theory {\sf\textgreek{lh}} are valid, and
+$\auf \{D_{\alpha} : \alpha \in S\}, \bullet\zu$ is a functionally
+complete (typed) applicative structure. Since $\Delta$ is
+maximally consistent, $D_t$ consists of two elements, which we now
+call $0$ and $1$. Furthermore, we may arrange it that $[M_t] = 1$
+iff $M_t \in \Delta$. It is then easily checked that
+the interpretation of {\mtt\symbol{5}} is complement, and the 
+interpretation of {\mtt\symbol{4}} is intersection. Now we treat 
+$\pi^{\alpha} := [\GPi^{\alpha}]$. We have to
+show that for $a \in D_{\alpha\pf t}$
+$\pi^{\alpha} \bullet a = 1$ iff
+for every $b \in D_{\alpha}$: $a \bullet b = 1$. Or,
+alternatively, $\Pi^{\alpha}M_{\alpha\pf t} \in \Delta$ iff 
+$M_{\alpha\pf t}N_{\alpha} \in \Delta$ for every closed
+term $N_{\alpha}$. Suppose that $\Pi^{\alpha}M_{\alpha\pf t} \in
+\Delta$. Using Lemma~\ref{lem:a14} and the fact that $\Delta$ is
+deductively closed, $M_{\alpha\pf t}N_{\alpha} \in \Delta$.
+Conversely, assume $M_{\alpha\pf t}N_{\alpha} \in \Delta$ for
+every constant term $N_{\alpha}$. Then
+$M_{\alpha}(\iota^{\alpha}(\lambda x_{\alpha}.\nicht M_{\alpha\pf
+t}x_{\alpha}))$ is a constant term, and it is in $\Delta$.
+Moreover, by the Witnessing Lemma, $\Pi^{\alpha}M_{\alpha\pf t}
+\in \Delta$. Finally, we have to show that for every $a \in
+D_{\alpha\pf t}$: if there is a $b \in D_{\alpha}$ such that $a
+\bullet b = 1$ then $a \bullet (\iota^{\alpha} \bullet a) = 1$. 
+This means that for $M_{\alpha\pf t}$: if there
+is a constant term $N_{\alpha}$ such that $M_{\alpha\pf
+t}N_{\alpha} \in \Delta$ then $M_{\alpha\pf
+t}(\iota^{\alpha}M_{\alpha\pf t}) \in \Delta$.
+This is a consequence of (s17). %%
+\newline\mbox{}
+\proofend
+
+Now, it follows that $\goth{Hfr}_{\Delta} \vDash N_t$ iff
+$N_t \in \Delta$. More generally, let $\beta$ an assignment of
+constant terms to variables. Let $M_{\alpha}$ be a term. Write
+$M^{\beta}_{\alpha}$ for the result of replacing a free occurrence
+of a variable $x_{\gamma}$ by $\beta(x_{\gamma})$. Then
+%%%
+\begin{equation}
+\auf \goth{Hfr}_{\Delta}, \beta\zu \vDash M_{\alpha}
+\quad\Dpf\quad M^{\beta}_{\alpha} \in \Delta
+\end{equation}
+%%
+This is shown by induction.
+%%
+\begin{lem}
+\label{lem:wohl}
+Let $\Delta_0$ be a consistent set of constant terms. Then there
+exists a maximally consistent set $\Delta$ of constant terms
+containing $\Delta_0$.
+\end{lem}
+%%%
+\proofbeg%%
+Choose a well--ordering $\{N^{\delta} : \delta < \mu\}$ on the set
+of constant terms. Define $\Delta_i$ by induction as follows.
+$\Delta_{\kappa+1} := \Delta_{\kappa} \cup \{N^{\delta}\}$ if the
+latter is consistent. Otherwise, $\Delta_{\kappa+1} :=
+\Delta_{\kappa}$. If $\kappa < \mu$ is a limit ordinal,
+$\Delta_{\kappa} := \bigcup_{\lambda < \kappa} \Delta_{\lambda}$.
+We shall show that $\Delta := \Delta_{\mu}$ is maximally
+consistent. Since it contains $\Delta_0$, this will complete the
+proof. (a) It is consistent. This is shown inductively. By
+assumption $\Delta_0$ is consistent, and if $\Delta_{\kappa}$ is
+consistent, then so is $\Delta_{\kappa+1}$. Finally, let $\lambda$
+be a limit ordinal and suppose that $\Delta_{\lambda}$ is
+inconsistent. Then there is a finite subset $\Gamma$ which is
+inconsistent. There exists an ordinal $\kappa < \lambda$ such that
+$\Gamma \subseteq \Delta_{\kappa}$. $\Delta_{\kappa}$ is
+consistent, contradiction. (b) There is no consistent superset.
+Assume that there is a term $M \not\in \Delta$ such that $\Delta
+\cup \{M\}$ is consistent. Then for some $\delta$, $M =
+N^{\delta}$. Then $\Delta_{\delta} \cup \{N^{\delta}\}$ is
+consistent, whence by definition
+$N^{\delta} \in \Delta_{\delta+1}$. Contradiction. %%
+\proofend
+%%%
+\begin{thm}[Henkin]
+%%%
+\index{Henkin, Leon}%%
+%%%
+(a) A term $N_t$ is a theorem of $\mathsf{STyp}$ iff it is
+valid in all Henkin--frames. (b) An equation $M_{\alpha} \neweq
+N_{\alpha}$ is a theorem of $\mathsf{STyp}$ iff it holds in
+all Henkin--frames iff it is valid in the many sorted 
+sense.
+\end{thm}
+%%%
+We sketch how to prove Theorem~\ref{thm:ent}. Let $\auf \Omega, \Xi\zu$ 
+be a signature for predicate logic. Define a translation into 
+$\mathsf{STyp}$:
+%%%
+\begin{subequations}
+\begin{align}
+\label{eq:fdef}
+f^{\heartsuit} & := (\lambda x_0)(\lambda x_1)\dotso
+	(\lambda x_{\Omega(f)-1})f(x_0, \dotsc, x_{\Omega(f)-1}) \\
+\label{eq:rdef}
+r^{\heartsuit} & := (\lambda x_0)(\lambda x_1)\dotso
+	(\lambda x_{\Xi(r)-1})r(x_0, \dotsc, x_{\Xi(r)-1}) 
+\end{align}
+\end{subequations}
+%%%
+This is extended to all formulae. Now we look at the signature for 
+$\mathsf{STyp}$ with the constants $f^{\heartsuit}$, $r^{\heartsuit}$ 
+of type 
+%%
+\begin{subequations}
+\begin{align}
+f^{\heartsuit} : & \ (e \pf (e \pf \dotso (e \pf e) \dotso )) \\
+r^{\heartsuit} : & \ (e \pf (e \pf \dotso (e \pf t) \dotso )) 
+\end{align}
+\end{subequations}
+%%
+Now, given a first--order model $\GM$, we can construct a Henkin--frame 
+for $\GM^{\heartsuit}$ with $D_e = M$ and $D_{\alpha\pf\beta} 
+:= D_{\alpha} \pf D_{\beta}$, by interpreting $f^{\heartsuit}$ 
+and $r^{\heartsuit}$ as given by \eqref{eq:fdef} and \eqref{eq:rdef}.
+%%
+\begin{lem}
+\label{lem:predtostyp}
+Let $\beta$ be a valuation on $\GM$. Extend $\beta$ to 
+$\beta^{\heartsuit}$. Then
+%%%
+\begin{equation}
+\auf \GM, \beta\zu \vDash \varphi \quad\Dpf\quad
+\auf \GM^{\heartsuit}, \beta\zu \vDash \varphi^{\heartsuit}
+\end{equation}
+\end{lem}
+%%
+\begin{lem}
+\label{lem:pred}
+$\vdash^{\mathsf{STyp}} \varphi^{\heartsuit}$ iff 
+$\vdash^{\mathsf{FOL}} \varphi$.
+\end{lem}
+%%%
+Right to left is by induction. Now if $\nvdash^{\mathsf{FOL}}
+\varphi$ then there is a model $\auf \GM, \beta\zu \vDash 
+\nicht \varphi$, from which we get a Henkin--frame 
+$\auf \GM^{\heartsuit}, \beta\zu \nvDash \nicht \varphi^{\heartsuit}$.
+The proof of Theorem~\ref{thm:ent} is as follows. Clearly, if
+$\varphi$ is derivable it is valid. Suppose that it is not 
+derivable. Then $\varphi^{\heartsuit}$ is not derivable   
+in $\mathsf{STyp}$. There is a Henkin--frame $\GM \nvDash 
+\varphi^{\heartsuit}$. This allows to define a first--order model 
+$\GM_{\heartsuit} \nvDash \varphi$.
+%%
+\vplatz
+\exercise
+The set of typed $\lambda$--terms is defined over a finite alphabet 
+if the set $B$ of basic types is finite. Define from this a 
+well--ordering on the set of terms. {\it Remark.} This shows 
+that the proof of Lemma~\ref{lem:wohl} does not require the 
+use of the Axiom of Choice for obtaining the well--ordering.
+%%%
+\vplatz
+\exercise
+Show Lemma~\ref{lem:predtostyp}.
+%%%
+\vplatz
+\exercise
+Complete the details of the proof of Theorem~\ref{thm:ent}. 
+%%%
+\vplatz
+\exercise
+Let $L$ be a normal modal logic. Show that $\Delta \Vdash_L \chi$ 
+iff $\Delta^b \vdash_L \chi$, where $\Delta^b := \{\qu^n \delta : 
+\delta \in \Delta, n \in \omega\}$. {\it Hint.} This is analogous 
+to Theorem~\ref{thm:genelim}.

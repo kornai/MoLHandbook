@@ -1,0 +1,1167 @@
+\section{Intensionality}
+\label{kap6-3}
+%
+%
+%
+Leibniz' Principle 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+has given rise to a number of problems in
+formal semantics. One such problem is its alleged failure
+with respect to intensional contexts. This is what we shall
+discuss now. The following context does not admit any substitution
+of $A$ by a $B$ different from $A$ without changing the truth value
+of the entire sentence.
+%%
+\begin{equation}
+\label{eq:431} 
+\mbox{\tt The expression `$A$' is the same expression as `$B$'.} 
+\end{equation}
+%%
+Obviously, if such sentences were used to decide about synonymy, no
+expression is synonymous with any other. However, the feeling with
+these types of sentences is that the expressions do not enter with
+their proper meaning here; one says, the expressions $A$ and $B$ are
+%%%%
+\index{use}\index{mention}%%
+%%%
+not \textbf{used} in \eqref{eq:431} they are only \textbf{mentioned}.
+This need not cause problems for our sign based approach. We might
+for example say that the occurrences of $A$ where $A$ is used
+are occurrences with a different category than those where $A$ is
+mentioned. If we do not assume this we must exclude those sentences
+in which the occurrences of $A$ or $B$ are only mentioned, not
+used. However, in that case we need a criterion for deciding when
+an expression is used and when it is mentioned. The picture is as
+follows. Let $S(x)$ be shorthand for a sentence $S$ missing a
+constituent $x$. We call them \textbf{contexts}.
+%%%
+\index{context}%%
+%%%
+Leibniz' Principle says that $A$ and $B$ have identical
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+%%%
+\index{$A \equiv B$}%%
+%%%
+meaning, in symbols $A \equiv B$, iff $S(A) \dpf
+S(B)$ is true for all $S(x)$. Now, let $\Sigma$ be the set of all
+contexts, and $\Pi$ the set of all contexts where the missing
+expression is used, not mentioned. Then we end up with two kinds
+of identity:
+%%
+\begin{align}
+A \equiv_{\Sigma} B & :\Dpf (\forall S(x) \in \Sigma)(S(A) \dpf S(B)) \\
+A \equiv_{\Pi} B & :\Dpf (\forall S(x) \in \Pi)(S(A) \dpf S(B))
+\end{align}
+%%
+Obviously, $\equiv_{\Sigma}\; \subseteq\; \equiv_{\Pi}$.
+Generalizing this, we get a Galois correspondence here between
+certain sets of contexts and equivalence relations on expressions.
+%%%%
+\index{context!hyperintensional}%%
+%%%%
+Contexts outside of $\Pi$ are called \textbf{hyperintensional}. In
+our view, \eqref{eq:431} does not contain occurrences of the
+language signs for $A$ and $B$ but only occurrences of strings.
+Strings denote themselves. So, what we have inserted are not the
+same signs as the signs of the language, and this means that
+Leibniz' Principle is without force in example \eqref{eq:431}
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+with respect to the signs. However, if put into the context {\tt
+the meaning of `}$\uli{\mbox{\quad}}${\tt '}, we get the actual
+meaning of $A$ that the language gives to it. Thus, the following
+is once again transparent for the meanings of $A$ and $B$:
+%%
+\begin{align}
+\label{eq:432} 
+    & \mbox{\tt The expression `$A$' has the same meaning as the} 
+\\\notag
+    & \quad \mbox{\tt expression `$B$'.} 
+\end{align}
+%%
+A hyperintensional context is
+%%
+\begin{align}
+\label{eq:433} & \mbox{\tt John thinks that palimpsests are leaflets.} 
+\end{align}
+%%
+What John thinks here is that the expression {\tt palimpsest}
+denotes a special kind of leaflet, where in fact it denotes a
+kind of manuscript. Although this is a less direct case of mentioning
+an expression, it still is the case that the sign with exponent
+{\tt palimpsest} is not an occurrence of the genuine English
+language sign, because it is used with a different meaning.
+The meaning of that sign is once again the exponent (string)
+itself.
+
+There are other problematic instances of Leibniz' Principle, for
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+example the so--called {\it intensional\/} contexts. Consider the
+following sentences.
+%%
+\begin{align}
+\label{eq:434} & \mbox{\tt The morning star is the evening star.} \\
+\label{eq:435} & \mbox{\tt John believes that the morning star is the}
+	 \\\notag
+    & \quad \mbox{\tt morning star.} \\
+\label{eq:436}  & \mbox{\tt John believes that the morning star is the} 
+	\\\notag
+    & \quad \mbox{\tt evening star.} \\
+\label{eq:437}  & \mbox{\tt The square root of 2 is less than 3/2.} \\
+\label{eq:438}  & \mbox{\tt John believes that the square root of
+    2 is} \\\notag
+        & \quad \mbox{\tt less than 3/2.}
+\end{align}
+%%
+It is known that \eqref{eq:434} is true. However, it is quite
+conceivable that \eqref{eq:435} may be true and \eqref{eq:436}
+false. By Leibniz' Principle, we must assume that {\tt the morning
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+star} and {\tt the evening star} have different meaning. However,
+as Frege points out, in {\it this\/} world they refer to the same
+thing (the planet Venus), so they are not different. Frege therefore
+%%%
+\index{sense}\index{reference}%%
+%%%
+distinguishes \textbf{reference} ({\it Bedeutung\/}) from \textbf{sense}
+({\it Sinn\/}). In \eqref{eq:434} the expressions enter with
+their reference, and this is why the sentence is true. In
+\eqref{eq:435} and \eqref{eq:436}, however, they do not enter with 
+their reference,
+otherwise John holds an inconsistent belief. Rather, they enter
+with their senses, and the senses are different. Thus, we have
+seen that expressions that are used (not mentioned) in a sentence
+may either enter with their reference or with their sense. The
+question is however the same as before: how do we know when an
+expression enters with its sense rather than its reference?
+The general feeling is that one need not be worried by that
+question. Once the sense of an expression is given, we know what
+its reference is. We may think of the sense as an algorithm that
+gives us the reference on need. (This analogy has actually been
+pushed by Yannis Moschovakis, who thinks that sense actually
+{\it is\/} an algorithm (see \cite{moschovakis:sense}). However,
+this requires great care in defining the notion of an algorithm,
+otherwise it is too fine grained to be useful. Moschovakis shows 
+that equality of meaning is decidable, while equality of denotation 
+is not.) Contexts that do not vary with the sense only with the 
+reference of their subexpression are called \textbf{extensional}.  
+%%%%
+\index{context!extensional}%%%
+%%%
+Nonextensional contexts are \textbf{intensional}.
+%%%
+\index{context!intensional}%%
+%%%
+Just how fine grained intensional contexts are is a difficult matter.
+For example, it is not inconceivable that \eqref{eq:437} is true but 
+\eqref{eq:438} is false. Since $\sqrt{2} < 1.5$ we expect that it 
+cannot be otherwise, and that one cannot even believe otherwise. 
+This holds, for example, under the modal analysis of belief by 
+Hintikka~\shortcite{hintikka:knowledge}. Essentially, this is what 
+we shall assume here, too. The problem of intensionality with 
+respect to Leibniz' Principle disappears once we realize that it 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+speaks of identity in meaning, not just identity in
+denotation. These are totally different things, as Frege rightly
+observed. Of course, we still have to show how meaning and
+denotation work together, but there is no problem with Leibniz'
+Principle.
+
+Intensionality has been a very important area of research in
+formal semantics, partly because Montague 
+%%%
+\index{Montague, Richard}%%
+\index{Carnap, Rudolf}%%%
+%%%
+already formulated
+an intensional system. The influence of Carnap is clearly
+visible here. It will turn out that equating intensionality
+with normal modal operators is not always helpful. Nevertheless,
+the study of intensionality has helped enormously in understanding
+the process of algebraization.
+
+%%%
+\index{$\qu, \wD$}%%
+%%%
+Let $A := \{\mbox{\tt (}, \mbox{\tt )}, \mbox{\tt p}, \mbox{\tt 0},
+\mbox{\tt 1}, \mbox{\mtt\symbol{4}}, \mbox{\mtt\symbol{5}}, 
+\boldsymbol{\qu}\}$, where the boolean symbols are used as before 
+and $\boldsymbol{\qu}$ is a unary symbol, which is written before 
+its argument. We form expressions in the usual way, using brackets. 
+The language we obtain shall be called $L_M$. The abbreviations 
+$\varphi \pf \chi$ and $\varphi\dpf \chi$ as well as typical 
+shorthands (omission of brackets) are used without warning.
+Notice that we have a propositional language, so that the notions
+of substitution, consequence relation and so on can be taken over
+straightforwardly from Section~\ref{kap6}.\ref{kap:feasibility}.
+%%%
+\begin{defn}
+%%%
+\index{modal logic}%%
+\index{modal logic!classical}%%
+\index{modal logic!monotone}%%
+\index{modal logic!normal}%%
+%%%
+A \textbf{modal logic} is a subset $L$ of $L_M$ which contains
+all boolean tautologies and which is closed under substitution and
+Modus Ponens. $L$ is called \textbf{classical} if from $\varphi
+\dpf \chi \in L$ follows that $\qu \varphi \dpf\qu \chi \in
+L$, \textbf{monotone} if from $\varphi \pf \chi\in L$
+follows $\qu \varphi \pf \qu \chi \in L$.  $L$ is 
+\textbf{normal} if for all $\varphi, \chi \in L_M$ (a) 
+$\qu (\varphi \pf \chi) \pf (\qu \varphi \pf\qu\chi) \in L$, 
+(b) if $\varphi \in L$ then $\qu \varphi \in L$.
+\end{defn}
+%%%
+The smallest normal modal logic is denoted by $\mathsf{K}$, after Saul
+Kripke. 
+%%%%
+\index{modal logic!quasi--normal}%%
+%%%%
+A \textbf{quasi--normal} modal logic is a modal logic that
+contains $\mathsf{K}$. One also defines
+%%%
+\begin{equation}
+\wD \varphi := \mbox{\mtt \symbol{5}($\boldsymbol{\qu}$(\symbol{5}%
+$\varphi$))}
+\end{equation}
+%%%
+\index{operator!necessity}%%
+\index{operator!possibility}%%
+\index{operator!dual}%%%
+%%%%
+and calls this the \textbf{dual operator} (see Exercise~\ref{ex:dual}). 
+$\qu$ is usually called a \textbf{necessity operator}, $\wD$ a 
+\textbf{possibility operator}.
+%%%%
+\index{$\oplus$}%%
+%%%%
+If $\varphi$ is an axiom and $L$ a (normal) modal logic,
+then $L + \varphi$ ($L\oplus \varphi$) is the smallest
+(normal) logic containing $L \cup \{\varphi\}$. Analogously
+the notation $L + \Gamma$, $L \oplus \Gamma$ for a set
+$\Gamma$ is defined.
+%%%
+\begin{defn}
+%%%
+\index{$\vdash_{L}, \Vdash_{L}$}%%
+%%%%
+Let $L$ be a modal logic. Then $\vdash_{L}$ is the
+following consequence relation. $\Delta \vdash_{L} \varphi$
+iff $\varphi$ can be deduced from $\Delta \cup L$
+using (mp) only. $\Vdash_{L}$ is the consequence
+relation generated by the axioms of $L$, the rule (mp) and
+the rule (mn): $\auf \{\mbox{\tt p}\}, \mbox{\tt ($\boldsymbol{\qu}$p)}\zu$. 
+$\vdash_{L}$ is called the \textbf{local consequence relation}, 
+%%%%
+\index{consequence relation!local}
+%%%
+$\Vdash_{L}$ the \textbf{global consequence relation} associated 
+with $L$.
+%%%
+\index{consequence relation!global}
+%%%
+\end{defn}
+%%%
+It is left to the reader to verify that this indeed defines a
+consequence relation. We remark here that for $\vdash_{\mathsf{K}}$
+the rule (mn) is by definition admissible. However, it is not 
+derivable (see the exercises) while in $\Vdash_{\mathsf{K}}$
+it is, by definition. Before we develop the algebraic approach 
+further, we shall restrict our attention to normal logics. For 
+these logics, a geometric (or `model theoretic') semantics has 
+been given.
+%%%
+\begin{defn}
+%%%
+\index{Kripke--frame}%%
+\index{Kripke--frame!generalized}%%
+\index{set!\faul\  of worlds}%%
+\index{accessibility relation}%%
+%%%
+A \textbf{Kripke--frame} is a pair $\auf F, \lhd\zu$ where $F$ is a
+set, the \textbf{set of worlds}, and $\lhd \subseteq F^2$, the
+\textbf{accessibility relation}. A \textbf{generalized Kripke--frame}
+is a triple $\auf F, \lhd, \BF\zu$ where $\auf F, \lhd\zu$ is a
+Kripke--frame and $\BF \subseteq \wp(F)$ a field of sets closed
+%%%
+\index{$\sq$}%%
+%%%
+under the operation $\sq$ on $\wp(F)$ defined as follows:
+%%
+\begin{equation}
+\sq A := \{x : \text{ for all }y: \text{ if }x \lhd y \text{ then
+    }y \in A\}
+\end{equation}
+\end{defn}
+%%%
+%So we have found a representation for the algebra. A matrix however
+%also consists of a deductively closed set. We have already said that
+%we may take this set to be an ultrafilter. This ultrafilter is now
+%nothing but a member of the set $U(\GM)$. Under this representation,
+%a homorphism $h \colon \goth{Tm}_{\Omega}(V)$ to $\GM$ defines a
+%homomorphism from $\goth{Tm}_{\Omega}(V)$ to the modal algebra
+%defined over $U(\GM)$. However, the standard terminology is
+%somewhat different.
+%%%
+\index{valuation}%%
+%%%
+Call a \textbf{valuation} into a  general Kripke--frame
+$\GF = \auf F, \lhd, \BF\zu$ a function $\beta \colon V \pf \BF$. 
+%%
+\begin{equation}
+\begin{split}
+\auf \GF, \beta, x\zu \vDash p & \Dpf x \in \beta(p)\qquad (p \in V) \\
+\auf \GF, \beta, x\zu \vDash \mbox{\mtt (\symbol{5}$\varphi$)}
+    & \Dpf
+\auf \GF, \beta, x\zu \nvDash \varphi \\
+\auf \GF, \beta, x\zu \vDash \mbox{\mtt ($\varphi$\symbol{4}$\chi$)}
+    & \Dpf
+\auf \GF, \beta, x\zu \vDash \varphi;\chi \\
+\auf \GF, \beta, x\zu \vDash \mbox{\mtt ($\boldsymbol{\qu}\varphi$)}
+    & \Dpf
+\mbox{for all}\;y\colon\mbox{if }x\lhd y\;\mbox{then}\;
+\auf \GF, \beta, y\zu \vDash \varphi
+\end{split}
+\end{equation}
+%%%
+\index{frame consequence!local}%%
+%%%
+(One often writes $x \vDash \varphi$, suppressing $\GF$ and $\beta$.)
+Furthermore, the \textbf{local frame consequence} is defined as follows.
+$\Delta \vDash_{\GF} \varphi$ if for every $\beta$ and $x$:
+if $\auf \GF, \beta, x\zu \vDash \delta$ for every $\delta \in
+\Delta$ then $\auf \GF, \beta, x\zu \vDash \varphi$. This is
+a consequence relation. Moreover, the axioms and rules of $\mathsf{PC}$
+are valid. Furthermore,
+%%
+\begin{equation}
+\vDash_{\GF} \qu(\varphi\pf\chi) \pf (\qu \varphi \pf \qu\chi)
+\end{equation}
+%%
+For if $x \vDash \qu(\varphi\pf\chi); \qu\varphi$ and $x \lhd y$
+then $y\vDash \varphi \pf\chi;\varphi$, from which $y \vDash \chi$. 
+As $y$ was arbitrary, $x \vDash \qu\chi$. Finally, suppose that 
+$\GF \vDash \varphi$. Then $\GF \vDash \qu\varphi$.
+For choose $x$ and $\beta$. Then for all $y$ such that
+$x \lhd y$: $\auf \GF, \beta, y\zu\vDash \varphi$, by assumption. 
+Hence $\auf \GF, \beta, x\zu\vDash \qu\varphi$. Since $x$ and
+$\beta$ were arbitrarily chosen, the conclusion follows.
+Define $\Delta \vDash^g_{\GF} \varphi$ if for all $\beta$:
+if $\oli{\beta}(\delta) = F$ for all $\delta \in \Delta$,
+then also $\oli{\beta}(\varphi) = F$. This is the
+%%%
+\index{frame consequence!global}%%
+%%%
+\textbf{global frame consequence} determined by $\GF$.
+%%%
+For a class of frames $\CK$ we put
+%%
+\begin{equation}
+\vDash_{\CK}\; := \bigcap \auf \vDash_{\GF}\; : \; \GF \in \CK\zu
+\end{equation}
+%%%
+Analogously,
+$\vDash_{\CK}^g$ is the intersection of all $\vDash^g_{\GF}$,
+$\GF \in \CK$.
+%%
+\begin{thm}
+For every class $\CK$ of frames there is a modal logic $L$
+such that $\vDash_{\CK}\; = \;\vdash_{L}$. Moreover,
+$\vDash_{\CK}^g \; = \; \Vdash_{L}$.
+\end{thm}
+%%
+\proofbeg
+We put $L := \{\varphi : \varnothing \vDash_{\CK} \varphi\}$.
+We noticed that this is a normal modal logic if $\CK$ is one
+membered. It is easy to see that this therefore holds for
+all classes of frames. Clearly, since both $\vdash_{L}$
+and $\vDash_{\CK}$ have a deduction theorem, they are equal if
+they have the same tautologies. This we have just shown.
+For the global consequence relation, notice first that
+$L = \{\varphi : \varnothing \vDash^g_{\CK}\varphi\}$.
+Moreover, $\Vdash_{L}$ is the smallest global consequence
+relation containing $\vdash_{L}$, and similarly
+$\vDash^g_{\CK}$ the smallest global consequence relation
+containing $\vDash_{\CK}$.
+\proofend
+
+We shall give some applications of modal logic to the semantics
+of natural language. The first is that of (meta)physical necessity.
+In uttering \eqref{eq:439} we suggest that \eqref{eq:4310}
+obtains whatever the circumstances. Likewise, in uttering
+\eqref{eq:4311} we suggest that there are circumstances under which
+\eqref{eq:4312} is true.
+%%
+\begin{align}
+\label{eq:439} & \mbox{\tt 2+3 is necessarily greater than 4.} \\
+\label{eq:4310} & \mbox{\tt 2+3 is greater than 4.} \\
+\label{eq:4311} & \mbox{\tt Caesar might not have defeated Vercingetorix.} \\
+\label{eq:4312} & \mbox{\tt Caesar has not defeated Vercingetorix.}
+\end{align}
+%%
+The analysis is as follows. We consider {\tt necessarily} as an
+operator on sentences. Although it appears here in postverbal
+position, it may be rephrased by {\tt it is necessary that}, which
+can be iterated any number of times. The same can be done with
+{\tt might}, which can be rephrased as {\tt it is possible that}
+and turns out to be the dual of the first. We disregard questions
+of form here and represent sentential operators simply as $\qu$
+and $\wD$, prefixed to the sentence in question. $\qu$ is a modal
+operator, and it is normal. For example, if $A$ and $B$ are both
+necessary, then so is $A \und B$, and conversely. Second, if $A$
+is logically true, then $A$ is necessary. Necessity has been modelled
+following to Carnap by frames of the form $\auf W, W\times W\zu$.
+Metaphysically possible worlds should be possible no matter
+what is the case (that is, no matter which world we are in). It 
+turns out that the interpretation above yields a particular logic,
+called $\mathsf{S5}$.
+%%%
+\index{$\mathsf{S5}$}%%
+%%%
+%%
+\begin{equation}
+\mathsf{S5} :=
+\mathsf{K} \oplus \{p \pf \wD p, \wD p \pf \wD\wD p,
+p \pf \qu\wD p\}
+\end{equation}
+%%
+We defer a proof of the fact that this characterizes $\mathsf{S5}$.
+
+%%%
+\index{$[K_J]$, $[B_J]$}%%
+%%%
+Hintikka~\shortcite{hintikka:knowledge} has axiomatized the logic
+of knowledge and belief. Write $[K_J]\varphi$ to represent
+the proposition `John knows that $\varphi$' and $[B_J]\varphi$
+to represent the proposition `John believes that $\varphi$'.
+Then, according to Hintikka, both turn out to be normal modal
+operators. In particular, we have the following axioms.
+%%
+\begin{align}
+& [B_J](\varphi\pf\chi) && \mbox{\rm logical `omniscience' for belief} \\\notag
+& \quad \pf ([B_J]\varphi \pf [B_J]\chi) &&  \\
+& [B_J]\varphi \pf [B_J][B_J]\varphi && \mbox{\rm positive introspection 
+	for belief} \\
+& [K_J](\varphi\pf\chi) && \mbox{\rm logical omniscience} \\\notag
+& \pf ([K_J]\varphi \pf [K_J]\chi) &&  \\
+& [K_J]\varphi \pf \varphi && \mbox{\rm factuality of knowledge} \\
+& [K_J]\varphi \pf [K_J][K_J]\varphi &&
+    \mbox{\rm positive introspection} \\
+& \nicht [K_J]\varphi \pf [K_J]\nicht [K_J]\varphi &&
+    \mbox{\rm negative introspection}
+\end{align}
+%%
+Further, if $\varphi$ is a theorem, so is $[B_J]\varphi$ and
+$[K_J]\varphi$. Now, we may either study both operators in
+isolation, or put them together in one language, which now has
+two modal operators. We trust that the reader can make the
+necessary amendments to the above definitions to take care
+of any number of operators. We can can then also formulate
+properties of the operators in combination. It turns out, namely,
+that the following holds.
+%%
+\begin{equation}
+[K_J]\varphi \pf [B_J]\varphi
+\end{equation}
+%%
+\index{$\mathsf{K4}$}%%%
+%%%%
+The logic of $[B_J]$ is known as $\mathsf{K4} := \mathsf{K}
+\oplus \wD\wD p \pf \wD p$ and it is the logic of all transitive
+Kripke--frames; $[K_J]$ is once again $\mathsf{S5}$. The validity of 
+this set of axioms for the given interpretation is of course open 
+to question.
+
+A different interpretation of modal logic is in the area of
+{\it time}. Here there is no consensus on how the correct model
+structures look like. If one believes in determinism, one may
+for example think of time points as lying on the real line
+$\auf \BR, <\zu$. Introduce an operator $\qrechts$ by
+%%%
+\index{$\qrechts$, $\rechts$, $\qlinks$, $\links$}%%
+%%
+\begin{equation}
+\auf \BR, <, \beta, t\zu \vDash \qrechts\, \chi
+    :\Dpf \mbox{ for all } t' > t:
+    \auf \BR, <, \beta, t'\zu \vDash \chi
+\end{equation}
+%%
+One may read $\qrechts\,\chi$ as {\it it will always be the case
+that\/} $\chi$. Likewise, $\rechts\chi$ may be read as
+{\it it will at least once be the case that\/} $\chi$.
+The logic of $\qrechts$ is
+%%
+\begin{equation}
+\mathsf{Th}\, \auf \BR, <\zu := \{\chi : \mbox{ for all
+    }\beta, x:
+    \auf \BR, <, \beta, x\zu \vDash \chi\}
+\end{equation}
+%%
+Alternatively, we may define an operator $\qlinks$ by
+%%
+\begin{equation}
+\auf \BR, <, \beta, t\zu \vDash \qlinks\, \chi
+    :\Dpf \mbox{ for all } t' < t:
+    \auf \BR, <, \beta, t'\zu \vDash \chi
+\end{equation}
+%%
+to be read as {\it it has always been the case that\/} $\chi$.
+Finally, $\links\,\chi$ reads {\it it has been the case that\/}
+$\chi$. On $\auf \BR, <\zu$, $\qlinks$ has the same logic as
+$\qrechts$. We may also study both operators in combination.
+What we get is a bimodal logic (which is simply a logic over
+a language with two operators, each defining a modal logic in
+its own fragment).  Furthermore, $\auf \mathbb{R}, <\zu \vDash
+p \pf \qrechts\,\links\, p; p \pf \qlinks\, \rechts \, p$.
+The details need not be of much concern here.  Suffice it to say
+that the modelling of time with the help of modal logic has received
+great attention in philosophy and linguistics. Obviously,
+to be able to give a model theory of tenses is an important
+task. Already Montague integrated into his theory a treatment
+%%%
+\index{Montague, Richard}%%%
+%%%
+of time in combination with necessity (as discussed above).
+
+We shall use the theory of matrices to define a semantics for
+these logics. We have seen earlier that one can always choose
+matrices of the form $\auf \goth{Tm}_{\Omega}(V), \Delta\zu$,
+$\Delta$ deductively closed. Now assume that $L$ is
+classical. Then put $\varphi\; \Theta_L^{\dpf}\; \chi$ if $\varphi \dpf
+\chi \in L$. This is a congruence relation, and we can form
+the factor algebra along that congruence. (Actually, classicality
+is exactly the condition that $\dpf$ induces a congruence
+relation.) It turns out that this algebra is a boolean algebra and
+that $\qu$ is interpreted by a
+%%%
+\index{$\sq$, $\wD$}%%
+%%%
+function $\sq$ on that boolean algebra (and $\wD$ by a function
+$\sD$).
+%%%
+\begin{defn}
+%%%%
+\index{boolean algebra!with operators (BAO)}%%%
+%%%
+A \textbf{boolean algebra with (unary) operators} (\textbf{BAO}) is an
+algebra $\auf A, 0, 1, \cap, \cup, -, \auf \sq_i : i < \kappa\zu\zu$
+such that $\sq_i \colon A \pf A$ for all $i < \kappa$.
+\end{defn}
+%%
+If furthermore $L$ is a normal modal logic, $\sq$ turns
+out to be a so--called hemimorphism.
+%%%
+\begin{defn}
+%%%
+\index{hemimorphism}%%%
+\index{multimodal algebra}%%%
+%%%%
+Let $\GB$ be a boolean algebra and $h \colon B \pf B$ a map. $h$ is called
+a \textbf{hemimorphism} if (i) $\sq 1 = 1$ and (2) for all $x, y \in B$:
+$\sq (x \cap y) = \sq (x) \cap \sq (y)$. A \textbf{multimodal algebra} is
+an algebra $\GM = \auf M, 0, 1, \cap, \cup, -, \auf \sq_i :
+i < \kappa\zu\zu$, where $\auf M, 0, 1, \cap, \cup, -\zu$ is
+a boolean algebra and $\sq_i$, $i < \kappa$, a hemimorphism on it.
+\end{defn}
+%%%
+We shall remain with the case $\kappa = 1$ for reasons of
+simplicity. A hemimorphism is thus not a homomorphism (since it
+does not commute with $\cup$). The modal algebras form the
+semantics of modal propositional logic. We also have to look at
+the deductively closed sets. First, if 
+$\varphi\; \Theta_L^{\dpf}\; \chi$ then $\varphi \in %
+\Delta$ iff $\chi \in \Delta$. So, we can factor
+$\Delta$ by $\Theta_L^{\dpf}$. It turns out that $\Delta$, being closed
+under (mp), becomes a filter of the boolean quotient algebra.
+Thus, normal modal logics are semantically complete with
+respect to matrices $\auf \GM, F\zu$, where $\GM$ is a modal
+algebra and $F$ a filter. We can refine this still further to $F$
+being an ultrafilter. This is so since if $\Delta \nvdash_{L}
+\varphi$ there actually is a maximally consistent set of formulae
+that contains $\Delta$ but not $\varphi$, and reduced by $\Theta_L^{\dpf}$
+this turns into an ultrafilter. Say that $\GM \vDash \chi$ if
+$\auf \GM, U\zu \vDash \chi$ for all ultrafilters $U$ on $\GM$.
+Since $x$ is in all ultrafilters iff $x = 1$, we have
+$\GM \vDash \chi$ exactly if for all homomorphisms $h$ into $\GM$,
+$h(\chi) = 1$. (Equivalently, $\GM \vDash \chi$ iff
+$\auf \GM, \{1\}\zu \vDash \chi$.) Notice that $\GM \vDash \varphi
+\pf \chi$ if for all $h$: $h(\varphi) \leq h(\chi)$.
+
+Now we shall apply the representation theory of the previous section.
+A boolean algebra can be represented by a field of sets, where
+the base set is the set of all ultrafilters (alias points) over
+the boolean algebra. Now take a modal algebra $\GM$. Underlying it
+we find a boolean algebra, which we can represent by a field of
+sets. The set of ultrafilters is denoted by $U(\GM)$. Now, for two
+ultrafilters $U$, $V$ put $U \lhd V$ iff for all
+$\sq x \in U$ we have $x \in V$. Equivalently, $U \lhd V$ iff 
+$x \in V$ implies $\sD x \in U$. We end up with a structure
+$\auf U(\GM), \lhd, \BS\zu$, where $\lhd$ is a binary relation
+over $U(\GM)$ and $\BS \subseteq \wp(U(\GM))$ a field of sets
+closed under the operation $A \mapsto \sq A$.
+
+A modal algebra $\GM$ is an $\mathsf{S5}$--algebra if it satisfies
+the axioms given above. Let $\GM$ be an $\mathsf{S5}$--algebra and $U, V, W$
+ultrafilters. Then (a) $U \lhd U$. For let $x \in U$. Then
+$\sD x \in U$ since $\GM \vDash p \pf \wD p$. Hence, $U \lhd U$.
+(b) Assume $U \lhd V$ and $V \lhd W$. We show that $U \lhd W$.
+Pick $x \in W$. Then $\sD x \in V$ and so $\sD\sD x \in U$.
+Since $\GM \vDash \wD \wD p \pf \wD p$, we have $\sD x \in U$.
+(c) Assume $U \lhd V$. We show $V \lhd U$. To this end, pick
+$x \in U$. Then $\sq \sD x \in U$. Hence $\sD x \in V$, by
+definition of $\lhd$. Hence we find that $\lhd$ is an equivalence
+relation on $U(\GM)$. More exactly, we have shown the following.
+%%%
+\begin{prop}
+Let $\GM$ be a modal algebra, and $\lhd \subseteq U(\GM)^2$ be
+defined as above.
+%%
+\begin{dingautolist}{192}
+\item $\GM \vDash p \pf \wD p$ iff $\lhd$ is reflexive.
+\item $\GM \vDash \wD\wD p \pf \wD p$ iff $\lhd$ is
+    transitive.
+\item $\GM \vDash p \pf \wq\wD p$ iff $\lhd$ is symmetric.
+\end{dingautolist}
+\end{prop}
+%%
+The same holds for Kripke--frames. For example,
+$\auf F,\lhd\zu \vDash p \pf \wD p$ iff $\lhd$ is
+reflexive. Therefore, $\auf U(\GM), \lhd\zu$ already satisfies
+all the axioms of $\mathsf{S5}$. Finally, let $\auf F, \lhd\zu$ be a
+Kripke--frame, $G \subseteq F$ be a set such that $x \in G$ and
+$x \lhd y$ implies $y \in G$.
+%%%
+\index{subframe!generated}%%
+%%%
+(Such sets are called \textbf{generated}.) Then the induced frame
+$\auf G, \lhd \cap G^2\zu$ is called a \textbf{generated subframe}.
+A special case of a generated subset is the set $F \uparrow x$
+consisting of all points that can be reached in finitely many
+steps from $x$. Write $\GF \uparrow x$ for the generated subframe
+induced by $F \uparrow x$. Then a valuation $\beta$ on $\GF$
+induces a valuation on $\GF\uparrow x$, which we denote also
+by $\beta$.
+%%%
+\begin{lem}
+\label{lem:gensub}
+$\auf \GF, \beta, x\zu \vDash \varphi$ iff
+$\auf \GF\uparrow x, \beta, x\zu \vDash \varphi$. It follows
+that if $\GF \vDash L$ and $\GG$ is a generated subframe
+of $\GF$ then also $\GG \vDash L$.
+\end{lem}
+%%%
+A special consequence is the following. Let $\GF_0 :=
+\auf F_0, \lhd_0\zu$ and $\GF_1 := \auf F_1, \lhd_1\zu$
+be Kripke--frames. Assume that $F_0$ and $F_1$ are disjoint.
+%%%
+\begin{equation}
+\GF_0 \oplus \GF_1 := \auf F_0 \cup F_1, \lhd_0 \cup \lhd_1\zu
+\end{equation}
+%%%
+Then $\GF_0 \oplus \GF_1 \vDash \varphi$ iff $\GF_0 \vDash \varphi$ 
+and $\GF_1 \vDash \varphi$. (For if $x \in F_0$ then 
+$\auf \GF_0 \oplus \GF_1, \beta, x\zu\vDash \varphi$ iff $\auf \GF_0,
+\beta, x\zu \vDash \varphi$, and analogously for $x \in F_1$.)
+It follows that a modal logic which is determined by some class of
+Kripke--frames is already determined by some class of Kripke--frames 
+generated from a single point. This shows the following.
+%%%
+\begin{thm}
+$\mathsf{S5}$ is the logic of all Kripke--frames of the form
+$\auf M, M\times M\zu$.
+\end{thm}
+%%
+
+Now that we have looked at intensionality we shall look at the question
+of individuation of meanings. In algebraic logic a considerable amount
+of work has been done concerning the semantics of propositional
+languages. Notably in Blok and Pigozzi~\shortcite{blokpigozzi:algebraizable} 
+%%%
+\index{Blok, Wim}%%
+\index{Pigozzi, Don}%%
+%%%
+Leibniz' Principle was made the starting point of a definition of
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+algebraizability of logics. We shall exploit this work for our purposes
+here.  We start with a propositional language of signature $\Omega$.
+Recall the definition of logics, consequence relation and matrix from
+Section~\ref{kap6}.\ref{kap6-1}. We distinguish between a {\it theory}, 
+{\it (world) knowledge\/} and a {\it meaning postulate}.
+%%%
+\begin{defn}
+%%%
+\index{theory}%%%
+\index{axiomatization}%%%
+%%%%
+Let $\vdash$ be a consequence relation. A $\vdash$--\textbf{theory} is
+a set $\Delta$ such that $\Delta^{\vdash} = \Delta$. If $T$ is a
+set such that $T^{\vdash} = \Delta$, $T$ is called an 
+\textbf{axiomatization of} $\Delta$.
+\end{defn}
+%%
+Theories are therefore sets of formulae, and they may contain variables.
+For example, $\{\mbox{\mtt p0}, \mbox{\mtt (p1\symbol{25}(\symbol{5}p01))}\}$ 
+is a theory. However, in virtue of the fact that
+variables are placeholders, it is not appropriate to say that knowledge
+is essentially a theory. Rather, for a theory to be knowledge it must
+be closed under substitution. Sets of this form shall be called
+{\it logics}.
+%%%
+\begin{defn}
+%%%
+\index{logic}%%
+%%%
+Let $\vdash$ be a structural consequence relation. A 
+$\vdash$--\textbf{logic} is a $\vdash$--theory closed 
+under substitution.
+\end{defn}
+%%%
+Finally, we turn to meaning postulates. Here, it is appropriate not 
+to use sets of formulae, but rather equations.
+%%%
+\begin{defn}
+%%%
+\index{meaning postulate}%%
+%%%%
+Let $L$ be a propositional language. A \textbf{meaning postulate}
+for $L$ is an equation. Given a set $M$ of meaning postulates,
+an equation $s \doteq t$ follows from $M$ if $s \doteq t$ holds
+in all algebras satisfying $M$.
+\end{defn}
+%%%
+Thus, the meaning postulates effectively axiomatize the variety of
+meaning algebras, and the consequences of a set of equations can
+be derived using the calculus of equations of Section~\ref{kap1}.\ref{kap1-1}.
+In particular, if $f$ is an $n$--ary operation and $s_i \doteq t_i$
+holds in the variety of meaning algebras, so does
+$f(\vec{s}) \doteq f(\vec{t})$, and likewise, if $s \doteq t$
+holds, then $\sigma(s) \doteq \sigma(t)$ holds for any substitution
+$\sigma$. These are natural consequences if we assume that meaning
+postulates characterize identity of meaning. We shall give an
+instructive example.
+%%
+\begin{align}
+\label{eq:4313} & \mbox{\tt Caesar crossed the Rubicon.} \\
+\label{eq:4314} & \mbox{\tt John does not believe that Caesar crossed the}
+\\\notag
+ & \quad \mbox{\tt Rubicon.} \\
+\label{eq:4315} & \mbox{\tt Bachelors are unmarried men.} \\
+\label{eq:4316} & \mbox{\tt John does not believe that bachelors are} 
+	\\\notag
+    & \quad \mbox{\tt unmarried men.}
+\end{align}
+%%
+It is not part of the meanings of the words that Caesar crossed the
+Rubicon, so John may safely believe or disbelieve it. However, it is
+part of the language that bachelors are unmarried men, so not believing
+it means associating different meanings to the words. Thus, if
+\eqref{eq:4315} is true and moreover a meaning postulate, 
+\eqref{eq:4316} cannot be true.
+
+It is unfortunate having to distinguish postulates that take the
+form of a formula from those that take the form of an equation.
+Therefore, one has sought to reduce the equational calculus to
+the logical calculus and conversely. The notion of equivalential
+logic has been studied among other by Janusz Czelakowski 
+%%%
+\index{Czelakowski, Janusz}%%%
+\index{Suszko, Roman}%%%
+%%%
+and Roman Suszko. The following definition is due to Prucnal and
+Wro\'{n}ski \shortcite{prucnalwronski}. 
+%%%
+\index{Prucnal, T.}%%%
+\index{Wro\'nski, Andrzej}%%
+%%%
+(For a set $\Phi$
+of formulae, we write $\Delta \vdash \Phi$ to say that $\Delta
+\vdash \varphi$ for all $\varphi \in \Phi$.)
+%%
+\begin{defn}
+%%%%
+\index{equivalential term}%%
+%%%%
+\label{defn:equivalential}
+Let $\vdash$ be a consequence relation. We call the set 
+$\Delta(p,q) = \{\delta_i(p,q) : i \in I\}$ a \textbf{set of
+equivalential terms for} $\vdash$ if the following holds
+%%
+\index{equivalential term!set of \faul s}%%
+%%
+\begin{subequations}
+\label{eq:eqterm}
+\begin{align}
+& \vdash \Delta(p,p) \\
+& \Delta(p,q) \vdash \Delta(q,p) \\
+& \Delta(p,q); \Delta(q,r) \vdash \Delta(p,r) \\
+& \bigcup_{i < \Omega(f)} \Delta(p_i,q_i) \vdash
+        \Delta(f(\vec{p}), f(\vec{q})) \\
+& p; \Delta(p,q) \vdash q
+\end{align}
+\end{subequations}
+%%%%%
+\index{consequence relation!equivalential}%%
+\index{consequence relation!finitely equivalential}%%
+%%%%%
+$\vdash$ is called \textbf{equivalential} if it has a set of
+equivalential terms, and \textbf{finitely equivalential} if it
+has a finite set of equivalential terms. If $\Delta(p,q)
+= \{\delta(p,q)\}$ is a set of equivalential terms for $\vdash$
+then $\delta(p,q)$ is called an \textbf{equivalential term}
+for $\vdash$.
+%%%%%
+\index{term!equivalential}%%
+%%%%%
+\end{defn}
+%%
+As the reader may check, $p \dpf q$ is an equivalential term for
+$\vdash^{\mathsf{PC}}$. If there is no equivalential term then
+synonymy is not definable language internally. \cite{zimmermann:meaning} 
+discusses the nature of meaning postulates. He requires among other 
+that meaning postulates should be expressible in the language itself. 
+To that effect we can introduce a 0--ary symbol $\mathsf{1}$ and a binary 
+symbol $\boldsymbol{\triangleup}$ such that $\boldsymbol{\triangleup}$ 
+is an equivalential term for $\vdash$ in the expanded language. 
+(So, we add \eqref{eq:eqterm} for $\Delta(p,q) := 
+\{\mbox{\mtt ($p\!\boldsymbol{\triangleup}\!q$)}\}$.)
+To secure that $\boldsymbol{\triangleup}$ and $\mathsf{1}$ do the job 
+as intended, we shall stipulate that the logical and the equational 
+calculus are intertranslatable in the following way.
+%%
+\begin{align}
+\{\mbox{\mtt $s_i$=$t_i$} : i < n\} & \vDash \mbox{\mtt $u$=$v$}
+    & \Dpf &&
+\{\mbox{\mtt ($s_i\!\boldsymbol{\triangleup}\!t_i$)} : 
+i < n\} & \vdash \mbox{\mtt ($u\!\boldsymbol{\triangleup}\!v$)} \\
+\{\delta_i : i < \kappa\} & \vdash \varphi & \Dpf &&
+    \{\mbox{\mtt $\delta_i$=1} :
+    i < \kappa\} & \vDash \mbox{\mtt $\varphi$=1}
+\end{align}
+%%
+Here, $\vDash$ denotes model theoretic consequence, or,
+alternatively, derivability in the equational calculus
+(see Section~\ref{kap1}.\ref{kap1-1}). In this way, equations are
+translated into sets of formulae. In order for this 
+translation to be faithful in both directions we must
+require the following (see \cite{pigozzi:fregean}).
+%%
+\begin{equation}
+x \vdash \mbox{\mtt ($x\!\boldsymbol{\triangleup}$1)}\qquad
+\mbox{\rm (G--rule)}
+\end{equation}
+%%
+An equivalent condition is $x; y \vdash 
+\mbox{\mtt ($x\!\boldsymbol{\triangleup}\!y$)}$. 
+Second, we must require that
+%%
+\begin{equation}
+\mbox{\mtt ($x\!\boldsymbol{\triangleup}\!y$)=1}
+\vDash \mbox{\mtt $x$=$y$}\qquad \mbox{\rm (R--rule)}
+\end{equation}
+%%
+Then one can show that on any algebra $\GA$ and any two congruences
+$\Theta$, $\Theta'$ on $\GA$, $\Theta = \Theta'$ iff
+$[\mathsf{1}]\Theta = [\mathsf{1}]\Theta'$,
+so every congruence is induced by a theory. (Varieties satisfying 
+%%%
+\index{variety!congruence regular}%%
+%%%
+this are called \textbf{congruence regular}.) 
+%%%
+\index{variety!congruence regular}%%%
+%%%
+Classical modal
+logics admit the addition of $\triangleup$. $\mathsf{1}$ is simply
+$\top$. The postulates can more or less directly be verified.
+Notice however that for a modal logic $L$ there are two
+choices for $\vdash$ in Definition~\ref{defn:equivalential}:
+if we choose $\Vdash_{L}$ then $p \dpf q$ is an
+equivalential term; if, however, we choose $\vdash_{L}$
+then $\{\qu^n (p \dpf q) : n \in \omega\}$ is a set of
+equivalential terms. In general no finite set can be
+named in the local case.
+
+In fact, this holds for any logic which is an extension of boolean
+logic by any number of congruential operators.
+There we may conflate meaning postulates with logics. However,
+%%%%
+\index{logic!Fregean}%%
+%%%%
+call a logic \textbf{Fregean} if it satisfies
+$(p \dpf q) \pf (p  \triangleup q)$. A modal logic is Fregean
+iff it contains $p \pf \qu p$. There are exactly
+four Fregean modal logics the least of which is
+$\mathsf{K} \oplus p \pf \qu p$. The other three are
+$\mathsf{K} \oplus p \dpf \qu p$, $\mathsf{K} \oplus
+\qu \bot$ and $\mathsf{K} \oplus \bot$, the inconsistent
+logic. This follows from the following theorem.
+%%%
+\begin{prop}
+$\mathsf{K} \oplus p \pf \qu p = \mathsf{K} \oplus
+(\qu p \dpf (p \oder \qu \bot))$.
+\end{prop}
+%%%
+\proofbeg
+Put $L := \mathsf{K} \oplus p \pf \qu p$. $\qu p \dpf (p \oder \qu \bot) 
+\vdash_{\mathsf{K}} p \pf \qu p$, so have to show that $\qu p \dpf (p %
+\oder \qu \bot) \in L$. (1) $\vdash_{\mathsf{K}} \qu p \pf (\wD p \oder \qu \bot)$. 
+Furthermore, $\vdash_{L} \wD p \pf p$. Hence also $\vdash_L 
+\qu p \pf (p \oder \qu \bot)$. (2) $\qu \bot \pf \qu p$ is a theorem 
+of $\mathsf{K}$, $p \pf \qu p$ holds by assumption. This shows the claim.
+\proofend
+
+Now, in a Fregean logic, any proposition $\varphi$ is equivalent
+either to a nonmodal proposition or to a proposition
+$(\chi \und \wD \top) \oder (\chi' \und \qu \bot)$,
+where $\chi$ and $\chi'$ are nonmodal. It follows from this that
+the least Fregean logic has only constant extensions: by the axiom
+$\qu \bot$, by its negation $\wD \top$, or both (which yields the
+inconsistent logic).
+
+Now let us return to Leibniz' Principle.  Fix a theory $T$. Together
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+with the algebra of formulae it forms a matrix. This matrix tells us
+what is true and what is not. Notice that the members of the algebra
+are called truth--values in the language of matrices. In the
+present matrix, a sentence is true only if it is a member of $T$.
+Otherwise it is false. Thus, although we can have as many truth values
+as we like, sentences are simply true or false. Now apply Leibniz'
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+Principle. It says: two propositions $\varphi$ and $\varphi'$ have
+identical meaning iff for every proposition $\chi$ and
+every variable $p$: $[\varphi/p]\psi \in T$
+iff $[\varphi'/p]\chi \in T$. This leads to the following
+definition.
+%%%
+\begin{defn}
+Let $\Omega$ be a signature and $\GA$ an $\Omega$--algebra. Then for
+any $F \subseteq A$ put
+%%
+\begin{equation}
+\Delta_{\GA}F := \{\auf a,b\zu : \mbox{ for all }t \in
+    \Pol_1(\GA): t(a) \in F \Dpf t(b) \in F\}
+\end{equation}
+%%
+This is called the \textbf{Leibniz equivalence} 
+%%%
+\index{Leibniz equivalence}%%
+%%%
+and the map $\Delta_{\GA}$ the \textbf{Leibniz operator}.
+%%%
+\index{Leibniz operator}%%
+%%%
+\end{defn}
+%%
+Notice that the definition uses unary polynomials, not just terms.
+This means in effect that we have enough constants to name all
+expressible meanings, not an unreasonable assumption.
+%%%
+\begin{lem}
+$\Delta_{\GA}F$ is an admissible congruence on $\auf \GA, F\zu$.
+\end{lem}
+%%%
+\proofbeg%%
+It is easy to see that this is an equivalence relation. By
+Proposition~\ref{prop:punary} it is a congruence relation. We show
+that it is compatible with $F$. Let $x \in F$ and $x\; \Delta_{\GA}F\;
+y$. Take $t := p$ we get $[x/p]t = x$, $[y/p]p = y$. Since $x \in
+F$ we have $y \in F$ as well.%%
+\proofend
+
+We know that the consequence relation of $\auf \GA, F\zu$ is the
+same as the congruence relation of $\auf \GA/\Delta_{\GA}F,
+F/\Delta_{\GA}F\zu$. So, from a semantical point of view we may
+simply factor out the congruence $\Delta_{\GA}F$. Moreover, this
+matrix satisfies Leibniz' Principle! So, in aiming to define
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+meanings from the language and its logic, we must first choose a
+theory and then factor out the induced Leibniz equivalence. We may
+then take as the meaning of a proposition simply its equivalence
+class with respect to that relation. Yet, the equivalence depends
+on the theory chosen and so do therefore the meanings. If the
+0--ary constant $\mbox{\tt c}_0$ is a particular sentence (say,
+that Caesar crossed the Rubicon) then depending on whether this
+sentence is true or not we get different meanings for our language
+objects. However, we shall certainly not make the assumption that
+meaning depends on accidental truth. Therefore, we shall say the
+following.
+%%%
+\begin{defn}
+%%%
+\index{canonical Leibniz congruence}%%
+\index{canonical Leibniz meaning}%%
+\index{$\nabla_{\vdash}$}%%
+%%%
+Let $\vdash$ be a structural consequence relation over a language
+of signature $\Omega$. Then the \textbf{canonical Leibniz congruence}
+is defined to be
+%%
+\begin{equation}
+\nabla_{\vdash} := \Delta_{\goth{Fm}_{\Omega}(\varnothing)}
+\Taut(\vdash \cap\; \Tm_{\Omega}(\varnothing))
+\end{equation}
+%%
+For a proposition $\varphi$ free of variables, the object
+$[\varphi]_{\nabla_{\vdash}}$ is called the \textbf{canonical}
+(\textbf{Leibniz}) \textbf{meaning} of $\varphi$.
+%%
+\end{defn}
+%%%
+The reader is asked to check that
+$\Pol_1(\goth{Tm}_{\Omega}(\varnothing))
+= \Clo_1(\goth{Tm}_{\Omega}(\varnothing))$, so that nothing
+hinged on the assumption made earlier to admit all polynomials
+for the definition of $\Delta_{\GA}$. We shall briefly comment on
+the fact that we deal only with constant propositions. From the
+standpoint of language, propositional variables have no meaning
+except as placeholders. To ask for the meaning of
+$\mbox{\mtt (p0\symbol{31}(\symbol{5}p11))}$ in the context of
+language makes little sense since language is a means of communicating 
+concrete meanings. A variable only stands in for the possible concrete
+meanings. Thus we end up with a single algebra of meanings,
+one that even satisfies Leibniz' Principle.
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+
+In certain cases the Leibniz operator actually induces an
+isomorphism between the lattice of deductively closed sets and the
+lattice of congruences on $\GA$. This means that different theories
+will actually generate different equalities and different equalities
+will generate different theories. For example, in boolean logic, a
+theory corresponds to a deductively closed set in the free algebra
+of propositions.  Moreover, $\auf \varphi, \chi\zu \in \Delta_{\GB}T$ iff
+$\varphi \dpf \chi \in T$. On the left hand side we find the
+Leibniz congruence generated by $T$, on the right hand side we
+find $T$ applied to a complex expression formed from $\varphi$ and
+$\chi$. It means in words the following (taking $T$ to be the
+theory generated by $\varnothing$): two propositions, $\varphi$ and
+$\chi$, have the same meaning iff the proposition $\varphi \dpf \chi$ 
+is a tautology. This does not hold for modal logic; for in modal logic 
+a theory induces a nontrivial consequence only if it
+is closed under the necessitation rule. (The exactness of the
+correspondence is guaranteed for boolean logic by the fact
+that it is Fregean.)
+
+We shall now briefly address the general case of a language as a
+system of signs. We assume for a start a grammar, with certain
+modes. The grammar supplies a designated category  $t$ of
+sentences. We may define notions of logic, theory and so on on the
+level of definite structure terms of category $t$, since these are
+unique by construction. This is how Church formulated the simple
+theory of types, $\mathsf{STyp}$ (see next section). A 
+%%%
+\index{theory}%%
+%%%
+\textbf{theory} 
+is now a set of definite structure terms of category $t$ which is 
+closed under consequence. Given a theory $T$ we define the following 
+relation on definite structure terms: $\Gt\; \Delta\; \Gt'$ iff
+the two are intersubstitutable in any structure term preserving
+definiteness, and for a structure term $\Gs$: $[\Gt/x]\Gs \in T$
+iff $[\Gt'/x]\Gs \in T$. Again, this proves to be a
+congruence on the partial algebra of definite structure terms, and
+the congruence relation can be factored. What we get is the
+algebra of natural meanings.
+
+{\it Notes on this section.}
+There have been accounts of propositional attitudes that propose 
+representations of attitude reports that do not contain a 
+representation of the embedded proposition. These accounts have 
+difficulties with Leibniz' Principle. Against this argues
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+\cite{recanati:oratio}. 
+%%%
+\index{Recanati, Fran\c{c}ois}%%
+%%%
+For him, the representation of the report 
+contains a representation of the embedded proposition so that 
+Leibniz' Principle does not need to be stipulated. Modal operators 
+actually have that property. However, they do not provide enough 
+analysis of the kinds of attitudes involved. On the other hand, 
+modal operators are very flexible. In general, most attitudes will 
+not give rise to a normal logic, though classicality 
+must be assumed, in virtue of Leibniz' Principle. Also, there is a 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+consensus that a proposition is an expression modulo the laws
+of $\mathsf{PC}$. However, notice that this means only that if two
+expressions are interderivable in $\mathsf{PC}$, we must have the same
+attitude towards them. It does not say, for example, that if
+$\chi$ follows from $\varphi$ then if I believe $\varphi$ I
+also believe that $\chi$. Classical logics need not be monotone
+(see the exercises below).  For the general theory of modal logic
+see \cite{kracht:tools}.
+%%%
+\vplatz
+\exercise
+Set up a Galois correspondence between contexts and equivalence
+classes of expressions. You may do this for any category $\alpha$.
+Can you characterize those context sets that generate the same
+equivalence class?
+%%%
+\vplatz
+\exercise
+Show that $\vdash_{L}$ as defined above is a consequence
+relation. Show that (mn) is not derivable in
+$\vDash_{\mathsf{K}}$. {\it Hint.} You have to find a
+formula $\varphi$ such that $\varphi \nvDash_{\mathsf{K}}
+\qu \varphi$.
+%%%
+\vplatz 
+\exercise 
+Show that $\vDash_{\CK}^g$ is the global consequence relation
+associated with $\mathsf{Th}\, \CK$.
+%%%
+\vplatz
+\exercise
+Show that the logic of knowledge axiomatized above is $\mathsf{S5}$.
+%%%
+\vplatz
+\exercise
+Let $\auf F, \lhd, \BF\zu$ be a generalized Kripke--frame and
+$\beta$ a valuation into it. Put $\GM := \auf \BF, \varnothing, F, \cap,
+\cup, \sq\zu$. Then $\beta$ has an obvious homomorphic extension
+$\oli{\beta} \colon \goth{Tm}_{\Omega}(V) \pf \GM$. Show that
+$\auf \GF, \beta, x\zu \vDash \varphi$ iff
+$x \in \oli{\beta}(\varphi)$.
+%%
+\vplatz
+\exercise
+Show that there are classical modal logics which are not monotone.
+{\it Hint.} There is a counterexample based on a two--element
+algebra.
+%%%
+\vplatz
+\exercise
+Prove Lemma~\ref{lem:gensub}.
+%%%
+\vplatz
+\exercise
+Define $\boxtimes \varphi := \varphi \triangleup \top$. Let $L$ 
+be the set of formulae in $\boxtimes$ and the boolean connectives 
+that are derivable. Show that $L$ is a normal modal logic
+containing $\mathsf{K4}$.

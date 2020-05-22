@@ -1,0 +1,710 @@
+\section{The Lambek--Calculus}
+\label{kap:lambek}
+%
+%
+%
+The Lambek--Calculus, $\mathsf{L}$, is in many respects an extension of
+$\mathsf{AB}$. It has been introduced in \cite{lambek:mathematics}. In
+contrast to $\mathsf{AB}$, in $\mathsf{L}$ categories are not interpreted 
+as sets of labelled trees but as sets of strings. This means that the
+calculus has different laws. Furthermore, $\mathsf{L}$ possesses a new
+category constructor, {\it pair formation\/}; it is written $\bullet$ 
+and has a counterpart on the level of categories, also denoted by that 
+symbol. The constructors of the classical Lambek--calculus for 
+categories therefore are {\mtt{\tb}}, {\mtt{\tf}} and $\bullet$. 
+Given an alphabet $A$ and an elementary category assignment $\zeta$
+we denote by $\{\alpha\}_{\zeta}$ the set of all strings over $A$ 
+which are of category $\alpha$ with respect to $\zeta$. Then the 
+following holds.
+%%
+\begin{equation}
+\begin{split}
+\{\alpha \bullet \beta\}_{\zeta}  &
+        := \{\alpha\}_{\zeta} \cdot \{\beta\}_{\zeta} \\
+\mbox{}\{\Gamma \circ \Delta\}_{\zeta}   &
+    := \{\Gamma\}_{\zeta} \cdot \{\Delta\}_{\zeta}
+\end{split}
+\end{equation}
+%%
+Since we have the constructor $\bullet$ at our disposal, we
+can in principle dispense with the symbol $\circ$. However,
+we shall not do so. We shall formulate the calculus as before
+using $\circ$, which makes it directly comparable to the ones
+we have defined above. Hence as before we distinguish {\it terms\/}
+from {\it structures}. We write $\Gamma \bvdash \beta$ if
+$\{ \Gamma \}_{\zeta} \subseteq \{ \alpha\}_{\zeta}$.  We shall
+axiomatize the sequents of $\bvdash$. In order to do so we add
+the following rules to the calculus $\mathsf{AB}$ (without (cut)).
+%%
+$$\begin{array}{c@{\;}cc@{\;}c}
+\mbox{(\textbf{ass1})} & \begin{array}{c}
+        \Gamma[\Delta_1 \circ (\Delta_2 \circ \Delta_3)]
+    \bvdash \alpha \\\hline
+        \Gamma[(\Delta_1 \circ \Delta_2) \circ \Delta_3] \bvdash \alpha
+         \end{array} &
+\mbox{(\textbf{ass2})} & \begin{array}{c}
+        \Gamma[(\Delta_1 \circ \Delta_2) \circ \Delta_3] \bvdash \alpha
+    \\\hline
+        \Gamma[\Delta_1 \circ (\Delta_2 \circ \Delta_3)] \bvdash \alpha
+        \end{array} \\
+\mbox{(\textbf{$\bullet$--I})} & \begin{array}{c}
+        \Gamma[\alpha \circ \beta] \bvdash \gamma \\\hline
+        \Gamma[\alpha \bullet \beta] \bvdash \gamma
+        \end{array} &
+\mbox{(\textbf{I--$\bullet$})} & \begin{array}{c}
+        \Gamma \bvdash \alpha \qquad \Delta \bvdash \beta \\\hline
+        \Gamma \circ \Delta \bvdash \alpha \bullet \beta
+        \end{array}
+\end{array}$$
+%%
+This calculus is called the  \textbf{Lambek--Calculus}, or simply 
+$\mathsf{L}$.
+%%%
+\index{Lambek--Calculus}
+\index{Lambek--Calculus!Nonassociative}
+\index{$\mathsf{L}$, $\mathsf{NL}$, $\mathsf{NL}^-$}%%
+%%%
+Further, we put $\mathsf{NL}  := \mathsf{AB} + \mbox{(\textbf{I}--$\bullet$)} 
++ \mbox{($\bullet$--\textbf{I})}$ and  $\mathsf{NL}^{-} := \mathsf{AB}^{-} + 
+\mbox{($\bullet$--\textbf{I})} + \mbox{(\textbf{I}--$\bullet$)}$.
+$\mathsf{NL}$ is also called the \textbf{Nonassociative Lambek--Calculus}.
+%%
+\begin{thm}[Lambek]
+%%%
+\index{Lambek, Joachim}%%%
+%%%
+(cut) is admissible for $\mathsf{L}$.
+\end{thm}
+%%
+\begin{cor}[Lambek]
+%%%
+\index{Lambek, Joachim}%%%
+%%%%
+$\mathsf{L}$ with or without (cut) is decidable.
+\end{cor}
+%%
+For a proof we only have to look at applications of (cut) following
+an application of the new rules.  Assume that the left hand premiss 
+has been obtained by an application of (ass1).
+%%
+\begin{equation}
+\begin{array}{ccc}
+\Gamma[\Theta_1 \circ (\Theta_2 \circ \Theta_2)] \bvdash \alpha &
+        \qquad & \\\cline{1-1}
+\Gamma[(\Theta_1 \circ \Theta_2) \circ \Theta_2] \bvdash \alpha &
+        & \Delta[\alpha] \bvdash \beta \\\hline
+\multicolumn{3}{c}{%
+\Delta[\Gamma[(\Theta_1 \circ \Theta_2) \circ \Theta_3]] \bvdash \beta}
+\end{array}
+\end{equation}
+%%
+This proof part we reformulate into the following one.
+%%
+\begin{equation}
+\begin{array}{c}
+\Gamma[\Theta_1 \circ (\Theta_2 \circ \Theta_3)] \bvdash \alpha
+        \qquad \Delta[\alpha] \bvdash \beta \\\hline
+\begin{array}{c}
+\Delta[\Gamma[\Theta_1 \circ (\Theta_2 \circ \Theta_3)]] \bvdash
+        \beta \\\hline
+\Delta[\Gamma[(\Theta_1 \circ \Theta_2) \circ \Theta_3]] \bvdash
+        \beta
+\end{array}
+\end{array}
+\end{equation}
+%%
+Analogously if the left hand premiss has been obtained by using
+(ass2). We leave it to the reader to treat the case where the right
+hand premiss has been obtained by using (ass1) or (ass2). We
+have to remark here that by reformulation we do not diminish the
+degree of the cut. So the original proof is not easily transported
+into the new setting. However, the {\it depth\/} of the application
+has been diminished. Here, depth means (intuitively) the length of
+a longest path through the proof tree from the top up to the
+rule occurrence. If we assume that $\Gamma[\Theta_1 \circ %
+(\Theta_2 \circ \Theta_3)] \bvdash \alpha$ has depth $i$ and
+$\Delta[\alpha] \bvdash \beta$ depth $j$ then in the first tree
+the application of (cut) has depth $\max \{i,j\} + 1$,
+in the second however it has depth $\max \{i,j\}$.
+
+Let us look at the cases of introduction of $\bullet$. The case of
+($\bullet$--\textbf{I}) on the left hand premiss is easy.
+%%
+\begin{multline}
+\begin{array}{ccc}
+\Gamma[\theta_1 \circ \theta_2] \bvdash \alpha & \quad &
+\\\cline{1-1} \Gamma[\theta_1 \bullet \theta_2] \bvdash \alpha & &
+\Delta[\alpha]
+        \bvdash \gamma \\\hline
+\multicolumn{3}{c}{\Delta[\Gamma[\theta_1 \bullet \theta_2]]
+        \bvdash \gamma}
+\end{array} \\
+\quad\leadsto\quad
+\begin{array}{c}
+\Gamma[\theta_1 \circ \theta_2] \bvdash \alpha \quad
+        \Delta[\alpha] \bvdash \gamma \\\hline
+\begin{array}{c}
+\Delta[\Gamma[\theta_1 \circ \theta_2]] \bvdash \gamma \\\hline
+\Delta[\Gamma[\theta_1 \bullet \theta_2]] \bvdash \gamma
+\end{array}
+\end{array}
+\end{multline}
+%%
+Now for the case of (\textbf{I}--$\bullet$) on the right hand premiss.
+%%
+\begin{equation}
+\begin{array}{ccc}
+ & \qquad & \Theta_1 \bvdash \theta_1 \qquad \Theta_2 \bvdash \theta_2
+        \\\cline{3-3}
+\Gamma \bvdash \alpha & & \Delta[\alpha] \bvdash \gamma \\\hline
+\multicolumn{3}{c}{\Delta[\Gamma] \bvdash \gamma}
+\end{array}
+\end{equation}
+%%
+In this case $\gamma = \theta_1 \bullet \theta_2$. Furthermore,
+$\Delta = \Theta_1 \circ \Theta_2$ and the marked occurrence of
+$\alpha$ either is in $\Theta_1$ or in $\Theta_2$. Without loss of
+generality we assume that it is in $\Theta_1$. Then we can replace
+the proof by
+%%
+\begin{equation}
+\begin{array}{ccc}
+\Gamma \bvdash \alpha \qquad \Theta_1[\alpha] \bvdash \theta_1 & \qquad
+        & \\\cline{1-1}
+\Theta_1[\Gamma] \bvdash \theta_1 & & \Theta_2 \bvdash \theta_2 \\\hline
+\multicolumn{3}{c}{\Theta_1[\Gamma] \circ \Theta_2 \bvdash
+        \theta_1 \bullet \theta_2}
+\end{array}
+\end{equation}
+%%
+We have $\Theta_1[\Gamma] \circ \Theta_2 = \Delta[\Gamma]$ by
+hypothesis on the occurrence of $\alpha$. Now we look at the case
+where the left hand premiss of cut has been introduced by
+(\textbf{I}--$\bullet$). We may assume that the right hand premiss has
+been obtained through application of ($\bullet$--\textbf{I}). The case
+where $\alpha$ is a side formula is once again easy. So let
+$\alpha$ be main formula. We get the following local tree.
+%%
+\begin{multline}
+\begin{array}{c}
+\begin{array}{c}
+\Theta_1 \bvdash \theta_1 \qquad \Theta_2 \bvdash \theta_2 \\\hline
+\Theta_1 \circ \Theta_2 \bvdash \theta_1 \bullet \theta_2
+\end{array}
+        \qquad
+\begin{array}{c}
+\Delta[\theta_1 \circ \theta_2] \bvdash \gamma \\\hline
+\Delta[\theta_1 \bullet \theta_2] \bvdash \gamma
+\end{array}
+        \\\hline
+\Delta[\Theta_1 \circ \Theta_2] \bvdash \gamma
+\end{array}
+\qquad\leadsto\qquad \\
+%%
+\begin{array}{ccc}
+ & \qquad & \Theta_1 \bvdash \theta_1 \qquad
+        \Delta[\theta_1 \circ \theta_2] \bvdash \gamma \\\cline{3-3}
+\Theta_2 \bvdash \theta_2 & &
+        \Delta[\Theta_1 \circ \theta_2] \bvdash \gamma \\\hline
+\multicolumn{3}{c}{\Delta[\Theta_1 \circ \Theta_2] \bvdash \gamma}
+\end{array}
+\end{multline}
+%%
+In all cases the cut--weight (or the sum of the depth of the 
+cuts) has been reduced. 
+
+We shall also present a different formulation of $\mathsf{L}$ using
+natural deduction over ordered DAGs. Here are the rules:
+%%
+\begin{equation}
+$$\begin{array}{l@{\qquad}l}
+\mbox{\rm (\textbf{I}--$\bullet$)}\quad
+\begin{array}{c}
+\alpha\quad\beta \\\hline
+\mbox{\mtt ($\alpha\bullet\beta$)}
+\end{array}
+    &
+\mbox{\rm (\textbf{E}--$\bullet$)}\quad
+\begin{array}{c}
+\mbox{\mtt ($\alpha\bullet\beta$)} \\\hline
+\alpha \quad \beta
+\end{array}
+    \\
+    \\
+\mbox{\rm (\textbf{I}--{\mtt{\tf}})}\quad
+\begin{array}{c}
+[\alpha] \\
+\vdots   \\\hline \beta \\\hline \mbox{\mtt ($\alpha${\tf}$\beta$)}
+\end{array}
+    &
+\mbox{\rm (\textbf{E}--{\mtt{\tf}})}\quad
+\begin{array}{c}
+\beta \quad \mbox{\mtt ($\beta${\tb}$\alpha$)} \\\hline
+\alpha
+\end{array}
+    \\
+    \\
+\mbox{\rm (\textbf{I}--{\mtt{\tb}})}\quad
+\begin{array}{c}
+[\alpha] \\
+\vdots   \\\hline \beta \\\hline 
+\mbox{\mtt ($\alpha${\tf}$\beta$)}
+\end{array}
+    &
+\mbox{\rm (\textbf{E}--{\mtt{\tb}})}\quad
+\begin{array}{c}
+\mbox{\mtt ($\alpha${\tf}$\beta$)} \quad \beta \\\hline
+\alpha
+\end{array}
+\end{array}$$
+\end{equation}
+%%
+These rules are very much like the natural deduction rules for
+intuitionistic logic. However, two differences must be noted.
+First, suppose we disregard for the moment the rules for $\bullet$. 
+(This would incidentally give exactly the natural deduction calculus
+corresponding to $\mathsf{AB}$.) The rules must be understood to operate 
+on ordered trees. Otherwise, the difference between then rules 
+for {\mtt\tf} and the rules for {\mtt\tb} would be obliterated.
+Second, the elimination rule for $\bullet$ creates two linearly
+ordered daughters for a node, thus we not only create ordered
+trees, we in fact create ordered DAGs. We shall not spell out
+exactly how the rules are interpreted in terms of ordered DAGs,
+but we shall point out a few noteworthy things. First, this style of
+presentation is very much linguistically oriented. We may in fact
+proceed in the same way as for $\mathsf{AB}$ and define algorithms that
+decorate strings with certain categorial labels and proceed
+downward using the rules shown above. Yet, it must be clear that
+the so created structures cannot be captured by constituency rules
+(let alone rules of a CFG) for the simple reason
+that they are not trees. The following derivation is
+illustrative of this.
+%%
+\begin{equation}
+\begin{array}{ccccc}
+\multicolumn{5}{c}{(\alpha \bullet (\alpha\backslash\gamma)/\beta) %
+\bullet \beta} \\\hline
+\multicolumn{3}{c}{\alpha \bullet (\alpha\backslash\gamma)/\beta}
+    & \quad & \beta \\\hline
+\alpha & \quad & (\alpha \backslash\gamma)/\beta & \quad & \beta
+    \\\cline{3-5}
+\vdots  &       & \multicolumn{3}{c}{\alpha\backslash\gamma}
+\\\hline \multicolumn{5}{c}{\gamma}
+\end{array}
+\end{equation}
+%%
+Notice that if a rule has two premisses, these must be adjacent
+and follow each other in the order specified in the rule. No more
+is required. This allows among other to derive associativity, that
+is, $(\alpha \bullet\beta) \bullet \gamma \dashv\bvdash \alpha
+\bullet (\beta \bullet\gamma)$. However, notice the role of the
+so--called assumptions and their discharge. Once an assumption is
+discharged, it is effectively removed, so that the items to its
+left and its right are now adjacent. This plays a crucial role in
+the derivation of the rule of function composition.
+%%
+\begin{equation}
+\begin{array}{ccccc}
+\alpha/\beta & \quad & \beta/\gamma & \quad & \gamma^{\surd}
+    \\\cline{3-5}
+\vdots       &       & \multicolumn{3}{c}{\beta} \\\cline{1-5}
+             &       &    \alpha    &       & \\\cline{3-3}
+             &       & \alpha/\gamma &      &
+\end{array}
+\end{equation}
+%%
+As soon as the assumption $\gamma$ is removed, the top sequence
+reads $\alpha/\beta, \beta/\gamma$.
+
+The relationship with $\mathsf{L}$ is as follows. Let $\Gamma$ be a
+sequence of categories. We interpret this as a labelled DAG, which
+is linearly ordered. Now we successively apply the rules above. It
+is verified that each rule application preserves the property that
+the leaves of the DAG are linearly ordered. Define a category
+corresponding to a sequence as follows.
+%%
+\begin{equation}
+\begin{split}
+\alpha^{\bullet} & := \alpha \\
+(\alpha,\Delta)^{\bullet} & := \alpha \bullet \Delta^{\bullet}
+\end{split}
+\end{equation}
+%%
+First of all we say that for two sequences $\Delta$ and $\Delta'$,
+$\Delta'$ is \textbf{derivable from} $\Delta$ in the natural deduction 
+style calculus if there is a DAG constructed according to the rules 
+above, whose topmost sequence is $\Delta$ and whose lowermost sequence
+is $\Delta'$. (Notice that assumptions get discharged, so that we
+cannot simply say that $\Delta$ is the sequence we started off with.)
+The following is then shown by induction.
+%%
+\begin{thm}
+Let $\Delta$ and $\Theta$ be two sequences of categories. $\Theta$
+is derivable from $\Delta$ iff $\Delta \bvdash \Theta^{\bullet}$ is 
+derivable in $\mathsf{L}$.
+\end{thm}
+%%
+This shows that the natural deduction style calculus is
+effectively equivalent to $\mathsf{L}$.
+
+$\mathsf{L}$ allows for a result akin to the
+Curry--Howard--Isomorphism. This is an extension of the latter
+result in two respects. First, we have the additional type
+constructor $\bullet$, which we have to match by some category
+constructor, and second, there are different structural rules.
+First, the new type constructor is actually the pair--formation.
+%%
+\begin{defn}
+%%%
+\index{projection}%%
+\index{$\lambda^{\bullet}$--term}%%
+%%%
+Every $\lambda$--term is a $\lambda^{\bullet}$--\textbf{term}.
+Given two $\lambda^{\bullet}$--terms $M$ and $N$, $\auf M, N\zu$, $p_1(M)$ 
+and $p_2(M)$ also are $\lambda^{\bullet}$--\textbf{terms}.
+Further, the following equations hold.
+%%
+\begin{equation}
+p_1(\auf M, N\zu) = M, \qquad p_2(\auf M,N\zu) = N.
+\end{equation}
+%%
+$p_1(U)$ and $p_2(U)$ are not defined if $U$ is not of the
+form $\auf M, N\zu$ for some $M$ and $N$. The functions $p_1$
+and $p_2$ are called the \textbf{projections}.
+\end{defn}
+%%
+Notice that antecedents of sequents no longer consist of sets of
+sequences. Hence, $\Gamma$, $\Delta$, $\Theta$ now denote
+sequences rather than sets. In Table~\ref{tab:seq} we display the
+new calculus.
+%%
+\begin{table}
+\caption{$\mathsf{L}$ with $\lambda$--Term Annotation}%%
+\label{tab:seq}
+$$\begin{array}{ll}
+\mbox{\rm (ax)} \quad x : \varphi \bvdash x : \varphi
+   &   \\
+\multicolumn{2}{l}{\mbox{\rm (cut)} \quad
+\begin{array}{c}
+\Gamma \bvdash M : \varphi \quad \Delta, x : \varphi, \Theta \bvdash
+    N : \beta \\\hline
+\Delta, \Gamma, \Theta \bvdash [M/x]N : \beta
+\end{array}}
+\\
+\mbox{(\textbf{E}--{\mtt{\tf}})}\quad
+\begin{array}{c}
+\Gamma \bvdash M : \alpha/\beta \quad \Delta \bvdash N : \beta
+\\\hline
+\Gamma, \Delta \bvdash MN : \alpha
+\end{array}
+    &
+\mbox{(\textbf{I}--{\mtt{\tf}})}\quad
+\begin{array}{c}
+\Gamma, x : \beta \bvdash M : \alpha \\\hline
+\Gamma \bvdash \lambda x.M : \alpha/\beta
+\end{array}
+\\
+\mbox{(\textbf{E}--{\mtt{\tb}})}\quad
+\begin{array}{c}
+\Gamma \bvdash M : \beta \backslash\alpha \quad \Delta \bvdash N : \beta
+\\\hline
+\Delta, \Gamma \bvdash MN : \alpha
+\end{array}
+    &
+\mbox{(\textbf{I}--{\mtt{\tb}})}\quad
+\begin{array}{c}
+x : \beta, \Gamma \bvdash M : \alpha \\\hline
+\Gamma \bvdash \lambda x.M : \beta \backslash \alpha
+\end{array}
+\\
+\multicolumn{2}{l}{\mbox{(\textbf{E}--$\bullet$)}\quad
+\begin{array}{c}
+\Gamma \bvdash M : \alpha\bullet\beta \quad \Delta, x : \alpha, y : \beta,
+    \Theta
+     \bvdash U : \psi
+\\\hline
+\Delta, \Gamma, \Theta \bvdash [p_1(M)/x][p_2(M)/y]U : \psi
+\end{array}} \\
+\mbox{(\textbf{I}--$\bullet$)}\quad
+\begin{array}{c}
+\Gamma \bvdash M : \alpha \quad \Delta \bvdash N : \beta \\\hline
+\Gamma, \Delta \bvdash \auf M, N\zu :
+    \alpha \bullet \beta
+\end{array}
+\end{array}$$
+\end{table}
+%%
+We have also put a general constraint on the proofs that variables
+may not be used twice. To implement this constraint, we define the
+notion of a linear term:
+%%
+\begin{defn}
+%%%
+\index{$\lambda^{\bullet}$--term!strictly linear}%%%
+\index{$\lambda^{\bullet}$--term!linear}%%%
+%%%
+A term $M$ is \textbf{strictly linear} if for every variable 
+$x$ and every subterm $N$, $\focc(x,N) \leq 1$. A term is \textbf{linear} 
+if it results from a strictly linear term $M$ by iterated 
+replacement of a subterm $M'$ by $[p_1(N)/x][p_2(N)/y]M'$, 
+where $N$ is a linear term.
+\end{defn}
+%%
+The calculus above yields only linear terms if we start with 
+variables and require in the rules (\textbf{I}--$\bullet$), 
+(\textbf{E}--{\mtt{\tf}}), (\textbf{E}--{\mtt{\tb}}) that the 
+sets of free variables be disjoint, and that in 
+(\textbf{I}--{\mtt{\tf}}) and (\textbf{I}--{\mtt{\tb}}) the
+variable occurs exactly once free in $M$. In this way we can 
+ensure that for every sequent derivable in $\mathsf{L}$ there 
+actually exists a labelling such that the labelled sequent is 
+derivable in the labelled
+calculus. This new calculus establishes a close correspondence
+between linear $\lambda^{\bullet}$--terms and the so--called
+multiplicative fragment of linear logic, which naturally arises
+from the above calculus by stripping off the terms and leaving
+only the formulae. A variant of proof normalization can be shown,
+and all this yields that $\mathsf{L}$ has quite well--behaved
+properties.
+
+In presence of the rules (ass1) and (ass2) $\bullet$ behaves exactly
+like concatenation, that is, it is a fully associative operation.
+Therefore we shall change the notation in what is to follow. In
+place of structures consisting of categories we shall consider
+finite sequences of categories, that is, strings over 
+$\Cat_{\mbox{\smtt{\tb}}, \bullet, \mbox{\smtt{\tf}}}(C)$. 
+We denote concatenation by comma, as is commonly done.
+
+Now we return to the theory of meaning. In the previous section we
+have seen how to extend $\mathsf{AB}$ by a component for meanings
+which computes the meaning in tandem with the category. We shall
+do the same here. To this end we shall have to first clarify what
+we mean by a realization of $\alpha \bullet \beta$. We shall agree
+on the following.
+%%
+\begin{equation}
+\real{\alpha \bullet \beta} := \real{\alpha} \times \real{\beta}
+\end{equation}
+%%
+The rules are tailored to fit this interpretation. They are
+as follows.
+%%
+\begin{equation}
+\begin{array}{c}
+        \Gamma[\Delta_1 \circ (\Delta_2 \circ \Delta_3)]
+    \bvdash \alpha : M \\\hline
+        \Gamma[(\Delta_1 \circ \Delta_2) \circ \Delta_3]
+    \bvdash \alpha : M
+         \end{array}
+\end{equation}
+%%
+This means that the restructuring of the term is without influence
+on its meaning. Likewise we have
+%%
+\begin{equation}
+\begin{array}{c}
+        \Gamma[(\Delta_1 \circ \Delta_2) \circ \Delta_3]
+    \bvdash \alpha : M
+    \\\hline
+        \Gamma[\Delta_1 \circ (\Delta_2 \circ \Delta_3)]
+    \bvdash \alpha : M
+        \end{array}
+\end{equation}
+%%%
+So, for $\bullet$ we assume the following rule.
+%%
+\begin{equation}
+\label{eq:bull}
+\begin{array}{c}
+        \Gamma[\alpha : x_{\alpha} \circ \beta : x_{\beta}]
+    \bvdash \gamma : M \\\hline
+        \Gamma[\alpha \bullet \beta] \bvdash \gamma :
+    [p_1(z_{\alpha\bullet \beta})/x_{\alpha},
+    p_2(z_{\alpha\bullet \beta})/x_{\beta}]M
+        \end{array}
+\end{equation}
+%%
+\eqref{eq:bull} says that in place of a function of two arguments
+$\alpha$ and $\beta$ we can form a function of a single argument
+of type $\alpha \bullet \beta$. The two arguments we can
+recover by application of the projection functions. The fourth
+rule finally tells us how the type/category $\alpha \bullet \beta$
+is interpreted.
+%%
+\begin{equation}
+\begin{array}{c}
+        \Gamma \bvdash \alpha : M \qquad
+        \Delta \bvdash \beta : N \\\hline
+        \Gamma \circ \Delta \bvdash \alpha \bullet \beta :
+    \auf M, N\zu
+        \end{array}
+\end{equation}
+%%
+Here we have the same problem as before with $\mathsf{AB}$. The meaning
+assignments that are being computed are not in full
+accord with the interpretation.  The term $\mbox{\tt (x}_0\mbox{\tt %
+(x}_1\mbox{\tt x}_2\mbox{\tt ))}$ does not denote the same
+function as $\mbox{\tt ((x}_0\mbox{\tt x}_1\mbox{\tt
+)x}_2\mbox{\tt )}$. (Usually, one of them is not even well
+defined.) So this raises the question whether it is at all
+legitimate to proceed in this way. We shall avoid the question by
+introducing a totally different calculus, sign based $\mathsf{L}$ 
+%%%
+\index{$\mathsf{L}$}%%%
+%%%
+(see Table~\ref{tab:lz}), which builds on the calculus $\mathsf{N}$ of the
+previous section. The rules (\textbf{ass1}) and (\textbf{ass2}) are
+dropped. Furthermore, ($\bullet$--\textbf{I}) is restricted to
+$\Gamma = \varnothing$. These restrictions are taken over from
+$\mathsf{N}$ for the abstraction rules.
+%%
+\begin{table}
+\caption{The Sign Based Calculus $\mathsf{L}$}%%
+\label{tab:lz}
+$$\begin{array}{l@{\quad}l}
+\mbox{(ax)} & \vec{x} : \alpha : x_{\zeta}
+    \bvdash \vec{x} : \alpha : x_{\zeta}, 
+\qquad\qquad
+\zeta = \sigma(\alpha) 
+                \\
+\mbox{(\textbf{I}--{\mtt{\tf}})} & \begin{array}{c}
+                \Gamma \circ \vec{x} : \alpha : x_{\zeta}
+        \bvdash \vec{y} : \beta : N
+        \\\hline
+                \Gamma \bvdash \vec{y}/ \vec{x} : \beta/\alpha :
+        \lambda x_{\zeta}. N
+              \end{array} \qquad
+    \begin{array}{l} 
+	\mbox{$x_{\zeta}$ an argument variable,}  \\
+	\focc(x_{\zeta},N) \leq 1 
+	\end{array} \\
+\mbox{(\textbf{I}--{\mtt{\tb}})} & \begin{array}{c}
+                \vec{x} : \alpha : x_{\zeta} \circ \Gamma
+        \bvdash  \vec{y} : \beta : N
+        \\\hline
+                \Gamma \bvdash \vec{x}\backslash \vec{y} :
+        \alpha \backslash \beta :
+        \lambda x_{\zeta}.N
+                \end{array} \qquad
+	\begin{array}{l}
+              \mbox{$x_{\zeta}$ an argument variable,} \\ 
+		\focc(x_{\zeta},N) \leq 1 
+	\end{array} \\
+\mbox{(\textbf{E}--{\mtt{\tf}})} & \begin{array}{c}
+        \Gamma \bvdash \vec{x} : \alpha : M
+    \qquad \Delta \bvdash \vec{y} : \beta/\alpha : N \\\hline
+            \Delta \circ \Gamma \bvdash \vec{y}\conc \vec{x} : \beta :
+        NM
+              \end{array} \\
+\mbox{(\textbf{E}--{\mtt{\tb}})} & \begin{array}{c}
+        \Gamma \bvdash \vec{x} : \alpha : M \qquad
+    \Delta \bvdash \vec{y} : \alpha\backslash \beta : N \\\hline
+            \Gamma \circ \Delta \bvdash \vec{x} \conc \vec{y} : \beta :
+        NM
+                \end{array} \\
+\mbox{($\bullet$--\textbf{I})} &
+    \begin{array}{c}
+        \vec{x} : \alpha : x_{\zeta} \circ
+        \vec{y} : \beta : y_{\eta} \bvdash \vec{z} : \gamma : M
+    \\\hline
+            \vec{x}\conc \vec{y} : \alpha \bullet \beta :
+        z_{\zeta \bullet \eta} \bvdash \vec{z} : \gamma
+        : [p_1(z_{\zeta \bullet \eta})/x_{\zeta},
+        p_2(z_{\zeta \bullet \eta})/y_{\eta}]M
+                \end{array} \\
+\mbox{(\textbf{I}--$\bullet$)} & \begin{array}{c}
+        \Gamma \bvdash \vec{x} : \alpha : M \qquad
+    \Delta \bvdash \vec{y} : \beta : N \\\hline
+            \Gamma \circ \Delta \bvdash \vec{x} \conc \vec{y} :
+        \alpha \bullet \beta :
+        \auf M, N\zu
+                \end{array} \\
+\end{array}$$
+\end{table}
+%%
+Sign based $\mathsf{L}$ has the global side condition that no variable 
+is used in two different leaves. This condition can be replaced (up to 
+$\alpha$--conversion) by the condition that all occurring terms are 
+linear. In turn, this can be implemented by the adding suitable side 
+conditions on the rules. 
+
+Sign based $\mathsf{L}$ is not as elegant as plain categorial $\mathsf{L}$. 
+However, it is semantically correct. If one desperately wants to have 
+associativity, one has to introduce combinators at the right hand side. 
+So, a use of the associativity rule is accompanied in the semantics by 
+a use of $\mathsf{C}$ with $\mathsf{C}MNP = M\mbox{\tt (} NP\mbox{\tt )}$. 
+We shall not spell out the details here.
+%%
+\vplatz
+\exercise
+Assume that in place of sequents of the form $\alpha \bvdash \alpha$ for
+arbitrary $\alpha$ only sequents $c \bvdash c$, $c \in C$,
+are axioms. Show that with the rules of $\mathsf{L}$
+$\alpha \bvdash \alpha$ can be derived for every
+$\alpha$.
+%%
+%\vplatz
+%\exercise
+%Prove Theorem~\ref{gruppenwertig}.
+%%
+\vplatz
+\exercise
+Let $G = \auf C, S, A, \zeta, \mathsf{NL}^-\zu$ be a
+categorial sequent grammar. Show that the language
+$\{\vec{x} : \; \vdash_G \vec{x}\}$ is context free.
+%%
+\vplatz \exercise%%
+Show that the sequent $\alpha/\beta \circ \beta/\gamma \bvdash
+\alpha/\gamma$ is derivable in $\mathsf{L}$ but not in $\mathsf{AB}$.
+What semantics does the structure $\alpha/\beta \circ
+\beta/\gamma$ have?
+%%%
+\vplatz
+\exercise
+%%%
+\index{loop}%%
+%%%%
+A \textbf{loop} is a structure $\auf L, \cdot, \backslash, /\zu$
+where $\Omega(\cdot) = \Omega(\backslash) = \Omega(/)= 2$ and
+the following equations hold for all $x, y \in L$.
+%%
+\begin{equation}
+x \cdot (x\backslash y) = y, \quad (y/x) \cdot x = y
+\end{equation}
+%%
+The categories do not form a loop with respect to $\backslash$,
+$/$ and $\cdot$ (!), for the reason that $\cdot$ is only
+partially defined. Here is a possible remedy. Define
+$\approx\,  \subseteq \Cat_{{\smtt{\tb}}, \bullet, {\smtt{\tf}}}(C)^2$ 
+to be the least congruence such that
+%%
+\begin{equation}
+(\alpha \bullet \beta)/\beta \approx \alpha, \qquad
+\beta\backslash(\beta\bullet \alpha) \approx \alpha
+\end{equation}
+%%
+Show that the free algebra of categories over $C$ factored by
+$\approx$ is a loop. What is $\alpha \cdot \beta$ in the factored
+algebra?
+%%%
+\vplatz 
+\exercise%%
+Show that the following rules are admissible in $\mathsf{L}$.
+%%
+\begin{equation}
+\mbox{($\bullet$--\textbf{E})}\
+\begin{array}{c}
+\Gamma[\theta_1 \bullet \theta_2] \bvdash \alpha \\\hline
+\Gamma[\theta_1 \circ \theta_2]   \bvdash \alpha
+\end{array}
+\quad \mbox{(\textbf{E}--{\mtt{\tf}})}\
+\begin{array}{c}
+\Gamma \bvdash \alpha/\beta \\\hline \Gamma \circ \beta \bvdash
+\alpha
+\end{array}
+\quad \mbox{(\textbf{E}--{\mtt{\tb}})}\
+\begin{array}{c}
+\Gamma \bvdash \beta\backslash \alpha \\\hline \beta \circ \Gamma
+\bvdash \alpha
+\end{array}
+\end{equation}

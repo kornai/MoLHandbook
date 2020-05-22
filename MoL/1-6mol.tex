@@ -1,0 +1,1152 @@
+\section{Grammar and Structure}
+\label{einsvier}
+%
+%
+%
+Processes that replace strings by strings can often be considered 
+as processes that successively replace parts of structures by 
+structures. In this section we shall study processes of structure 
+replacement. They can in principle operate on any kind of structure.
+But we will restrict our attention to algorithms that generate ordered 
+trees. There are basically two kinds of algorithms: the first is 
+like the grammars of the previous section, generating intermediate 
+structures that are not proper structures of the language; and the 
+second, which generates in each step a structure of the language.
+
+%%%
+\index{multigraph}%%
+%%%
+Instead of graphs we shall deal with so--called {\it multigraphs}. 
+A \textbf{directed multigraph} is
+a structure $\auf V, \auf K_i : i < n\zu\zu$ where is $V$
+%%%
+\index{vertex}%%
+%%%
+a set, the set of \textbf{vertices}, and $K_i \subseteq V \times V$
+%%%
+\index{edge}%%
+%%%
+a disjoint set, the set of \textbf{edges} of type $i$. In our case
+edges are always directed. We shall not mention this fact explicitly
+later on. Ordered trees are one example
+among many of (directed) multigraphs. For technical reasons we shall 
+not exclude the case $V = \varnothing$, so that $\auf \varnothing, 
+\auf \varnothing : i < n\zu\zu$ also is a multigraph. Next we shall 
+introduce a
+%%%
+\index{vertex colouring}%%
+%%%
+colouring on the vertices. A \textbf{vertex--colouring} is a
+function $\mu_V \colon V \pf F_V$ where $F_V$ is a nonempty set, the
+set of \textbf{vertex colours}.
+%%%
+\index{vertex colour}%%
+%%%
+Think of the labelling as being a vertex colouring on the graph.
+The principal structures are therefore vertex coloured multigraphs.
+However, from a technical point of view the different edge relations
+can also be viewed as colourings on the edges. Namely, if
+$v$ and $w$ are vertices, we colour the edge $\auf v,w\zu$ by
+the set $\{i : \auf v,w\zu \in K_i\}$. This set may be empty.
+%%
+\begin{defn}
+%%%
+\index{multigraph}%%%
+\index{$\gamma$--graph}%%%
+%%%%
+An $\auf F_V, F_E\zu$--\textbf{coloured multigraph}
+or simply a $\gamma$--\textbf{graph} (\textbf{over}
+$F_V$ \textbf{and} $F_E$) is a triple $\auf V, \mu_V, \mu_E\zu$,
+where $V$ is a (possibly empty) set and $\mu_V \colon V \pf F_V$ as
+well as $\mu_E \colon V \times V \pf \wp(F_E)$ are functions.
+\end{defn}
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(10,10)
+    \put(1.5,2){\makebox(0,0)[r]{$w$}}
+    \put(1.5,8){\makebox(0,0)[r]{$x$}}
+    \put(8.5,8){\makebox(0,0)[l]{$y$}}
+    \put(8.5,2){\makebox(0,0)[l]{$z$}}
+        \put(4,5){\makebox(0,0)[r]{$p$}}
+\put(2,2){\makebox(0,0){$\bullet$}}
+\put(8,2){\makebox(0,0){$\bullet$}}
+    \put(8,2){\vector(-1,0){5.8}}
+        \put(5,1.8){\makebox(0,0)[t]{\tiny 1}}
+    \put(8,2){\vector(0,1){5.8}}
+        \put(8.2,5){\makebox(0,0)[l]{\tiny 2}}
+\put(2,8){\makebox(0,0){$\bullet$}}
+    \put(2,8){\vector(0,-1){5.8}}
+        \put(1.8,5){\makebox(0,0)[r]{\tiny 2}}
+    \put(2,8){\vector(1,-1){2.8}}
+        \put(3.5,6.8){\makebox(0,0)[l]{\tiny 1}}
+    \put(2,8){\vector(1,0){5.8}}
+        \put(5,8.2){\makebox(0,0)[b]{\tiny 1}}
+\put(8,8){\makebox(0,0){$\bullet$}}
+\put(5,5){\makebox(0,0){$\bullet$}}
+    \put(5,5){\circle{1}}
+    \put(5,5){\vector(-1,-1){2.8}}
+        \put(3.5,3.8){\makebox(0,0)[b]{\tiny 2}}
+    \put(5,5){\vector(1,1){2.8}}
+        \put(6.5,6.7){\makebox(0,0)[b]{\tiny 2}}
+\put(5,0.5){\makebox(0,0){$\GG_1$}}
+\end{picture}
+\begin{picture}(10,10)
+\put(3,3){\makebox(0,0){$\bullet$}}
+    \put(2.5,3){\makebox(0,0)[r]{$a$}}
+    \put(3,3){\vector(0,1){3.8}}
+        \put(2.8,5){\makebox(0,0)[r]{\tiny 1}}
+\put(3,7){\makebox(0,0){$\bullet$}}
+    \put(2.5,7){\makebox(0,0)[r]{$b$}}
+    \put(3,7){\vector(1,0){3.8}}
+        \put(5,7.2){\makebox(0,0)[b]{\tiny 2}}
+\put(7,7){\makebox(0,0){$\bullet$}}
+    \put(7.5,7){\makebox(0,0)[l]{$c$}}
+\put(5,0.5){\makebox(0,0){$\GG_2$}}
+\end{picture}
+%%
+\begin{picture}(13,13)
+    \put(1.5,2){\makebox(0,0)[r]{$w$}}
+    \put(1.5,11){\makebox(0,0)[r]{$x$}}
+    \put(11.5,11){\makebox(0,0)[l]{$y$}}
+    \put(11.5,2){\makebox(0,0)[l]{$z$}}
+\put(2,2){\makebox(0,0){$\bullet$}}
+    \put(2,2){\vector(1,1){2.8}}
+        \put(3.5,3.8){\makebox(0,0)[b]{\tiny 1}}
+\put(11,2){\makebox(0,0){$\bullet$}}
+    \put(11,2){\vector(-1,0){8.8}}
+        \put(6.5,1.8){\makebox(0,0)[t]{\tiny 1}}
+    \put(11,2){\vector(0,1){8.8}}
+        \put(11.2,6.5){\makebox(0,0)[l]{\tiny 2}}
+\put(2,11){\makebox(0,0){$\bullet$}}
+    \put(2,11){\vector(0,-1){8.8}}
+        \put(1.8,6.5){\makebox(0,0)[r]{\tiny 2}}
+    \put(2,11){\vector(1,-1){2.8}}
+        \put(3.5,9.8){\makebox(0,0)[l]{\tiny 1}}
+    \put(2,11){\vector(1,0){8.8}}
+        \put(6.5,11.2){\makebox(0,0)[b]{\tiny 1}}
+\put(11,11){\makebox(0,0){$\bullet$}}
+\put(5,5){\makebox(0,0){$\bullet$}}
+    \put(4.5,5){\makebox(0,0)[r]{$a$}}
+    \put(5,5){\vector(0,1){2.8}}
+        \put(4.8,6.5){\makebox(0,0)[r]{\tiny 1}}
+\put(5,8){\makebox(0,0){$\bullet$}}
+    \put(4.5,8){\makebox(0,0)[r]{$b$}}
+    \put(5,8){\vector(1,0){2.8}}
+        \put(6.5,8.2){\makebox(0,0)[b]{\tiny 2}}
+\put(8,8){\makebox(0,0){$\bullet$}}
+    \put(8.5,8){\makebox(0,0)[l]{$c$}}
+    \put(8,8){\vector(1,1){2.8}}
+        \put(9.5,9.8){\makebox(0,0)[b]{\tiny 2}}
+\put(6.5,0.5){\makebox(0,0){$\GG_3$}}
+\end{picture}
+\end{center}
+\caption{Graph Replacement}
+\label{fig:graphersetzung}
+\end{figure}
+%%%%
+Now, in full analogy to the string case we shall distinguish
+terminal and nonterminal colours. For simplicity, we shall study 
+only replacements of a single vertex by a graph. Replacing a vertex 
+by another structure means embedding a structure into some other 
+structure. We need to be told how to do so. Before 
+we begin we shall say something about the graph replacement in 
+general. The reader is asked to look at
+Figure~\ref{fig:graphersetzung}. The graph $\GG_3$ is the result of 
+replacing in $\GG_1$ the encircled dot by $\GG_2$. The edge colours 
+are $1$ and $2$ (the vertex colours pose no problems, so they are
+omitted here for clarity).
+
+Let $\GG = \auf E, \mu_E, \mu_K\zu$ be a $\gamma$--graph and
+$M_1$ and $M_2$ be disjoint subsets of $E$ with $M_1 \cup M_2 = E$. 
+Put $\GM_i = \auf M_i, \mu^i_V, \mu^i_E\zu$, where 
+$\mu^i_V := \mu_V \restriction M_i$ and
+$\mu^i_E := \mu_E \restriction M_i \times M_i$.
+These graphs do not completely determine $\GG$
+since there is no information on the edges between them.
+We therefore define functions $\ein, \aus\colon
+M_2 \times F_E \pf \wp(M_1)$, which for every vertex of $M_2$
+and every edge colour name the set of all vertices of $M_1$
+which lie on an edge with a vertex that either is directed
+into $M_1$ or goes outwards from $M_1$.
+%%
+%%%
+\index{$\ein(x,f)$, $\aus(x,f)$}%%%
+%%%
+\begin{subequations}
+\begin{align}
+\ein(x,f) & := \{y \in M_1 : f \in \mu_E(\auf y,x\zu)\} \\
+\aus(x,f) & := \{y \in M_1 : f \in \mu_E(\auf x,y\zu)\}
+\end{align}
+\end{subequations}
+%%
+It is clear that $\GM_1$, $\GM_2$ and the functions
+$\ein$ and $\aus$ determine $\GG$ completely.
+In our example we have
+%%
+\begin{align}
+\ein(p,1) & = \{x\} & \ein(p,2) & = \varnothing \\\notag
+\aus(p,1) & = \varnothing & \aus(p,2) & = \{w,y\}
+\end{align}
+%%
+Now assume that we want to replace $\GM_2$ by a different graph
+$\GH$. Then not only do we have to know $\GH$  but also the 
+functions $\ein, \aus \colon H \times F_E \pf
+\wp(M_1)$. This, however, is not the way we wish to proceed
+here. We want to formulate rules of replacement that are
+general in that they do not presuppose exact knowledge about the
+embedding context. We shall only assume that the functions
+$\ein(x,f)$ and $\aus(x,f)$, $x \in H$, are systematically defined 
+from the sets $\ein(y,g)$, $\aus(y,g)$, $y \in M_2$. We shall 
+therefore only allow to specify how the sets of the first kind are 
+formed from the sets of the second kind. This we do by means of
+four so--called {\it colour functionals}. A \textbf{colour functional 
+from} $\GH$ \textbf{to} $\GM_2$ is a map
+%%%
+\index{colour functional}%%
+%%%
+%%
+\begin{equation}
+\GF \colon H \times F_E \pf \wp(M_2 \times F_E)
+\end{equation}
+%%
+In our case a functional is a function
+from $\{a,b,c\} \times \{1,2\}$ to $\wp(\{p\} \times \{1,2\})$.
+We can simplify this to a function from $\{a,b,c\} \times \{1,2\}$
+to $\wp(\{1,2\})$. The colour functionals are called $\goth{II}$,
+$\goth{IO}$, $\goth{OI}$ and $\goth{OO}$. 
+%%%
+\index{$\goth{II}$, $\goth{IO}$, $\goth{OI}$, $\goth{OO}$}%%%
+%%%
+For the example of Figure~\ref{fig:graphersetzung} we get the 
+following colour functionals (we only give values when the 
+functions do not yield $\varnothing$).
+%%
+\begin{align}
+\goth{II} & \colon \auf b, 1\zu \mapsto \{1\} &
+\goth{OI} & \colon \auf a, 2\zu \mapsto \{1\} \\\notag
+\goth{IO} & \colon \varnothing &
+\goth{OO} & \colon \auf c, 2\zu \mapsto \{2\}
+\end{align}
+%%
+The result of substituting $\GM_2$ by $\GH$ by means of the
+colour functionals from $\GF$ is denoted by $\GG[\GH/\GM_2 : \GF]$.
+%%%
+\index{$\GG[\GH/\GM : \GF]$}%%
+%%%
+This graph is the union of $\GM_1$ and $\GH$ together with the
+functions $\ein^+$ and $\aus^+$, which are defined as follows.
+%%
+\begin{equation}
+\begin{split}
+\ein^+(x,f) := & \phantom{\cup}\, \bigcup \auf \ein(x,g) :
+    g \in \goth{II}(x,f)\zu \\
+    & \cup \bigcup \auf \aus(x,g) :
+    g \in \goth{OI}(x,f) \zu \\
+\aus^+(x,f) := & \phantom{\cup}\, \bigcup \auf \aus(x,g) :
+    g \in \goth{OO}(x,f)\zu \\
+    & \cup \bigcup \auf \ein(x,g) :
+    g \in \goth{IO}(x,f) \zu
+\end{split}
+\end{equation}
+%%
+If $g \in \goth{II}(x,f)$ we say that an edge with
+colour $g$ into $x$ is {\it transmitted as an ingoing edge of
+colour $f$ to $y$}. If $g \in \goth{OI}(x,f)$ we say
+that an edge with colour $g$ going out from $x$ is {\it transmitted
+as an ingoing edge with colour $f$ to $y$}. Analogously for
+$\goth{IO}$ and $\goth{OO}$. So, we do allow for an edge to
+change colour and direction when being transmitted.
+If edges do not change direction, we only need the functionals
+$\goth{II}$ and $\goth{OO}$, which are then denoted simply by
+$\goth{I}$ and $\goth{O}$. Now we look at the special case where
+$M_2$ consists of a single element, say $x$. In this case a
+colour functional simply is a function $\GF \colon H \times F_E \pf %
+\wp(F_E)$.
+%%
+\begin{defn}
+%%%
+\index{graph grammar}%%
+\index{graph grammar!context free}%%
+\index{start graph}%%
+%%%
+A \textbf{context free graph grammar with edge replacement} ---
+a \textbf{context free $\gamma$--grammar} for short --- is a
+quintuple of the form
+%%
+\begin{equation}
+\Gamma = \auf \GS, F_V, F^T_V, F_E, R\zu
+\end{equation}
+%%
+in which $F_V$ is a finite set of vertex colours, $F_E$
+a finite set of edge colours, $F_V^T \subseteq F_V$
+a set of so--called \textbf{terminal vertex colours}, $\GS$ a
+$\gamma$--graph over $F_V$ and $F_E$, the so--called
+\textbf{start graph}, and finally $R$ a finite set of triples
+$\auf X, \GH, \BF\zu$ such that $X \in F_V - F_V^T$ is a
+nonterminal vertex colour, $\GH$ a $\gamma$--graph over $F_V$
+and $F_E$ and $\BF$ is a matrix of colour functionals.
+\end{defn}
+%%
+\index{derivation}%%
+%%%%
+A \textbf{derivation} in a $\gamma$--grammar $\Gamma$ is defined as 
+follows.  For $\gamma$--graphs $\GG$ and $\GH$ with the colours
+$F_V$ and $F_E$, $\GG \Pf^1_R \GH$ means that there is
+$\auf X, \GM, \BF\zu \in R$ such that $\GH = \GG [\GM/\GX : \BF]$,
+where $\GX$ is a subgraph consisting of a single vertex $x$
+having the colour $X$. Further we define $\Pf^{\ast}_R$ to be
+the reflexive and transitive closure of $\Pf^1_R$ and finally we put
+$\Gamma \vdash \GG$ if $\GS \Pf^{\ast}_R \GG$. A derivation
+\textbf{terminates} if there is no vertex with a nonterminal colour.
+%%%
+\index{$L_{\gamma}(\Gamma)$}%%%%
+%%%
+We write $L_{\gamma}(\Gamma)$ for the class of $\gamma$--graphs
+that can be generated from $\Gamma$. Notice that the edge colours
+only the vertex colours are used to steer the derivation.
+
+We also define the productivity of a rule as the difference
+between the cardinality of the replacing graph and the cardinality
+of the graph being replaced. The latter is 1 in context free
+$\gamma$--grammars, which is the only type we shall study here. So, 
+the productivity is always $\geq - 1$. It equals $-1$ if the replacing 
+graph is the empty graph. A rule has productivity $0$ if the replacing 
+graph consists of a single vertex. In the exercises the reader will 
+be asked to verify that we can dispense with rules of this kind.
+
+Now we shall define two types of context free $\gamma$--grammars.
+Both are context free as $\gamma$--grammars but the second type
+can generate non--CFLs. This shows that the concept of 
+$\gamma$--grammar is more general. We shall begin with ordinary 
+CFGs. We can view them alternatively as
+grammars for string replacement or as grammars that replace trees
+by trees. For that we shall now assume that there are no rules of
+the form $X \pf \varepsilon$. (For such rules generate trees
+whose leaves are not necessarily marked by letters from $A$. This
+case can be treated if we allow labels to be in $A_{\varepsilon}
+= A \cup \{\varepsilon\}$, which we shall not do here.) Let 
+$G = \auf \mbox{\tt S}, A, N, R\zu$ be such a grammar.
+We put $F_V := A \cup (N \times 2)$.  We write $X^0$ for
+$\auf X,0\zu$ and $X^1$ for $\auf X,1\zu$. $F_V^T := A \cup
+N \times \{0\}$. $F_E := \{<, \sqsubset\}$. Furthermore, the
+start graph consists of a single vertex labelled $\mbox{\tt S}^1$ 
+and no edge. The rules of replacement are as follows.
+Let $\rho = X \pf \alpha_0 \alpha_1 \dotsb \alpha_{n-1}$
+be a rule from $G$, where none of the $\alpha_i$ is $\varepsilon$.
+Then we define a $\gamma$--graph $\GH_{\rho}$
+as follows. $H_{\rho} := \{y_i : i < n\} \cup \{x\}$.
+$\mu_V(x) = X^0$, $\mu_V(y_i) = \alpha_i$ if
+$\alpha_i \in A$ and $\mu_V(y_i) = \alpha_i^1$ if
+$\alpha_i \in N$. 
+%%
+\begin{equation}
+\begin{split}
+\mu_E^{-1}(\{<\}) & := \{\auf y_i, x\zu : i < n\},  \\
+\mu_E^{-1}(\{\sqsubset\}) & := \{\auf y_i, y_j \zu : i < j < n\}.
+\end{split}
+\end{equation}
+%%
+This defines $\GH_{\rho}$. Now we define the colour functionals.
+For $u \in n$ we put
+%%
+\begin{equation}
+\begin{split}
+\GI_{\rho}(u, \sqsubset) & := \{\sqsubset\} & 
+	 \GO_{\rho}(u, \sqsubset) & := \{\sqsubset\} \\
+\GI_{\rho}(u, <)         & := \{<\} &
+	\GO_{\rho}(u, <) & := \{<\}
+\end{split}
+\end{equation}
+%%
+Finally we put $\rho^{\gamma} := \auf X, \GH_{\rho}, \{\GI_{\rho}, %
+\GO_{\rho}\}\zu$. $R^{\gamma} := \{\rho^{\gamma} : \rho \in R\}$.
+%%
+\begin{equation}
+\gamma G := \auf \GS, F_E, F_E^T, F_T, R^{\gamma}\zu 
+\end{equation}
+%%
+We shall show that this grammar yields exactly those trees that
+we associate with the grammar $G$. Before we do so, a few remarks
+are in order. The nonterminals of $G$ are now from a technical
+viewpoint terminals since they are also part of the structure
+that we are generating. In order to have any derivation at all
+we define two equinumerous sets of nonterminals. Each nonterminal
+$N$ is split into the nonterminal $N^1$ (which is nonterminal
+in the new grammar) and $N^0$ (which is now a terminal vertex
+colour). We call the first kind \textbf{active}, \textbf{nonactive}
+%%%
+\index{node!active}%%
+\index{node!nonactive}%%
+%%%
+the second. Notice that the rules are formulated in such a way
+that only the leaves of the generated trees carry active
+nonterminals. A single derivation step is displayed in
+Figure~\ref{fig:cfggraph}. In it, the rule $\mbox{\tt X} \pf %
+\mbox{\tt AcA}$ has been applied to the tree to the left. The
+result is shown on the right hand side.
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(13,13)
+\put(2,5){\line(1,1){6}}
+\put(2,5){\line(1,0){12}}
+\put(14,5){\line(-1,1){6}}
+\put(8,5){\makebox(0,0){$\bullet$}}
+\put(8,5.5){\makebox(0,0)[b]{$\mbox{\tt X}^1$}}
+\end{picture}
+\qquad
+\begin{picture}(13,13)
+\put(2,5){\line(1,1){6}}
+\put(2,5){\line(1,0){12}}
+\put(14,5){\line(-1,1){6}}
+\put(8,5){\makebox(0,0){$\bullet$}}
+\put(8,5.5){\makebox(0,0)[b]{$\mbox{\tt X}^0$}}
+\put(5,2){\line(1,0){6}}
+\put(8,5){\line(-1,-1){3}}
+% \put(8,5){\line(0,-1){3}}
+\put(8,5){\line(1,-1){3}}
+\put(5,1.5){\makebox(0,0){$\mbox{\tt A}^1$}}
+\put(8,1.5){\makebox(0,0){\tt c}}
+\put(11,1.5){\makebox(0,0){$\mbox{\tt A}^1$}}
+\end{picture}
+\end{center}
+\caption{Replacement in a Context Free Grammar}
+\label{fig:cfggraph}
+\end{figure}
+%%
+It is easy to show that in each derivation only leaves
+carry active nonterminals. This in turn shows that the
+derivations of the $\gamma$--grammar are in one to one
+correspondence with the derivations of the CFGs.
+We put 
+%%%
+\begin{equation}
+L_B(G) := h[L_{\gamma}(\gamma G)]
+\end{equation}
+\index{$L_B(G)$}%%%%
+%%%
+This is the class of trees generated by $\gamma G$, with $X^0$ and 
+$X^1$ mapped to $X$ for each $X \in N$. 
+The rules of $G$ can therefore be interpreted as conditions
+on labelled ordered trees in the following way.
+$\GC$ is called a \textbf{local subtree} of $\GB$
+%%%
+\index{subtree!local}%%
+%%%
+if (i) it has height 2 (so it does not possess inner nodes)
+and (ii) it is maximal with respect to inclusion.
+For a rule $\rho = X \pf Y_0 Y_1 \dotsb Y_{n-1}$ we define
+$L_{\rho} := \{y_i : i < n\} \cup \{x\}$, $<_{\rho}\; :=
+\{ \auf y_i, x\zu : i < n\}$, $\sqsubset_{\rho} := \{\auf y_i, y_j\zu
+: i < j < n\}$, and finally $\ell_{\rho}(x) := X$, $\ell(y_i) := Y_i$.
+$\GL_{\rho} := \auf L_{\rho}, <_{\rho}, \sqsubset_{\rho},
+\ell_{\rho}\zu$. Now, an isomorphism between labelled ordered
+trees $\GB = \auf B, <_{\GB}, \sqsubset_{\GB}, \ell_{\GB}\zu$
+and $\GC = \auf C, <_{\GC}, \sqsubset_{\GC}, \ell_{\GC}\zu$
+is a bijective map $h \colon B \pf C$ such that $h[<_{\GB}] 
+= \; <_{\GC}$, $h[\sqsubset_{\GB}] = \sqsubset_{\GC}$
+and $\ell_{\GC}(h(x)) = \ell_{\GB}(x)$ for all $x \in B$.
+%%
+\begin{prop}
+Let $G = \auf \mbox{\tt S}, N, A, R\zu$. $\GB \in L_B(G)$ iff 
+every local tree of $\GB$ is isomorphic to an $\GL_{\rho}$ such 
+that $\rho \in R$.
+\end{prop}
+%%
+\begin{thm}
+Let \textbf{B} be a set of trees over an alphabet $A \cup N$
+with terminals from $A$. Then $\textbf{B} = L_B(G)$ for a
+CFG $G$ iff there is a finite set $\{\GL_i : i < n\}$ of trees 
+of height 2 and an $S$ such that $\GB \in \textbf{B}$ exactly if
+%%%
+\begin{dingautolist}{192}
+\item the root carries label $S$,
+\item a label is terminal iff the node is a leaf, and
+\item every local tree is isomorphic to some $\GL_i$.
+\end{dingautolist}
+\end{thm}
+%%
+We shall derive a few useful consequences from these considerations.
+It is clear that $\gamma G$ generates trees that do not necessarily
+have leaves with terminal symbols. However, we do know that the
+leaves carry labels either from $A$ or from $N^1 := N \times \{1\}$
+while all other nodes carry labels from $N^0 := N \times \{0\}$.
+For a labelled tree we define the associated string sequence $k(\GB)$
+in the usual way. This is an element of $(A \cup N^1)^{\ast}$.
+Let $v \colon A \cup (N \times 2) \pf A \cup N$ be defined by
+$v(a) := a$, $a \in A$ and $v(X^0) := v(X^1) := X$ for $X \in N$.
+%%
+\begin{lem}
+Let $\gamma G \vdash \GB$ and $\vec{\alpha} = k(\GB)$.
+Then $\vec{\alpha} \in (A \cup N^1)^{\ast}$
+and $G \vdash \oli{v}(\vec{\alpha})$.
+\end{lem}
+%%
+\proofbeg
+Induction over the length of the derivation. If the length is
+0 then $\vec{\alpha} = \mbox{\tt S}^1$ and $\oli{v}(\mbox{\tt S}^1) 
+= \mbox{\tt S}$. Since $G \vdash \mbox{\tt S}$ this case is settled. 
+Now let $\GB$ be the result of an application of some rule $\rho^{\gamma}$
+on $\GC$ where $\rho = X \pf \vec{\gamma}$. We then have
+$k(\GC) \in (A \cup N^1)^{\ast}$. The rule $\rho^{\gamma}$
+has been applied to a leaf; this leaf corresponds to an 
+occurrence of $X^1$ in $k(\GC)$. Therefore we have
+$k(\GC) = \vec{\eta}_1 \conc X^1 \conc \vec{\eta}_2$. Then
+$k(\GB) = \vec{\eta}_1 \conc \vec{\gamma} \conc \vec{\eta}_2$.
+$k(\GB)$ is the result of a single application of the rule
+$\rho$ from $k(\GC)$.
+\proofend
+%%
+\begin{defn}
+%%%
+\index{cut}%%
+%%%
+Let $\GB$ be a labelled ordered tree. A \textbf{cut through} $\GB$ is
+a maximal set that contains no two elements comparable by $<$. If 
+$\GB$ is exhaustively ordered, a cut is linearly ordered and labelled, 
+and then we also call the string associated to this set a 
+\textbf{cut}.
+\end{defn}
+%%
+\begin{prop}
+Let $\gamma G \vdash \GB$ and let $\vec{\alpha}$ be a cut through
+$\GB$. Then $G \vdash \oli{v}(\vec{\alpha})$.
+\end{prop}
+%%
+This theorem shows that the tree provides all necessary information.
+If you have the tree, all essential details of the derivation can
+be reconstructed (up to commuting applications of rules). Now let
+us be given a tree $\GB$ and let $\vec{\alpha}$ be a cut.
+We say that an occurrence $C$ of $\vec{\gamma}$ in $\vec{\alpha}$
+is a \textbf{constituent of category} $X$ \textbf{in} $\GB$ if 
+this occurrence of $\vec{\gamma}$ in $\vec{\alpha}$ is that cut 
+defined by $\vec{\alpha}$ on $\low{x}$ where $x$ carries the label 
+$X$.
+%%%
+\index{constituent}%%
+%%%
+This means that $\vec{\alpha} = \vec{\eta}_1 \conc \vec{\gamma}
+\conc \vec{\eta}_2$, $C = \auf \vec{\eta}_1, \vec{\eta}_2\zu$,
+and $\low{x}$ contains exactly those nodes that do not belong
+to $\vec{\eta}_1$ or $\vec{\eta}_2$. Further, let $G$ be a 
+CFG. A substring occurrence of $\vec{\gamma}$ is 
+a $G$--constituent of category $X$ in $\vec{\alpha}$ if there is a 
+$\gamma G$--tree for which there exists a cut $\vec{\alpha}$ such that 
+the occurrence $\vec{\gamma}$ is a constituent of category $X$. If 
+$G$ is clear from the context, we shall omit it. 
+%%
+\begin{lem}
+\label{wegmachen}
+Let $\GB$ be a $\gamma G$--tree and $\vec{\alpha}$ a cut through
+$\GB$. Then there exists a tree $\GC$ with associated string
+$\vec{\gamma}$ and $\oli{v}(\vec{\gamma}) = \oli{v}(\vec{\alpha})$.
+\end{lem}
+%%
+\begin{lem}
+Let $G \vdash \vec{\alpha}_1 \conc \vec{\gamma} \conc \vec{\alpha}_2$, 
+$C = \auf \vec{\alpha}_1, \vec{\alpha}_2\zu$ an occurrence 
+of $\vec{\gamma}$ as a $G$--constituent of category $X$. Then $C$ is a
+$G$--constituent occurrence of $X$ in $C(X) = \vec{\alpha}_1 \conc X \conc %
+\vec{\alpha}_2$.
+\end{lem}
+%%
+For a proof notice that if $\vec{\alpha}_1 \conc
+\vec{\gamma} \conc \vec{\alpha}_2$ is a cut and
+$\vec{\gamma}$ is a constituent of category $X$ therein then
+$\vec{\alpha}_1 \conc X \conc \vec{\alpha}_2$ also is a cut.
+%%
+\begin{thm}[Constituent Substitution]
+%%%
+\index{Constituent Substitution Theorem}%%
+%%%
+Suppose that $C$ is an occurrence of $\vec{\beta}$ as
+a $G$--constituent of category $X$. Furthermore, let
+$X \vdash_G \vec{\gamma}$. Then $G \vdash C(\vec{\gamma}) =
+\vec{\alpha}_1 \conc \vec{\gamma} \conc \vec{\alpha}_2$
+and $C$ is a $G$--constituent occurrence of $\vec{\gamma}$ 
+of category $X$.
+\end{thm}
+%%
+\proofbeg
+By assumption there is a tree in which $\vec{\beta}$
+is a constituent of category $X$ in $\vec{\alpha}_1 \conc \vec{\beta} %
+\conc \vec{\alpha}_2$.  Then there exists a cut $\vec{\alpha}_1 \conc X
+\conc \vec{\alpha}_2$ through this tree, and by
+Lemma~\ref{wegmachen} there exists a tree with associated
+string $\vec{\alpha}_1 \conc X \conc \vec{\alpha}_2$.
+Certainly we have that $X$ is a constituent in this tree.
+However,  a derivation $X \vdash_G \vec{\gamma}$ can in
+this case be extended to a $\gamma G$--derivation of
+$\vec{\alpha}_1 \conc \vec{\gamma}\conc \vec{\alpha}_2$
+in which $\vec{\gamma}$ is a constituent.
+\proofend
+%%
+\begin{lem}
+Let $G$ be a CFG. Then there exists a number $k_G$ such that 
+for each derivation tree of a string of length $\geq k_G$ there 
+are two constituents $\low{y}$ and $\low{z}$ of identical 
+category such that $y \leq z$ or $z \leq y$,
+and the associated strings are different.
+\end{lem}
+%%
+\proofbeg
+To begin, notice that nothing changes in our claim if we
+eliminate the unproductive rules. This does not change the
+constituent structure. Now let $\pi$ be the maximum of all
+productivities of rules in $G$, and $\nu := |N|$. Then
+let $k_G := (1 + \pi)^{\nu} + 1$. We claim that this is the
+desired number.  (We can assume that $\pi > 0$. Otherwise
+$G$ only generates strings of length 1, and then $k_G := 2$
+satisfies our claim.) For let $\vec{x}$ be given such that
+$|\vec{x}| \geq k_G$.  Then there exists in every derivation
+tree a branch of length $> \nu$. (If not, there can be no more
+than $\pi^{\nu}$ leaves.) On this branch we have two nonterminals
+with identical label. The strings associated to these
+nodes are different since we have no unproductive rules.
+\proofend
+
+%%%
+\index{constituent part!left, right}%%
+%%%
+We say, an occurrence $C$ is a \textbf{left constituent part} 
+(\textbf{right constituent part}) if $C$ is an occurrence of 
+a prefix (suffix) of a constituent.  An occurrence of $\vec{x}$ 
+contains a left constituent part $\vec{z}$ if some suffix of 
+$\vec{x}$ is a left constituent part.  We also remark that 
+if $\vec{u}$ is a left constituent part and a proper substring 
+of $\vec{x}$ then $\vec{x} = \vec{v}\,\vec{v}_1\vec{u}$ with 
+$\vec{v}_1$ a possibly empty sequence of constituents and 
+$\vec{v}$ a right constituent part. This will 
+be of importance in the sequel.
+%%
+\begin{lem}
+\label{lem:halb}
+Let $G$ be a  CFG. Then there exists a number $k'_G$ such that 
+for every derivation tree of a string $\vec{x}$ and every occurrence 
+in $\vec{x}$ of a string $\vec{z}$ of length $\geq k'_G$ 
+$\vec{z}$ contains two different left or two different right 
+constituent parts $\vec{y}$ and $\vec{y}_1$ of constituents that 
+have the same category. Moreover, $\vec{y}$ is a prefix 
+of $\vec{y}_1$ or $\vec{y}_1$ a prefix of $\vec{y}$ in case that 
+both are left constituent parts, and $\vec{y}$ is a suffix of 
+$\vec{y}_1$ or $\vec{y}_1$ a suffix of $\vec{y}$ in case that both 
+are right constituent parts.
+\end{lem}
+%%
+\proofbeg
+Let $\nu := |N|$ and let $\pi$ be the maximal productivity of a rule from
+$G$.  We can assume that $\pi \geq 2$. Put $k'_G := (2 + 2\pi)^{\nu}$.
+We show by induction on the number $m$ that a string of length
+$\geq (2+ 2\pi)^m$ has at least $m$ left or at least $m$ right
+constituent parts that are contained in each other. If $m = 1$
+the claim is trivial. Assume that it holds for $m \geq 1$. We shall 
+show that it also holds for $m+1$.  Let $\vec{z}$ be of length 
+$\geq (2+2\pi)^{m+1}$. Let $\vec{x} = \prod_{i < 2\pi+2} \vec{x}_i$ 
+for certain $\vec{x}_i$ with length at least $(2 + 2\pi)^m$. By 
+induction hypothesis each $\vec{x}_i$ contains at least $m$ constituent
+parts. Now we do not necessarily have $(2\pi +2)m$ constituent
+parts in $\vec{x}$. For if $\vec{x}_i$ contains a left part then
+$\vec{x}_j$ with $j > i$ may contain the corresponding right part.
+(There is only one. The sections in between contain subwords of
+that constituent occurrence.) For each left constituent part
+we count at most one (corresponding) right constituent part.
+In total we have at least $(1 + \pi)m \geq m+1$ constituent parts.
+However,  we have to verify  that at least $m+1$ of these are
+contained inside each other. Assume  this is not the case, for all
+$i$. Then $\vec{x}_i$, $i < 2\pi + 2$, contains exactly $m$ left or 
+exactly $m$ right constituent parts.
+Case 1. $\vec{x}_0$ contains $m$ left constituent parts inside
+each other. If $\vec{x}_1$ also contains $m$ left constituent
+parts inside each other, we are done. Now suppose that this is
+not the case. Then $\vec{x}_1$ contains $m$ right constituent
+parts inside each other.  Then we obviously get $m$ entire
+constituents stacked inside each other. Again, we would be done
+if $\vec{x}_2$ contained $m$ right constituent parts inside
+each other. If not, then $\vec{x}_2$ contains exactly $m$ left
+constituent parts. And again we would be done if these would
+not correspond to exactly $m$ right part that $\vec{x}_3$
+contains. And so on. Hence we get a sequence of length $\pi$
+of constituents which each contain $m$ constituents stacked
+inside each other. Now three cases arise: (a) one of the 
+constituents is a left part of some constituent, (b) one of 
+the constituent is a right part of some constituent. (For if 
+neither is the case, we have a rule of arity $> \pi$, a 
+contradiction.) In Case (a) we evidently have $m+1$ left 
+constituent parts stacked inside each other, and in Case (b) 
+$m+1$ right constituent parts. Case 2. $\vec{x}_0$ contains $m$
+right hand constituents stacked inside each other. Similarly.
+This shows our auxiliary claim. Putting $m := \nu + 1$ the main
+claim now follows.
+\proofend
+%%
+\begin{thm}[Pumping Lemma]
+%%%
+\index{Pumping Lemma}%%%
+\label{thm:pumplemma}
+%%%
+Given a CFL $L$ there exists a $p_L$ such that
+for every string $\vec{z} \in L$ of length at least $p_L$ and an
+occurrence of a string $\vec{r}$  of length at least $p_L$ in
+$\vec{z}$, $\vec{z}$ possesses a decomposition
+%%
+\begin{equation}
+\vec{z} = \vec{u} \conc \vec{x} \conc \vec{v}
+\conc \vec{y} \conc \vec{w}
+\end{equation}
+%%
+such that the following holds.
+%%
+\begin{dingautolist}{192}
+\item
+$\vec{x} \conc \vec{y} \neq \varepsilon$. 
+%$\vec{u} \conc \vec{w} \neq \varepsilon$.
+\item
+Either the occurrence of $\vec{x}$ or the occurrence of
+$\vec{y}$ is contained in the specified occurrence of $\vec{r}$.
+\item
+$\{\vec{u} \conc {\vec{x}\,}^i \conc \vec{v} \conc {\vec{y}\,}^i
+\conc \vec{w} : i \in \omega\} \subseteq L$.
+\end{dingautolist}
+%%
+(The last property is called the \textbf{pumpability} of the
+substring occurrences of $\vec{x}$ and $\vec{y}$.) Alternatively, 
+in place of \ding{193} one may require that $|\vec{v}| \leq p_L$. 
+Further we can choose $p_L$ in such a way that every derivable
+string $\vec{\gamma}$ with designated occurrences of a string
+$\vec{\alpha}$ of length $\geq p_S$ can be decomposed in the way
+given.
+%%
+\end{thm}
+%%
+\proofbeg
+Let $G$ be a grammar which generates $L$. Let $p_L$
+be the constant defined in Lemma~\ref{lem:halb}. We look at
+a $G$--tree of $\vec{z}$ and the designated occurrence of
+$\vec{r}$. Suppose that $\vec{r}$ has length at least $p_L$.
+Then there are two left or two right constituent parts of
+identical category contained in $\vec{r}$. Without loss of
+generality we assume that $\vec{r}$ contains two left parts.
+Suppose that these parts are not fully contained in $\vec{r}$.
+Then $\vec{r} = \vec{s}\,\vec{x}\,\vec{s}_1$ where $\vec{x}\,\vec{s}_1$
+and $\vec{s}_1$ are left constituent parts of identical category,
+say $X$. Now $|\vec{x}| > 0$. There are $\vec{s}_2$ and $\vec{y}$
+such that $\vec{v} := \vec{s}_1\vec{s}_2$ and
+$\vec{x}\,\vec{s}_1\vec{s}_2\vec{y}$ are constituents of 
+category $X$.
+
+Hence there exists a decomposition
+%%
+\begin{equation}
+\vec{z} = \vec{u} \conc \vec{x} \conc \vec{v}
+\conc \vec{y} \conc \vec{w} 
+\end{equation}
+%%
+where $\vec{v}$ is a constituent of the same category
+as $\vec{x}\,\vec{v}\,\vec{y}$ satisfying \ding{192} and
+\ding{193}. By the Constituent Substitution Theorem we may 
+replace the occurrence of $\vec{x}\,\vec{v}\,\vec{y}$ by $\vec{v}$
+as well as $\vec{v}$ by $\vec{x}\,\vec{v}\,\vec{y}$.
+This yields \ding{194}, after an easy induction.
+Now let the smaller constituent part be contained in $\vec{r}$
+but not the larger one. Then we have a decomposition
+$\vec{r} = \vec{s}\,\vec{x}\,\vec{v}\,\vec{s}_1$ such that $\vec{v}$
+is a constituent part of category $X$ and $\vec{x}\,\vec{v}\,\vec{s}_1$
+a left constituent part of a constituent of category $X$. Then there
+exists a $\vec{s}_2$ such that also $\vec{x}\vec{v}\vec{s}_1\vec{s}_2$
+is a constituent of category $X$. Now put $\vec{y} :=
+\vec{s}_1\vec{s}_2$. Then we also have $\vec{y} \neq \varepsilon$.
+The third case is if both parts are proper substrings of $\vec{r}$.
+Also here we find the desired decomposition. If we want to have in 
+place of \ding{193} that $\vec{v}$ is as small as possible then 
+notice that $\vec{v}$ already is a
+constituent. If it has length $\geq (1+ \pi)^{\nu}$ then
+there is a decomposition of $\vec{v}$ such that it contains
+pumpable substrings. Hence in place of \ding{193} we may require 
+that $|\vec{v}| \leq p_G$.
+\proofend
+
+The Pumping Lemma can be stated more concisely as follows.
+For every large enough derivable string $\vec{x}$ there exist 
+contexts $C$, $D$, where $C \neq \auf \varepsilon, \varepsilon\zu$,
+and a string $\vec{y}$ such $\vec{x} = D(C(\vec{y}))$,
+and $D(C^k(\vec{y})) \in L$ for every $k \in \omega$.
+The strongest form of a pumping lemma is the following.  
+Suppose that we have two decompositions into pumping pairs 
+$\vec{u}_1\conc \vec{x}_1 \conc \vec{v}_1\conc\vec{y}_1\conc\vec{w}_1$, 
+$\vec{u}_2\conc \vec{x}_2 \conc \vec{v}_2\conc\vec{y}_2\conc\vec{w}_2$. 
+We say that the two pairs are \textbf{independent} 
+%%%
+\index{independent pumping pair}%%
+%%%
+if either (1a) $\vec{u}_1\conc \vec{x}_1\conc\vec{v}_1\conc\vec{y}_1$ 
+is a prefix of $\vec{u}_2$, or
+(1b) $\vec{u}_2\conc \vec{x}_2\conc\vec{v}_2\conc\vec{y}_2$ is a 
+prefix of $\vec{u}_1$, or
+(1c) $\vec{u}_1\conc\vec{x}_1$ is a prefix of $\vec{u}_2$ and 
+$\vec{y}_1\conc\vec{w}_1$ a suffix of $\vec{w}_2$, or
+(1d) $\vec{u}_2\conc\vec{x}_2$ is a prefix of $\vec{u}_1$ and 
+$\vec{y}_2\conc\vec{w}_2$ a suffix of $\vec{w}_1$ and 
+(2) each of them can be pumped any number of times independently 
+of the other. 
+\nocite{manasterrameretal:ogden}
+%%%%
+\begin{thm}[Manaster-Ramer \& Moshier \& Zeitman]
+\label{thm:multipump}
+Let $L$ be a CFL. Then there exists a number 
+$m_{L}$ such that if $\vec{x} \in L$ and we are given $k m_L$ 
+occurrences of letters in $\vec{x}$ there are $k$ independent 
+pumping pairs, each of which contains at least one and at most 
+$m_L$ of the occurrences. 
+\end{thm}
+%%%%
+This theorem implies the well--known \textbf{Ogden's Lemma} (see 
+\cite{ogden:helpful}), which says that given at least $m_L$ 
+occurrences of letters, there exists a pumping pair containing 
+at least one and at most $m_L$ of them.
+
+Notice that in all these theorems we may choose $i = 0$ as well. This 
+means that not only we can pump `up' the string so that it becomes longer
+except if $i = 1$, but we may also pump it `down' ($i = 0$)
+so that the string becomes shorter. However, one can pump down 
+only once. Using the Pumping Lemma we can show that the language
+$\{\mbox{\tt a}^n \mbox{\tt b}^n \mbox{\tt c}^n : n \in \omega\}$
+is not context free.
+
+For suppose the contrary. Then there is an $m$ such that
+for all $k \geq m$ the string $\mbox{\tt a}^k \mbox{\tt b}^k \mbox{\tt c}^k$
+can be decomposed into
+%%
+\begin{equation}
+\mbox{\tt a}^k \mbox{\tt b}^k \mbox{\tt c}^k
+= \vec{u} \conc \vec{v} \conc \vec{w} \conc \vec{x}
+\conc \vec{y}
+\end{equation}
+%%
+Furthermore there is an $\ell > k$ such that
+%%
+\begin{equation}
+\mbox{\tt a}^{\ell} \mbox{\tt b}^{\ell} \mbox{\tt c}^{\ell} =
+\vec{u} \conc {\vec{v}\,}^2 \conc \vec{w} \conc {\vec{x}\,}^2 \conc
+\vec{y}
+\end{equation}
+%%
+The string $\vec{v} \conc \vec{x}$ contains exactly $\ell - k$ times
+the letters {\tt a}, {\tt b} and {\tt c}. It is clear that we must
+have $\vec{v} \subseteq \mbox{\tt a}^{\ast} \cup
+\mbox{\tt b}^{\ast} \cup \mbox{\tt c}^{\ast}$.
+For if $\vec{v}$ contains two distinct letters, say
+{\tt b} and {\tt c}, then $\vec{v}$ contains an occurrence
+of {\tt b} before an occurrence of {\tt c} (certainly not the
+other way around). But then ${\vec{v}\,}^2$ contains
+an occurrence of {\tt c} before an occurrence of {\tt b},
+and that cannot be. Analogously it is shown that
+$\vec{y} \in \mbox{\tt a}^{\ast} \cup \mbox{\tt b}^{\ast}
+\cup \mbox{\tt c}^{\ast}$. But this is a contradiction.
+We shall meet this example of a non--CFL quite often in the 
+sequel.
+
+The second example of a context free graph grammar shall be
+the so--called {\it tree adjunction grammars}. We take an
+alphabet $A$ and a set $N$ of nonterminals.
+%%%
+\index{centre tree}%%
+\index{adjunction tree}%%
+%%%
+A \textbf{centre tree} is an ordered labelled tree over $A \cup N$
+such that all leaves have labels from $A$ all other nodes labels
+from $N$. An \textbf{adjunction tree} is an ordered labelled tree 
+over $A \cup N$ which is distinct from ordinary trees in that of 
+the leaves there is exactly one with a nonterminal label; this 
+label is the same as that of the root.  Interior nodes have 
+nonterminal labels. We require that an adjunction tree has at 
+least one leaf with a terminal symbol.
+%%%
+\index{tree adjunction grammar!unregulated}%%
+\index{UTAG}%%
+%%%
+An \textbf{unregulated tree adjunction grammar}, briefly \textbf{UTAG},
+over $N$ and $A$, is a quadruple $\auf \BC, N, A, \BA\zu$ where
+$\BC$ is a finite set of centre trees over $N$ and $A$, and $\BA$ a
+finite set of adjunction trees over $N$ and $A$. An example of a
+tree adjunction is given in Figure~\ref{fig:baumadjunktion}. The
+tree to the left is adjoined to a centre tree with root $X$ and
+associated string {\tt bXb}; the result is shown to the right.
+Tree adjunction can formally be defined as follows.
+%%
+\begin{figure}
+\begin{center}
+\begin{picture}(18,18)
+\put(9,16){\line(-1,-1){7}}
+\put(9,16){\line(1,-1){7}}
+\put(2,9){\line(1,0){14}}
+\put(9,12.5){\makebox(0,0){\tt X}}
+\put(9,12){\line(-1,-1){3}}
+\put(9,12){\line(1,-1){3}}
+\put(2,8.5){\makebox(0,0){\tt Y}}
+\put(4,8.5){\makebox(0,0){\tt c}}
+\put(6,8.5){\makebox(0,0){\tt a}}
+\put(9,8.5){\makebox(0,0){\tt A}}
+\put(12,8.5){\makebox(0,0){\tt a}}
+\put(14,8.5){\makebox(0,0){\tt A}}
+\put(16,8.5){\makebox(0,0){\tt a}}
+\end{picture}
+\qquad
+\begin{picture}(18,18)
+\put(2,8.5){\makebox(0,0){\tt Y}}
+\put(4,8.5){\makebox(0,0){\tt c}}
+\put(6,2.5){\makebox(0,0){\tt a}}
+\put(9,2.5){\makebox(0,0){\tt A}}
+\put(12,2.5){\makebox(0,0){\tt a}}
+\put(14,8.5){\makebox(0,0){\tt A}}
+\put(16,8.5){\makebox(0,0){\tt a}}
+\put(6,3){\line(1,0){6}}
+\put(6,3){\line(1,1){3}}
+\put(12,3){\line(-1,1){3}}
+\put(4,5.5){\makebox(0,0){\tt b}}
+\put(4,6){\line(1,1){5}}
+\put(4,6){\line(1,0){10}}
+\put(14,5.5){\makebox(0,0){\tt b}}
+\put(14,6){\line(-1,1){5}}
+\put(2,9){\line(1,1){7}}
+\put(2,9){\line(1,0){5}}
+\put(16,9){\line(-1,1){7}}
+\put(16,9){\line(-1,0){5}}
+\put(9,11.5){\makebox(0,0){\tt X}}
+\put(9,6.5){\makebox(0,0){\tt X}}
+\end{picture}
+\end{center}
+\caption{Tree Adjunction}
+\label{fig:baumadjunktion}
+\end{figure}
+%%
+Let $\GB = \auf B, <, \sqsubset, \ell\zu$ be a tree and
+$\GA = \auf A, <, \sqsubset, m \zu$ an adjunction tree.
+We assume that $r$ is the root of $\GA$ and that $s$ is
+the unique leaf such that $m(r) = m(s)$. Now let $x$ be a node
+of $B$ such that $\ell(x) = m(r)$. Then the replacement
+of $x$ by $\GB$ is defined by naming the colour functionals.
+These are
+%%
+\begin{align}
+\goth{II}_{\rho}(y,\sqsubset) & :=
+    \begin{cases}
+        \{\sqsubset, <\} & \text{if $s \sqsubset y$,} \\
+                \{\sqsubset\} & \text{else.}
+    \end{cases}
+     &
+\goth{OI}_{\rho}(y, \sqsubset) & := \varnothing \\\notag
+\goth{IO}_{\rho}(y, \sqsubset) & := 
+    \begin{cases}
+    \{<\} & \text{if $y \sqsubset s$,} \\
+    \varnothing & \text{else.}
+    \end{cases} &
+\goth{OO}_{\rho}(y,\sqsubset) & := \{\sqsubset\} \\
+%%%
+\goth{II}_{\rho}(y, <)         & := 
+	\begin{cases} 
+		\{<\} & \text{if $y \geq s$,} \\
+		\varnothing & \text{else.} 
+	\end{cases}
+	&
+    \goth{IO}_{\rho}(y, <) & := \varnothing \\\notag
+\goth{OI}{\rho}(y, <) & := \varnothing &
+    \goth{OO}_{\rho}(y,<) & := \{<\}
+\end{align}
+%%
+Two things may be remarked.  First, instead of a single
+start graph we have a finite set of them. This can be
+remedied by standard means. Second, all vertex colours
+are terminal as well as nonterminal. One may end the
+derivation at any given moment. We have noticed in
+connection with grammars  for strings that this can be
+remedied. In fact, we have not defined context free 
+$\gamma$--grammars but context free quasi 
+$\gamma$--grammars$^{\ast}$. However, we shall refrain
+from being overly pedantic. Suffice it to note that the
+adjunction grammars do not define the same kind of
+generative process if defined exactly as above.
+
+Finally we shall give a graph grammar which generates all
+strings of the form $\mbox{\tt a}^n \mbox{\tt b}^n
+\mbox{\tt c}^n$, $n>0$. The idea for this grammar is due to
+Uwe M\"onnich 
+%%%
+\index{M\"onnich, Uwe}%%%
+%%%
+\shortcite{moennich:cloning}. We shall exploit
+the fact that we may think of terms as structures. We posit
+a ternary symbol, {\tt F}, which is nonterminal, and another
+ternary symbol, {\tt f}, which is terminal. Further, there
+is a binary terminal symbol $^{\smallfrown}$. The rules are
+as follows. (To enhance readability we shall not write terms
+in Polish Notation but by means of brackets.)
+%%
+\begin{equation}
+\begin{split}
+\mbox{\tt F}(x, y, z) & \pf \mbox{\tt F}(\mbox{\tt a}{^{\smallfrown}x},
+\mbox{\tt b}{^{\smallfrown}y},
+    \mbox{\tt c}{^{\smallfrown}z}), \\
+\mbox{\tt F}(x,y,z) & \pf \mbox{\tt f}(x,y,z). \\
+\end{split}
+\end{equation}
+%%
+%%%
+\index{term replacement system}%%
+%%%
+These rules constitute a so--called \textbf{term replacement system}.
+The start term is $\mbox{\tt F}(\mbox{\tt a}, \mbox{\tt b}, \mbox{\tt c})$.
+Now suppose that $u \pf v$ is a rule and that we have derived
+a term $t$ such that $u^{\sigma}$ occurs in $t$ as a subterm.
+Then we may substitute this occurrence by $v^{\sigma}$.
+Hence we get the following derivations.
+%%
+\begin{equation}
+\begin{split}
+\mbox{\tt F}(\mbox{\tt a},\mbox{\tt b},\mbox{\tt c}) &
+    \pf \mbox{\tt f}(\mbox{\tt a},\mbox{\tt b},\mbox{\tt c}), \\
+\mbox{\tt F}(\mbox{\tt a},\mbox{\tt b},\mbox{\tt c}) &
+    \pf \mbox{\tt F}(\mbox{\tt a}{^{\smallfrown}\mbox{\tt a}},
+        \mbox{\tt b}{^{\smallfrown}\mbox{\tt b}},
+    \mbox{\tt c}{^{\smallfrown}\mbox{\tt c}}) \\
+    & \pf \mbox{\tt f}(\mbox{\tt a}{^{\smallfrown}\mbox{\tt a}},
+    \mbox{\tt b}{^{\smallfrown}\mbox{\tt b}},
+        \mbox{\tt c}{^{\smallfrown}\mbox{\tt c}}) \\
+\mbox{\tt F}(\mbox{\tt a},\mbox{\tt b},\mbox{\tt c}) &
+    \pf \mbox{\tt F}(\mbox{\tt a}{^{\smallfrown}\mbox{\tt a}},
+        \mbox{\tt b}{^{\smallfrown}\mbox{\tt b}},
+    \mbox{\tt c}{^{\smallfrown}\mbox{\tt c}}) \\
+	&
+    \pf \mbox{\tt F}(\mbox{\tt a}{^{\smallfrown}{(\mbox{\tt
+        a}^{\smallfrown}\mbox{\tt a})}},
+    \mbox{\tt b}{^{\smallfrown}{(\mbox{\tt
+        b}^{\smallfrown}\mbox{\tt b})}},
+    \mbox{\tt c}{^{\smallfrown}{(\mbox{\tt
+        c}^{\smallfrown}\mbox{\tt c})}}) \\
+    & \pf \mbox{\tt f}(\mbox{\tt a}{^{\smallfrown}{(\mbox{\tt
+        a}^{\smallfrown}\mbox{\tt a})}},
+    \mbox{\tt b}{^{\smallfrown}{(\mbox{\tt
+        b}^{\smallfrown}\mbox{\tt b})}},
+    \mbox{\tt c}{^{\smallfrown}{(\mbox{\tt
+        c}^{\smallfrown}\mbox{\tt c})}})
+\end{split}
+\end{equation}
+%%
+Notice that the terms denote graphs here. We make use of the
+dependency coding. Hence the associated strings to these terms
+are {\tt abc}, {\tt aabbcc} and {\tt aaabbbccc}.
+
+In order to write a graph grammar which generates the graphs
+for these terms we shall have to introduce colours for edges.
+Put $F_E := \{\uli{0}, \uli{1}, \uli{2}, \sqsubset, <\}$,
+$F_V := \{\mbox{\tt F}, \mbox{\tt f}, \mbox{\tt a}, \mbox{\tt b}, 
+\mbox{\tt c}\}$, and $F_V^T := \{\mbox{\tt f}, \mbox{\tt a}, 
+\mbox{\tt b}, \mbox{\tt c}\}$.
+The start graph is as follows. It has four vertices,
+$p$, $q$, $r$ and $s$. ($<$ is empty (!), and
+$q \sqsubset r \sqsubset s$.) The labelling is
+$p \mapsto \mbox{\tt F}$, $q \mapsto \mbox{\tt a}$,
+$r \mapsto \mbox{\tt b}$ and $s \mapsto \mbox{\tt c}$.
+%%
+\begin{equation}
+\begin{array}{l}
+\begin{picture}(6,6)
+\put(1,1.5){\makebox(0,0){$\bullet$}}
+    \put(1,1.5){\vector(1,1){2.8}}
+    \put(1.7,3){\makebox(0,0)[r]{$\uli{0}$}}
+    \put(1,.5){\makebox(0,0){\tt a}}
+\put(4,1.5){\makebox(0,0){$\bullet$}}
+    \put(4,1.5){\vector(0,1){2.8}}
+    \put(3.5,3){\makebox(0,0)[r]{$\uli{1}$}}
+    \put(4,.5){\makebox(0,0){\tt b}}
+\put(7,1.5){\makebox(0,0){$\bullet$}}
+    \put(7,1.5){\vector(-1,1){2.8}}
+    \put(6.3,3){\makebox(0,0)[l]{$\uli{2}$}}
+    \put(7,.5){\makebox(0,0){\tt c}}
+\put(4,4.5){\makebox(0,0){$\bullet$}}
+    \put(4,5.5){\makebox(0,0){\tt F}}
+\end{picture}
+\end{array}
+\end{equation}
+%%
+There are two rules of replacement. The first can be written
+schematically as follows. The root, $x$, carries the label {\tt F}
+and has three incoming edges; their colours are
+$\uli{0}$, $\uli{1}$ and $\uli{2}$. These come from three
+disjoint subgraphs, $\GG_0$, $\GG_1$ and $\GG_2$, which are
+ordered trees with respect to $<$ and $\sqsubset$ and in which
+there are no edges with colour $\uli{0}$, $\uli{1}$ and $\uli{2}$.
+In replacement, $x$ is replaced by a graph consisting of
+seven vertices, $p$, $q_i$, $r_i$ and $s_i$, $i < 2$,
+where $q_i \sqsubset r_j \sqsubset s_k$, $i,j,k < 2$,
+and $q \stackrel{\uli{0}}{\pf} p$, $r \stackrel{\uli{1}}{\pf} p$
+and $s \stackrel{\uli{2}}{\pf} p$. $< = \{\auf q_1, q_0\zu,
+\auf r_1, r_0\zu, \auf s_1, s_0\zu\}$. The colouring is
+%%
+\begin{equation}
+\begin{array}{rlrlrlrl}
+p & \mapsto \mbox{\tt F} & q_0 & \mapsto ^{\smallfrown} & 
+r_0 & \mapsto ^{\smallfrown} & s_0 & \mapsto ^{\smallfrown} 
+\\ 
+ & & q_1 & \mapsto \mbox{\tt a} & r_1 & \mapsto \mbox{\tt b} 
+& s_1 & \mapsto \mbox{\tt c}
+\end{array}
+\end{equation}
+%%
+(With $\{p,q_0, r_0, s_0\}$ we reproduce the begin situation.)
+The tree $\GG_0$ is attached to $q_0$ to the right of $q_1$,
+$\GG_1$ to $r_0$ to the right of $r_1$ and
+$\GG_2$ to $s_0$ to the right of $s_1$.
+Additionally, we put $x < p$ for all vertices $x$ of the $\GG_i$.
+(So, the edge $\auf x, p\zu$ has colour $<$ for all such $x$.)
+By this we see to it that in each step the union of the
+relations $<$, $\uli{0}$, $\uli{1}$ and $\uli{2}$ is the
+intended tree ordering and that there always exists
+an ingoing edge with colour $\uli{0}$, $\uli{1}$ and
+$\uli{2}$ into the root.
+
+The second replacement rule replaces the root
+by a one vertex graph with label {\tt f} at the root.
+This terminates the derivation. The edges with label
+$\uli{0}$, $\uli{1}$ and $\uli{2}$ are transmitted under the
+name $<$. This completes the tree. It has the desired form.
+%%
+\vplatz
+\exercise
+Strings can also be viewed as multigraphs with only one edge 
+colour. Show that a CFG for strings can also be defined as a 
+context free $\gamma$--grammar on strings. We shall show in 
+Section~\ref{kap2}.\ref{kap2-5} that CFLs can also be generated by UTAGs,
+but that the converse does not hold.
+%%
+\vplatz
+\exercise
+Show that for every context free $\gamma$--grammar $\Gamma$
+there exists a context free  $\gamma$--grammar $\Delta$
+which has no rules of productivity $- 1$ and which generates
+the same class of graphs.
+%%
+\vplatz
+\exercise
+Show that for every context free $\gamma$--grammar there exists
+a context free $\gamma$--grammar with the same yield and no
+rules of productivity $\leq 0$.
+%%
+\vplatz
+\exercise
+Define unregulated string adjunction grammars in a similar way to 
+UTAGs. Take note of the fact that these are quasi--grammars. Characterize 
+the class of strings generated  by these grammars in terms of 
+ordinary grammars.
+%%
+\vplatz %%
+\exercise %%
+Show that the language $\{\vec{w} \conc \vec{w}
+: \vec{w} \in A^{\ast}\}$ is not context free but that it
+satisfies the Pumping Lemma. 
+%%%
+\index{Pumping Lemma}%%%
+\index{Interchange Lemma}%%%
+%%%
+(It does not satisfy the Interchange Lemma (\ref{thm:interchange}).)
+%%

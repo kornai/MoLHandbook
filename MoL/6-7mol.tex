@@ -1,0 +1,1054 @@
+\section{Formal Structures of GB}
+\label{kap5-7}
+%
+%
+%
+We shall close this chapter with a survey of the basic mathematical
+constructs of GB. The first complex concerns constraints on syntactic 
+structures. GB has many types of such constraints. It has for example 
+many principles that describe the geometrical configuration within 
+which an element can operate. A central definition is that of 
+idc--command, often referred to as {\it c--command}, although the 
+latter was originally defined differently.
+%%%%
+\begin{defn}
+%%%%
+\index{idc--command}%%
+\index{c--command}%%
+%%%%
+Let $\GT = \auf T, <\zu$ be a tree, $x, y \in T$. $x$ 
+\textbf{idc--commands} $y$ if for every $z > x$ we have $z \geq y$. 
+A constituent $\low{x}$ \textbf{idc--commands} a constituent $\low{y}$ 
+if $x$ idc--commands $y$.
+\end{defn}
+%%%%
+In \shortcite{koster:domains}, Jan Koster has proposed an attempt to
+formulate GB without the use of movement transformations. The basic
+idea was that the traces in the surface structure leave enough
+indication of the deep structure that we can replace talk of deep
+structure and derivations by talk about the surface structure
+alone. The general principle that Koster proposed was as follows.
+Let $x$ be a node with label $\delta$, and let $\delta$
+be a so--called dependent element. (Dependency is 
+defined with reference to the category.) Then there must
+exist a uniquely defined node $y$ with label $\alpha$
+which c--commands $x$, and is local to $x$. Koster required
+in addition that $\alpha$ and $\delta$ shared a property.
+However, in formulating this condition it turns out to be
+easier to constrain the possible choices of $\delta$ and $\alpha$.
+In addition to the parameters $\alpha$ and $\delta$ it
+remains to say what locality is. Anticipating our definitions
+somewhat we shall say that we have $x\; R\; y$ for a certain
+relation $R$. \cite{barkerpullum:command} have surveyed the notions of
+locality that enter in the definition of $R$ that were used in
+the literature and given a definition of command relation.
+Using this, \cite{kracht:aspects} developed a theory
+of command relations that we shall outline here.
+%%%%
+\begin{defn}
+Let $\auf T,<\zu$ be a tree and $R \subseteq T^2$ a
+relation. $R$ is called a \textbf{command relation} 
+%%%
+\index{command relation}%%
+%%%
+if there is a function $f_R \colon T \pf T$ such that (1) -- (3) hold. 
+$R$ is a \textbf{monotone command relation} 
+%%%
+\index{command relation!monotone}%%%
+%%%
+if in addition it satisfies (4), 
+and \textbf{tight} if it satisfies (1) -- (5).
+%%%
+\index{command relation!tight}%%
+%%%%
+\begin{dingautolist}{192}
+\item $R_x := \{y : x\; R\; y\} = \low{f_R(x)}$.
+\item $x < f_R(x)$ for all $ x < r$.
+\item $f_R(r) = r$.
+\item If $x \leq y$ then $f_R(x) \leq f_R(y)$.
+\item If $x < f_R(y)$ then $f_R(x) \leq f_R(y)$.
+\end{dingautolist}
+%%%%%
+\end{defn}
+%%%%
+The first class that we shall study is the class of tight
+command relations. Let $\GT$ be a tree and $P \subseteq T$.
+We say,  $x$ $P$--\textbf{commands} $y$ if for every $z > x$ with
+$z \in P$ we have $z \geq y$.  We denote the relation of
+$P$--command by $K(P)$. If we choose $P = T$ we exactly get
+idc--command. The following theorem is left as an exercise.
+%%%%
+\begin{prop}
+\label{prop:dicht}
+Let $R$ be a binary relation on the tree $\auf T, <\zu$.
+$R$ is a tight command relation iff $R = K(P)$ for some 
+$P \subseteq T$.
+\end{prop}
+%%%
+Let $\GT$ be a tree. We denote by $\mbox{\rm MCr}(\GT)$ the set of
+monotone command relations on $\GT$. This set is closed under
+intersection, union and relation composition. We even have
+%%%
+\begin{equation}
+\begin{split}
+f_{R \cup S}(x) & = \max \{f_R(x), f_S(x)\} \\
+f_{R \cap S}(x) & = \min \{f_R(x), f_S(x)\} \\
+f_{R \circ S}(x) & = (f_S \circ f_R)(x)
+\end{split}
+\end{equation}
+%%%%
+For union and intersection this holds without assuming monotonicity. 
+For relation composition, however, it is needed. For suppose 
+$x\; R \circ S\; y$. Then we can conclude that $x\; R\; f_R(x)$
+and $f_R(x)\; S\; y$. Hence $x\; R \circ S\; y$ iff
+$y \leq f_S(f_R(x))$, from which the claim now follows.
+Now we set
+%%%
+\begin{equation}
+%%%
+\index{$\goth{MCr}(\GT)$}%%%
+%%%
+\goth{MCr}(\GT) := \auf \mbox{\rm MCr}(\GT), \cap, \cup, \circ\zu
+\end{equation}
+%%%
+$\goth{MCr}(\GT)$ is a  distributive lattice with respect to
+$\cap$ and $\cup$. What is more, there are additional laws
+of distribution concerning relation composition.
+%%%%
+\begin{prop}
+\label{prop:distributoid}
+Let $R, S, T \in \mbox{\rm MCr}(\GT)$. Then
+%%%%
+\begin{dingautolist}{192}
+\item
+$R \circ (S \cap T) = (R \circ S) \cap (R \circ T)$, \\
+$(S \cap T) \circ R = (S \circ R) \cap (T \circ R)$.
+\item
+$R \circ (S \cup T) = (R \circ S) \cup (R \circ T)$, \\
+$(S \cup T) \circ R = (S \circ R) \cup (T \circ R)$.
+\end{dingautolist}
+%%
+\end{prop}
+%%%%
+\proofbeg
+%%
+Let $x$ be an element of the tree. Then
+%%
+\begin{equation}
+\begin{split}
+f_{R \circ (S \cap T)}(x) & = f_{S \cap T} \circ f_R(x) \\
+ & = \min \{f_S(f_R(x)), f_T(f_R(x))\} \\
+ & = \min \{f_{R \circ S}(x), f_{R \circ T}(x)\} \\
+ & = f_{(R \circ S) \cap (R \circ T)}(x)
+\end{split}
+\end{equation}
+%%
+The other claims can be shown analogously.
+\proofend
+%%%
+\begin{defn}
+%%%%
+\index{command relation!generated}
+\index{command relation!chain like}%%
+%%%%
+Let $\GT$ be a tree, $R \in \mbox{\rm MCr}(\GT)$.
+$R$ is called \textbf{generated} if it can be produced from tight
+command relations by means of $\cap$, $\cup$ and $\circ$. $R$ is
+called \textbf{chain like} if it can be generated from tight
+relations with $\circ$ alone.
+\end{defn}
+%%%%
+\begin{thm}
+$R$ is generated iff $R$ is an intersection of chain
+line command relations.
+\end{thm}
+%%%%
+\proofbeg
+Because of Proposition~\ref{prop:distributoid} we can move
+$\circ$ to the inside of $\cap$ and $\cup$. Furthermore, we can
+move $\cap$ outside of the scope of $\cup$. It remains to be
+shown that the union of two chain like command
+relations is an intersection of chain like command relations.
+This follows from Lemma~\ref{lem:spleiss}.
+\proofend
+%%%
+\begin{lem}
+Let $R = K(P)$ and $S = K(Q)$ be tight. Then
+%%
+\begin{equation}
+R \cup S = (R \circ S) \cap (S \circ R) \cap K(P \cap Q)
+\end{equation}
+%%
+\end{lem}
+%%%%
+\proofbeg
+Let $x$ be given. We look at $f_R(x) $ and $f_S(x)$.
+Case 1. $f_R(x) < f_S(x)$. Then $f_{R \cup S}(x) = f_S(x)$.
+On the right hand side we have $f_S \circ f_R(x) = f_S(x)$,
+since $S$ is tight. $f_R \circ f_S(x) \geq f_S(x)$, as well as
+$f_{K(P \cap Q)}(x) \geq f_S(x)$. Case 2.  $f_S(x) < f_R(x)$.
+Analogously. Case 3. $f_S(x) = f_R(x)$. Then $f_{S \cup R}(x) %
+= f_R(x) = f_S(x)$, whence $f_R \circ f_S(x), f_S \circ f_R(x) %
+\geq f_{S \cup R}(x)$. The smallest node above $x$ which is
+both in $P$ and in $Q$ is clearly in $f_S(x)$. Hence we have
+$f_{K(P\cap Q)}(x) = f_S(x)$. Hence equality holds in all
+cases.
+\proofend
+
+We put
+%%%
+\index{$K(P) \bullet K(Q)$}%%
+%%%
+\begin{equation}
+K(P) \bullet K(Q) := K(P \cap P)
+\end{equation}
+%%
+The operation $\bullet$ is defined only on tight command relations.
+If $\auf R_i : i < m\zu$ is a sequence of command relations,
+then $R_0 \circ R_1 \circ \dotsb \circ R_{n-1}$ is called its
+%%%
+\index{command relation!product of {\faul}s}%%
+%%%
+\textbf{product}. In what is to follow we shall characterize a
+union of chain like relations as the intersection of products.
+To this end we need some definitions. The first is that of
+a \textbf{shuffling}. This operation mixes two sequences in such a
+way that the liner order inside the sequences is respected.
+%%%
+\begin{defn}
+%%%%
+\index{shuffling}%%
+\index{embedding}%%
+%%%%
+Let $\rho = \auf a_i : i < m\zu$ and $\sigma =
+\auf b_j : j < n\zu$ be sequences of objects.
+A \textbf{shuffling} of $\rho$ and $\sigma$ is a sequence
+$\auf c_k : k < m+n\zu$ such that there are injective
+monotone functions $f \colon n \pf m+n$ and $g \colon m \pf m+n$
+such that $\im(f) \cap \im(g) = \varnothing$ and $\im(f) \cup \im(g) 
+= m+n$, as well as $c_{f(i)} = a_i$ for all $i < m$ and $c_{g(j)} = b_j$
+for all $j < n$. $f$ and $g$ are called the \textbf{embeddings}
+of the shuffling.
+\end{defn}
+%%%%
+\begin{defn}
+%%%%
+\index{command relation!weakly associated}%%
+%%%%
+Let $\rho = \auf R_i : i < m\zu$ and $\sigma =
+\auf S_j : j < n\zu$ be sequences of tight command relations.
+Then $T$ is called \textbf{weakly associated with} $\rho$ and
+$\sigma$ if there is a shuffling $\tau = \auf T_i : i < m+n\zu$
+of $\rho$ and $\sigma$ together with embeddings $f$ and $g$
+such that
+%%
+\begin{equation}
+T = T_0 \circ^0 T_1 \circ^1 T_2 \dotsb \circ^{n-2} T_{n-1}
+\end{equation}
+%%
+where $\circ^i \in \{\circ, \bullet\}$ for $i < n-1$
+and $\circ^i = \circ$ always if $\{i, i+1\} \subseteq
+\im(f)$ or $\{i,i+1\} \subseteq \im(g)$.
+\end{defn}
+%%%
+If $m = n = 2$, we have the following shufflings.
+%%%
+\begin{equation}
+\begin{array}{l}
+\auf R_0, R_1, S_0, S_1\zu, \quad \auf R_0, S_0, R_1, S_1\zu, \quad
+    \auf R_0, S_0, S_1, R_1\zu,  \\
+\auf S_0, R_0, R_1, S_1\zu, \quad \auf S_0, R_0, S_1, R_1\zu, \quad
+    \auf S_0, S_1, R_0, R_1\zu 
+\end{array}
+\end{equation}
+%%%
+The sequence $\auf R_1, S_0, S_1, R_0\zu$ is not a shuffling because
+the order of the  $R_i$ is not respected. In general there exist
+up to ${m+n \choose n}$ different shufflings. For every shuffling
+there are up to $2^{n-1}$ weakly associated command relations
+(if $n \leq m$).  For example the following command relations
+are weakly associated to the third shuffling.
+%%
+\begin{equation}
+R_0 \bullet S_0 \circ S_1 \bullet S_1, \quad
+R_0 \circ S_0 \circ S_1 \circ R_1
+\end{equation}
+%%%
+The relation $R_0 \circ S_0 \bullet S_1 \circ R_1$ is however
+not weakly associated to it since $\bullet$ may not occur in
+between two $S$.
+%%%
+\begin{lem}
+\label{lem:spleiss}
+Let $\rho = \auf R_i : i < m\zu$ and $\sigma =
+\auf S_i : i < n\zu$  be sequences of tight command relations
+with product $T$ and $U$, respectively. Then $T \cup U$ is the
+intersection of all chain like command relations
+which are products of sequences weakly associated with
+a shuffling of $\rho$ and $\sigma$.
+\end{lem}
+
+In practice one has restricted attention to command relations
+which are characterized by certain sets of nodes, such as the set
+of all maximal projections, the set of all finite sentences, the
+set of all sentences in the indicative mood and so on. If we
+choose $P$ to be the set of nodes carrying a label subsuming the
+category of finite sentences, then we get the following: if $x$ is
+a reflexive anaphor, it has to be c--commanded by a subject, which
+it in turn $P$--commands. (The last condition makes sure that the
+subject is a subject of the same sentence.) There is a plethora of
+similar examples where command relations play a role in defining
+the range of phenomena. Here, one took not just any old set of
+nodes but those that where {\it definable}. To precisify this, let
+$\auf \GT, \ell\zu$ with $\ell \colon T \pf N$ be a labelled tree and
+$Q \subseteq N$. Then $K(Q) := K(\ell^{-1}(Q))$ is called a
+%%%%
+\index{command relation!definable}%%
+%%%%%
+\textbf{definable tight command relation}.
+%%%%
+\begin{defn}
+Let $\GT$ be a tree and $R \subseteq T\times T$. $P$ is
+called a (\textbf{definable}) \textbf{command relation} if it
+can be obtained from definable tight command relations
+by means of composition, union and intersection.
+\end{defn}
+%%%
+In follows from the previous considerations that the union
+of definable relations is an intersection of chains of
+tight relations. A particular role is played by subjacency.
+%%%
+\index{subjacency}%%
+%%%
+The antecedent of a trace must be 1--subjacent to a trace.
+As  is argued in \cite{kracht:adjunction} on the basis of
+\cite{chomsky:barriers} this relation is exactly
+%%%
+\begin{equation}
+K(\mbox{\sf ip}) \circ K(\mbox{\sf cp}) 
+\end{equation}
+%%
+
+The movement and copy--transformations create so--called {\it chains}.
+Chains connect elements in different positions with each other. The
+mechanism inside the grammar is coindexation. For as we have said
+in Section~\ref{kap5}.\ref{kap5-5} traces must be properly governed, and
+this means that an antecendent must c--com\-mand its trace in addition to
+being coindexed with it. This is a restriction on the structures
+as well as on the movement transformations. Using coindexation
+one also has the option of associating antecedent and trace
+without assuming that anything has ever moved. The transformational
+history can anyway be projected form the S--structure up to minor
+(in fact inessential) variations. This means that we need not
+care whether the S--structure has been obtained by transformations
+or by some other process introducing the indexation (this is what
+Koster has argued for). The association between antecedent and
+trace can also be done in a different way, namely by collecting
+sets of constituents. We call a chain a certain set of constituents.
+In a chain the members may be thought to be coindexed, but this is 
+not necessary. Chomsky 
+%%%
+\index{Chomsky, Noam}%%%
+%%%
+has once again
+introduced the idea in the 1990s that movement is the sequence of
+copying and deletion and made this one of the main innovations of
+the reform in the Minimalist Program (see \cite{chomsky:minimalist}).
+Deletion here is simply marking as phonetically empty (so the
+copy remains but is marked). However, the same idea can be
+introduced into GB without substantial change. Let us do this
+here and introduce in place of Move--$\alpha$ the transformation
+%%%%
+\index{Copy--$\alpha$}%%%
+%%%%
+\textbf{Copy}--$\alpha$. It will turn out that it is actually not
+necessary to say which of the members of the chain has been obtained
+by copying from which other member. The reason is simple:
+the copy (= antecedent) c--commands the original (= trace) but
+the latter does not c--command the former. Knowing who is in a 
+chain with whom is therefore enough. This is the central insight
+that is used in the theory of chains in \cite{kracht:chains}
+which we shall now outline.  We shall see below that copying
+gives more information on the derivation than movement, so that
+we must be careful in saying that nothing has changed by introducing
+copy--movement.
+
+Recall that constituents are subtrees. In what is to follow we
+shall not distinguish between a set of nodes and the constituent
+%%%
+\index{ac--command}%%
+%%%
+that is based on that set. Say that $x$ \textbf{ac--commands} 
+$y$ if $x$  and $y$ are incomparable, $x$ idc--commands $y$ but $y$ 
+does not idc--command $x$.
+%%%%
+\begin{defn}
+%%%%
+\index{chain}%%
+\index{chain!trace \faul}%%
+\index{chain!copy \faul}%%
+\index{chain!head \faul}%%
+\index{chain!foot \faul}%%
+%%%
+Let $\GT$ be a tree. A set $\Delta$ of constituents of $\GT$ which 
+is linearly ordered with respect to ac--command is called a 
+\textbf{chain in} $\GT$. The element which is highest with respect 
+to ac--command is called the \textbf{head of} $\Delta$, the lowest 
+the \textbf{foot}. $\Delta$ is a \textbf{copy chain} if any two 
+members are isomorphic. $\Delta$ is a \textbf{trace chain} if all 
+non heads are traces.
+\end{defn}
+%%%
+The definition of chains can be supplemented with more detail
+in the case of copy chains. This will be needed in the sequel.
+%%%
+\begin{defn}
+%%%%
+\index{copy chain$^{\ast}$}%%
+\index{chain!associated}
+%%%%
+Let $\GT$ be a tree. A \textbf{copy chain}$^{\ast}$ \textbf{in} $\GT$
+is a pair $\auf \Delta, \Phi\zu$ for which the following holds.
+%%
+\begin{dingautolist}{192}
+\item
+$\Delta$ is a chain.
+\item
+$\Phi = \{\phi_{\GC,\GD} : \GC, \GD \in \Delta\}$ is a family of
+isomorphisms such that for all $\GC, \GD, \GA \in \Delta$ we have
+\begin{enumerate}
+\item $\phi_{\GC,\GC} = 1_{\GC}$
+\item $\phi_{\GC,\GA} = \phi_{\GC,\GD} \circ \phi_{\GD,\GA}$
+\end{enumerate}
+\end{dingautolist}
+%%%
+The \textbf{chain associated with} $\auf \Delta, \Phi\zu$ is $\Delta$.
+\end{defn}
+%%
+Often we shall identify a chain$^{\ast}$ with its associated chain.
+The isomorphisms give explicit information which elements
+of the various constituents are counterparts of which others.
+%%%%
+\begin{defn}
+Let $\GT$ be a tree and $\CD = \auf \Delta, \Phi\zu$ a copy
+%%%%
+\index{$x \approx_{\CD} y$, $[x]_{\CD}$}%%%
+%%%%
+chain$^{\ast}$. Then we put $x \approx_{\CD} y$ if there is a map
+$\varphi \in \Phi$ such that $\phi(x) = y$.  We put
+$[x]_{\CD} := \{y : x \approx_{\CD} y\}$. If $C$ is a set
+of copy chains$^{\ast}$ then let $\approx_C$ be the smallest equivalence
+relation generated by all $\approx_{\CD}$, $\CD \in C$.
+Further, let $[x]_C := \{y : x \approx_C y\}$.
+\end{defn}
+%%
+%%%%
+\begin{defn}
+%%%%
+\index{link}%%
+\index{link map}%%
+\index{map!ascending}%%
+%%%%
+Let $\auf \Delta, \Phi\zu$ be a copy chain$^{\ast}$, $\GC, \GD \in \Delta$.
+$\GC$ is said to be \textbf{immediately above} $\GD$ if there is no
+$\GE \in \Delta$ distinct from $\GC$ and $\GD$ which ac--commands
+$\GD$ and is ac--commanded by $\GC$. A \textbf{link of} $\Delta$ is
+a triple $\auf \GC, \phi_{\GD,\GC}, \GD\zu$ where $\GC$ is immediately
+above $\GD$. $\phi$ is called a \textbf{link map} if it occurs in a
+link. An \textbf{ascending map} is a composition of link maps.
+\end{defn}
+%%%%
+\begin{lem}
+Let $\phi$ be a link map. Then $t(\phi(x)) < t(x)$.
+\end{lem}
+%%%%
+\proofbeg
+Let $\phi = \phi_{\GC,\GD}$, $\GC = \low{v}$, $\GD = \low{w}$.
+Further, let $t_{\GC}(x)$ be the depth of $x$ in $\GC$,
+$t_{\GD}(\phi(x))$ the depth of $\phi(x)$ in $\GD$. Then
+$t_{\GC}(x) = t_{\GD}(\phi(x))$, since $\phi$ is an isomorphism.
+On the other hand $t(x) = t(v) + t_{\GC}(x)$ and $t(\phi(x)) = t(w) +
+t_{\GD}(\phi(x))  = t(w) + t_{\GC}(x)$. The claim now follows
+from the next lemma given the remark that $v$ c--commands $w$,
+but $w$ does not c--command $v$.
+\proofend
+%%%%
+\begin{lem}
+Let $\GT = \auf T, <\zu$ be a tree, $x, y \in T$.
+If $x$ ac--commands $y$, $t(x) \leq t(y)$.
+\end{lem}
+%%%%
+\proofbeg
+There exists a uniquely defined $z$ with $z \succ x$. By
+definition of c--command we have $z \geq y$. But $y \neq z$,
+since $y$ is not comparable with $x$. Hence $y < z$. Now we
+have $t(x) = t(z) + 1$ and $t(y) > t(z) = t(x) - 1$. Whence
+the claim.
+\proofend
+
+%%%%
+We call a pair $\auf \GT, C\zu$ a \textbf{copy chain tree}
+%%%
+\index{copy chain tree}%%
+\index{CCT (see copy chain tree)}%%%
+%%%%
+(\textbf{CCT}) if $C$ is a set of copy chains$^{\ast}$ on $\GT$,
+$\GT$ a finite tree. We consider among other the following
+constraints.
+%%%%
+\begin{quote}
+%%%%
+\index{uniqueness}%%
+%%%%
+{\sl Uniqueness}.
+Every constituent of $\GT$ is contained in exactly one chain.
+\\
+%%%%
+\index{Liberation}%%
+%%%%
+{\sl Liberation}. Let $\Gamma, \Delta$ be chain, $\GC \in \Gamma$
+    and $\GD_0, \GD_1 \in \Delta$ with $\GD_0 \neq \GD_1$ such
+    that $\GD_0, \GD_1 \subseteq \GC$. Then $\GC$ is the foot
+    of $\Gamma$.
+\end{quote}
+%%%
+\begin{lem}
+Let $K$ be a CCT which satisfies {\sl Uniqueness} and
+{\sl Liberation}. Further, let $\phi$ and $\phi'$ be link maps with
+$\im(\phi) \cap \im(\phi') \neq \varnothing$. Then already 
+$\phi = \phi'$.
+\end{lem}
+%%%%
+\proofbeg
+Let $\phi \colon \GC \pf \GD$, $\phi' \colon \GC' \pf \GD'$ be link 
+maps.  If $\im(\phi) \cap \im(\phi') \neq \varnothing$ then 
+$\GD \subseteq \GD'$ or $\GD' \subseteq \GD$. Without loss of 
+generality we may assume the first. If $\GD \subsetneq \GD'$ then 
+also $\GC \subseteq \GD'$, since $\GD$ c--commands $\GC$. By 
+{\sl Liberation\/} $\GD'$ is the foot of its chain, in contradiction 
+to our assumption. Hence we have $\GD = \GD'$. By {\sl Uniqueness}, 
+$\GC$, $\GC'$ and $\GD$ are therefore in the same chain. Since 
+$\phi$ and $\phi'$ are link maps, we must have $\GC = \GC'$. 
+Hence $\phi = \phi'$.
+\proofend
+%%%%
+\begin{defn}
+%%%
+\index{root}%%
+%%%
+Let $K$ be a CCT. $x$ is called a \textbf{root} if $x$ is not in the
+image of a link map.
+\end{defn}
+%%%%
+Then proof of the following theorem is now easy to provide.
+It is left for the reader.
+%%%%
+\begin{prop}
+\label{prop:kandek}
+Let $K$ be a CCT which satisfies {\sl Uniqueness} and {\sl Liberation}.
+Let $x$ be an element and $\tau_i$, $i < m$, $\phi_j$, $j < n$,
+link maps, and $y$, $z$ roots such that
+%%
+\begin{equation}
+x = \tau_{m-1} \circ \tau_{m-2} \circ \dotsb \circ \tau_0(y) =
+    \phi_{n-1} \circ \phi_{n-2} \circ \dotsb \circ \phi_0(z) 
+\end{equation}
+%%
+Then we have $y = z$, $m = n$ and $\tau_i = \phi_i$ for all
+$i < n$.
+\end{prop}
+%%%
+Hence, for given $x$ there is a uniquely defined root $x_r$ with
+$x \approx_C x_r$. Further, there exists a unique sequence 
+$\auf \phi_i : i < n\zu$ of link maps such that $x$ is the image 
+of $\phi_{n-1} \circ \dotsb \circ \phi_0$. This sequence we call 
+the \textbf{canonical decomposition of} $x$.
+%%%
+\index{canonical decomposition}%%
+%%%%
+\begin{prop}
+Let $K$ be a CCT satisfying {\sl Uniqueness} and {\sl Liberation}.
+Then the following are equivalent.
+%%%
+\begin{dingautolist}{192}
+\item
+$x \approx_C y$.
+\item
+$x_r = y_r$.
+\item
+There exist two ascending maps $\chi$ and $\tau$
+with $y = \tau \circ \chi^{-1}(x)$.
+\end{dingautolist}
+\end{prop}
+%%%%
+\proofbeg
+\ding{192} $\Pf$ \ding{194}. Let $x \approx_C y$.
+Then there exists a sequence $\auf \sigma_i : i < p\zu$ of link 
+maps or inverses thereof such that 
+$y = \sigma_{p-1} \circ \dotsb \circ \sigma_0(x)$.
+Now if $\sigma_{i}$ is a link map and $\sigma_{i+1}$ an inverse
+link map, then $\sigma_{i+1} = \sigma_{i}^{-1}$. Hence we may
+assume that for some $q \leq p$ all $\sigma_i$, $i < q$,
+are inverse link maps and all $\sigma_i$, $p > i \geq q$,
+are link maps. Now put $\tau := \sigma_{p} \circ \sigma_{p-1}
+\dotsb \circ \sigma_q$ and $\chi := \sigma_0 \circ \sigma_{1}
+\circ \dotsb \circ \sigma_{q-1}$. $\chi$ and $\tau$ are ascending
+maps. So, \ding{194} obtains. \ding{194} $\Pf$ \ding{193}. Let 
+ascending maps $\chi$ and $\tau$ be given with 
+$y = \tau \circ \chi^{-1}(x)$.
+Put $u := \chi^{-1}(x)$. Then $u = \rho(u_r)$ for some
+ascending map $\rho$. Further, $x = \chi(u) = \chi \circ %
+\rho(u_r)$ and $y = \tau(u) = \tau \circ \rho(u_r)$.
+Now, $u_r$ is a root and $x$ as well as $y$ are images of
+$u_r$ under ascending maps. Hence $u_r$ is a root of $x$
+and $y$. This however means that $u_r = x_r = y_r$. Hence,
+\ding{193} obtains. \ding{193} $\Pf$ \ding{192} is straightforward.
+\proofend
+
+The proof also establishes the following fact.
+%%%%
+\begin{lem}
+Every ascending map is a canonical decomposition.
+Every composition of maps equals a product $\tau \circ \chi^{-1}$
+where $\tau$ and $\chi$ are ascending maps.
+A minimal composition of link maps and their inverses is
+unique.
+\end{lem}
+%%%%
+
+Let $x$ be an element and $\auf \phi_i : i < n\zu$ its canonical
+decomposition. Then we call
+%%
+\begin{equation}
+T_K(x) := \{\phi_{j-1} \circ \phi_{j-2}\circ\dotsb\circ\phi_0(x) :
+    j \leq n\}
+\end{equation}
+%%
+%%%%
+\index{trajectory}%%
+%%%%
+the \textbf{trajectory of} $x$. The trajectory mirrors the history
+of $x$ in the process of derivation. We call \textbf{root line}
+of $x$ the set
+%%%
+\begin{equation}
+W_K(x) := \{y : y \in T_K(x), y \text{ idc--commands }
+    x_r\}
+\end{equation}
+%%%
+Notice that $x_r$ idc--commands itself. The \textbf{peak of} $x$
+is the element of $W_K(x)$ of smallest depth. We write $x_{\pi}$
+%%%
+\index{$\pi_x$, $x_{\pi}$, $\zeta_x$, $x_{\zeta}$}%%%
+%%%%
+for the peak of $x$ and $\pi_x$ for the ascending map which
+sends $x$ to $x_{\pi}$.
+%%%%
+\begin{defn}
+Let $K$ be a CCT satisfying {\sl Uniqueness} and {\sl Liberation}.
+If $r$ is the root of the tree then $r$ is the \textbf{zenith of} $r$,
+the \textbf{zenith map} is $\zeta_r := 1_T$. If $x \neq r$ then
+the \textbf{zenith map} is the composition $\zeta_y \circ \pi_x$,
+where $y \succ x_{\pi}$. The \textbf{zenith of} $x$ equals $\zeta_y \circ %
+\pi_x(x)$. We write $x_{\zeta}$ for the zenith of $x$.
+\end{defn}
+%%%%
+\begin{defn}
+%%%
+\index{link map!orbital}%%
+%%%
+A link map is called \textbf{orbital} if it occurs in a minimal
+decomposition of the zenith map.
+\end{defn}
+%%%%%
+At last we can formulate the following restriction on CCTs.
+%%%%
+\begin{quote}
+%%%%
+\index{No Recycling}%%
+%%%%
+{\sl No Recycling}. All link maps are orbital.
+\end{quote}
+
+The effect of a copy transformation is that (1) it adds a new
+constituent and (2) this constituent is added to an already
+existing chain as a head. Hence the whole derivation can be
+thought of as a process which generates a tree together with
+its chains. These can be explicitly described and this eliminates
+the necessity of talking about transformations.
+%%%
+\begin{defn}
+A \textbf{copy chain structure} (\textbf{CCS}) is a CCT
+%%%%%
+\index{copy chain structure}
+\index{CCS (see copy chain structure)}%%%
+%%%%%
+$K = \auf \GT, C\zu$ which satisfies {\sl Uniqueness},
+{\sl Liberation} and {\sl No Recycling}.
+\end{defn}
+%%%
+Everything that one wants to say about transformations and
+derivations can be said also about copy chain structures.
+The reason for this is the following fact. We call a CCT
+%%%
+\index{tree}%%
+%%%
+simply a \textbf{tree} if every chain consists of a single
+constituent. Then also this tree is a CCS.
+A transformation can naturally be defined as an operation
+between CCSs. It turns out that Copy--$\alpha$
+turns a CCS into a CCS. The reason for this is that traces
+have to be bound and may not be moved.  (Only in order to
+reflect this in the definition of the CCSs the condition
+{\sl No Recycling\/} has been introduced. Otherwise it was
+unnecessary.) The following now holds.
+%%%
+\begin{thm}
+A CCT is a CCS iff it is obtained from a tree by
+successive application of Copy--$\alpha$.
+\end{thm}
+%%%
+%%%
+Transformational grammar and HPSG are not as different as one
+might think. The appearance to the contrary is created by the fact
+that TG is written up using trees, while HPSG has acyclic
+structures, which need not be trees. In this section we shall show
+that GB actually defines structures that are more similar to
+acyclic graphs than to trees. The basis for the alternative
+formulation is the idea that instead of movement transformations
+we define an operation that changes the dominance relation. If the
+daughter constituent $z$ of $x$ moves and becomes a daughter
+constituent of $y$ then we can simply add to the dominance
+relation the pair $\auf z,y\zu$. This rather simple idea has to be
+worked out carefully. For first we have to change from using the
+usual transitive dominance relation the immediate dominance
+relation. Second one has to take care of the linear order of the
+elements at the surface since it is now not any more represented.
+%%
+\begin{defn}
+A \textbf{multidominance structure} (\textbf{MDS}) is a triple 
+%%%%
+\index{multidominance structure}%%
+\index{MDS (see multidominance structure)}%%%
+%%%%%
+$\auf M, \prec, r\zu$ such that
+$\auf M, \prec\zu$ is a directed acyclic graph with root
+$r$ and for every $x < r$ the set $M(x) := \{y : x \prec y\}$
+is linearly ordered by $<$.
+\end{defn}
+%%%%
+With an MDS we only have coded the dominance relation between the
+constituents. In order to include order we cannot simply add
+another relation as we did with trees. Depending on the branching
+number, a fair number of new relations will have to be added,
+which represent the relations {\it the $i$th daughter of} (where
+$i < n$, the maximum branching number). Since we are dealing with
+binary branching trees we need only two of these relations.
+%%%%%
+\index{multidominance structure!ordered}%%%
+\index{OMDS (see ordered multidominance structure)}%%
+%%%%%
+\begin{defn}
+An \textbf{ordered} (\textbf{binary branching}) 
+\textbf{multidominance structure} (\textbf{OMDS}) is a quadruple 
+$\auf M, \prec_0, \prec_1, r\zu$
+such that the following holds:
+%%%
+\begin{dingautolist}{192}
+\item $\auf M, \prec_0 \cup \prec_1, r\zu$ is an MDS.
+\item From $x \succ_0 y$ and $x \succ_0 z$ follows $y = z$.
+\item From $x \succ_1 y$ and $x \succ_1 z$ follows $y = z$.
+\item If $x \succ_1 z$ for some $z$ then there exists a
+    $y \neq z$ with $x \succ_0 y$.
+\end{dingautolist}
+\end{defn}
+%%%
+(The reader may verify that \ding{193} and \ding{195} together imply 
+that $\succ_0 \cap \succ_1 = \varnothing$.)
+Let $\auf \GT, <, \sqsubset\zu$ be a binary branching ordered tree.
+Then we put $x \prec_0 y$ if $x$ is a daughter of $y$ and there is
+no daughter $z$ of $y$ with $z \sqsubset x$. Further, we write
+$x \prec_1 y$ if $x$ is a daughter of $y$ but not $x \prec_0 y$.
+%%%%
+\begin{thm}
+Let $K = \auf \GT, C\zu$ be a CCS over an ordered binary branching
+tree with root $r$. Put $M := [x]_C$, $x \in T$, as well as for 
+$i = 0,1$, $[x]_C \prec_i [y]_C$ iff there is an 
+$x' \approx_C x$ and an $y' \approx_C y$ with $x' \prec_i y'$. 
+Finally let 
+%%%
+\begin{equation}
+M(K) := \auf M, \prec_0, \prec_1, [r]_K\zu
+\end{equation}
+%%%
+Then $M(K)$ is an OMDS.
+\end{thm}
+%%%%
+Now we want to deal with the problem of finding the CCS from
+the OMDS.
+%%%%
+\begin{defn}
+Let $\auf M, \prec_0, \prec_1, r\zu$ be an OMDS. An
+\textbf{identifier} is a sequence $I = \auf x_i : i < n\zu$ such that
+$r \succ x_0$ and $x_i \succ x_{i+1}$ for all $i \in n$.
+$\CI(\GM)$ denotes the set of all identifiers of $\GM$.
+The \textbf{address of} 
+%%%
+\index{address}%%%
+%%%
+$I$ is that sequence $\auf \gamma_i : i < n\zu$ such that for
+all $i < n$ one has $x_{i} \prec_{\gamma_i} x_{i-1}$.
+\end{defn}
+%%%%
+The following is easy to see.
+%%%%
+\begin{prop}
+The set of addresses of an OMDS is a tree domain.
+\end{prop}
+%%%%
+This means that we have already identified the tree structure.
+What remains to do is to find the chains. The order is irrelevant, so
+we ignore it. At first we want to establish which elements are
+%%%
+\index{element!overt}%%
+%%%
+overt. In a CCS an element $x$ is called \textbf{overt} if for
+every $y \geq x$ the constituent $\low{y}$ is the head of its
+chain. This we can also describe in the associated MDS. We say
+%%%
+\index{link}%%
+\index{link!maximal}%%
+\index{identifier!S--\faul}%%
+%%%
+a pair $\auf x,y\zu$ is a \textbf{link in} $\auf M, \prec, r\zu$
+if $x \prec y$. The link is \textbf{maximal} if $y$ is maximal with
+respect to $<$ in $M(x)$. An \textbf{S--identifier} is an identifier
+$I = \auf x_i : i < n\zu$ where $\auf x_{i-1}, x_{i}\zu$
+is a maximal link for all $i < n$. (For the purpose of this 
+definition, $x_{-1}$ is the root.) The overt elements are exactly 
+the S--identifiers.
+%%%
+%%%%
+\begin{defn}
+\index{link extension}%%
+%%%
+Let $\GM = \auf M, \prec, r\zu$ and $\GM' = \auf M', \prec', r'\zu$
+be MDSs. Then $\GM'$ is called a  \textbf{link extension of} $\GM$
+if $M' = M$, $r' = r$ and $\prec'\; = \;\prec \cup \;\{\auf x,y\zu\}$,
+where $\auf x,y\zu$ is maximal in $\GM'$.
+\end{defn}
+%%%%
+One finds out easily that if $K'$ is derived from $K$ by simple
+copying then $M(K')$ is isomorphic to a link extension of $M(K)$.
+Let conversely $\GM'$ be a link extension of $\GM$ and $K$ a CCS
+such that $M(K) \cong \GM$. Then we claim that there is a CCS $K'$
+for which $M(K') \cong \GM'$ and which results by copying from $K$.
+This is unique up to isomorphism. The tree is given by $\CI(\GM')$.
+Further, let the tree of $K$ be exactly $\GI(\GM)$. First we have
+$\CI(\GM) \subset \CI(\GM')$, and the identity is an embedding
+whose image contains all identifiers which do not contain the
+subsequence $x;y$. Let now $y'$ be maximal with respect to $<$
+in $\GM$. Further, let $I$ be the S--identifier of $y$ and $I'$
+the S--identifier of $y'$ in $\GM$. Then $I' = I;J$ for some $J$
+since $y' < y$. Define $\phi : I;J;x;K \mapsto I;x;K$. This is an
+isomorphism of the constituent $\low{I;J;x}$ onto the constituent
+$\low{I;x}$. Now we define the chains$^{\ast}$ on $\CI(\GM')$. Let
+$\CD = \auf \Delta, \Phi\zu$ be the chain of $K$ which contains
+the constituent $\low{I;J;xK}$. Then let
+$\CD' := \auf \Delta \cup \{\im(\phi)\},
+\Phi'\zu$, where $\Phi' := \Phi \cup \{\phi \circ \chi :
+    \chi \in \Phi\} \cup \{\chi \circ \phi^{-1} :
+    \chi \in \Phi\zu$.
+For every other chain $\CC$ let $\CC' := \CC$. Finally
+for an identifier $L < I;J;x;K$ we put $\CK_L := \auf \{\low{L}\}, %
+\{1_{\low{L}}\}\zu$. Then we put
+%%%
+\begin{equation}
+K' := \auf \CI(\GM'), <, \varepsilon, \{\CC' : \CC \in C\}
+    \cup \{\CK_L : L < I;J;x;K\}\zu 
+\end{equation}
+%%%
+This is a CCS. Evidently it satisfies {\sl Uniqueness}. Further,
+{\sl Liberation\/} is satisfied as one easily checks. For {\sl No
+Recycling\/} it suffices that the new link map is orbital. 
+This is easy to see. 
+
+Now, how does one define the kinds of structures that are common in
+GB? One approximation is the following. We say a \textbf{trace chain
+structure} 
+%%%
+\index{trace chain structure}%%%
+%%%
+is a pair $\auf \GT, C\zu$ where $C$ is a set of trace
+chains. If we have a CCS we get the trace chain structure
+relatively easily. To this end we replace all maximal nonovert
+constituents in a tree by a trace (which is a one node tree). This
+however deletes some chain members! Additionally it may happen
+that some traces are not any more bound. Hence we say that a trace
+chain structure is a pair $\auf \GT, C\zu$ which results from a
+CCS by deleting overt constituents. Now one can define trace chain
+structures also from MDSs, and it turns out that if two CCSs $K$
+and $K'$ have isomorphic MDSs then their trace chain structures
+are isomorphic. This has the following reason. An MDS is
+determined from $\GT$ and $\approx_C$ alone. We can determine the
+root of every element from $\GT$ and $\approx_C$, and further also
+the root line. From this we can define the peak of every element
+and therefore also the zenith. The overt elements are exactly the
+elements in zenith position. Except for the overt element, the trace 
+chain structure contains also the traces. These are exactly
+the overt daughters of the overt elements.
+
+Let us summarize. There exists a biunique correspondence
+between derivations of trace chain structures, derivations of
+CCSs and derivations of MDSs.  Further, there is a biunique
+correspondence between MDSs and trace chain structures.
+Insofar the latter two structures are exactly equivalent.
+CCSs contain more information over the derivation (see the
+exercises).
+%%%%
+\vplatz
+\exercise
+This example shows why we cannot use the ordering
+$<$ in the MDSs. Let $\GM = \auf \{0,1,2\}, \prec, 0\zu$ and
+$\GM' = \auf \{0,1,2\}, \prec', 0\zu$ with
+$\prec = \{\auf 2,1\zu, \auf 1,0\zu\}$ and
+$\prec' = \prec \cup \{\auf 2,0\zu\}$.
+Evidently $\prec^+ = \prec'^+$.  Construct $\CI(\GM)$ and
+$\CI(\GM')$ as well as the connected CCS.
+%%%%
+\vplatz
+\exercise
+Prove Proposition~\ref{prop:dicht}.
+%%
+\vplatz
+\exercise
+Show Lemma~\ref{lem:spleiss}.
+%%
+\vplatz
+\exercise
+Show that ac--command is transitive.
+%%
+\vplatz
+\exercise
+Show Proposition~\ref{prop:kandek}.
+%%%
+\vplatz
+\exercise
+Let the CCS in Figure~\ref{fig:zenith} be given. The members of
+a chain are annotated by the same upper case Greek letter.
+Trivial chains are not shown. Let the link maps be
+$\phi_{\Gamma} \colon 2 \mapsto 4$, $\phi_{\Delta} \colon i \mapsto i + 6
+\quad (i < 6)$, and also $\phi_{\Theta} \colon i \mapsto i + 13 
+\quad (i < 13)$. Compute $[i]_{C}$ for every $i$. If instead of 
+$\phi_{\Delta}$ we take the map $\phi'_{\Delta}$  how do the 
+equivalence classes change?
+%%
+\begin{equation}
+\phi'_{\Delta} \colon 1 \mapsto 8, 2 \mapsto 7, 3 \mapsto 9, 4
+\mapsto 10, 5 \mapsto 11
+\end{equation}
+%%%
+Determine the peak and the zenith of every element and the
+maps.
+%%%%
+\begin{figure}
+\begin{center}
+\begin{picture}(22,35)
+%%
+\put(2,2){\line(0,1){9}}
+    \put(2,2){\makebox(0,0){$\bullet$}}
+        \put(2,1){\makebox(0,0){$1$}}
+\put(5,2){\line(-1,1){3}}
+    \put(5,2){\makebox(0,0){$\bullet$}}
+        \put(5,1){\makebox(0,0){$2$}}
+        \put(5,2.4){\vector(0,1){2.2}}
+        \put(6,3.5){\makebox(0,0)[l]{$\Gamma$}}
+\put(5,5){\line(-1,1){3}}
+    \put(5,5){\makebox(0,0){$\bullet$}}
+        \put(5,6){\makebox(0,0)[l]{$4$}}
+    \put(2,5){\makebox(0,0){$\bullet$}}
+        \put(1,5){\makebox(0,0)[r]{$3$}}
+    \put(2,8){\makebox(0,0){$\bullet$}}
+        \put(1,8){\makebox(0,0)[5]{$5$}}
+        \put(2.4,8.4){\vector(1,1){5.2}}
+        \put(5,12){\makebox(0,0){$\Delta$}}
+\put(2,11){\makebox(0,0){$\bullet$}}
+    \put(1,11){\makebox(0,0)[r]{$6$}}
+%%
+\put(2,11){\line(1,1){6}}
+\put(8,17){\line(0,1){3}}
+\put(8,20){\line(1,1){12}}
+% \put(2,11){\makebox(0,0){$\bullet$}}
+    \put(8,17){\makebox(0,0){$\bullet$}}
+        \put(7,17){\makebox(0,0){$12$}}
+\put(8,20){\makebox(0,0){$\bullet$}}
+    \put(7,20){\makebox(0,0){$13$}}
+%%
+\put(8,8){\line(0,1){9}}
+    \put(8,8){\makebox(0,0){$\bullet$}}
+        \put(8,7){\makebox(0,0){$7$}}
+\put(11,8){\line(-1,1){3}}
+    \put(11,8){\makebox(0,0){$\bullet$}}
+        \put(11,7){\makebox(0,0){$8$}}
+\put(11,11){\line(-1,1){3}}
+    \put(11,11){\makebox(0,0){$\bullet$}}
+        \put(11,10){\makebox(0,0){$10$}}
+    \put(8,11){\makebox(0,0){$\bullet$}}
+        \put(7,11){\makebox(0,0)[r]{$9$}}
+    \put(8,14){\makebox(0,0){$\bullet$}}
+        \put(9,14){\makebox(0,0)[l]{$11$}}
+        \put(8.4,17.4){\vector(1,1){5.2}}
+        \put(11,21){\makebox(0,0){$\Theta$}}
+%%
+\put(14,26){\line(0,-1){15}}
+    \put(14,26){\makebox(0,0){$\bullet$}}
+        \put(13,27){\makebox(0,0){$26$}}
+    \put(14,23){\makebox(0,0){$\bullet$}}
+        \put(16,24){\makebox(0,0)[r]{$25$}}
+    \put(14,20){\makebox(0,0){$\bullet$}}
+        \put(13,20){\makebox(0,0)[r]{$19$}}
+%%
+\put(14,23){\line(1,-1){9}}
+\put(14,17){\makebox(0,0){$\bullet$}}
+    \put(13,17){\makebox(0,0)[r]{$18$}}
+\put(14,17){\line(1,-1){3}}
+    \put(14,14){\makebox(0,0){$\bullet$}}
+        \put(13,14){\makebox(0,0)[r]{$16$}}
+\put(14,14){\line(1,-1){3}}
+    \put(14,11){\makebox(0,0){$\bullet$}}
+        \put(14,10){\makebox(0,0){$14$}}
+    \put(17,11){\makebox(0,0){$\bullet$}}
+        \put(17,10){\makebox(0,0){$15$}}
+    \put(17,14){\makebox(0,0){$\bullet$}}
+        \put(17,13){\makebox(0,0){$17$}}
+%%
+\put(20,17){\line(0,-1){6}}
+    \put(20,17){\makebox(0,0){$\bullet$}}
+        \put(21,18){\makebox(0,0)[r]{$24$}}
+    \put(20,14){\makebox(0,0){$\bullet$}}
+        \put(19,14){\makebox(0,0)[r]{$22$}}
+    \put(23,14){\makebox(0,0){$\bullet$}}
+        \put(23,13){\makebox(0,0){$23$}}
+\put(20,14){\line(1,-1){3}}
+    \put(23,11){\makebox(0,0){$\bullet$}}
+        \put(23,10){\makebox(0,0){$21$}}
+    \put(20,11){\makebox(0,0){$\bullet$}}
+        \put(20,10){\makebox(0,0){$20$}}
+%%
+\put(20,32){\line(1,-1){3}}
+    \put(17,29){\makebox(0,0){$\bullet$}}
+        \put(16,30){\makebox(0,0){$27$}}
+    \put(20,32){\makebox(0,0){$\bullet$}}
+        \put(20,33){\makebox(0,0){$29$}}
+    \put(23,29){\makebox(0,0){$\bullet$}}
+        \put(23,28){\makebox(0,0){$28$}}
+\end{picture}
+\end{center}
+\caption{A Copy--Chain Structure}
+\label{fig:zenith}
+\end{figure}
+%%
+\vplatz
+\exercise
+Let $d(n)$ be the largest number of nonisomorphic CCSs which have
+(up to isomorphism) the same MDS.  Show that $d(n) \in O(2^n)$.

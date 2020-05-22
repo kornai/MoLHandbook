@@ -1,0 +1,669 @@
+\section{Axiomatic Classes II: Exhaustively Ordered Trees}
+\label{kap5-4}%%
+\nocite{doner:tree}%%
+\nocite{thatcherwright}%%
+%
+%
+%
+The theorem by B\"uchi on axiomatic classes of strings has a
+very interesting analogon for exhaustively ordered trees.
+We shall prove it here; however, we shall only show those
+facts that are not proved in a completely similar way.
+Subsequently, we shall outline the importance of this
+theorem for syntactic theory. The reader should consult
+Section~\ref{kap1}.\ref{kap1-4} for notation. Ordered
+trees are structures over a language that has two binary
+relation symbols, $\sqsubset$ and $<$. We also take
+labels from $A$ and $N$ (!) in the form of constants
+and get the language $\mathsf{MSO}^b$. 
+%%%
+\index{$\mathsf{MSO}^b$}%%%
+%%%
+In this language the
+set of exhaustively ordered trees is a finitely
+axiomatizable class of structures. We consider first
+the postulates. $<$ is transitive and irreflexive,
+$\uppx{x}$ is linear for every $x$, and there is a largest
+element, and every subset has a largest and a smallest element
+with respect to  $<$. From this it follows in particular that
+below an arbitrary element there is a leaf. Here are now the
+axioms listed in the order just described.
+%%
+\begin{subequations}
+\begin{align}
+& (\forall xyz)(x < y \und y < z .\pf. x < z) \\
+& (\forall x)\nicht (x < x) \\
+& (\forall xyz)(x < y \und x < z. \pf . y < z \oder y \doteq z \oder
+    y > z) \\
+& (\exists x)(\forall y)(y < x \oder y \doteq x) \\
+& (\forall P)(\exists x)(\forall y)(P(x) \und y < x .\pf.
+    \nicht P(y)) \\
+& (\forall P)(\exists x)(\forall y)(P(x) \und y < x .\pf.
+    \nicht P(y))
+\end{align}
+\end{subequations}
+%%
+In what is to follow we use the abbreviation $x \leq y := x < y \oder
+x \doteq y$. Now we shall lay down the axioms for the ordering.
+$\sqsubset$ is transitive and irreflexive, it is linear on the
+leaves, and we have $x \sqsubset y$ iff for all leaves
+$u$ below $x$ and all leaves $v \leq y$ we have $u \sqsubset v$.
+Finally, there are only finitely many leaves, a fact which we can
+express by requiring that every set of nodes has a smallest
+and a largest member (with respect to $\sqsubset$).
+We put $b(x) := \nicht (\exists y)(y < x)$.
+%%
+\begin{subequations}
+\begin{align}
+& (\forall xyz)(x \sqsubset y \und y \sqsubset z. \pf .x \sqsubset z) \\
+& (\forall x)\nicht (x \sqsubset x) \\
+& (\forall xy)(b(x) \und b(y) .\pf.
+    x \sqsubset y \oder x \doteq y \oder y \sqsubset x) \\
+& (\forall xy)(x \sqsubset y. \dpf .
+    (\forall uv)(b(u) \und u \leq x \und b(v) \und v \leq y.
+    \pf .u \sqsubset v)) 
+\\
+& (\forall P)\{(\forall x)(P(x) \pf b(x)).  \\\notag
+& \quad \pf. \phantom{\mbox{}\und\mbox{}}
+    (\exists y)(P(y) \und (\forall z)(P(z) \pf
+    \nicht (y \sqsubset z))) \\\notag
+& \quad \phantom{\mbox{}\pf. \mbox{}}
+    \und (\exists y)(P(y) \und (\forall z)(P(z) \pf
+    \nicht (z \sqsupset y)))\}
+\end{align}
+\end{subequations}
+%%
+Thirdly,  we must regulate the distribution of the labels.
+%%
+\begin{subequations}
+\begin{align}
+%& (\forall x)(\goder \auf \uli{a}(x) : a \in N\zu \dpf 
+%	\nicht \goder \auf \uli{A}(x) : A \in N\zu) \\
+& (\forall x)(b(x) \dpf \goder \auf \uli{a}(x) : a \in A\zu) \\
+%& (\forall x)(b(x) \pf \gund \auf \uli{a}(x) \pf \nicht \uli{b}(x) :
+%    a \neq b\zu) \\
+& (\forall x)(\nicht b(x) \pf \goder \auf \uli{A}(x) : A \in N\zu) \\
+& (\forall x)(\gund \auf \uli{\alpha}(x) \pf \nicht \uli{\beta}(x)
+    : \alpha \neq \beta\zu)
+\end{align}
+\end{subequations}
+%%
+The fact that a tree is exhaustively ordered is described by the
+following formula.
+%%
+\begin{equation}
+(\forall xy)(\nicht (x \leq y \oder y \leq x) .\pf .
+    x \sqsubset y \oder y \sqsubset x)
+\end{equation}
+%%
+\begin{prop}
+The following are finitely $\mathsf{MSO}^b$--axiomatizable
+classes.
+%%
+\begin{dingautolist}{192}
+\item The class of ordered trees.
+\item The class of finite exhaustively ordered trees.
+\end{dingautolist}
+\end{prop}
+%%
+Likewise we can define a quantified modal language.
+However, we shall change the base as follows, using the
+results of Exercise~\ref{ueb:schwester}. We assume 8 operators,
+$M_8 := \{\oben, \oben^+, \unten, \unten^+, \rechts, \rechts^+,
+\links, \links^+\}$, 
+%%%
+\index{$\oben$, $\oben^+$, $\unten$, $\unten^+$, $\rechts$, $\rechts^+$, $\links$, $\links^+$}%%% 
+%%%
+which correspond to the 
+relations $\prec$, $<$, $\succ$, $>$, {\it immediate left
+sister of}, {\it left sister of}, {\it immediate right sister
+of}, as well as {\it right sister of}. These relations are
+MSO--definable from the original ones, and conversely the original 
+relations can be MSO--defined from the present ones. Let 
+$\GT = \auf T, <, \sqsubset\zu$ be an exhaustively ordered tree. 
+Then we define $R \colon M_8 \pf \wp(T)$ as follows.
+%%
+\begin{equation}
+\begin{split}
+x\; R(\rechts^+)\; y & := x \sqsubset y \und (\exists z)(x \prec z
+\und y \prec z) \\
+x\; R(\rechts)\; y & := x\; R(\rechts^+)\; y \und
+    \nicht (x\; R(\rechts^+) \circ R(\rechts^+)\; y) \\
+x\; R(\links^+)\; y & := x \sqsupset y \und (\exists z)(x \prec z
+	\und y \prec z) \\
+x\; R(\links)\; y & := x\; R(\links^+)\; y \und
+    \nicht (x\; R(\links^+) \circ R(\links^+)\; y) \\
+x\; R(\oben^+)\; y & := x < y \\
+x\; R(\oben)\; y & := x \prec y \\
+x\; R(\unten^+)\; y & := x > y \\
+x\; R(\unten)\; y & := x \succ y 
+\end{split}
+\end{equation}
+%%
+The resulting structure we call $M(\GT)$. Now if $T$ as well as
+$R$ are given, then the relations $\prec$, $\succ$, $<$, $>$,
+and $\sqsubset$, as well as $\sqsupset$ are definable.
+First we define $\oben^{\ast} \varphi := \varphi \oder
+\oben^+ \varphi$, and likewise for the other relations.
+Then $R(\oben^{\ast}) = \Delta \cup R(\oben^+)$.
+%%
+\begin{equation}
+\begin{split}
+\prec & = R(\oben) & \succ & = R(\unten) \\
+< & = R(\oben^+) & > & = R(\unten^+) \\
+\sqsubset & = R(\oben^{\ast}) \circ R(\rechts^+) \circ
+    R(\unten^{\ast}) \\
+\sqsupset & = R(\oben^{\ast}) \circ R(\links^+) \circ
+    R(\unten^{\ast}) 
+\end{split}
+\end{equation}
+%%
+Analogously, as with the strings we can show that the following
+properties are axiomatizable: (a) that $R(\links^+)$
+is transitive and irreflexive with converse relation
+$R(\rechts^+)$; (b) that $R(\links^+)$ is the transitive
+closure of $R(\links)$ and $R(\rechts^+)$ the transitive closure
+of $R(\rechts)$. Likewise for $R(\oben^+)$ and $R(\oben)$,
+$R(\unten^+)$ and $R(\unten)$. With the help of the axiom
+below we axiomatically capture the condition that $\uppx{x}$
+is linear:
+%%
+\begin{equation}
+\oben^+ p \und \oben^+ q .\pf.
+\oben^+ (p \und q) \oder \oben^+ (p \und \oben^+ q)
+\oder \oben^+ (q \und \oben^+ p)
+\end{equation}
+%%
+The other axioms are more complex. Notice first the
+following.
+%%
+\begin{lem}
+Let $\auf T, < , \sqsubset\zu$ be an exhaustively ordered tree
+and $x, y \in T$. Then $x \neq y$ iff
+(a) $x < y$ or (b) $x > y$ or (c) $x \sqsubset y$ or
+(d) $x \sqsupset y$.
+\end{lem}
+%%
+Hence the following definitions.
+%%
+\begin{align}
+\auf\neq\zu \varphi & := \oben^+ \varphi \oder \unten^+ \varphi
+         \oder
+    \oben^{\ast} \rechts^+ \unten^{\ast} \varphi
+         \oder
+    \oben^{\ast} \links^+ \unten^{\ast} \varphi \\
+\master \varphi & := \varphi \und [\neq] \varphi
+\end{align}
+%%
+So we add the following set of axioms.
+%%
+\begin{multline}
+\{\master \varphi \pf \qrechts^+ \varphi,
+\master \varphi \pf \qlinks^+ \varphi,  
+\master \varphi \pf \qoben^+ \varphi,  
+\master \varphi \pf \qunten^+ \varphi \\
+\master \varphi \pf \master\master \varphi,  
+\master \varphi \pf \varphi, 
+\varphi \pf \master \nicht\master\nicht \varphi\}
+\end{multline}
+%%
+(Most of them are already derivable. The axiom system is therefore
+not minimal.) These axioms see to it that in a connected structure 
+every node is reachable from any other by means of the basic relations,
+moreover, that it is reachable in one step using $R(\master)$.
+Here we have
+%%
+\begin{equation}
+R(\master) =
+\{\auf x,y\zu : \mbox{\it there is \/} z:
+x \leq z \geq y\}
+\end{equation}
+%%
+Notice that this always holds in a tree and that conversely it
+follows from the above axioms that $R(\oben^+)$ possesses a
+largest element. Now we put
+%%
+\begin{equation}
+b(\varphi) := \varphi \und \qunten \bot \und [\neq] \nicht \varphi
+\end{equation}
+%%
+$b(\varphi)$ holds at a node $x$  iff
+$x$ is a leaf and $\varphi$ is true exactly at $x$. Now we can
+axiomatically capture the conditions that
+$R(\rechts^+)$ must be linear on the set of leaves.
+%%
+\begin{equation}
+\qunten \bot \und \auf\neq\zu b(q). \pf.
+\rechts^+ p \oder \links^+ p
+\end{equation}
+%%
+Finally, we have to add axioms which constrain the distribution of
+the labels. The reader will be able to supply them. A 
+forest is defined here as the disjoint union of trees.
+%%
+\begin{prop}
+The class of exhaustively ordered forests is fi\-ni\-te\-ly
+$\mathsf{QML}^b$--axi\-o\-ma\-ti\-sa\-ble.
+\end{prop}
+%%
+We already know that $\mathsf{QML}^b$ can be embedded into
+$\mathsf{MSO}^b$. The converse is as usual somewhat difficult.
+To this end we proceed as in the case of strings. We introduce
+an analogon of restricted quantifiers. We define
+functions $\oben$, $\oben^+$, $\unten$, $\unten^+$,
+$\rechts$, $\rechts^+$, $\links$, $\links^+$, as well as
+$\auf\neq\zu$ on unary predicates, whose meaning should
+be self explanatory. For example
+%%
+\begin{subequations}
+\begin{align}
+(\oben \varphi)(x) & := (\exists y \succ x)\varphi(y) \\
+(\oben^+ \varphi)(x) & := (\exists y > x)\varphi(y)
+\end{align}
+\end{subequations}
+%%
+where $y \not\in \fr(\varphi)$.
+Finally let $O$ be defined by
+%%
+\begin{equation}
+O(\varphi) := (\forall x)\nicht \varphi(x)
+\end{equation}
+%%
+$O(\varphi)$ says that $\varphi(x)$ is nowhere satisfiable. Let 
+$P_x$ be a  predicate variable which
+does not occur in $\varphi$. Define $\{P_x/x\}\varphi$ inductively
+as described in Section~\ref{kap5}.\ref{kap5-2}. Let $\gamma(P_x) =
+\{\beta(x)\}$. Then we have
+%%
+\begin{equation}
+\auf \GM, \gamma, \beta\zu \vDash \varphi\qquad
+\Dpf\qquad \auf \GM, \gamma, \beta\zu \vDash
+\{P_x/x\}\varphi 
+\end{equation}
+%%
+Therefore put
+%%
+\begin{equation}
+(E x)\varphi(x) := (\exists P_x)(\nicht O(P_x) \und
+    O(P_x \und \auf\neq\zu P_x).  \pf .\{P_x/x\}\varphi)
+\end{equation}
+%%
+Because of this we have for all exhaustively
+ordered trees $\GT$
+%%
+\begin{equation}
+\auf \GT, \gamma, \beta\zu \vDash (\exists x)\varphi\qquad
+\Dpf\qquad
+\auf \GT, \gamma, \beta\zu \vDash
+(E x)\varphi
+\end{equation}
+%%
+Let again $h \colon P \pf \mbox{\it PV\/}$ be a bijection from
+the set of predicate variables of $\mathsf{MSO}^b$ onto
+the set of proposition variables or $\mathsf{QML}^b$.
+%%
+\begin{equation}
+\begin{split}
+(\uli{a}(x))^{\diamond} & := Q^a & (P(y))^{\diamond} & := h(P) \\
+(\oben \varphi)^{\diamond} & := \oben \varphi^{\diamond} &
+(\unten \varphi)^{\diamond} & := \unten \varphi^{\diamond} \\
+(\links\varphi)^{\diamond} & := \links \varphi^{\diamond} &
+(\rechts\varphi)^{\diamond} & := \rechts \varphi^{\diamond} \\
+(\oben^+\varphi)^{\diamond} & := \oben^+ \varphi^{\diamond} &
+(\unten^+\varphi)^{\diamond} & := \unten^+ \varphi^{\diamond} \\
+(\rechts^+\varphi)^{\diamond} & := \rechts^+ \varphi^{\diamond} &
+(\links^+ \varphi))^{\diamond} & := \links^+ \varphi^{\diamond} \\
+(\nicht \varphi)^{\diamond} & := \nicht \varphi^{\diamond} &
+(O(\varphi))^{\diamond} & := \master \nicht \varphi^{\diamond} \\
+(\varphi_1 \und \varphi_2)^{\diamond} &
+    := \varphi_1^{\diamond} \und \varphi_2^{\diamond} &
+(\varphi_1 \oder \varphi_2)^{\diamond} &
+    := \varphi_1^{\diamond} \oder \varphi_2^{\diamond} \\
+((\exists P)\varphi)^{\diamond} & := (\exists h(P))\varphi^{\diamond} &
+((\forall P)\varphi)^{\diamond} & := (\forall h(P))\varphi^{\diamond}
+\end{split}
+\end{equation}
+%%
+Then the desired embedding of $\mathsf{MSO}^b$
+into $\mathsf{QML}^b$ is shown.
+%%
+\begin{thm}
+Let $\varphi$ be an $\mathsf{MSO}^b$--formula with at most
+one free variable, the object variable $x_0$. Then there exists
+a $\mathsf{QML}^b$--formula $\varphi^M$ such that for all
+exhaustively ordered trees $\GT$:
+%%
+\begin{equation}
+\auf \GT, \beta\zu \vDash \varphi(x_0)
+\text{ iff }\auf M(\GT), \beta(x_0)\zu \vDash
+\varphi(x_0)^M
+\end{equation}
+%%
+\end{thm}
+%%
+\begin{cor}
+\label{cor:mqlb} Modulo the identification $\GT \mapsto M(\GT)$
+$\mathsf{MSO}^b$ and $\mathsf{QML}^b$ define the same model
+classes of exhaustively ordered trees. Further: $\CK$ is a
+finitely axiomatizable class of $\mathsf{MSO}^b$--struc\-tu\-res 
+iff $M(\CK)$ is a finitely axiomatizable class of
+$\mathsf{QML}^b$--structures.
+\end{cor}
+%%
+For the purpose of definition of a code we suspend the difference
+between terminal and nonterminal symbols.
+%%
+\begin{defn}
+\index{code}%%
+\index{faithfulness}%%
+%%
+Let $G = \auf \Sigma, N,A,R\zu$ be a CFG$^{\ast}$
+and $\varphi \in \mathsf{QML}^b$ a constant formula (with constants
+over $A$). We say, $G$ is \textbf{faithful for} $\varphi$ if there is a
+set $H_{\varphi} \subseteq N$ such that for every tree $\GT$ and
+every node $w \in T$: $\auf \GT, w\zu \vDash \varphi$ iff
+$\ell(w) \in H_{\varphi}$. We also say that $H_{\varphi}$
+\textbf{codes} $\varphi$ \textbf{with respect to} $G$.
+Let $\varphi$ be a $\mathsf{QML}^b$--formula and $n$ a
+natural number. An $n$--\textbf{code for} $\varphi$ is a pair
+$\auf G, H\zu$ such that $L_B(G)$ is the set of all at most
+$n$--ary branching, finite, exhaustively ordered trees over
+$A \cup N$ and $H$ codes $\varphi$ in $G$. $\varphi$ is called
+$n$--\textbf{codable} 
+%%%
+\index{formula!codable}%%%
+%%%
+if there is an $n$--code for $\varphi$.  $\varphi$ is called 
+\textbf{codable} if there is an $n$--code
+for $\varphi$ for every $n$.
+\end{defn}
+%%
+Notice that for technical reasons we must restrict ourselves
+to at most $n$--branching trees since we can otherwise not write
+down a CFG$^{\ast}$ as a code. Let
+$G = \auf \Sigma, N, A, R\zu$ and $G' = \auf \Sigma', N', A, R'\zu$
+be grammars$^{\ast}$ over $A$. 
+%%%
+\index{grammar$^{\ast}$!product of {\faul}s}%%
+%%%
+The \textbf{product} is defined by
+%%
+\begin{equation}
+G \times G' = \auf \Sigma\times\Sigma', N \times N', A, R \times R'\zu
+\end{equation}
+%%
+where
+%%
+\begin{multline}
+R \times R' := 
+     \{\auf X,X'\zu \pf \auf \alpha_0, \alpha'_0\zu \dotsb
+    \auf \alpha_{n-1},\alpha'_{n-1}\zu : \\
+    X \pf \alpha_0\dotsb \alpha_{n-1} \in R,
+    X' \pf \alpha'_0\dotsb \alpha'_{n-1} \in R'\} 
+\end{multline}
+%%
+To prove the analogon of the Coding Theorem (\ref{thm:code}) for 
+strings we shall have to use a trick. As one can easily show
+the direct extension on trees is false since we have
+also taken the nonterminal symbols as symbols of the
+language. So we proceed as follows. Let $h \colon N \pf N'$ be
+a map and $\GT = \auf T, <, \sqsubset, \ell\zu$ a tree with
+labels in $A \cup N$. Then let $h[\GT] :=
+\auf T, <, \sqsubset, h_A \circ \ell\zu$ where
+$h_A \restriction N := h$ and $h_A(a) := a$ for all $a \in A$.
+%%%
+\index{projection}%%
+%%%
+Then $h[\GT]$ is called a \textbf{projection of} $\GT$.
+If $\CK$ is a class of trees, then let $h[\CK] :=
+\{h[\GT] : \GT \in \CK\}$. 
+%%
+\begin{thm}[Thatcher \& Wright, Doner]
+%%%
+\index{Thatcher, J.~W.}%%
+\index{Wright, J.~B.}%%
+\index{Doner, J.~E.}%%
+Let $A$ be a terminal alphabet, $N$ a nonterminal alphabet 
+and $n \in \omega$. A class of exhaustively ordered, at most
+$n$--branching finite trees over $A \cup N$ is finitely
+axiomatizable in $\mathsf{MSO}^b$ iff it is the
+projection onto $A \cup N$ of a context free$^{\ast}$ class of
+ordered trees over some alphabet.
+\end{thm}
+%%
+Here a class of trees is \textbf{context free}$^{\ast}$ if it
+is the class of trees generated by some CFG$^{\ast}$.
+Notice that the symbol $\varepsilon$ is not problematic as it
+was for regular languages. We may look at it as an
+independent symbol which can be the label of a leaf. However,
+if this is to be admitted, we must assume that the terminal
+alphabet may be $A_{\varepsilon}$ and not $A$. Notice that
+the union of two context free sets of trees is not necessarily
+itself context free. (This again is different for regular
+languages, since the structures did not contain the nonterminal
+symbols.)
+
+From now on the proof is more or less the same. First one shows
+the codability of $\mathsf{QML}^b$--formulae. Then one argues
+as follows. Let $\auf G, H\zu$ be the code of a formula $\varphi$.
+We restrict the set of symbols (that is, both $N$ as well as $A$)
+to $H$. In this way we get a grammar$^{\ast}$ which only generates
+trees that satisfy $\varphi$. Finally we define the projection
+$h \colon H \pf A \cup N$ as follows. Put $h(a) := a$, $a \in A$,
+and $h(Y) := X$ if $L_B(G) \vDash (\forall x)( \uli{Y}(x) \pf %
+\uli{X}(x))$. In order for this to be well defined we must 
+therefore have for all $Y \in H$ an $X \in N$ with this property. 
+In this
+%%%
+\index{code!uniform}%%
+%%%
+case we call the code \textbf{uniform}. Uniform codability follows
+easily from codability since we can always construct products
+$G \times G'$ of grammars$^{\ast}$ so that
+$G = \auf \Sigma, N, A, R\zu$ and $L_B(G \times G') \vDash
+\uli{X}(\auf x,y\zu)$ iff $L_B(G) \vDash
+\uli{X}(x)$. The map $h$ is nothing but the projection onto
+the first component.
+%%
+\begin{thm}
+\label{thm:codeb}
+Every constant $\mathsf{QML}^b$--formula is uniformly codable.
+\end{thm}
+%%
+\proofbeg We only deliver a sketch of the proof. We choose an $n$
+and show the uniform $n$--codability. For ease of exposition we
+illustrate the proof for $n = 2$. For the formulae $\uli{a}(x)$, $a
+\in A$, and $\uli{Y}(x)$, $Y \in N$, nothing special has to be
+done. Again, the booleans are easy. There remain the modal
+operators and the quantifiers. Before we begin we shall introduce
+a somewhat more convenient notation. As usual we assume that we
+have a grammar$^{\ast}$ $G = \auf \Sigma, N, A, R\zu$ as well as
+some sets $H_{\eta}$ for certain formulae. Now we take the product
+with a new grammar$^{\ast}$ and define $H_{\varphi}$. In place of
+explicit labels we now use the formulae themselves, where $\eta$
+stands for the set of labels from $H_{\eta}$.
+
+The basic modalities are as follows. Put
+%%
+\begin{equation}
+\boldmath{2} := \auf \{0,1\}, \{0,1\}, A, R_2\zu
+\end{equation}
+%%
+where $R_2$ consists of all possible $n$--branching rules of a 
+grammar in standard form. To code $\unten \eta$, we form the 
+product of $G$ with \textbf{2}. However, we only choose a subset 
+of rules and of the start symbols. Namely, we put $\Sigma' := 
+\Sigma \times \{0,1\}$ and $H'_{\eta} := H_{\eta} \times \{0,1\}$, 
+$H'_{\unten \eta} := N \times \{1\}$. The rules are all rules 
+of the form
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\unten \eta}{\top}{\eta}
+\binbaum{\unten \eta}{\eta}{\top}
+\binbaum{\nicht\unten \eta}{\nicht\eta}{\nicht\eta}
+\end{array}
+\end{equation}
+%%
+Now we proceed to $\oben\eta$. Here $\Sigma'_{\oben\eta}
+:= N \times \{0\}$.
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\eta}{\oben \eta}{\oben \eta}
+\binbaum{\nicht\eta}{\nicht\oben\eta}{\nicht\oben\eta}
+\end{array}
+\end{equation}
+%%
+With $\rechts\eta$ we choose $\Sigma'_{\rechts\eta} := \Sigma \times
+\{0\}$.
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\top}{\rechts\eta}{\eta}
+\binbaum{\top}{\nicht\rechts \eta}{\nicht \eta}
+\end{array}
+\end{equation}
+%%
+Likewise, $\Sigma'_{\links\eta}$ is the start symbol of
+$G'$ in the case of $\links\eta$.
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\top}{\eta}{\links\eta}
+\binbaum{\top}{\nicht\eta}{\nicht \links \eta}
+\end{array}
+\end{equation}
+%%
+We proceed to the transitive relations. Notice that on binary 
+branching trees $\rechts^+ \eta \dpf \rechts \eta$ and 
+$\links^+ \eta \dpf \links \eta$. Now let us look at the 
+relation $\unten^+\eta$.
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\unten^+ \eta}{\eta \oder \unten^+ \eta}{\top}
+\binbaum{\unten^+ \eta}{\top}{\eta \oder \unten^+ \eta} \\
+\binbaum{\quad\nicht\unten^+ \eta}{\nicht (\eta \oder \unten^+ \eta)\quad}%
+{\nicht (\eta \oder \unten^+ \eta)}
+\end{array}
+\end{equation}
+%%
+The set of start symbols is $\Sigma \times \{0,1\}$.
+Next we look at $\oben^+ \eta$.
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\eta\oder\oben^+ \eta}{\oben^+ \eta}{\oben^+\eta}
+\binbaum{\nicht (\eta \oder \oben^+ \eta)}{\nicht\oben^+ %
+\eta}{\nicht \oben^+\eta}
+\end{array}
+\end{equation}
+%%
+The set of start symbols is $\Sigma' := \Sigma \times \{0\}$.
+
+Finally we study the quantifier $(\exists p)\eta$.
+Let $\eta' := \eta[\mathsf{c}/p]$, where $\mathsf{c}$ is a new constant.
+Our terminal alphabet is now $A \times \{0,1\}$, the
+nonterminal alphabet $N \times \{0,1\}$.  We assume that
+$\auf G^1, H^1_{\theta}\zu$ is a uniform code for $\theta$, $\theta$
+an arbitrary subformula of $\eta'$. For every subset $\Sigma$ of
+the set $\Delta$ of all subformulae of $\eta'$ we put
+%%
+\begin{equation}
+L_{\Sigma} := \gund_{\theta \in \Sigma} \theta \und
+    \gund_{\theta \in \Delta - \Sigma} \nicht\theta
+\end{equation}
+%%
+Then $\auf G^1, H^1_{\Sigma}\zu$ is a code for $L_{\Sigma}$
+where
+%%
+\begin{equation}
+H^1_{\Sigma} := \bigcap_{\theta \in \Sigma} H^1_{\theta} \cap
+    \bigcap_{\theta \in \Delta - \Sigma} (N - H^1_{\theta})
+\end{equation}
+%%
+Now we build a new CFG$^{\ast}$, $G^2$. Put $N^2 := N \times
+\{0,1\} \times \wp(N^1)$. The rules of $G^2$ are
+all rules of the form
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\auf X, i, \Sigma\zu}{\auf Y_0, j_0, \Theta_0\zu}%
+{\auf Y_1, j_1, \Theta_1\zu}
+\end{array}
+\end{equation}
+%%
+where $\auf X,i\zu \in H^1_{\Sigma}$, $\auf Y_0, j_0\zu \in %
+H^1_{\Theta_0}$,  $\auf Y_1, j_1\zu \in H^1_{\Theta_1}$ and
+$\Sigma \pf \Theta_0\Theta_1$ is a rule of $G^1$. (This in turn
+is the case if there are $X$, $Y_0$ and $Y_1$ as well as $i$, $j_0$
+and $j_1$ such that $\auf X,i\zu \pf \auf Y_0, j_0\zu\;
+\auf Y_1,j_1\zu \in R$.) Likewise for unary rules. Now
+we go over to the grammar$^{\ast}$ $G^3$, with $N^3 := N \times
+\wp(\wp(N^1))$. Here we take all rules of the form
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\auf X, \BA\zu}{\auf Y_0, \BB_0\zu}{\auf Y_1,\BB_1\zu}
+\end{array}
+\end{equation}
+%%
+where $\BA$ is the set of all $\Sigma$ for which there are
+$\Theta_0$, $\Theta_1$ and $i$, $j_0$, $j_1$ such that
+%%
+\begin{equation}
+\begin{array}{l}
+\binbaum{\auf X, i, \Sigma\zu}{\auf Y_0, j_0, \Theta_0\zu}%
+{\auf Y_1, j_1, \Theta_1\zu}
+\end{array}
+\end{equation}
+%%
+is a rule of $G^2$.
+\proofend
+%%
+\\
+{\it Notes on this section.} From complexity theory we know that
+CFLs, being in \textbf{PTIME}, actually possess a description using 
+first order logic plus inflationary fixed point operator. This means 
+that we can describe the set of strings in $L(G)$ for a CFG by means 
+of a formula that uses first order logic plus inflationary fixed points. 
+Since we can assume $G$ to be binary branching and invertible, it
+suffices to find a constituent analysis of the string. This is a
+set of subsets of the string, and so of too high complexity. What
+we need is a first order description of the constituency in terms
+of the string alone. The exercises describe a way to do this.
+%%
+\vplatz
+\exercise
+Show the following: $<$ is definable from $\prec$, likewise $>$.
+Also, trees can be axiomatized alternatively with $\prec$ (or
+$\succ$). Show furthermore that in ordered trees $\prec$
+is uniquely determined from $<$. Give an explicit definition.
+%%
+\vplatz
+\exercise
+Let $x\, L\; y$ if $x$ and $y$ are sisters and $x \sqsubset y$.
+Show that in ordered trees $L$ can be defined with $\sqsubset$
+and conversely.
+%%%
+\vplatz
+\exercise
+Let $\GT$ be a tree over $A$ and $N$ such that every node that
+is not preterminal is at least 2--branching. Let $\vec{x} =
+x_0\dotsb x_{n-1}$ be the associated string. Define a set
+$C \subseteq n^3$ as follows. $\auf i,j,k\zu \in C$ iff
+the least node above $x_i$ and $x_j$ is lower
+than the least node above $x_i$ and $x_k$. Further, for $X \in N$,
+define $L_X \subseteq n^2$ by $\auf i,j\zu \in L_X$ iff
+the least node above $x_i$ and $x_j$ has label $X$. Show that
+$C$ uniquely codes the tree structure $\GT$ and $L_X$, $X \in N$,
+the labelling. Finally, for every $a \in A$ we have a unary
+relation $T_a \subseteq n$ to code the nodes of category $a$.
+Axiomatize the trees in terms of the relations $C$, $L_X$, $X \in N$,
+and $T_a$, $a \in A$.
+%%%
+\vplatz
+\exercise
+Show that a string of length $n$ possesses at most $2^{c n^3}$
+different constituent structures for some constant $c$.

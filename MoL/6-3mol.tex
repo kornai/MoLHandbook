@@ -1,0 +1,1421 @@
+\section{Categorization and Pho\-no\-logy}
+\label{kap5-3}
+%
+%
+%
+\nocite{birdellison:onelevel}
+In this section we shall deal with syllable structure and phonological
+rules. We shall look at the way in which discrete entities, known as 
+{\it phonemes}, arise from a continuum of sounds or phones, and how the 
+mapping between the sound continuum and the discrete space of language 
+particular phonemes is to be construed. The issue is far from 
+resolved; moreover, it seems that it depends on the way we look 
+at language as a whole. Recall that we have assumed sign grammars
+to be completely additive: there is no possibility to remove
+something from an exponent that has been put there before. This 
+has a number of repercussions. Linguists often try to define 
+representations such that combinatory processes are additive. If 
+this is taken to be a definition of linguistic processes (as in our 
+definition of compositionality) the organisation of phonology and 
+the phonetics--to--phonology mapping have to have a particular form. 
+We shall discuss a few examples, notably 
+%%%
+\index{umlaut}%%%
+\index{devoicing}%%%
+%%%
+umlaut and final devoicing. 
+
+For example, the plural of the German noun {\tt Vater} is {\tt V\"ater}. 
+How can this be realized in an additive way? First, notice that the 
+plural is not formed from the singular; rather, both forms are derived 
+from an underlying form, the root. Notice right away that the root 
+cannot be a string, it must be a string where at most one vowel is marked 
+for umlaut. (Not all roots will undergo umlaut and if so only 
+one vowel is umlauted!) Technically, we can implement this by writing 
+the root as a string vector: 
+$\mbox{\tt V}\sotimes\mbox{\tt a}\sotimes\mbox{\tt ter}$. 
+This allows us to restrict our attention to the representation 
+of the vowel alone. 
+
+Typically, in grammar books the root is assumed to be just like the 
+singular: $\mbox{\tt V}\sotimes\mbox{\tt a}\sotimes \mbox{\tt ter}$. 
+Early phonological theory on the other hand would have posited an 
+abstract phoneme in place of {\tt a} or {\tt \"a}, a so--called 
+%%%
+\index{archiphoneme}
+%%%
+\textbf{archiphoneme}. Write {\tt A} for the archiphoneme that is 
+underspecified between {\tt a} 
+and {\tt \"a}. Then the root is $\mbox{\tt V}\sotimes \mbox{\tt A}
+\sotimes \mbox{\tt ter}$, and the singular adds the specification, 
+say an element {\tt x}, that makes {\tt A} be like {\tt a}, while the 
+plural adds something, say {\tt y} that makes {\tt A} be like {\tt \"a}.
+In other words, in place of {\tt a} and {\tt \"a} we have
+{\tt Ax} and {\tt Ay}.
+%%%
+\begin{align}
+\mbox{\rm sing} & \colon x\sotimes y \sotimes z \mapsto 
+z\cdot y \cdot \mbox{\tt x} \cdot z \colon 
+\mbox{\tt V}\sotimes \mbox{\tt A} \sotimes 
+\mbox{\tt ter} \mapsto \mbox{\tt VAxter} \\
+\mbox{\rm plur} & \colon x\sotimes y \sotimes z \mapsto 
+z\cdot y \cdot \mbox{\tt y} \cdot z \colon 
+\mbox{\tt V}\sotimes \mbox{\tt A} \sotimes 
+\mbox{\tt ter} \mapsto \mbox{\tt VAyter}
+\end{align}
+%%%
+This solution is additive. Notice, however, that {\tt A} cannot be 
+pronounced, and so the root remains an abstract element. In certain 
+representations, however, {\tt \"a} is derived from {\tt a}. Rather 
+than treating the opposition between {\tt a} and {\tt \"a} as equipollent, 
+we may treat it as privative: {\tt \"a} is {\tt a} plus something else. 
+One specific proposal is  that {\tt \"a} differs from {\tt a} in 
+having the symbol \textbf{i} in the i--tier (see 
+\cite{ewenvanderhulst:phonology} and references therein). So, 
+rather than writing 
+the vowels using the Latin alphabet, we should write them as sequences
+indicating the decomposition into primitive elements, and the process 
+becomes literally additive. Notice that the alphabet that we use 
+actually {\it is\/} additive. {\tt \"a} differs from {\tt a} by 
+just two dots --- and this is the same with {\tt \"u} and 
+{\tt \"o}. Historically, the dots derive from an `e' that was 
+written above the vowel to indicate umlaut. (This does not always 
+work; in Finnish {\tt \"u} is written {\tt y}, blocking for us this 
+cheap way out for Finnish vowel harmony.) 
+%%%
+\index{devoicing}%%%
+%%%
+Final devoicing could be solved similarly by positing a decomposition 
+of voiced consonants into voiceless consonant plus an abstract voice 
+element (or rather: being voiceless is being voiced plus having a 
+devoicing--feature). All these solutions, however, posit two levels of 
+phonology: a surface phonology and a deep phonology. At the deep level, 
+signs are again additive. This allows us to say that languages are 
+compositional from the deep phonological level onwards.
+
+The most influential model of phonology, by Chomsky and 
+%%%
+\index{Chomsky, Noam}%%
+\index{Halle, Morris}%%
+%%%
+Halle~\shortcite{chomskyhalle:spe}, is however {\it not\/} 
+additive. The model of phonology they favoured --- referred to simply 
+%%%
+\index{SPE--model}%%
+%%%
+as the \textbf{SPE--model} --- transforms deep structures into surface 
+structures using context sensitive rewrite rules. We may illustrate 
+these rules with German final 
+%%%
+\index{devoicing}%%%
+%%%
+devoicing. The rule says, roughly, that syllable final consonants 
+(those following the vowel) are voiceless in German. However, as we 
+have noted earlier (in Section~\ref{kap1}.\ref{kap1-3}), there is evidence to 
+assume that some consonants are voiced and only become voiceless 
+exactly when they end up in syllable final position. 
+Hence, instead of viewing this as a constraint on the structure 
+of the syllable we may see this as the effect of a rule that 
+devoices consonants. Write {\tt +} for the syllable boundary. 
+Sidestepping a few difficulties, we may write the rule of 
+final devoicing as follows.
+%%%
+\begin{equation}
+\mbox{\tt C}[+ \mbox{\it voiced\/}]
+\Longrightarrow \mbox{\tt C}[- \mbox{\it voiced\/}] /
+\underline{\quad}[-\mbox{\it voiced\/}]\; \mbox{\it or}
+\; \underline{\quad}\mbox{\tt +} 
+\end{equation}
+%%
+(Phonologists write +{\it voiced} what in attribute--value notation 
+is $[\mbox{\sc voiced} : +]$.) This says that a consonant preceding 
+a voiceless sound or a syllable boundary becomes voiceless. Using 
+such rules, Chomsky 
+%%%
+\index{Chomsky, Noam}%%%
+\index{Halle, Morris}%%%
+%%%
+and Halle have formulated a theory of the sound structure of English. 
+This is a Type 1 grammar for English. It has 
+been observed, however, by Ron Kaplan and Martin 
+Kay~\shortcite{kaplankay:regular} 
+%%%
+\index{Kaplan, Ron}%%%
+\index{Kay, Martin}%%%
+%%%
+and Kimmo Koskenniemi~\shortcite{koskenniemi:twolevel} that 
+%%%
+\index{Koskenniemi, Kimmo}%%%
+%%%
+for all that language really needs the relation between deep level 
+and surface level is a regular relation and can be effected by a 
+finite state transducer. Before we go into the details, we shall 
+explain something about the general abstraction process in structural 
+linguistics, exemplified here with phonemes, and on syllable structure.
+
+Phonetics is the study of phones (= linguistic sounds) whereas 
+phonology is the study of the phonemes of the languages. We may simply 
+define a phoneme as a set of phones. Different languages group different
+phones into different phonemes, so that the phonemes of languages
+are typically not comparable. The grouping into phonemes is far
+from trivial. A good exposition of the method can be found in
+\cite{harris:structural}. We shall look at the process of
+pho\-ne\-mi\-ci\-za\-tion in some detail. Let us assume for simplicity 
+that words or texts are realized as sequences of discrete entities
+called phones. This is not an innocent assumption: it is
+for example often not clear whether the sequence [t] plus [\textesh],
+resulting in an affricate [t\textesh], is to be seen as one or as 
+two phones. (One can imagine that this varies from language to 
+language.) Now, denote the set of phones by $\Sigma$. A word is not
+a single sequence of phones, but rather a set of such sequences.
+%%%
+\begin{defn}
+%%%
+\index{language$^{\ast}$}%%
+\index{word}%%
+\index{realization}%%
+%%%
+$L$ is a \textbf{language}${}^{\ast}$ \textbf{over} $\Sigma$ if $L$ is a
+subset of $\wp(\Sigma^{\ast})$ such that $\varnothing \not\in \Sigma$
+and if $W, W' \in L$ and $W \cap W' \neq \varnothing$ then $W = W'$.
+We call the members of $L$ \textbf{words}. $\vec{x} \in W$ is called a
+\textbf{realization} of $W$. For two sequences $\vec{x}$ and $\vec{y}$
+we write $\vec{x} \sim_L \vec{y}$ if they belong to (or realize) the
+same word.
+\end{defn}
+%%%
+One of the aims of phonology is to simplify the alphabet in such a
+way that words are realized by as few as possible sequences. (That 
+there is only one sequence for each word in the written system is an 
+illusion created by orthographical convention. English orthography 
+often has little connection with actual pronunciation.) We proceed 
+by choosing a new alphabet, 
+$P$, and a mapping $\pi \colon \Sigma \pf P$.  The map $\pi$ induces a 
+partition on $\Sigma$. If $\pi(s) = \pi(s')$ we say that $s$ and $s'$ 
+are \textbf{allophones}%%%
+\index{allophone}%%%
+%%%
+. $\pi$ induces a mapping of $L$ onto a subset 
+of $\wp(P^{\ast})$ in the following way. For a word $W$ we write
+$\oli{\pi}[W] := \{\oli{\pi}(\vec{x}) : \vec{x} \in W\}$. Finally,
+$\pi^{\ast}(L) := \{\oli{\pi}[W] : W \in L\}$. 
+%%%
+\begin{defn}
+%%%
+\index{map!discriminating}%%
+%%%
+Let $\pi \colon P \pf \Sigma$ be a map and $L \subseteq \wp(\Sigma^{\ast})$
+be a language${}^{\ast}$. $\pi$ is called \textbf{discriminating for}
+$L$ if whenever $W, W' \in L$ are distinct then $\oli{\pi}[W] \cap
+\oli{\pi}[W'] = \varnothing$.
+\end{defn}
+%%
+\begin{lem}
+Let $L \subseteq \wp(\Sigma^{\ast})$ be a language$^{\ast}$ and 
+$\pi \colon \Sigma \pf P$. If $\pi$ is discriminating for $L$, 
+$\pi^{\ast}(L)$ is a language$^{\ast}$ over $P$.
+\end{lem}
+%%%
+\begin{defn}
+\label{defn:preph}
+%%%
+\index{phonemicization}%%
+\index{phoneme}%%
+%%%
+A \textbf{phonemicization} of $L$ is a discriminating map 
+$v \colon A \pf B$ such that for every discriminating 
+$w \colon A \pf C$ we have $|C| \geq |B|$.
+We call the members of $B$ \textbf{phonemes}.
+\end{defn}
+%%
+If phonemes are sets of phones, they are clearly infinite sets.
+To account for the fact that speakers can manipulate them, we must 
+assume that they are finitely specified. Typically, phonemes are 
+defined by means of articulatory gestures, which tell us (in an 
+effective way) what basic motor program of the vocal organs is 
+associated with what phoneme. For example, English [p] is 
+voiceless. This says that the chords do not vibrate while 
+it is being pronounced. It is further classified as an obstruent. 
+This means that it obstructs the air flow. And thirdly 
+it is classified as a bilabial: it is pronounced by putting the lips 
+together. In English, there is exactly one voiceless bilabial obstruent, 
+so these three features characterize English [p]. In Hindi, however, 
+there are two phonemes with these features, an aspirated and an 
+unaspirated one. (In fact, the actual pronunciation of English [p] 
+for a Hindi speaker oscillates between two different sounds, see the 
+discussion below.) As sounds have to be perceived and classified accordingly, 
+each articulatory gesture is identifiable by an auditory feature that 
+can be read off its spectrum. 
+
+The analysis of this sort ends in the establishment of an alphabet $P$
+of abstract sounds classes, defined by means of some features, which 
+may either be called articulatory or auditory. (It is not universally 
+agreed that features must be auditory or articulatory. We shall get to 
+that point below.) These can be modeled in the logical language by means 
+of {\it constants}. For example, the feature +{\it voiced\/} corresponds
+to the constant \textsf{voiced}. Then $\nicht \textsf{voiced}$ is the 
+same as being unvoiced.
+
+The features are often interdependent. For example, vowels are always
+%%%
+\index{English}%%
+\index{German}%%
+%%%
+voiced and continuants. In English and German voiceless plosives
+are typically aspirated, while in French this is not the case; so 
+[t] is pronounced with a subsequent [h]. (In older German books
+one often finds {\tt Theil} (`part') in place of the modern
+{\tt Teil}.) The aspiration is lacking when [t] is preceded 
+within the syllable by a sibilant, which in standard German 
+always is [\textesh], for example in {\tt stumpf}
+[\textprimstress \textesh t\textupsilon mpf]. In German, vowels 
+are not simply long or short. Also the vowel quality changes with 
+the length. Long vowels are tense, short vowels are not. The 
+letter {\tt i} is pronounced [\i] when it is short and [i:] 
+when it is long (the colon indicates a long sound). (For example, 
+{\tt Sinn} (`sense') [\textprimstress z\i n]  as opposed to {\tt Tief} 
+(`deep') [\textprimstress t\textsuperscript{h}i:f].) Likewise for 
+the other vowels.  Table~\ref{tab:langkurz} shows the pronunciation 
+of the long and short vowels, drawn from \cite{ipahandbook}, Page 87 
+(written by Klaus Kohler).
+%%
+\begin{table}
+\caption{Long and short vowels of German}
+\index{German}%%%
+\label{tab:langkurz}
+\begin{center}
+\begin{tabular}{|l|l||l|l|}
+\hline
+long & short & long & short \\\hline\hline
+i: & \i & y: & \textscy \\
+a: & a & e: & \textschwa \\
+o:  & \textopeno   & \o: & \oe \\
+u:  & \textupsilon  & \textepsilon : & \textepsilon 
+\\\hline
+\end{tabular}
+\end{center}
+\end{table}
+%%
+Only the pairs [a:]/[a] and [\textepsilon :]/[\textepsilon]
+are pronounced in the same way, differing only in length. It is 
+therefore not easy to say which feature is distinctive: 
+is length distinctive in German for vowels, or is it rather the tension?
+This is interesting in particular when speakers learn a new language, 
+because they might be forced to keep distinct two parameters that are 
+cogradient in their own. For example, in Finnish vowels are almost purely 
+distinct in length, there is no cooccurring distinction in tension. 
+If so, tension cannot be used to differentiate a long vowel from a 
+short one. This is a potential source of difficulty for Germans if 
+%%%
+\index{Finnish}%%
+%%%
+they want to learn Finnish.
+
+If $L$ is a language$^{\ast}$ in which every word has exactly
+one member, $L$ is uniquely defined by the language
+$L^{\diamond} := \{\vec{x} : \{\vec{x}\} \in L\}$. Let us assume
+after suitable reductions that we have such a language$^{\ast}$;
+then we may return to studying languages in the customary sense.
+It might be thought that languages do not possess nontrivial
+phonemicization maps. This is, however, not so. For example, English
+has two different sounds, [p] and [p\textsuperscript{h}]. The first 
+occurs after [s], while the second appears for example word initially 
+before a vowel. It turns out that in English [p] and 
+[p\textsuperscript{h}] are not two but one phoneme. To see why, 
+we offer first a combinatorial and then a logical analysis. Recall 
+the definition of a context set. For regular languages it is 
+simply
+%%%
+\index{context set}%%
+\index{$\Cont_L(a)$}%%%
+%%%
+\begin{equation}
+\Cont_L(a) := \{\auf \vec{x}, \vec{y} \zu :
+        \vec{x}\conc a\conc\vec{y} \in L\}
+\end{equation}
+%%%
+\index{complementary distribution}%%
+%%%
+If $\Cont_L(a) \cap \Cont_L(a') = \varnothing$,  $a$ and $a'$ are said 
+to be in \textbf{complementary distribution}. An example is the
+abovementioned [p] and [p\textsuperscript{h}]. Another example is [x] 
+versus [$\chi$] in German. Both are written {\tt ch}. However, {\tt ch}
+is pronounced [x] if occurring after [a], [o] and [u], while it is
+pronounced [\c{c}] if occurring after other vowels and [r], [n]
+or [l]. Examples are {\tt Licht} [\textprimstress l\i\c{c}t], 
+{\tt Nacht} [\textprimstress naxt], {\tt echt} [\textprimstress e\c{c}t] 
+and {\tt Furcht} [\textprimstress fu\textinvscr\c{c}t]. (If you do not 
+know German, here is a short description of the sounds. [x] is
+pronounced at the same place as [k] in English, but it is a
+fricative. [\c{c}] is pronounced at the same place as {\tt y} in
+English {\tt yacht}, however the tongue is a little higher, that
+is, closer to the palatum and also the air pressure is somewhat
+higher, making it sound harder.) Now, from
+Definition~\ref{defn:preph} we extract the following.
+%%%
+\begin{defn}
+Let $A$ be an alphabet and $L$ a language over $A$. 
+$\pi \colon A \pf B$
+is a \textbf{pre--phonemicization} if $\oli{\pi}$ is injective on
+$L$. $\pi \colon A \epi B$ is a \textbf{phonemicization} if for all
+pre--phonemicizations $\pi' \colon A \epi C$, $|C| \geq |B|$.
+\end{defn}
+%%
+The map sending [x] and [\c{c}] to the same sound is a
+pre--pho\-ne\-mi\-ci\-za\-tion in German. However, notice the following.
+In the language $L_0 := \{\mbox{\tt aa}, \mbox{\tt bb}\}$, {\tt a}
+and {\tt b} are in complementary distribution. Nevertheless, the map
+sending both to the same element is not injective. So, complementary
+distribution is not enough to make two sounds belong to the same
+phoneme. We shall see below what is. Second, let $L_1 :=
+\{\mbox{\tt ac}, \mbox{\tt bd}\}$. We may either send
+{\tt a} and {\tt b} to {\tt e} and obtain the language
+$M_0 := \{\mbox{\tt ec}, \mbox{\tt ed}\}$, or we may send
+{\tt c} and {\tt d} to {\tt f} and obtain the language
+$M_1 := \{\mbox{\tt af}, \mbox{\tt bf}\}$. Both maps are
+phonemicizations, as is easily checked. So, phonemicizations are
+not necessarily unique. In order to analyse the situation we have to
+present a few definitions. The general idea is this. Suppose
+that $A$ is not minimal for $L$ in the sense that it possesses
+a noninjective phonemicization.  Then there is a pre--phonemicization
+that conflates exactly two symbols into one. The image $M$ of this
+map is a regular language again. Now, given the latter we can
+actually recover for each member of $M$ its preimage under this
+conflation. What we shall show now
+is that moreover if $L$ is regular {\it there is an explicit procedure
+telling us what the preimage is}. This will be cast in rather abstract
+terms. We shall define here a modal language that is somewhat different
+from $\mathsf{QML}$, namely $\mathsf{PDL}$ with converse. 
+
+\index{propositional dynamic logic}%%
+\index{PDL (see propositional dynamic logic)}%%%
+The syntax of \textbf{propositional dynamic logic} (henceforth PDL) 
+has the usual boolean connectives, the \textbf{program connectives} 
+;, $\cup$, $^{\ast}$, further $?$ and the `brackets' $[-]$ and 
+$\auf -\zu$. Further, there is a set $\Pi_0$ of \textbf{elementary 
+programs}. 
+%%%
+\index{program!elementary}%%%
+%%%%
+\begin{dingautolist}{192}
+\item Every propositional variable is a proposition. 
+\item if $\varphi$ and $\chi$ is a proposition, so are 
+	$\nicht\varphi$, $\varphi\und\chi$, $\varphi\oder \chi$, 
+	and $\varphi\pf\chi$.
+\item If $\varphi$ is a proposition, $\varphi?$ is a program. 
+\item Every elementary program is a program.
+\item If $\alpha$ and $\beta$ are programs, so are 
+	$\alpha;\beta$, $\alpha\cup\beta$, and $\alpha^{\ast}$.
+\item If $\alpha$ is a program and $\varphi$ a proposition, 
+	$[\alpha]\varphi$ and $\auf\alpha\zu\varphi$ 
+	are propositions.
+\end{dingautolist}
+%%%
+A \textbf{Kripke--model} is a triple $\auf F, R, \beta\zu$, where 
+$R : \Pi_0 \pf \wp(F^2)$, and $\beta : \mbox{\rm PV} \pf \wp(F)$. 
+We extend the maps $R$ and $\beta$ as follows. 
+%%%
+\begin{equation}
+\begin{split}
+\oli{\beta}(\nicht\varphi) & := F - \oli{\beta}(\varphi) \\
+\oli{\beta}(\varphi\und\chi) & := \oli{\beta}(\varphi) 
+	\cap \oli{\beta}(\chi) \\
+\oli{\beta}(\varphi\oder\chi) & := \oli{\beta}(\varphi) 
+	\cup \oli{\beta}(\chi) \\
+\oli{\beta}(\varphi\pf\chi) & := (- \oli{\beta}(\varphi)) 
+	\cup \oli{\beta}(\chi) \\
+\oli{R}(\varphi?) & := \{\auf x,x\zu : x \in \oli{\beta}(\varphi)\} \\
+\oli{R}(\alpha\cup\beta) & := \oli{R}(\alpha) \cup \oli{R}(\beta) \\
+\oli{R}(\alpha;\beta) & := \oli{R}(\alpha) \circ \oli{R}(\beta) \\
+\oli{R}(\alpha^{\ast}) & := \oli{R}(\alpha)^{\ast} \\
+\oli{\beta}([\alpha]\varphi) & := 
+	\{x : \text{for all $y:$ if } x\; \oli{R}(\alpha)\; y 
+	\text{ then } y \in \oli{\beta}(\varphi)\} \\
+\oli{\beta}(\auf\alpha\zu\varphi) & := 
+	\{x : \text{there is }y: x\; \oli{R}(\alpha)\; y 
+	\text{ and } y \in \oli{\beta}(\varphi)\} 
+\end{split}
+\end{equation}
+%%%
+We write $\auf F, R, \beta\zu \vDash \varphi$ if $x \in 
+\oli{\beta}(\varphi)$. \textbf{Elementary PDL} (\textbf{EPDL}) 
+%%%
+\index{propositional dynamic logic!elementary}%%%
+%%%
+is the fragment 
+of PDL that has no star. The elements of $\Pi_0$ are constants; 
+they are like the modalities of modal logic. Obviously, it is 
+possible to add also propositional constants.
+
+In addition to $\mathsf{PDL}$, 
+%%%
+\index{$\mathsf{PDL}$}%%%
+it also has a program constructor 
+$^{\smallsmile}$.
+$\alpha^{\smallsmile}$ denotes the converse of $\alpha$.
+Hence, in a Kripke--frame $\oli{R}(\alpha^{\smallsmile}) =
+\oli{R}(\alpha)^{\smallsmile}$. The axiomatization consists
+in the axioms for $\mathsf{PDL}$ together with the axioms
+$p \pf [\alpha]\auf \alpha^{\smallsmile}\zu p$,
+$p \pf [\alpha^{\smallsmile}]\auf \alpha\zu p$ for every
+program $\alpha$. The term {\it dynamic logic\/} will henceforth
+refer to an extension of $\mathsf{PDL}^{\smallsmile}$ by
+some axioms. The fragment without $^{\ast}$ is called
+\textbf{elementary} $\textbf{PDL}$ with converse, and is 
+denoted by $\mathsf{EPDL}^{\smallsmile}$. 
+%%%
+\index{$\mathsf{PDL}^{\smallsmile}$, $\mathsf{EPDL}^{\smallsmile}$}%%
+%%%
+An analog of B\"uchi's Theorem
+holds for the logic $\mathsf{PDL}^{\smallsmile}(\prec)$.
+%%
+\begin{thm}
+Let $A$ be a finite alphabet. A class of MZ--struc\-tu\-res over $A$
+is regular iff it is axiomatizable over the logic of
+all MZ--structures by means of constant formulae in
+$\mathsf{PDL}^{\smallsmile}(\prec)$ (with constants for
+letters from $A$).
+\end{thm}
+%%
+\proofbeg
+By Kleene's Theorem, a regular language is the extension of a regular
+term. The language of such a term can be written down in 
+$\mathsf{PDL}^{\smallsmile}$ using a constant formula. Conversely, 
+if $\gamma$ is a constant
+$\mathsf{PDL}^{\smallsmile}(\prec)$--formula it can be rewritten
+into an $\mathsf{MSO}$--formula.
+\proofend
+
+The last point perhaps needs reflection. There is a straightforward
+translation of $\mathsf{PDL}^{\smallsmile}$ into $\mathsf{MSO}$. We only
+have to observe that the transitive closure of an $\mathsf{MSO}$--definable
+relation is again $\mathsf{MSO}$--definable (see 
+Exercise~\ref{ex:transclose}).
+%%
+\begin{align}
+x\; R^{\ast}\; y\quad \Dpf\quad & 
+(\forall X)(X(x) \und (\forall z)(\forall z')(X(z) \und
+    z\; R\; z'. \\\notag
+	& \qquad\qquad \pf .X(z')) \pf X(y))
+\end{align}
+%%
+Notice also that we can eliminate $^{\smallsmile}$ from complex
+programs using the following identities.
+%%
+\begin{subequations}
+\begin{align}
+\oli{R}((\alpha\cup\beta)^{\smallsmile}) & = 
+        \oli{R}(\alpha^{\smallsmile} \cup \beta^{\smallsmile}) \\
+\oli{R}((\alpha;\beta)^{\smallsmile}) & = 
+        \oli{R}(\beta^{\smallsmile};\alpha^{\smallsmile}) \\
+\oli{R}((\alpha^{\ast})^{\smallsmile}) & = 
+        \oli{R}((\alpha^{\smallsmile})^{\ast}) \\
+\oli{R}((\varphi?)^{\smallsmile}) & = \oli{R}(\varphi?)
+\end{align}
+\end{subequations}
+%%
+Hence, $\mathsf{PDL}^{\smallsmile}(\prec)$ can also be seen as
+an axiomatic extension of $\mathsf{PDL}(\prec;\succ)$ by the
+axioms $p \pf [\prec]\auf \succ\zu p$, $p \pf [\succ]\auf \prec\zu p$.
+Now let $\Theta$ be a dynamic logic.  Recall from 
+Section~\ref{kap6}.\ref{kap6-3} the definition of $\Vdash_{\Theta}$, 
+the global consequence associated with $\Theta$.
+
+Now, we shall assume that we have a language
+$\mathsf{PDL}^{\smallsmile}(\prec;D)$, where $D$ is a set of
+constants. For simplicity, we shall assume that for each letter
+$a \in A$, $D$ contains a constant $\uli{a}$. However, there may
+be additional constants. It is those constants that we shall 
+investigate here. We shall show (i) that these constants can
+be eliminated in an explicit way, (ii) that one can always add
+constants such that $A$ can be be described purely by contact
+rules.
+%%
+\begin{defn}
+%%%
+\index{definition!global implicit}%%
+%%%
+Let $\Theta$ be a dynamic logic and $\varphi(q)$ a formula. 
+$\varphi(q)$ \textbf{globally implicitly defines} $q$ \textbf{in} 
+$\Theta$ if $\varphi(q); \varphi(q') \Vdash_{\Theta} q \dpf q'$.
+\end{defn}
+%%
+Features (or constants, for that matter) that are implicitly defined
+are called \textbf{inessential}. Here the leading idea is that an 
+inessential feature does not constitute a distinctive phonemic feature, 
+because removing the distinction that this feature induces on the alphabet
+turns out to induce an injective map. Formally, this is spelled out
+as follows. Let $A \times \{0,1\}$ be an alphabet, and assume that
+the second component indicates the value of the feature $\mathsf{c}$. Let
+$\pi \colon A \times \{0,1\} \pf A$ be the projection onto the first
+factor. Suppose that the language $L$ can be axiomatized by the
+constant formula $\varphi(\mathsf{c})$. $\varphi(\mathsf{c})$
+defines $\mathsf{c}$ implicitly if $\oli{\pi} \colon  L' \pf L$ is injective.
+This in turn means that the map $\pi$ is a pre--phonemicization. For
+in principle we could do without the feature.  Yet, it is not clear
+that we can simply eliminate it.  In $\mathsf{PDL}^{\smallsmile}
+\oplus \varphi(\mathsf{c})$ we call $\mathsf{c}$ \textbf{eliminable} 
+%%%
+\index{constant!eliminable}%%
+%%%
+if there is a formula $\chi$ provably equivalent to $\varphi(\mathsf{c})$
+that uses only the constants of $\varphi$ without $\mathsf{c}$. In the
+present case, however, an inessential feature is also eliminable.
+Notice first of all that a regular language over an alphabet $B$ is
+definable by means a constant formula over the logic of all strings,
+with constants $\uli{b}$ for every element $b$ of $B$.
+By Lemma~\ref{lem:constantbeth}, it is therefore enough
+to show the claim for the logic of all strings. Moreover, by a suitable
+replacement of other variables by new constants we may reduce the
+problem to the case where $p$ is the only variable occurring in the
+formula. Now the language $L$ is regular over the alphabet
+$A \times \{0,1\}$. Therefore, $\oli{\pi}[L]$ is regular as well.
+This means that it can be axiomatized using a formula without the
+constant $\mathsf{c}$. However, this only means that we can make the
+representation of words more compact. Ideally, we also wish to describe
+for given $a \in A$, in which context we find $\auf a, 0\zu$ (an
+$a$ lacking $\mathsf{c}$) and in which context we find $\auf a, 1\zu$
+(an $a$ having $\mathsf{c}$).  This can be done. Let $\GA =
+\auf A, Q, q_0, F, \delta\zu$ be a finite state automaton.
+Then $L_{\GA}(q) := \{\vec{x} : q_0 \stackrel{\vec{x}}{\pf} q\}$
+is a regular language (for $L_{\GA}(q) = L(\auf A, Q, q_0,
+\{q\}, \delta\zu)$, and the latter is a finite state automaton).
+Furthermore, $A^{\ast} = \bigcup_{q \in Q} L_{\GA}(q)$.
+If $\GA$ is deterministic, then $L_{\GA}(q) \cap L_{\GA}(q') 
+= \varnothing$ whenever $q \neq q'$. Now, let $\GB$ be a 
+deterministic finite state automaton over $A \times \{0,1\}$ such 
+that $\vec{x} \in L(\GB)$ iff $\vec{x} \vDash \varphi(\mathsf{c})$.
+Suppose we have a constraint $\chi$, where $\chi$ is a constant
+formula.
+%%%
+\begin{defn}
+The \textbf{Fisher--Ladner closure} 
+%%%
+\index{Fisher--Ladner closure}%%%
+\index{$\FL(\chi)$}%%%
+%%%
+of $\chi$, $\FL(\chi)$, is defined as follows.
+%%%
+\begin{subequations}
+\begin{align}
+\FL(p_i) & := \{p_i\} \\
+\FL(\gamma) & := \{\gamma\} \\
+\FL(\chi\und\chi') & := \{\chi\und\chi'\}
+        \cup \FL(\chi) \cup \FL(\chi') \\
+\FL(\auf \alpha\cup \beta\zu\chi) & :=
+        \{\auf\alpha\cup\beta\zu\chi\}
+        \cup \FL(\auf\alpha\zu\chi)
+        \cup \FL(\auf\beta\zu\chi) \\
+\FL(\auf \alpha;\beta\zu\chi) & :=
+        \{\auf\alpha;\beta\zu\chi\}
+        \cup \FL(\auf\alpha\zu\auf\beta\zu\chi) \\
+\FL(\auf \alpha^{\ast}\zu\chi) & :=
+        \{\auf \alpha^{\ast}\zu\chi\} \cup
+        \FL(\auf \alpha\zu\auf\alpha^{\ast}\zu\chi)
+	\cup \FL(\chi) \\
+\FL(\auf \varphi?\zu\chi) & :=
+        \{\auf\varphi?\zu\chi\} \cup
+        \FL(\varphi) \cup \FL(\chi) \\
+\FL(\auf \alpha\zu\chi) & :=
+        \{\auf\alpha\zu\chi\} \cup
+        \FL(\chi) \qquad \alpha \mbox{ basic}
+\end{align}
+\end{subequations}
+\end{defn}
+%%%
+The Fisher--Ladner closure covers only 
+$\mathsf{PDL}(\prec;\succ)$--formulae, but this is actually enough 
+for our purposes. For each formula $\sigma$ in the Fisher--Ladner 
+closure of $\chi$ we introduce a constant $c(\sigma)$.
+In addition, we add the following axioms.
+%%
+\begin{equation}
+\begin{split}
+c(\nicht\sigma) & \dpf \nicht c(\sigma) \\
+c(\sigma\und\tau) & \dpf c(\sigma) \und c(\tau) \\
+c(\auf\varphi?\zu\sigma) & \dpf c(\varphi) \und c(\sigma) \\
+c(\auf\alpha\cup\beta\zu\sigma) & \dpf c(\auf\alpha\zu\sigma)
+        \oder c(\auf\beta\zu\sigma) \\
+c(\auf\alpha;\beta\zu\sigma) & \dpf c(\auf\alpha\zu\auf\beta\zu\sigma)
+        \\
+c(\auf\alpha^{\ast}\zu\sigma) & \dpf c(\sigma) \oder 
+        c(\auf\alpha\zu\auf\alpha^{\ast}\zu\sigma) \\
+c(\auf\prec\zu\sigma) & \dpf \auf\prec\zu c(\sigma) \\
+c(\auf\succ\zu\sigma) & \dpf \auf\succ\zu c(\sigma)
+\end{split}
+\end{equation}
+%%
+\index{cooccurrence restrictions}%%
+%%%
+We call these formulae \textbf{cooccurrence restrictions}.
+After the introduction of these formulae as axioms 
+$\sigma \dpf c(\sigma)$ is provable for every $\sigma \in
+\FL(\chi)$. In particular, $\chi \dpf c(\chi)$
+is provable. This means that we can eliminate $\chi$ in favour
+of $c(\chi)$. The formulae that we have just added do not contain
+any of $?$, $\cup$, $^{\smallsmile}$, $^{\ast}$ or $;$. We only
+have the most simple axioms, stating that some constant is true
+before or after another. Now we construct the following automaton.
+Let $\vartheta$ be a subset of $\FL(\chi)$. Then put
+%%
+\begin{equation}
+q_{\vartheta} := \gund_{\gamma \in \vartheta} c(\gamma) \und
+    \gund_{\gamma \not\in \vartheta} \nicht c(\gamma)
+\end{equation}
+%%
+Now let $Q$ be the set of all consistent $q_{\vartheta}$.
+Furthermore, put $q_{\vartheta} \stackrel{a}{\pf} q_{\eta}$
+iff $q_{\vartheta} \und \auf \prec; \uli{a}?\zu q_{\eta}$
+is consistent. Let $F := \{q_{\vartheta} : [\prec]\bot \in \vartheta\}$
+and $B := \{q_{\vartheta} : [\succ]\bot \in \vartheta\}$. For every
+$b \in B$, $\auf A, Q, b, F, \delta\zu$ is a finite state
+automaton. Then
+%%
+\begin{equation}
+L := \bigcup_{b \in B} L(\auf A, Q, b, F, \delta\zu)
+\end{equation}
+%%
+is a regular language. It immediately follows that the automaton
+above is well--defined and for every subformula $\alpha$ of $\chi$
+the set of positions $i$ such that $\auf \vec{x}, i\zu \vDash \alpha$
+is uniquely fixed. Hence, for every $\vec{x}$ there exists exactly
+one accepting run of the automaton. $\auf \vec{x}, i\zu \vDash \psi$
+iff $\psi$ holds at the $i$th position of the accepting run.
+
+We shall apply this to our problem. Let $\varphi(\mathsf{c})$ be an
+implicit definition of $\mathsf{c}$. Construct the automaton
+$\GA(\varphi(\mathsf{c}))$ for $\varphi(\mathsf{c})$
+as just shown, and lump together all states that do not contain
+$c(\varphi(\mathsf{c}))$ into a single state $q'$ and put
+$q' \stackrel{a}{\pf} q'$ for every $a$. All states different
+from $q'$ are accepting. This defines the automaton $\GB$. Now
+let $C := \{q_{\vartheta} : \mathsf{c} \in \vartheta\}$. The
+language $\bigcup_{c \in C} L_{\GB}(q)$ is regular, and it
+possesses a description in terms of the constants $\uli{a}$,
+$a \in A$, alone.
+%%
+\begin{defn}
+%%%
+\index{definition!global explicit}%%
+%%%
+Let $\Theta$ be a logic and $\varphi(q)$ a formula. Further, let
+$\delta$ be a formula not containing $q$. We say that $\delta$
+\textbf{globally explicitly defines} $q$ \textbf{in} $\Theta$
+\textbf{with respect to} $\varphi$ if $\varphi(q) \Vdash_{\Theta}
+\delta \dpf q$.
+\end{defn}
+%%
+Obviously, if $\delta$ globally explicitly defines $q$ with respect 
+to $\varphi(q)$
+then $\varphi(q)$ globally implicitly defines $q$. On the other hand,
+if $\varphi(q)$ globally implicitly defines $q$ then it is not necessarily
+the case that there is an explicit definition for it. It very much
+depends on the logic in addition to the formula whether there is.
+%%%
+\index{Beth property!global}%%
+%%%
+A logic is said to have the \textbf{global Beth--property} if for
+any global implicit definition there is a global explicit definition.
+Now suppose that we have a formula $\varphi$ implicitly
+defining $q$. Suppose further that $\delta$ is an explicit definition.
+Then the following is valid.
+%%
+\begin{equation}
+\Vdash_{\Theta} \varphi(q) \dpf \varphi(\delta)
+\end{equation}
+%%
+The logic $\Theta \oplus \varphi$ defined by adding the formula $\varphi$
+as an axiom to $\Theta$ can therefore equally well be axiomatized by
+$\Theta \oplus \varphi(\delta)$. The following is relatively easy
+to show.
+%%%
+\begin{lem}
+\label{lem:constantbeth}
+Let $\Theta$ be a modal logic, and $\gamma$ a constant formula.
+Suppose that $\Theta$ has the global Beth--property. Then
+$\Theta \oplus \gamma$ also has the global Beth--property.
+\end{lem}
+%%%
+\begin{thm}
+%%%
+\label{thm:regbeth}
+%%%
+Every logic of a regular string language has the global
+Beth--property.
+\end{thm}
+%%%
+If the axiomatization is infinite, by the described procedure we
+get an infinite array of formulae. This does not have a regular
+solution in general, as the reader is asked to show in the exercises.
+
+The procedure of phonemicization is inverse to the procedure of
+adding features that we have looked at in the previous section.
+We shall briefly look at this procedure from a phonological
+point of view. Assume that we have an alphabet $A$ of phonemes,
+containing also the syllable boundary marker {\tt +} and the
+word boundary marker {\tt \#}. These are not brackets, they are separators.
+Since a word boundary is also a syllable boundary, no extra marking
+of the syllable is done at the word boundary. Let us now ask what
+are the rules of syllable and word structure in a language. The
+minimal assumption is that any combination of phonemes may form
+a syllable. This turns out to be false. Syllables are in fact
+constrained by a number of (partly language dependent) principles.
+This can partly be explained by the fact that vocal tract has a 
+certain physiognomy that discourages certain phoneme combinations 
+while it enhances others. These properties also lead to a deformation 
+of sounds in contact,
+%%%
+\index{sandhi}%%
+%%%
+which is called \textbf{sandhi}, a term borrowed from Sanskrit grammar.
+A particular example of sandhi is assimilation ([np] $>$ [mp]). Sandhi
+rules exist in nearly all languages, but the scope and character varies
+greatly. Here, we shall call {\it sandhi\/} any constraint that
+is posed on the occurrence of two phonemes (or sounds) next to
+each other. Sandhi rules are 2--templates in the sense of the 
+following definition.
+%%%
+\begin{defn}
+%%%%
+\index{template}%%%
+\index{template language}%%
+%%%%
+Let $A$ be an alphabet. An $n$--\textbf{template over} $A$ (or
+\textbf{template of length} $n$) is a cartesian product of length
+$n$ of subsets of $A$. A language $L$ is an $n$--\textbf{template
+language} if there is a finite set $\CP$ of length $n$ such that
+$L$ is the set of words $\vec{x}$ such that every subword of length
+$n$ belongs to at least one template from $\CP$. $L$ is a
+\textbf{template language} if there is an $n$ such that $L$ is
+an $n$--template language.
+\end{defn}
+%%%
+Obviously, an $n$--template language is an $n+1$--template language.
+Furthermore, 1--template languages have the form $B^{\ast}$ where
+$B \subseteq A$. So the first really interesting class is that of
+the 2--template languages.  It is clear that if the alphabet is finite,
+we may actually define an $n$--template to be just a member of $A^n$.
+Hence, a template language is defined by naming all those sequences
+of bounded length that are allowed to occur.
+%%%
+\begin{prop}
+A language is a template language iff its class of
+$A$--strings is axiomatizable by finitely many positive 
+EPDL--formulae.
+\end{prop}
+%%
+To make this more realistic we shall allow also boundary templates.
+Namely, we shall allow a set $\CP^-$ of left edge templates and a set
+$\CP^+$ of right edge templates. $\CP^-$ lists the admissible
+$n$--prefixes of a word and $\CP^+$ the admissible $n$--suffixes.
+Call such languages \textbf{boundary template languages}. 
+%%%
+\index{template language!boundary}%%%
+%%
+Notice that phonological processes are conditioned by certain boundaries, 
+but we have added the boundary markers to the alphabet. This
+effectively eliminates the need for boundary templates in the
+description here. We have not explored the question what would happen
+if they were eliminated from the alphabet.
+%%%
+\begin{prop}
+A language is a boundary template language iff its
+class of $A$--strings is axiomatizable by finitely many 
+EPDL--formulae.
+\end{prop}
+%%%
+It follows from Theorem~\ref{thm:buechi} that template languages are
+regular (which is easy to prove anyhow). However, the language
+$\mbox{\tt c}\mbox{\tt a} ^+\mbox{\tt c} \cup \mbox{\tt d}%
+\mbox{\tt a}^+\mbox{\tt d}$ is regular but not a template
+language.
+
+The set of templates effectively names the legal
+transitions of an automaton that uses the alphabet $A$ itself as
+the set of states to recognize the language. We shall define this
+notion, using a slightly different concept here, namely that of a
+%%%
+\index{finite state automaton!partial}%%
+%%%%
+\textbf{partial finite state automaton}. This is a quintuple $\GA =
+\auf A, Q, I, F, \delta\zu$, such that $A$ is the \textbf{input
+alphabet}, $Q$ the set of internal states, $I$ the set of initial
+states, $F$ the set of accepting states and $\delta : A \times Q
+\stackrel{p}{\pf} Q$ a partial function. $\GA$ \textbf{accepts} $\vec{x}$
+if there is a computation from some $q \in I$ to some $q' \in F$
+%%%%
+\index{language!2--template}%%%
+%%%
+with $\vec{x}$ as input. $\GA$ is a \textbf{2--template language} 
+if $Q = A$ and $\delta(a,b)$ is either undefined or $\delta(a,b) = b$.
+
+The reason for concentrating on 2--template languages is the philosophy
+of naturalness. Basically, grammars are natural if the nonterminal
+symbols can be identified with terminal symbols, that is, for 
+every nonterminal $X$ there is a terminal $a$ such that for every 
+$X$--string $\vec{x}$ we have $\Cont_L(\vec{x}) = \Cont_L(a)$. For 
+a regular grammar this means in essence that a
+string beginning with $a$ has the same distribution
+as the letter $a$ itself. A moment's reflection reveals that this is
+the same as the property of being 2--template. Notice that the 2--template
+property of words and syllables was motivated from the nature
+of the articulatory organs, and we have described a parser that
+recognizes whether something is a syllable or a word. Although it
+seems prima facie plausible that there are also auditory
+constraints on phoneme sequences we know of no plausible constraint
+that could illustrate it. We shall therefore concentrate on the
+former. What we shall now show is that syllables are not 2--template.
+This will motivate either adding structure or adding more features
+to the description of syllables. These features are necessarily
+nonphonemic.
+
+We shall show that nonphonemic features exist by looking at syllable
+structure. It is not possible to outline a general theory of syllable
+structure.  However, the following sketch may be given (see
+\cite{grewendorf:wissen}). The sounds are aligned into a 
+so--called \textbf{sonoricity hierarchy}, which is shown in 
+Table~\ref{tab:son} (vd.\ = voiced, vl.\ = voiceless).
+%%
+\begin{table}
+\caption{The Sonoricity Hierarchy}
+%%%
+\index{sonoricity hierarchy}
+%%%
+\label{tab:son}
+\begin{center}
+\begin{tabular}{l@{\;}ll@{\;}ll@{\;}l}
+ & dark vowels & $>$ & mid vowels & $>$ & high vowels \\ 
+ & [a], [o] & & [\ae], [\oe] & & [i], [y] \\ 
+\\
+$>$ & r--sounds & $>$ & nasals; laterals & $>$ & vd.~fricatives \\
+    & [r]       &     & [m], [n]; [l]    &     & [z], [\textyogh] \\
+\\
+$>$ & vd.~plosives & $>$ & vl.~fricatives & $>$ & vl.~plosives \\
+    & [b], [d]     &     & [s], [\textesh] &    & [p], [t] 
+\end{tabular}
+\end{center}
+\end{table}
+%%
+The syllable is organized as follows.
+%%
+\begin{quote}
+{\sl Syllable Structure.} Within a syllable the sonoricity increases
+monotonically and then decreases.
+\end{quote}
+%%%
+This means that a syllable must contain at least one sound
+which is at least as sonorous as all the others in the syllable.
+It is called the \textbf{sonoricity peak}. We shall make the following
+assumption that will simplify the discussion.
+%%%
+\begin{quote}
+{\sl Sonoricity Peak.}
+The sonoricity peak can be constituted by vowels only.
+\end{quote}
+%%%
+This wrongly excludes the syllable [krk], or [dn]. The latter is
+heard in the German {\tt verschwinden} (`to disappear') 
+[\textsecstress f\textepsilon \textinvscr \textprimstress\textesh 
+w\i ndn]. (The second {\tt e} that appears in writing is hardly 
+ever pronounced.) However, even if the assumption is relaxed, the 
+problem that we shall address will remain.
+
+The question is: how can we implement these constraints?  There are 
+basically two ways of doing that. (a) We state
+them by means of $\mathsf{PDL}^{\smallsmile}$--formulae.
+This is the descriptive approach. (b) We code them.
+This means that we add some features in such a way that the
+resulting restrictions become specifiable by 2--templates.
+The second approach has some motivation as well. The added
+features can be identified as states of a productive (or analytic)
+device. Thus, while the solution under (a) tells us what the
+constraint actually is, the approach under (b) gives us features
+which we can identify as (sets of) states of a (finite state)
+machine that actually parses or produces these structures.
+That this can be done is expressed in the following corollary of 
+the Coding Theorem.
+%%
+\begin{thm}
+Any regular language is the homomorphic image of a boundary
+2--template language.
+\end{thm}
+%%
+So, we only need to add features. Phonological string languages
+are regular, so this method can be applied. Let us see how we can
+find a 2--template solution for the sonoricity hierarchy. We introduce a
+feature $\alpha$ and its negation $- \alpha$. We start with the
+alphabet $P$, and let $C \subseteq P$ be the set of consonants.
+The new alphabet is
+%%
+\begin{equation}
+\Xi := P \times \{-\alpha\} \cup C \times \{\alpha\}
+\end{equation}
+%%
+Let $\son(a)$ be the sonoricity of $a$. (It is some number such 
+that the facts of Table~\ref{tab:son} fall out.)
+%%
+\begin{equation}
+\begin{split}
+\nabla := & \phantom{\mbox{}\cup\mbox{}}
+\{\auf\auf a, \alpha\zu, \auf a', \alpha\zu\zu :
+                \son(a) \leq \son(a')\}  \\
+        & \cup \{\auf\auf a, -\alpha\zu, \auf a', -\alpha\zu\zu :
+                \son(a) \geq \son(a')\} \\
+        & \cup \{\auf\auf a, \alpha\zu, \auf a', -\alpha\zu\zu :
+                a' \not\in C, \son(a) \leq \son(a')\} \\
+        & \cup \{\auf\auf a, -\alpha\zu, \auf a', \alpha'\zu\zu :
+                a \in \{\mbox{\tt +},\mbox{\tt \#}\}\}
+\end{split}
+\end{equation}
+%%
+As things are defined, any subword of a word is in the language. We need
+to mark the beginning and the end of a sequence in a special way, as
+described above. This detail shall be ignored here.
+
+$\alpha$ has a clear phonetic interpretation: it signals the rise
+of the sonoricity. It has a natural correlate in what de
+Saussure calls `explosive articulation'. A phoneme carrying
+$\alpha$ is pronounced with explosive articulation, a phoneme carrying
+$-\alpha$ is pronounced with `implosive articulation'. (See 
+\cite{desaussure:grundfragen}.) So, $\alpha$ actually has
+an articulatory (and an auditory) correlate. But it is a nonphonemic
+feature; it has been introduced in addition to the phonemic features
+in order to constrain the choice of the next phoneme. As de Saussure
+remarks, it makes the explicit marking of the syllable boundary
+unnecessary. The syllable boundary is exactly where the implosive
+articulation changes to explosive articulation. However, some linguists
+(for example van der Hulst in \shortcite{hulst:dutch}) 
+%%%
+\index{van der Hulst, Harry}%%%
+%%%
+have provided a
+completely different answer. For them, a syllable is structured in
+the following way.
+%%
+\index{onset}%%
+\index{rhyme}%%
+\index{nucleus}%%
+\index{coda}%%
+%%
+\begin{equation}
+\mbox{[onset \quad [nucleus \quad coda]]}
+\end{equation}
+%%
+So, the grammar that generates the phonological strings is actually
+not a regular grammar but context free (though it makes only very
+limited use of phrase structure rules). $\alpha$ marks the onset,
+while $- \alpha$ marks the nucleus together with the coda (which is
+also called \textbf{rhyme}). So, we have three possible ways to arrive
+at the constraint for the syllable structure: we postulate an
+axiom, we introduce a new feature, or we assume more structure.
+
+We shall finally return to the question of spelling out the
+relation between deep and surface phonological representations.
+We describe here the simplest kind of a machine that transforms
+strings into strings, the {\it finite state transducer}.
+%%
+\begin{defn}
+%%%
+\index{transducer!finite state}%%
+%%%
+Let $A$ and $B$ be alphabets. A (\textbf{partial}) 
+\textbf{finite state transducer from} $A$ \textbf{to} $B$ is a 
+sextuple $\GT = \auf A, B, Q, i_0, F, \delta\zu$ such that $i_0 \in Q$,
+$F \subseteq Q$ and $\delta \colon Q \times A_{\varepsilon}
+\pf \wp(Q \times B^{\ast})$ where $\delta(q,\vec{x})$ is always
+finite for every $\vec{x} \in A_{\varepsilon}$. $Q$ is called the
+set of \textbf{states}, 
+%%%
+\index{state}%%
+%%%
+$i_0$ is called the \textbf{initial state},
+%%%
+\index{state!initial}%%
+%%%
+$F$ the set of \textbf{accepting states} 
+%%%%
+\index{state!accepting}%%
+%%%
+and $\delta$ the \textbf{transition function}. 
+%%%
+\index{transition function}%%
+%%%%
+$\GT$ is called \textbf{deterministic}
+%%%
+\index{transducer!deterministic finite state}%%
+%%%
+if $\delta(q,a)$ contains at most one element for every
+$q \in Q$ and every $a \in A$.
+\end{defn}
+%%
+We call $A$ the \textbf{input alphabet} and $B$ the
+%%%
+\index{alphabet!input}%%%
+\index{alphabet!output}%%%
+%%%
+\textbf{output alphabet}. The transducer differs from a finite
+automaton in the transition function. This function does
+not only say into which state the automaton may change but
+also what symbol(s) it will output on going into that state.
+Notice that the transducer may also output an empty string
+and that it allows for empty transitions. These are not
+eliminable (as they would be in the finite state automaton)
+since the machine may accompany the change in state by a
+nontrivial output. We write
+%%
+\begin{equation}
+q \stackrel{\vec{x} : \vec{y}}{\longrightarrow} q'
+\end{equation}
+%%
+if the transducer changes from state $q$ with input
+$\vec{x}$ ($\in A^{\ast}$) into the state
+$q'$ and outputs the string $\vec{y}$ ($\in B^{\ast}$).
+This is defined as follows.
+%%
+\begin{equation}
+q \stackrel{\vec{x} : \vec{y}}{\longrightarrow} q', \quad
+\mbox{ if }
+\begin{cases}
+ & (q',\vec{y}) \in \delta(q,\vec{x}) \\
+ \\
+\text{ or } &
+ \text{ for some $q'', \vec{u}, \vec{u}_1, \vec{v}, \vec{v}_1:$} \\
+ & q    \stackrel{\vec{u} : \vec{v}}{\longrightarrow} q''
+    \stackrel{\vec{u}_1 : \vec{v}_1}{\longrightarrow} q'
+\\
+ & \text{ and
+	$\vec{x} = \vec{u}\conc\vec{u}_1, \vec{y} = \vec{v} \conc \vec{v}_1$.}
+\end{cases}
+\end{equation}
+%%
+Finally one defines
+%%
+\begin{equation}
+L(\GT) := \{\auf \vec{x}, \vec{y}\zu : \mbox{ there is }
+    q \in F \mbox{ with }
+    i_0 \stackrel{\vec{x}: \vec{y}}{\longrightarrow} q\}
+\end{equation}
+%%
+Transducers can be used to describe the effect of rules.
+One can write, for example, a transducer $\goth{Syl}$ that
+syllabifies a given input according to the constraints on
+syllable structure. Its input alphabet is $A \cup \{
+\mbox{\tt +}, \mbox{\tt \#}\}$, where $A$ is the set of 
+phonemes, {\tt +} the word boundary and {\tt \#} the syllable 
+boundary. The output alphabet is $A \times \{\mbox{\tt o}, 
+\mbox{\tt n}, \mbox{\tt c}\} \cup \{\mbox{\tt +}, \mbox{\tt \#}\}$. 
+Here, {\tt o} stands for `onset', {\tt n} for `nucleus,' and 
+{\tt c} for `coda'. The machine annotates each phoneme stating 
+whether it belongs to the onset of a syllable, to its nucleus or 
+its coda. Additionally, the machine inserts a syllable boundary 
+wherever necessary. (So, one may leave the input partially or 
+entirely unspecified for the 
+syllable boundaries. The machine will look which syllable segmentation
+can or must be introduced.) Now we write a machine $\goth{AVh}$
+which simulates the actions of final devoicing. It has one
+state, $i_0$, it is deterministic and the transition function
+consists in
+$\auf \mbox{[b]}, \mbox{\tt c}\zu : \auf \mbox{[p]}, \mbox{\tt c}\zu$,
+$\auf \mbox{[d]}, \mbox{\tt c}\zu : \auf \mbox{[t]}, \mbox{\tt c}\zu$,
+$\auf \mbox{[g]}, \mbox{\tt c}\zu : \auf \mbox{[k]}, \mbox{\tt c}\zu$ as
+well as
+$\auf \mbox{[z]}, \mbox{\tt c}\zu : \auf \mbox{[s]}, \mbox{\tt c}\zu$ and
+$\auf \mbox{[v]}, \mbox{\tt c}\zu : \auf \mbox{[f]}, \mbox{\tt c}\zu$.
+Everywhere else we have
+$\auf P, \alpha\zu : \auf P, \alpha\zu$, $P$ a phoneme,
+$\alpha \in \{\mbox{\tt a},\mbox{\tt c},\mbox{\tt n}\}$.
+
+The success of the construction is guaranteed by a general theorem
+known as the {\it Transducer Theorem}. It says that the image under
+transduction of a regular language is again a regular language.
+The proof is not hard. First, by adding some states, we can replace 
+the function $\delta \colon Q \times A_{\varepsilon} \pf 
+\wp(Q \times B^{\ast})$ by a function 
+$\delta^{\diamond} \colon Q^{\diamond} \times A_{\varepsilon} \pf %
+\wp(Q^{\diamond} \times B_{\varepsilon})$ for some set $Q^{\diamond}$. 
+The details of this construction  are left to the reader.
+Next we replace this function by the function 
+$\delta^2 \colon Q \times A_{\varepsilon} 
+\times B_{\varepsilon} \pf \wp(Q)$. What we now have is an automaton 
+over the alphabet $A_{\varepsilon} \times B_{\varepsilon}$. We now 
+take over the notation from the Section~\ref{kap4}.\ref{kap4-3} and write 
+$\vec{x} \sotimes \vec{y}$ for the pair consisting of $\vec{x}$ 
+and $\vec{y}$. We define
+%%
+\begin{equation}
+(\vec{u}\sotimes\vec{v}) \conc (\vec{w}\sotimes\vec{x})
+    := (\vec{u}\conc\vec{w}) \sotimes (\vec{v}\conc \vec{x})
+\end{equation}
+%%
+\begin{defn}
+Let $R$ be a regular term. We define $L^2(R)$ as follows.
+%%
+\begin{subequations}
+\begin{align}
+L^2(0) & := \varnothing \\
+L^2(\vec{x}\sotimes \vec{y}) & := \{\vec{x}\sotimes\vec{y}\} 
+   \qquad \qquad
+(\vec{x}\sotimes\vec{y} \in A_{\varepsilon} \times B_{\varepsilon}) \\
+L^2(R \cdot S) & := \{\Gx \conc \Gy : \Gx \in L^2(R), \Gy \in L^2(S)\} \\
+L^2(R \cup S) & := L^2(R) \cup L^2(S) \\
+L^2(R^{\ast}) & := L^2(R)^{\ast} 
+\end{align}
+\end{subequations}
+%%
+\index{regular relation}%%%
+\index{relation!regular}%%%
+%%%
+A \textbf{regular relation on} $A$ is a relation of the form
+$L^2(R)$ for some regular term $R$.
+\end{defn}
+%%
+\begin{thm}
+A relation $Z \subseteq A^{\ast} \times B^{\ast}$ is
+regular iff there is a finite state transducer
+$\GT$ such that $L(\GT) = Z$.
+\end{thm}
+%%
+This is essentially a consequence of the Kleene's Theorem.
+In place of the alphabets $A$ we have chosen the alphabet
+$A_{\varepsilon} \times B_{\varepsilon}$. Now observe
+that the transitions $\varepsilon : \varepsilon$ do not
+%% Hier aufpassen ich glaube das nicht %%
+add anything to the language. We can draw a lot of conclusions
+from this.
+%%
+\begin{cor}[Transducer Theorem]
+%%%
+\index{Transducer Theorem}%%%
+%%%
+\label{cor:transducer}
+The following holds.
+%%
+\begin{dingautolist}{192}
+\item
+Regular relations are closed unter intersection and converse.
+\item
+If $H \subseteq A^{\ast}$ is regular so is $H \times B^{\ast}$.
+If $K \subseteq B^{\ast}$ is regular so is $A^{\ast} \times K$.
+\item
+If $Z  \subseteq A^{\ast}\times B^{\ast}$ is a regular relation,
+so are the projections
+\begin{itemize}
+\item $\pi_1[Z] := \{\vec{x} :
+    \mbox{\it there is }\vec{y}\; \mbox{\it with }
+        \auf \vec{x}, \vec{y}\zu \in Z\}$,
+\item $\pi_2[Z] := \{\vec{y} :
+    \mbox{\it there is }\vec{x}\; \mbox{\it with }
+        \auf \vec{x}, \vec{y}\zu \in Z\}$.
+\end{itemize}
+\item
+If $Z$ is a regular relation and $H \subseteq A^{\ast}$ a
+regular set then $Z[H]$ also is regular.
+$$Z[H] := \{\vec{y} : \mbox{\it there is }
+\vec{x} \in H \; \mbox{\it with }\auf \vec{x}, \vec{y} \zu \in Z\}$$
+\end{dingautolist}
+\end{cor}
+%%
+One can distinguish two ways of using a transducer. The first is
+as a machine which checks for a pair of strings whether they
+stand in a particular regular relation. The second, whether
+for a given string over the input alphabet there is a string
+over the output alphabet that stands in the given relation to it.
+In the first use we can always transform the transducer into
+a deterministic one that recognizes the same set. In the second
+case this is impossible. The relation $\{\auf \mbox{\tt a},
+\mbox{\tt a}^n\zu : n \in \omega\}$ is regular but there is no
+deterministic translation algorithm. One easily finds a
+language in which there is no deterministic algorithm in any
+of the directions. From the previous results we derive the
+following consequence.
+%%%
+\begin{cor}[Kaplan \& Kay]
+%%%
+\index{Kaplan, Ron}%%%
+\index{Kay, Martin}%%%
+%%%
+Let $R \subseteq A^{\ast} \times B^{\ast}$ and $S \subseteq
+B^{\ast}\times C^{\ast}$ be regular relations. Then
+$R \circ S \subseteq A^{\ast} \times C^{\ast}$ is regular.
+\end{cor}
+%%
+\proofbeg
+By assumption and the previous theorems, both $R \times C^{\ast}$
+and $A^{\ast} \times S$ are regular. Furthermore, $(R \times C^{\ast}) 
+\cap (A^{\ast} \times S) =
+\{\auf \vec{x}, \vec{y}, \vec{z}\zu : \auf \vec{x}, \vec{y}\zu
+\in R, \auf \vec{y}, \vec{z}\zu \in S\}$ is regular, and so is
+its projection onto $A^{\ast}\times B^{\ast}$, which is exactly
+$R \circ S$.
+\proofend
+
+This theorem is important. It says that the composition of rules
+which define regular relations defines a regular relation again. 
+Effectively, what distinguishes regular relations from Type 1 grammars 
+is that the latter allow arbitrary iterations of the same process, 
+while the former do not.
+
+{\it Notes on this section.} 
+There is every reason to believe that the mapping from 
+phonemes to phones is not constant but context dependent.  
+In particular, final devoicing is believed by some not to 
+be a phonological process, rather, it is the effect of a 
+contextually conditioned change of realization of the 
+voice--feature (see \cite{portodell:voicing}). In other words, 
+on the phonological level nothing changes, but the realization 
+of the phonemes is changed, sometimes so radically that they 
+sound like the realization of a different phoneme (though in a 
+different environment). This simplifies phonological processes 
+at the cost of complicating the realization map.
+
+The idea of eliminating features was
+formulated in \cite{kracht:essential} and already brought
+into correspondence with the notion of implicit definability.
+Concerning long and short vowels, Hungarian is an interesting 
+case. The vowels {\tt i}, {\tt o}, {\tt \"o}, {\tt u}, {\tt \"u}
+show length contrast alone, while the long and short forms of 
+{\tt a} and {\tt e} also differ in lip attitude and/or aperture. 
+%%%
+\index{Hungarian}%%
+%%%
+Sauvageot noted in \shortcite{sauvageot:edification} that 
+Hungarian moved towards a system where length alone is not 
+distinctive. Effectively, it moves to eliminate the feature 
+\textsf{short}.
+%%
+\vplatz 
+\exercise 
+Show that for every given string in a language there is a 
+separation into syllables that conforms to the {\sl Syllable 
+Structure\/} constraint.
+%%%
+\vplatz
+\exercise
+Let $\Pi_0 := \{\zeta_i : i < n\}$ be a finite set of basic
+programs. Define $M := \{\zeta_i : i < n\} \cup \{\zeta_i^ {\smallsmile}
+: i < n\}$. Show that for every $\mathsf{EPDL}^{\smallsmile}$
+formula $\varphi$ there is a modal formula $\delta$ over the
+set $M$ of modalities such that $\mathsf{PDL}^{\smallsmile}
+\vdash \delta \dpf \varphi$. {\it Remark.} A modal formula is
+a formula that has no test, and no $\cup$ and $;$. Whence it
+can be seen as a $\mathsf{PDL}^{\smallsmile}$--formula.
+%%%
+\vplatz
+\exercise
+The results of the previous section show that there is a translation
+$^{\heartsuit}$ of $\mathsf{PDL}^{\smallsmile}(M)$ into
+$\mathsf{QML}(M)$. Obviously, the problematic symbols are $^{\ast}$
+and $^{\smallsmile}$. With respect to $^{\smallsmile}$ the technique
+shown above works. Can you suggest a perspicuous translation of
+$[\alpha^{\ast}]\varphi$? {\it Hint.} $[\alpha^{\ast}]\varphi$
+holds if $\varphi$ holds in the smallest set of worlds closed under
+$\alpha$--successors containing the current world. This can be
+expressed in $\mathsf{QML}$ rather directly.
+%%%
+\vplatz
+\exercise
+Show that in Theorem~\ref{thm:regbeth} the assumption of regularity
+is necessary. {\it Hint.} For example, show that the logic of
+$L = \{\mbox{\tt a}^{2^n}\mbox{\tt c}\mbox{\tt a}^n : n \in
+\omega\}$ fails to have the global Beth--property.
+%%%
+\vplatz
+\exercise
+\label{ex:beth}
+Prove Lemma~\ref{lem:constantbeth}.
+%%
+\vplatz%% 
+\exercise%%
+%%%
+\index{Indo--European}%%
+%%%
+One of the aims of historical linguistics is to reconstruct the 
+affiliation of languages, preferrably by reconstructing a parent 
+language for a certain group of languages and showing how the 
+languages of that group developed from that parent language. The 
+success of the reconstruction lies in the establishment of so--called 
+sound correspondences. In the easiest case they take the shape of 
+correspondences between sounds of the various languages. Let us 
+take the Indo--European (I.--E.) languages. The ancestor of this 
+language, called Indo--European, is not known directly to us, if it 
+at all existed. The proof of its existence is --- among other --- 
+the successful establishment of such correspondences. Their 
+reliability and range of applicability have given credibility to 
+the hypothesis of its existence. Its sound structure is reconstructed, 
+and is added to the sound correspondences. (We base the correspondence 
+on the written language, viz.\ transcriptions thereof.)
+%%%
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+I--E & Sanskrit & Greek & Latin & (meaning) \\
+\hline\hline
+{\tt g\textsuperscript{h}ermos} & {\tt gharma\textsubdot{h}} & 
+	{\tt thermos} & {\tt formus} & `warm' \\
+{\tt o\textsubarch{u}is} & {\tt avi\textsubdot{h}} & 
+	{\tt ois} & {\tt ovis} & `sheep' \\
+{\tt s\textsubarch{u}os} & {\tt sva\textsubdot{h}} & 
+	{\tt hos} & {\tt suus} & `his' \\
+{\tt sept\textsubring{m}} & {\tt sapta} & 
+	{\tt hepta} & {\tt septem} & `seven' \\
+{\tt dek\textsuperscript{u}\textsubring{m}} & {\tt da\'sa} & 
+	{\tt deka} & {\tt decem} & `ten' \\
+{\tt ne\textsubarch{u}os} & {\tt nava\textsubdot{h}} & 
+	{\tt neos} & {\tt novus} & `new' \\
+{\tt \textroundcap{g}enos} & {\tt jana\textsubdot{h}} & 
+	{\tt genos} & {\tt genus} &  `gender' \\
+{\tt s\textsubarch{u}epnos} & {\tt svapna\textsubdot{h}} & 
+	{\tt hypnos} & {\tt somnus} & `sleep'
+\\\hline
+\end{tabular}
+\end{center}
+%%
+Some sounds of one language have exact correspondences in another.
+For example, I.--E.\ $^{\ast}${\tt p} corresponds to {\tt p} across 
+all languages. (The added star indicates a reconstructed entity.)
+With other sounds the correspondence is not so clear. I.--E.\ 
+$^{\ast}${\tt e} and $^{\ast}${\tt a} become {\tt a} in Sanskrit. 
+Sanskrit {\tt a} in fact has multiple correspondences in other 
+languages. Finally, sounds develop differently in different 
+environments. In the onset, I.--E.\ $^{\ast}${\tt s} becomes 
+Sanskrit {\tt s}, but it becomes {\tt \textsubdot{h}} at the end 
+of the word. The details need not interest us here. Write 
+a transducer for all sound correspondences displayed here.
+%%%
+\vplatz
+\exercise
+(Continuing the previous exercise.)
+Let $L_i$, $i < n$, be languages over alphabets $A_i$.
+Show the following: {\it Suppose $R$ is a regular relation
+between $L_i$, $i < n$. Then there is an alphabet $P$,
+a proto--language $Q \subseteq P^{\ast}$, and regular
+relations $R_i \subseteq P^{\ast} \times A_i^{\ast}$, $i < n$, 
+such that (a) for every $\vec{x} \in P$ there is exactly one
+$\vec{y}$ such that $\vec{x}\, R_i\, \vec{y}$ and (b) $L_i$
+is the image of $P$ under $R_i$.}
+%%
+\vplatz
+\exercise
+\index{Finnish}%%
+Finnish has a phenomenon called {\it vowel harmony}.
+There are three kinds of vowels: back vowels ([a], [o], [u],
+written {\tt a}, {\tt o} and {\tt u}, respectively), front vowels
+([\ae], [\o], [y], written {\tt \"a}, {\tt \"o} and {\tt y},
+respectively) and neutral vowels ([e], [i], written {\tt e}
+and {\tt i}).  The principle is this.
+%%
+\begin{quote}
+{\sl Vowel harmony (Finnish).} A word contains not both a
+back and a front harmonic vowel.
+\end{quote}
+%%
+The vowel harmony only goes up to the word boundary. So, it
+is possible to combine two words with different harmony.
+Examples are {\tt osakeyhti\"o} `share holder company'.
+It consists of the back harmonic word {\tt osake} `share'
+and the front harmonic word {\tt yhti\"o} `society'.
+First, give an $\mathsf{PDL}^{\smallsmile}$--definition of
+strings that satisfy Finnish vowel harmony. It follows that
+there is a finite automaton that recognizes this language.
+Construct such an automaton. {\it Hint.} You may need to
+explicitly encode the word boundary.

@@ -1,0 +1,736 @@
+\section{Index Grammars}
+\label{kap4-6}
+%
+%
+%
+Index grammars broaden the concept of CFGs in a very
+special way. They allow to use in addition of the nonterminals a
+sequence of indices; the manipulation of the sequences is however 
+very limited. Therefore, we may consider these grammars alternatively 
+as grammars that contain rule schemata rather than individual rules.
+Let as usual $A$ be our alphabet, $N$ the set of nonterminals (disjoint 
+with $A$). Now add a set $I$ of \textbf{indices}, disjoint to both $A$ 
+and $N$. Furthermore, {\tt \#} shall be a symbol that does not occur in
+$A \cup N \cup I$. An \textbf{index scheme} $\sigma$ has the
+%%%
+\index{index scheme}%%
+%%%
+form
+%%
+\begin{equation}
+A \conc \vec{\alpha} \pf
+    B_0 \conc \vec{\beta}_0  \quad
+    \dotsb \quad
+    B_{n-1} \conc \vec{\beta}_{n-1}
+\end{equation}
+%%
+or alternatively the form
+%%
+\begin{equation}
+A \conc \vec{\alpha} \pf a
+\end{equation}
+%%
+where $\vec{\alpha}, \vec{\beta}_i \in I^{\ast} \cup \{\mbox{\tt\#}\}$ 
+for $i < n$, and $a \in A$. The schemata of the second kind are called
+%%%
+\index{index scheme!terminal}%%
+\index{instantiation}%%
+%%%
+\textbf{terminal schemata}. An \textbf{instantiation of} $\sigma$ is
+a rule
+%%
+\begin{equation}
+A \conc \vec{x}\vec{\alpha} \pf
+    B_0 \conc \vec{y}_0\vec{\beta}_0  \quad
+    \dotsb \quad
+    B_{n-1} \conc \vec{y}_{n-1}\vec{\beta}_{n-1}
+\end{equation}
+%%
+where the following holds.
+%%
+\begin{dingautolist}{192}
+\item If $\vec{\alpha} = \mbox{\tt\#}$ then $\vec{x} = \varepsilon$
+    and $\vec{y}_i = \varepsilon$ for all $i < n$.
+\item If $\vec{\alpha} \neq \mbox{\tt\#}$ then for all
+    $i < n$: $\vec{y}_i = \varepsilon$ or $\vec{y}_i = \vec{x}$.
+\item For all $i < n$: if $\vec{\beta}_i = \mbox{\tt\#}$ then $\vec{y}_i =
+    \varepsilon$.
+\end{dingautolist}
+%%
+For a terminal scheme the following condition holds:
+if $\vec{\alpha} = \mbox{\tt\#}$ then $\vec{x} = \varepsilon$.
+An index scheme simply codes the set of all of its instantiations.
+So we may also call it a \textbf{rule scheme}.
+%%%
+\index{rule scheme}%%
+%%%
+If in a rule scheme $\sigma$ we have $\vec{\alpha} = \mbox{\tt\#}$
+as well as $\vec{\beta}_i = \mbox{\tt\#}$ for all $i < n$ then
+we have the classical case of a context free rule. We therefore 
+call an index scheme \textbf{context free} 
+%%%
+\index{index scheme!context free}%%
+\index{index scheme!linear}%%
+%%%
+if it has this form. We call it \textbf{linear} if 
+$\vec{\beta}_i \neq \mbox{\tt\#}$ for at 
+most one $i < n$. Context free schemata are therefore also
+linear but the converse need not hold. One uses the following
+suggestive notation. $A[\;]$ denotes an $A$ with an arbitrary
+stack; on the other hand, $A$ is short for $A\mbox{\tt\#}$. Notice
+for example the following rule.
+%%
+\begin{equation}
+\mbox{\tt A}[\mbox{\tt i}] \pf \mbox{\tt B}[\;] \quad
+\mbox{\tt A} \quad \mbox{\tt C}[\mbox{\tt ij}]
+\end{equation}
+%%
+This is another form for the scheme
+%%
+\begin{equation}
+\mbox{\tt Ai} \pf \mbox{\tt BA\#Cij}
+\end{equation}
+%%
+which in turn comprises all rules of the following form
+%%
+\begin{equation}
+\mbox{\tt A}\vec{x}\mbox{\tt i} \pf \mbox{\tt B}\vec{x}
+\quad \mbox{\tt A}\mbox{\tt\#}\quad \mbox{\tt C}\vec{x}\mbox{\tt ij}
+\end{equation}
+%%
+\begin{defn}
+%%%
+\index{index grammar}%%
+\index{index grammar!linear}%%
+\index{LIG}%%
+%%%
+We call an \textbf{index grammar} a sextuple
+$G = \auf S, A, N, I, \mbox{\tt\#}, R\zu$ where $A$, $N$, and $I$ are
+pairwise disjoint finite sets not containing $\mbox{\tt\#}$, $S \in N$
+the \textbf{start symbol} and $R$ a finite set of index schemata 
+over $A$, $N$, $I$ and $\mbox{\tt\#}$. $G$ is called \textbf{linear} or a 
+\textbf{LIG} if all its index schemata are linear.
+\end{defn}
+%%
+The notion of a derivation can be formulated over strings as
+well as trees. (To this end one needs $A$, $N$ and $I$ to be
+disjoint. Otherwise the category symbols cannot be uniquely
+reconstructed from the strings.) The easiest is to picture
+an index grammar as a grammar $\auf S, N, A, R\zu$, where in
+contrast to a context free rule set we have put an infinite
+set of rules which is specified by means of schemata, which
+may allow infinitely many instantiations. This allows us to
+transfer many notions to the new type of grammars. For example,
+it is easily seen that for an index grammar there is a
+2--standard form which generates the same language.
+
+The following is an example of an index grammar.
+Let $A := \{ \mbox{\tt a}\}$, $N := \{\mbox{\tt S}, \mbox{\tt T},
+\mbox{\tt U}\}$, $I := \{\mbox{\tt i}, \mbox{\tt j}\}$, and
+%%
+\begin{equation}
+\begin{split}
+\mbox{\tt S}[\;] & \pf \mbox{\tt T}[\mbox{\tt j}] & 
+\qquad\qquad \mbox{\tt T}[\;] & \pf \mbox{\tt T}[\mbox{\tt i}] \\
+\mbox{\tt T}[\mbox{\tt i}] & \pf \mbox{\tt U}[\;] &
+\mbox{\tt U}[\mbox{\tt i}] & \pf \mbox{\tt U}[\; ] \quad
+    \mbox{\tt U}[\;] \\
+\mbox{\tt U}[\mbox{\tt j}] & \pf \mbox{\tt a}
+\end{split}
+\end{equation}
+%%
+This defines the grammar $G$. We have $L(G) = \{\mbox{\tt a}^{2^n}
+: n \in \omega\}$. As an example, look at the following derivation.
+%%
+\begin{equation}
+\begin{array}{l@{\quad}l@{\quad}l}
+\auf \mbox{\tt S}, & \mbox{\tt Tj}     & \mbox{\tt Tji}, \\
+\mbox{\tt Tjii},   & \mbox{\tt Tjiii}, & \mbox{\tt Ujii}, \\
+\mbox{\tt UjiUji}, & \mbox{\tt UjiUjUj}, & \mbox{\tt UjUjUjUj}, \\
+\mbox{\tt aUjUjUj},& \mbox{\tt aaUjUj}, & \mbox{\tt aaaUj}, \\
+\mbox{\tt aaaa}\zu
+\end{array}
+\end{equation}
+%%
+Index grammars are therefore quite strong. Nevertheless, one can
+show that they too can only generate \textbf{PTIME}--languages.
+(For index grammars one can define a variant of the chart--algorithm
+This variant also needs only polynomial time.)
+Of particular interest are the linear index grammars.
+
+Now we turn to the equality between LIGs and TAGs. Let $G$ be an
+LIG; we shall construct a TAG which generates the same constituent
+structures. We shall aim for roughly the same proof as with CFGs. 
+The idea is again to look for nodes $x$ and $y$ with identical 
+label $X\vec{x}$. This however can fail. For on the
+one hand we can expect to find two nodes with identical label from
+$N$, but they may have different index stack. It may happen
+that no such pair of nodes exists. Therefore we shall introduce
+the first simplification. We only allow rules of the following
+form.
+%%
+\begin{subequations}
+\begin{align}
+\label{eq:56a}
+X[i]  & \pf Y_0 \dotsb Y_{j-1}\; Y_j[\;] \; Y_{j+1} \dotsb Y_{n-1} \\
+\label{eq:56b}
+X[\;] & \pf Y_0 \dotsb Y_{j-1}\; Y_j[i] \; Y_{j+1} \dotsb Y_{n-1} \\
+\label{eq:56c}
+X     & \pf Y_0 \dotsb Y_{n-1} \\
+\label{eq:56d}
+X     & \pf a
+\end{align}
+\end{subequations}
+%%
+In other words, we only admit rules that stack or unstack
+a single letter, or which are context free.  Such a grammar
+%%%
+\index{index grammar!simple}%%
+%%%
+we shall call \textbf{simple}. It is clear that we can turn $G$ into
+simple form while keeping the same constituent structures. Then
+we always have the following property. If $x$ is a node with
+label $X\vec{x}$ and if $x$ immediately dominates the node
+$x'$ with label $Y\vec{x}i$ then there exists a node $y' \leq x'$
+with label $V\vec{x}i$ which immediately dominates a node with
+label $W\vec{x}$. At least the stacks are now identical, but
+we need not have $Y = V$. To get this we must do a second step.
+We put $N' := N^2 \times \{o,e,a\}$ (but write 
+$\auf A, B\zu^x$ in place of $\auf A, B, x\zu$). The superscript 
+keeps score of the fact whether at this point we stack an index 
+($a$), we unstack a letter ($e$) or we do nothing ($o$). The index
+alphabet is $I' := N^2 \times I$. The rules above are now reformed
+as follows. (For the sake of perspicuity we assume
+that $n = 3$ and $j = 1$.) For a rule of the form \eqref{eq:56b}
+we add all rules of the form
+%%
+\begin{equation}
+\auf X, X'\zu^a \pf \auf Y_0, Y_0'\zu^{a/o} \;
+    \auf Y_1, Y_1'\zu^{a/o}[\auf X,X',i\zu]
+    \; \auf Y_2,Y_2'\zu^{a/o} 
+\end{equation}
+%%
+So we stack in addition to the index $i$ also the information about
+the label with which we have started. The superscript $a$ is
+obligatory for $\auf X, X'\zu$! From the rules of the form 
+\eqref{eq:56a} we make rules of the following form.
+%%
+\begin{equation}
+\auf X,X'\zu^{a/o}[\auf W,Y_1',i\zu] \pf
+    \auf Y_0, Y_0'\zu^{a/o} \quad
+    \auf W,Y_1'\zu^e \quad
+    \auf Y_2, Y_2'\zu^{a/o} 
+\end{equation}
+    %%
+However, we shall also add these rules:
+%%
+\begin{equation}
+\label{eq:s}
+\auf Y_1, Y_1'\zu^e \pf \auf Y_1',Z\zu^{a/o}
+\end{equation}
+%%
+for all $Y_1, Y_1', Z \in N$.
+%%
+The rules of the form \eqref{eq:56c} are replaced thus.
+%%
+\begin{equation}
+\auf X, X'\zu^{o} \pf \auf Y_0, Y_0'\zu^{a/o} \quad
+    \auf Y_1, Y_1'\zu^{a/o}\quad \auf Y_2,Y_2'\zu^{a/o}
+\end{equation}
+%%
+Finally, the rules of the form \eqref{eq:56d} are replaced by these rules.
+%%
+\begin{equation}
+\auf X,X'\zu^o \pf a 
+\end{equation}
+%%
+We call this grammar $G^{\spadesuit}$. We shall at first see
+why $G$ and $G^{\spadesuit}$ generate the same constituent structures.
+To this end, let us be given a $G^{\spadesuit}$--derivation.
+We then get a $G$--derivation as follows.  Every symbol of the form
+$\auf X,X'\zu^{a/e/o}$ is replaced by $X$, every stack symbol
+$\auf X,X',i\zu$ by $i$. Subsequently, the rules of type \eqref{eq:s} 
+are skipped. This yields a $G$--derivation, as is easily checked.
+It gives the same constituent structure. Conversely, let a
+$G$--derivation be given with associated ordered labelled tree
+$\GB$. Then going from bottom to top we do the following. Suppose
+a rule of the form \eqref{eq:56b} has been applied to a node $x$ and
+that $i$ has been stacked. Then look for the highest node
+$y < x$ where the index $i$ has been unstacked. Let $y$ have
+the label $B$, $x$ the label $A$. Then replace $A$ by
+$\auf A, B\zu^a$ and the index $i$ on all nodes up to
+$y$ by $\auf A, B, i\zu$. In between  $x$ and $y$ we insert a
+node $y^{\ast}$ with label $\auf A, B\zu^e$. $y^{\ast}$ has
+$y$ as its only daughter. $y$ keeps at first the label $B$. If
+however no symbol has been stacked at $x$ then exchange the
+label $A$ by $\auf A, A'\zu^o$, where $A'$ is arbitrary. If one
+is at the bottom of the tree, one has a $G^{\spadesuit}$--tree.
+Again the constituent structures have been kept, since only
+unary rules have been inserted.
+
+Now the following holds.  If at $x$ the index $\auf A, B, i\zu$
+has been stacked then $x$ has the label $\auf A, B\zu^a$ and there
+is a node $y$ below $x$ at which this index is again removed.
+It has the label $\auf A, B\zu^e$. We say that $y$ is
+\textbf{associated to} $x$. Now define as in the case of CFLs
+centre trees as trees whose associated string
+is a terminal string and in which no pair of associated
+nodes exist. It is easy to see that in such trees no symbol
+is ever put on the stack. No node carries a stack symbol and
+therefore there are only finitely many such trees. Now we
+define the adjunction trees. These are trees in which the
+root has label $\auf A, B\zu^a$ exactly one leaf has a nonterminal
+label and this is $\auf A, B\zu^e$. Further, in the interior
+of the tree no pair of associated nodes shall exist. Again it
+is clear that there are only finitely many such trees. They
+form the basic set of our adjunction trees. However, we do
+the following.  The labels $\auf X, X'\zu^o$ we replace by
+$\auf X,X'\zu$, the labels $\auf X,X'\zu^a$ and $\auf X,X'\zu^e$
+by $\auf X,X'\zu^{\triangledown}$. (Root and associated node
+get an adjunction prohibition.) Now the proof is as in the
+context free case.
+
+Now let conversely a TAG $G = \auf\BC, N, A, \BA\zu$ be given. 
+We shall construct a LIG which generates the same
+constituent structures. To this end we shall assume that all
+trees from $\BC$ and $\BA$ are based on pairwise disjoint
+sets of nodes. Let $K$ be the union of all sets of nodes. This is
+our set of nonterminals. The set $\BA$ is our set of
+indices. Now we formulate the rules.  Let $i \pf j_0 \quad j_1 %
+\dotsb j_{n-1}$ be a local subtree of a tree. 
+\\
+(A) $i$ is not central. Then add
+%%
+\begin{equation}
+i \pf j_0\quad j_1 \dotsb j_{n-1}
+\end{equation}
+%%
+(B) Let $i$ be root of $\GT$ and $j_k$ central
+(and therefore not a distinguished leaf). Then add
+%%
+\begin{equation}
+i[\;] \pf j_0 \quad j_{k-1}\quad  j_k[\GT] \quad j_{k+1}
+\dotsb j_{n-1}
+\end{equation}
+%%
+(C) Let $j_k$ be a distinguished leaf of $\GT$.
+Then add
+%%
+\begin{equation}
+i[\GT] \pf j_0 \quad j_{k-1}\quad j_k[\;]\quad j_{k+1}%
+\dotsb j_{n-1}
+\end{equation}
+%%
+(D) Let $i$ be central in $\GT$, but not a root
+and $j_k$ central but not a distinguished leaf.
+Then let
+%%
+\begin{equation}
+i[\;] \pf j_0 \dotsb j_{k-1} \quad j_k[\;] \quad j_{k+1}\dotsb
+    j_{n-1}
+\end{equation}
+%%
+be a rule.  Nothing else shall be a rule. This defines the grammar
+$G^I$. (This grammar may have start trees over distinct start
+symbols. This can be remedied.)
+Now we claim that this grammar generates the same constituent
+structures over $A$. This is done by induction over the length
+of the derivation. Let $\GT$ be a centre tree, say
+$\GT = \auf B, <, \sqsubset, \ell\zu$.  Then let
+$\GT^I := \auf B, <, \sqsubset, \ell^I\zu$, where
+$\ell^I(i) := i$ if $i$ is nonterminal and $\ell^I(i) := \ell(i)$
+otherwise. One establishes easily that this tree is derivable.
+Now let $\GT = \auf B, <, \sqsubset, \ell\zu$ and
+$\GT^I = \auf B, <, \sqsubset, \ell^I\zu$ already be
+constructed; let $\GU = \auf C, <', \sqsubset', \ell'\zu$
+result from $\GT$ by adjoining a tree $\GB$ to a node
+$x$. By making $x$ into the root of an adjoined tree
+we get $B \subseteq C$, $<' \cap B^2 = \; <$, $\sqsubset' \cap B^2 =
+\; \sqsubset$ and $\ell' \restriction B = \ell$. Now
+$\GU^I = \auf C, <', \sqsubset', \ell'^I\zu$.
+Further, there is an isomorphism between the  adjunction tree
+$\GB$ and the local subtree induced on $C \cup \{x\}$. Let
+$\pi \colon C \cup \{x\} \pf B$ be this isomorphism.
+Put $\ell'^I(y) := \ell^I(y)$ if $y \in B - C$.
+Put $\ell'^I(y) := \pi(y)$ if $\pi(y)$ is not central;
+and put $\ell'^I(y) := \ell'^I(x) := \ell^I(x)$ if
+$y$ is a distinguished leaf. Finally, assume
+$\ell^I(x) = X\vec{x}$, where $X$ is a nonterminal symbol
+and $\vec{x} \in I^{\ast}$. If $y$ is central but not
+root or leaf then put
+%%
+\begin{equation}
+\ell'^I(y) := \pi(y)\vec{x}\GB
+\end{equation}
+%%
+Now it is easily checked that the so--defined tree
+is derivable in $G^I$. We have to show likewise
+that if $\GU$ is derivable in $G^I$ there exists a tree
+$\GU^A$ with $(\GU^A)^I \cong \GU$ which is derivable in $G$.
+To this end we use the method of disembedding. One looks
+for nodes $x$ and $y$ such that they have the same stack,
+$x > y$, there is no element between the two that has
+the same stack. Further, there shall be no such pair in
+$\low{x} - (\low{y} \cup \{x\})$. It is easily seen that 
+this tree is isomorphic to an adjunction tree. We disembed 
+this tree and gets a tree which is strictly smaller. (Of 
+course, the existence of such a tree must still be shown. 
+This is done as in the context free case. Choose
+$x$ of minimal height such that such there exists a $y < x$
+with identical stack. Subsequently, choose $y$ maximal with
+this property. In $\low{x} - (\low{y} \cup \{x\})$ there can
+then be no pair $x'$, $y'$ of nodes with identical stack such
+that $y' < x'$. Otherwise, $x$ would not be minimal.) We
+summarize.
+%%
+\begin{thm}
+A set of constituent structures is generated by a linear index
+grammar iff it is generated by a TAG.
+\end{thm}
+%%
+We also say that these types of grammars are equivalent in
+constituent analysis.
+
+A rule is called \textbf{right linear} if the index is only passed
+on to the right hand daughter. So, the right hand rule is
+right linear, the left hand rule is not:
+%%
+\begin{equation}
+\mbox{\tt A}[\;] \pf \mbox{\tt B}\quad \mbox{\tt C}[\mbox{\tt i}]
+\quad \mbox{\tt B}, \qquad \mbox{\tt A}[\; ] \pf \mbox{\tt B}\quad
+\mbox{\tt C}\quad \mbox{\tt B}[\mbox{\tt i}]
+\end{equation}
+%%
+\index{index grammar!right linear}%%
+%%%
+An index grammar is called \textbf{right linear} if all of its
+rules are right linear. Hence it is automatically linear.
+The following is from 
+\cite{michaelis_wartena:fg97,michaelis_wartena:csli-ligs}. 
+%%
+\begin{thm}[Michaelis \& Wartena]
+%%%
+\index{Michaelis, Jens}%%
+\index{Wartena, Christian}%%%
+%%%
+A language is generated by a right linear index grammar iff
+it is context free.
+\end{thm}
+%%
+\proofbeg
+Let $G$ be right linear, $X \in N$. Define $H_X$ as follows. The
+alphabet of nonterminals has the form $T := \{X^{\diamond} :
+X \in N\}$. The alphabet of terminals is the one of $G$, likewise
+the alphabet of indices. The start symbol is $X$. Now for every
+rule
+%%
+\begin{equation}
+A[\;] \pf B_0 \dotsb B_{n-1}\quad B_n[i]
+\end{equation}
+%%
+we add the rule
+%%
+\begin{equation}
+A^{\diamond}[\;] \pf A \quad B^{\diamond}[i]
+\end{equation}
+%%
+This grammar is right regular and generates a CFL (see the 
+exercises). So there exists a CFG
+$L_X := \auf S_X^L, N_X^L, N, R_X^L\zu$ which generates $L(H_X)$.
+(Here $N$ is the alphabet of nonterminals of $G$ but the terminal
+alphabet of $L_X$.) We assume that $N^X_L$ is disjoint to our
+previous alphabets. We put $N' := \bigcup N_X^L \cup N$ as well as
+$R' := \bigcup R_X^L \cup R \cup R^-$ where $R$ is the set of
+context free rules of $G$ and $R^-$ the set of rules
+$A[\;] \pf B_0 \dotsb B_{n-1}$ such that
+$A[\;] \pf B_0 \dotsb B_{n-1}\quad B_n[i] \in R$.
+Finally, let $G' := \auf S_L, N', A, R'\zu$.
+$G'$ is certainly context free. It remains to show that
+$L(G') = L(G)$. To this end let $\vec{x} \in L(G)$. There exists
+a tree $\GB$ with associated string $\vec{x}$ which is derived
+from $G$. By induction over the height of this tree one shows that
+$\vec{x} \in L(G')$. The inductive hypothesis is this:
+{\it For every $G$--tree $\GB$ with associated string $\vec{x}$
+there exists a $G'$--tree $\GB'$ with associated string
+$\vec{x}$; and if the root of $\GB$ carries the label
+$X\vec{x}$ then the root of $\GB'$ carries the label $X$.} If
+$\GB$ contains no stack symbols, this claim is certainly true.
+Simply take $\GB' := \GB$. Further, the claim is easy to see if
+the root has been expanded with a context free rule.
+Now let this not be the case; let the tree have a root with label
+$U$. Let $P$ be the set of right hand nodes of $\GB$. For
+every $x \in P$ let $B(x)$ be that tree which contains all nodes
+which are below $x$ but not below any $y \in P$ with $y < x$. It
+is easy to show that these sets form a partition of $\GB$.
+Let $u \prec x$, $u \not\in P$. By induction hypothesis,
+the tree dominated by $u$ can be restructured into a tree
+$\GT_u$ which has the same associated string and the same
+root label and which is generated by $G'$. The local tree of
+$x$ in $B(x)$ is therefore an instance of a rule of $R^-$. We
+denote the tree obtained from $x$ in such a way by $\GB'_x$.
+$\GB'_x$ is a $G'$--tree. Furthermore:  if $y < x$, $y \in P$,
+and if $u < x$ then $u \sqsubset y$. Therefore we have
+that $P = \{x_i : i < n\}$ is an enumeration with
+$x_i > x_{i+1}$ for all $i < n-1$. Let $A_i$ be the root label
+of $x_i$ in $\GB'_{x_i}$. The string $\prod_{i < n} A_i$ is a
+string of $H_U$. Therefore it is generated by $L_U$. Hence it
+is also generated by $G'$. So, there exists a tree $\GC$ associated
+to this string. Let the leaves of this tree be exactly the $x_i$ and
+let $x_i$ have the label $A_i$. Then we insert $\GB'_{x_i}$ at
+the place of $x_i$ for all $i < n$. This defines $\GD$.
+$\GD$ is a $G'$--tree with associated string $\vec{x}$. The
+converse inclusion is left to the reader.
+\proofend
+
+We have already introduced Combinatory Categorial Grammars
+(CCGs) in Section~\ref{kap3}.\ref{kap3-2}. The concept of these grammars
+was very general. In the literature, the term CCG is usually
+fixed --- following Mark Steedman --- to a particular variant
+where only those combinators may be added that perform
+function application and generalized function composition.
+In order to harmonize the notation, we revise it as follows.
+%%
+\begin{equation}
+%%%
+\mbox{\mtt $\alpha$\fslash$\beta$} 
+	\text{ replaces }\mbox{\mtt $\alpha${\tf}$\beta$}, 
+\mbox{\mtt $\alpha$\bslash$\beta$} 
+	\text{ replaces }\mbox{\mtt $\beta$\tb$\alpha$}
+\end{equation}
+%%
+We take $p_i$ as a variable for elements from $\{\mbox{\mtt\symbol{43}}, 
+\mbox{\mtt\symbol{45}}\}$. A \textbf{category} is a well formed 
+string over $\{B, \mbox{\tt (}, \mbox{\tt )}, \mbox{\mtt\fslash}, 
+\mbox{\mtt\bslash}\}$. We agree on {\it obligatory\/} left associative 
+bracketing. That means that the brackets that we do not need to 
+write assuming left associativity actually are {\it not\/} present 
+in the string. Hence {\mtt a{\fslash}b{\bslash}c} is a category, as 
+is {\mtt a{\fslash}(b{\bslash}c)}. However, 
+{\mtt ((a{\fslash}b){\bslash}c)} and {\mtt (a{\fslash}(b{\bslash}c))}
+%%%
+\index{block}%%
+%%%
+are not. A \textbf{block} is a sequence of the form 
+{\mtt {\fslash}$a$} or {\mtt {\bslash}$a$}, $a$ basic, or of 
+the form {\mtt {\fslash}($\beta$)} or {\mtt {\bslash}($\beta$)},
+where $\beta$ is a complex category symbol. (Often we ignore 
+the details of the enclosing brackets.)
+%%%
+\index{p--category}%%
+%%
+A \textbf{p--category} is a sequence of blocks, seen as a string.
+With this a category is simply a string of the form
+$\alpha \conc \Delta$ where $\Delta$ is a  p--category.
+If $\Delta$ and $\Delta'$ are p--categories, so is
+$\Delta \conc \Delta'$. For a category $\alpha$ we define
+by induction the head, $\alpha$, $K(\alpha)$, as follows.
+%%
+\begin{dingautolist}{192}
+%%%
+\index{$K(\alpha)$}%%%
+%%%
+\item $K(b) := b$.
+\item $K(\mbox{\mtt $\alpha${\fslash}$\beta$}) := 
+K(\mbox{\mtt $\alpha${\bslash}$\beta$}) := K(\alpha)$.
+\end{dingautolist}
+%%
+\begin{lem}
+Every category $\alpha$ can be uniquely segmented as
+$\alpha = K(\alpha)\conc\Delta$ where $\Delta$ is a
+p--category.
+\end{lem}
+%%
+If we regard the sequence simply as a string we can use 
+$\conc$ as the concatenation symbol of blocks
+as well as of sequences of blocks. We admit the following
+operations. (If $\beta$ is basic, omit the additional 
+enclosing brackets.)
+%%
+\begin{align}
+\mbox{\mtt $\alpha${\fslash}($\beta$)} \circ_1 \beta & := \alpha \\
+\beta        \circ_2 \mbox{\mtt $\alpha${\bslash}($\beta$)} & := \alpha \\
+\mbox{\mtt $\alpha${\fslash}($\beta$)} \circ_3^n \beta \conc \Delta^n &
+    := \alpha \conc \Delta^n \\
+\beta \conc \Delta^n \circ_4^n \mbox{\mtt $\alpha${\bslash}($\beta$)} &
+    := \alpha \conc \Delta^n
+\end{align}
+%%
+Here $\Delta^n$ is a variable for p--categories consisting of
+$n$ blocks. In addition it is possible to restrict the choice
+of heads for $\alpha$ and $\beta$. This means that we define
+operations $\circ^{F,A,n}_i$ in such a way that
+%%
+\begin{equation}
+\alpha \circ^{L,R,n}_i \beta :=
+\begin{cases}
+    \alpha \circ^n \beta & \text{ if $K(\alpha) \in L,
+        K(\beta) \in R$,} \\
+    \star & \text{ otherwise.}
+    \end{cases}
+\end{equation}
+%%
+This means that we have to step back from our ideal to let
+the categories be solely determined by the combinators.
+%%
+\begin{defn}
+A \textbf{combinatory categorial grammar} (or \textbf{CCG}) 
+%%%
+\index{combinatory categorial grammar}%%
+\index{CCG (see combinatory categorial grammar)}%%
+%%%
+is a categorial grammar which uses finitely many operations
+from 
+%%%
+\begin{equation}
+\{\circ_1^{L,R}, \circ_2^{L,R} : L, R \subseteq B\}
+\cup \{\circ_3^{L,R,n}, \circ^{L,R,n}_4 : n \in \omega,
+L, R \subseteq B\}
+\end{equation}
+\end{defn}
+%%
+Notice by the way that $\circ_1 = \circ_3^0$ and
+$\circ_2 = \circ_4^n$. This simplifies the calculations.
+%%
+\begin{lem}
+\label{lem:ccg}
+Let $G$ be a CCG over $A$ and $M$ the set of categories which are
+subcategories of some $\alpha \in \zeta(a)$, $a \in A$. Then the
+following holds. If $\vec{x}$ is a string of category $\alpha$ in
+$G$ then $\alpha = \beta \conc \Delta$ where $\alpha \in M$ and
+$\Delta$ is a  p--category over $M$.
+\end{lem}
+%%
+The proof is by induction over the length of $\vec{x}$ and is left
+as an exercise.
+%%
+\begin{thm}
+For every CCG $G$ there exists a linear index grammar $H$
+which generates the same trees.
+\end{thm}
+%%
+\proofbeg
+Let $G$ be given. In particular, $G$ associates with every letter
+$a \in A$ a finite set $\zeta(a)$ of categories. We consider the
+set $M$ of subterms of categories from $\bigcup \auf \zeta(a) :
+a \in A\zu$. This is a finite set. We put $N := M$ and $I := M$.
+By Lemma~\ref{lem:ccg}, categories can be written as pairs
+$\alpha[\Delta]$ where $\alpha \in N$ and $\Delta$ is a
+p--category over $I$. Further, there exist finitely many
+operations which we write as rules. Let for example $\circ_1^{L,R}$
+be an operation. This means that we have rules of the form
+%%
+\begin{subequations}
+%\label{eq:klammern}
+\begin{align}
+\alpha & \pf \mbox{\mtt $\alpha${\fslash}$a$} \quad a \\
+\alpha & \pf \mbox{\mtt $\alpha${\fslash}($\beta$)} \quad \beta 
+\end{align}
+\end{subequations}
+%%
+where $K(\beta) \in L$ and $K(\alpha) \in R$, and $\beta$ not 
+basic. We write this into linear index rules. Notice that in 
+any case $\beta \in M$ because of Lemma~\ref{lem:ccg}. Furthermore, 
+we must have $\alpha \in M^+$. So we write down all the rules of 
+the form
+%%
+\begin{equation}
+\label{eq:56dagger}
+\alpha \pf \delta[\Delta] \quad \beta
+\end{equation}
+%%
+where $\delta[\Delta] = \mbox{\mtt $\alpha${\fslash}$\beta$}$ 
+for certain $\alpha, \Delta \in M^{\ast}$ and $\delta, \beta \in M$.
+We can group these into finitely many rule schemata.
+Simply fix $\beta$ where $K(\beta) \in R$. Let $\BB$ be
+the set of all sequences $\auf \gamma_i : i < p\zu \in M^{\ast}$
+whose concatenation is \mbox{\mtt {\fslash}$\beta$}. $\BB$ is 
+finite.  Now put for \eqref{eq:56dagger} all rules of the form
+%%
+\begin{equation}
+\label{eq:56ddagger}
+\alpha'[]  \pf \alpha'[\Delta] \quad \beta
+\end{equation}
+%%
+where $\alpha' \in M$ is arbitrary with $K(\alpha) \in L$ and
+$\Delta \in \BB$. Now one can see easily that every instance of
+\eqref{eq:56dagger} is an instance of \eqref{eq:56ddagger} and 
+conversely.
+
+Analogously for the rules of the following form.
+%%
+\begin{equation}
+\alpha \pf \beta \quad \mbox{\mtt $\alpha${\bslash}$\beta$} 
+\end{equation}
+%%
+In a similar way we obtain from the operations
+$\circ_3^{L,R,n}$ rules of the form
+%%
+\begin{equation}
+\label{eq:56star}
+    \alpha \conc \Delta^n \pf \mbox{\mtt $\alpha${\fslash}$\beta$} \quad
+    \beta \conc \Delta^n
+\end{equation}
+%%
+where $K(\alpha) \in L$ and $K(\beta) \in R$. Now it turns out
+that, because of Lemma~\ref{lem:ccg} $\Delta^n \in M^n$ and $\beta
+\in M$. Only $\alpha$ may again be arbitrarily large. Nevertheless
+we have $\alpha \in M^+$, because of Lemma~\ref{lem:ccg}.
+Therefore, \eqref{eq:56star} only corresponds to finitely many index
+schemata. \proofend
+
+The converse does not hold: for the trees which are generated by an
+LIG  need not be 3--branching. However, the two grammar types are
+weakly equivalent.
+
+{\it Notes on this section.} There is a descriptive characterization
+of indexed languages akin to the results of Chapter~\ref{kap5}
+which is presented in \cite{langholm:indexed}. 
+%%%
+\index{Langholm, Tore}%%%
+%%%
+The idea there is to replace the index by a so--called contingency 
+function, which is a function on the nodes of the constituent structure 
+that codes the adjunction history.
+%%
+%\vplatz
+%\exercise
+%%%%
+%\index{index grammar!right regular}%%
+%%%%
+%A linear index grammar is called {\it right regular} if
+%rules either have the form $X \pf a Y[i]$ the form
+%$X[i] \pf a Y$ or the form $x \pf aY$, where $X$ and $Y$ are
+%nonterminals. Show that $L$ is context free iff
+%it is the language of a right regular linear index grammar.
+%{\it Hint.} Model the actions of a pushdown automaton
+%with the help of right linear rules.
+%%
+\vplatz
+\exercise
+Show the following claim. {\it For every index
+grammar $G$ there is an index grammar $H$ in 2--standard form such
+that $L(G) = L(H)$.  If $G$ is linear (context free) $H$ can be
+chosen linear (context free) as well.}
+%%
+\vplatz
+\exercise
+Prove the Lemma~\ref{lem:ccg}.
+%%
+\vplatz
+\exercise
+Write an index grammar that generates the sentences of predicate
+logic. (See Section~\ref{kap2}.\ref{kap2-6} for a definition.)
+%%
+\vplatz \exercise Let {\it NB\/} be the set of formulae of predicate 
+logic with {\mtt\symbol{61}} and {\mtt\symbol{4}} in which every 
+quantifier binds at least one occurrence of a variable. Show that
+there is no index grammar that generates {\it NB}. {\it Hint.} It
+is useful to concentrate on formulae of the form $QM$, where $Q$
+is a sequence of quantifiers and $M$ a formula without quantifiers
+(but containing any number of conjuncts). Show that in order to
+generate these formulae from {\it NB}, a branching rule is needed.
+Essentially, looking top down, the index stack has to memorize
+which variables have been abstracted over, and the moment that
+there is a branching rule, the stack is passed on to both
+daughters. However, it is not required that the left and right branch 
+contain the same variables.

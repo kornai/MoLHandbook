@@ -1,0 +1,935 @@
+\section{Compositionality and Constituent Structure}
+\label{kap4-7}
+%
+%
+%
+In this section we return to the discussion of compositionality,
+which we started in Chapter~\ref{kap3}. Our concern is how
+constituent structure and compositionality constrain each other.
+In good cases this shows that the semantics of a language does 
+not allow a certain syntactic analysis. This will allow to give 
+substance to the distinction between weak and strong generative 
+capacity of grammar types.
+
+Recall once again Leibniz' Principle. 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+It is defined on the basis 
+of constituent substitution and truth equivalence. However, 
+constituent substitution is highly problematic in itself, for it 
+hardly ever is string substitution. If we do string substitution 
+of {\tt fast} by {\tt good} in \eqref{ex:561}, we get \eqref{ex:562}
+and not the correct \eqref{ex:563}.
+%%%
+\begin{align}
+\label{ex:561} & \mbox{\tt Simon is faster than Paul.} \\
+\label{ex:562} & ^{\ast}\mbox{\tt Simon is gooder than Paul.} \\
+\label{ex:563} & \mbox{\tt Simon is better than Paul.} 
+\end{align}
+%%
+Notice that substitution in $\lambda$--calculus and predicate logic 
+also is not string substitution but something more complex. (This  
+is true even when variables are considered simple entities.)
+What makes matters even more difficult in natural languages is the fact 
+that there seems to be no uniform algorithm to perform such substitution. 
+Another, related problem is that of determining occurrences. For 
+example, does {\tt cater} occur as a subexpression in the word 
+{\tt caterpillar}, 
+{\tt berry} as a subexpression of {\tt cranberry}? What about {\tt kick} 
+in {\tt kick the bucket}? Worse still, does {\tt tack} occur as a
+subexpression of {\tt stack}, {\tt rye} as a subexpression of {\tt
+rice}? Obviously, no one would say that {\tt tack} occurs in {\tt
+stack}, and that by Leibniz' Principle its meaning is distinct from 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+{\tt needle} since there is no word {\tt sneedle}. Such an argument 
+is absurd. Likewise, in the formula $\mbox{\tt (p0}\und\mbox{\tt p01)}$, 
+the variable {\tt p} does not occur, even though the string {\tt p} 
+is a substring of the formula as a string.
+
+To be able to make progress on these questions we have to resort to 
+the distinction between language and grammar. As the reader will 
+see in the exercises, there is a tight connection between the choice 
+of constituents and the meanings these constituents can have. If we 
+fix the possible constituents and their meanings this eliminates some 
+but not all choices.  However it does settle the question of identity 
+in meaning and can then lead to a detection of subconstituents. For if 
+two given expressions have the same meaning we can conclude that they 
+can be substituted for each other without change in the truth value in 
+any given sentence on condition that they also have 
+the same category. (Just an aside: sometimes substitution can be 
+blocked by the exponents so that substitution is impossible even when 
+the meanings and the category are the same. These facts are however 
+generally ignored. See below for further remarks.) So, Leibniz' 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+Principle does tell us something about which substitutions are 
+legitimate, and which occurrences of substrings 
+are actually occurrences of a given expression. If {\tt sneedle} 
+does not exist we can safely conclude that {\tt tack} has no proper 
+occurrence in {\tt stack} if substitution is simply string substitution. 
+Moreover, Leibniz' Principle also says that if two expressions are 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+intersubstitutable everywhere without changing the truth value, 
+then they have the same meaning.  
+%(This actually means that there 
+%might exist languages that do not satisfy it.)
+%%%
+\begin{defn}
+%%%
+\index{occurrence}%%
+\index{replacement}%%
+%%%
+Let $\Gs$ be a structure term with a single free variable, $x$, and $\Gu$ 
+a structure term unfolding to $\tau$. If $[\Gu/x]\Gs$ unfolds to 
+$\sigma$ we say that the sign $\tau$ \textbf{occurs in $\sigma$ 
+under the analyses $\Gs$ and $\Gu$}. Suppose now that $\Gu'$ is a structure 
+term unfolding to $\tau'$, and that $[\Gu'/x]\Gs$ is definite and unfolds to 
+$\sigma'$. Then we say that $\sigma'$ \textbf{results from} $\sigma$ 
+\textbf{by replacing the occurrence of $\tau$ by $\tau'$ under the 
+analyses $\Gs$, $\Gu$ and $\Gu'$}.
+\end{defn}
+%%
+This definition is complicated since a given sign may have different
+structure terms, and before we can define the substitution operation
+on a sign we must fix a structure term for it. This is particularly 
+apparent when we want to define simultaneous substitution. Now, in 
+ordinary parlance one does not usually mention the structure 
+term. And substitution is typically defined not on signs but on exponents
+(which are called \textbf{expressions}). This, however, is dangerous
+and the reason for much confusion. For example, we have proved
+in Section~\ref{kap3}.\ref{kap3-1} that almost every recursively 
+enumerable sign system has a compositional grammar. The proof used 
+rather tricky functions on the exponents. Consequently, there is no 
+guarantee that if $\vec{y}$ is the exponent of $\tau$ and $\vec{x}$ the
+exponent of $\sigma$ there is anything in $\vec{x}$ that resembles
+$\vec{y}$. Contrast this with CFGs, where a
+subexpression is actually also a substring. To see the dangers
+of this we discuss the theory of compositionality of
+\cite{hodges:compositionality}. Hodges 
+%%%
+\index{Hodges, Wilfrid}%%
+%%%
+discusses in passim the following principle, which he attributes to 
+Tarski 
+%%%
+\index{Tarski, Alfred}%%%
+%%%
+(from \cite{tarski:truth}). The original formulation in 
+\shortcite{hodges:compositionality} was flawed. The correct 
+version according to Hodges (p.c.) is this.
+%%%
+\begin{quote}
+%%%
+\index{Tarski's Principle}%%%
+%%%
+{\sl Tarski's Principle.} If there is a $\mu$--meaningful structure
+    term $[\Gs/x]\Gu$ unequal to $\Gu$ and $[\Gs'/x]\Gu$ also is
+    a $\mu$--meaningful structure term with $[\Gs'/x]\Gu \sim_{\mu}
+    [\Gs/x]\Gu$ then $\Gs \sim_{\mu} \Gs'$.
+\end{quote}
+%%
+Notice that the typed $\lambda$--calculus satisfies this condition.
+Hodges dismisses Tarski's Principle on the following grounds.
+%%
+\begin{align}
+\label{ex:569} & \mbox{\tt The beast ate the meat.} \\
+\label{ex:5610} & \mbox{\tt The beast devoured the meat.} \\
+\label{ex:5611} & \mbox{\tt The beast ate.} \\
+\label{ex:5612} & ^{\ast}\mbox{\tt The beast devoured.} 
+\end{align}
+%%
+Substituting {\tt the beast ate} by {\tt the beast devoured} in
+\eqref{ex:569} yields a meaningful sentence, but it does not
+with \eqref{ex:5611}. (As an aside: we consider the appearance 
+of the upper case letter as well as the period as the result of 
+adding a sign that turns the proposition into an assertion. Hence 
+the substitution is performed on the string beginning with a lower 
+case {\tt t}.) Thus, substitutability in one sentence does not 
+imply substitutability in another, so the argument goes. The 
+problem with this argument is that it assumes that we can 
+substitute {\tt the beast ate} for {\tt the beast devoured}. 
+Moreover, it assumes that this is the effect of replacing a 
+structure term $\Gu$ by $\Gu'$ in some structure term for 
+\eqref{ex:569}.  Thirdly, it assumes that if we perform the same 
+substitution in a structure term for \eqref{ex:5611} we get 
+\eqref{ex:5612}. Unfortunately, none of these assumptions is justified. 
+(The pathological examples of Section~\ref{kap3}.\ref{kap3-1} should suffice 
+to destroy this illusion.) What we need is a strengthening of the 
+conditions concerning admissible operations on exponents. In the 
+example sentence, the substituted strings are actually nonconstituents, 
+so even under standard assumptions they do not constitute 
+counterexamples. We can try a different substitution, for example 
+replacing {\tt the meat} by $\varepsilon$. This is a constituent 
+substitution under the ordinary analysis. But this does not save 
+the argument, for we do not know which grammar underlies the examples. 
+It is not clear that Tarski's Principle is a good principle. But the 
+argument against it is fallacious. 
+
+Obviously, what is needed is a restriction on the syntactic
+operations. In this book, we basically present two approaches. 
+One is based on polynomials (noncombinatorial LMGs), the other 
+on $\lambda$--terms for strings. In both cases the idea is that 
+the functions should not destroy any material (ideally, each rule 
+should {\it add\/} something).  In this way the notion of composition 
+does justice to the original meaning of the word. (Compositionality 
+derives from Latin \textsf{compositi\={o}}`the putting together'.) 
+Thus, every derived string is the result of applying some polynomial 
+applied to certain vectors, and this polynomial determines the structure
+as well as --- indirectly  --- the meaning and the category. 
+Both approaches have a few abstract features in common. For example, 
+that the application of a rule is progressive with respect to some 
+progress measurse. (For LMGs this measure is the combined length 
+of the parts of the string vector.)
+%%
+\begin{defn}
+%%%
+\index{progress measure}%%%
+\index{sign grammar!progressive}%%%
+%%%
+A \textbf{progress measure} is a  function $\mu : E \pf \omega$.
+A function $f : E^n \pf E$ is \textbf{progressive with respect to} 
+$\mu$ if 
+\begin{equation}
+\mu(f(\vec{e})) > \max \{\mu(e_i) : i < n\}
+\end{equation}
+%%%
+$f$ is \textbf{strictly progressive} if 
+%%%
+\index{sign grammar!strictly progressive}%%%
+%%%
+\begin{equation}
+\mu(f(\vec{e})) > \sum_{i < n} \mu(e_i)
+\end{equation}
+%%% 
+A sign grammar is (\textbf{strictly}) \textbf{progressive with respect 
+to} $\mu$ if for all modes $f$, $f^{\varepsilon}$ is (strictly) 
+progressive.
+\end{defn}
+%%
+For example, a CFG is progressive with respect to length if it has 
+no unary rules, and no empty productions (and then it is also strictly 
+progressive). Let $\mu$ be a progress measure, $\GA$ a progressive 
+grammar generating $\Sigma$. Then a given exponent $e$ can be derived 
+with a term that has depth at most $\mu(e)$. This means that its 
+length is $\leq \Omega_{\intercal}^{\mu(e)}$, where $\Omega_{\intercal} := 
+\max \{\Omega(f) : f \in F\}$. The number of such terms is 
+$\leq |F|^{\Omega_{\intercal}^{\mu(e)}}$, so it is doubly exponential in $\mu(e)$! 
+If $\GA$ is strictly progressive, the length of the structure term 
+is $\leq \mu(e)$, so we have at most $|F|^{\mu(e)}$ many. Now, 
+finally, suppose that the unfolding of a term is at most 
+exponential in its length, then we can compute for strictly 
+progressive grammars in time $O(2^{c\mu(e)})$ whether $e$ is 
+in $\pi_0[\Sigma]$.
+%%
+\begin{thm}
+Suppose that $\GA$ is strictly progressive with respect to the 
+pro\-gress measure $\mu$. Assume that computing the unfolding of a 
+term can be done in time exponential in the length. Then for every $e$, 
+`$e \in \pi_0[\Sigma]$' can be solved in time $O(c^{\mu(e)})$ 
+for some $c > 0$. If $\GA$ is only progressive, `$e \in \pi_0[\Sigma]$' 
+can be solved in time $O(c^{c^{\mu(e)}})$ for some $c > 0$.
+\end{thm}
+%%
+Notice that this one half of the finite reversibility for grammars 
+(see Definition~\ref{defn:reverse}). The other half requires a similar 
+notion of progress in the semantics. This would correspond to the 
+idea that the more complex a sentence is the more complex its meaning. 
+(Unlike in classical logic, where for example 
+{\mtt (p\symbol{31}(\symbol{5}p))} is simpler than {\mtt p}.)
+
+We still have not defined the notion of intersubstitutability 
+that enters Leibniz' Principle. We shall give a definition based 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+on a grammar. Recall that for Leibniz' Principle we need a category 
+of sentences, and a notion of truth. So, let $\GA$ be a sign grammar 
+and {\tt S} a category. Put 
+%%%
+\index{$\Sent_{\GA, \mbox{\smtt S}}$}%%%
+%%%
+\begin{equation}
+\Sent_{\GA,\mbox{\smtt S}} := \{\Gs : \Gs^{\mu} = \mbox{\tt S}\}
+\end{equation}
+%%%
+This defines the set of sentential terms (see also 
+Section~\ref{kap5}.\ref{kap5-1}). Let $\Gt$ be a structure term with a 
+single occurrence of a free variable, say $x$. Then given $\Gs$, 
+$[\Gs/x]\Gt$ if definite is the result of putting $\Gs$ in place 
+of $x$. Thus $\Gt^{\varepsilon} \in \Pol_1(\GE)$. We define the 
+%%%
+\index{context set}%%
+%%%%
+\textbf{context set} of $e$ as follows. 
+%%%
+\begin{multline}
+\label{eq:contset}
+\Cont_{\GA, \mbox{\smtt S}}(e) := 
+	\{\Gt^{\varepsilon} : \text{for some }\Gs \text{ such that 
+	}\Gs^{\varepsilon} = e \colon \\
+	[\Gs/x]\Gt \in \Sent_{\GA, \mbox{\smtt S}}\}
+\end{multline}
+%%%
+We shall spell this out for a CFG. In a CFG, $\Cont_{\GA, \mbox{\smtt S}} 
+\in \Pol_1(\GZ(A))$. Moreover, if $x$ occurs only once, 
+the polynomials we get are quite simple: they are of the form 
+$p(x) = \vec{u}\conc x\conc\vec{v}$ for certain strings 
+$\vec{u}$ and $\vec{v}$. Putting $C := \auf \vec{u}, \vec{v}\zu$, 
+$p(\vec{x}) = C(\vec{x})$. Thus, the context set for $\vec{x}$ 
+defined in \eqref{eq:contset} is the set of all $C$ such that 
+$C(\vec{x})$ is a sentence, and $C$ is a constituent occurrence 
+of $\vec{x}$ in it. Thus, \eqref{eq:contset} defines the substitution 
+classes of the exponents. We shall also define what it means 
+to be syntactically indistinguishable in a sign system.
+%%%
+\begin{defn}
+%%%
+\index{$\simeq_{\Sigma}$}%%%
+\index{exponents!syntactically indistinguishable}%%
+%%%%
+$e$ and $e'$ are \textbf{syntactically indistinguishable} --- we 
+write $e \simeq_{\Sigma} e'$ --- iff 
+%%
+\begin{dingautolist}{192}
+	\item
+	for all $c \in C$ and all $m \in M$: if  
+	$\auf e,c,m\zu\in \Sigma$ then there is
+         an $m' \in M$ such that $\auf e',c,m'\zu \in \Sigma$ and
+	\item
+	for all $c \in C$ and all $m' \in M$: if  $\auf e',c,m'\zu\in \Sigma$
+	 then there is an $m \in M$ such that  $\auf e,c,m\zu \in \Sigma$. 
+	\end{dingautolist}
+\end{defn}
+%%%
+This criterion defines which syntactic objects should belong 
+to the same substitution category. Obviously, we can also use Husserl's 
+criterion here. However, there is an intuition that certain sentences 
+are semantically but not syntactically well formed. Although the distinction 
+between syntactic and semantic well--formedness breaks the close 
+connection between syntactic categories and context sets, it seems 
+intuitively justified. Structural linguistics, following Zellig Harris
+and others, typically defines categories in this way, using context sets.
+We shall only assume here that categories may not distinguish syntactic
+objects finer than the context sets. 
+%%
+\begin{defn}
+%%%
+\index{grammar!natural}%%
+%%%
+Let $\Sigma$ be a system of signs. A sign grammar $\GA$ that generates 
+$\Sigma$ is \textbf{natural with respect to} {\tt S} if 
+$\Cont_{\GA,\mbox{\smtt S}}(e) = \Cont_{\GA,\mbox{\smtt S}}(e')$ 
+implies $e \simeq_{\Sigma} e'$.
+\end{defn}
+%%%
+A context free sign grammar is natural iff the underlying CFG is 
+reduced. Here is an example. Let 
+%%
+\begin{equation}
+\Sigma := \{\auf \mbox{\mtt a}, \mbox{\mtt A}, 0\zu, 
+\auf \mbox{\mtt b}, \mbox{\mtt B}, 0\zu, 
+\auf \mbox{\mtt c}, \mbox{\mtt C}, 3\zu, 
+\auf \mbox{\mtt ac}, \mbox{\mtt S}, 5\zu, 
+\auf \mbox{\mtt bc}, \mbox{\mtt S}, 7\zu\}
+\end{equation}
+%%
+Let $\GA$ be the sign grammar based on the following rules. 
+%%
+\begin{align}
+\mbox{\mtt S} & \pf \mbox{\mtt AC} \mid \mbox{\mtt BC} &
+\mbox{\mtt A} & \pf \mbox{\mtt a} \\\notag
+\mbox{\mtt B} & \pf \mbox{\mtt b} &
+\mbox{\mtt C} & \pf \mbox{\mtt c}  
+\end{align}
+%%
+This corresponds to choosing five modes, $\mbox{\mtt F}_{\snull}$, 
+$\mbox{\mtt F}_{\seins}$, $\mbox{\mtt F}_{\szwei}$ all unary, and
+$\mbox{\mtt F}_{\sdrei}$, $\mbox{\mtt F}_{\svier}$ both binary.
+%%%
+\begin{align}
+\notag
+\mbox{\mtt F}_{\snull} & = \auf \mbox{\tt a}, \mbox{\tt A}, 0\zu \\ 
+\mbox{\mtt F}_{\seins} & = \auf \mbox{\tt b}, \mbox{\tt B}, 0\zu \\ 
+\notag
+\mbox{\mtt F}_{\szwei} & = \auf \mbox{\tt c}, \mbox{\tt C}, 3\zu 
+\end{align}
+%%%
+Further, $\mbox{\mtt F}_{\sdrei}^{\gamma}$ is a two place function 
+defined only on $\auf \mbox{\tt A}, \mbox{\tt C}\zu$ with result 
+{\mtt S}, $\mbox{\mtt F}_{\sdrei}^{\mu}$ a two place function 
+defined only on $\auf 0, 3\zu$ with value $5$. Similarly, 
+$\mbox{\mtt F}_{\svier}^{\gamma}(\mbox{\tt A}, \mbox{\tt C}) 
+= \mbox{\mtt S}$, and is undefined elsewhere, and 
+$\mbox{\mtt F}_{\svier}^{\mu}(0, 3) = 7$, and is undefined 
+elsewhere. Then the only definite structure terms are 
+{\mtt F$_{\snull}$}, {\mtt F$_{\seins}$}, {\mtt F$_{\szwei}$}, 
+{\mtt F$_{\sdrei}$F$_{\snull}$F$_{\szwei}$}, 
+and {\mtt F$_{\svier}$F$_{\seins}$F$_{\szwei}$}. Together they unfold 
+to exactly $\Sigma$.
+
+This grammar is, however, not natural. We have 
+%%%
+\begin{equation}
+\Cont_{\GA, \mbox{\smtt S}}(\mbox{\mtt a}) = 
+	\Cont_{\GA, \mbox{\smtt S}}(\mbox{\mtt b}) = 
+\{\auf \varepsilon, \mbox{\mtt c}\zu\} 
+\end{equation}
+%%%
+However, {\mtt a} and {\mtt b} do not have the same category.
+
+Now look at the grammar $\GB$ based on the following rules: 
+%%
+\begin{align}
+\mbox{\mtt S} & \pf \mbox{\mtt ac} \mid \mbox{\mtt BC} &
+\mbox{\mtt A} & \pf \mbox{\mtt a} \\\notag
+\mbox{\mtt B} & \pf \mbox{\mtt b} &
+\mbox{\mtt C} & \pf \mbox{\mtt c}
+\end{align}
+%%
+Here we compute that 
+%%%
+\begin{equation}
+\Cont_{\GB, \mbox{\smtt S}}(\mbox{\mtt a}) = \varnothing \neq 
+\{\auf \varepsilon, \mbox{\mtt c}\zu\} = 
+\Cont_{\GB, \mbox{\smtt S}}(\mbox{\mtt b}) 
+\end{equation}
+%%%
+Notice that in this grammar, {\mtt a} has no constituent occurrence 
+in a sentence. Only {\mtt b} has. So, {\tt ac} is treated as an idiom.  
+%%%
+\begin{defn}
+%%%
+\index{sign system!strictly compositional}%%%
+%%%
+A vectorial system of signs is \textbf{strictly compositional} 
+if there is a natural sign grammar for $\Sigma$ in which for 
+every $f \in F$ the function $f^{\GZ}$ is a vector term which 
+is stricly progressive with respect to the combined lengths of 
+the strings.
+\end{defn}
+%%%
+The definition of compositionality is approximately the one that
+is used in the literature (modulo adaptation to systems of signs)
+while the notion of strict compositionality is the one which we
+think is the genuine notion reflecting the intuitions concerning 
+compositionality. 
+
+A particularly well--known case of noncompositionality in the strict
+sense is the analysis of quantification by Montague.
+%%%
+\index{Montague, Richard}%%
+%%%
+%%%
+\begin{align}
+\label{ex:5613} & \mbox{\tt Nobody has seen Paul.} \\
+\label{ex:5614} & \mbox{\tt No man has seen Paul.}
+\end{align}
+%%%
+In the traditional, pre--Fregean understanding the subject of this
+sentence is {\tt nobody} and the remainder of the sentence is the
+predicate;  further, the predicate is predicated of the subject. 
+Hence, it is said of nobody that he has seen Paul. Now, who is this 
+`nobody'? Russell, 
+%%%
+\index{Russell, Bertrand}%%%
+\index{Frege, Gottlob}%%%
+%%%
+following Frege's analysis has claimed that the 
+syntactic structure is deceptive: the subject of this sentence is 
+contrary to all expectations {\it not\/} the argument of its predicate. 
+Many, including Montague, have endorsed that view. For them, the 
+subject denotes a so--called {\it generalized quantifier}. 
+Type theoretically the generalized quantifier of a subject has the 
+type $e \pf (e \pf t)$. This is a set of properties, in this case the 
+set of properties that are disjoint to the set of all humans. Now, 
+{\tt has seen Paul} denotes a property, and \eqref{ex:5614} is true 
+iff this property is in the set denoted by {\tt no human}, that
+is to say, if it is disjoint with the set of all humans.
+
+The development initiated by Montague 
+%%%
+\index{Montague, Richard}%%%
+%%%
+has given rise to a rich
+literature. Generalised quantifiers have been a big issue for
+semantics for quite some time (see \cite{keenanwesterstahl:generalized}). 
+Similarly for the treatment of intensionality that he proposed. 
+Montague systematically assigned intensional types as meanings, 
+which allowed to treat world or situation dependencies. The 
+general ideas were laid out in the
+semiotic program and left room for numerous alternatives. This is
+what we shall discuss here. However, first we scrutinize
+Montague's analysis of quantifiers. The problem that he chose to
+deal with was the ambiguity of sentences that were unambiguous
+with respect to the type assignment. Instructive examples are the
+following.
+%%
+\begin{align}
+\label{ex:5615} & \mbox{\tt Some man loves every woman.} \\
+\label{ex:5616} & \mbox{\tt Jan is looking for a unicorn.}
+\end{align}
+%%
+Both sentences are ambiguous. \eqref{ex:5615} may say that there
+is a man such that he loves all women. Or it may say that for
+every woman there is a man who loves her. In the first reading the
+universal quantifier is in the scope of the existential, in the
+second reading the existential quantifier is in the scope of the
+universal quantifier. Likewise, \eqref{ex:5616} may mean two
+things. That there is a real unicorn and Jan is looking for it, or
+Jan is looking for something that is in his opinion a unicorn.
+Here we are dealing with scope relations between an existential quantifier
+and a modal operator. We shall concentrate on example \eqref{ex:5615}. 
+The problem with this sentence is that the universal quantifier {\tt
+every woman} may not take scope over {\tt some man loves}. This is
+so since the latter does not form a constituent. (Of course, we
+may allow it to be a constituent, but then this option creates
+problems of its own. In particular, this does not fit in with the
+tight connections between the categories and the typing regime.)
+So, if we insist on our analysis there is only one reading: the
+universal quantifier is in the scope of the existential. Montague
+%%%
+\index{Montague, Richard}%%%
+%%%
+solved the problem by making natural language look more like 
+predicate logic. He assumed an infinite set of pronouns called 
+$\mbox{\tt he}_n$. These pronouns exist in inflected forms and 
+in other genders as well, so we also have $\mbox{\tt him}_n$, 
+$\mbox{\tt her}_n$ and so on. (We shall ignore gender and case 
+inflection at this point.) The other reading is created as 
+follows. We feed to the verb the pronoun $\mbox{\tt he}_{\snull}$ and 
+get the constituent {\tt loves he$_{\snull}$}. This is an intransitive 
+verb. Then we feed another pronoun, say $\mbox{\tt he}_{\seins}$ 
+and get {\mtt he$_{\seins}$ loves he$_{\snull}$}. Next we combine this 
+with {\tt every man} and then with {\tt a woman}. These operations 
+substitute genuine phrases for these pronouns in the following 
+way.  Assume that we have two signs:
+%%
+\begin{equation}
+\sigma = \auf \vec{x}, e \backslash t, m\zu, \quad
+    \sigma' = \auf \vec{y}, t, m'\zu 
+\end{equation}
+%%
+Further, let $Q_n$ be the following function on signs:
+%%
+\begin{equation}
+Q_n(\sigma, \sigma') := \auf \subst_n(\vec{x},\vec{y}),
+    t, Q(m,\lambda x_n.m')\zu
+\end{equation}
+%%
+Here $\subst_n(\vec{x},\vec{y})$ is defined as follows.
+%%%
+\begin{dingautolist}{192}
+\item
+For some $k$: $\vec{x} = \mbox{\tt he}_k$. Then $\subst_n(\vec{x},\vec{y})$
+    is the result of replacing all occurrences of
+    $\mbox{\tt he}_n$ by $\mbox{\tt he}_k$.
+\item
+For all $k$: $\vec{x} \neq \mbox{\tt he}_k$. Then $\subst_n(\vec{x}, \vec{y})$
+    is the result of replacing the first occurrence of
+    $\mbox{\tt he}_n$ by $\vec{x}$ and deleting the index
+    $n$ on all other occurrences of $\mbox{\tt he}_n$.
+\end{dingautolist}
+%%
+At last we have to give the signs for the pronouns. These are
+%%
+\begin{equation}
+\mbox{\tt P}_n := \auf \mbox{\tt he}_n, \mbox{\tt NP}, \lambda
+    x_{\CP}.x_{\CP}(x_n)\zu
+\end{equation}
+%%
+Depending on case, $x_{\CP}$ is a variable of type $e \pf t$
+(for nominative pronouns) or of type $e \pf (e \pf t)$ (for
+accusative pronouns). Starting with the sign
+%%
+\begin{equation}
+\mbox{\tt L} := \auf \mbox{\tt loves}, (e\backslash t)/e,
+    \lambda x_0. \lambda x_1.
+    \mbox{\sf love}'(x_1, x_0)\zu 
+\end{equation}
+%%
+we get the sign
+%%
+\begin{align}
+& \mbox{\mtt A}_{\sgr}\mbox{\mtt P}_{\seins}\mbox{\mtt A}_{\sgr}%
+\mbox{\tt P}_{\snull}\mbox{\mtt L}  \\\notag
+= & 
+\auf \mbox{\mtt he$_{\seins}$ loves he$_{\snull}$}, t,
+    \mbox{\sf loves}'(x_1,x_0))\zu
+\end{align}
+%%
+Now we need the following additional signs.
+%%
+\begin{align}
+\begin{split}
+\mbox{\tt E}_n & := \auf \lambda x.\lambda y.%
+\subst_n(\mbox{\tt every}\oconc x, y),
+    (t/t)/(e\backslash t), \\
+	& \qquad\qquad \lambda x. \lambda y.\forall x_n.
+    (x(x_n) \pf y)\zu 
+\end{split} \\
+\begin{split}
+\mbox{\tt S}_n & := \auf \lambda x.\lambda y.%
+\subst_n(\mbox{\tt some}\oconc x, y), (t/t)/(e\backslash t), \\
+	& \qquad\qquad \lambda x. \lambda y.\exists x_n.
+    (x(x_n) \und y)\zu 
+\end{split} \\
+\mbox{\tt M} & := \auf \mbox{\tt man}, e\backslash t,
+    \lambda x.\mbox{\sf man}'(x)\zu \\
+\mbox{\tt W} & := \auf \mbox{\tt W}, e\backslash t,
+    \lambda x.\mbox{\sf woman}'(x)\zu
+\end{align}
+%%
+If we feed the existential quantifier first we get the reading
+$\forall\exists$, and if we feed the universal quantifier first
+we get the reading $\exists\forall$. The structure terms are as 
+follows.
+%%
+\begin{align}
+& \mbox{\mtt A$_{\sgr}$A$_{\sgr}$E$_{\snull}$WA$_{\sgr}$A$_{\sgr}$S$%
+_{\seins}$MA$_{\sgr}$P$_{\snull}$A$_{\sgr}$P$_{\seins}$L} \\
+& \mbox{\tt A$_{\sgr}$A$_{\sgr}$S$_{\seins}$MA$_{\sgr}$A$_{\sgr}$%
+E$_{\snull}$WA$_{\sgr}$P$_{\snull}$A$_{\sgr}$P$_{\seins}$L} 
+\end{align}
+%%
+We have not looked at the morphological realization of the phrase
+$\vec{x}$. Number and gender must be inserted with the
+substitution. So, the case is determined by the local context, the
+other features are not. We shall not go into this here. (Montague
+%%%
+\index{Montague, Richard}%%%
+%%%
+had nothing to say about morphology as English has very little. We
+can only speculate what would have been the case if Montague had
+spoken, say, an inflecting language.) Notice that the present analysis 
+makes quantifiers into sentence adjuncts. 
+
+Recall from Section~\ref{kap2}.\ref{kap2-6} that the grammar of sentences 
+is very complex. Hence, since Montague defined the meaning of
+%%%
+\index{Montague, Richard}%%%
+%%%
+sentences to be closed formulae, it is almost unavoidable that
+something had to be sacrificed. In fact, the given analysis violates
+several of our basic principles. First, there are infinitely
+many lexical elements. Second, the syntactic structure is not
+respected by the translation algorithm, and this yields the wrong
+results. Rather than taking an example from a different language,
+we shall exemplify the problems with the genitive pronouns. We
+consider {\tt his} as the surface realization of $\mbox{\tt
+him's}$, where {\tt 's} is the so--called Anglo Saxon genitive.
+Look for example at \eqref{ex:5717}, which resulted from
+\eqref{ex:5718}. Application of the above rules gives
+\eqref{ex:5719}, however.
+%%
+\begin{align}
+\label{ex:5717} & \mbox{\tt with a hat on his head every man looks better} \\
+\label{ex:5718} & \subst_{\snull}(\mbox{\tt every man}, 
+\mbox{\mtt with a hat on him$_{\snull}$'s head %
+ he$_{\snull}$} \\\notag
+& \quad \mbox{\mtt looks better}) \\
+\label{ex:5719} & \mbox{\tt with a hat on every man's head
+    he looks better}
+\end{align}
+%%
+This happens not because the possessive pronouns are also part of the
+rules: of course, they have to be part of the semantic algorithm.
+It is because the wrong occurrence of the pronoun is being
+replaced by the quantifier phrase. This is due to the fact that
+the algorithm is ignorant about the syntactic structure (which
+the string reveals only partly) and second because the algorithm
+is order sensitive at places where it should better not be. 
+See Section~\ref{kap5}.\ref{kap5-5} on GB, a theory that has 
+concerned itself extensively with the question which NP may be a 
+pronoun, or a reflexive pronoun or empty. Fiengo and May 
+%%%
+\index{May, Robert}%%%
+\index{Fiengo, Robert}%%%
+%%%
+\shortcite{fiengomay:indices} speak quite plastically of 
+{\it vehicle change}, to name the phenomenon that a variable appears 
+sometimes as a pronoun, sometimes as {\rm pro} (an empty pronoun, see 
+Section~\ref{kap5}.\ref{kap5-5}),
+sometimes as a lexical NP and so on. The synchronicity between
+surface structure and derivational history which has been
+required in the subsequent categorial grammar, is not found
+with Montague. 
+%%%
+\index{Montague, Richard}%%%
+%%%
+He uses instead a distinction proposed by Church 
+%%%
+\index{Church, Alonzo}%%%
+%%%
+between \textbf{tectogrammar} (the inner structure,
+%%%
+\index{tectogrammar}%%%
+%%%
+as von Humboldt would have called it) and 
+%%%
+\index{von Humboldt, Alexander}%%%
+%%%
+\index{phenogrammar}%%%
+%%%
+\textbf{phenogrammar} (the outer structure, which is simply what we 
+see). Montague admits quite powerful phenogrammatical operations, 
+and it seems as if only the label distinguishes him from GB theory. 
+For in principle his maps could be interpreted as transformations. 
+
+We shall briefly discuss the problems of blocking and other apparent
+failures of compositionality. In principle, we have allowed
+the exponent functions to be partial. They can refuse to operate
+on certain items. This may be used in the analysis
+of defective words, for example {\tt courage}. This word exists
+only in the singular (though it arguably also has a plural meaning). 
+There is no form {\tt courages}. In morphology, one says that each 
+word has a root; in this case the root may simply be {\tt courage}.
+The singular is formed by adding $\varepsilon$, the plural by adding
+{\tt s}. The word {\tt courage} does not let the plural be formed. 
+It is defective. If that is so, we are in trouble with Leibniz' 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+Principle.  Suppose we have a word $X$ that is synonymous with 
+{\tt courage} but exists in the singular and the plural (or only 
+in the plural like {\tt guts}). Then, by Leibniz' Principle, the two roots 
+can never have the same meaning, since it is not possible to exchange 
+them for each other in all contexts (the context where $X$ appears in 
+the plural is a case in point). To avoid this, we must actually assume 
+that there is no root form of {\tt courage}.
+%%%
+\index{singulare tantum}%%
+%%%
+The classical grammar calls it a \textbf{singulare tantum}, a 
+`singular only'. This is actually more appropriate. If namely this
+word has no root and exists only as a singular form, one simply
+cannot exchange the root by another. We remark here that English
+has \textbf{pluralia tanta} (`plural only' nouns), for example
+{\tt troops}. In Latin, {\tt tenebrae} `darkness', {\tt
+indutiae} `cease fire' are examples. Additionally, there are 
+words which are only formwise derived from the singular
+counterpart (or the root, for that matter). One such example is
+{\tt forces} in its meaning `troops', in Latin {\tt fortunae} 
+`assets', whose singular {\tt fortuna} means `luck'. Again, if
+both forms are assumed to be derived from the root, we have
+problems with the meaning of the plural. Hence, some of these forms
+(typically --- but not always --- the plural form) will have to 
+be part of the lexicon (that is, it constitutes a 0--ary mode).
+
+Once we have restricted the admissible functions on exponents, 
+we can show that weak and strong generative capacity do not 
+necessarily coincide. Recall the facts from Exercise~\ref{ex:chinese}, 
+taken from \cite{radzinski:copying}. In Mandarin yes--no--questions are 
+formed by iterating the statement with the negation word in between. 
+Although it is conceivable that
+%%%
+\index{Mandarin}%%
+%%%
+Mandarin is context free as a string language, Radzinski 
+%%%
+\index{Radzinski, Daniel}%%%
+%%%
+argues that it is not strongly context free. Now, suppose we understand
+by strongly context free that there is a context free sign grammar.
+Then we shall show that under mild conditions Mandarin is not
+strongly context free. To simplify the dicussion, we shall define
+a somewhat artificial counterpart of Mandarin. Start with a context 
+free language $G$ and a meaning function $\mu$ defined on $G$. Then 
+put $M := G \cup G \oconc \mbox{\tt bu}\oconc G$.
+Further, put
+%%
+\begin{equation}
+\nu(\vec{x}\oconc\mbox{\tt bu}\oconc\vec{y}) :=
+    \begin{cases}
+    \mu(\vec{x}) \oder \nicht \mu(\vec{y}) &
+        \text{ if $\vec{x} \neq \vec{y}$,} \\
+    \mu(\vec{x})? & \text{ if $\vec{x} = \vec{y}$.}
+    \end{cases}
+\end{equation}
+%%%
+Here, $?$ forms questions. We only need to assume that it is 
+injective on the set $\mu[G]$ and that $?[\mu[G]]$ is disjoint 
+from $\{\mu(\vec{x}) \oder \mu(\vec{y}) : \vec{x}, \vec{y} \in 
+L(G)\}$. (This is the case in Mandarin.) Assume that
+there are two distinct expressions $\vec{u}$ and $\vec{v}$ of 
+equal category in $G$ such that $\mu(\vec{u}) = \mu(\vec{v})$. 
+Then they can be substituted for each other. Now suppose that 
+$G$ has a sublanguage of the form $\{\vec{r}\, {\vec{z}\,}^i\, \vec{s} :
+i \in \omega\}$ such that $\mu(\vec{r}\, {\vec{z}\,}^i\, \vec{s}) =
+\mu(\vec{r}\, {\vec{z}\,}^j\, \vec{s})$ for all $i, j$. We claim 
+that $M$ together with $\nu$ is not context free. Suppose otherwise. 
+Then we have a context free grammar $H$ together with a meaning 
+function that generates it. By the Pumping Lemma, there is a $k$ 
+such that ${\vec{z}\,}^k$ can be adjoined into some 
+$\vec{r}\, {\vec{z}\,}^i\, \vec{s}$ any number of times. (This is 
+left as an exercise.) Now look at the expressions
+%%e
+\begin{equation}
+\vec{r}\conc {\vec{z}\,}^i\conc\vec{s}\oconc\mbox{\tt bu}\oconc
+\vec{r}\conc{\vec{z}\,}^{j} \conc\vec{s}
+\end{equation}
+%%%
+Adjunction is the result of substitution. However, the $\nu$--meaning 
+of these expressions is $\top$ if $i \neq j$ and a yes--no question
+if $i = j$. Now put $j = i+k$. If we adjoin ${\vec{z}\,}^k$ on the
+left side, we get a yes--no question, if we substitute it to the
+right, we do not change the meaning, so we do not get a yes--no question.
+It follows that one and the same syntactic substitution operation
+defines two different semantic functions, depending on where it is
+performed. Contradiction. Hence this language is not strongly context 
+free. It is likely that Mandarin satisfies the additional assumptions. 
+For example, colour words are extensional. So, {\tt blue shirt} 
+means the same as {\tt blue blue shirt}, {\tt blue blue blue shirt}, 
+and so on.
+
+%%%
+\index{Bahasa Indonesia}%%
+%%%
+Next we look at Bahasa Indonesia. Recall that it forms the plural by
+reduplication. If the lexicon is finite, we can still generate the
+set of plural expressions. However, we must assume a distinct
+syntactic category for each noun. This is clearly unsatisfactory.
+For every time the lexicon grows by another noun, we must add a
+few rules to the grammar (see \cite{manasterramer:copying}). However, 
+let us grant this point. Suppose, we have two nouns, $\vec{m}$ and
+$\vec{n}$, which have identical meaning. If there is no syntactic 
+or mophological blocking, by Leibniz' Principle any constituent 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+occurrence of the first can be substituted by the second and vice 
+versa. Therefore, if $\vec{m}$ has two constituent
+occurrences in $\vec{m}\mbox{\tt -}\vec{m}$, we must have a word
+$\vec{m}\mbox{\tt -}\vec{n}$ and a word $\vec{n}\mbox{\tt
+-}\vec{m}$, and both mean the same as the first. This is precisely
+what is not the case. Hence, no such pair of words can exist if
+Bahasa Indonesia is strongly context free. This argument relies 
+on a stronger version of Leibniz' Principle: that semantic identity 
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+enforces substitutability {\it tout court}. Notice that our
+previous discussion of context sets does not help here. The noun
+$\vec{m}$ has a different context set as the noun $\vec{n}$, since
+it occurs in a plural noun $\vec{m}\mbox{\tt -}\vec{m}$, where
+$\vec{n}$ does not occur. However, notice that the context set of
+$\vec{m}$ contains occurrences of $\vec{m}$ itself. If that
+circularity is removed, $\vec{m}$ and $\vec{n}$ become
+indistinguishable.
+
+These example might suffice to demonstrate that the relationship 
+between syntactic structure and semantics is loose but not entirely 
+free. One should be extremely careful, though, of hidden assumptions. 
+Many arguments in the literature showing that this or that 
+language is not strongly context free rest on particular assumptions 
+that are not made explicit. 
+
+{\it Notes on this section.} The idea that syntactic operations should 
+more or less be restricted to concatenation give or take some minor 
+manipulations is advocated for in \cite{hausser:surface}, who calls 
+this {\it surface compositionality}. Hausser also noted that Montague 
+%%%
+\index{Hausser, Roland}%%%
+\index{Montague, Richard}%%%
+%%%
+did not actually define a surface compositional grammar. Most present 
+day categorial grammars are, however, surface compositional.  
+%%%
+\vplatz
+\exercise
+Suppose that $A = \{\mbox{\tt 0}, \mbox{\tt 1}, \dotsc, \mbox{\tt 9}\}$,
+with the following modes.
+%%
+\begin{align}
+\mbox{\tt O} & := \auf \mbox{\tt 0}, \mbox{\tt Z}, 0\zu \\
+\mbox{\tt S}(\auf \vec{x}, \mbox{\tt Z}, n\zu) &
+    := \auf \Suc(\vec{x}), \mbox{\tt Z}, n+1\zu
+\end{align}
+%%
+Here, $\Suc(\vec{x})$ denotes the successor of $\vec{x}$ in the decimal
+notation, for example, $\Suc(\mbox{\tt 19}) = \mbox{\tt 20}$. Let a
+string be given. What does a derivation of that string look like?
+When does a sign $\sigma$ occur in another sign $\tau$? Describe
+the exponent of $[\Gs'/\Gs]\Gt$, for given structure terms
+$\Gs$, $\Gs'$, $\Gt$. Define a progress measure for which this 
+grammar is progressive.
+%%
+\vplatz
+\exercise
+Let $A := \{\mbox{\mtt 0}, \dotsc, \mbox{\mtt 9}, \mbox{\mtt +},
+\mbox{\mtt (}, \mbox{\mtt )}, \mbox{\mtt\symbol{42}}\}$. We shall 
+present two ways for generating ordinary arithmetical terms. Recall that
+there is a convention to drop brackets in the following
+circumstances. (a) When the same operation symbol is used in
+succession ({\mtt 5+7+4} in place of {\mtt (5+(7+4))}),
+(b) when the enclosed term is multiplicative ({\mtt 3\symbol{42}4+3}
+in place of {\mtt (3\symbol{42}4)+3}). Moreover, (c) the outermost
+brackets are dropped. Write a sign grammar that generates triples
+$\auf \vec{x}, T, n\zu$, where $\vec{x}$ is a term and $n$ its
+value, where the conventions (a), (b) and (c) are optionally used.
+(So you should generate $\auf \mbox{\mtt 5+7+4}, T, 16\zu$ as well as
+$\auf \mbox{\mtt (5+(7+4))}, T, 16\zu$). Now apply Leibniz' Principle
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+to the pairs {\mtt (5+7)} and {\mtt 5+7}, {\tt 5+(7+4)} and
+{\mtt 5+7+4}. What problems arise? Can you suggest a solution?
+%%%
+\vplatz
+\exercise
+(Continuing the previous exercise.) Write a grammar that treats
+every accidental occurrence of a term as a constituent occurrence
+in some different parse. For example, the occurrence of {\tt 3+4}
+in {\tt 3+4\symbol{42}7} is in the grammar of the
+previous exercise a nonconstituent occurrence, now however it shall
+be a constituent occurrence under some parse. Apply Leibniz'
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+Principle. Show that {\tt 5+7} is not identical to {\tt 7+5},
+and {\tt 2+5+7} is not identical to {\tt 2+7+5} and so on. 
+Which additive terms without brackets are identical 
+in meaning, by Leibniz Principle?
+%%%
+\vplatz
+\exercise
+%%%
+\index{Latin}%%
+%%
+The Latin verbs {\tt aio} and  {\tt inquam} (`I say') are highly
+defective. They exist only in the present. Apart from one or two more
+forms (which we shall ignore for simplicity), Figure~\ref{fig:aio}
+gives a synopsis of what forms exist of these verbs and contrast 
+them with the forms of {\tt dico}.
+%%
+\begin{figure}
+\begin{center}
+\begin{tabular}{|l|l|l||l|}
+\hline
+{\tt aio} & {\tt inquam} & {\tt dico} & `I say' \\
+{\tt ais} & {\tt inquis} & {\tt dicis} & `you(sg) say' \\
+{\tt ait} & {\tt inquit} & {\tt dicit} & `he says' \\
+          &              & {\tt dicimus} & `we say' \\
+          &              & {\tt dicitis} & `you(pl) say' \\
+{\tt aiunt} & {\tt inquiunt} & {\tt dicunt} & `they say' \\\hline
+\end{tabular}
+\end{center}
+\caption{Latin Verbs of Saying}
+\label{fig:aio}
+\end{figure}
+%%
+The morphology of {\tt inquam} is irregular in that form (we 
+expect {\tt inquo}); also the syntax of {\tt inquit} is
+somewhat peculiar (it is used parenthetically).  Discuss whether
+{\tt inquit} and {\tt dicit} can be identical in meaning by
+Leibniz' Principle or not. Further, the verb {\tt memini} is
+%%%
+\index{Leibniz' Principle}%%%
+%%%
+formwise in the perfect, but it means `I remember'; similarly {\tt
+odi} `I hate'.

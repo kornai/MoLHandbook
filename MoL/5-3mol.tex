@@ -1,0 +1,594 @@
+\newcommand{\sotimes}{\mbox{\small$\otimes$}}
+\section{Interpreted LMGs}
+\label{kap4-3}
+%
+%
+%
+In this section we shall concern ourselves with interpreted LMGs.
+The basic idea behind interpreted LMGs is quite simple.
+Every rule is connected with a function which tells us how
+the meanings of the elements on the right hand side are
+used to construct the meaning of the item on the left. We
+shall give an example. The following grammar generates ---
+as we have shown above  --- the language $\{\mbox{\tt a}^{2^n} :
+n \geq 0\}$.
+%%
+\begin{equation}
+\label{eq:531}
+S(xx) \hrn S(x).\qquad S(\mbox{\tt a}) \hrn .
+\end{equation}
+%%
+We write a grammar which generates all pairs
+$\auf \mbox{\tt a}^{2^n}, n\zu$. So, we take the number
+$n$ to be the meaning of the string $\mbox{\tt a}^{2^n}$.
+For the first rule we choose the function $\lambda n.n+1$
+as the meaning function and for the second the constant
+$0$. We shall adapt the notation to the one used previously
+and write as follows.
+%%
+\begin{equation}
+\label{eq:53ast}
+\mbox{\tt aaaa} : S : 2 \qquad \mbox{ or } \qquad
+\auf \mbox{\tt aaaa}, S, 2\zu
+\end{equation}
+%%
+Both notations will be used concurrently. \eqref{eq:53ast} names 
+a sign with exponent {\tt aaaa} with category (or predicate) $S$ and
+with meaning 2. The rules of the above grammar are written
+as follows:
+%%
+\begin{equation}
+\auf xx, S, n+1\zu \hrn
+\auf x, S, n\zu. \qquad
+\auf \mbox{\tt a}, S, 0\zu\hrn .
+\end{equation}
+%%
+This grammar is easily transformed into a sign grammar.
+We define a 0--ary mode {\mtt A$_{\snull}$} and a unary
+mode {\tt A$_{\seins}$}.
+%%
+\begin{equation}
+\begin{split}
+\mbox{\mtt A$_{\snull}$} & := \auf \mbox{\tt a}, S, 0\zu, \\
+\mbox{\mtt A$_{\seins}$}(\auf x, S, n\zu) &
+    := \auf xx, S, n+1\zu.
+\end{split}
+\end{equation}
+%%
+The structure term 
+{\mtt A$_{\seins}$A$_{\seins}$A$_{\seins}$A$_{\snull}$} 
+for example defines the sign $\auf \mbox{\tt a}^8, S, 3\zu$.
+
+It seems that one can always define a sign grammar from a LMGs
+in this way. However, this is not so. Consider
+adding the following rule to \eqref{eq:531}.
+%%
+\begin{equation}
+\auf x\mbox{\tt ab}y, S, 3n\zu
+\hrn \auf x\mbox{\tt aa}y, S, n\zu.
+\end{equation}
+%%
+The problem with this rule is that the left hand side is not
+uniquely determined by the right hand side. For example, from
+$\auf \mbox{\tt aaaa}, S, 2\zu$ we can derive in one step
+$\auf \mbox{\tt abaa}, S,6\zu$ as well as
+$\auf \mbox{\tt aaba}, S,6\zu$ and $\auf \mbox{\tt aaab},
+S, 6\zu$. We shall therefore agree on the following.
+%%
+\begin{defn}
+Let
+%%
+\begin{align}
+& \rho = T(t^0, t^1, \dotsc, t^{p-1}) \hrn
+U_0(s^0_0, s^1_0, \dotsc, s^{q_0-1}_0), \\\notag
+& \qquad\; 
+U_1(s^0_1, s^1_1, \dotsc, s^{q_1-1}_1), \dotsc, 
+U_{n-1}(s^0_{n-1}, s^1_{n-1}, \dotsc, s^{q_n -1}_{n-1})
+\end{align}
+%%
+be a rule. $\rho$ is called \textbf{definite} 
+%%%
+\index{rule!definite}%%
+%%%
+if for all instances of the rule the following holds: For all
+$\alpha$, if the $(s^j_i)^{\alpha}$ are given, the
+$(t^j)^{\alpha}$ are uniquely determined. An
+%%%
+\index{literal movement grammar!definite}
+%%%
+LMG is called \textbf{definite} if each of its rules is definite.
+\end{defn}
+%%
+Clearly, to be able to transform an LMG into a sign grammar we 
+need that it is definite. However, this is still a very general 
+concept. Hence we shall restrict our attention to simple LMGs. 
+They are definite, as is easily seen. These grammars have the 
+advantage that the $s^j_i$ are variables over strings and
+the $t^j$ polynomials. We can therefore write them
+in $\lambda$--notation. Our grammar can therefore be
+specified as follows.
+%%
+\begin{equation}
+\begin{split}
+\mbox{\mtt A$_{\snull}$} & := \auf \mbox{\tt a}, S, 0\zu \\
+\mbox{\mtt A$_{\seins}$} & := \auf \lambda x.x \conc x, S, \lambda n.n+1\zu
+\end{split}
+\end{equation}
+%%
+In certain cases the situation is not so simple. For this
+specification only works if a variable of the right hand side
+occurs there only once. If it occurs several times, we
+cannot regard the $t^j$ as polynomials using concatenation.
+Namely, they are partial, as is easily seen. An easy example
+is provided by the following rule.
+%%
+\begin{equation}
+C(x) \hrn A(x), B(x).
+\end{equation}
+%%
+Intuitively, one would choose $\lambda x.x$ for the string
+function; however, how does one ensure that the two strings
+on the right hand side are equal? For suppose we were
+to introduce a binary mode {\tt C}.
+%%
+\begin{equation}
+\mbox{\tt C}(\auf \vec{x},\alpha,X\zu, \auf \vec{y},\beta,Y\zu)
+:= \auf \mbox{\tt C}^{\varepsilon}(\vec{x},\vec{y}),
+    \mbox{\tt C}^{\tau}(\alpha,\beta),
+    \mbox{\tt C}^{\mu}(X,Y)\zu
+\end{equation}
+%%
+Then we must ensure that
+$\mbox{\tt C}^{\varepsilon}(\vec{x},\vec{y})$ is only defined
+if $\vec{x} = \vec{y}$. So in addition to concatenation on $A^{\ast}$ 
+we also have to have a binary operation $\iota$, which is defined 
+as follows.
+%%
+\begin{equation}
+\iota(\vec{x}, \vec{y}) := 
+	\begin{cases}
+    \vec{x} & \text{ if $\vec{x} = \vec{y}$,} \\
+    \star   & \text{ otherwise.}
+    	\end{cases}
+\end{equation}
+%%
+With the help of this operation we can transform the rule
+into a binary mode. Then we simply put $\mbox{\tt %
+C}^{\varepsilon} := \lambda x.\lambda y.\iota(x,y)$.
+
+We shall try out our concepts by giving a few examples.
+Let $\vec{x} \in \{\mbox{\tt L}, \mbox{\tt O}\}^{\ast}$ be
+a binary sequence. This is the binary code $n^{\flat}$ of a
+natural number $n$. This binary sequence we shall take as the
+meaning of the same number in Turing code. For the number $n$ 
+it is the sequence $n^{\sharp} := \mbox{\tt a}^{n+1}$. Here
+is a grammar for the language $\{\auf n^{\sharp}, S, n^{\flat}\zu
+: n \in \omega\}$.
+%%
+\begin{equation}
+\begin{split} 
+\auf x \, \mbox{\tt a}, S, n\zu & \hrn
+    \auf x, T, n\zu. \\
+\auf xx \, \mbox{\tt a}, T, n \conc \mbox{\tt L}\zu  & \hrn
+    \auf x, T, n\zu. \\
+\auf xx, T, n \conc \mbox{\tt O}\zu  & \hrn
+    \auf x, T, n\zu. \\
+\auf \varepsilon, T, \varepsilon\zu & \hrn.
+\end{split}
+\end{equation}
+%%
+Notice that the meanings are likewise computed using concatenation.
+In place of $\lambda n.2n$ or $\lambda n.2n+1$ we therefore have
+$\lambda x.x \conc \mbox{\tt O}$ and
+$\lambda x.x \conc \mbox{\tt L}$.
+
+We can also write a grammar which transforms binary codes into
+Turing codes, by simply exchanging exponent and meaning. 
+
+A somewhat more complex example is a grammar which derives
+triples $\auf \vec{x}\sotimes \vec{y}, S, \vec{z}\zu$ of binary 
+numbers where $\vec{z}$ is the binary code of the sum of 
+the numbers represented by $\vec{x}$ and $\vec{y}$. (The symbol 
+$\sotimes$ 
+%%%%
+\index{$\sotimes$}%%
+%%%%
+serves to separate $\vec{x}$ from $\vec{y}$.)
+%%
+\begin{subequations}
+\begin{align}
+\auf x\sotimes y, S, z \zu & \hrn \auf x\sotimes y, A, z\zu. \\\notag
+\auf \mbox{\tt O}x\sotimes y, S, z\zu & \hrn \auf x\sotimes y, S, z\zu.
+	\\\notag
+\auf x\sotimes \mbox{\tt O}y, S, z\zu & \hrn \auf x\sotimes y, S, z\zu.
+	 \\\notag
+\auf x\sotimes y, S, \mbox{\tt O}z\zu & \hrn \auf x\sotimes y, S, z\zu.
+	 \\\notag
+\auf x\sotimes y, S, \mbox{\mtt L}z\zu & \hrn \auf x\sotimes y, U, z\zu. 
+	\\
+\auf \mbox{\tt O}x\sotimes \mbox{\tt O}y, A, \mbox{\tt O}z\zu
+    & \hrn \auf x\sotimes y, A, z\zu. \\\notag
+\auf \mbox{\tt O}x\sotimes \mbox{\tt O}y, A, \mbox{\tt L}z\zu
+    & \hrn \auf x\sotimes y, U, z\zu. \\\notag
+\auf \mbox{\tt O}x\sotimes \mbox{\tt L}y, U, \mbox{\tt O}z\zu
+    & \hrn \auf x\sotimes y, U, z\zu. \\\notag
+\auf \mbox{\tt O}x\sotimes \mbox{\tt L}y, A, \mbox{\tt L}z\zu
+    & \hrn \auf x\sotimes y, A, z\zu. \\\notag
+\auf \mbox{\tt L}x\sotimes \mbox{\tt O}y, U, \mbox{\tt O}z\zu
+    & \hrn \auf x\sotimes y, U, z\zu. \\\notag
+\auf \mbox{\tt L}x\sotimes \mbox{\tt O}y, A, \mbox{\tt L}z\zu
+    & \hrn \auf x\sotimes y, A, z\zu. \\\notag
+\auf \mbox{\tt L}x\sotimes \mbox{\tt L}y, U, \mbox{\tt O}z\zu
+    & \hrn \auf x\sotimes y, A, z\zu. \\\notag
+\auf \mbox{\tt L}x\sotimes \mbox{\tt L}y, U, \mbox{\tt L}z\zu
+    & \hrn \auf x\sotimes y, U, z\zu. \\
+\auf \mbox{\tt O}\sotimes \mbox{\tt O}, A, \mbox{\tt O}\zu & \hrn . 
+    & 
+\auf \mbox{\tt O}\sotimes \mbox{\tt L}, A, \mbox{\tt L}\zu \hrn . \\\notag
+\auf \mbox{\tt L}\sotimes \mbox{\tt O}, A, \mbox{\tt L}\zu & \hrn .
+    &
+\auf \mbox{\tt L}\sotimes \mbox{\tt L}, U, \mbox{\tt O}\zu \hrn .
+\end{align}
+\end{subequations}
+%%
+Now let us return to the specification of interpreted LMGs.
+First of all we shall ask how LMGs can be interpreted to
+become sign grammars. To this end we have to reconsider our
+notion of an exponent. Up to now we have assumed that exponents
+are strings. Now we have to assume that they are sequences of
+strings (we say rather `vectors of strings', since strings are
+themselves sequences). This motivates the following definition.
+%%
+\begin{defn}
+Let $A$ be a finite set. We denote by $V(A) := \bigcup_{k < \omega} 
+(A^{\ast})^k$ the set of vectors of strings over $A$. Furthermore, 
+let $F^{V} := \{\varepsilon, 0, \conc, \sotimes, \triangleright, 
+\triangleleft, \zeta, \iota\}$, 
+%%%
+\index{$\sotimes$, $\triangleleft$, $\triangleright$, $\zeta$, $\iota$}%%%
+%%%
+$\Omega(\conc) = \Omega(\sotimes) =
+\Omega(\iota) = 2$, $\Omega(\triangleright) = \Omega(\triangleleft) =
+\Omega(\zeta) = 1$; $\Omega(\varepsilon) = \Omega(0) = 0$. Here, the
+following is assumed to hold. (Strings are denoted 
+by vector arrows, while $\Gx$, $\Gy$ and $\Gz$ range over $V(A)$.)
+%%
+\begin{dingautolist}{192}
+\item
+$\Gz \sotimes (\Gy \sotimes \Gz) = (\Gz \sotimes \Gy) \sotimes \Gz$
+\item
+$0 = \auf\,\zu$ is the empty sequence.
+\item
+$\conc$ is the usual concatenation of strings, so it is not defined
+on vectors of length $\neq 1$.
+\item
+$\varepsilon$ is the empty string.
+\item
+$\triangleright \bigotimes_{i< m} \vec{x} =
+\bigotimes_{i < m-1} \vec{x}_i$, and $\triangleleft \bigotimes_{i < m}
+\vec{x}_i = \bigotimes_{0 < i < m} \vec{x}_i$.
+\item
+$\zeta(\Gx) = \star$ if $\Gx$ is not a string;
+$\zeta(\vec{x}) = \vec{x}$ otherwise.
+\item
+$\iota(\Gx,\Gy) = \Gx$ if $\Gx = \Gy$ and
+$\iota(\Gx, \Gy) = \star$ otherwise.
+\end{dingautolist}
+%%
+The resulting (partial)
+%%%
+\index{string vector algebra}%%
+%%%
+algebra is called the \textbf{algebra of string vectors over} $A$ 
+and is denoted by $\GV(A)$.
+%%%
+\index{$\GV(\GA)$}%%
+%%%
+\end{defn}
+%%
+In this algebra the following laws hold among other.
+%%
+\begin{equation}
+\begin{split}
+\Gx \sotimes 0 & = \Gx \\
+0 \sotimes \Gx & = \Gx \\
+\Gx \sotimes (\Gy \sotimes \Gz) & = (\Gx \sotimes \Gy) \sotimes \Gz \\
+\triangleright (\Gx \sotimes \zeta (\Gy)) & = \Gx \\
+\triangleleft (\zeta (\Gy) \sotimes \Gx) & = \Gx
+\end{split}
+\end{equation}
+%%
+The fourth and fifth equation hold under the condition
+that $\zeta (\Gy)$ is defined. A vector $\Gx$ has length
+$m$ if $\zeta (\triangleright^{m-1}\Gx)$ is defined but 
+$\zeta(\triangleright^m\Gx)$ is not. In this case
+$\zeta (\triangleright^{m-(i+1)}\triangleleft^i \Gx)$
+is defined for all $i < m$ and they are the
+projection functions. Now we have:
+%%
+\begin{equation}
+\Gx = \triangleright^{m-1}\Gx \sotimes \triangleright^{m-2}
+\triangleleft \Gx \sotimes \dotsb \sotimes
+\triangleright \triangleleft^{m-2}\Gx \sotimes
+\triangleleft^{m-1}\Gx.
+\end{equation}
+%%
+All polynomial functions that appear in the sequel can be
+defined in this algebra. The basis is the following theorem.
+%%
+\begin{thm}
+Let $p \colon (A^{\ast})^m \pf A^{\ast}$ be a function which is
+a polynomial in $\conc$ and $\iota$. Then there exists a
+vector polynomial $\Gq \colon V(A) \pf V(A)$ such that
+%%
+\begin{dingautolist}{192}
+\item $\Gq(\Gx)$ is defined only if $\Gx \in (A^{\ast})^m$.
+\item If $\Gx \in (A^{\ast})^m$ and $\Gx = \auf \vec{x}_i :
+    i < m\zu$ then
+    $\Gq(\Gx) = p(\vec{x}_0, \dotsc, \vec{x}_{m-1})$.
+\end{dingautolist}
+\end{thm}
+%%
+\proofbeg
+Let $p$ be given. We assume that one of the variables appears
+at least once. (Otherwise $p = \varepsilon$ and then we put
+$q := \varepsilon$.) Let $q$ arise from $p$ by replacement
+of $x_i$ by $\zeta(\triangleright^{m-(i+1)} \triangleleft^i \Gx)$,
+for all $i < m$. This defines $q$. (It is well defined, for
+the symbols $\varepsilon$, $\conc$, $\iota$ are in the signature
+$F^V$.) Let now $\Gx$ be given. As remarked above, $q$ is
+defined on $\Gx$ only if $\Gx$ has length $m$. In this case
+$\Gx = \auf \vec{x}_i : i < n\zu$ for certain $\vec{x}_i$, and
+we have $\vec{x}_i = \zeta(\triangleright^{m-(i+1)} \triangleleft^i \Gx)$.
+Since the symbols $\varepsilon$, $\conc$ and $\iota$ coincide on
+the strings in both algebras (that of the strings and that
+of the vectors) we have $q(\Gx) = q(\vec{x}_0, \dotsc, \vec{x}_{m-1})$.
+\proofend
+
+That $p \colon (A^{\ast})^m \pf (A^{\ast})^n$ is a polynomial function
+means that there exist polynomials $p_i$, $i < n$, such that
+%%
+\begin{equation}
+p(\vec{x}_0, \dotsc, \vec{x}_{m-1}) =
+\auf p_i(\vec{x}_0, \dotsc, \vec{x}_{m-1}) : i < n\zu.
+\end{equation}
+%%
+We can therefore replace the polynomials on strings by
+polynomials over vectors of strings. Thise simplifies the
+presentation of LMGs considerably. We can now write down a
+rule as follows.
+%%
+\begin{align}
+& \auf q(\Gx_0, \dotsc, \Gx_{m-1}), A, f(X_0,\dotsc,X_{m-1})\zu \\\notag
+& \qquad \hrn 
+\auf \Gx_0, B_0, X_0\zu, \dotsc,
+\auf \Gx_{m-1}, B_{m-1}, X_{m-1}\zu.
+\end{align}
+%%
+We shall make a further step and consider LMGs as categorial
+grammars. To this end we shall first go over to Chomsky
+Normal Form. This actually brings up a surprise. For there are
+$k$--LMGs for which no $k$--LMG in Chomsky Normal Form can be
+produced (see the exercises). However, there exists a
+$k'$--LMG in Chomsky Normal Form for a certain effectively
+determinable $k' \leq \pi k$, where $\pi$ is the maximal
+productivity of a rule. Namely, look at a rule. We introduce new
+symbols $Z_i$, $i < m-2$, and replace this rule by the
+following rules.
+%%
+\begin{equation}
+\begin{split}
+& \auf \Gx_0 \sotimes \Gx_1, Z_0, X_0 \times X_1) 
+    \quad \hrn \quad \auf \Gx_0, B_0, X_0\zu, \quad
+    \auf \Gx_1, B_1, X_1\zu. \\
+& \auf \Gy_0 \sotimes \Gx_2, Z_1, Y_0 \times X_2) 
+    \quad \hrn \quad
+    \auf \Gy_0, Z_0, Y_0\zu, \quad
+    \auf \Gx_2, B_2, X_2\zu. \\
+& \dotsb \\
+& \auf \Gy_{m-4} \sotimes \Gx_{m-2}, Z_{m-3}, %
+	Y_{m-4} \times X_{m-2}\zu \\
+& \qquad \hrn \quad \auf \Gy_{m-4}, Z_{m-4}, Y_{m-4}\zu
+    \quad \auf \Gx_{m-2}, B_{m-2}, X_{m-2}\zu. \\
+& \auf q^{\ast}(\Gy_{m-3}\sotimes\Gx_{m-1}), A,
+    f^{\ast}(Y_{m-3} \times X_{m-1})\zu \\
+& \qquad \hrn\quad
+    \auf \Gy_{m-3}, Z_{m-3}, Y_{m-3}\zu, \quad
+    \auf \Gx_{m-1}, B_{m-1}, X_{m-1}\zu.
+\end{split}
+\end{equation}
+%%
+Here $q^{\ast}$ and $f^{\ast}$ are chosen in such a way that
+%%
+\begin{equation}
+\begin{split}
+q^{\ast}(\Gx_0 \sotimes \dotsm \sotimes \Gx_{m-1}) & = 
+    q(\Gx_0, \dotsc, \Gx_{m-1}) \\
+f^{\ast}(X_0 \times \dotsb \times X_{m-1}) & = 
+    f(X_0, \dotsc, X_{m-1})
+\end{split}
+\end{equation}
+%%
+It is not hard to see how to define the functions by polynomials.
+Hence, in the sequel we may assume that we have at most binary
+branching rules. 0--ary rules are the terminal rules.
+A unary rule has the following form.
+%%
+\begin{equation}
+\auf q(\Gx), C, f(X)\zu \hrn \auf \Gx, A, X\zu.
+\end{equation}
+%%
+We keep the sign $\auf \Gx, A, X\zu$ and introduce a new
+sign $\mbox{\tt Z}_{\rho}$ which has the following form.
+%%
+\begin{equation}
+\mbox{\tt Z}_{\rho} := \auf \lambda \Gx.q(\Gx), C/A,
+\lambda x.f(x)\zu
+\end{equation}
+%%
+There is only one binary mode, {\tt C}, which is defined thus:
+%%
+\begin{equation}
+\mbox{\tt C}(\auf p, A, X\zu, \auf q, B, Y\zu) :=
+\auf p(q), A \cdot B, (XY)\zu 
+\end{equation}
+%%
+This is exactly the scheme of application in categorial grammar.
+One difference remains. The polynomial $p$ is not necessarily
+concatenation. Furthermore, we do not have to distinguish
+between two modes, since we in the string case we have the 
+possibility of putting $p$ to be either $\lambda x.x \conc \vec{y}$ 
+or $\lambda x.\vec{y} \conc x$.
+Application has in this way become independent of the accidental
+order. Many more operations can be put here, for example
+reduplication. The grammar that
+we have mentioned at the beginning of the section is defined
+by the following two modes.
+%%
+\begin{equation}
+\begin{split}
+\mbox{\mtt D}_{\snull} & := \auf \mbox{\tt a}, S, 0\zu \\
+\mbox{\mtt D}_{\seins} & := \auf \lambda x.x \conc x, S/S, \lambda n.n+1\zu
+\end{split}
+\end{equation}
+%%
+To the previous structure term
+{\mtt A$_{\seins}$A$_{\seins}$A$_{\seins}$A$_{\snull}$} 
+now corresponds the structure term
+%%
+\begin{equation}
+\mbox{\mtt CD$_{\seins}$CD$_{\seins}$CD$_{\seins}$D$_{\snull}$}
+\end{equation}
+%%
+In this way the grammar has become an AB--grammar, with
+one exception: the treatment of strings must be explicitly defined.
+
+The binary rules remain. A binary rule has the following form.
+%%
+\begin{equation}
+\auf q(\Gx, \Gy), C, f(X,Y)\zu \hrn
+    \auf \Gx, A, X\zu, \auf \Gy, B, Y\zu.
+\end{equation}
+%%
+We keep the sign on the right hand side and introduce a
+new sign.
+%%
+\begin{equation}
+\mbox{\tt Z}_{\rho} :=
+    \auf \lambda \Gy.\lambda \Gx.q(\Gx,\Gy),
+    (C/A)/B, \lambda y.\lambda x.f(x,y)\zu
+\end{equation}
+%%
+%% Order of arguments (Code in the category)
+\vplatz
+\exercise
+Show that for any $k > 1$ there are simple $k$--LMGs $G$
+with branching number $3$ such that for no simple $k$--LMG
+$H$ with branching number 2, $L(G) = L(H)$.
+%%
+\vplatz
+\exercise
+\label{ex:arabic}
+Here are some facts from Arabic.
+%%%
+\index{Arabic}%%
+%%%
+In Arabic a root typically consists of three consonants. 
+Examples are {\tt ktb} `to write', {\tt drs} `to study'. There 
+are also roots with four letters, such as {\tt drhm} (from Greek
+{\it Drachme\/}), which names a numismatic unit. From a
+root one forms so--called  {\it binyanim}, roughly translated
+as `word classes', by inserting vowels or changing the
+consonantism of the root. In Table~\ref{tab:531} we give some 
+examples of verbs derived from the root {\tt ktb}.
+%%
+\begin{table}
+\caption{Arabic Binyanim: {\tt ktb}}
+\label{tab:531} 
+\begin{center}
+\begin{tabular}{llll}
+ & \mbox{\rm I} & \mbox{\tt katab} & \mbox{\rm to write} \\
+ & \mbox{\rm II} & \mbox{\tt kattab} & \mbox{\rm to make write}\\
+ & \mbox{\rm III} & \mbox{\tt kaatab} & \mbox{\rm to correspond} \\
+ & \mbox{\rm VI} & \mbox{\tt takaatab} & \mbox{\rm to write to each other} \\
+ & \mbox{\rm VIII} & \mbox{\tt ktatab} & \mbox{\rm to write, to be inscribed}
+\end{tabular} \\[3mm]
+\begin{tabular}{lllll}
+      & Perf. Act. & Perf. Pass. & Impf. Act. & Impf. Pass. \\\hline
+ \mbox{\rm I}    & \mbox{\tt katab} & \mbox{\tt kutib} & 
+	\mbox{\tt aktub} & \mbox{\tt uktab} \\
+ \mbox{\rm II}   & \mbox{\tt kattab} & \mbox{\tt kuttib} & 
+	\mbox{\tt ukattib} & \mbox{\tt ukattab} \\
+ \mbox{\rm III}  & \mbox{\tt kaatab} & \mbox{\tt kuutib} & 
+	\mbox{\tt ukaatib} & \mbox{\tt ukaatab} \\
+ \mbox{\rm VI}   & \mbox{\tt takaatab} & \mbox{\tt tukuutib} & 
+	\mbox{\tt atakattab} & \mbox{\tt utakattab} \\
+ \mbox{\rm VIII} & \mbox{\tt ktatab} & \mbox{\tt ktutib} & 
+	\mbox{\tt aktatib} & \mbox{\tt uktatab}
+\end{tabular}
+\end{center}
+\end{table}
+%%
+Of these forms we can in turn form verbal forms in different
+tenses and voices.
+%%
+
+%%
+We have only shown the transparent cases, there are other classes
+whose forms are not so regular. Write an interpreted LMG that
+generates these forms. For the meanings, simply assume unary
+operators, for example $\mbox{\sf caus}'$ for II, $\mbox{\sf pass}'$
+for passive, and so on.
+%%
+\vplatz
+\exercise
+\label{ex:chinese}
+\index{Mandarin}\index{Chinese}%%%
+In Mandarin (a Chinese language) a yes--no--question is formed as follows. 
+A simple assertive sentence has the form \eqref{ex:533} and
+the corresponding negative sentence the form \eqref{ex:534}.
+Mandarin is an SVO--language, and so the verb phrase follows the
+subject. The verb phrase is negated by prefixing {\tt bu}.
+(We do not write tones.)
+%%%
+\begin{align}
+\label{ex:533} & \mbox{\tt Ta zai jia.} \\\notag 
+	& \mbox{\rm He/She/It (is) at home} \\
+\label{ex:534} & \mbox{\tt Ta bu zai jia.} \\\notag
+                & \mbox{\rm He/She/It (is) not at home}
+\end{align}
+%%
+The yes--no--question is formed by concatenating the subject
+phrase with the positive verb phrase and then the negated verb 
+phrase.
+%%%
+\begin{align}
+\label{ex:535} & \mbox{\tt Ta zai jia bu zai jia?} \\\notag
+                & \mbox{\it Is he/she/it at home?}
+\end{align}
+%%
+As Radzinski~\shortcite{radzinski:copying} 
+%%%
+\index{Radzinski, Daniel}%%%
+%%%%
+argues, the verb phrases 
+have to be completely identical (with the exception of {\tt bu}). For 
+example, \eqref{ex:536} is grammatical, \eqref{ex:537} is ungrammatical. 
+However, \eqref{ex:538} is again grammatical and means roughly what 
+\eqref{ex:536} means.
+%%%
+\begin{align}
+\label{ex:536} & \mbox{\tt Ni xihuan ta-de chenshan bu xihuan ta-de} \\\notag
+ & \mbox{\rm You like his shirt not like his} \\\notag
+    & \mbox{\tt chenshan?} \\\notag
+    & \mbox{\rm shirt?} \\\notag
+    & \mbox{\it Do you like his shirt?} \\
+\label{ex:537} & 
+	^{\ast}\mbox{\tt Ni xihuan ta-de bu xihuan ta-de chenshan?} \\\notag
+    & \mbox{\rm You like his not like his shirt?} \\
+\label{ex:538} & \mbox{\tt Ni xihuan bu xihuan ta-de chenshan?} \\\notag 
+    & \mbox{\rm You like not like his shirt?}
+\end{align}
+%%
+Write an interpreted LMG generating these examples. Use $?:\varphi$
+to denote the question, whether or not $\varphi$ is the case.

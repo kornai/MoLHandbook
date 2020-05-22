@@ -1,0 +1,839 @@
+\chapter{The Model Theory of Linguistic Structures}
+\thispagestyle{empty}
+%%
+\label{kap5}
+%
+%
+%
+\section{Categories}
+\label{kap5-1}
+%
+%
+%
+Up to now we have used plain nonterminal symbols in our description
+of syntactic categories --- symbols with no internal structure. For 
+many purposes this is not a serious restriction. But it does not allow 
+to capture important regularities of language. We give an example 
+from German. 
+%%%%
+\index{German}%%
+%%%%
+The sentences \eqref{ex:611} -- \eqref{ex:616} are grammatical.
+%%
+\begin{align}
+\label{ex:611} & \mbox{\tt Ich sehe.} \\\notag
+                & \mbox{\rm I see-{\sc 1.Sg}} \\
+\label{ex:612} & \mbox{\tt Du siehst.} \\\notag
+                & \mbox{\rm You.{\sc Sg} see-{\sc 2.Sg}} \\
+\label{ex:613} & \mbox{\tt Er/Sie/Es sieht.} \\\notag
+                & \mbox{\rm He/She/It see-{\sc 3.Sg}} \\
+\label{ex:614} & \mbox{\tt Wir sehen.} \\\notag
+                & \mbox{\rm We see-{\sc 1.Pl}} \\
+\label{ex:615} & \mbox{\tt Ihr seht.} \\\notag
+               & \mbox{\rm You.{\sc Pl} see-{\sc 2.Pl}} \\
+\label{ex:616} & \mbox{\tt Sie sehen.} \\\notag
+                & \mbox{\rm They see-{\sc 3.Pl}}
+\end{align}
+\\[2mm]
+%%%
+By contrast, the following sentences are ungrammatical.
+%%
+\begin{align}
+\label{ex:617} & ^{\ast}\mbox{\tt Ich siehst}/\mbox{\tt sieht}/
+	\mbox{\tt sehen}/\mbox{\tt seht.} \\\notag
+                & \mbox{\rm I see-{\sc 2.Sg}/see-{\sc 3.Sg}/see-{\sc
+    1/3.Pl}/see-{\sc 2.Pl}} \\
+\label{ex:618} & ^{\ast}\mbox{\tt Du sehe}/\mbox{\tt sieht}/
+	\mbox{\tt sehen}/\mbox{\tt seht.} \\\notag
+                & \mbox{\rm You.{\sc Sg} see-{\sc 1.Sg}/see-{\sc 3.Sg}/%
+see-{\sc 1/3.Pl}/see-{\sc 2.Pl}}
+\end{align}
+%%%
+One says that the finite verb of German agrees with the subject in 
+person and number. This means that the verb has different forms 
+depending on whether the subject is in the 1st, 2nd or 3rd person, 
+and whether it is singular or plural. 
+
+How can we account for this? On the one hand, we may simply assume 
+that there are six different kinds of subjects (1st, 2nd or 3rd person, 
+singular or plural) as well as five different kinds of verb forms (since 
+two are homophonous, namely 1st and 3rd person plural). And the 
+subjects of one kind can only cooccur with a matching verb form.
+But the grammars we looked at so far do not allow to express this 
+fact at this level of generality; all one can do is provide lists 
+of rules. A different way has been proposed among other in 
+%%%
+\index{GPSG (see Generalized Phrase Structure Grammar)}%%
+\index{Generalized Phrase Structure Grammar}%%%
+%%%
+\textbf{Generalized Phrase Structure Grammar} (\textbf{GPSG},
+see \cite{gazdarpullumsag:gpsg}). Let us start with the following
+basic rule.
+%%
+\begin{equation}
+\label{eq:61ast} \mathsf{S} \pf \mathsf{NP}\quad \mathsf{VP}
+\end{equation}
+%%
+Here the symbols $\mathsf{S}$, $\mathsf{NP}$ and $\mathsf{VP}$ are symbols 
+not for a single category but for a whole set of them. (This is why 
+we have not used typewriter font.) In fact,
+the labels are taken to be {\it descriptions of categories}.
+They are not string anymore. 
+This means that these `labels' can be combined using boolean
+connectives such as negation, conjunction and disjunction.
+For example, if we introduce the properties $\mathsf{1}$, $\mathsf{2}$
+and $\mathsf{3}$ as well as $\mathsf{Sg}$ and $\mathsf{Pl}$ then our rule
+\eqref{eq:61ast} can be refined as follows:
+%%
+\begin{equation}
+\mathsf{S} \pf \mathsf{NP}\und
+\mathsf{1}\und \mathsf{Sg} \quad \mathsf{VP} \und
+\mathsf{1} \und \mathsf{Sg}
+\end{equation}
+%%
+Furthermore, we have the following terminal rules.
+%%
+\begin{equation}
+\mathsf{NP}\und\mathsf{1}\und\mathsf{Sg} \pf
+\mbox{\tt ich}, \quad
+\mathsf{VP} \und \mathsf{1}\und\mathsf{Sg} \pf
+\mbox{\tt sehe}
+\end{equation}
+%%
+Here $\mathsf{NP}\und \mathsf{1} \und \mathsf{Sg}$ is 
+the description of a category which is a noun phrase ($\mathsf{NP}$) 
+in the first person ($\mathsf{1}$) singular ($\mathsf{Sg}$). This means 
+that we can derive the sentence \eqref{ex:611}. In order
+for the sentences \eqref{ex:617} and \eqref{ex:618} not
+to be derivable we now have to eliminate the rule \eqref{eq:61ast}.
+But this excludes the sentences \eqref{ex:612} -- \eqref{ex:616}.
+To get them back again we still have to introduce five more rules.
+These can however be fused into a single schematic rule.
+In place of $\mathsf{NP}$ we now write $[\mbox{\sc cat} : %
+\mbox{\it np\/}]$, in place of $\mathsf{1}$ we write
+$[\mbox{\sc pers} : \mbox{\it 1\/}]$, and in place of
+$\mathsf{Pl}$ we write $[\mbox{\sc num} : \mbox{\it pl\/}]$.
+Here, we call {\sc cat}, {\sc per} and {\sc num}
+%%%
+\index{attribute}%%
+%%%
+\textbf{attributes}, and {\it np}, {\it vp}, {\it 1}, and so on
+\textbf{values}.
+%%%
+\index{value}%%
+%%%
+In the pair $[\mbox{\sc cat} : \mbox{\it np\/}]$ we say that
+the attribute {\sc cat} has the value {\it np}. A set of pairs
+$[A : v]$, where $A$ is an attribute and $v$ a value
+%%%
+\index{attribute--value structure (AVS)}%%
+\index{AVS (see attribute value structure)}%%%
+%%%
+is called an \textbf{attribute--value structure} or simply an 
+\textbf{AVS}.
+
+The rule \eqref{eq:61ast} is now replaced by the schematic rule 
+\eqref{eq:61ddagger}.
+%%
+\begin{equation}
+\label{eq:61ddagger}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it s}
+\end{array}\right]
+\pf
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it np} \\
+\mbox{\sc per} & \alpha \\
+\mbox{\sc num} & \beta
+\end{array}\right]
+\quad
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it vp} \\
+\mbox{\sc per} & \alpha \\
+\mbox{\sc num} & \beta
+\end{array}\right]
+\end{equation}
+%%
+Here, $\alpha$ and $\beta$ are variables. However, they have
+different value range; $\alpha$ may assume values from the set
+$\{\mbox{\it 1}, \mbox{\it 2}, \mbox{\it 3\/}\}$ $\beta$ values
+from the set $\{\mbox{\it sg}, \mbox{\it pl\/}\}$. This fact shall be
+dealt with further below. One has to see to it that the properties
+inducing agreement are passed on. This means that the following
+rule also has to be refined in a similar way.
+%%
+\begin{equation}
+\label{eq:61dagger}
+\mathsf{VP} \pf \mathsf{V}\quad \mathsf{NP}
+\end{equation}
+%%
+This rule says that a VP may be a constituent comprising a
+(transitive) verb and an NP. The agreement features have to be
+passed on to the verb.
+%%
+\begin{equation}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it vp} \\
+\mbox{\sc per} & \alpha \\
+\mbox{\sc num} & \beta
+\end{array}\right]
+\pf
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc per} & \alpha \\
+\mbox{\sc num} & \beta
+\end{array}\right]
+\quad
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it np}
+\end{array}\right]
+\end{equation}
+%%
+Now, there are languages in which the verb not only agrees with
+the subject but also with the object in the same categories. This
+means that it does not suffice to simply write $[\mbox{\sc per} : \alpha]$;
+we also have to say whether $\alpha$ concerns the subject or
+the object. Hence the structure relating to agreement has
+to be further embedded into the structure. 
+%%
+\begin{equation}
+\left[
+\begin{array}{l@{\, : \,}l}
+    \mbox{\sc cat} & \mbox{\it vp} \\
+    \mbox{\sc per} & \alpha \\
+    \mbox{\sc num} & \beta
+\end{array}\right]
+\pf
+\left[
+\begin{array}{l@{\, : \,}l}
+    \mbox{\sc cat} & \mbox{\it v} \\
+    \mbox{\sc agrs} & \left[
+        \begin{array}{l@{\, : \,}l}
+            \mbox{\sc per} & \alpha \\
+            \mbox{\sc num} & \beta
+        \end{array}\right] \\
+\multicolumn{2}{l}{}    \\
+    \mbox{\sc agro} & \left[
+        \begin{array}{l@{\, : \,}l}
+            \mbox{\sc per} & \alpha' \\
+            \mbox{\sc num} & \beta'
+        \end{array}\right]
+\end{array}\right]
+\quad
+\left[\begin{array}{l@{\, : \,}l}
+\mbox{\sc cat} & \mbox{\it np} \\
+\mbox{\sc per} & \alpha' \\
+\mbox{\sc num} & \beta'
+\end{array}\right]
+\end{equation}
+%%
+It is clear that this rule does the job as intended. One can
+make it look even nicer by assuming also for the NP an embedded
+structure for the agreement complex. This is what we shall do
+below. Notice that the value of an attribute is now not only
+a single value but may in turn be an entire AVS. Thus, two kinds 
+of attributes are distinguished.  {\it 1}, {\it sg\/} are called 
+\textbf{atomic values}. In the present context, all basic expressions 
+are either (atomic) values or attributes.
+%%%
+\index{value!atomic}%%
+\index{attribute!Type 0}%%
+\index{attribute!Type 1}%%
+%%%
+Attributes which have only atomic values are called \textbf{Type 0 
+attributes}, all others are \textbf{Type 1 attributes}. This is the 
+basic setup of \cite{gazdar:cstructures}. In the so--called
+\textbf{Head Driven Phrase--Structure Grammar} by Carl Pollard
+and Ivan Sag
+%%%
+\index{HPSG (see Head Driven Phrase Structure Grammar)}%%
+\index{Head Driven Phrase Structure Grammar}%%
+%%%
+(\textbf{HPSG}, see \cite{pollardsag:hpsg}) this has been pushed much
+further. In HPSG, the entire structure is encoded using AVSs of the 
+kind just shown.  Not only the bare linguistic features but 
+also the syntactic structure itself is coded into AVSs. We shall 
+study these structures from a theoretical point of view in 
+Section~\ref{kap5}.\ref{kap5-6}. Before we enter this investigation
+we shall move one step further. The rules that we have introduced
+above use variables for values of attributes. This certainly
+is a viable option. However, HPSG has gone into a different
+direction here. It introduces what are in fact structure variables,
+%%%
+\index{variable!structure \faul}%%
+%%%
+whose role it is to share entire AVSs between certain members of an 
+AVS. To see how this works we continue with our example. Let us now 
+write an NP not as a flat AVS, but let us instead embed
+the agreement related attribute value pairs as the value
+of an attribute {\sc agr}. A 3rd person NP in the plural
+is now represented as follows.
+%%
+\begin{equation}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it np\/} \\
+\mbox{\sc agr} & \left[
+    \begin{array}{l@{\quad : \quad}l}
+    \mbox{\sc num} & \mbox{\it pl\/} \\
+    \mbox{\sc per} & \mbox{\it 3\/}
+    \end{array}\right]
+\end{array}\right]
+\end{equation}
+%%
+The value of {\sc agr} is now structured in the same way as the 
+values of {\sc agrs} and {\sc agro}. Now we can rewrite our rules 
+with the help of structure variables as follows. The rule 
+\eqref{eq:61ddagger} now assumes the form
+%%
+\begin{equation}
+\label{eq:61ddd}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it s}
+\end{array}\right]
+\pf
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it np} \\
+\mbox{\sc agr} & \framebox{1}
+\end{array}\right]
+\quad
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it vp} \\
+\mbox{\sc agrs} & \framebox{1} \\
+\end{array}\right]
+\end{equation}
+%%
+The rule that introduces the object now has this shape.
+%%
+\begin{equation}\left[
+\begin{array}{l@{\; : \;}l}
+    \mbox{\sc cat} & \mbox{\it vp} \\
+    \mbox{\sc agrs} & \framebox{1}
+\end{array}\right]
+\pf
+\left[
+\begin{array}{l@{\; : \;}l}
+    \mbox{\sc cat} & \mbox{\it v} \\
+    \mbox{\sc agrs} & \framebox{1} \\
+    \mbox{\sc agro} & \framebox{2}
+\end{array}\right]
+\quad
+\left[\begin{array}{l@{\; : \;}l}
+    \mbox{\sc cat} & \mbox{\it np\/} \\
+    \mbox{\sc agr} & \framebox{2}
+\end{array}\right]
+\end{equation}
+%%
+The labels $\framebox{1}$ and $\framebox{2}$ are variables for
+AVSs. If some variable occurs several times in a rule then every
+occurence stands for the same AVS. This is precisely what is needed 
+to formulate agreement. AVS variables help to avoid that agreement 
+blows up the rule apparatus beyond recognition. The rules have 
+become once again small and perspicuous. (However, the agreement 
+facts of languages are full of tiny details and exceptions, which 
+make the introduction of more rules unavoidable.)
+
+Now if AVSs are only the description, then what are categories? 
+In a nutshell, it is thought that categories are {\it Kripke--frames}. 
+One assumes a set of vertices and associates with each attribute a 
+binary relation on this set. So, attributes are edge colours, atomic 
+values turn into vertex colours. And a syntactic tree is no longer
+an exhaustively ordered tree with simple labels but an exhaustively 
+ordered tree with labels having complex structure. Or, as it is more 
+convenient, we shall assume that the tree structure itself also is 
+coded by means of AVSs. The Figure~\ref{fig:sstruk} shows an example 
+of a structure which --- as one says --- is \textbf{licensed} by 
+the rule
+%%%
+\index{licensing}%%
+%%%
+\eqref{eq:61ddd}.
+%%
+\setlength{\unitlength}{1.2em}
+\begin{figure}
+\begin{center}
+\begin{picture}(20,10)
+\put(4,3){\makebox(0,0){$\bullet$}}
+    \put(3,3){\makebox(0,0)[r]{\it sg}}
+    \put(5.5,3){\makebox(0,0){\sc num}}
+\put(7,5){\vector(-3,-2){2.8}}
+\put(4,7){\makebox(0,0){$\bullet$}}
+    \put(3,7){\makebox(0,0)[r]{\it 1}}
+    \put(7,5){\vector(0,-1){2.8}}
+\put(7,5){\makebox(0,0){$\bullet$}}
+    \put(7,5){\line(1,1){3}}
+\put(7,5){\vector(-3,2){2.8}}
+\put(7,2){\makebox(0,0){$\bullet$}}
+    \put(7.5,3.5){\makebox(0,0)[l]{\sc cat}}
+    \put(7,1){\makebox(0,0){\it np}}
+\put(5.5,7){\makebox(0,0){\sc per}}
+%%
+\put(10,8){\vector(1,0){2.8}}
+    \put(11.5,9){\makebox(0,0){\sc cat}}
+\put(13,8){\makebox(0,0){$\bullet$}}
+    \put(14,8){\makebox(0,0)[l]{\it s}}
+\put(10,8){\makebox(0,0){$\bullet$}}
+\put(13,5){\line(-1,1){3}}
+\put(13,5){\makebox(0,0){$\bullet$}}
+\put(13,2){\makebox(0,0){$\bullet$}}
+    \put(13,5){\vector(0,-1){2.8}}
+    \put(12.5,3.5){\makebox(0,0)[r]{\sc cat}}
+    \put(13,1){\makebox(0,0){\it vp}}
+\put(13,5){\vector(3,-2){2.8}}
+    \put(14.5,3){\makebox(0,0){\sc num}}
+\put(16,3){\makebox(0,0){$\bullet$}}
+    \put(17,3){\makebox(0,0)[l]{\it sg}}
+\put(13,5){\vector(3,2){2.8}}
+    \put(14.5,7){\makebox(0,0){\sc per}}
+\put(16,7){\makebox(0,0){$\bullet$}}
+    \put(17,7){\makebox(0,0)[l]{\it 1}}
+\end{picture}
+\end{center}
+\caption{The Kripke--frame of an AVS}
+\label{fig:sstruk}
+\end{figure}
+%%
+The literature on AVSs is rich (see the books \cite{johnson:avlogic} 
+and \cite{carpenter:logic}). In its basic form, however, it is quite 
+simple. Notice that it is a mistake to view attributes as objects. 
+In fact, AVSs are not objects, they are descriptions of objects. 
+Moreover, they can be the values of attributes. Therefore we treat 
+values like {\it np}, {\it 1\/} as properties which can be combined 
+with the usual boolean operations, for example $\nicht$, $\und$, $\oder$ 
+or $\pf$. This has the advantage that we are now able to represent 
+the category of the German verb form {\tt sehen} in either of 
+the following ways.
+%%
+\begin{equation}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc per} & \mbox{\it 1} \oder \mbox{\it 3} \\
+\mbox{\sc num} & \mbox{\it pl}
+\end{array}\right]
+\quad
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc per} & \nicht \mbox{\it 2} \\
+\mbox{\sc num} & \mbox{\it pl}
+\end{array}\right]
+\end{equation}
+%%
+The equivalence between these two follows only if we assume
+that the values of {\sc per} can be only {\it 1}, {\it 2} or 
+{\it 3}. This fact, however, is a fact of German, and will be 
+part of the grammar of German. (In fact, it seems to hold pretty 
+universally across languages.) Notice that the collocation of 
+attribute--value pairs into an attribute--value structure is 
+nothing but the logical conjunction. So the left hand AVS can 
+also be written down as follows.
+%%
+\begin{equation}
+[\mbox{\sc cat} : \mbox{\it v\/}]
+\und [\mbox{\sc per} : \mbox{\it 1\/} \oder \mbox{\it 3\/}]
+\und [\mbox{\sc num} : \mbox{\it pl\/}]
+\end{equation}
+%%
+One calls \textbf{underspecification}
+%%%
+\index{underspecification}%%
+%%%
+the fact that a representation does not fix an object in all
+detail but that it leaves certain properties unspecified.
+Disjunctive specifications are a case in point. However, they
+do not in fact provide the most welcome case. The most ideal 
+case is when certain attributes are not contained in the AVS
+so that their actual value can be anything. For example, the
+category of the English verb form {\tt saw} may be (partially!) 
+represented thus.
+%%
+\begin{equation}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc temp} & \mbox{\it past\/}
+\end{array}\right]
+\end{equation}
+%%
+This means that we have a verb in the past tense. The number and
+person are simply not mentioned.  We can --- but need not --- write
+them down explicitly.
+%%
+\begin{equation}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc temp} & \mbox{\it past\/} \\
+\mbox{\sc num} & \top \\
+\mbox{\sc per} & \top
+\end{array}\right]
+\end{equation}
+%%
+Here $\top$ is the maximally unspecified value. We have ---
+this is a linguistical, that is to say, an empirical, fact ---:
+%%
+\begin{equation}
+[\mbox{\sc per} : \mbox{\it 1} \oder \mbox{\it 2} \oder \mbox{\it 3\/}]
+\end{equation}
+%%
+From this we can deduce that the category of {\tt saw} also has 
+the following representation.
+%%
+\begin{equation}
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc temp} & \mbox{\it past\/} \\
+\mbox{\sc num} & \top \\
+\mbox{\sc per} & \mbox{\it 1} \oder \mbox{\it 2} \oder
+    \mbox{\it 3\/}
+\end{array}\right]
+\end{equation}
+%%
+Facts of language are captured by means of axioms. More on that later.
+
+Since attribute--value pairs are propositions, we can combine
+them in the same way. The category of the English verb form 
+{\tt see} has among other the following grammatical representation.
+%%
+\begin{equation}
+\nicht \left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc per} & \mbox{\it 3} \\
+\mbox{\sc num} & \mbox{\it sg}
+\end{array}\right]
+\oder
+\left[\begin{array}{l@{\quad : \quad}l}
+\mbox{\sc cat} & \mbox{\it v} \\
+\mbox{\sc num} & \mbox{\it pl}
+\end{array}\right]
+\end{equation}
+%%%
+This can alternatively be written as follows.
+%%
+\begin{equation}
+[\mbox{\sc cat} : \mbox{\it v\/} ] \und
+(\nicht ([\mbox{\sc per} : \mbox{\it 3\/}] \und
+    [\mbox{\sc num} : \mbox{\it sg\/}]) \oder
+[\mbox{\sc num} : \mbox{\it pl\/}])
+\end{equation}
+%%
+In turn, this can be simplified.
+%%
+\begin{equation}
+[\mbox{\sc cat} : \mbox{\it v\/} ] \und
+(\nicht [\mbox{\sc per} : \mbox{\it 3\/}]
+\oder [\mbox{\sc num} : \mbox{\it pl\/}])
+\end{equation}
+%%
+This follows on the basis of the given interpretation. Since AVSs 
+are not the objects themselves but descriptions thereof, we may
+exchange one description of an object or class of objects by any
+other description of that same object or class of objects. We call
+an AVS \textbf{universally true} if it is always true, that is, if it
+holds of every object.
+%%
+\begin{dingautolist}{192}
+\item
+If $\varphi$ is a tautology of propositional logic then
+    $\varphi$ holds for all replacements of AVSs for the
+    propositional variables.
+\item
+If $\varphi$ is universally true, then so is
+$[\mbox{\sc X} : \varphi]$.
+\item 
+$[\mbox{\sc X} : \varphi \pf \chi]. \pf .
+    [\mbox{\sc X} : \varphi] \pf [\mbox{\sc X} : \chi]$.
+\item
+If $\varphi$ and $\varphi \pf \chi$ are universally true then 
+so is $\chi$.
+\end{dingautolist}
+%%
+%%%
+\index{attribute!definite}%%
+%%%
+In order to avoid having to use $\pf$, we shall write 
+$\varphi \leq \chi$ if $\varphi \pf \chi$ is universally true.
+Most attributes are \textbf{definite}, that is, they can have at most
+one value in any object. For such attributes we also have
+%%
+\begin{equation}
+[\mbox{\sc X} : \varphi] \und
+    [\mbox{\sc X} : \chi]. \pf .
+    [\mbox{\sc X} : \varphi \und \chi]
+\end{equation}
+%%
+Definite attributes are the norm. Sometimes, however, one
+needs nondefinite attributes; they are called
+%%%
+\index{attribute!set valued}%%
+%%%
+\textbf{set valued} to distinguish them from the definite ones.
+
+\index{second order logic}%%
+\index{second order logic!monadic}%%
+\index{MSO (see monadic second order logic)}%%%
+\index{SO (see second order logic)}
+%%%
+The AVSs are nothing but an alternative notation for formulae 
+of some logical language. In the literature, two different kinds 
+of logical languages have been proposed. Both serve the purpose 
+equally well. The first is the so--called \textbf{monadic second order 
+predicate logic} ($\mathsf{MSO}$), which is a fragment of \textbf{second 
+order logic} ($\mathsf{SO}$). Second order logic extends standard first 
+order predicate logic as follows. There additionally are variables 
+and quantifiers for predicates of any given arity $n \in \omega$. 
+The quantifiers are also written $\forall$ and $\exists$ and the 
+variables are $P^n_i$, $n, i \in \omega$. Here, $n$ tells us that 
+the variable is a variable for $n$--ary relations. So, 
+$\mbox{\rm PdV} := \{P^n_i : n, i \in \omega\}$ is the set of 
+predicate variables 
+for unary predicates and $V := \{x_i : i \in \omega\}$ the set of 
+object variables. We write $P^n_i(\vec{x})$ to say that $P^n_i$ applies 
+to (the $n$--tuple) $\vec{x}$. If $\varphi$ is a formula so are 
+$(\forall P^n_i)\varphi$ and $(\exists P^n_i)\varphi$. The set of 
+(M)SO--formulae defined over a given signature $\Omega$ is 
+denoted by $\mathsf{SO}(\Omega)$ and $\mathsf{MSO}(\Omega)$, respectively. 
+%%%%
+\index{$\mathsf{MSO}(\Omega)$}%%
+%%%%
+The structures are the same as
+%%%
+\index{structure}%%
+%%%
+those of predicate logic (see Section~\ref{kap3}.\ref{kap3-6}): 
+triples $\GM = \auf M, \{f^{\GM} : f \in F\}, %
+\{r^{\GM} : r \in R\}\zu$, where $M$ is a nonempty set,
+$f^{\GM}$ the interpretation of the function $f$ in $\GM$ and
+$r^{\Gm}$ the interpretation of the relation $r$. A \textbf{model}
+%%%
+\index{model}%%
+%%%
+is a triple $\auf \GM, \gamma, \beta\zu$ where $\GM$ is a structure
+$\beta \colon V \pf M$ a function assigning to each variable an
+element from $M$ and $\gamma \colon P \pf \wp(M)$ a function assigning
+to each $n$--ary predicate variable an $n$--ary relation on
+$M$. The relation $\auf \GM, \gamma, \beta\zu \vDash \varphi$ is
+defined inductively.
+%%
+\begin{equation}
+\auf \GM, \gamma, \beta\zu \vDash P^n_i(\vec{x})
+\quad:\Dpf\quad
+\beta(\vec{x}) \in \gamma(P^n_i)
+\end{equation}
+%%
+We define $\gamma \sim_P \gamma'$ if $\gamma'(Q) = \gamma(Q)$
+for all $Q \neq P$.
+%%
+\begin{align}
+%$$\begin{array}{l@{\quad\Dpf\quad}l@{\; : \;}l}
+\auf \GM, \gamma, \beta\zu \vDash (\forall P)\varphi &
+    :\Dpf \text{for all }\gamma' \sim_P \gamma : &&
+    \auf \GM, \gamma', \beta\zu \vDash \varphi \\
+\auf \GM, \gamma, \beta\zu \vDash (\exists P)\varphi &
+    :\Dpf \text{for some }\gamma' \sim_P \gamma : &&
+    \auf \GM, \gamma', \beta\zu \vDash \varphi
+%\end{array}$$
+\end{align}
+%%
+We write $\GM \vDash \varphi$ iff for all $\gamma$ and $\beta$
+$\auf \GM, \gamma, \beta\zu \vDash \varphi$. $\mathsf{MSO}$ is that
+fragment of $\mathsf{SO}$ which has only predicate variables for 
+unary relations ($n = 1$). When using MSO we drop the superscript 
+`$1$' in the variables $P^1_i$.
+
+Another type of languages that have been proposed are modal
+languages (see \cite{blackburn:avstructures} and
+\cite{kracht:av}). We shall pick out one specific language that 
+is actually an extension of the ones proposed in the quoted 
+literature, namely \textbf{quantified modal logic} (QML). 
+%%%
+\index{quantified modal logic}%%%
+\index{QML (see quantified modal logic)}%%
+%%%
+This language possesses a denumerably infinite set $\mbox{\it PV} 
+:= \{p_i : i \in \omega\}$ of proposition variables, a set {\rm Md} of 
+so--called \textbf{modalities}, and a set {\rm Cd} of propositional constants. 
+And finally, there are the symbols $\nicht$, $\und$, $\oder$, $\pf$, 
+$[-]$, $\auf -\zu$, $\forall$ and $\exists$. Formulas (called 
+propositions) are defined inductively in the usual way. Moreover, 
+if $\varphi$ is a proposition, so is $(\forall p_i)\varphi$ and
+$(\exists p_i)\varphi$.
+%%%
+\index{Kripke--frame}%%
+\index{Kripke--model}%%
+%%%
+The notions of Kripke--frame and Kripe--model remain the same.
+A \textbf{Kripke--frame} is a triple $\auf F, R, C\zu$, where 
+$R : \mbox{\rm Md} \pf \wp(F^2)$ and $C : \mbox{\rm Cd} \pf \wp(F)$.
+If $m$ is a modality, $R(m)$ is the accessibility relation 
+associated with $m$. In particular, we have 
+%%%
+\begin{equation}
+\auf \GF, \beta, x\zu \vDash \auf m\zu \varphi \quad:\Dpf\quad
+\text{there is }y: x\; R(m)\; y \text{ and } \auf \GF, \beta, y\zu 
+	\varphi
+\end{equation}
+%%%
+For the constants we put
+%%%
+\begin{equation}
+\auf \GF, \beta, x\zu \vDash c \quad:\Dpf\quad x \in C(c)
+\end{equation}
+%%%
+%%%
+We define
+%%
+\begin{equation}
+\begin{array}{rl@{\quad :\Dpf \quad}rl}
+\auf \GF, \beta, x\zu & \vDash (\forall p)\varphi   &
+    \text{for all }\beta' \sim_p \beta:
+    & \auf \GF, \beta', x\zu \vDash \varphi \\
+\auf \GF, \beta, x\zu & \vDash (\exists p)\varphi &
+    \text{for some }\beta' \sim_p \beta:
+    & \auf \GF, \beta', x\zu \vDash \varphi
+\end{array}$$
+\end{equation}
+%%
+We write $\auf \GF, \beta\zu \vDash \varphi$ if for all $x \in F$
+$\auf \GF, \beta,x\zu \vDash \varphi$; we write $\GF \vDash \varphi$,
+if for all $\beta$ we have $\auf \GF, \beta\zu \vDash \varphi$.
+
+We define an embedding of $\mathsf{QML}(\Omega)$ into 
+%%%
+\index{$\Omega^m$}%%
+%%%%
+$\mathsf{MSO}(\Omega^m)$, where $\Omega^m$ is defined as follows. 
+Let $R := \{r^m : m \in \mbox{\rm Md}\}$ 
+and $\mbox{\rm Cd} := \{Q^c : c \in K\}$. $\Omega^m(r^m) := 2$, 
+$\Omega^m(Q^c) := 1$. Then define $\varphi^{\dagger}$ as in 
+Table~\ref{tab:qml2mso}.
+%%
+\begin{table}
+\caption{Translating $\mathsf{QML}$ into $\mathsf{MSO}$}
+\label{tab:qml2mso}
+$$\begin{array}{rl@{\qquad}rl}
+p_i^{\dagger} & := P_i(x_0) &
+c^{\dagger} & := Q^c(x_0) \\
+(\nicht \varphi)^{\dagger} & := \nicht \varphi^{\dagger} &
+(\varphi_1 \und \varphi_2)^{\dagger} &
+    := \varphi_1^{\dagger} \und \varphi_2^{\dagger} \\
+(\varphi_1 \oder \varphi_2)^{\dagger} &
+    := \varphi_1^{\dagger} \oder \varphi_2^{\dagger} &
+(\varphi_1 \pf \varphi_2)^{\dagger} & := 
+	\varphi_1^{\dagger} \pf \varphi_2^{\dagger} \\
+((\forall p_i)\varphi)^{\dagger} & := (\forall P_i)\varphi^{\dagger} &
+((\exists p_i)\varphi)^{\dagger} & := (\exists P_i)\varphi^{\dagger} \\
+([m]\varphi)^{\dagger} &
+\multicolumn{3}{l}{:= (\forall x_0)(r^m(x_0, x_i) \pf %%
+    [x_i/x_0]\varphi^{\dagger})} \\
+(\auf m\zu\varphi)^{\dagger} &
+\multicolumn{3}{l}{:= (\exists x_0)(r^m(x_0, x_i) \und %%
+	[x_i/x_0]\varphi^{\dagger})}
+\end{array}$$
+\end{table}
+%%
+Here in the last two clauses $x_i$ is a variable that does not
+already occur in $\varphi^{\dagger}$. Finally, if $\GF$ is a 
+Kripke--frame, we define an MSO--structure $\GF^m$ as follows. 
+The underlying set is $F$, $(r^m)^{\GF^m} := R(m)$ for every 
+$m \in \mbox{\rm Md}$, and $(Q^c)^{\GF^m} := C(c)$.
+Now we have
+%%
+\begin{thm}
+Let $\varphi \in \mathsf{QML}(\Omega)$. Then $\varphi^{\dagger} \in
+\mathsf{MSO}(\Omega^m)$. And for every Kripke--frame $\GF$: 
+$\GF \vDash \varphi$ iff $\GF^m \vDash \varphi^{\dagger}$.
+\end{thm}
+%%
+\proofbeg
+We shall show the following. Assume $\beta \colon \mbox{\it PV}
+\pf \wp(F)$ is a valuation in $\GF$ and that $x \in F$ and
+$\gamma \colon \mbox{\rm PdV} \pf \wp(F)$ and $\delta \colon V 
+\pf F$ valuations for the predicate and the object variables. Then if
+$\gamma(P_i) = \beta(p_i)$ for all $i \in \omega$ and
+$\delta(x_0) = x$ we have
+%%
+\begin{equation}
+\label{eq:61dddd}
+\auf \GF, \beta, x\zu \vDash \varphi
+    \quad\Dpf\quad
+    \auf \GF^m, \gamma, \delta\zu \vDash \varphi^{\dagger}
+\end{equation}
+%%
+It is not hard to see that \eqref{eq:61dddd} allows to derive the 
+claim. We prove \eqref{eq:61dddd} by induction. If $\varphi = p_i$ 
+then $\varphi^{\dagger} = P_i(x_0)$ and the claim holds in virtue 
+of the fact that $\beta(p_i) = \gamma(P_i)$ and $\gamma(x_0) = x$. 
+Likewise for $\varphi = c \in C$. The steps for $\nicht$, $\und$, 
+$\oder$ and $\pf$ are routine. Let us therefore consider
+$\varphi = (\exists p_i)\eta$. Let $\auf \GF, \beta, x\zu \vDash
+\varphi$. Then for some $\beta'$ which differs from $\beta$
+at most in $p_i$: $\auf \GF, \beta', x\zu \vDash \eta$. Put
+$\gamma'$ as follows: $\gamma'(P_i) := \beta'(p_i)$ for all
+$i \in \omega$. By induction hypothesis
+$\auf \GF^m, \gamma', \delta\zu \vDash \eta^{\dagger}$ and
+$\gamma'$ differs from $\gamma$ at most in $P_i$.
+Therefore we have $\auf \GF^m, \gamma, \delta\zu \vDash
+(\exists P_i)\eta^{\dagger} = \varphi^{\dagger}$, as desired.
+The argument can be reversed, and the case is therefore settled.
+Analogously for $\varphi = (\forall P_i)\eta$. Now for
+$\varphi = \auf m\zu\eta$. Let $\auf \GF, \beta, x\zu \vDash %
+\varphi$. Then there exists a $y$ with
+$x\; r^m\, y$ and $\auf \GF, \beta, y\zu \vDash \eta$. Choose
+$\delta'$ such that $\delta'(x_0) = y$ and
+$\delta'(x_i) = \delta(x_i)$ for every $i > 0$. Then by
+induction hypothesis $\auf \GF^m, \gamma, \delta'\zu\vDash
+\eta^{\dagger}$. If $x_i$ is a variable that does not occur in
+ $\eta^{\dagger}$ then let $\delta''(x_i) := \delta'(x_i)$,
+$\delta''(x_0) := x$ and $\delta''(x_j) := \delta'(x_j)$ for all
+$j \not\in \{0,i\}$. Then $\auf \GF^m, \gamma, \delta''\zu\vDash
+r^m(x_0,x_i); [x_i/x_0]\eta^{\dagger} = \varphi^{\dagger}$. Hence
+we have $\auf \GF^m, \gamma, \delta''\zu \vDash  \varphi^{\dagger}$.
+Now it holds that $\delta''(x_0) = x = \delta(x_0)$ and $x_i$ is
+bound. Therefore also $\auf \GF^m, \gamma, \delta\zu \vDash
+\varphi^{\dagger}$.  Again the argument is reversible,
+and the case is proved. Likewise for $\varphi = [m]\eta$.
+\proofend
+%%
+%\vplatz
+%\exercise
+%Prove Proposition~\ref{prop:disjunkt}.
+%%
+\vplatz
+\exercise
+Let $1$, $2$ and $3$ be modalities. Show that a Kripke--frame 
+satisfies the following formula iff $R(3) = R(1) \cup R(2)$.
+%%
+\begin{equation}
+\auf 3\zu p \dpf \auf 1\zu p \oder \auf 2\zu p
+\end{equation}
+%%
+\vplatz
+\exercise
+Let $1$, $2$ and $3$ be modalities. Show that a Kripke--frame 
+satisfies the following formula iff $R(3) = R(1) \circ R(2)$.
+%%
+\begin{equation}
+\auf 3\zu p \dpf \auf 1\zu \auf 2\zu p
+\end{equation}
+%%%
+\vplatz
+\exercise
+In HPSG one writes $[\mbox{\sc cat} : \alpha \oplus \beta]$ if 
+{\sc cat} has at least two values: $\alpha$ and $\beta$. (If 
+$\alpha\und\beta$ is consistent, {\sc cat} can take also one 
+value, $\alpha\und\beta$, but not necessarily.) Devise a 
+translation into $\mathsf{QML}$ for $\oplus$. What if $[\mbox{\rm cat} 
+: \alpha\oplus\beta]$ also means that {\sc cat} can have no other 
+value than $\alpha$ and $\beta$?
+%%
+\vplatz
+\exercise
+\label{ex:transclose}
+Let $r$ be a binary relation symbol. Show that in a model of
+$\mathsf{MSO}$ the following holds:
+$\auf \GM, \gamma, \beta\zu \vDash Q(x,y)$ iff
+$x \; (r^{\GM})^{\ast}\; y$ (this means that $y$ can be reached from
+$x$ in finitely many $r$--steps).
+%%
+\begin{equation}
+Q(x,y) := (\forall P)(P(x) \und (\forall yz)(P(y) \und
+    y\; r\; z .\pf .P(z)). \pf . P(y))
+\end{equation}
+%%

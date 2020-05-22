@@ -1,0 +1,285 @@
+\documentclass[12pt]{mouton}
+\usepackage[greek,hungarian,english]{babel}
+\usepackage[safe]{tipa}
+\usepackage{latexsym,amssymb,named,mol,abb2e,eucal,makeidx}
+\usepackage[leqno,fleqn]{amsmath}
+\usepackage{pifont,bm}
+\usepackage[clock]{ifsym}
+%%
+%% Seitenlayout
+%%
+\newcommand{\fslash}{\symbol{124}$^{\mbox{\smtt\symbol{43}}}$}
+\newcommand{\bslash}{\symbol{124}$^{\mbox{\smtt\symbol{45}}}$}
+\newcommand{\bvdash}{\boldsymbol{\vdash}}
+\allowdisplaybreaks[1]
+\mathindent=5em
+\DeclareMathOperator{\subst}{sub}
+\DeclareMathOperator{\Suc}{suc}
+\DeclareMathOperator{\ein}{in}
+\DeclareMathOperator{\aus}{out}
+\DeclareMathOperator{\fr}{fr}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\FL}{FL}
+\DeclareMathOperator{\Taut}{Taut}
+\DeclareMathOperator{\son}{son}
+\DeclareMathOperator{\der}{der}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Typ}{Typ}
+\DeclareMathOperator{\Cat}{Cat}
+\DeclareMathOperator{\Tm}{Tm}
+\DeclareMathOperator{\Clo}{Clo}
+\DeclareMathOperator{\Pol}{Pol}
+\DeclareMathOperator{\PN}{PN}
+\DeclareMathOperator{\focc}{focc}
+\DeclareMathOperator{\pt}{Pt}
+\DeclareMathOperator{\At}{At}
+\DeclareMathOperator{\lub}{lub}
+\DeclareMathOperator{\glb}{glb}
+\DeclareMathOperator{\CCG}{CCG}
+\DeclareMathOperator{\Sent}{Sent}
+\DeclareMathOperator{\Cont}{Cont}
+\DeclareMathOperator{\im}{im}
+%%%%
+%%%%
+\renewcommand{\doteq}{=}
+\newcommand{\nameindex}[1]{}
+\newcommand{\sbot}{\boldsymbol{\bot}}
+\renewcommand{\labelitemi}{$\ast$}
+%\renewcommand{\thesection}{\thechapter.\arabic{section}}
+%\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\newcommand{\hrn}{\leftarrow}
+\newcommand{\lauf}{[\![}
+\newcommand{\lzu}{]\!]}
+\newcommand{\real}[1]{\ulcorner#1\urcorner}
+\newcommand{\triangleup}{\vartriangle}
+\newcommand{\tlambda}{\mbox{\tt\textgreek{l}}}
+\newcommand{\stlambda}{\textgreek{l}}
+\newcommand{\conc}{{^{\smallfrown}}}
+\newcommand{\oconc}{\diamond}
+%%
+%% Seitenlayout
+%%
+%\pagestyle{fancy}
+%\fancyhead[LE,RO]{\thepage}
+%% \fancyhead[RE]{\bfseries \leftmark}
+%% \fancyhead[LO]{\rightmark}
+%\fancyfoot{}%
+%\renewcommand{\headheight}{15pt}
+%\renewcommand{\headsep}{8mm}
+%\renewcommand{\sectionmark}[1]{\markright{\footnotesize\thesection.\ #1}}
+\clearpage{\pagestyle{empty}\cleardoublepage}
+%\renewcommand{\headrulewidth}{0.0pt}
+%\renewcommand{\headwidth}{11.8cm}
+%\renewcommand{\textheight}{18cm}
+%\renewcommand{\textwidth}{11.8cm}
+%\setlength{\parindent}{0.5cm}
+%\setlength{\parskip}{0cm}
+%%
+%% Ende Seitenlayout
+%%
+%%
+\makeindex
+\setlength{\unitlength}{1em}
+%\makeindex
+%%
+\renewcommand{\phi}{\varphi}
+\newcommand{\goth}[1]{\mathfrak{#1}}
+%
+%\oddsidemargin=2truecm\relax%
+%\evensidemargin=2truecm\relax%
+%\marginparwidth=2truecm\relax%
+%\marginparsep=0.2truecm\relax%
+%\topmargin=2truecm\relax%
+% \headheight=1truecm\relax%                        %Seite DIN A4
+%\headsep=0.4truecm\relax%
+%\topskip=\baselineskip%
+%\footskip=1truecm%%
+%
+%
+%
+\newcommand{\zeichen}[3]{\langle #1 : #2 : #3 \rangle}
+\newcommand{\lzeichen}[2]{\langle #1 : #2 : \rangle}
+\newcommand{\rzeichen}[2]{\langle : #1 : #2\rangle}
+\newcommand{\dzeichen}[2]{\langle #1 :: #2\rangle}
+%
+\newcommand{\punkt}[1]{\put(#1){\makebox(0,0){$\bullet$}}}
+\newcommand{\ubla}[2]{\put(#1){\makebox(0,0){#2}}}
+%
+%
+%
+\newcommand{\platz}{\hspace{4em}}
+%
+% Baeume
+%
+\newcommand{\binbaum}[3]{
+\setlength{\unitlength}{0.8em}
+\begin{picture}(10,6)
+                        \put(2.2,1.7){\line(1,1){2.8}}
+                        \put(7.8,1.7){\line(-1,1){2.8}}
+                        \put(5,5.2){\makebox(0,0){$#1$}}
+                        \put(2,1){\makebox(0,0){$#2$}}
+                        \put(8,1){\makebox(0,0){$#3$}}
+                        \end{picture}
+\setlength{\unitlength}{1em}}
+\newcommand{\recbinbaum}[4]{\begin{picture}(10,6)(#1)
+                        \put(2,1.5){\line(1,1){3}}
+                        \put(8,1.5){\line(-1,1){3}}
+                        \put(5,5){\makebox(0,0){$#2$}}
+                        \put(2,1){\makebox(0,0){$#3$}}
+                        \put(8,1){\makebox(0,0){$#4$}}
+                        \end{picture}}
+\newcommand{\unbaum}[2]{\begin{picture}(3,6)
+                        \put(1.5,5){\makebox(0,0){#1}}
+                        \put(1.5,4.5){\line(0,-1){3}}
+                        \put(1.5,1){\makebox(0,0){#2}}
+                        \end{picture}}
+\newcommand{\recunbaum}[3]{\begin{picture}(3,6)(#1)
+                        \put(1.5,5){\makebox(0,0){#2}}
+                        \put(1.5,4.5){\line(0,-1){3}}
+                        \put(1.5,1){\makebox(0,0){#3}}
+                        \end{picture}}
+\newcommand{\nbaum}[2]{\begin{picture}(3,6)
+                        \put(1.5,5){\makebox(0,0){#2}}
+                        \put(1.5,4.5){\line(1,-3){1}}
+                        \put(1.5,4.5){\line(-1,-3){1}}
+                        \put(0.5,1.5){\line(1,0){2}}
+                        \put(1.5,1){\makebox(0,0){#1}}
+                        \end{picture}}
+%
+\newcommand{\sch}[2]{#1 \dotfill \` \pageref{#2} \\}
+\newcommand{\osch}[1]{#1 \dotfill \`             \\}
+\newcommand{\usch}[2]{\hspace{1em} #1 \dotfill \` \pageref{#2}\\}
+\newcommand{\faul}{$\stackrel{\circ}{\sim}$}
+%
+%
+%
+\newcommand{\down}[1]{\downarrow\! #1 \!}
+\newcommand{\wupp}{\begin{picture}(.6,1)
+                        \put(.3,.42){\makebox(0,0){$\uparrow$}}
+                        \put(.1,0){\line(1,0){.4}}
+                      \end{picture}}
+\newcommand{\wdown}{\begin{picture}(.6,1)
+                        \put(.3,.4){\makebox(0,0){$\downarrow$}}
+                        \put(.1,.9){\line(1,0){.4}}
+                      \end{picture}}
+\newcommand{\wlhd}{\unlhd}
+%%
+%%
+\newcommand{\vplatz}{\\[2mm]}
+\newcounter{uebung}
+\setcounter{uebung}{0}
+\newcommand{\exercise}{\refstepcounter{uebung}
+                       {\bf Exercise \arabic{uebung}. }}
+\newcommand{\dexercise}{\refstepcounter{uebung}
+                       {\bf $^{\ast}$Exercise \arabic{uebung}. }}
+\newcommand{\titel}{The Mathematics of Language}
+%
+\title{\titel}
+\author{Marcus Kracht \\
+{\em Department of Linguistics} \\
+{\em UCLA} \\
+{\em PO Box 951543} \\
+{\em 450 Hilgard Avenue} \\
+{\em Los Angeles, CA 90095--1543} \\
+{\em USA} \\
+{\tt kracht@humnet.ucla.edu} \\
+\\
+Printed Version}
+%
+\date{September 16, 2003}
+%
+%
+%
+\begin{document}
+%%
+%% Seitenlayout
+%%
+ \pagenumbering{roman}
+
+ \maketitle
+ \mbox{}
+ \newpage
+ \thispagestyle{empty}
+ \setcounter{page}{5}
+ \thispagestyle{empty}
+ \include{motto}
+ \newpage
+ \thispagestyle{empty}
+ \mbox{}
+ \newpage
+ \thispagestyle{empty}
+ \include{0mol}
+ \newpage
+ \thispagestyle{empty}
+ \mbox{}
+ \newpage
+ \thispagestyle{empty}
+ \include{intro-mol}
+ \newpage
+ \thispagestyle{empty}
+ \tableofcontents
+ \newpage
+ \thispagestyle{empty}
+ \pagenumbering{arabic}
+ \setcounter{page}{1}
+ \input{1-1mol}
+ \input{1-2mol}
+ \input{1-3mol}
+ \input{1-4mol}
+ \input{1-5mol}
+ \input{1-6mol}
+ \input{1-7mol}
+ \input{2-1mol}
+ \input{2-2mol}
+ \input{2-3mol}
+ \input{2-4mol}
+ \input{2-5mol}
+ \input{2-6mol}
+ \input{2-7mol}
+% \newpage 
+%	\thispagestyle{empty}
+%	\mbox{}
+ \input{3-1mol}
+ \input{3-2mol}
+ \input{3-3mol}
+ \input{3-4mol}
+ \input{3-5mol}
+ \input{3-6mol}
+ \input{3-7mol}
+ \input{3-8mol}
+% \newpage 
+%	\thispagestyle{empty}
+%	\mbox{}
+ \input{4-1mol}
+ \input{4-2mol}
+ \input{4-3mol}
+ \input{4-4mol}
+ \input{4-5mol}
+ \input{4-6mol}
+ \input{4-7mol}
+ \input{5-1mol}
+ \input{5-2mol}
+ \input{5-3mol}
+ \input{5-4mol}
+ \input{5-5mol}
+ \input{5-6mol}
+ \input{5-7mol}
+ \input{5-8mol}
+% \newpage 
+%	\thispagestyle{empty}
+%	\mbox{}
+ \input{6-1mol}
+ \input{6-2mol}
+ \input{6-3mol}
+ \input{6-4mol}
+ \input{6-5mol}
+ \input{6-6mol}
+ \input{6-7mol}
+ \newpage
+%%
+%% Seitenlayout
+%%
+{\small
+ \include{literatur}
+ \printindex}
+\end{document}
