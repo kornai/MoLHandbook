@@ -1,0 +1,34 @@
+\documentclass{report}
+\title{Synopsis}
+\author{Draft Version 0.01}
+\usepackage[backend=biber,natbib,style=authoryear,uniquename=false,uniquelist=false]{biblatex}
+\addbibresource{ML/ml.bib}
+%\usepackage[T2A,T1]{fontenc}
+%\bibliographystyle{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{mlbook}
+%\usepackage{amssymb}
+%\usepackage{amsmath}
+\usepackage{multicol}        
+\usepackage{graphicx}
+\usepackage[pdftex,colorlinks=true,urlcolor=blue,bookmarksdepth=subsection,plainpages=false]{hyperref}
+\hypersetup{citecolor=blue}
+%\newcommand{\Be}{\mbox{\usefont{T2A}{\rmdefault}{m}{n}\CYRB}}
+\def\Marginpar#1{\marginpar[{\bf \hfill {#1}}]{\bf #1}}
+\def\Qref#1#2{\href{#1}{#2}\Marginpar{\qrcode[hyperlink,height=12mm]{#1}}}
+\def\Tref#1#2#3{\href{#1}{#2}\Marginpar{\qrcode[hyperlink,height=12mm]{#1}}}
+
+\addbibresource{ml.bib}
+
+
+%\usepackage{minitoc}
+
+\begin{document}
+\maketitle
+\include{intro-syn}
+\include{ocr}
+
+%\printbibliography %issues warnings and doesn't print. Currently hacked
+%around by \printbibliography in last included file.
+\end{document}

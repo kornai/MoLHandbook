@@ -1,0 +1,72 @@
+\noindent
+Owing to the complexity of the task, the handbook will not proceed in a 100\%
+top-down fashion. Rather, we begin with a draft structure and a brief (one
+page) synopsis for each chapter as planned {\it at a time when the chapter
+structure is still fluid}. We begin by cannibalizing \cite{Kracht:2003}
+and \cite{Kornai:2007}, which deal, roughly, with the discrete and the
+continuous aspects of ML respectively. 
+
+\subsection*{Volume 1: discrete}
+
+We should have separate chapters on:
+
+\begin{enumerate}
+\item Formal languages
+\item Generative capacity
+\item Automata theory
+\item Subregular
+\item Finite state
+\item Context free
+\item Mildly CS
+\item CS and beyond
+\item Influential syntax formalisms: TG, LFG, GPSG, HPSG, MP, UD
+\item Categorial Grammar, CCG
+\item Model-theoretic syntax
+\item Influential semantic formalisms
+\item Knowledge Representation
+\end{enumerate}
+
+\subsection*{Volume 2: continuous}
+
+
+\begin{enumerate}
+\item Weighted generalizations of formal languages and automata
+\item Phonetics
+\item Speech synthesis
+\item Phonology
+\item Learnability
+\item Speech Recognition
+\item Optical character recognition
+\item Information theory
+\item Statistical linguistics
+\item Historical linguistics
+\item Psycholinguistics
+\item Machine learning
+\item Natural Language Processing
+\item Machine Translation
+\item Continuous vector semantics
+\item Typology
+\end{enumerate}
+
+
+\noindent
+The chapters (in both volumes) are given in no particular order. Some of them
+already have candidate editors, most don't, so feel free to nominate yourself
+by editing {\tt editors.tsv}, and adding a synopsis -- a mini-sample is
+provided for 2.7.
+
+Your chapter synopsis should not exceed 1 page, should cite some relevant
+literature, and should be named subjectofchapter.tex. You should 
+$\backslash$include it in {\tt synopsis.tex}. At this point, negative statements
+(I'm planning on covering X and Y, but not Z) also make sense.
+
+For ease of diff-ing, keep line length of .tex files to 80, and for ease of
+merging bibliographies, name your entries Firstauthor:fullyear, and use
+Smith:2017, Smith:2017a, Smith2017b if you need to cite three papers from
+various people (or the same person) named Smith from the same year. Save us
+the pain, avoid anything outside 7-bit ascii in the entry name (but feel free
+to use utf8 in the author = field). Check ML/ml.bib and MoL/formal.bib to see
+if your entry is already present before adding it to a new bib file (which
+should be the same synopsis.bib for everyone). 
+
+
